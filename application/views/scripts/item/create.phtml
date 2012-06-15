@@ -1,0 +1,90 @@
+<style type="text/css" media="screen">
+	.create-form {
+		padding: 20px;
+	}
+	.create-form select {
+		width: 500px;
+	}
+</style>
+<div class="create-form">
+	<div>
+		<p>What kind of item is this?</p>
+		<select name="type" id="type">
+			<option></option>
+			<option value='amulet'>Amulet</option>
+			<option value='belt'>Belt</option>
+			<option value='boots'>Boots</option>
+			<option value='bracers'>Bracers</option>
+			<option value='chest-armor'>Chest Armor</option>
+			<option value='cloak'>Cloak</option>
+			<option value='gloves'>Gloves</option>
+			<option value='helm'>Helm</option>
+			<option value='pants'>Pants</option>
+			<option value='mighty-belt'>Mighty Belt</option>
+			<option value='ring'>Ring</option>
+			<option value='shoulder'>Shoulder</option>
+			<option value='spirit-stone'>Spirit Stone</option>
+			<option value='voodoo-mask'>Voodoo Mask</option>
+			<option value='wizard-hat'>Wizard Hat</option>
+			<option value='2h-mace'>Two-Handed Mace</option>
+			<option value='2h-axe'>Two-Handed Axe</option>
+			<option value='bow'>Bow</option>
+			<option value='diabo'>Diabo</option>
+			<option value='crossbow'>Crossbow</option>
+			<option value='2h-mighty'>Two-Handed Mighty Weapon</option>
+			<option value='polearm'>Polearm</option>
+			<option value='staff'>Staff</option>
+			<option value='2h-sword'>Two-Handed Sword</option>
+			<option value='axe'>Axe</option>
+			<option value='ceremonial-knife'>Ceremonial Knife</option>
+			<option value='hand-crossbow'>Hand Crossbow</option>
+			<option value='dagger'>Dagger</option>
+			<option value='fist-weapon'>Fist Weapon</option>
+			<option value='mace'>mace</option>
+			<option value='mighty-weapon'>Mighty Weapon</option>
+			<option value='spear'>Spear</option>
+			<option value='sword'>Sword</option>
+			<option value='wand'>Wand</option>
+			<option value='mojo'>Mojo</option>
+			<option value='source'>Source</option>
+			<option value='quiver'>Quiver</option>
+			<option value='shield'>Shield</option>
+		</select>
+	</div>
+	<div>
+		<p>What is the quality/rarity of the item?</p>
+		<select name="quality" id="quality">
+			<option></option>
+			<option value="inferior">Inferior</option>
+			<option value="normal">Normal</option>
+			<option value="superior">Superior</option>
+			<option value="magic">Magic</option>
+			<option value="rare">Rare</option>
+			<option value="legendary">Legendary</option>
+			<option value="set">Set</option>
+		</select>
+	</div>
+	<div>
+		<p>What types of stats are on this item?</p>
+		<select name="attributes" id="attributes" multiple>
+			<option value="strength">Strength</option>
+			<option value="intelligence">Intelligence</option>
+			<option value="dexterity">Dexterity</option>
+			<option value="vitality">Vitality</option>
+		</select>
+	</div>
+</div>
+<script type="text/javascript">
+	$("#type").select2({
+		placeholder: 'Choose the item type...',
+		allowClear: true
+	});
+	$("#quality").select2({
+		placeholder: 'Choose the item\'s quality...',
+		allowClear: true
+	});
+	$("#attributes").select2({
+		placeholder: 'What attributes does this item have?',
+		allowClear: true
+	})
+</script>
