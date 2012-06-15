@@ -1,0 +1,8 @@
+<? foreach($this->items as $item): ?>
+	<?= $this->displayItem($item) ?>
+	<?
+		echo "<pre>";
+		echo json_encode($item->export());
+		echo "</pre>";
+	?>
+<? endforeach; ?>

@@ -1,0 +1,9 @@
+[submodule "library/Epic"]
+	path = library/Epic
+	url = git@github.com:aaroncox/epic.git
+[submodule "library/Zend"]
+	path = library/Zend
+	url = git@github.com:aaroncox/ZendFramework-1.11.git
+[submodule "library/Shanty"]
+	path = library/Shanty
+	url = git@github.com:aaroncox/Shanty.git
