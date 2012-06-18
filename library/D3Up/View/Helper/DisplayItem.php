@@ -53,7 +53,7 @@ class D3Up_View_Helper_DisplayItem extends Zend_View_Helper_Abstract
 		'dps' => 'Damage Per Second',
 	);
 	
-	protected $_attrMap = array(
+	protected static $_attrMap = array(
 		// Base Stats
 		'strength' => '+[v] Strength',
 		'intelligence' => '+[v] Intelligence',
@@ -192,23 +192,30 @@ class D3Up_View_Helper_DisplayItem extends Zend_View_Helper_Abstract
 		7 => 'Set',
 	);
 	
+	public static function getAttributeMap() {
+		return static::$_attrMap;
+	}
+	
 	public function prettyDisplay($type, $value = null) {
 		if($value == null) {
 			if(isset($this->_statMap[$type])) {
 				return $this->_statMap[$type];
 			}
 		}
-		if(isset($this->_attrMap[$type])) {
+		if(isset(self::$_attrMap[$type])) {
 			if($value !== null) {
 				if(is_array($value)) {
-					return str_replace("[v]", implode("-", $value), $this->_attrMap[$type]);
+					return str_replace("[v]", implode("-", $value), self::$_attrMap[$type]);
 				}
 				if(is_float($value)) {
-					return str_replace("[v]", number_format(($value * 100), 2), $this->_attrMap[$type]);
+					return str_replace("[v]", number_format(($value * 100), 2), self::$_attrMap[$type]);
 				}
-				return str_replace("[v]", $value, $this->_attrMap[$type]);
+				if(is_numeric($value)) {
+					return str_replace("[v]", $value, self::$_attrMap[$type]);
+				}
+				return str_replace("[v]", $value, self::$_attrMap[$type]);
 			}
-			return $this->_attrMap[$type];				
+			return self::$_attrMap[$type];				
 		}
 		if(isset($this->_typesMap[$type])) {
 			return $this->_typesMap[$type];

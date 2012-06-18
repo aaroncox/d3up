@@ -6,6 +6,9 @@
 	.create-form select {
 		width: 400px;
 	}
+	.create-form dt {
+		margin: 10px;
+	}
 	.item-preview {
 		float: right;
 		margin-top: 50px;
@@ -15,205 +18,46 @@
 		margin: 2px 5px;
 		width: 30px;
 	}
+	.controls {
+		text-align: center;
+		padding: 20px;
+	}
+	.controls input {
+		padding: 10px;
+	}
+	#basedps-label, #basedps-element,
+	#basedamagemin-label, #basedamagemin-element,
+	#basedamagemax-label, #basedamagemax-element,
+	#basespeed-label, #basespeed-element,
+	#basearmor-label, #basearmor-element {
+		display: none;
+	}
 </style>
-<div class="item-preview">
-	<div class="d3-item">
-		<div class="top"><p class=""></p></div>
-		<div class="item">
-			<p class="item-type">
-				<span class="quality"></span>
-				<span class="type"></span>
-			</p>
-			<p class="stats stats-armor">
-				<span class="big-stat"></span>
-				<span class="stat-helper"></span>
-			</p>
-			<ul class="attrs">
-			</ul>
+<form method="post">
+	<div class="item-preview">
+		<div class="d3-item">
+			<div class="top"><p class="">Name</p></div>
+			<div class="item">
+				<p class="item-type">
+					<span class="quality">Quality</span>
+					<span class="type">Type</span>
+				</p>
+				<p class="stats stats-armor">
+					<span class="big-stat"></span>
+					<span class="stat-helper"></span>
+				</p>
+				<p class="stats stats-damage"></p>
+				<p class="stats stats-speed"></p>
+				<ul class="attrs">
+				</ul>
+			</div>
+			<div class="bottom">Submitted by: Jesta</div>
 		</div>
-		<div class="bottom"></div>
 	</div>
-</div>
-<div class="create-form">
-	<div>
-		<p>What kind of item is this?</p>
-		<select name="type" id="type">
-			<option></option>
-			<option value='amulet'>Amulet</option>
-			<option value='belt'>Belt</option>
-			<option value='boots'>Boots</option>
-			<option value='bracers'>Bracers</option>
-			<option value='chest-armor'>Chest Armor</option>
-			<option value='cloak'>Cloak</option>
-			<option value='gloves'>Gloves</option>
-			<option value='helm'>Helm</option>
-			<option value='pants'>Pants</option>
-			<option value='mighty-belt'>Mighty Belt</option>
-			<option value='ring'>Ring</option>
-			<option value='shoulder'>Shoulder</option>
-			<option value='spirit-stone'>Spirit Stone</option>
-			<option value='voodoo-mask'>Voodoo Mask</option>
-			<option value='wizard-hat'>Wizard Hat</option>
-			<option value='2h-mace'>Two-Handed Mace</option>
-			<option value='2h-axe'>Two-Handed Axe</option>
-			<option value='bow'>Bow</option>
-			<option value='diabo'>Diabo</option>
-			<option value='crossbow'>Crossbow</option>
-			<option value='2h-mighty'>Two-Handed Mighty Weapon</option>
-			<option value='polearm'>Polearm</option>
-			<option value='staff'>Staff</option>
-			<option value='2h-sword'>Two-Handed Sword</option>
-			<option value='axe'>Axe</option>
-			<option value='ceremonial-knife'>Ceremonial Knife</option>
-			<option value='hand-crossbow'>Hand Crossbow</option>
-			<option value='dagger'>Dagger</option>
-			<option value='fist-weapon'>Fist Weapon</option>
-			<option value='mace'>mace</option>
-			<option value='mighty-weapon'>Mighty Weapon</option>
-			<option value='spear'>Spear</option>
-			<option value='sword'>Sword</option>
-			<option value='wand'>Wand</option>
-			<option value='mojo'>Mojo</option>
-			<option value='source'>Source</option>
-			<option value='quiver'>Quiver</option>
-			<option value='shield'>Shield</option>
-		</select>
+	<div class="create-form">
+		<?= $this->form ?>
 	</div>
-	<div>
-		<p>What is the quality/rarity of the item?</p>
-		<select name="quality" id="quality">
-			<option></option>
-			<option value="1">Inferior</option>
-			<option value="2">Normal</option>
-			<option value="3">Superior</option>
-			<option value="4">Magic</option>
-			<option value="5">Rare</option>
-			<option value="6">Legendary</option>
-			<option value="7">Set</option>
-		</select>
-	</div>
-	<div>
-		<p>What types of stats are on this item?</p>
-		<select name="attributes" id="attributes" multiple>
-			<option value='strength'>Strength</option>
-			<option value='intelligence'>Intelligence</option>
-			<option value='vitality'>Vitality</option>
-			<option value='dexterity'>Dexterity</option>
-			<option value='resist-all'>Resistance to All Elements</option>
-			<option value='armor'>Armor</option>
-			<option value='plus-life'>% Life</option>
-			<option value='life-regen'>Regenerates Life per Second</option>
-			<option value='plus-block'>Chance to Block</option>
-			<option value='cc-reduce'>Reduces the duration of control impairing effects</option>
-			<option value='elite-reduce'>Reduces damage from elites</option>
-			<option value='melee-reduce'>Reduces damage from melee attacks</option>
-			<option value='range-reduce'>Reduces damage from ranged attacks</option>
-			<option value='arcane-resist'>Arcane Resistance</option>
-			<option value='cold-resist'>Cold Resistance</option>
-			<option value='fire-resist'>Fire Resistance</option>
-			<option value='lightning-resist'>Lightning Resistance</option>
-			<option value='physical-resist'>Physical Resistance</option>
-			<option value='poison-resist'>Poison Resistance</option>
-			<option value='thorns'>Melee attackers take damage per hit</option>
-			<option value='attack-speed'>Attack speed increased</option>
-			<option value='critical-hit'>Critical Hit Chance increased</option>
-			<option value='critical-hit-damage'>Critical Hit Damage increased</option>
-			<option value='plus-damage'>+% Damage</option>
-			<option value='min-damage'>Minimum Damage</option>
-			<option value='max-damage'>Maximum Damage</option>
-			<option value='arcane-damage'>Arcane Damage</option>
-			<option value='cold-damage'>Cold Damage</option>
-			<option value='fire-damage'>Fire Damage</option>
-			<option value='holy-damage'>Holy Damage</option>
-			<option value='lightning-damage'>Lightning Damage</option>
-			<option value='poison-damage'>Poison Damage</option>
-			<option value='elite-damage'>Increases Damage against Elites</option>
-			<option value='chance-bleed'>Chance to inflict Bleed</option>
-			<option value='chance-blind'>Chance to Blind on Hit</option>
-			<option value='chance-chill'>Chance to Chill on Hit</option>
-			<option value='chance-fear'>Chance to Fear on Hit</option>
-			<option value='chance-freeze'>Chance to Freeze on Hit</option>
-			<option value='chance-immobilize'>Chance to Immobilize on Hit</option>
-			<option value='chance-knockback'>Chance to Knockback on Hit</option>
-			<option value='chance-slow'>Chance to Slow on Hit</option>
-			<option value='chance-stun'>Chance to Stun on Hit</option>
-			<option value='plus-movement'>Movement Speed</option>
-			<option value='plus-pickup-radius'>Increases Gold and Health pickup</option>
-			<option value='plus-experience'>Experience</option>
-			<option value='plus-gold-find'>Gold Find</option>
-			<option value='plus-magic-find'>Magic Find</option>
-			<option value='health-globes'>Health Globes grant Life</option>
-			<option value='life-steal'>Damage Dealt is Converted to Life</option>
-			<option value='life-kill'>Life after each Kill</option>
-			<option value='life-hit'>Each hit adds Life</option>
-			<option value='level-reduce'>Level Requirement reduced</option>
-			<option value='indestructable'>Ignores durability loss</option>
-			<option value='bb-bash'>Increases bash damage</option>
-			<option value='bb-cleave'>Increases cleave damage</option>
-			<option value='bb-frenzy'>Increases frenzy damage</option>
-			<option value='bb-rend'>Reduces resource cost of Rend</option>
-			<option value='bb-revenge'>Increases Critical Hit Chance of Revenge</option>
-			<option value='bb-weapon-throw'>Reduces resource cost of Weapon Throw</option>
-			<option value='bb-hammer-of-the-ancients'>Reduces resource cost of Hammer of the Ancients</option>
-			<option value='bb-whirlwind'>Increases Critical Hit Chance of Whirlwind</option>
-			<option value='bb-overpower'>Increases Critical Hit Chance of Overpower</option>
-			<option value='bb-seismic-slam'>Increases Critical Hit Chance of Seismic Slam</option>
-			<option value='fury-max'>Maximum Fury</option>
-			<option value='hatred-regen'>Increases Hatred Regeneration</option>
-			<option value='max-discipline'>Maximum Discipline</option>
-			<option value='dh-chakram'>Reduces resource cost of Chakram</option>
-			<option value='dh-evasive-fire'>Increases Evasive Fire damage</option>
-			<option value='dh-grenades'>Increases Grenades Damage</option>
-			<option value='dh-impale'>Reduces resource cost of Impale</option>
-			<option value='dh-spike-trap'>Increases Spike Trap damage</option>
-			<option value='dh-bola-shot'>Increases Bola Shot damage</option>
-			<option value='dh-elemental-arrow'>Increases Elemental Arrow damage</option>
-			<option value='dh-entangling-shot'>Increases Entangling Shot damage</option>
-			<option value='dh-hungering-arrow'>Increases Hungering Arrow damage</option>
-			<option value='dh-multishot'>Increases Critical Hit Chance of Multishot</option>
-			<option value='dh-rapid-fire'>Increases Critical Hit Chance of Rapid Fire</option>
-			<option value='spirit-spent-life'>Gain Life per Spirit Spent</option>
-			<option value='spirit-regen'>Increases Spirit Regeneration</option>
-			<option value='mk-crippling-wave'>Increases Crippling Wave damage</option>
-			<option value='mk-cyclone-strike'>Reduces resource cost of Cyclone Strike</option>
-			<option value='mk-deadly-reach'>Increases Deadly Reach damage</option>
-			<option value='mk-exploding-palm'>Increases Exploding Palm damage</option>
-			<option value='mk-fists-of-thunder'>Increases Fist of Thunder damage</option>
-			<option value='mk-sweeping-wind'>Increases Sweeping Wind damage</option>
-			<option value='mk-way-of-the-hundred-fists'>Increases Way of the Hundred Fists damage</option>
-			<option value='mk-lashing-tail-kick'>Reduces resource cost of Lashing Tail Kick</option>
-			<option value='mk-tempest-rush'>Increases Critical Hit Chance of Tempest Rush</option>
-			<option value='mk-wave-of-light'>Increases Critical Hit Chance of Wave of Light</option>
-			<option value='mana-regen'>Increases Mana Regeneration</option>
-			<option value='mana-max'>Maximum Mana</option>
-			<option value='wd-firebomb'>Reduces resource cost of Firebomb</option>
-			<option value='wd-haunt'>Increases Haunt Damage</option>
-			<option value='wd-acid-clouds'>Increases Critical Hit Chance of Acid Clouds</option>
-			<option value='wd-firebats'>Reduces resource cost of Firebats</option>
-			<option value='wd-zombie-dogs'>Reduces cooldown of Summon Zombie Dogs</option>
-			<option value='wd-plague-of-toads'>Increases Plague of Toads damage</option>
-			<option value='wd-poison-darts'>Increaeses Poison Darts damage</option>
-			<option value='wd-spirit-barrage'>Increases Spirit Barrage damage</option>
-			<option value='wd-wall-of-zombies'>Reduces cooldown of Wall of Zombies</option>
-			<option value='wd-zombie-charger'>Reduces resource cost of Zombie Charger</option>
-			<option value='ap-on-crit'>Critical Hits grant Arcane Power</option>
-			<option value='ap-max'>Maximum Arcane Power</option>
-			<option value='wz-arcane-torrent'>Reduces resource cost of Arcane Torrent</option>
-			<option value='wz-disintegrate'>Reduces resource cost of Disintegrate</option>
-			<option value='wz-electrocute'>Increases Electrocute damage</option>
-			<option value='wz-explosive-blast'>Increases Critical Hit Chance of Explosive Blast</option>
-			<option value='wz-hydra'>Reduces resource cost of Hydra</option>
-			<option value='wz-ray-of-frost'>Increases Critical Hit Chance of Ray of Frost</option>
-			<option value='wz-energy-twister'>Increases Critical Hit Chance of Energy Twister</option>
-			<option value='wz-magic-missle'>Increases Magic Missle damage</option>
-			<option value='wz-arcane-orb'>Increases Critical Hit Chance of Arcane Orb</option>
-			<option value='wz-blizzard'>Increases duration of Blizzard</option>
-			<option value='wz-meteor'>Reduces resource cost of Meteor</option>
-			<option value='wz-shock-pulse'>Increases Shock Pulse damage</option>
-			<option value='wz-spectral-blade'>Increases Spectral Blade damage</option>
-		</select>
-	</div>
-</div>
+</form>
 <script type="text/javascript">
 	var td = [];
 	td['strength'] = '+VVV Strength';
@@ -332,14 +176,100 @@
 	td['wz-meteor'] = 'Reduces resource cost of Meteor by VVV Arcane Power';
 	td['wz-shock-pulse'] = 'Increases Shock Pulse damage by VVV%';
 	td['wz-spectral-blade'] = 'Increases Spectral Blade damage by VVV%'
-
+	$("#name").keyup(function() {
+		$(".item-preview .top p").html($("#name").val());
+	});
 	$("#type").select2({
 		placeholder: 'Choose the item type...',
 		allowClear: true
 	});
 	$("#type").bind("change", function() {
 		var name = $(this).find(":selected").html(),
-				type = $(".item-preview .item-type .type").html(name);
+				val = $(this).find(":selected").val(),
+				type = $(".item-preview .item-type .type").html(name),
+				add = $(".additional");
+		switch(val) {
+			case "belt":
+			case "boots":
+			case "bracers":
+			case "chest-armor":
+			case "cloak":
+			case "gloves":
+			case "helm":
+			case "pants":
+			case "mighty-belt":
+			case "shoulder":
+			case "spirit-stone":
+			case "voodoo-mask":
+			case "wizard-hat":
+			case "shield":
+				var exists = $("#base-armor");
+				if(!exists.length) {
+					$("#basearmor-label, #basearmor-element").show();
+					var stats = $(".item-preview .stats"),
+							input = $("#basearmor"),
+							bigStat = stats.find(".big-stat"),
+							bigLabel = stats.find(".stat-helper");
+					stats.removeClass("stats-armor stats-dps").addClass("stats-armor");
+					bigLabel.html("Armor");
+					input.keyup(function(event) {
+							bigStat.html(input.val());
+					});					
+				}
+				break;
+			case "2h-mace":
+			case "2h-axe":
+			case "bow":
+			case "diabo":
+			case "crossbow":
+			case "2h-mighty":
+			case "polearm":
+			case "staff":
+			case "2h-sword":
+			case "axe":
+			case "ceremonial-knife":
+			case "hand-crossbow":
+			case "dagger":
+			case "fist-weapon":
+			case "mace":
+			case "mighty-weapon":
+			case "spear":
+			case "sword":
+			case "wand":
+				var exists = $("#base-dps");
+				if(!exists.length) {
+					console.log("making");
+					var stats = $(".item-preview .stats"),
+							input1 = $("#basedps"),
+							input2 = $("#basedamagemin"),
+							input3 = $("#basedamagemax"),
+							input4 = $("#basespeed"),
+							speedStat = $(".stats-speed"),
+							damageStat = $(".stats-damage"),
+							bigStat = stats.find(".big-stat"),
+							bigLabel = stats.find(".stat-helper");
+					stats.removeClass("stats-armor stats-dps").addClass("stats-dps");
+					bigLabel.html("Damage per Second");
+					$("#basedps-element, #basedamagemin-element, #basedamagemax-element, #basespeed-element, #basedps-label, #basedamagemin-label, #basedamagemax-label, #basespeed-label").show();
+					input1.keyup(function(event) {
+							bigStat.html(input1.val());
+					});					
+					input2.keyup(function(event) {
+							damageStat.html(input2.val() + "-" + input3.val() + " <span class='stat-helper'>Damage</span>");
+					});					
+					input3.keyup(function(event) {
+							damageStat.html(input2.val() + "-" + input3.val() + " <span class='stat-helper'>Damage</span>");
+					});					
+					input4.keyup(function(event) {
+							speedStat.html(input4.val() + " <span class='stat-helper'>Attacks per Second</span>");
+					});					
+				}
+				break;
+			default:
+				add.html("");
+				break;
+		}
+
 	});
 	$("#quality").select2({
 		placeholder: 'Choose the item\'s quality...',
