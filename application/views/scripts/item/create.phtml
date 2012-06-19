@@ -293,10 +293,11 @@
 	$("#attributes").bind("change", function() {
 		var attrs = $(this).val(),
 				elements = $(".item-preview .item ul.attrs");
+		// Add new Elements to the Item for Editing
 		$.each(attrs, function(k,v) {
 			var exists = elements.find("." + v),
 					attr = $("<li></li>");
-			if(exists.empty()) {
+			if(!exists.length) {
 				var label = td[v],
 						input = "<input type='text' name='" + v + "' value=''/>";
 				label = label.replace("VVV", input);
@@ -305,5 +306,12 @@
 				elements.append(attr);
 			}
 		});
+		// Remove deleted elements from the Item
+		elements.find("li").each(function() {
+			if(attrs.indexOf($(this).attr("class")) == -1) {
+				$(this).remove();
+			}
+		});
+		
 	});
 </script>
