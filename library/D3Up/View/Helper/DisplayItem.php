@@ -182,7 +182,7 @@ class D3Up_View_Helper_DisplayItem extends Zend_View_Helper_Abstract
 		'wz-spectral-blade' => 'Increases Spectral Blade damage by [v]%',
 	);
 	
-	protected $_qualityMap = array(
+	public $_qualityMap = array(
 		1 => 'Inferior',
 		2 => 'Normal',
 		3 => 'Superior',
@@ -195,7 +195,6 @@ class D3Up_View_Helper_DisplayItem extends Zend_View_Helper_Abstract
 	public static function getAttributeMap() {
 		return static::$_attrMap;
 	}
-	
 	public function prettyDisplay($type, $value = null) {
 		if($value == null) {
 			if(isset($this->_statMap[$type])) {
