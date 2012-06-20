@@ -273,6 +273,10 @@ class D3Up_Form_Record_Item extends Epic_Form
 		$item = $this->getItem();
 		// Set the Name of the Item
 		$item->name = $this->name->getValue();
+		// Are we a new item? If so, add some meta
+		if(!$item->_created) {
+			$item->_created = time();
+		}
 		// Set the Quality of the Item
 		$item->quality = (int) $this->quality->getValue();
 		// Set the Type of the Item

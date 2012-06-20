@@ -37,7 +37,7 @@ class D3Up_View_Helper_DisplayItem extends Zend_View_Helper_Abstract
 		'hand-crossbow' => 'Hand Crossbow',
 		'dagger' => 'Dagger',
 		'fist-weapon' => 'Fist Weapon',
-		'mace' => 'mace',
+		'mace' => 'Mace',
 		'mighty-weapon' => 'Mighty Weapon',
 		'spear' => 'Spear',
 		'sword' => 'Sword',
@@ -283,7 +283,7 @@ class D3Up_View_Helper_DisplayItem extends Zend_View_Helper_Abstract
 		return $html;
 	}
 	private function _renderBottom() {
-		return "Bottom";
+		return " ";
 	}
 	public function displayItem($item) {
 		$this->_item = $item;

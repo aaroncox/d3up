@@ -1,8 +1,42 @@
-<? foreach($this->items as $item): ?>
-	<?= $this->displayItem($item) ?>
-	<?
-		echo "<pre>";
-		echo json_encode($item->export());
-		echo "</pre>";
-	?>
-<? endforeach; ?>
+<style type="text/css" media="screen">
+	.home {
+		margin: 10px;
+	}
+	.recent-items {
+		width: 600px;
+		padding: 1px;
+	}
+	.info {
+		float: right;
+		width: 300px;
+	}
+</style>
+<div class="home">
+	<div class="info">
+		<h2>What is D3Up?</h2>
+		<p>D3Up is designed to be an incredibly simple tool that allows you to share information about items from Diablo 3.</p>
+		<h2>What is it for?</h2>
+		<p>Use it to create examples of items you have, you're using, that you want to sell or that you wish existed!</p>
+	</div>
+	<div class="recent-items">
+		<h2>Recently Created Items</h2>
+		<ul>
+			<? foreach($this->items as $item): ?>
+				<li>
+					<?= $this->mLink($item) ?>
+					<? 
+						$attrs = array_keys($item->attrs->export());
+						$attrs = str_replace(array("-"), " ", $attrs);
+						foreach($attrs as $k => $v) {
+							$attrs[$k] = ucwords($v);
+						}
+					?>
+					(<?= implode(" / ", $attrs) ?>)
+				</li>
+			<? endforeach; ?>
+		</ul>
+		<?php echo $this->paginationControl($this->items,
+		                                    'Elastic',
+		                                    'index/_pages.phtml'); ?>
+	</div>
+</div>

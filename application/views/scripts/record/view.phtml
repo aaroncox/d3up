@@ -1,1 +1,10 @@
-<?= $this->displayItem($this->record) ?>
+<style type="text/css" media="screen">
+	.single-item {
+		width: 430px;
+		margin: 20px auto;
+	}
+</style>
+<div class="single-item">
+	<?= $this->displayItem($this->record) ?>
+	<p style='text-align: center'>Link: <input type='text' value='http://d3up.com<?= $this->url(array('record' => $this->record), $this->record->route, true) ?>'/></p>
+</div>
