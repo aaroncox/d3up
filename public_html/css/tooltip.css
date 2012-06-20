@@ -37,6 +37,7 @@
 	height: 64px;
 	line-height: 64px;
 	text-align: center;
+	overflow: hidden;
 }
 .d3-item .item {
 	background: url("/images/item-bg.png") repeat-y scroll left top transparent;
@@ -77,6 +78,7 @@
 	background-image: url("/images/bullet.gif");
 	background-repeat: no-repeat;
 	background-position: 0 5px;
+	overflow: hidden;
 }
 .d3-item .item ul.attrs li.is-socket {
 	list-style: none;
