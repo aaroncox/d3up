@@ -15,6 +15,8 @@
 <?= $this->record->stats['dps'] ?> dps
 <?= implode("-", $this->record->stats['damage']->export()) ?> damage
 <?= $this->record->stats['speed'] ?> attack speed
+<? elseif(isset($this->record->stats['armor'])): ?>
+<?= $this->record->stats['armor']?> Armor
 <? endif; ?>
 <? foreach($this->record->attrs as $k => $v): ?>
 <?= $p->prettyDisplay($k, $v) ?> 
