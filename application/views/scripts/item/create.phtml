@@ -203,19 +203,18 @@
 			case "voodoo-mask":
 			case "wizard-hat":
 			case "shield":
-				var exists = $("#base-armor");
-				if(!exists.length) {
-					$("#basearmor-label, #basearmor-element").show();
-					var stats = $(".item-preview .stats"),
-							input = $("#basearmor"),
-							bigStat = stats.find(".big-stat"),
-							bigLabel = stats.find(".stat-helper");
-					stats.removeClass("stats-armor stats-dps").addClass("stats-armor");
-					bigLabel.html("Armor");
-					input.keyup(function(event) {
-							bigStat.html(input.val());
-					});					
-				}
+				$("#basedps-element, #basedamagemin-element, #basedamagemax-element, #basespeed-element, #basedps-label, #basedamagemin-label, #basedamagemax-label, #basespeed-label").hide();
+				$("#basearmor-label, #basearmor-element").show();
+				var stats = $(".item-preview .stats"),
+						input = $("#basearmor"),
+						bigStat = stats.find(".big-stat"),
+						bigLabel = stats.find(".stat-helper");
+				$(".stats-damage, .stats-speed").empty();
+				stats.removeClass("stats-armor stats-dps").addClass("stats-armor");
+				bigLabel.html("Armor");
+				input.keyup(function(event) {
+						bigStat.html(input.val());
+				});					
 				break;
 			case "2h-mace":
 			case "2h-axe":
@@ -236,34 +235,31 @@
 			case "spear":
 			case "sword":
 			case "wand":
-				var exists = $("#base-dps");
-				if(!exists.length) {
-					console.log("making");
-					var stats = $(".item-preview .stats"),
-							input1 = $("#basedps"),
-							input2 = $("#basedamagemin"),
-							input3 = $("#basedamagemax"),
-							input4 = $("#basespeed"),
-							speedStat = $(".stats-speed"),
-							damageStat = $(".stats-damage"),
-							bigStat = stats.find(".big-stat"),
-							bigLabel = stats.find(".stat-helper");
-					stats.removeClass("stats-armor stats-dps").addClass("stats-dps");
-					bigLabel.html("Damage per Second");
-					$("#basedps-element, #basedamagemin-element, #basedamagemax-element, #basespeed-element, #basedps-label, #basedamagemin-label, #basedamagemax-label, #basespeed-label").show();
-					input1.keyup(function(event) {
-							bigStat.html(input1.val());
-					});					
-					input2.keyup(function(event) {
-							damageStat.html(input2.val() + "-" + input3.val() + " <span class='stat-helper'>Damage</span>");
-					});					
-					input3.keyup(function(event) {
-							damageStat.html(input2.val() + "-" + input3.val() + " <span class='stat-helper'>Damage</span>");
-					});					
-					input4.keyup(function(event) {
-							speedStat.html(input4.val() + " <span class='stat-helper'>Attacks per Second</span>");
-					});					
-				}
+				var stats = $(".item-preview .stats"),
+						input1 = $("#basedps"),
+						input2 = $("#basedamagemin"),
+						input3 = $("#basedamagemax"),
+						input4 = $("#basespeed"),
+						speedStat = $(".stats-speed"),
+						damageStat = $(".stats-damage"),
+						bigStat = stats.find(".big-stat"),
+						bigLabel = stats.find(".stat-helper");
+				stats.removeClass("stats-armor stats-dps").addClass("stats-dps");
+				bigLabel.html("Damage per Second");
+				$("#basearmor-label, #basearmor-element").hide();
+				$("#basedps-element, #basedamagemin-element, #basedamagemax-element, #basespeed-element, #basedps-label, #basedamagemin-label, #basedamagemax-label, #basespeed-label").show();
+				input1.keyup(function(event) {
+						bigStat.html(input1.val());
+				});					
+				input2.keyup(function(event) {
+						damageStat.html(input2.val() + "-" + input3.val() + " <span class='stat-helper'>Damage</span>");
+				});					
+				input3.keyup(function(event) {
+						damageStat.html(input2.val() + "-" + input3.val() + " <span class='stat-helper'>Damage</span>");
+				});					
+				input4.keyup(function(event) {
+						speedStat.html(input4.val() + " <span class='stat-helper'>Attacks per Second</span>");
+				});					
 				break;
 			default:
 				add.html("");
