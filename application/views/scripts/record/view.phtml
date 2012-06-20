@@ -18,9 +18,11 @@
 <? elseif(isset($this->record->stats['armor'])): ?>
 <?= $this->record->stats['armor']?> Armor
 <? endif; ?>
+<? if($this->record->attrs): ?>
 <? foreach($this->record->attrs as $k => $v): ?>
 <?= $p->prettyDisplay($k, $v) ?> 
 <? endforeach ?>
+<? endif; ?>
 </textarea>
 	</p>
 </div>

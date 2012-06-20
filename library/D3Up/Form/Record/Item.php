@@ -177,6 +177,9 @@ class D3Up_Form_Record_Item extends Epic_Form
 		$this->addElement("text", "name", array(
 			'required' => true,
 			'label' => 'Name',
+			'validators' => array(
+				array('StringLength', false, array(2, 50)),
+			),
 		));
 
 		$this->addElement("select", "type", array(
@@ -245,25 +248,41 @@ class D3Up_Form_Record_Item extends Epic_Form
 			'multiple' => true,
 			'multiOptions' => array(null => '') + $this->_attributes,
 		));
+		$this->attributes->setRegisterInArrayValidator(false);
 		
-		$this->addElement("text", "base-armor", array(
+		$this->addElement("text", "base_armor", array(
 			'label' => "What is the displayed Armor value?",
+			'validators' => array(
+				array('Float')
+			)
 		));
 
-		$this->addElement("text", "base-dps", array(
-			'label' => "What is the displayed DPS?"
+		$this->addElement("text", "base_dps", array(
+			'label' => "What is the displayed DPS?",
+			'validators' => array(
+				array('Float')
+			)
 		));
 
-		$this->addElement("text", "base-damage-min", array(
-			'label' => "What is the displayed Minimum Damage?"
+		$this->addElement("text", "base_damage_min", array(
+			'label' => "What is the displayed Minimum Damage?",
+			'validators' => array(
+				array('Float')
+			)
 		));
 
-		$this->addElement("text", "base-damage-max", array(
-			'label' => "What is the displayed Maximum Damage?"
+		$this->addElement("text", "base_damage_max", array(
+			'label' => "What is the displayed Maximum Damage?",
+			'validators' => array(
+				array('Float')
+			)
 		));
 
-		$this->addElement("text", "base-speed", array(
-			'label' => "What is the displayed Attack Speed?"
+		$this->addElement("text", "base_speed", array(
+			'label' => "What is the displayed Attack Speed?",
+			'validators' => array(
+				array('Float')
+			)
 		));
 		
 		$this->setButtons(array("save" => "Create Item"));		
@@ -298,7 +317,7 @@ class D3Up_Form_Record_Item extends Epic_Form
 			case "wizard-hat":
 			case "shield":
 				$stats = array(
-					'armor' => (int) $this->_allData['basearmor'],
+					'armor' => (int) $this->_allData['base_armor'],
 				);
 				$item->stats = $stats;
 				break;
@@ -322,11 +341,11 @@ class D3Up_Form_Record_Item extends Epic_Form
 			case "sword":
 			case "wand":
 				$stats = array(
-					'dps' => (float) $this->_allData['basedps'],
-					'speed' => (float) $this->_allData['basespeed'],
+					'dps' => (float) $this->_allData['base_dps'],
+					'speed' => (float) $this->_allData['base_speed'],
 					'damage' => array(
-						'min' => (int) $this->_allData['basedamagemin'],
-						'max' => (int) $this->_allData['basedamagemax'],
+						'min' => (int) $this->_allData['base_damage_min'],
+						'max' => (int) $this->_allData['base_damage_max'],
 					),
 				);
 				$item->stats = $stats;
@@ -357,7 +376,6 @@ class D3Up_Form_Record_Item extends Epic_Form
 	
 	protected $_allData = array();
 	public function process($data) {
-		$this->removeElement('attributes');
 		if($this->isValid($data)) {
 			$this->_allData = $data;
 			return $saved = $this->save();

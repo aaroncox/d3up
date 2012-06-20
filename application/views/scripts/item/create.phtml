@@ -25,11 +25,11 @@
 	.controls input {
 		padding: 10px;
 	}
-	#basedps-label, #basedps-element,
-	#basedamagemin-label, #basedamagemin-element,
-	#basedamagemax-label, #basedamagemax-element,
-	#basespeed-label, #basespeed-element,
-	#basearmor-label, #basearmor-element {
+	#base_dps-label, #base_dps-element,
+	#base_damage_min-label, #base_damage_min-element,
+	#base_damage_max-label, #base_damage_max-element,
+	#base_speed-label, #base_speed-element,
+	#base_armor-label, #base_armor-element {
 		display: none;
 	}
 </style>
@@ -176,6 +176,49 @@
 	td['wz-meteor'] = 'Reduces resource cost of Meteor by VVV Arcane Power';
 	td['wz-shock-pulse'] = 'Increases Shock Pulse damage by VVV%';
 	td['wz-spectral-blade'] = 'Increases Spectral Blade damage by VVV%'
+	switch($("#type").val()) {
+			case "belt":
+			case "boots":
+			case "bracers":
+			case "chest-armor":
+			case "cloak":
+			case "gloves":
+			case "helm":
+			case "pants":
+			case "mighty-belt":
+			case "shoulder":
+			case "spirit-stone":
+			case "voodoo-mask":
+			case "wizard-hat":
+			case "shield":
+				$("#base_dps-element, #base_damage_min-element, #base_damage_max-element, #base_speed-element, #base_dps-label, #base_damage_min-label, #base_damage_max-label, #base_speed-label").hide();
+				$("#base_armor-label, #base_armor-element").show();
+				break;
+			case "2h-mace":
+			case "2h-axe":
+			case "bow":
+			case "diabo":
+			case "crossbow":
+			case "2h-mighty":
+			case "polearm":
+			case "staff":
+			case "2h-sword":
+			case "axe":
+			case "ceremonial-knife":
+			case "hand-crossbow":
+			case "dagger":
+			case "fist-weapon":
+			case "mace":
+			case "mighty-weapon":
+			case "spear":
+			case "sword":
+			case "wand":
+				$("#base_armor-label, #base_armor-element").hide();
+				$("#base_dps-element, #base_damage_min-element, #base_damage_max-element, #base_speed-element, #base_dps-label, #base_damage_min-label, #base_damage_max-label, #base_speed-label").show();
+				break;
+			default:
+				break;
+		}
 	$("#name").keyup(function() {
 		$(".item-preview .top p").html($("#name").val());
 	});
@@ -203,10 +246,10 @@
 			case "voodoo-mask":
 			case "wizard-hat":
 			case "shield":
-				$("#basedps-element, #basedamagemin-element, #basedamagemax-element, #basespeed-element, #basedps-label, #basedamagemin-label, #basedamagemax-label, #basespeed-label").hide();
-				$("#basearmor-label, #basearmor-element").show();
+				$("#base_dps-element, #base_damage_min-element, #base_damage_max-element, #base_speed-element, #base_dps-label, #base_damage_min-label, #base_damage_max-label, #base_speed-label").hide();
+				$("#base_armor-label, #base_armor-element").show();
 				var stats = $(".item-preview .stats"),
-						input = $("#basearmor"),
+						input = $("#base_armor"),
 						bigStat = stats.find(".big-stat"),
 						bigLabel = stats.find(".stat-helper");
 				$(".stats-damage, .stats-speed").empty();
@@ -214,7 +257,7 @@
 				bigLabel.html("Armor");
 				input.keyup(function(event) {
 						bigStat.html(input.val());
-				});					
+				}).val('').trigger('keyup');					
 				break;
 			case "2h-mace":
 			case "2h-axe":
@@ -236,33 +279,38 @@
 			case "sword":
 			case "wand":
 				var stats = $(".item-preview .stats"),
-						input1 = $("#basedps"),
-						input2 = $("#basedamagemin"),
-						input3 = $("#basedamagemax"),
-						input4 = $("#basespeed"),
+						input1 = $("#base_dps"),
+						input2 = $("#base_damage_min"),
+						input3 = $("#base_damage_max"),
+						input4 = $("#base_speed"),
 						speedStat = $(".stats-speed"),
 						damageStat = $(".stats-damage"),
 						bigStat = stats.find(".big-stat"),
 						bigLabel = stats.find(".stat-helper");
 				stats.removeClass("stats-armor stats-dps").addClass("stats-dps");
 				bigLabel.html("Damage per Second");
-				$("#basearmor-label, #basearmor-element").hide();
-				$("#basedps-element, #basedamagemin-element, #basedamagemax-element, #basespeed-element, #basedps-label, #basedamagemin-label, #basedamagemax-label, #basespeed-label").show();
+				$("#base_armor-label, #base_armor-element").hide();
+				$("#base_dps-element, #base_damage_min-element, #base_damage_max-element, #base_speed-element, #base_dps-label, #base_damage_min-label, #base_damage_max-label, #base_speed-label").show();
 				input1.keyup(function(event) {
 						bigStat.html(input1.val());
-				});					
+				}).val('').trigger('keyup');					
 				input2.keyup(function(event) {
 						damageStat.html(input2.val() + "-" + input3.val() + " <span class='stat-helper'>Damage</span>");
-				});					
+				}).val('').trigger('keyup');					
 				input3.keyup(function(event) {
 						damageStat.html(input2.val() + "-" + input3.val() + " <span class='stat-helper'>Damage</span>");
-				});					
+				}).val('').trigger('keyup');					
 				input4.keyup(function(event) {
 						speedStat.html(input4.val() + " <span class='stat-helper'>Attacks per Second</span>");
-				});					
+				}).val('').trigger('keyup');					
 				break;
 			default:
-				add.html("");
+				console.log("Must be a ring!");
+				$(".stats .big-stat, .stats .stat-helper").html("");
+				$(".stats-speed").html("");
+				$(".stats-damage").html("");
+				$(".item-preview .stats").removeClass("stats-armor stats-dps");
+				$("#base_dps-element, #base_damage_min-element, #base_damage_max-element, #base_speed-element, #base_dps-label, #base_damage_min-label, #base_damage_max-label, #base_speed-label, #base_armor-label, #base_armor-element").hide();
 				break;
 		}
 
@@ -311,4 +359,14 @@
 			}
 		});
 	});
+	$("#attributes").trigger('change');
+	$("#quality").trigger('change');
+	$("#type").trigger('change');
+	$("#name").trigger("keyup");
+	<? if(isset($_POST)): ?>
+	var post = <?= json_encode($_POST) ?> ;
+	$("ul.attrs li input").each(function() {
+		$(this).val(post[$(this).attr("name")]);
+	});
+	<? endif ?>
 </script>
