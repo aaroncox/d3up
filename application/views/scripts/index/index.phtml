@@ -25,10 +25,13 @@
 				<li>
 					<?= $this->mLink($item) ?>
 					<? 
-						$attrs = array_keys($item->attrs->export());
-						$attrs = str_replace(array("-"), " ", $attrs);
-						foreach($attrs as $k => $v) {
-							$attrs[$k] = ucwords($v);
+						$attrs = array();
+						if($item->attrs) {
+							$attrs = array_keys($item->attrs->export());
+							$attrs = str_replace(array("-"), " ", $attrs);
+							foreach($attrs as $k => $v) {
+								$attrs[$k] = ucwords($v);
+							}							
 						}
 					?>
 					(<?= implode(" / ", $attrs) ?>)
