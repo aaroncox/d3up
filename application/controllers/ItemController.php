@@ -16,7 +16,7 @@ class ItemController extends Epic_Controller_Action
 			$result = $form->process($this->getRequest()->getParams());
 			if($result) {
 				$i = Epic_Mongo::db('item')->find($result['upserted']);
-				$this->_redirect("/item/".$i->id);				
+				$this->_redirect("/i/".$i->id);				
 			}
 		}
 	}
