@@ -63,8 +63,9 @@
 .d3-item .item p.stats {
 	margin-left:70px;
 }
-.d3-item .item p.stats .damage {
-	margin-top: 5px;
+.d3-item .item .stats-dps,
+.d3-item .item .stats-armor {
+	margin-bottom: 10px;
 }
 .d3-item .item ul.attrs{
 	font-size: 14px;
@@ -80,13 +81,17 @@
 	background-position: 0 5px;
 	overflow: hidden;
 }
-.d3-item .item ul.attrs li.is-socket {
+.d3-item .item ul.sockets > li {
+	color: #7979D4;
 	list-style: none;
 	background-image: url("/images/socket.png");
 	background-repeat: no-repeat;
 	background-position: -3px 0;
 	padding: 1px 30px;
 	line-height: 25px;
+}
+.d3-item .item ul.sockets > li select {
+	color: #000;
 }
 .d3-item .bottom {
 	background: url("/images/item-bottom.png") no-repeat scroll left top transparent;

@@ -250,6 +250,16 @@ class D3Up_Form_Record_Item extends Epic_Form
 		));
 		$this->attributes->setRegisterInArrayValidator(false);
 		
+		$this->addElement("select", "sockets", array(
+			'label' => 'Does this item have sockets?',
+			'multiOptions' => array(
+				null => '',
+				1 => '1 Socket',
+				2 => '2 Sockets',
+				3 => '3 Sockets',
+			)
+		));
+		
 		$this->addElement("text", "base_armor", array(
 			'label' => "What is the displayed Armor value?",
 			'validators' => array(
@@ -285,6 +295,28 @@ class D3Up_Form_Record_Item extends Epic_Form
 			)
 		));
 		
+		$this->addElement("text", "base_block_chance", array(
+			'label' => "What is the displayed Block Chance?",
+			'validators' => array(
+				array('Float')
+			)
+		));
+
+		$this->addElement("text", "base_block_amount_min", array(
+			'label' => "What is the displayed Minimum Block Value?",
+			'validators' => array(
+				array('Float')
+			)
+		));
+
+		$this->addElement("text", "base_block_amount_max", array(
+			'label' => "What is the displayed Maximum Block Value?",
+			'validators' => array(
+				array('Float')
+			)
+		));
+
+		
 		$this->setButtons(array("save" => "Create Item"));		
 	}
 	
@@ -300,8 +332,29 @@ class D3Up_Form_Record_Item extends Epic_Form
 		$item->quality = (int) $this->quality->getValue();
 		// Set the Type of the Item
 		$item->type = $this->type->getValue();
+		// Did we specify sockets? Lets set them up
+		if($socketCount = (int) $this->sockets->getValue()) {
+			$sockets = array();
+			for($i = 0; $i < $socketCount; $i++) {
+				$sockets[$i] = $this->_allData['socket'.$i];
+			}
+			$item->sockets = $sockets;
+		} else {
+			$item->sockets = null;
+		}
 		// Determine and set Item Specific Values (Armor vs Weapons)
 		switch($this->type->getValue()) {
+			case "shield":
+				$stats = array(
+					'armor' => (int) $this->_allData['base_armor'],
+					'block-chance' => (float) $this->_allData['base_block_chance'],
+					'block-amount' => array(
+						'min' => (int) $this->_allData['base_block_amount_min'],
+						'max' => (int) $this->_allData['base_block_amount_max'],
+					)
+				);
+				$item->stats = $stats;
+				break;
 			case "belt":
 			case "boots":
 			case "bracers":
@@ -315,7 +368,6 @@ class D3Up_Form_Record_Item extends Epic_Form
 			case "spirit-stone":
 			case "voodoo-mask":
 			case "wizard-hat":
-			case "shield":
 				$stats = array(
 					'armor' => (int) $this->_allData['base_armor'],
 				);
@@ -370,6 +422,10 @@ class D3Up_Form_Record_Item extends Epic_Form
 		}		
 		// Assign the attrs to the item
 		$item->attrs = $attrs;
+		// Do we have a user creating this? If so, add it.
+		if($profile = Epic_Auth::getInstance()->getProfile()) {
+			$item->_createdBy = $profile;
+		}
 		// Return the Item
 		return $item->save();
 	}

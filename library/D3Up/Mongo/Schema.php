@@ -14,6 +14,8 @@ class D3Up_Mongo_Schema extends Epic_Mongo_Schema {
 	protected $_classMap = array(
 		'record' => array(
 			'item' => 'D3Up_Mongo_Record_Item',
+			'hero' => 'D3Up_Mongo_Record_Hero',
+			'gearset' => 'D3Up_Mongo_Record_GearSet',
 		), 
 		'post' => array(
 			

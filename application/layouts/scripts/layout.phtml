@@ -4,6 +4,7 @@
 	<link rel="stylesheet" href="/css/style.css" type="text/css" charset="utf-8">	
 	<link rel="stylesheet" href="/css/select2.css" type="text/css" charset="utf-8">	
 	<link rel="stylesheet" href="/css/tooltip.css" type="text/css" charset="utf-8">	
+	<link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.21/themes/base/jquery-ui.css" type="text/css" charset="utf-8">	
 	<script type="text/javascript" src="http://code.jquery.com/jquery-1.7.2.js"></script>
 	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.18/jquery-ui.js"></script>
 	<script type="text/javascript" src="/js/select2.js"></script>
@@ -14,6 +15,15 @@
 		<ul id="navigation">
 			<li><a href="/">Home</a></li>
 			<li><a href="/item/create">Create Item</a></li>
+			<!-- 
+			<li><a href="/user/heroes">My Heroes</a></li>
+			<? if($profile = Epic_Auth::getInstance()->getProfile()): ?>
+				<li><a href="/user"><?= $profile->username ?></a></li>	
+				<li><a href="/user/logout">Logout</a></li>
+			<? else: ?>
+				<li><a href="/user/login">Login</a></li>
+			<? endif; ?>
+			-->
 		</ul>
 		<div id="main">
 			<div id="content">

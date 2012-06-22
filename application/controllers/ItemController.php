@@ -20,4 +20,22 @@ class ItemController extends Epic_Controller_Action
 			}
 		}
 	}
+	public function fetchAction() {
+		$profile = Epic_Auth::getInstance()->getProfile();
+		$type = $this->getRequest()->getParam('type');
+		if($profile && $type) {
+			$acceptable = Epic_Mongo::db('gearset')->getAcceptableTypes($type);
+			$query = array(
+				'_createdBy' => $profile->createReference(),
+				'type' => array('$in' => $acceptable),
+			);
+			$items = Epic_Mongo::db('item')->fetchAll($query);
+			$data = array();
+			foreach($items as $item) {
+				$data[$item->id] = $item->name." (".implode(",", array_keys($item->attrs->export())).")";
+			}
+			echo json_encode($data); exit;
+		}
+		return false;
+	}
 } // END class ItemController extends Epic_Controller_Action

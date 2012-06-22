@@ -1,0 +1,32 @@
+<style type="text/css" media="screen">
+	.single-item {
+		width: 430px;
+		margin: 20px auto;
+	}
+</style>
+<div class="single-item">
+	<?= $this->displayItem($this->record) ?>
+	<p style='text-align: center'>Link: <input type='text' value='http://d3up.com<?= $this->url(array('record' => $this->record), $this->record->route, true) ?>'/></p>
+	<p>Text Version of the Item:
+<? $p = new D3Up_View_Helper_DisplayItem() ?>
+<textarea style="text-align: left; width: 425px; height: 200px">
+<?= $this->record->name?> (<?= $p->_qualityMap[$this->record->quality] ?> <?= $p->prettyDisplay($this->record->type) ?>)
+<? if(isset($this->record->stats['dps'])): ?>
+<?= $this->record->stats['dps'] ?> dps
+<?= implode("-", $this->record->stats['damage']->export()) ?> damage
+<?= $this->record->stats['speed'] ?> attack speed
+<? elseif(isset($this->record->stats['armor'])): ?>
+<?= $this->record->stats['armor']?> Armor
+<? if(isset($this->record->stats['block-chance'])):?>
++<?= $this->record->stats['block-chance']?>% Block Chance
+<?= implode("-", $this->record->stats['block-amount']->export()) ?> Block Amount
+<? endif?>
+<? endif; ?>
+<? if($this->record->attrs): ?>
+<? foreach($this->record->attrs as $k => $v): ?>
+<?= $p->prettyDisplay($k, $v) ?> 
+<? endforeach ?>
+<? endif; ?>
+</textarea>
+	</p>
+</div>

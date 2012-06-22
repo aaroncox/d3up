@@ -1,0 +1,79 @@
+<style type="text/css">
+	#gear-change {
+		display: none;
+	}
+</style>
+<h2><?= $this->record->name ?> (<?= ucwords(str_replace("-", " ", $this->record->class)) ?>)</h2>
+<? foreach($this->record->equipment->getSlots() as $slot): ?>
+	<li>
+		<?= ucfirst($slot) ?>: 
+		<span id="equiped-<?= $slot ?>">
+			<? if($this->record->equipment[$slot]->id): ?>
+				<?= $this->mLink($this->record->equipment[$slot]) ?>
+			<? else: ?>
+				Nothing
+			<? endif ?>
+		</span>
+		<button id="change-<?= $slot ?>" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only gear-change" data-item-type="<?= $slot ?>" role="button" aria-disabled="false"><span class="ui-button-text">Change</span></button>
+	</li>
+<? endforeach ?>
+<div id="gear-change" title="Select an Item">
+	<p>Listed below are all of the items you've created that would fit into this equipment slot.</p>
+	<p>Please choose which item you'd like to equip.</p>
+	<fieldset>
+		<select name="available" id="available-gear" class="ui-widget-content ui-corner-all">
+		</select>
+	</fieldset>
+	</form>
+</div>
+<script type="text/javascript">
+	$(".gear-change").click(function() {
+		var itemType = $(this).data('item-type'),
+				itemDisplay = $("#equiped-" + itemType);
+		console.log("Requesting change dialog for " + $(this).data('item-type'));
+		$.ajax({
+			url: '/item/fetch/type/' + itemType,
+			cache: false,
+			dataType: 'json',
+			success: function(data) {
+				var gearSelect = $("#available-gear"),
+						gearDialog = $("#gear-change");
+				// Clear out the List to avoid confusion
+				gearSelect.html("");
+				// Add a "Nothing" option
+				gearSelect.append("<option value=''>Nothing</option>");
+				// Loop through all the JSON we recieved and append them as options
+				$.each(data, function(k,v) {
+					gearSelect.append("<option value='" + k + "'>" + v + "</option>");
+				});
+				gearDialog.dialog({
+					width: 500,
+					modal: true,
+					buttons: {
+						Equip: function() {	
+							var dialog = $(this);
+							$.ajax({
+								data: {
+									a: 'equip',
+									slot: itemType,
+									newItem: gearSelect.val()
+								}, 
+								success: function(data) {
+									if(gearSelect.val() != "") {
+										itemDisplay.html("<a href='/item/" + gearSelect.val() + "'>" + gearSelect.find(":selected").html() + "</a>");										
+									} else {
+										itemDisplay.html("Nothing");
+									}
+									dialog.dialog( "close" );									
+								}
+							});
+						},
+						Cancel: function() {
+							$(this).dialog( "close" );
+						}
+					}
+				});
+			}			
+		});
+	});
+</script>
