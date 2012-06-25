@@ -31,4 +31,19 @@
 		                                    'Elastic',
 		                                    'index/_pages.phtml'); ?>
 	</div>
+	<? if($this->heroes->count()): ?>
+	<div class="recent-heroes">
+		<h2>Recently Created Heroes</h2>
+		<ul>
+			<? foreach($this->heroes as $hero): ?>
+				<li>
+					<?= $this->mLink($hero) ?> (<?= ucwords(str_replace("-", " ", $hero->class))?>)
+				</li>
+			<? endforeach; ?>
+		</ul>
+		<?php echo $this->paginationControl($this->heroes,
+		                                    'Elastic',
+		                                    'index/_pages.phtml'); ?>
+	</div>
+	<? endif; ?>
 </div>

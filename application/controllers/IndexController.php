@@ -6,7 +6,6 @@ class IndexController extends Epic_Controller_Action {
   public function indexAction()
   {
 		$query = array(
-			
 		);
 		$sort = array(
 			'_created' => -1,
@@ -15,5 +14,9 @@ class IndexController extends Epic_Controller_Action {
 		$paginator = Zend_Paginator::factory($items);
 		$paginator->setCurrentPageNumber($this->getRequest()->getParam('page', 1))->setItemCountPerPage(20);
 		$this->view->items = $paginator;
+		$heroes = Epic_Mongo::db('hero')->fetchAll($query, $sort);	
+		$paginator = Zend_Paginator::factory($heroes);
+		$paginator->setCurrentPageNumber($this->getRequest()->getParam('page', 1))->setItemCountPerPage(20);
+		$this->view->heroes = $paginator;
 	}
 }

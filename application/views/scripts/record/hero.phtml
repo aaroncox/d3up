@@ -1,22 +1,48 @@
+<?
+	$profile = Epic_Auth::getInstance()->getProfile();
+?>
 <style type="text/css">
 	#gear-change {
 		display: none;
 	}
+	.equipment-table {
+		border: 1px solid #888;
+		width: 500px;
+	}
+	.equipment-table td {
+		padding: 5px;
+		vertical-align: middle;
+		width: 70px;
+	}
+	.equipment-table td.primary {
+		width: auto;
+	}
 </style>
 <h2><?= $this->record->name ?> (<?= ucwords(str_replace("-", " ", $this->record->class)) ?>)</h2>
-<? foreach($this->record->equipment->getSlots() as $slot): ?>
-	<li>
-		<?= ucfirst($slot) ?>: 
-		<span id="equiped-<?= $slot ?>">
-			<? if($this->record->equipment[$slot]->id): ?>
-				<?= $this->itemLink($this->record->equipment[$slot]) ?>
-			<? else: ?>
-				Nothing
-			<? endif ?>
-		</span>
-		<button id="change-<?= $slot ?>" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only gear-change" data-item-type="<?= $slot ?>" role="button" aria-disabled="false"><span class="ui-button-text">Change</span></button>
-	</li>
-<? endforeach ?>
+<table class="equipment-table">
+	<tr><th colspan="3">Equipped Gear</th></tr>
+	<? foreach($this->record->equipment->getSlots() as $slot): ?>
+		<tr>
+			<td>
+				<?= ucfirst($slot) ?>
+			</td>
+			<? if($profile && $profile->createReference() == $this->record->_createdBy->createReference()): ?>
+			<td>
+				<button id="change-<?= $slot ?>" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only gear-change" data-item-type="<?= $slot ?>" role="button" aria-disabled="false"><span class="ui-button-text">Change</span></button>
+			</td>
+			<? endif; ?>
+			<td class="primary">
+				<span class="equipped" id="equipped-<?= $slot ?>">
+					<? if($this->record->equipment[$slot]->id): ?>
+						<?= $this->itemLink($this->record->equipment[$slot]) ?>
+					<? else: ?>
+						Nothing
+					<? endif ?>
+				</span>
+			</td>
+		</tr>
+	<? endforeach ?>
+</table>
 <div id="gear-change" title="Select an Item">
 	<p>Listed below are all of the items you've created that would fit into this equipment slot.</p>
 	<p>Please choose which item you'd like to equip.</p>
@@ -29,7 +55,7 @@
 <script type="text/javascript">
 	$(".gear-change").click(function() {
 		var itemType = $(this).data('item-type'),
-				itemDisplay = $("#equiped-" + itemType);
+				itemDisplay = $("#equipped-" + itemType);
 		console.log("Requesting change dialog for " + $(this).data('item-type'));
 		$.ajax({
 			url: '/item/fetch/type/' + itemType,

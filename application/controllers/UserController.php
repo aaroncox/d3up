@@ -36,4 +36,12 @@ class UserController extends Epic_Controller_Action
 			$this->view->notLoggedIn = true;
 		}
 	}
+	public function itemsAction() {
+		$profile = Epic_Auth::getInstance()->getProfile();
+		if($profile) {
+			$items = $this->view->items = Epic_Mongo::db('item')->fetchAll(array('_createdBy' => $profile->createReference()));			
+		} else {
+			$this->view->notLoggedIn = true;
+		}
+	}
 } // END class UserController extends Epic_Controller_Action

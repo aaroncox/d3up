@@ -133,3 +133,6 @@ ul#navigation li {
 .select2-result {
 	color: #222;
 }
+.ui-button-text-only .ui-button-text {
+	padding: 0.1em 0.5em;
+}
