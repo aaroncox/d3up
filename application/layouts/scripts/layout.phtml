@@ -1,7 +1,7 @@
 <!doctype html>
 <head>
 	<title>D3Up.com</title>
-	<link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.21/themes/base/jquery-ui.css" type="text/css" charset="utf-8">	
+	<link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.19/themes/dot-luv/jquery-ui.css" type="text/css" />
 	<link rel="stylesheet" href="/css/style.css" type="text/css" charset="utf-8">	
 	<link rel="stylesheet" href="/css/select2.css" type="text/css" charset="utf-8">	
 	<link rel="stylesheet" href="/css/tooltip.css" type="text/css" charset="utf-8">	
@@ -16,14 +16,14 @@
 		<ul id="navigation">
 			<li><a href="/">Home</a></li>
 			<li><a href="/item/create">Create Item</a></li>
-			<li><a href="/user/heroes">My Heroes</a></li>
-			<li><a href="/user/items">My Items</a></li>
+			<!-- <li><a href="/user/heroes">My Heroes</a></li> -->
+			<!-- <li><a href="/user/items">My Items</a></li> -->
 			<? if($profile = Epic_Auth::getInstance()->getProfile()): ?>
 				<!-- <li><a href="/user"><?= $profile->username ?></a></li>	 -->
-				<li><a href="/user/logout">Logout</a></li>
+				<!-- <li><a href="/user/logout">Logout</a></li> -->
 			<? else: ?>
-				<li><a href="/user/login">Login</a></li>
-				<li><a href="/user/register">Register</a></li>
+				<!-- <li><a href="/user/login">Login</a></li> -->
+				<!-- <li><a href="/user/register">Register</a></li> -->
 			<? endif; ?>
 		</ul>
 		<div id="main">
