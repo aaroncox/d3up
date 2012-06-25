@@ -27,6 +27,11 @@
 <?= $p->prettyDisplay($k, $v) ?> 
 <? endforeach ?>
 <? endif; ?>
+<? if($this->record->sockets): ?>
+<? foreach($this->record->sockets as $k => $v): ?>
+[Socket] <?= ucwords(str_replace("_"," ", $v)) ?> (<?= $p->gemEffect($v, $this->record->type) ?>)
+<? endforeach ?>
+<? endif; ?>
 </textarea>
 	</p>
 </div>

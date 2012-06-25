@@ -130,3 +130,6 @@ ul#navigation li {
 	display: inline-block;
 	padding: 0px 15px;
 }
+.select2-result {
+	color: #222;
+}
