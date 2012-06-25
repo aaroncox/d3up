@@ -27,36 +27,40 @@ $(function() {
 		container.append(footer);
 		// Add the Item Type, Item Quality and class for quality to the content
 		content.append(itemLabel.addClass("quality-" + item.quality).append(itemQuality, ' ', itemType));
-		// Is this armor?
-		if(item.stats.armor > 0) {
-			// Add the Armor Value
-			itemPrimaryBigStat.html(item.stats.armor);
-			itemPrimaryHelper.html("Armor");
-			// Is this a shield?
-			if(item.stats['block-chance'] > 0) {
-				// Add the Block Values
-				itemExtraPercent.html(item.stats['block-chance'] + " <span class='stat-helper'>Chance to Block</span>");
-				itemExtraRange.html(item.stats['block-amount']['min'] + "-" + item.stats['block-amount']['max'] + " <span class='stat-helper'>Block Amount</span>");
-			} 
+		if(item.stats) {
+			// Is this armor?
+			if(item.stats.armor > 0) {
+				// Add the Armor Value
+				itemPrimaryBigStat.html(item.stats.armor);
+				itemPrimaryHelper.html("Armor");
+				// Is this a shield?
+				if(item.stats['block-chance'] > 0) {
+					// Add the Block Values
+					itemExtraPercent.html(item.stats['block-chance'] + " <span class='stat-helper'>Chance to Block</span>");
+					itemExtraRange.html(item.stats['block-amount']['min'] + "-" + item.stats['block-amount']['max'] + " <span class='stat-helper'>Block Amount</span>");
+				} 
+			}
+			// Is this a weapon?
+			if(item.stats.dps > 0) {
+				// Add the DPS Value, Attack Speed and damage range
+				itemPrimaryBigStat.html(item.stats.dps);
+				itemPrimaryHelper.html("Damage Per Second");
+				itemExtraPercent.html(item.stats['speed'] + " <span class='stat-helper'>Attacks per Second</span>");
+				itemExtraRange.html(item.stats['damage']['min'] + "-" + item.stats['damage']['max'] + " <span class='stat-helper'>Damage</span>");
+			}
+			// Add the BigStat and Helper to the primary
+			itemPrimary.append(itemPrimaryBigStat, itemPrimaryHelper);
+			// Append the collected data onto the content
+			content.append(itemPrimary, itemExtraPercent, itemExtraRange);			
 		}
-		// Is this a weapon?
-		if(item.stats.dps > 0) {
-			// Add the DPS Value, Attack Speed and damage range
-			itemPrimaryBigStat.html(item.stats.dps);
-			itemPrimaryHelper.html("Damage Per Second");
-			itemExtraPercent.html(item.stats['speed'] + " <span class='stat-helper'>Attacks per Second</span>");
-			itemExtraRange.html(item.stats['damage']['min'] + "-" + item.stats['damage']['max'] + " <span class='stat-helper'>Damage</span>");
+		if(item.attrs) {
+			// Loop through attrs and add
+			$.each(item.display.attrs, function(k, v) {
+				itemAttrs.append("<li>" + v + "</li>");
+			});
+			// Append Attrs to content
+			content.append(itemAttrs);			
 		}
-		// Add the BigStat and Helper to the primary
-		itemPrimary.append(itemPrimaryBigStat, itemPrimaryHelper);
-		// Append the collected data onto the content
-		content.append(itemPrimary, itemExtraPercent, itemExtraRange);
-		// Loop through attrs and add
-		$.each(item.display.attrs, function(k, v) {
-			itemAttrs.append("<li>" + v + "</li>");
-		});
-		// Append Attrs to content
-		content.append(itemAttrs);
 		// Do we have sockets?
 		if(item.sockets) {
 			$.each(item.display.sockets, function(k,v) {
