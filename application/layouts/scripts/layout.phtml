@@ -8,6 +8,7 @@
 	<script type="text/javascript" src="http://code.jquery.com/jquery-1.7.2.js"></script>
 	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.18/jquery-ui.js"></script>
 	<script type="text/javascript" src="/js/select2.js"></script>
+	<script type="text/javascript" src="/js/tooltip.js"></script>
 </head>
 <body>
 	<div id="wrapper">
@@ -15,15 +16,14 @@
 		<ul id="navigation">
 			<li><a href="/">Home</a></li>
 			<li><a href="/item/create">Create Item</a></li>
-			<!-- 
-			<li><a href="/user/heroes">My Heroes</a></li>
+			<!-- <li><a href="/user/heroes">My Heroes</a></li> -->
 			<? if($profile = Epic_Auth::getInstance()->getProfile()): ?>
-				<li><a href="/user"><?= $profile->username ?></a></li>	
+				<!-- <li><a href="/user"><?= $profile->username ?></a></li>	 -->
 				<li><a href="/user/logout">Logout</a></li>
 			<? else: ?>
-				<li><a href="/user/login">Login</a></li>
+				<!-- <li><a href="/user/login">Login</a></li>
+				<li><a href="/user/register">Register</a></li> -->
 			<? endif; ?>
-			-->
 		</ul>
 		<div id="main">
 			<div id="content">

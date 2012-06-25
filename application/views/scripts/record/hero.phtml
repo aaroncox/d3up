@@ -9,7 +9,7 @@
 		<?= ucfirst($slot) ?>: 
 		<span id="equiped-<?= $slot ?>">
 			<? if($this->record->equipment[$slot]->id): ?>
-				<?= $this->mLink($this->record->equipment[$slot]) ?>
+				<?= $this->itemLink($this->record->equipment[$slot]) ?>
 			<? else: ?>
 				Nothing
 			<? endif ?>
@@ -44,10 +44,16 @@
 				gearSelect.append("<option value=''>Nothing</option>");
 				// Loop through all the JSON we recieved and append them as options
 				$.each(data, function(k,v) {
-					gearSelect.append("<option value='" + k + "'>" + v + "</option>");
+					var item = $.parseJSON(v), 
+							option = $("<option/>");
+					option.attr("value", k);
+					option.attr("data-json", v);
+					option.html(item.name);
+					option.bindTooltip();
+					gearSelect.append(option);
 				});
 				gearDialog.dialog({
-					width: 500,
+					width: 800,
 					modal: true,
 					buttons: {
 						Equip: function() {	
@@ -60,7 +66,15 @@
 								}, 
 								success: function(data) {
 									if(gearSelect.val() != "") {
-										itemDisplay.html("<a href='/item/" + gearSelect.val() + "'>" + gearSelect.find(":selected").html() + "</a>");										
+										var itemLink = $("<a/>"),
+												itemSelected = gearSelect.find(":selected"),
+												itemData = $.parseJSON(itemSelected.attr("data-json"));
+										itemLink.attr("href", "/item/" + gearSelect.val());
+										itemLink.attr("data-json", JSON.stringify(itemData));
+										itemLink.addClass("quality-" + itemData.quality);
+										itemLink.html(itemData.name);
+										itemLink.bindTooltip();
+										itemDisplay.html(itemLink);										
 									} else {
 										itemDisplay.html("Nothing");
 									}

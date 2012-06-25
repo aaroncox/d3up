@@ -23,18 +23,7 @@
 		<ul>
 			<? foreach($this->items as $item): ?>
 				<li>
-					<?= $this->mLink($item) ?>
-					<? 
-						$attrs = array();
-						if($item->attrs) {
-							$attrs = array_keys($item->attrs->export());
-							$attrs = str_replace(array("-"), " ", $attrs);
-							foreach($attrs as $k => $v) {
-								$attrs[$k] = ucwords($v);
-							}							
-						}
-					?>
-					(<?= implode(" / ", $attrs) ?>)
+					<?= $this->itemLink($item) ?> (<?= ucwords(str_replace("-", " ", $item->type))?>)
 				</li>
 			<? endforeach; ?>
 		</ul>

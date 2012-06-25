@@ -19,6 +19,9 @@
 .quality-7 {
   color: #8BD442 !important;		
 }
+.d3up-tooltip {
+	z-index: 2000;
+}
 .d3-item {
   color: #FFFFFF;		
 	font-family: Arial,Helvetica,sans-serif;
@@ -63,8 +66,7 @@
 .d3-item .item p.stats {
 	margin-left:70px;
 }
-.d3-item .item .stats-dps,
-.d3-item .item .stats-armor {
+.d3-item .item .stats-primary {
 	margin-bottom: 10px;
 }
 .d3-item .item ul.attrs{

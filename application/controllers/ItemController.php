@@ -32,7 +32,7 @@ class ItemController extends Epic_Controller_Action
 			$items = Epic_Mongo::db('item')->fetchAll($query);
 			$data = array();
 			foreach($items as $item) {
-				$data[$item->id] = $item->name." (".implode(",", array_keys($item->attrs->export())).")";
+				$data[$item->id] = json_encode($item->cleanExport());
 			}
 			echo json_encode($data); exit;
 		}

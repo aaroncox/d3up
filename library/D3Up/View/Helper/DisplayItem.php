@@ -254,8 +254,11 @@ class D3Up_View_Helper_DisplayItem extends Zend_View_Helper_Abstract
 	public static function getAttributeMap() {
 		return static::$_attrMap;
 	}
-	public function gemEffect($name, $socket = null) {
-		switch($this->_item->type) {
+	public function gemEffect($name, $type = null) {
+		if($type == null) {
+			$type = $this->_item->type;
+		}
+		switch($type) {
 			case 'helm': 
 				$loc = 1;
 				break;
