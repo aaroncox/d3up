@@ -93,11 +93,12 @@ td { vertical-align: top; }
 }
 
 body {
-	background-color: #FFF;
+	color: #ECECEC;
+	background-color: #222;
 	font-family: 'Droid Sans', sans-serif;
 }
 a, a:visited, a:hover, a:active {
-	color: #5C879B;
+	color: #70B1D5;
 	text-decoration: none;
 }
 .inline-flow {
@@ -116,14 +117,14 @@ a, a:visited, a:hover, a:active {
 #header {
 	text-align: center;
 	font-size: 3em;
-	border-bottom: 1px solid #000;
+	border-bottom: 1px solid #777;
 }
 ul#navigation {
 	text-align: center;
-	padding: 0;
-	margin: 5px;
+	padding: 5px;
+	margin: 0;
 	list-style: none;
-	border-bottom: 1px solid #000;
+	border-bottom: 1px solid #777;
 }
 ul#navigation li {
 	display: inline-block;
