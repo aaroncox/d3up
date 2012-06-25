@@ -14,7 +14,7 @@ class UserController extends Epic_Controller_Action
 		$form = $this->view->form = new Epic_Auth_Form_Login();
 		$this->_handleForm($form);
 		if(Epic_Auth::getInstance()->getProfile()) {
-			$this->_redirect("/user");
+			$this->_redirect("/");
 		}
 	}
 	public function logoutAction() {
@@ -24,6 +24,9 @@ class UserController extends Epic_Controller_Action
 	public function registerAction() {
 		$form = $this->view->form = new D3Up_Auth_Form_Register();
 		$this->_handleForm($form);		
+		if(Epic_Auth::getInstance()->getProfile()) {
+			$this->_redirect("/");
+		}
 	}
 	public function forgotAction() {
 		
