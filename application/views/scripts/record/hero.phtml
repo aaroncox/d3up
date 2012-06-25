@@ -26,7 +26,7 @@
 			<td>
 				<?= ucfirst($slot) ?>
 			</td>
-			<? if($profile && $profile->createReference() == $this->record->_createdBy->createReference()): ?>
+			<? if($profile && $this->record->_createdBy->id && $profile->createReference() == $this->record->_createdBy->createReference()): ?>
 			<td>
 				<button id="change-<?= $slot ?>" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only gear-change" data-item-type="<?= $slot ?>" role="button" aria-disabled="false"><span class="ui-button-text">Change</span></button>
 			</td>
