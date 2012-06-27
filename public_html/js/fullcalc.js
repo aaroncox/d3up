@@ -211,7 +211,7 @@ $(function() {
 		
 		// Defensive Statistics
 		tabDefense.empty();
-		var mathArmor = stats['armor'] + attrs['strength'] + attrs['armor'],
+		var mathArmor = stats['armor'] + attrs['strength'] + ((attrs['armor']) ? attrs['armor'] : 0),
 				mathReduction = mathArmor / (50 * 60 + mathArmor),
 				mathAllResist = Math.round(attrs['resist-all'] + (attrs['intelligence'] / 10)),
 				mathResists = {
