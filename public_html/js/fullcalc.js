@@ -1,6 +1,19 @@
 $(function() {
-	function statLabel(k,v) {
-		return $("<li/>").html($("<span class='stat-helper'/>").html(k + ": ")).append(v);
+	var stats = [];
+	function statLabel(k,v,format,math) {
+		stats[k] = v;
+		switch(format) {
+			case "per":
+				v = v + "%";
+				break;
+			default:
+				break;
+		}
+		var data = $("<li/>").html($("<span class='stat-helper'/>").html(k + ": ")).append(v);
+		if(math) {
+			data.append(" (" + math + "%)");
+		}
+		return data;
 	}
 	$(".gear-change").click(function() {
 		var itemType = $(this).data('item-type'),
@@ -65,7 +78,7 @@ $(function() {
 			}			
 		});
 	});
-	function calc() {
+	function calc(target) {
 		// Gather ALL stats from all gear
 		var stats = [],
 				attrs = [],
@@ -201,9 +214,9 @@ $(function() {
 				mathLifeTotal = Math.round(mathLife + (mathLife * (mathLifePlus * 0.01)));
 		tabLife.empty();
 		tabLife.append(statLabel("Maximum Life", mathLifeTotal));
-		tabLife.append(statLabel("Total Life Bonus", mathLifePlus + "%"));
+		tabLife.append(statLabel("Total Life Bonus", mathLifePlus, 'per'));
 		tabLife.append(statLabel("Life per Second", (attrs['life-regen']) ? attrs['life-regen'] : 0));
-		tabLife.append(statLabel("Life Steal", (attrs['life-steal']) ? attrs['life-steal'] : 0 + "%"));
+		tabLife.append(statLabel("Life Steal", (attrs['life-steal']) ? attrs['life-steal'] : 0, 'per'));
 		tabLife.append(statLabel("Life per Kill", (attrs['life-kill']) ? attrs['life-kill'] : 0));
 		tabLife.append(statLabel("Life per Hit", (attrs['life-hit']) ? attrs['life-hit'] : 0));
 		tabLife.append(statLabel("Health Globe Healing Bonus", (attrs['health-globes']) ? attrs['health-globes'] : 0));
@@ -250,15 +263,15 @@ $(function() {
 		}
 		tabDefense.append(statLabel("Dodge Chance", (Math.round(mathDodgePercent*10)/10)));
 		tabDefense.append(statLabel("Damage Reduction", Math.round(mathReduction * 100 * 100)/100));
-		tabDefense.append(statLabel("Physical Resistance", mathResists['physical'] + " (" + mathResistsPercents['physical']+ "%)"));
-		tabDefense.append(statLabel("Cold Resistance", mathResists['cold'] + " (" + mathResistsPercents['cold']+ "%)"));
-		tabDefense.append(statLabel("Fire Resistance", mathResists['fire'] + " (" + mathResistsPercents['fire']+ "%)"));
-		tabDefense.append(statLabel("Lightning Resistance", mathResists['lightning'] + " (" + mathResistsPercents['lightning']+ "%)"));
-		tabDefense.append(statLabel("Poison Resistance", mathResists['poison'] + " (" + mathResistsPercents['poison']+ "%)"));
-		tabDefense.append(statLabel("Arcane/Holy Resistance", mathResists['arcane'] + " (" + mathResistsPercents['arcane']+ "%)"));
-		tabDefense.append(statLabel("Crowd Control Reduction", attrs['cc-reduce'] + "%"));
-		tabDefense.append(statLabel("Missile Damage Reduction", attrs['range-reduce'] + "%"));
-		tabDefense.append(statLabel("Melee Damage Reduction", attrs['melee-reduce'] + "%"));
+		tabDefense.append(statLabel("Physical Resistance", mathResists['physical'], '', mathResistsPercents['physical']));
+		tabDefense.append(statLabel("Cold Resistance", mathResists['cold'], '', mathResistsPercents['cold']));
+		tabDefense.append(statLabel("Fire Resistance", mathResists['fire'], '', mathResistsPercents['fire']));
+		tabDefense.append(statLabel("Lightning Resistance", mathResists['lightning'], '', mathResistsPercents['lightning']));
+		tabDefense.append(statLabel("Poison Resistance", mathResists['poison'], '', mathResistsPercents['poison']));
+		tabDefense.append(statLabel("Arcane/Holy Resistance", mathResists['arcane'], '', mathResistsPercents['arcane']));
+		tabDefense.append(statLabel("Crowd Control Reduction", attrs['cc-reduce'], 'per'));
+		tabDefense.append(statLabel("Missile Damage Reduction", attrs['range-reduce'], 'per'));
+		tabDefense.append(statLabel("Melee Damage Reduction", attrs['melee-reduce'], 'per'));
 		tabDefense.append(statLabel("Thorns", attrs['thorns']));
 		// Offensive Statistics
 		tabOffense.empty();
@@ -284,15 +297,95 @@ $(function() {
 		if(mathDamage) {
 			mathDps = (((mathDamage.min + mathDamage.max) / 2 + mathDamageAdd) * stats['speed']) * mathSpeedAdditive * (primaryAttr / 100 + 1) * 1 * ((mathCriticalHit / 100) * (mathCriticalHitDamage/100)+ 1);
 			mathDps = Math.round(mathDps * 100) / 100;			
-			tabOffense.append("((" + mathDamage.min + "+" + mathDamage.max + ")" + "/ 2 + " + mathDamageAdd + ") * " + stats['speed'] + ") * " + mathSpeedAdditive + ") * " + "(" + primaryAttr + "/ 100 + 1) * 1 * ((" + mathCriticalHit + "/ 100) * (" + mathCriticalHitDamage + "/100)+ 1)");
+			// tabOffense.append("((" + mathDamage.min + "+" + mathDamage.max + ")" + "/ 2 + " + mathDamageAdd + ") * " + stats['speed'] + ") * " + mathSpeedAdditive + ") * " + "(" + primaryAttr + "/ 100 + 1) * 1 * ((" + mathCriticalHit + "/ 100) * (" + mathCriticalHitDamage + "/100)+ 1)");
 		}
 		// (Average Weapon Damage + Non-Weapon Damage Bonuses) x Non-Weapon Attack Speed Modifier x Primary Damage Stat Modifier x Passive Skill Damage Bonus Modifier x Active Skill Damage Bonus Modifier x (Critical Damage Bonus x Critical Chance + 1)
 		tabOffense.append(statLabel("DPS", mathDps));
 		tabOffense.append(statLabel("Attacks per Second", mathSpeed));
 		tabOffense.append(statLabel("Critical Hit Chance", mathCriticalHit + '%'));
 		tabOffense.append(statLabel("Critical Hit Damage", mathCriticalHitDamage + '%'));
+		
 	}
 	calc();
 	$("#character").tabs();
 	// $(".calc-stats").tabs();
+	var compareTo = $("#compare-to");
+	$("#compared-slot").bind('change', function() {
+		var itemType = $(this).val();
+		$.ajax({
+			url: '/item/fetch/type/' + itemType,
+			cache: false,
+			dataType: 'json',
+			success: function(data) {
+				// Clear out the List to avoid confusion
+				compareTo.html("");
+				// Add a "Nothing" option
+				compareTo.append("<option value=''>Nothing</option>");
+				// Loop through all the JSON we recieved and append them as options
+				$.each(data, function(k,v) {
+					var item = $.parseJSON(v), 
+							option = $("<option/>");
+					option.attr("value", k);
+					option.attr("data-json", v);
+					option.html(item.name);
+					option.bindTooltip();
+					compareTo.append(option);
+				});
+			}
+		})
+	});
+	function calcDiff(currentStats, upgradeItem) {
+		var itemType = $("#compared-slot").find(":selected").val(),
+				currently = stats;
+				itemDisplay = $("#equipped-" + itemType);
+		var itemLink = $("<a/>"),
+				oldItem = itemDisplay.html();
+		itemLink.attr("href", "/i/" + upgradeItem.id);
+		itemLink.attr("data-json", JSON.stringify(upgradeItem));
+		itemLink.addClass("quality-" + upgradeItem.quality);
+		itemLink.html(upgradeItem.name);
+		itemLink.bindTooltip();
+		itemDisplay.html(itemLink);
+		// Calculate all the stats
+		calc();
+		// Get the new possible stats
+		var possible = {};
+		jQuery.extend(possible,stats);
+		// Put the old item back in place
+		itemDisplay.html(oldItem);
+		calc();
+		var items = $("<div/>").append($("<div/>").append("Old Item: ", oldItem), $("<div/>").append("New Item: ", itemLink)),
+				diff = $.diff(currentStats, possible),
+				table = $("<table/>");
+				header = $("<tr/>").append("<th>Stat</th><th>Old</th><th>New</th><th>Diff</th>");
+		table.append(header);
+		$.each(diff['mod'], function(k,v) {
+			var diffVal = Math.round((possible[k] - currentStats[k]) * 100) / 100;
+			var row = $("<tr/>");
+			row.append($("<td/>").html(k));
+			if(diffVal > 0) {
+				row.append($("<td class='neg'/>").html(currentStats[k]));
+				row.append($("<td class='pos'/>").html(possible[k]));				
+				row.append($("<td/>").html(diffVal).addClass("pos"));
+			} else {
+				row.append($("<td class='pos'/>").html(currentStats[k]));
+				row.append($("<td class='neg'/>").html(possible[k]));
+				row.append($("<td/>").html(diffVal).addClass("neg"));
+			}
+			table.append(row);
+		});
+		table.append("<tr><td colspan='10'><span class='pos'>Green = Increase</span> / <span class='neg'>Red = Decrease</span></td></tr>");
+		items.find("div a").each(function() {
+			$(this).bindTooltip();
+		});
+		$(".compare-diff").empty().append(items, table);
+	}
+	compareTo.bind('change', function() {
+		var statsCopy = {};
+		jQuery.extend(statsCopy,stats);
+		var itemType = $("#compared-slot").find(":selected").val(),
+				current = $("#equipped-" + itemType + " a").data("json"),
+				upgrade = $(this).find(":selected").data("json"),
+				diff = calcDiff(statsCopy, upgrade);
+	});	
 });

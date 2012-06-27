@@ -24,20 +24,74 @@
 		margin: 10px;
 		padding: 0;
 	}
+	.compare-diff {
+		padding: 10px;
+		font-size: 0.9em;
+	}
+	.compare-diff table {
+		width: 99%;
+		margin: 10px 0;
+	}
+	.compare-diff table th {
+		font-size: 1.1em;
+	}
+	.compare-diff table tr:first-child {
+		border-top: 1px solid #555;		
+	}
+	.compare-diff table tr {
+		border-bottom: 1px solid #555;
+	}
+	.compare-diff table th,
+	.compare-diff table td {
+		padding: 2px 5px;
+		text-align: center;
+	}
+	.compare-diff table th:first-child,
+	.compare-diff table td:first-child {
+		text-align: right;
+	}
+	.compare-diff .pos {
+		color: #0F0;
+	}
+	.compare-diff .neg {
+		color: #F00;
+	}
 </style>
 <h2><?= $this->record->name ?> (<?= ucwords(str_replace("-", " ", $this->record->class)) ?>)</h2>
 <div id="character" class="inline-flow" data-class="<?= $this->record->class ?>">
 	<ul>
 		<li><a href="#hero-gear">Gear</a></li>
 		<li><a href="#hero-skills">Skills</a></li>
-		<li><a href="#hero-compare">Gear Compare</a></li>
+		<? if($profile && $this->record->_createdBy && $profile->createReference() == $this->record->_createdBy->createReference()): ?>
+			<li><a href="#hero-compare">Gear Compare</a></li>
+		<? endif ?>
 	</ul>
 	<div id="hero-skills">
 		Not available yet!
 	</div>
+	<? if($profile && $this->record->_createdBy && $profile->createReference() == $this->record->_createdBy->createReference()): ?>
 	<div id="hero-compare">
-		Not available yet!
+		<p>This compare tool will compare what you are <b>currently wearing</b> to an item you select from the database.</p>
+		<p>Please select the <i>slot</i> of the item you wish to compare first, then select the item from your items from the drop down or type the ID # of the item in the text box next to it.</p>
+		<p>Which item slot should we compare?</p>
+		<select id="compared-slot">
+			<option></option>
+			<? foreach($this->record->equipment->getSlots() as $slot): ?>
+				<option class="slot" value="<?= $slot ?>"><?= ucfirst($slot) ?></option>
+			<? endforeach; ?>
+		</select>
+		<span id="compared-to"></span>
+		<p>And what should we compare it to?</p>
+		My Items: 
+		<select id="compare-to">
+		</select>
+		<!-- or
+		<input type="text" id="compare-to-id" style="width: 50px"/> (Enter Item ID) -->
+		<div class="compare-diff">
+		</div>
+		<p><b>Note</b>: Currently the item HAS to be created by you before you are able to compare them.</p>
 	</div>
+	<? endif; ?>
 	<table class="equipment-table" id="hero-gear">
 		<? foreach($this->record->equipment->getSlots() as $slot): ?>
 			<tr>
@@ -87,4 +141,4 @@
 	</fieldset>
 	</form>
 </div>
-<script type="text/javascript" src="/js/calc.js"></script>
+<script type="text/javascript" src="/js/fullcalc.js"></script>
