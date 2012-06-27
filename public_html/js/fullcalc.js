@@ -116,6 +116,9 @@ $(function() {
 									}
 								}
 								break;
+							// case "strength":
+							// 	console.log(v);
+							// 	break;
 							case "attack-speed":
 								switch(data.type) {
 									case "shield":
@@ -191,6 +194,18 @@ $(function() {
     // 67 in secondary stats
     // 127 in vitality
 		var primaryAttr = 0;
+		if(!attrs['dexterity']) {
+			attrs['dexterity'] = 0;
+		}
+		if(!attrs['vitality']) {
+			attrs['vitality'] = 0;
+		}
+		if(!attrs['strength']) {
+			attrs['strength'] = 0;
+		}
+		if(!attrs['intelligence']) {
+			attrs['intelligence'] = 0;
+		}
 		switch(heroClass) {
 			case "wizard":
 			case "witch-doctor":
@@ -257,7 +272,7 @@ $(function() {
 				}
 		tabDefense.append(statLabel("Armor", mathArmor));
 		tabDefense.append(statLabel("Block Amount", (stats['block-amount']) ? stats['block-amount'] : '~'));		
-		tabDefense.append(statLabel("Block Chance", (stats['block-chance']) ? stats['block-chance'] : 0 + '%'));
+		tabDefense.append(statLabel("Block Chance", ((stats['block-chance']) ? stats['block-chance'] : 0), 'per'));
 		// Calculate Dodge
 		var mathDodge = attrs['dexterity'],
 				mathDodgePercent = 0,
@@ -273,7 +288,7 @@ $(function() {
 				}
 			});
 		}
-		tabDefense.append(statLabel("Dodge Chance", (Math.round(mathDodgePercent*10)/10)));
+		tabDefense.append(statLabel("Dodge Chance", (Math.round(mathDodgePercent*10)/10), 'per'));
 		tabDefense.append(statLabel("Damage Reduction", Math.round(mathReduction * 100 * 100)/100));
 		tabDefense.append(statLabel("Physical Resistance", mathResists['physical'], '', mathResistsPercents['physical']));
 		tabDefense.append(statLabel("Cold Resistance", mathResists['cold'], '', mathResistsPercents['cold']));
@@ -282,8 +297,8 @@ $(function() {
 		tabDefense.append(statLabel("Poison Resistance", mathResists['poison'], '', mathResistsPercents['poison']));
 		tabDefense.append(statLabel("Arcane/Holy Resistance", mathResists['arcane'], '', mathResistsPercents['arcane']));
 		tabDefense.append(statLabel("Crowd Control Reduction", attrs['cc-reduce'], 'per'));
-		tabDefense.append(statLabel("Missile Damage Reduction", attrs['range-reduce'], 'per'));
-		tabDefense.append(statLabel("Melee Damage Reduction", attrs['melee-reduce'], 'per'));
+		tabDefense.append(statLabel("Missile Damage Reduction", ((attrs['range-reduce']) ? attrs['range-reduce'] : 0), 'per'));
+		tabDefense.append(statLabel("Melee Damage Reduction", ((attrs['melee-reduce']) ? attrs['melee-reduce'] : 0), 'per'));
 		tabDefense.append(statLabel("Thorns", attrs['thorns']));
 		// Offensive Statistics
 		tabOffense.empty();
@@ -293,8 +308,9 @@ $(function() {
 				mathDamageAvg = stats['dps'],
 				mathDamageAdd = 0,
 				mathDps = 0,
-				mathCriticalHit = attrs['critical-hit'] + 5,
+				mathCriticalHit = 5 + ((attrs['critical-hit']) ? attrs['critical-hit'] : 0),
 				mathCriticalHitDamage = attrs['critical-hit-damage'] + 50;
+		console.log(mathCriticalHit, attrs['critical-hit']);
 		if(attrs['max-damage'] && attrs['min-damage']) {
 			mathDamageAdd = (attrs['max-damage'] + attrs['min-damage']) / 2;
 		}
