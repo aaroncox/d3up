@@ -308,9 +308,9 @@ class D3Up_View_Helper_DisplayItem extends Zend_View_Helper_Abstract
 				$loc = 0;
 				break;
 		}
-		if(!isset(static::$_gemMap[$name][$loc])) {
-			throw new Exception('Unknown: ['.$name.']['.$loc.']');
-		}
+		// if(!isset(static::$_gemMap[$name][$loc])) {
+		// 	throw new Exception('Unknown: ['.$name.']['.$loc.']');
+		// }
 		return $effect = static::$_gemMap[$name][$loc];
 		return $this->prettyDisplay($effect[0], $effect[1]);
 	}
