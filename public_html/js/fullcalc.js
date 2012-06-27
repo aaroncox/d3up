@@ -1,3 +1,15 @@
+if (!Object.keys) {
+    Object.keys = function (obj) {
+        var keys = [],
+            k;
+        for (k in obj) {
+            if (Object.prototype.hasOwnProperty.call(obj, k)) {
+                keys.push(k);
+            }
+        }
+        return keys;
+    };
+}
 $(function() {
 	var stats = [];
 	function statLabel(k,v,format,math) {
@@ -302,8 +314,8 @@ $(function() {
 		// (Average Weapon Damage + Non-Weapon Damage Bonuses) x Non-Weapon Attack Speed Modifier x Primary Damage Stat Modifier x Passive Skill Damage Bonus Modifier x Active Skill Damage Bonus Modifier x (Critical Damage Bonus x Critical Chance + 1)
 		tabOffense.append(statLabel("DPS", mathDps));
 		tabOffense.append(statLabel("Attacks per Second", mathSpeed));
-		tabOffense.append(statLabel("Critical Hit Chance", mathCriticalHit + '%'));
-		tabOffense.append(statLabel("Critical Hit Damage", mathCriticalHitDamage + '%'));
+		tabOffense.append(statLabel("Critical Hit Chance", mathCriticalHit, 'per'));
+		tabOffense.append(statLabel("Critical Hit Damage", mathCriticalHitDamage, 'per'));
 		
 	}
 	calc();
@@ -359,25 +371,29 @@ $(function() {
 				table = $("<table/>");
 				header = $("<tr/>").append("<th>Stat</th><th>Old</th><th>New</th><th>Diff</th>");
 		table.append(header);
-		$.each(diff['mod'], function(k,v) {
-			var diffVal = Math.round((possible[k] - currentStats[k]) * 100) / 100;
-			var row = $("<tr/>");
-			row.append($("<td/>").html(k));
-			if(diffVal > 0) {
-				row.append($("<td class='neg'/>").html(currentStats[k]));
-				row.append($("<td class='pos'/>").html(possible[k]));				
-				row.append($("<td/>").html(diffVal).addClass("pos"));
-			} else {
-				row.append($("<td class='pos'/>").html(currentStats[k]));
-				row.append($("<td class='neg'/>").html(possible[k]));
-				row.append($("<td/>").html(diffVal).addClass("neg"));
-			}
-			table.append(row);
-		});
-		table.append("<tr><td colspan='10'><span class='pos'>Green = Increase</span> / <span class='neg'>Red = Decrease</span></td></tr>");
+		if(Object.keys(diff['mod']).length > 0) {
+			$.each(diff['mod'], function(k,v) {
+				var diffVal = Math.round((possible[k] - currentStats[k]) * 100) / 100;
+				var row = $("<tr/>");
+				row.append($("<td/>").html(k));
+				if(diffVal > 0) {
+					row.append($("<td class='neg'/>").html(currentStats[k]));
+					row.append($("<td class='pos'/>").html(possible[k]));				
+					row.append($("<td/>").html(diffVal).addClass("pos"));
+				} else {
+					row.append($("<td class='pos'/>").html(currentStats[k]));
+					row.append($("<td class='neg'/>").html(possible[k]));
+					row.append($("<td/>").html(diffVal).addClass("neg"));
+				}
+				table.append(row);
+			});
+			table.append("<tr><td colspan='10'><span class='pos'>Green = Increase</span> / <span class='neg'>Red = Decrease</span></td></tr>");
+		} else {
+			table.append("<tr><td colspan='10' style='text-align: center; font-weight: bold;'>These items are identical.</td></tr>");
+		}
 		items.find("div a").each(function() {
 			$(this).bindTooltip();
-		});
+		});			
 		$(".compare-diff").empty().append(items, table);
 	}
 	compareTo.bind('change', function() {
