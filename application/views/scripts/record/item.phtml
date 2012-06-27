@@ -6,7 +6,10 @@
 </style>
 <div class="single-item">
 	<?= $this->displayItem($this->record) ?>
-	<p style='text-align: center'>Link: <input type='text' value='http://d3up.com<?= $this->url(array('record' => $this->record), $this->record->route, true) ?>'/></p>
+	<p style='text-align: center'>
+		Link: <input type='text' value='http://d3up.com<?= $this->url(array('record' => $this->record), $this->record->route, true) ?>'/>
+		<a href="/i/<?= $this->record->id ?>/edit" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only gear-change"><span class="ui-button-text">Edit</span></a>
+	</p>
 	<p>Text Version of the Item:
 <? $p = new D3Up_View_Helper_DisplayItem() ?>
 <textarea style="text-align: left; width: 425px; height: 200px">

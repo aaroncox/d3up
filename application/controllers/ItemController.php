@@ -20,6 +20,20 @@ class ItemController extends Epic_Controller_Action
 			}
 		}
 	}
+	public function editAction() {
+		$id = $this->getRequest()->getParam("id");
+		if($id) {
+			$this->view->record = $item = Epic_Mongo::db('item')->fetchOne(array("id" => (int) $id));			
+			// Get Form for Item
+			$form = $this->view->form = $item->getEditForm();
+			if($this->getRequest()->isPost()) {
+				$result = $form->process($this->getRequest()->getParams());
+				if($result) {
+					$this->_redirect("/i/".$item->id);				
+				}
+			}
+		}		
+	}
 	public function fetchAction() {
 		$profile = Epic_Auth::getInstance()->getProfile();
 		$type = $this->getRequest()->getParam('type');

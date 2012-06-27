@@ -138,7 +138,7 @@
 	td['plus-gold-find'] = '+VVV% Extra Gold from Monsters';
 	td['plus-magic-find'] = 'VVV% Better Chance of finding Magic Items';
 	td['health-globes'] = 'Health Globes grant +VVV Life';
-	td['life-steal'] = 'VVV% of Damage Dealt is Converted to Life (Steal)';
+	td['life-steal'] = 'VVV% of Damage Dealt is Converted to Life';
 	td['life-kill'] = '+VVV Life after each Kill';
 	td['life-hit'] = 'Each hit adds +VVV Life';
 	td['level-reduce'] = 'Level Requirement reduced by VVV';
@@ -281,16 +281,16 @@
 				bigLabel.html("Armor");
 				input1.keyup(function(event) {
 						bigStat.html(input1.val());
-				}).val('').trigger('keyup');					
+				}).trigger('keyup');					
 				input2.keyup(function(event) {
 						damageStat.html(input2.val() + "-" + input3.val() + " <span class='stat-helper'>Block Amount</span>");
-				}).val('').trigger('keyup');					
+				}).trigger('keyup');					
 				input3.keyup(function(event) {
 						damageStat.html(input2.val() + "-" + input3.val() + " <span class='stat-helper'>Block Amount</span>");
-				}).val('').trigger('keyup');					
+				}).trigger('keyup');					
 				input4.keyup(function(event) {
 						speedStat.html(input4.val() + "% <span class='stat-helper'>Chance to Block</span>");
-				}).val('').trigger('keyup');							
+				}).trigger('keyup');							
 				break;
 			case "belt":
 			case "boots":
@@ -315,7 +315,7 @@
 				bigLabel.html("Armor");
 				input.keyup(function(event) {
 						bigStat.html(input.val());
-				}).val('').trigger('keyup');					
+				}).trigger('keyup');					
 				break;
 			case "2h-mace":
 			case "2h-axe":
@@ -350,16 +350,16 @@
 				$("#base_dps-element, #base_damage_min-element, #base_damage_max-element, #base_speed-element, #base_dps-label, #base_damage_min-label, #base_damage_max-label, #base_speed-label").show();
 				input1.keyup(function(event) {
 						bigStat.html(input1.val());
-				}).val('').trigger('keyup');					
+				}).trigger('keyup');					
 				input2.keyup(function(event) {
 						damageStat.html(input2.val() + "-" + input3.val() + " <span class='stat-helper'>Damage</span>");
-				}).val('').trigger('keyup');					
+				}).trigger('keyup');					
 				input3.keyup(function(event) {
 						damageStat.html(input2.val() + "-" + input3.val() + " <span class='stat-helper'>Damage</span>");
-				}).val('').trigger('keyup');					
+				}).trigger('keyup');					
 				input4.keyup(function(event) {
 						speedStat.html(input4.val() + " <span class='stat-helper'>Attacks per Second</span>");
-				}).val('').trigger('keyup');					
+				}).trigger('keyup');					
 				break;
 			default:
 				$(".stats .big-stat, .stats .stat-helper").html("");
@@ -437,7 +437,20 @@
 	$("#attributes").trigger('change');
 	$("#quality").trigger('change');
 	$("#itemType").trigger('change');
+	$("#sockets").trigger('change');
 	$("#name").trigger("keyup");
+	<? if($this->record->id): ?>
+	var post = <?= json_encode($this->record->cleanExport()) ?>;
+	$("ul.attrs li input").each(function() {
+		$(this).val(post['attrs'][$(this).attr("name")]);
+	});
+	$("ul.sockets li select").each(function() {
+		var idx = $(this).attr("name").replace("socket","");
+		$(this).val(post['sockets'][idx]);
+		$(this).trigger("change");
+		// $(this).parent().find(".select2-container span").html($(this));
+	});
+	<? endif ?>
 	<? if(!empty($_POST)): ?>
 	var post = <?= json_encode($_POST) ?>;
 	$("ul.attrs li input").each(function() {

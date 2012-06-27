@@ -7,7 +7,7 @@
  **/
 class D3Up_View_Helper_ItemLink extends Epic_View_Helper_MLink
 {
-	public function itemLink($item) {
+	public function itemLink($item, $params = array()) {
 		if(!$item instanceOf Epic_Mongo_Document) {
 			return false;
 		}
@@ -24,7 +24,7 @@ class D3Up_View_Helper_ItemLink extends Epic_View_Helper_MLink
 			'data-json' => json_encode($item->cleanExport()),
 			'href' => $this->view->url(array(
 				'record' => $item,
-			)+$urlParams, $item->route, true),
+			)+$urlParams, 'item', true),
 		), $linkText);
 	}
 } // END class D3Up_View_Helper_ItemLink extends Epic_View_Helper_MLink

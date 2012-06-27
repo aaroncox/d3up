@@ -162,6 +162,7 @@ class D3Up_Form_Record_Item extends Epic_Form
   public function __construct($options = null)
 	{
 		parent::__construct( $options );
+		
 	}
 
 	/**
@@ -173,7 +174,8 @@ class D3Up_Form_Record_Item extends Epic_Form
 	public function init()
 	{
 		parent::init();
-		
+		$item = $this->getItem();
+
 		$this->addElement("text", "name", array(
 			'required' => true,
 			'label' => 'Name',
@@ -182,7 +184,7 @@ class D3Up_Form_Record_Item extends Epic_Form
 			),
 		));
 
-		$this->addElement("select", "type", array(
+		$this->addElement("select", "itemType", array(
 			'required' => true,
 			'label' => 'What kind of item is this?',
 			'multiOptions' => array(
@@ -216,7 +218,7 @@ class D3Up_Form_Record_Item extends Epic_Form
 				'hand-crossbow' => 'Hand Crossbow',
 				'dagger' => 'Dagger',
 				'fist-weapon' => 'Fist Weapon',
-				'mace' => 'mace',
+				'mace' => 'Mace',
 				'mighty-weapon' => 'Mighty Weapon',
 				'spear' => 'Spear',
 				'sword' => 'Sword',
@@ -315,7 +317,52 @@ class D3Up_Form_Record_Item extends Epic_Form
 				array('Float')
 			)
 		));
+		
+		$attrs = array();
+		if($item->attrs) {
+			$attrs = $item->attrs->export();
+		}
+		
+		$sockets = null;
+		if($item->sockets) {
+			$sockets = count($item->sockets); 
+		}
 
+		$this->setDefaults(array(
+			'name' => $item->name,
+			'itemType' => $item->type,
+			'quality' => $item->quality,
+			'attributes' => array_keys($attrs),
+			'sockets' => $sockets,
+		));
+		
+		if(isset($item->stats['armor'])) {
+			$this->base_armor->setValue($item->stats['armor']);
+		}
+		if(isset($item->stats['block-chance'])) {
+			$this->base_block_chance->setValue($item->stats['block-chance']);
+		}
+		if(isset($item->stats['block-amount']) && is_array($item->stats['block-amount']->export())) {
+			$this->setDefaults(array(
+				'base_block_amount_min' => $item->stats['block-amount']['min'],
+				'base_block_amount_max' => $item->stats['block-amount']['max'],				
+			));
+		}
+		
+		if(isset($item->stats['dps'])) {
+			$this->base_dps->setValue($item->stats['dps']);
+		}
+		if(isset($item->stats['damage']) && is_array($item->stats['damage']->export())) {
+			$this->setDefaults(array(
+				'base_damage_min' => $item->stats['damage']['min'],
+				'base_damage_max' => $item->stats['damage']['max'],				
+			));
+		}
+		if(isset($item->stats['speed'])) {
+			$this->base_speed->setValue($item->stats['speed']);
+		}
+		// echo "<pre>";
+		// var_dump($item->export()); 
 		
 		$this->setButtons(array("save" => "Create Item"));		
 	}
@@ -331,7 +378,7 @@ class D3Up_Form_Record_Item extends Epic_Form
 		// Set the Quality of the Item
 		$item->quality = (int) $this->quality->getValue();
 		// Set the Type of the Item
-		$item->type = $this->type->getValue();
+		$item->type = $this->itemType->getValue();
 		// Did we specify sockets? Lets set them up
 		if($socketCount = (int) $this->sockets->getValue()) {
 			$sockets = array();
@@ -343,7 +390,7 @@ class D3Up_Form_Record_Item extends Epic_Form
 			$item->sockets = null;
 		}
 		// Determine and set Item Specific Values (Armor vs Weapons)
-		switch($this->type->getValue()) {
+		switch($this->itemType->getValue()) {
 			case "shield":
 				$stats = array(
 					'armor' => (int) $this->_allData['base_armor'],
@@ -414,7 +461,7 @@ class D3Up_Form_Record_Item extends Epic_Form
 				if(is_float($value)) {
 					$attrs[$key] = (float) $value;						
 				} elseif(is_numeric($value)) {
-					$attrs[$key] = (int) $value;
+					$attrs[$key] = (float) $value;
 				} else {
 					$attrs[$key] = $value;
 				}

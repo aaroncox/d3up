@@ -12,6 +12,15 @@ class RecordController extends Epic_Controller_Action
 	}
 	public function indexAction() {		
 	}
+	public function editAction() {
+		$record = $this->getRequest()->getParam('record');
+		switch($record->_type) {
+			case "item":
+				$this->_redirect("/item/edit/id/".$record->id);
+				break;
+		}
+		var_dump($record); exit;
+	}
 	public function viewAction() {
 		$record = $this->getRecord();
 		// NOTE - This logic kinda sucks, but it works for now (Mainly AJAX handling)

@@ -70,11 +70,13 @@
 	margin-bottom: 10px;
 }
 .d3-item .item ul.attrs{
-	font-size: 14px;
 	list-style: none;
 	color: #7979D4;
 	margin: 15px 5px;
 	padding: 0;
+}
+.d3-item .item ul {
+	font-size: 16px;
 }
 .d3-item .item ul.attrs li {
 	padding: 1px 15px;

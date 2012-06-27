@@ -5,9 +5,11 @@
 	#gear-change {
 		display: none;
 	}
+	#character {
+		width: 500px;
+	}
 	.equipment-table {
 		border: 1px solid #888;
-		width: 500px;
 	}
 	.equipment-table td {
 		padding: 5px;
@@ -17,32 +19,65 @@
 	.equipment-table td.primary {
 		width: auto;
 	}
+	.calc-stats ul {
+		list-style: none;
+		margin: 10px;
+		padding: 0;
+	}
 </style>
 <h2><?= $this->record->name ?> (<?= ucwords(str_replace("-", " ", $this->record->class)) ?>)</h2>
-<table class="equipment-table">
-	<tr><th colspan="3">Equipped Gear</th></tr>
-	<? foreach($this->record->equipment->getSlots() as $slot): ?>
-		<tr>
-			<td>
-				<?= ucfirst($slot) ?>
-			</td>
-			<? if($profile && $this->record->_createdBy && $profile->createReference() == $this->record->_createdBy->createReference()): ?>
-			<td>
-				<button id="change-<?= $slot ?>" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only gear-change" data-item-type="<?= $slot ?>" role="button" aria-disabled="false"><span class="ui-button-text">Change</span></button>
-			</td>
-			<? endif; ?>
-			<td class="primary">
-				<span class="equipped" id="equipped-<?= $slot ?>">
-					<? if($this->record->equipment[$slot]->id): ?>
-						<?= $this->itemLink($this->record->equipment[$slot]) ?>
-					<? else: ?>
-						Nothing
-					<? endif ?>
-				</span>
-			</td>
-		</tr>
-	<? endforeach ?>
-</table>
+<div id="character" class="inline-flow" data-class="<?= $this->record->class ?>">
+	<ul>
+		<li><a href="#hero-gear">Gear</a></li>
+		<li><a href="#hero-skills">Skills</a></li>
+		<li><a href="#hero-compare">Gear Compare</a></li>
+	</ul>
+	<div id="hero-skills">
+		Not available yet!
+	</div>
+	<div id="hero-compare">
+		Not available yet!
+	</div>
+	<table class="equipment-table" id="hero-gear">
+		<? foreach($this->record->equipment->getSlots() as $slot): ?>
+			<tr>
+				<td>
+					<?= ucfirst($slot) ?>
+				</td>
+				<? if($profile && $this->record->_createdBy && $profile->createReference() == $this->record->_createdBy->createReference()): ?>
+				<td>
+					<button id="change-<?= $slot ?>" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only gear-change" data-item-type="<?= $slot ?>" role="button" aria-disabled="false"><span class="ui-button-text">Change</span></button>
+				</td>
+				<? endif; ?>
+				<td class="primary">
+					<span class="equipped" id="equipped-<?= $slot ?>">
+						<? if($this->record->equipment[$slot]->id): ?>
+							<?= $this->itemLink($this->record->equipment[$slot]) ?>
+						<? else: ?>
+							Nothing
+						<? endif ?>
+					</span>
+				</td>
+			</tr>
+		<? endforeach ?>
+	</table>
+</div>
+<div class="inline-flow" style="width: 440px">
+	<div class="calc-stats">
+		<!-- <ul>
+			<li><a href="#stats-base">Stats</a></li>
+			<li><a href="#stats-offense">Offense</a></li>
+			<li><a href="#stats-defense">Defense</a></li>
+			<li><a href="#stats-life">Life</a></li>
+			<li><a href="#stats-misc">Misc</a></li>
+		</ul> -->
+		<ul id="stats-offense"><li>Damage</li></ul>
+		<ul id="stats-base"><li>base</li></ul>
+		<ul id="stats-life"><li>life</li></ul>
+		<ul id="stats-defense"><li>armor</li></ul>
+		<ul id="stats-misc"></ul>
+	</div>
+</div>
 <div id="gear-change" title="Select an Item">
 	<p>Listed below are all of the items you've created that would fit into this equipment slot.</p>
 	<p>Please choose which item you'd like to equip.</p>
@@ -52,68 +87,4 @@
 	</fieldset>
 	</form>
 </div>
-<script type="text/javascript">
-	$(".gear-change").click(function() {
-		var itemType = $(this).data('item-type'),
-				itemDisplay = $("#equipped-" + itemType);
-		console.log("Requesting change dialog for " + $(this).data('item-type'));
-		$.ajax({
-			url: '/item/fetch/type/' + itemType,
-			cache: false,
-			dataType: 'json',
-			success: function(data) {
-				var gearSelect = $("#available-gear"),
-						gearDialog = $("#gear-change");
-				// Clear out the List to avoid confusion
-				gearSelect.html("");
-				// Add a "Nothing" option
-				gearSelect.append("<option value=''>Nothing</option>");
-				// Loop through all the JSON we recieved and append them as options
-				$.each(data, function(k,v) {
-					var item = $.parseJSON(v), 
-							option = $("<option/>");
-					option.attr("value", k);
-					option.attr("data-json", v);
-					option.html(item.name);
-					option.bindTooltip();
-					gearSelect.append(option);
-				});
-				gearDialog.dialog({
-					width: 800,
-					modal: true,
-					buttons: {
-						Equip: function() {	
-							var dialog = $(this);
-							$.ajax({
-								data: {
-									a: 'equip',
-									slot: itemType,
-									newItem: gearSelect.val()
-								}, 
-								success: function(data) {
-									if(gearSelect.val() != "") {
-										var itemLink = $("<a/>"),
-												itemSelected = gearSelect.find(":selected"),
-												itemData = $.parseJSON(itemSelected.attr("data-json"));
-										itemLink.attr("href", "/item/" + gearSelect.val());
-										itemLink.attr("data-json", JSON.stringify(itemData));
-										itemLink.addClass("quality-" + itemData.quality);
-										itemLink.html(itemData.name);
-										itemLink.bindTooltip();
-										itemDisplay.html(itemLink);										
-									} else {
-										itemDisplay.html("Nothing");
-									}
-									dialog.dialog( "close" );									
-								}
-							});
-						},
-						Cancel: function() {
-							$(this).dialog( "close" );
-						}
-					}
-				});
-			}			
-		});
-	});
-</script>
+<script type="text/javascript" src="/js/calc.js"></script>

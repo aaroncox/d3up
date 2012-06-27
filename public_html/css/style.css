@@ -133,6 +133,48 @@ ul#navigation li {
 .select2-result {
 	color: #222;
 }
+.ui-widget {
+    font-size: 1.0em;
+}
 .ui-button-text-only .ui-button-text {
 	padding: 0.1em 0.5em;
+}
+.calc-stats .stat-helper {
+	color: #B18135;
+}
+.create-form {
+	padding: 20px;
+	display: inline-block;
+}
+.create-form select {
+	width: 400px;
+}
+.create-form dt {
+	margin: 10px;
+}
+.item-preview {
+	float: right;
+	margin-top: 50px;
+	display: inline-block;
+}
+.item-preview ul.attrs input {
+	margin: 2px 5px;
+	width: 30px;
+}
+.controls {
+	text-align: center;
+	padding: 20px;
+}
+.controls input {
+	padding: 10px;
+}
+#base_dps-label, #base_dps-element,
+#base_damage_min-label, #base_damage_min-element,
+#base_damage_max-label, #base_damage_max-element,
+#base_block_chance-label, #base_block_chance-element,
+#base_block_amount_min-label, #base_block_amount_min-element,
+#base_block_amount_max-label, #base_block_amount_max-element,
+#base_speed-label, #base_speed-element,
+#base_armor-label, #base_armor-element {
+	display: none;
 }
