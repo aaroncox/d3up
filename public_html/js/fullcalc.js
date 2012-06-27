@@ -285,6 +285,7 @@ $(function() {
 		mathDps = Math.round(mathDps * 100) / 100;
 		// (Average Weapon Damage + Non-Weapon Damage Bonuses) x Non-Weapon Attack Speed Modifier x Primary Damage Stat Modifier x Passive Skill Damage Bonus Modifier x Active Skill Damage Bonus Modifier x (Critical Damage Bonus x Critical Chance + 1)
 		tabOffense.append(statLabel("DPS", mathDps));
+		tabOffense.append("(" + mathDamageAvg + " + " + mathDamageAdd + ") * " + mathSpeedAdditive + " * " + "(" + primaryAttr + "/ 100 + 1) * 1 * ((" + mathCriticalHit + "/ 100) * (" + mathCriticalHitDamage + "/100)+ 1)");
 		tabOffense.append(statLabel("Attacks per Second", mathSpeed));
 		tabOffense.append(statLabel("Critical Hit Chance", mathCriticalHit + '%'));
 		tabOffense.append(statLabel("Critical Hit Damage", mathCriticalHitDamage + '%'));
