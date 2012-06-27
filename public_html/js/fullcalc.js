@@ -281,11 +281,11 @@ $(function() {
 		// Calculate the DPS
 		var preCrit = mathDamageAvg * mathSpeed * (attrs['intelligence'] / 100);
 		var critAddition = (preCrit * 1.74) * 0.325;
-		mathDps = (mathDamageAvg + mathDamageAdd) * mathSpeedAdditive * (primaryAttr / 100 + 1) * 1 * ((mathCriticalHit / 100) * (mathCriticalHitDamage/100)+ 1);
+		mathDps = (((mathDamage.min + mathDamage.max) / 2 + mathDamageAdd) * stats['speed']) * mathSpeedAdditive * (primaryAttr / 100 + 1) * 1 * ((mathCriticalHit / 100) * (mathCriticalHitDamage/100)+ 1);
 		mathDps = Math.round(mathDps * 100) / 100;
 		// (Average Weapon Damage + Non-Weapon Damage Bonuses) x Non-Weapon Attack Speed Modifier x Primary Damage Stat Modifier x Passive Skill Damage Bonus Modifier x Active Skill Damage Bonus Modifier x (Critical Damage Bonus x Critical Chance + 1)
 		tabOffense.append(statLabel("DPS", mathDps));
-		tabOffense.append("(" + mathDamageAvg + " + " + mathDamageAdd + ") * " + mathSpeedAdditive + " * " + "(" + primaryAttr + "/ 100 + 1) * 1 * ((" + mathCriticalHit + "/ 100) * (" + mathCriticalHitDamage + "/100)+ 1)");
+		tabOffense.append("((" + mathDamage.min + "+" + mathDamage.max + ")" + "/ 2 + " + mathDamageAdd + ") * " + stats['speed'] + ") * " + mathSpeedAdditive + ") * " + "(" + primaryAttr + "/ 100 + 1) * 1 * ((" + mathCriticalHit + "/ 100) * (" + mathCriticalHitDamage + "/100)+ 1)");
 		tabOffense.append(statLabel("Attacks per Second", mathSpeed));
 		tabOffense.append(statLabel("Critical Hit Chance", mathCriticalHit + '%'));
 		tabOffense.append(statLabel("Critical Hit Damage", mathCriticalHitDamage + '%'));
