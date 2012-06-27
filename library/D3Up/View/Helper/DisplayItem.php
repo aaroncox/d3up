@@ -407,7 +407,8 @@ class D3Up_View_Helper_DisplayItem extends Zend_View_Helper_Abstract
 		if(!empty($this->_item->sockets)) {
 			$socketHtml = '';
 			foreach($this->_item->sockets as $socket) {
-				$socketHtml .= $this->view->htmlTag("li", array('class' => 'gem_'.$socket), $this->gemEffect($socket));
+				$effect = $this->gemEffect($socket);
+				$socketHtml .= $this->view->htmlTag("li", array('class' => 'gem_'.$socket), $this->prettyDisplay($effect[0], $effect[1]));
 			}
 			$html .= $this->view->htmlTag("ul", array('class' => 'sockets'), $socketHtml);
 		}
