@@ -253,7 +253,7 @@
 				break;
 		}
 	$("#name").keyup(function() {
-		$(".item-preview .top p").html($("#name").val());
+		$(".item-preview .top p").html(document.createTextNode($("#name").val()));
 	});
 	$("#itemType").select2({
 		placeholder: 'Choose the item type...',
