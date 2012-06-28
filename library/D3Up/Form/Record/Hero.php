@@ -61,6 +61,7 @@ class D3Up_Form_Record_Hero extends Epic_Form
 			'validators' => array(
 				array('StringLength', false, array(2, 50)),
 			),
+			'filters' => array('StripTags'),
 		));
 
 		$this->addElement("select", "class", array(
