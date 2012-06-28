@@ -56,6 +56,11 @@
 	.compare-diff .neg {
 		color: #F00;
 	}
+	.stat-dps {
+		font-size: 24px;
+		font-weight: bold;
+		margin: 10px 0;
+	}
 </style>
 <h2><?= $this->record->name ?> (<?= ucwords(str_replace("-", " ", $this->record->class)) ?>)</h2>
 <div id="character" class="inline-flow" data-class="<?= $this->record->class ?>">
@@ -104,7 +109,7 @@
 				</td>
 				<? endif; ?>
 				<td class="primary">
-					<span class="equipped" id="equipped-<?= $slot ?>">
+					<span class="equipped" id="equipped-<?= $slot ?>" data-slot="<?= $slot ?>">
 						<? if($this->record->equipment[$slot]->id): ?>
 							<?= $this->itemLink($this->record->equipment[$slot]) ?>
 						<? else: ?>
@@ -117,7 +122,7 @@
 	</table>
 </div>
 <div class="inline-flow" style="width: 440px">
-	<div class="calc-stats">
+	<div class="calc-stats ui-widget ui-widget-content ui-corner-all">
 		<!-- <ul>
 			<li><a href="#stats-base">Stats</a></li>
 			<li><a href="#stats-offense">Offense</a></li>

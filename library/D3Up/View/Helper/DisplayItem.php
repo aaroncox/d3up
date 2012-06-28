@@ -119,6 +119,7 @@ class D3Up_View_Helper_DisplayItem extends Zend_View_Helper_Abstract
 		'vitality' => '+[v] Vitality',
 		'dexterity' => '+[v] Dexterity',
 		// Defensive Stats
+		'damage' => '+[v] Damage',
 		'resist-all' => '+[v] Resistance to All Elements',
 		'armor' => '+[v] Armor',
 		'plus-life' => '+[v]% Life',

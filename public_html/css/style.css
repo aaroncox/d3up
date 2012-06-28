@@ -92,6 +92,16 @@ td { vertical-align: top; }
   h2, h3 { page-break-after: avoid; }
 }
 
+.inline-flow {
+  display: -moz-inline-stack;
+  display: inline-block;
+  text-align: left;
+  vertical-align: top;
+  zoom: 1;
+  *display: inline;
+  _height: auto;
+}
+
 body {
 	color: #ECECEC;
 	background-color: #222;
@@ -100,15 +110,6 @@ body {
 a, a:visited, a:hover, a:active {
 	color: #70B1D5;
 	text-decoration: none;
-}
-.inline-flow {
-	display: -moz-inline-stack;
-	display: inline-block;
-	text-align: left;
-	vertical-align: top;
-	zoom: 1;
-	*display: inline;
-	_height: auto;
 }
 #wrapper {
 	width: 960px;
