@@ -182,6 +182,7 @@ class D3Up_Form_Record_Item extends Epic_Form
 			'validators' => array(
 				array('StringLength', false, array(2, 50)),
 			),
+			'filters' => array('StripTags'),
 		));
 
 		$this->addElement("select", "itemType", array(
@@ -227,7 +228,8 @@ class D3Up_Form_Record_Item extends Epic_Form
 				'source' => 'Source',
 				'quiver' => 'Quiver',
 				'shield' => 'Shield',
-			)
+			),
+			'filters' => array('StripTags'),
 		));
 		
 		$this->addElement("select", "quality", array(
@@ -242,13 +244,15 @@ class D3Up_Form_Record_Item extends Epic_Form
 			 	5 => 'Rare',
 			 	6 => 'Legendary',
 			 	7 => 'Set',
-			)
+			),
+			'filters' => array('StripTags'),
 		));
 		
 		$this->addElement("select", "attributes", array(
 			'label' => 'What types of stats are on this item?',
 			'multiple' => true,
 			'multiOptions' => array(null => '') + $this->_attributes,
+			'filters' => array('StripTags'),
 		));
 		$this->attributes->setRegisterInArrayValidator(false);
 		
@@ -259,63 +263,72 @@ class D3Up_Form_Record_Item extends Epic_Form
 				1 => '1 Socket',
 				2 => '2 Sockets',
 				3 => '3 Sockets',
-			)
+			),
+			'filters' => array('StripTags'),
 		));
 		
 		$this->addElement("text", "base_armor", array(
 			'label' => "What is the displayed Armor value?",
 			'validators' => array(
 				array('Float')
-			)
+			),
+			'filters' => array('StripTags'),
 		));
 
 		$this->addElement("text", "base_dps", array(
 			'label' => "What is the displayed DPS?",
 			'validators' => array(
 				array('Float')
-			)
+			),
+			'filters' => array('StripTags'),
 		));
 
 		$this->addElement("text", "base_damage_min", array(
 			'label' => "What is the displayed Minimum Damage?",
 			'validators' => array(
 				array('Float')
-			)
+			),
+			'filters' => array('StripTags'),
 		));
 
 		$this->addElement("text", "base_damage_max", array(
 			'label' => "What is the displayed Maximum Damage?",
 			'validators' => array(
 				array('Float')
-			)
+			),
+			'filters' => array('StripTags'),
 		));
 
 		$this->addElement("text", "base_speed", array(
 			'label' => "What is the displayed Attack Speed?",
 			'validators' => array(
 				array('Float')
-			)
+			),
+			'filters' => array('StripTags'),
 		));
 		
 		$this->addElement("text", "base_block_chance", array(
 			'label' => "What is the displayed Block Chance?",
 			'validators' => array(
 				array('Float')
-			)
+			),
+			'filters' => array('StripTags'),
 		));
 
 		$this->addElement("text", "base_block_amount_min", array(
 			'label' => "What is the displayed Minimum Block Value?",
 			'validators' => array(
 				array('Float')
-			)
+			),
+			'filters' => array('StripTags'),
 		));
 
 		$this->addElement("text", "base_block_amount_max", array(
 			'label' => "What is the displayed Maximum Block Value?",
 			'validators' => array(
 				array('Float')
-			)
+			),
+			'filters' => array('StripTags'),
 		));
 		
 		$attrs = array();
