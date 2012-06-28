@@ -269,7 +269,7 @@ class D3Up_Form_Record_Item extends Epic_Form
 		$this->addElement("text", "base_armor", array(
 			'label' => "What is the displayed Armor value?",
 			'validators' => array(
-				array('Float'),
+				array(new D3Up_Validate_Double()),
 				array('LessThan', false, array('max' => 10000)),
 			),
 			'filters' => array('StripTags'),
@@ -278,7 +278,7 @@ class D3Up_Form_Record_Item extends Epic_Form
 		$this->addElement("text", "base_dps", array(
 			'label' => "What is the displayed DPS?",
 			'validators' => array(
-				array('Float'),
+				array(new D3Up_Validate_Double()),
 				array('LessThan', false, array('max' => 10000)),
 			),
 			'filters' => array('StripTags'),
@@ -287,7 +287,7 @@ class D3Up_Form_Record_Item extends Epic_Form
 		$this->addElement("text", "base_damage_min", array(
 			'label' => "What is the displayed Minimum Damage?",
 			'validators' => array(
-				array('Float'),
+				array(new D3Up_Validate_Double()),
 				array('LessThan', false, array('max' => 10000)),
 			),
 			'filters' => array('StripTags'),
@@ -296,7 +296,7 @@ class D3Up_Form_Record_Item extends Epic_Form
 		$this->addElement("text", "base_damage_max", array(
 			'label' => "What is the displayed Maximum Damage?",
 			'validators' => array(
-				array('Float'),
+				array(new D3Up_Validate_Double()),
 				array('LessThan', false, array('max' => 10000)),
 			),
 			'filters' => array('StripTags'),
@@ -305,7 +305,7 @@ class D3Up_Form_Record_Item extends Epic_Form
 		$this->addElement("text", "base_speed", array(
 			'label' => "What is the displayed Attack Speed?",
 			'validators' => array(
-				array('Float'),
+				array(new D3Up_Validate_Double()),
 				array('LessThan', false, array('max' => 10000)),
 			),
 			'filters' => array('StripTags'),
@@ -314,7 +314,7 @@ class D3Up_Form_Record_Item extends Epic_Form
 		$this->addElement("text", "base_block_chance", array(
 			'label' => "What is the displayed Block Chance?",
 			'validators' => array(
-				array('Float'),
+				array(new D3Up_Validate_Double()),
 				array('LessThan', false, array('max' => 10000)),
 			),
 			'filters' => array('StripTags'),
@@ -323,7 +323,7 @@ class D3Up_Form_Record_Item extends Epic_Form
 		$this->addElement("text", "base_block_amount_min", array(
 			'label' => "What is the displayed Minimum Block Value?",
 			'validators' => array(
-				array('Float'),
+				array(new D3Up_Validate_Double()),
 				array('LessThan', false, array('max' => 10000)),
 			),
 			'filters' => array('StripTags'),
@@ -332,7 +332,7 @@ class D3Up_Form_Record_Item extends Epic_Form
 		$this->addElement("text", "base_block_amount_max", array(
 			'label' => "What is the displayed Maximum Block Value?",
 			'validators' => array(
-				array('Float'),
+				array(new D3Up_Validate_Double()),
 				array('LessThan', false, array('max' => 10000)),
 			),
 			'filters' => array('StripTags'),
