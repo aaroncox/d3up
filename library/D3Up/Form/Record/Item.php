@@ -252,7 +252,6 @@ class D3Up_Form_Record_Item extends Epic_Form
 			'label' => 'What types of stats are on this item?',
 			'multiple' => true,
 			'multiOptions' => array(null => '') + $this->_attributes,
-			'filters' => array('StripTags'),
 		));
 		$this->attributes->setRegisterInArrayValidator(false);
 		
@@ -348,7 +347,7 @@ class D3Up_Form_Record_Item extends Epic_Form
 			'attributes' => array_keys($attrs),
 			'sockets' => $sockets,
 		));
-		
+				
 		if(isset($item->stats['armor'])) {
 			$this->base_armor->setValue($item->stats['armor']);
 		}
