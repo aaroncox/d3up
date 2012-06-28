@@ -309,8 +309,7 @@ $(function() {
 				mathDamageAdd = 0,
 				mathDps = 0,
 				mathCriticalHit = 5 + ((attrs['critical-hit']) ? attrs['critical-hit'] : 0),
-				mathCriticalHitDamage = attrs['critical-hit-damage'] + 50;
-		console.log(mathCriticalHit, attrs['critical-hit']);
+				mathCriticalHitDamage = 50 + ((attrs['critical-hit-damage']) ? attrs['critical-hit-damage'] : 0);
 		if(attrs['max-damage'] && attrs['min-damage']) {
 			mathDamageAdd = (attrs['max-damage'] + attrs['min-damage']) / 2;
 		}
