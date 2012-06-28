@@ -18,5 +18,9 @@ class IndexController extends Epic_Controller_Action {
 		$paginator = Zend_Paginator::factory($heroes);
 		$paginator->setCurrentPageNumber($this->getRequest()->getParam('page', 1))->setItemCountPerPage(20);
 		$this->view->heroes = $paginator;
+		$this->view->counts = array(
+			'heroes' => count(Epic_Mongo::db("hero")->fetchAll()),
+			'items' => count(Epic_Mongo::db("item")->fetchAll()),
+		);
 	}
 }
