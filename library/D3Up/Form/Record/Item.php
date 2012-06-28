@@ -479,8 +479,8 @@ class D3Up_Form_Record_Item extends Epic_Form
 		foreach($this->_allData as $key => $value) {
 			if(array_key_exists($key, $valid)) {
 				if(is_float($value) || is_numeric($value)) {
-					if($value > 999) {
-						$attrs[$key] = (float) 999;						
+					if($value > 99999) {
+						$attrs[$key] = (float) 99999;						
 					} else {
 						$attrs[$key] = (float) $value;												
 					}

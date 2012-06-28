@@ -116,9 +116,38 @@ $(function() {
 									}
 								}
 								break;
-							// case "strength":
-							// 	console.log(v);
-							// 	break;
+							case "max-damage":
+							case "min-damage":
+								switch(data.type) {
+									case "shield":
+									case "belt":
+									case "boots":
+									case "bracers":
+									case "chest-armor":
+									case "cloak":
+									case "gloves":
+									case "helm":
+									case "pants":
+									case "mighty-belt":
+									case "shoulder":
+									case "spirit-stone":
+									case "voodoo-mask":
+									case "wizard-hat":
+									case "ring":
+									case "amulet":
+									case "quiver":
+									case "mojo":
+									case "source":
+										if(attrs[k]) {
+											attrs[k] += parseFloat(v);
+										} else {
+											attrs[k] = parseFloat(v);
+										}
+										break;
+									default:
+										break;
+								}
+								break;
 							case "attack-speed":
 								switch(data.type) {
 									case "shield":
@@ -313,8 +342,8 @@ $(function() {
 				mathDps = 0,
 				mathCriticalHit = 5 + ((attrs['critical-hit']) ? attrs['critical-hit'] : 0),
 				mathCriticalHitDamage = 50 + ((attrs['critical-hit-damage']) ? attrs['critical-hit-damage'] : 0);
-		if(attrs['max-damage'] && attrs['min-damage']) {
-			mathDamageAdd = (attrs['max-damage'] + attrs['min-damage']) / 2;
+		if(attrs['max-damage'] || attrs['min-damage']) {
+			mathDamageAdd = (((attrs['max-damage'])?attrs['max-damage']:0) + ((attrs['min-damage'])?attrs['min-damage']:0)) / 2;
 		}
 		// Calculate the Attack Speed (Additive)
 		$.each(attackSpeedIncs, function(k,v) {
