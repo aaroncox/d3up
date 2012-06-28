@@ -137,6 +137,9 @@ $(function() {
 									case "wizard-hat":
 									case "ring":
 									case "amulet":
+									case "quiver":
+									case "mojo":
+									case "source":
 										attackSpeedIncs.push(v/100);
 										break;
 									default:
