@@ -296,7 +296,7 @@ $(function() {
 		tabDefense.append(statLabel("Lightning Resistance", mathResists['lightning'], '', mathResistsPercents['lightning']));
 		tabDefense.append(statLabel("Poison Resistance", mathResists['poison'], '', mathResistsPercents['poison']));
 		tabDefense.append(statLabel("Arcane/Holy Resistance", mathResists['arcane'], '', mathResistsPercents['arcane']));
-		tabDefense.append(statLabel("Crowd Control Reduction", attrs['cc-reduce'], 'per'));
+		tabDefense.append(statLabel("Crowd Control Reduction", ((attrs['cc-reduce'])?attrs['cc-reduce']:0), 'per'));
 		tabDefense.append(statLabel("Missile Damage Reduction", ((attrs['range-reduce']) ? attrs['range-reduce'] : 0), 'per'));
 		tabDefense.append(statLabel("Melee Damage Reduction", ((attrs['melee-reduce']) ? attrs['melee-reduce'] : 0), 'per'));
 		tabDefense.append(statLabel("Thorns", attrs['thorns']));
