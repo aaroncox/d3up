@@ -281,6 +281,7 @@ class D3Up_View_Helper_DisplayItem extends Zend_View_Helper_Abstract
 			case 'mighty-weapon': 
 			case 'spear': 
 			case 'sword':
+			case 'wand':
 				$loc = 2;			
 				break;
 			case 'amulet': 
@@ -411,6 +412,7 @@ class D3Up_View_Helper_DisplayItem extends Zend_View_Helper_Abstract
 					$socketHtml .= $this->view->htmlTag("li", array('class' => 'is-socket'), 'Empty Socket');					
 				} else {
 					$effect = $this->gemEffect($socket);
+					var_dump($effect); exit;
 					$socketHtml .= $this->view->htmlTag("li", array('class' => 'gem_'.$socket), $this->prettyDisplay($effect[0], $effect[1]));					
 				}
 			}
