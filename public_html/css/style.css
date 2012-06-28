@@ -168,6 +168,12 @@ ul#navigation li {
 .controls input {
 	padding: 10px;
 }
+#sys-message {
+	text-align: center;
+	font-size: 12px;
+	padding: 5px;
+	border-bottom: 1px solid #777;
+}
 #base_dps-label, #base_dps-element,
 #base_damage_min-label, #base_damage_min-element,
 #base_damage_max-label, #base_damage_max-element,
