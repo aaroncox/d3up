@@ -28,13 +28,17 @@ class D3Up_Mongo_Record_Item extends Epic_Mongo_Document_Record
 		$sockets = array();
 		if(isset($export['sockets'])) {
 			foreach($export['sockets'] as $k => $v) {
-				$effect = $helper->gemEffect($v, $export['type']);
-				if(isset($export['socketAttrs'][$effect[0]])) {
-					$export['socketAttrs'][$effect[0]] += $effect[1];
+				if($v == null) {
+					$sockets[$k] = "Empty Socket";
 				} else {
-					$export['socketAttrs'][$effect[0]] = $effect[1];							
+					$effect = $helper->gemEffect($v, $export['type']);
+					if(isset($export['socketAttrs'][$effect[0]])) {
+						$export['socketAttrs'][$effect[0]] += $effect[1];
+					} else {
+						$export['socketAttrs'][$effect[0]] = $effect[1];							
+					}
+					$sockets[$k] = $helper->prettyDisplay($effect[0], $effect[1]);					
 				}
-				$sockets[$k] = $helper->prettyDisplay($effect[0], $effect[1]);
 			}
 		}
 		// if($export['id'] == 28) {
