@@ -260,6 +260,9 @@ class D3Up_View_Helper_DisplayItem extends Zend_View_Helper_Abstract
 			$type = $this->_item->type;
 		}
 		switch($type) {
+			case 'spirit-stone': 
+			case 'voodoo-mask': 
+			case 'wizard-hat': 
 			case 'helm': 
 				$loc = 1;
 				break;
@@ -295,9 +298,6 @@ class D3Up_View_Helper_DisplayItem extends Zend_View_Helper_Abstract
 			case 'mighty-belt': 
 			case 'ring': 
 			case 'shoulder': 
-			case 'spirit-stone': 
-			case 'voodoo-mask': 
-			case 'wizard-hat': 
 			case 'wand': 
 			case 'mojo': 
 			case 'source': 
