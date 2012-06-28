@@ -354,7 +354,7 @@ $("#sockets").bind("change", function() {
 	container.empty();
 	if(sockets > 0) {
 		for(i=0; i<sockets; i++) {
-			var select = $("<select name='socket"+i+"'><option></option></select>"),
+			var select = $("<select name='socket"+i+"' style='width: 300px'><option></option></select>"),
 					itemType = $("#itemType").val(),
 					effect = "unknown";
 			$.each(gems, function(k,v) {
