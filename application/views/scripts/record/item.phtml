@@ -35,7 +35,8 @@
 <? if($v == null): ?>
 [Empty Socket]
 <? else: ?>
-[Socket] <?= ucwords(str_replace("_"," ", $v)) ?> (<?= $p->gemEffect($v, $this->record->type) ?>)
+<? $effect = $p->gemEffect($v, $this->record->type);?>
+[Socket] <?= ucwords(str_replace("_"," ", $v)) ?> (<?= $p->prettyDisplay($effect[0], $effect[1]) ?>)
 <? endif; ?>
 <? endforeach ?>
 <? endif; ?>
