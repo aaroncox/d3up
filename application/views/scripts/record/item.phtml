@@ -32,7 +32,11 @@
 <? endif; ?>
 <? if($this->record->sockets): ?>
 <? foreach($this->record->sockets as $k => $v): ?>
+<? if($v == null): ?>
+[Empty Socket]
+<? else: ?>
 [Socket] <?= ucwords(str_replace("_"," ", $v)) ?> (<?= $p->gemEffect($v, $this->record->type) ?>)
+<? endif; ?>
 <? endforeach ?>
 <? endif; ?>
 </textarea>
