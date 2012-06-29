@@ -544,6 +544,15 @@ $(function() {
 									}
 								}
 								break;
+							case "plus-block":
+								if(data.type != 'shield') {
+									if(attrs[k]) {
+										attrs[k] += parseFloat(v);
+									} else {
+										attrs[k] = parseFloat(v);
+									}									
+								}
+								break;
 							case "max-damage":
 							case "min-damage":
 								switch(data.type) {
@@ -730,7 +739,8 @@ $(function() {
 		// Calculate Dodge
 		var mathDodge = attrs['dexterity'],
 				mathDodgePercent = 0,
-				mathDodgeBrackets = [[100,0.100], [500,0.025], [1000,	0.020], [8000,0.010]];
+				mathDodgeBrackets = [[100,0.100], [500,0.025], [1000,	0.020], [8000,0.010]],
+				mathBlockChance = ((stats['block-chance']) ? stats['block-chance'] : 0) + ((attrs['plus-block']) ? attrs['plus-block'] : 0);
 		if(mathDodge > 0) {
 			$.each(mathDodgeBrackets, function(k,v){
 				if(mathDodge > v[0]) {
@@ -967,7 +977,7 @@ $(function() {
 		tabDefense.empty();
 		tabDefense.append(statLabel("Armor", mathArmor));
 		tabDefense.append(statLabel("Block Amount", (stats['block-amount']) ? stats['block-amount'] : '~'));		
-		tabDefense.append(statLabel("Block Chance", ((stats['block-chance']) ? stats['block-chance'] : 0), 'per'));
+		tabDefense.append(statLabel("Block Chance", mathBlockChance, 'per'));
 		tabDefense.append(statLabel("Dodge Chance", (Math.round(mathDodgePercent*10)/10), 'per'));
 		tabDefense.append(statLabel("Damage Reduction", mathDamageReduce, 'per'));
 		tabDefense.append(statLabel("Physical Resistance", mathResists['physical'], '', mathResistsPercents['physical']));
