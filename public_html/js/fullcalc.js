@@ -888,6 +888,8 @@ $(function() {
 								// mathArmor = mathArmor + (attrs['critical-hit'] * value);
 								break;							
 							case "dexterity-to-armor":								
+								mathArmor = mathArmor + (attrs['dexterity'] * value);
+								break;
 							case "vitality-to-armor":
 								mathArmor = mathArmor + (attrs['vitality'] * value);
 								break;
