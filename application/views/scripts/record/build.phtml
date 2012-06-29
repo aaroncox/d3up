@@ -72,7 +72,18 @@
 		<? endif ?>
 	</ul>
 	<div id="hero-skills">
-		Not available yet!
+		<? if($profile && $this->record->_createdBy && $profile->createReference() == $this->record->_createdBy->createReference()): ?>
+			<p>Please select the 3 passive skills you're using:</p>
+			<script type="text/javascript">
+				<? if($this->record->passives && $this->record->passives != "null" && count($this->record->passives)): ?>
+					var activePassives = <?= json_encode($this->record->passives->export()); ?>
+				<? else: ?>
+					var activePassives = [];
+				<? endif; ?>
+			</script>
+			<select id="passives" multiple="multiple" name="passives[]" style="width: 450px"></select>
+		<? endif; ?>
+		<ul id="passive-display"></ul>
 	</div>
 	<? if($profile && $this->record->_createdBy && $profile->createReference() == $this->record->_createdBy->createReference()): ?>
 	<div id="hero-compare">
@@ -146,4 +157,4 @@
 	</fieldset>
 	</form>
 </div>
-<script type="text/javascript" src="/js/calc.js"></script>
+<script type="text/javascript" src="/js/fullcalc.js"></script>

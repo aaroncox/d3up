@@ -40,6 +40,10 @@ class RecordController extends Epic_Controller_Action
 							$record->equipment[$slot] = $item;
 							echo json_encode($record->save()); exit;
 							break;
+						case "passive-skills":
+							$record->passives = $this->getRequest()->getParam('passives');
+							echo json_encode($record->save()); exit;
+							break;
 					}
 				}
 			}

@@ -14,12 +14,12 @@ class IndexController extends Epic_Controller_Action {
 		$paginator = Zend_Paginator::factory($items);
 		$paginator->setCurrentPageNumber($this->getRequest()->getParam('page', 1))->setItemCountPerPage(20);
 		$this->view->items = $paginator;
-		$heroes = Epic_Mongo::db('hero')->fetchAll($query, $sort);	
-		$paginator = Zend_Paginator::factory($heroes);
+		$builds = Epic_Mongo::db('build')->fetchAll($query, $sort);	
+		$paginator = Zend_Paginator::factory($builds);
 		$paginator->setCurrentPageNumber($this->getRequest()->getParam('page', 1))->setItemCountPerPage(20);
-		$this->view->heroes = $paginator;
+		$this->view->builds = $paginator;
 		$this->view->counts = array(
-			'heroes' => count(Epic_Mongo::db("hero")->fetchAll()),
+			'builds' => count(Epic_Mongo::db("build")->fetchAll()),
 			'items' => count(Epic_Mongo::db("item")->fetchAll()),
 		);
 	}

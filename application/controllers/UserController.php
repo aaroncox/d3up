@@ -31,10 +31,13 @@ class UserController extends Epic_Controller_Action
 	public function forgotAction() {
 		
 	}
-	public function heroesAction() {
+	public function buildsAction() {
 		$profile = Epic_Auth::getInstance()->getProfile();
 		if($profile) {
-			$heroes = $this->view->heroes = Epic_Mongo::db('hero')->fetchAll(array('_createdBy' => $profile->createReference()));			
+			$builds = Epic_Mongo::db('build')->fetchAll(array('_createdBy' => $profile->createReference()));			
+			$paginator = Zend_Paginator::factory($builds);
+			$paginator->setCurrentPageNumber($this->getRequest()->getParam('page', 1))->setItemCountPerPage(20);
+			$this->view->builds = $paginator;			
 		} else {
 			$this->view->notLoggedIn = true;
 		}
@@ -42,7 +45,10 @@ class UserController extends Epic_Controller_Action
 	public function itemsAction() {
 		$profile = Epic_Auth::getInstance()->getProfile();
 		if($profile) {
-			$items = $this->view->items = Epic_Mongo::db('item')->fetchAll(array('_createdBy' => $profile->createReference()), array("_created" => -1));			
+			$items = Epic_Mongo::db('item')->fetchAll(array('_createdBy' => $profile->createReference()), array("_created" => -1));			
+			$paginator = Zend_Paginator::factory($items);
+			$paginator->setCurrentPageNumber($this->getRequest()->getParam('page', 1))->setItemCountPerPage(20);
+			$this->view->items = $paginator;
 		} else {
 			$this->view->notLoggedIn = true;
 		}

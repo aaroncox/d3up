@@ -14,17 +14,17 @@
 <div class="home">
 	<div class="info">
 		<h2>What is D3Up?</h2>
-		<p>D3Up is designed as a tool to help you find information about items, a place to create a character profile, and compare items to determine which stats of yours will change.</p>
+		<p>D3Up is designed as a tool to help you find information about Items, a place to create varies Character Builds, and compare your items to determine which stats will change.</p>
 		<h2>What can I do here?</h2>
 		<ul>
-			<li><a href="/item/create">Create Items</a> to share with others.</li>
-			<li>Make <a href="/hero/create">character profiles</a> with detailed statistics!</li>
-			<li>Compare the items you're wearing to other items you've created.</li>
+			<li><a href="/item/create">Create Items</a> to share with others or add to your builds.</li>
+			<li>Create <a href="/hero/create">Character Builds</a>, complete with gear, skills and detailed statistics!</li>
+			<li>Compare the items in your build to other items you've created.</li>
 		</ul>
 		<h2>Stats</h2>
 		<ul>
 			<li><?= $this->counts['items']?> items</li>
-			<li><?= $this->counts['heroes']?> heroes</li>
+			<li><?= $this->counts['builds']?> Character Builds</li>
 		</ul>
 	</div>
 	<div class="recent-items">
@@ -40,17 +40,17 @@
 		                                    'Elastic',
 		                                    'index/_pages.phtml'); ?>
 	</div>
-	<? if($this->heroes->count()): ?>
+	<? if($this->builds->count()): ?>
 	<div class="recent-heroes">
-		<h2>Recently Created Heroes</h2>
+		<h2>Recently Created Character Builds</h2>
 		<ul>
-			<? foreach($this->heroes as $hero): ?>
+			<? foreach($this->builds as $build): ?>
 				<li>
-					<?= $this->mLink($hero) ?> (<?= ucwords(str_replace("-", " ", $hero->class))?>)
+					<?= $this->mLink($build) ?> (<?= ucwords(str_replace("-", " ", $build->class))?>)
 				</li>
 			<? endforeach; ?>
 		</ul>
-		<?php echo $this->paginationControl($this->heroes,
+		<?php echo $this->paginationControl($this->builds,
 		                                    'Elastic',
 		                                    'index/_pages.phtml'); ?>
 	</div>

@@ -5,10 +5,10 @@
  * @package default
  * @author Aaron Cox
  **/
-class D3Up_Mongo_Record_Hero extends Epic_Mongo_Document_Record
+class D3Up_Mongo_Record_Build extends Epic_Mongo_Document_Record
 {
-	public $route = 'hero';	
-	protected static $_documentType = 'hero';
+	public $route = 'build';	
+	protected static $_documentType = 'build';
 	
 	protected $_requirements = array(
 		'equipment' => array('Document:D3Up_Mongo_Record_GearSet'),
@@ -16,6 +16,6 @@ class D3Up_Mongo_Record_Hero extends Epic_Mongo_Document_Record
 	);
 	
 	public function getEditForm() {
-		return new D3Up_Form_Record_Hero(array('hero' => $this));
+		return new D3Up_Form_Record_Build(array('build' => $this));
 	}
 } // END class D3Up_Mongo_Record_Hero extends Epic_Mongo_Document_Record

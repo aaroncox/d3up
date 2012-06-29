@@ -5,12 +5,15 @@
 	<p>Interested? Feel free to wander over to the <a href="/user/register">registration page</a> to create an account, or if you already have one, you can <a href="/user/login">login</a>.</p>
 <? else: ?>
 	<p><a href="/hero/create">Add Hero</a></p>
-	<? if(count($this->heroes->export())):?>
+	<? if($this->builds->count()):?>
 	<ul>
-		<? foreach($this->heroes as $hero): ?>
-			<li><?= $this->mLink($hero) ?> (<?= ucwords(str_replace("-", " ", $hero->class)) ?>)</li>
+		<? foreach($this->builds as $build): ?>
+			<li><?= $this->mLink($build) ?> (<?= ucwords(str_replace("-", " ", $build->class)) ?>)</li>
 		<? endforeach ?>
 	</ul>
+	<?php echo $this->paginationControl($this->builds,
+	                                    'Elastic',
+	                                    'index/_pages.phtml'); ?>
 	<? else: ?>
 	<p>You don't have any characters yet!</p>
 	<p>Click the "Add Hero" button above to get started.</p>
