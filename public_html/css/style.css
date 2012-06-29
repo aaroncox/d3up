@@ -198,3 +198,16 @@ ul#navigation li {
 	padding: 5px;
 	margin: 10px 0;
 }
+.calc-stats .resist-specific {
+}
+.calc-stats .resist-specific .header {
+	color: #75ABFF;
+	font-size: 1.2em;
+	font-weight: bold;
+}
+.calc-stats .resist-specific .stat-helper {
+	width: 140px;
+	display: inline-block;
+	text-align: right;
+	margin-right: 10px;
+}

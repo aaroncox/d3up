@@ -20,6 +20,8 @@ $(function() {
 			tabBase = $("#stats-base"),
 			tabLife = $("#stats-life"),
 			tabMisc = $("#stats-misc"),
+			tabEPH = $("#stats-ehp"),
+			selectVs = $("#vsLevel"),
 			heroClass = $("#character").data("class"),
 			passives = {
 				'barbarian': {
@@ -216,7 +218,7 @@ $(function() {
 					'blur': {
 						'desc': 'Decreases melee damage taken by <span class="skill-highlight">20%</span>.',
 						'effect': {
-							'reduce-damage': 0.20
+							'melee-reduce': 0.20
 						},
 					},
 					'power-hungry': {
@@ -229,7 +231,8 @@ $(function() {
 						'desc': 'Increases all damage done by <span class="skill-highlight">15%</span>, but decreases Armor and resistances by <span class="skill-highlight">10%</span>.',
 						'effect': {
 							'plus-damage': 0.15,
-							'plus-resist-all': -0.10
+							'plus-resist-all': -0.10,
+							'plus-armor': -0.10
 						}
 					},
 					'prodigy': {
@@ -435,17 +438,22 @@ $(function() {
 		calc();
 	});
 	passiveSelect.trigger('change');
+	selectVs.bind('change', calc);
 	function statLabel(k,v,format,math) {
 		stats[k] = v;
 		switch(format) {
 			case "per":
 				v = v + "%";
 				break;
+			case "round":
+				v = Math.round(v * 100) / 100;
 			default:
 				break;
 		}
-		var cleaned = '';
-		cleaned = k.replace(/\s+/g, '-').toLowerCase();
+		var cleaned = k.replace(/\s+/g, '-').toLowerCase();
+		if(v) {
+			v = v.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,");			
+		}
 		var data = $("<li/>").addClass('stat-' + cleaned).html($("<span class='stat-helper'/>").html(k + ": ")).append(v);
 		if(math) {
 			data.append(" (" + math + "%)");
@@ -720,12 +728,13 @@ $(function() {
 		// ----------------------------------
 		var mathLife = 36 + 4 * 60 + (60 - 25) * attrs['vitality'],
 		 		mathLifePlus = (attrs['plus-life']) ? attrs['plus-life'] : 0,
-				mathLifeTotal = Math.round(mathLife + (mathLife * (mathLifePlus * 0.01)));
+				mathLifeTotal = Math.round(mathLife + (mathLife * (mathLifePlus * 0.01))),
+				vsLevel = (selectVs.val()) ? selectVs.val() : 60;
 		// ----------------------------------
 		// Math for Defensive Statistics 
 		// ----------------------------------
 		var mathArmor = ((stats['armor'])?stats['armor']:0) + attrs['strength'] + ((attrs['armor']) ? attrs['armor'] : 0),
-				mathReduction = mathArmor / (50 * 60 + mathArmor),
+				mathReduction = mathArmor / (50 * vsLevel + mathArmor),
 				mathAllResist = Math.round(attrs['resist-all'] + (attrs['intelligence'] / 10)),
 				mathResists = {
 					'physical': (mathAllResist + ((attrs['physical-resist']) ? attrs['physical-resist'] : 0)),
@@ -844,6 +853,8 @@ $(function() {
 						switch(effect) {
 							case "plus-armor":
 								mathArmor = Math.round(mathArmor * (1 + value) * 100) / 100;
+								mathReduction = mathArmor / (50 * vsLevel + mathArmor);
+								mathDamageReduce = (Math.round(mathReduction * 100 * 100)/100);
 								break;
 							case "plus-thorns":
 								if(attrs['thorns']) {
@@ -865,6 +876,7 @@ $(function() {
 								});
 								break;
 							case "plus-resist-all":
+								mathAllResist = mathAllResist * (1 + value);
 								mathResists.physical = mathResists.physical * (1 + value);
 								mathResists.cold = mathResists.cold * (1 + value);
 								mathResists.fire = mathResists.fire * (1 + value);
@@ -872,6 +884,7 @@ $(function() {
 								mathResists.poison = mathResists.poison * (1 + value);
 								mathResists.arcane = mathResists.arcane * (1 + value);
 								break;
+							case "melee-reduce":
 							case "plus-movement-speed":
 							case "max-spirit":
 							case "max-hatred":
@@ -956,14 +969,65 @@ $(function() {
 		// After all modifications, determine percentages for display
 		// ----------------------------------
 		var mathResistsPercents = {
-			'physical': 	Math.round((mathResists.physical / (5 * 60 + mathResists.physical) * 100) * 100)/100,
-			'cold': 			Math.round((mathResists.cold / (5 * 60 + mathResists.cold) * 100) * 100)/100,
-			'fire': 			Math.round((mathResists.fire / (5 * 60 + mathResists.fire) * 100) * 100)/100,
-			'lightning': 	Math.round((mathResists.lightning / (5 * 60 + mathResists.lightning) * 100) * 100)/100,
-			'poison': 		Math.round((mathResists.poison / (5 * 60 + mathResists.poison) * 100) * 100)/100,
-			'arcane': 		Math.round((mathResists.arcane / (5 * 60 + mathResists.arcane) * 100) * 100)/100
+			'all': 				Math.round((mathAllResist / (5 * vsLevel + mathAllResist) * 100) * 100)/100,
+			'physical': 	Math.round((mathResists.physical / (5 * vsLevel + mathResists.physical) * 100) * 100)/100,
+			'cold': 			Math.round((mathResists.cold / (5 * vsLevel + mathResists.cold) * 100) * 100)/100,
+			'fire': 			Math.round((mathResists.fire / (5 * vsLevel + mathResists.fire) * 100) * 100)/100,
+			'lightning': 	Math.round((mathResists.lightning / (5 * vsLevel + mathResists.lightning) * 100) * 100)/100,
+			'poison': 		Math.round((mathResists.poison / (5 * vsLevel + mathResists.poison) * 100) * 100)/100,
+			'arcane': 		Math.round((mathResists.arcane / (5 * vsLevel + mathResists.arcane) * 100) * 100)/100
 		};
 		
+		// ----------------------------------
+		// Effective Health Calculations
+		// ----------------------------------
+		
+		var mathDR = (mathDamageReduce/100),
+				mathAR = (mathAllResist / (5 * vsLevel + mathAllResist)),
+				mathMeleeReduce = (attrs['melee-reduce']) ? (attrs['melee-reduce']) : 0,
+				mathRangeReduce = (attrs['range-reduce']) ? (attrs['range-reduce']) : 0,
+				mathEliteReduce = (attrs['elite-reduce']) ? (attrs['elite-reduce']) : 0,
+				mathARPhysical = (mathResists.physical / (5 * vsLevel + mathResists.physical)),
+				mathARCold = (mathResists.cold / (5 * vsLevel + mathResists.cold)),
+				mathARFire = (mathResists.fire / (5 * vsLevel + mathResists.fire)),
+				mathARLightning = (mathResists.lightning / (5 * vsLevel + mathResists.lightning)),
+				mathARPoison = (mathResists.poison / (5 * vsLevel + mathResists.poison)),
+				mathARArcane = (mathResists.arcane / (5 * vsLevel + mathResists.arcane)),
+				mathDT = (1 - mathAR) * (1 - mathDR),
+				mathDTDodge = mathDT * (1 - mathDodgePercent / 100),
+				mathDTMelee = mathDT * (1 - mathMeleeReduce / 100),
+				mathDTRange = mathDT * (1 - mathRangeReduce / 100),
+				mathDTElite = mathDT * (1 - mathEliteReduce / 100),
+				mathEPH = mathLifeTotal / mathDT,
+				mathEPHDodge = mathLifeTotal / mathDTDodge,
+				mathEPHMelee = mathLifeTotal / mathDTMelee,
+				mathEPHRange = mathLifeTotal / mathDTRange,
+				mathEPHElite = mathLifeTotal / mathDTElite,
+				mathEPHPhysical = mathLifeTotal / ((1 - mathAR) * (1 - mathARPhysical)),
+				mathEPHCold = mathLifeTotal / ((1 - mathAR) * (1 - mathARCold)),
+				mathEPHFire = mathLifeTotal / ((1 - mathAR) * (1 - mathARFire)),
+				mathEPHLightning = mathLifeTotal / ((1 - mathAR) * (1 - mathARLightning)),
+				mathEPHPoison = mathLifeTotal / ((1 - mathAR) * (1 - mathARPoison)),
+				mathEPHArcane = mathLifeTotal / ((1 - mathAR) * (1 - mathARArcane));
+		// Most simply, EH = Health / [(1 – Damage Reduction A)*(1 – Damage Reduction B)*...] or, EH = Health / Damage Taken
+		tabEPH.empty();
+		tabEPH.append(statLabel("EHP", mathEPH, 'round'));
+		tabEPH.append(statLabel("EHP w/ Dodge", mathEPHDodge, 'round'));
+		tabEPH.append($("<ul class='resist-specific'/>").append(
+			$("<li class='header'/>").html("Damage Type EHP"),
+			statLabel("Melee EPH", mathEPHMelee, 'round'),
+			statLabel("Ranged EPH", mathEPHRange, 'round'),
+			statLabel("Elite EPH", mathEPHElite, 'round')
+		));		
+		tabEPH.append($("<ul class='resist-specific'/>").append(
+			$("<li class='header'/>").html("Elemental EHP"),
+			statLabel("Physical EPH", mathEPHPhysical, 'round'),
+			statLabel("Cold EPH", mathEPHCold, 'round'),
+			statLabel("Fire EPH", mathEPHFire, 'round'),
+			statLabel("Lightning EPH", mathEPHLightning, 'round'),
+			statLabel("Poison EPH", mathEPHPoison, 'round'),
+			statLabel("Arcane/Holy EPH", mathEPHArcane, 'round')
+		));
 		// ----------------------------------
 		// Render the Stasistics below
 		// ----------------------------------	
@@ -975,7 +1039,8 @@ $(function() {
 		tabBase.append(statLabel("Vitality", attrs['vitality']));
 		// Defensive Statistics Display
 		tabDefense.empty();
-		tabDefense.append(statLabel("Armor", mathArmor));
+		tabDefense.append(statLabel("Armor", mathArmor, '', mathDamageReduce));
+		tabDefense.append(statLabel("All Resist", mathAllResist, '', mathResistsPercents['all']));
 		tabDefense.append(statLabel("Block Amount", (stats['block-amount']) ? stats['block-amount'] : '~'));		
 		tabDefense.append(statLabel("Block Chance", mathBlockChance, 'per'));
 		tabDefense.append(statLabel("Dodge Chance", (Math.round(mathDodgePercent*10)/10), 'per'));
@@ -987,8 +1052,9 @@ $(function() {
 		tabDefense.append(statLabel("Poison Resistance", mathResists['poison'], '', mathResistsPercents['poison']));
 		tabDefense.append(statLabel("Arcane/Holy Resistance", mathResists['arcane'], '', mathResistsPercents['arcane']));
 		tabDefense.append(statLabel("Crowd Control Reduction", ((attrs['cc-reduce'])?attrs['cc-reduce']:0), 'per'));
-		tabDefense.append(statLabel("Missile Damage Reduction", ((attrs['range-reduce']) ? attrs['range-reduce'] : 0), 'per'));
-		tabDefense.append(statLabel("Melee Damage Reduction", ((attrs['melee-reduce']) ? attrs['melee-reduce'] : 0), 'per'));
+		tabDefense.append(statLabel("Missile Damage Reduction", mathRangeReduce, 'per'));
+		tabDefense.append(statLabel("Melee Damage Reduction", mathMeleeReduce, 'per'));
+		tabDefense.append(statLabel("Elite Damage Reduction", mathEliteReduce, 'per'));
 		tabDefense.append(statLabel("Thorns", attrs['thorns']));
 		// Offensive Statistics Display
 		tabOffense.empty();
@@ -1008,8 +1074,6 @@ $(function() {
 		tabLife.append(statLabel("Bonus to Gold/Globe Radius", (attrs['plus-pickup-radius']) ? attrs['plus-pickup-radius'] : 0));
 	}
 	calc();
-	$("#character").tabs();
-	// $(".calc-stats").tabs();
 	var compareTo = $("#compare-to");
 	$("#compared-slot").bind('change', function() {
 		var itemType = $(this).val();
@@ -1058,21 +1122,29 @@ $(function() {
 		var items = $("<div/>").append($("<div/>").append("Old Item: ", oldItem), $("<div/>").append("New Item: ", itemLink)),
 				diff = $.diff(currentStats, possible),
 				table = $("<table/>");
-				header = $("<tr/>").append("<th>Stat</th><th>Old</th><th>New</th><th>Diff</th>");
+				header = $("<tr/>").append("<th>Stat</th><th>Diff</th><th>Old</th><th>New</th>");
 		table.append(header);
 		if(Object.keys(diff['mod']).length > 0) {
 			$.each(diff['mod'], function(k,v) {
 				var diffVal = Math.round((possible[k] - currentStats[k]) * 100) / 100;
 				var row = $("<tr/>");
 				row.append($("<td/>").html(k));
+				var cur = Math.round(currentStats[k] * 100) / 100,
+						pos = Math.round(possible[k] * 100) / 100;
+				if(cur > 99999) {
+					cur = Math.round(cur / 10) / 100 + "k";
+				}
+				if(pos > 99999) {
+					pos = Math.round(pos / 10) / 100 + "k";
+				}
 				if(diffVal > 0) {
-					row.append($("<td class='neg'/>").html(currentStats[k]));
-					row.append($("<td class='pos'/>").html(possible[k]));				
-					row.append($("<td/>").html(diffVal).addClass("pos"));
+					row.append($("<td/>").html("+"+diffVal).addClass("pos"));
+					row.append($("<td class='neg'/>").html(cur));
+					row.append($("<td class='pos'/>").html(pos));				
 				} else {
-					row.append($("<td class='pos'/>").html(currentStats[k]));
-					row.append($("<td class='neg'/>").html(possible[k]));
 					row.append($("<td/>").html(diffVal).addClass("neg"));
+					row.append($("<td class='pos'/>").html(cur));
+					row.append($("<td class='neg'/>").html(pos));				
 				}
 				table.append(row);
 			});

@@ -9,7 +9,6 @@
 		width: 500px;
 	}
 	.equipment-table {
-		border: 1px solid #888;
 	}
 	.equipment-table td {
 		padding: 5px;
@@ -21,7 +20,7 @@
 	}
 	.calc-stats ul {
 		list-style: none;
-		margin: 10px;
+		margin: 0 0 10px;
 		padding: 0;
 	}
 	.compare-diff {
@@ -56,10 +55,11 @@
 	.compare-diff .neg {
 		color: #F00;
 	}
+	.stat-ehp, 
 	.stat-dps {
 		font-size: 24px;
 		font-weight: bold;
-		margin: 10px 0;
+		margin: 0 0 10px;
 	}
 </style>
 <h2><?= $this->record->name ?> (<?= ucwords(str_replace("-", " ", $this->record->class)) ?>)</h2>
@@ -83,7 +83,9 @@
 			</script>
 			<select id="passives" multiple="multiple" name="passives[]" style="width: 450px"></select>
 		<? endif; ?>
-		<ul id="passive-display"></ul>
+		<ul id="passive-display">
+			<li>No Passives Detected</li>
+		</ul>
 	</div>
 	<? if($profile && $this->record->_createdBy && $profile->createReference() == $this->record->_createdBy->createReference()): ?>
 	<div id="hero-compare">
@@ -108,7 +110,15 @@
 		<p><b>Note</b>: Currently the item HAS to be created by you before you are able to compare them.</p>
 	</div>
 	<? endif; ?>
-	<table class="equipment-table" id="hero-gear">
+	<div id="hero-gear">
+		<? if($profile && $this->record->_createdBy && $profile->createReference() == $this->record->_createdBy->createReference()): ?>
+		<p>Adding gear to your build will dynamically update the statistics displayed in the statistics panel.</p>
+		<p>
+			<a href="/item/create" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only gear-change"><span class="ui-button-text">Create New Item</span></a>
+			<a href="/user/items" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only gear-change"><span class="ui-button-text">View My Items</span></a>
+		</p>
+		<? endif; ?>
+		<table class="equipment-table">
 		<? foreach($this->record->equipment->getSlots() as $slot): ?>
 			<tr>
 				<td>
@@ -130,22 +140,37 @@
 				</td>
 			</tr>
 		<? endforeach ?>
-	</table>
+		</table>
+	</div>
 </div>
 <div class="inline-flow" style="width: 440px">
 	<div class="calc-stats ui-widget ui-widget-content ui-corner-all">
-		<!-- <ul>
-			<li><a href="#stats-base">Stats</a></li>
-			<li><a href="#stats-offense">Offense</a></li>
-			<li><a href="#stats-defense">Defense</a></li>
-			<li><a href="#stats-life">Life</a></li>
-			<li><a href="#stats-misc">Misc</a></li>
-		</ul> -->
-		<ul id="stats-offense"><li>Damage</li></ul>
-		<ul id="stats-base"><li>base</li></ul>
-		<ul id="stats-life"><li>life</li></ul>
-		<ul id="stats-defense"><li>armor</li></ul>
-		<ul id="stats-misc"></ul>
+		<ul>
+			<li><a href="#tab-base">Stats</a></li>
+			<li><a href="#tab-dps">DPS</a></li>
+			<li><a href="#tab-ehp">EHP</a></li>
+		</ul>
+		<div style="background-image: none; padding: 15px 15px 0">
+			<select id="vsLevel">
+				<option value="60">Stats vs Level 60 Monster</option>
+				<option value="61">Stats vs Level 61 Monster</option>
+				<option value="62">Stats vs Level 62 Monster</option>
+				<option value="63" selected="selected">Stats vs Level 63 Monster</option>
+			</select>
+		</div>
+		<div id="tab-base">
+			<ul id="stats-offense"><li>Damage</li></ul>
+			<ul id="stats-base"><li>base</li></ul>
+			<ul id="stats-life"><li>life</li></ul>
+			<ul id="stats-defense"><li>armor</li></ul>
+			<ul id="stats-misc"></ul>
+		</div>
+		<div id="tab-dps">
+			Coming Soon
+		</div>
+		<div id="tab-ehp">
+			<ul id="stats-ehp"><li>test</li></ul>
+		</div>
 	</div>
 </div>
 <div id="gear-change" title="Select an Item">
@@ -157,4 +182,8 @@
 	</fieldset>
 	</form>
 </div>
-<script type="text/javascript" src="/js/fullcalc.js"></script>
+<script type="text/javascript" src="/js/calc.js"></script>
+<script type="text/javascript">
+$("#character").tabs();
+$(".calc-stats").tabs();
+</script>
