@@ -46,9 +46,9 @@ class UserController extends Epic_Controller_Action
 		$profile = Epic_Auth::getInstance()->getProfile();
 		if($profile) {
 			$items = Epic_Mongo::db('item')->fetchAll(array('_createdBy' => $profile->createReference()), array("_created" => -1));			
-			$paginator = Zend_Paginator::factory($items);
-			$paginator->setCurrentPageNumber($this->getRequest()->getParam('page', 1))->setItemCountPerPage(20);
-			$this->view->items = $paginator;
+			// $paginator = Zend_Paginator::factory($items);
+			// $paginator->setCurrentPageNumber($this->getRequest()->getParam('page', 1))->setItemCountPerPage(20);
+			$this->view->items = $items;
 		} else {
 			$this->view->notLoggedIn = true;
 		}

@@ -21,6 +21,38 @@ class RecordController extends Epic_Controller_Action
 		}
 		var_dump($record); exit;
 	}
+	public function deleteAction() {
+		$record = $this->getRecord();
+		if($confirm = $this->getRequest()->getParam("confirm")) {
+			unset($record->_createdBy);
+			$record->save();
+			$this->_redirect("/user/items");
+		}
+	}
+	public function copyAction() {
+		// Get the record
+		$record = $this->getRecord();
+		// Get this user
+		$profile = Epic_Auth::getInstance()->getProfile();
+		// Check to see if the user has already copied this item
+		$query = array(
+			'_original' => $record->createReference(),
+			'_createdBy' => $profile->createReference(), 
+		);
+		$dupe = Epic_Mongo::db("item")->fetchOne($query);
+		if($dupe) {
+			$this->_redirect("/i/".$dupe->id);
+			throw new Exception("You've already copied this item to your items. To prevent abuse, you can't copy an item to your items more than once.");
+		}
+		$new = Epic_Mongo::newDoc('item');
+		$export = $record->export();
+		unset($export['id'], $export['_id'], $export['_createdBy']);
+		$new->setFromArray($export);
+		$new->_original = $record;
+		$new->_createdBy = $profile;
+		$new->save();
+		$this->_redirect("/i/".$new->id);
+	}
 	public function viewAction() {
 		$record = $this->getRecord();
 		// NOTE - This logic kinda sucks, but it works for now (Mainly AJAX handling)
@@ -37,6 +69,24 @@ class RecordController extends Epic_Controller_Action
 							$slot = $this->getRequest()->getParam('slot');
 							$newItem = $this->getRequest()->getParam('newItem');
 							$item = Epic_Mongo::db('item')->fetchOne(array('id' => (int) $newItem));
+							// If we are wearing a 2h weapon, blank out the offhand
+							if(isset($record->equipment['mainhand']->id)) {
+								switch($record->equipment['mainhand']->type) {
+									case '2h-mace': 
+									case '2h-axe': 
+									case 'diabo': 
+									case 'crossbow': 
+									case '2h-mighty': 
+									case 'polearm': 
+									case 'staff': 
+									case '2h-sword':
+										$record->equipment['offhand'] = null;
+										break;
+								}								
+							}
+							if(in_array($item->type, array('2h-mace', '2h-axe', 'diabo', 'crossbow', '2h-mighty', 'polearm', 'staff', '2h-sword'))) {								
+								$record->equipment['offhand'] = null;
+							}
 							$record->equipment[$slot] = $item;
 							echo json_encode($record->save()); exit;
 							break;

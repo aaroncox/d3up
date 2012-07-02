@@ -1,32 +1,27 @@
 <style type="text/css" media="screen">
 	.home {
-		margin: 10px;
+		margin: 0 10px;
+		width: 610px;
+	}
+	.home h2 {
+		margin: 5px 10px;
 	}
 	.recent-items {
-		width: 600px;
-		padding: 1px;
+		padding: 2px;
 	}
 	.info {
-		float: right;
 		width: 300px;
+		margin: 0 10px;
+	}
+	.info .ui-widget {
+		padding: 0 10px;
+		margin-bottom: 10px;
+	}
+	.info .ui-widget h3 {
+		color: #70B1D5;
 	}
 </style>
-<div class="home">
-	<div class="info">
-		<h2>What is D3Up?</h2>
-		<p>D3Up is designed as a tool to help you find information about Items, a place to create varies Character Builds, and compare your items to determine which stats will change.</p>
-		<h2>What can I do here?</h2>
-		<ul>
-			<li><a href="/item/create">Create Items</a> to share with others or add to your builds.</li>
-			<li>Create <a href="/build/create">Character Builds</a>, complete with gear, skills and detailed statistics!</li>
-			<li>Compare the items in your build to other items you've created.</li>
-		</ul>
-		<h2>Stats</h2>
-		<ul>
-			<li><?= $this->counts['items']?> items</li>
-			<li><?= $this->counts['builds']?> Character Builds</li>
-		</ul>
-	</div>
+<div class="home inline-flow">
 	<div class="recent-items">
 		<h2>Recently Created Items</h2>
 		<ul>
@@ -40,8 +35,7 @@
 		                                    'Elastic',
 		                                    'index/_pages.phtml'); ?>
 	</div>
-	<? if($this->builds->count()): ?>
-	<div class="recent-heroes">
+	<div class="recent-builds">
 		<h2>Recently Created Character Builds</h2>
 		<ul>
 			<? foreach($this->builds as $build): ?>
@@ -54,5 +48,25 @@
 		                                    'Elastic',
 		                                    'index/_pages.phtml'); ?>
 	</div>
-	<? endif; ?>
+</div>
+<div class="info inline-flow">
+	<div class='ui-widget ui-widget-content ui-corner-all'>
+		<h3>What is D3Up?</h3>
+		<p>D3Up is designed as a tool to help you find information about Items, a place to create varies Character Builds, and compare your items to determine which stats will change.</p>
+	</div>
+	<div class='ui-widget ui-widget-content ui-corner-all'>
+		<h3>What can I do here?</h3>
+		<ul>
+			<li><a href="/item/create">Create Items</a> to share with others or add to your builds.</li>
+			<li>Create <a href="/build/create">Character Builds</a>, complete with gear, skills and detailed statistics!</li>
+			<li>Compare the items in your build to other items you've created.</li>
+		</ul>
+	</div>
+	<div class='ui-widget ui-widget-content ui-corner-all'>
+	<h3>Stats</h3>
+	<ul>
+		<li><?= $this->counts['items']?> items</li>
+		<li><?= $this->counts['builds']?> Character Builds</li>
+	</ul>
+	</div>
 </div>

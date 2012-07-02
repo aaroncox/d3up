@@ -422,7 +422,11 @@ class D3Up_View_Helper_DisplayItem extends Zend_View_Helper_Abstract
 	}
 	private function _renderBottom() {
 		if($this->_item->_createdBy->id) {
-			return "Created by: ".$this->_item->_createdBy->username;
+			$extra = "";
+			if($this->_item->_original->id) {
+				$extra = " (Copied from <a href='/i/".$this->_item->_original->id."'>Here</a>)";
+			}
+			return "Item Owner: ".$this->_item->_createdBy->username.$extra;
 		}
 		return " ";
 	}

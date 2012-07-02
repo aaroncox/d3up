@@ -107,9 +107,12 @@ body {
 	background-color: #222;
 	font-family: 'Droid Sans', sans-serif;
 }
-a, a:visited, a:hover, a:active {
+a, a:visited, a:hover, a:active, a:hover .ui-button-text {
 	color: #70B1D5;
 	text-decoration: none;
+}
+a:active .ui-button-text, a:visited .ui-button-text {
+	color: #fff;
 }
 #wrapper {
 	width: 960px;
@@ -118,14 +121,14 @@ a, a:visited, a:hover, a:active {
 #header {
 	text-align: center;
 	font-size: 3em;
-	border-bottom: 1px solid #777;
+/*	border-bottom: 1px solid #777;*/
 }
 ul#navigation {
 	text-align: center;
 	padding: 5px;
 	margin: 0;
 	list-style: none;
-	border-bottom: 1px solid #777;
+/*	border-bottom: 1px solid #777;*/
 }
 ul#navigation li {
 	display: inline-block;
@@ -144,8 +147,7 @@ ul#navigation li {
 	color: #B18135;
 }
 .create-form {
-	padding: 20px;
-	display: inline-block;
+	padding: 0 20px;
 }
 .create-form select {
 	width: 400px;
@@ -155,7 +157,6 @@ ul#navigation li {
 }
 .item-preview {
 	float: right;
-	margin-top: 50px;
 	display: inline-block;
 }
 .item-preview ul.attrs input {
@@ -173,7 +174,8 @@ ul#navigation li {
 	text-align: center;
 	font-size: 12px;
 	padding: 5px;
-	border-bottom: 1px solid #777;
+/*	border-bottom: 1px solid #777;*/
+	margin-bottom: 10px;
 }
 #base_dps-label, #base_dps-element,
 #base_damage_min-label, #base_damage_min-element,
@@ -210,4 +212,11 @@ ul#navigation li {
 	display: inline-block;
 	text-align: right;
 	margin-right: 10px;
+}
+.ui-buttonset a.ui-button {
+	margin-right: 20px;
+}
+.dataTables_wrapper .ui-widget-header {
+	background: #0B3E6F;
+	background-image: none;
 }

@@ -1,34 +1,38 @@
-<form method="post">
-	<div class="item-preview">
-		<div class="d3-item">
-			<div class="top"><p class="">Name</p></div>
-			<div class="item">
-				<p class="item-type">
-					<span class="quality">Quality</span>
-					<span class="type">Type</span>
-				</p>
-				<p class="stats stats-primary">
-					<span class="big-stat"></span>
-					<span class="stat-helper"></span>
-				</p>
-				<p class="stats stats-extra-percent"></p>
-				<p class="stats stats-extra-range"></p>
-				<ul class="attrs">
-				</ul>
-				<ul class="sockets">
-				</ul>
-			</div>
-			<div class="bottom"> 
-				<? if($profile = Epic_Auth::getInstance()->getProfile()): ?>
-					Created by: <?= $profile->username ?>
-				<? endif; ?>
+<div class="create-form ui-widget ui-widget-content ui-corner-all">
+	<form method="post">
+		<div class="item-preview">
+			<h3>Item Preview</h3>
+			<div class="d3-item">
+				<div class="top"><p class="">Name</p></div>
+				<div class="item">
+					<p class="item-type">
+						<span class="quality">Quality</span>
+						<span class="type">Type</span>
+					</p>
+					<p class="stats stats-primary">
+						<span class="big-stat"></span>
+						<span class="stat-helper"></span>
+					</p>
+					<p class="stats stats-extra-percent"></p>
+					<p class="stats stats-extra-range"></p>
+					<ul class="attrs">
+					</ul>
+					<ul class="sockets">
+					</ul>
+				</div>
+				<div class="bottom"> 
+					<? if($profile = Epic_Auth::getInstance()->getProfile()): ?>
+						Created by: <?= $profile->username ?>
+					<? endif; ?>
+				</div>
 			</div>
 		</div>
-	</div>
-	<div class="create-form">
-		<?= $this->form ?>
-	</div>
-</form>
+		<div>
+			<h2>Create an Item</h2>
+			<?= $this->form ?>
+		</div>
+	</form>
+</div>
 <script type="text/javascript" src="/js/fullitem.js"></script>
 <script type="text/javascript">
 <? if(!empty($_POST)): ?>

@@ -1,3 +1,6 @@
+<?
+	$profile = Epic_Auth::getInstance()->getProfile();
+?>
 <style type="text/css" media="screen">
 	.single-item {
 		width: 430px;
@@ -8,7 +11,12 @@
 	<?= $this->displayItem($this->record) ?>
 	<p style='text-align: center'>
 		Link: <input type='text' value='http://d3up.com<?= $this->url(array('record' => $this->record), $this->record->route, true) ?>'/>
+		<? if($profile && $this->record->_createdBy && $profile->createReference() == $this->record->_createdBy->createReference()): ?>
 		<a href="/i/<?= $this->record->id ?>/edit" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only gear-change"><span class="ui-button-text">Edit</span></a>
+		<? endif; ?>
+		<? if($profile && $this->record->_createdBy && $profile->createReference() != $this->record->_createdBy->createReference()): ?>
+		<a href="/i/<?= $this->record->id ?>/copy" class="has-tooltip ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only gear-change"><span class="ui-button-text" data-tooltip="Copy this item into 'My Items'">Make a Copy</span></a>
+		<? endif; ?>
 	</p>
 	<p>Text Version of the Item:
 <? $p = new D3Up_View_Helper_DisplayItem() ?>

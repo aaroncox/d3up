@@ -463,6 +463,29 @@ $(function() {
 	$(".gear-change").click(function() {
 		var itemType = $(this).data('item-type'),
 				itemDisplay = $("#equipped-" + itemType);
+		if(itemType == 'offhand') {
+			var mh = $("#equipped-mainhand a").data("json");
+			switch(mh.type) {
+				case '2h-mace': 
+				case '2h-axe': 
+				case 'diabo': 
+				case 'crossbow': 
+				case '2h-mighty': 
+				case 'polearm': 
+				case 'staff': 
+				case '2h-sword':
+					$($("<div style='padding: 20px'/>").html("<p>You're currently wearing a two handed weapon, an offhand isn't allowed.")).dialog({
+						modal: true,
+						buttons: {
+							Ok: function() {
+								$( this ).dialog( "close" );
+							}
+						}
+					});
+					return false;
+					break;
+			}
+		}
 		$.ajax({
 			url: '/item/fetch/type/' + itemType,
 			cache: false,
@@ -501,6 +524,19 @@ $(function() {
 										var itemLink = $("<a/>"),
 												itemSelected = gearSelect.find(":selected"),
 												itemData = $.parseJSON(itemSelected.attr("data-json"));
+										// Unequip offhand if we're equipping a 2h weapon
+										switch(itemData.type) {
+											case '2h-mace': 
+											case '2h-axe': 
+											case 'diabo': 
+											case 'crossbow': 
+											case '2h-mighty': 
+											case 'polearm': 
+											case 'staff': 
+											case '2h-sword':
+												$("#equipped-offhand").html("Nothing");
+												break;
+										}
 										itemLink.attr("href", "/i/" + gearSelect.val());
 										itemLink.attr("data-json", JSON.stringify(itemData));
 										itemLink.addClass("quality-" + itemData.quality);
@@ -1104,7 +1140,27 @@ $(function() {
 				currently = stats;
 				itemDisplay = $("#equipped-" + itemType);
 		var itemLink = $("<a/>"),
-				oldItem = itemDisplay.html();
+				oldItem = itemDisplay.html(),
+				oldOH = false,
+				notices = [];
+		// Are we replacing a 1h + OH or 2x 1h w/ a 2h?
+		switch(upgradeItem.type) {
+			case '2h-mace': 
+			case '2h-axe': 
+			case 'diabo': 
+			case 'crossbow': 
+			case '2h-mighty': 
+			case 'polearm': 
+			case 'staff': 
+			case '2h-sword': 
+				// Ensure we're using an OH atm
+				if($("#equipped-offhand a").length) {
+					oldOH = JSON.parse($("#equipped-offhand a").attr("data-json"));
+					$("#equipped-offhand").html("");
+					notices.push("We notice you're comparing a two-handed weapon vs your currently equipped mainhand + off-hand items. We've adjusted the comparision slightly so you can see the actual stats between your mainhand + offhand VS the two-hander (without the offhand).");					
+				}
+				break;
+		}
 		itemLink.attr("href", "/i/" + upgradeItem.id);
 		itemLink.attr("data-json", JSON.stringify(upgradeItem));
 		itemLink.addClass("quality-" + upgradeItem.quality);
@@ -1117,12 +1173,30 @@ $(function() {
 		var possible = {};
 		jQuery.extend(possible,stats);
 		// Put the old item back in place
+		if(oldOH) {
+			var replaceOH = $("<a/>").attr("href", "/i/" + oldOH.id).attr("data-json", JSON.stringify(oldOH)).addClass("quality-" + oldOH.quality).html(oldOH.name);
+			replaceOH.bindTooltip();
+			$("#equipped-offhand").append(replaceOH);
+		}
 		itemDisplay.html(oldItem);
+		itemDisplay.find("a").bindTooltip();
 		calc();
-		var items = $("<div/>").append($("<div/>").append("Old Item: ", oldItem), $("<div/>").append("New Item: ", itemLink)),
+		$("#compare-notes").html("");
+		if(notices.length > 0) {
+			$.each(notices, function(k,v) {
+				$("#compare-notes").append(v);
+			})
+		}
+		var items = $("<div/>"),
+				oldItems = $("<div/>").append("Old Item: ", oldItem), 
+				newItems = $("<div/>").append("New Item: ", itemLink),
 				diff = $.diff(currentStats, possible),
 				table = $("<table/>");
 				header = $("<tr/>").append("<th>Stat</th><th>Diff</th><th>Old</th><th>New</th>");
+		if(oldOH) {
+			oldItems.append(" (+" + $("#equipped-offhand").html() + ")");
+		}
+		items.append(oldItems, newItems);
 		table.append(header);
 		if(Object.keys(diff['mod']).length > 0) {
 			$.each(diff['mod'], function(k,v) {

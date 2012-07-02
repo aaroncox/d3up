@@ -10,7 +10,7 @@ class IndexController extends Epic_Controller_Action {
 		$sort = array(
 			'_created' => -1,
 		);
-		$items = Epic_Mongo::db('item')->fetchAll($query, $sort);	
+		$this->view->items = $items = Epic_Mongo::db('item')->fetchAll($query, $sort, 200);	
 		$paginator = Zend_Paginator::factory($items);
 		$paginator->setCurrentPageNumber($this->getRequest()->getParam('page', 1))->setItemCountPerPage(20);
 		$this->view->items = $paginator;

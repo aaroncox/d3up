@@ -8,6 +8,12 @@
 	#character {
 		width: 500px;
 	}
+	#compare-notes {
+		list-style: none;
+		padding: 15px;
+		margin: 0;
+		color: #F00;
+	}
 	.equipment-table {
 	}
 	.equipment-table td {
@@ -62,7 +68,7 @@
 		margin: 0 0 10px;
 	}
 </style>
-<h2><?= $this->record->name ?> (<?= ucwords(str_replace("-", " ", $this->record->class)) ?>)</h2>
+<h2 style="text-align: center"><?= $this->record->name ?> (<?= ucwords(str_replace("-", " ", $this->record->class)) ?>)</h2>
 <div id="character" class="inline-flow" data-class="<?= $this->record->class ?>">
 	<ul>
 		<li><a href="#hero-gear">Gear</a></li>
@@ -105,6 +111,7 @@
 		</select>
 		<!-- or
 		<input type="text" id="compare-to-id" style="width: 50px"/> (Enter Item ID) -->
+		<ul id="compare-notes"></ul>
 		<div class="compare-diff">
 		</div>
 		<p><b>Note</b>: Currently the item HAS to be created by you before you are able to compare them.</p>
@@ -182,7 +189,7 @@
 	</fieldset>
 	</form>
 </div>
-<script type="text/javascript" src="/js/calc.js"></script>
+<script type="text/javascript" src="/js/fullcalc.js"></script>
 <script type="text/javascript">
 $("#character").tabs();
 $(".calc-stats").tabs();

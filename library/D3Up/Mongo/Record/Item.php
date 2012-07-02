@@ -12,6 +12,7 @@ class D3Up_Mongo_Record_Item extends Epic_Mongo_Document_Record
 	
 	protected $_requirements = array(
 		'_createdBy' => array('Document:Epic_Mongo_Document_User', 'AsReference'),
+		'_original' => array('Document:D3Up_Mongo_Record_Item', 'AsReference'),			// If we are copying the item, this is the original.
 	);
 	
 	public function getEditForm() {
