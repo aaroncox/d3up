@@ -1,5 +1,7 @@
 <?
 	$profile = Epic_Auth::getInstance()->getProfile();
+	$this->headTitle($this->record->name); 
+	$this->headTitle(ucwords(str_replace("-", " ", $this->record->class))); 
 ?>
 <style type="text/css">
 	#gear-change {
