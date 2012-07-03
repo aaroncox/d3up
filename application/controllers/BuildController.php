@@ -24,4 +24,26 @@ class BuildController extends Epic_Controller_Action
 		} else {
 			$this->_redirect("/user/builds");
 		}
-	}} // END class HeroController extends Epic_Controller_Action
+	}
+	public function editAction() {
+		$id = $this->getRequest()->getParam("id");
+		if($id) {
+			$this->view->record = $build = Epic_Mongo::db('build')->fetchOne(array("id" => (int) $id));			
+			$profile = Epic_Auth::getInstance()->getProfile();
+			if(!$profile) {
+				throw new Exception("You aren't logged in!");
+			}
+			if($profile->id != $build->_createdBy->id) {
+				throw new Exception("This isn't your build to edit.");
+			}
+			// Get Form for Item
+			$form = $this->view->form = $build->getEditForm();
+			if($this->getRequest()->isPost()) {
+				$result = $form->process($this->getRequest()->getParams());
+				if($result) {
+					$this->_redirect("/b/".$build->id);				
+				}
+			}
+		}		
+	}
+} // END class HeroController extends Epic_Controller_Action

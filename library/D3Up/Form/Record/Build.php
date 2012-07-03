@@ -54,6 +54,7 @@ class D3Up_Form_Record_Build extends Epic_Form
 	public function init()
 	{
 		parent::init();
+		$build = $this->getBuild();
 		
 		$this->addElement("text", "name", array(
 			'required' => true,
@@ -62,6 +63,15 @@ class D3Up_Form_Record_Build extends Epic_Form
 				array('StringLength', false, array(2, 50)),
 			),
 			'filters' => array('StripTags'),
+		));
+		
+		$this->addElement("textarea", "description", array(
+			'label' => 'Description of this build',
+			'validators' => array(
+				array('StringLength', false, array(5, 5000)),
+			),
+			'rows' => 5,
+			'filters' => array('StripTags'),			
 		));
 
 		$this->addElement("select", "class", array(
@@ -77,7 +87,18 @@ class D3Up_Form_Record_Build extends Epic_Form
 			)
 		));
 		
-		$this->setButtons(array("save" => "Create Build"));		
+		$this->setDefaults(array(
+			'name' => $build->name,
+			'description' => $build->description,
+		));
+		
+		if($this->isNewRecord()) {
+			$this->setButtons(array("save" => "Create Build"));					
+		} else {
+			$this->class->setValue($build->class);
+			$this->setButtons(array("save" => "Save"));		
+		}
+
 	}
 	
 	public function save() {
@@ -92,6 +113,8 @@ class D3Up_Form_Record_Build extends Epic_Form
 		}
 		// Set the Quality of the Build
 		$build->class = $this->class->getValue();
+		// Set the Description
+		$build->description = $this->description->getValue();
 		// Do we have a user creating this? If so, add it.
 		if($profile = Epic_Auth::getInstance()->getProfile()) {
 			$build->_createdBy = $profile;

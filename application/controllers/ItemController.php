@@ -24,6 +24,13 @@ class ItemController extends Epic_Controller_Action
 		$id = $this->getRequest()->getParam("id");
 		if($id) {
 			$this->view->record = $item = Epic_Mongo::db('item')->fetchOne(array("id" => (int) $id));			
+			$profile = Epic_Auth::getInstance()->getProfile();
+			if(!$profile) {
+				throw new Exception("You aren't logged in!");
+			}
+			if($profile->id != $item->_createdBy->id) {
+				throw new Exception("This isn't your item to edit.");
+			}
 			// Get Form for Item
 			$form = $this->view->form = $item->getEditForm();
 			if($this->getRequest()->isPost()) {

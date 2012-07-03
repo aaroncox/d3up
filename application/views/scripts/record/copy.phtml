@@ -1,0 +1,17 @@
+<div class="ui-widget ui-corner-all ui-widget-content" style="padding: 20px">
+	<div style="float: right; width: 200px; border: 1px solid #777; padding: 10px; margin: 10px;">
+		<p><b>Build Name</b>: <span class="skill-highlight"><?= $this->record->name ?></span></p>
+		<p><b>Class</b>: <span class="skill-highlight"><?= ucwords(str_replace("-", " ", $this->record->class)) ?></span></p>
+		<p><b>Original Creator</b>: <span class="skill-highlight"><?= $this->record->_createdBy->username ?></span></p>
+	</div>
+	<h2 style="color: #00C800">Are you sure you want to make a copy of this?</h2>
+	<p style="font-size: 1.2em; line-height: 1.6em">
+		Making a copy of a build will copy the build itself, including all of the skills, passives and gear. Keep in mind, this is going to copy all of the items currently equipped into your "My Items", so you have a copy of each one for editing yourself.
+	</p>
+	<p>
+		Please confirm your decision:
+	</p>
+	<p>
+		<a href="?confirm=true" class='ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only' style="padding: 5px; width: 450px">Yes, make a copy.</a>
+	</p>
+</div>

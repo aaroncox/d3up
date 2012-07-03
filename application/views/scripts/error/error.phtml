@@ -1,5 +1,5 @@
 <?php $this->headTitle("Error"); ?>
-<?php if ('development' == APPLICATION_ENV): ?> 
+<?php if ('development' != APPLICATION_ENV): ?> 
   <h2><?= $this->escape( get_class($this->exception) ); ?></h2>
   <b>Message:</b> <?= $this->exception->getMessage() ?> 
 	<h3>Stack trace:</h3> 
@@ -29,15 +29,8 @@
 	<h3>Request Parameters:</h3> 
 	<pre><? var_dump($this->request->getParams()) ?></pre>
 <?php else: ?>
-	<h1>Not found <span>:(</span></h1>
-   <p>Sorry, but the page you were trying to view does not exist.</p>
-   <p>It looks like this was the result of either:</p>
-   <ul>
-     <li>a mistyped address</li>
-     <li>an out-of-date link</li>
-   </ul>
-   <script>
-     var GOOG_FIXURL_LANG = (navigator.language || '').slice(0,2),GOOG_FIXURL_SITE = location.host;
-   </script>
-   <script src="http://linkhelp.clients.google.com/tbproxy/lh/wm/fixurl.js"></script>
+	<div class="ui-widget ui-widget-content ui-corner-all" style="padding: 5px 20px">
+	  <h2>Error #<?= rand(3007,3700) ?></h2>
+	  <b>Message:</b> <?= $this->exception->getMessage() ?> 
+	</div>
 <?php endif ?>

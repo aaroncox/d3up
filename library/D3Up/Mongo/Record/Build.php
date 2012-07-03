@@ -13,6 +13,7 @@ class D3Up_Mongo_Record_Build extends Epic_Mongo_Document_Record
 	protected $_requirements = array(
 		'equipment' => array('Document:D3Up_Mongo_Record_GearSet'),
 		'_createdBy' => array('Document:Epic_Mongo_Document_User', 'AsReference'),
+		'_original' => array('Document:D3Up_Mongo_Record_Build', 'AsReference'),
 	);
 	
 	public function getEditForm() {

@@ -18,6 +18,9 @@ class RecordController extends Epic_Controller_Action
 			case "item":
 				$this->_redirect("/item/edit/id/".$record->id);
 				break;
+			case "build":
+				$this->_redirect("/build/edit/id/".$record->id);
+				break;
 		}
 		var_dump($record); exit;
 	}
@@ -34,24 +37,76 @@ class RecordController extends Epic_Controller_Action
 		$record = $this->getRecord();
 		// Get this user
 		$profile = Epic_Auth::getInstance()->getProfile();
-		// Check to see if the user has already copied this item
-		$query = array(
-			'_original' => $record->createReference(),
-			'_createdBy' => $profile->createReference(), 
-		);
-		$dupe = Epic_Mongo::db("item")->fetchOne($query);
-		if($dupe) {
-			$this->_redirect("/i/".$dupe->id);
-			throw new Exception("You've already copied this item to your items. To prevent abuse, you can't copy an item to your items more than once.");
+		if(!$profile) {
+			throw new Exception("You aren't logged in, therefore you cannot use the Copy feature.");
 		}
-		$new = Epic_Mongo::newDoc('item');
-		$export = $record->export();
-		unset($export['id'], $export['_id'], $export['_createdBy']);
-		$new->setFromArray($export);
-		$new->_original = $record;
-		$new->_createdBy = $profile;
-		$new->save();
-		$this->_redirect("/i/".$new->id);
+		// Check to see if the user has already copied this item
+		if($record instanceOf D3Up_Mongo_Record_Item) {
+			$query = array(
+				'_original' => $record->createReference(),
+				'_createdBy' => $profile->createReference(), 
+			);
+			$dupe = Epic_Mongo::db("item")->fetchOne($query);
+			if($dupe) {
+				$this->_redirect("/i/".$dupe->id);
+				throw new Exception("You've already copied this item to your items. To prevent abuse, you can't copy an item to your items more than once.");
+			}
+			$new = Epic_Mongo::newDoc('item');
+			$export = $record->export();
+			unset($export['id'], $export['_id'], $export['_createdBy']);
+			$new->setFromArray($export);	
+			$new->_original = $record;
+			$new->_createdBy = $profile;
+			$new->save();
+			$this->_redirect("/i/".$new->id);		
+		}
+		if($record instanceOf D3Up_Mongo_Record_Build) {
+			if($confirm = $this->getRequest()->getParam("confirm")) {
+				if($record->_original->id) {
+					echo "Checking Original Status";
+					$query = array(
+						'_original' => $record->_original->createReference(),
+						'_createdBy' => $profile->createReference(), 
+					);
+				} else {
+					// Check to see if THIS user has copied this build already
+					echo "Checking User/Build Status";
+					$query = array(
+						'_original' => $record->createReference(),
+						'_createdBy' => $profile->createReference(), 
+					);					
+				}
+				$dupe = Epic_Mongo::db("build")->fetchOne($query);
+				// echo "<pre>"; var_dump($query, $dupe); exit;
+				if($dupe) {
+					// $this->_redirect("/b/".$dupe->id);
+					throw new Exception("You've already copied this build to your builds. To prevent abuse, you can't copy a build to your builds more than once.");
+				}
+				$new = Epic_Mongo::newDoc('build');
+				$export = $record->export();
+				unset($export['id'], $export['_id'], $export['_createdBy'], $export['equipment']);
+				$new->setFromArray($export);			
+				foreach($record->equipment as $slot => $item) {
+					$newItem = Epic_Mongo::newDoc('item');
+					$exportItem = $item->export();
+					unset($exportItem['id'], $exportItem['_id'], $exportItem['_createdBy'], $exportItem['_original']);
+					$newItem->setFromArray($exportItem);			
+					$newItem->_original = $item;
+					$newItem->_createdBy = $profile;
+					$newItem->save();
+					$new->equipment->$slot = $newItem;
+				}
+				if($record->_original->id) {
+					$new->_original = $record->_original;					
+				} else {
+					$new->_original = $record;					
+				}
+				$new->_createdBy = $profile;
+				$new->save();
+				$this->_redirect("/b/".$new->id."/edit");
+			}
+			// echo "<pre>"; var_dump($record, $export); exit;
+		}
 	}
 	public function viewAction() {
 		$record = $this->getRecord();

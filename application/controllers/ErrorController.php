@@ -21,7 +21,7 @@ class ErrorController extends Epic_Controller_Action
       // Ensure the default view suffix is used so we always return good 
       // content
       $this->_helper->viewRenderer->setViewSuffix('phtml');
-      $this->view->layout()->disableLayout();
+      // $this->view->layout()->disableLayout();
 
       // Grab the error object from the request
       $errors = $this->_getParam('error_handler'); 

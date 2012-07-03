@@ -67,8 +67,39 @@
 		font-weight: bold;
 		margin: 0 0 10px;
 	}
+	.build-header {
+		margin: 5px 0;
+		padding: 5px 20px;
+	}
+	.build-header h2 {
+		color: #7FCDFF;
+		margin: 5px 0;
+	}
+	.build-header .controls {
+		float: right;
+		padding: 5px;
+	}
 </style>
-<h2 style="text-align: center"><?= $this->record->name ?> (<?= ucwords(str_replace("-", " ", $this->record->class)) ?>)</h2>
+<div class="build-header ui-widget ui-widget-content ui-corner-all">
+	<? if($profile && $this->record->_createdBy): ?>
+	<div class="controls">
+		<? if($profile->createReference() == $this->record->_createdBy->createReference()): ?>
+			<a href="/b/<?= $this->record->id ?>/edit" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only gear-change"><span class="ui-button-text">Edit</span></a>			
+		<? else: ?>
+			<a href="/b/<?= $this->record->id ?>/copy" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only gear-change"><span class="ui-button-text">Copy this Build</span></a>
+		<? endif; ?>
+	</div>
+	<? endif; ?>
+	<h2>
+		<?= $this->record->name ?> (<?= ucwords(str_replace("-", " ", $this->record->class)) ?>)
+	</h2>
+	<? if($this->record->_original->id): ?>
+		<p>Based on the original build: <a href="/b/<?= $this->record->_original->id ?>"><?= $this->record->_original->name ?> (<?= ucwords(str_replace("-", " ", $this->record->_original->class)) ?>)</a></p>
+	<? endif; ?>
+	<? if($this->record->description): ?>
+		<p><?= $this->record->description ?></p>
+	<? endif ?>
+</div>
 <div id="character" class="inline-flow" data-class="<?= $this->record->class ?>">
 	<ul>
 		<li><a href="#hero-gear">Gear</a></li>
@@ -150,7 +181,7 @@
 		</table>
 	</div>
 </div>
-<div class="inline-flow" style="width: 440px">
+<div class="inline-flow" style="width: 446px">
 	<div class="calc-stats ui-widget ui-widget-content ui-corner-all">
 		<ul>
 			<li><a href="#tab-base">Stats</a></li>
