@@ -1,5 +1,5 @@
 <?php $this->headTitle("Error"); ?>
-<?php if ('development' != APPLICATION_ENV): ?> 
+<?php if ('development' == APPLICATION_ENV): ?> 
   <h2><?= $this->escape( get_class($this->exception) ); ?></h2>
   <b>Message:</b> <?= $this->exception->getMessage() ?> 
 	<h3>Stack trace:</h3> 
