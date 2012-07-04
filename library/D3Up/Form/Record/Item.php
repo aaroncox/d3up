@@ -187,7 +187,8 @@ class D3Up_Form_Record_Item extends Epic_Form
 
 		$this->addElement("select", "itemType", array(
 			'required' => true,
-			'label' => 'What kind of item is this?',
+			'label' => 'Type',
+			'data-placeholder' => 'What type of item is this?',
 			'multiOptions' => array(
 				null => '',
 				'amulet' => 'Amulet',
@@ -234,7 +235,8 @@ class D3Up_Form_Record_Item extends Epic_Form
 		
 		$this->addElement("select", "quality", array(
 			'required' => true,
-			'label' => 'What is the quality/rarity of the item?',
+			'label' => 'Quality',
+			'data-placeholder' => 'What quality/rarity is this item?',
 			'multiOptions' => array(
 				null => '',
 			 	1 => 'Inferior',
@@ -249,7 +251,8 @@ class D3Up_Form_Record_Item extends Epic_Form
 		));
 		
 		$this->addElement("select", "attributes", array(
-			'label' => 'What types of stats are on this item?',
+			'label' => 'Which stats does this item have?',
+			'data-placeholder' => 'Select all of the stats you wish to display',
 			'multiple' => true,
 			'multiOptions' => array(null => '') + $this->_attributes,
 		));

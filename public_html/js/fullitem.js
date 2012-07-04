@@ -223,7 +223,7 @@ switch($("#itemType").val()) {
 $("#name").keyup(function() {
 	$(".item-preview .top p").html(document.createTextNode($("#name").val()));
 });
-$("#itemType").select2({
+$("#itemType").chosen({
 	placeholder: 'Choose the item type...',
 	allowClear: true
 });
@@ -340,11 +340,11 @@ $("#itemType").bind("change", function() {
 	}
 
 });
-$("#quality").select2({
+$("#quality").chosen({
 	placeholder: 'Choose the item\'s quality...',
 	allowClear: true
 });
-$("#sockets").select2({
+$("#sockets").chosen({
 	placeholder: 'No Sockets...',
 	allowClear: true
 });
@@ -404,7 +404,7 @@ $("#sockets").bind("change", function() {
 			});
 			container.append($("<li>").append(select));
 		}
-		container.find("select").select2();
+		container.find("select").chosen();
 	}
 });
 $("#quality").bind("change", function() {
@@ -418,7 +418,7 @@ $("#quality").bind("change", function() {
 	container.removeClass("quality-1 quality-2 quality-3 quality-4 quality-5 quality-6 quality-7");
 	container.addClass("quality-" + nameClass);
 });
-$("#attributes").select2({
+$("#attributes").chosen({
 	placeholder: 'What attributes does this item have?',
 	allowClear: true
 });
