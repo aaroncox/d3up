@@ -283,7 +283,10 @@ $(function() {
 						}
 					},
 					'steady-aim': {
-						'desc': 'As long as there are no enemies within <span class="skill-highlight">10</span> yards, all damage is increased by <span class="skill-highlight">20%</span>.'
+						'desc': 'As long as there are no enemies within <span class="skill-highlight">10</span> yards, all damage is increased by <span class="skill-highlight">20%</span>.',
+						'effect': {
+							'plus-damage': 0.2
+						}
 					},
 					'cull-the-weak': {
 						'desc': 'Damage against slowed enemies increased by <span class="skill-highlight">15%</span>.'
@@ -339,7 +342,10 @@ $(function() {
 						'desc': 'Increases Hatred generated from Grenades by <span class="skill-highlight">2</span> and reduces the Hatred cost of Cluster Arrow by <span class="skill-highlight">10</span>. Upon death, you drop a giant grenade that explodes for <span class="skill-highlight">450%</span> weapon damage as Fire.'
 					},
 					'sharpshooter': {
-						'desc': 'Gain <span class="skill-highlight">3%</span> Critical Hit Chance every second. This bonus is reset <span class="skill-highlight">1</span> second after you successfully critically hit.'
+						'desc': 'Gain <span class="skill-highlight">3%</span> Critical Hit Chance every second. This bonus is reset <span class="skill-highlight">1</span> second after you successfully critically hit.',
+						'effect': {
+							'sharpshooter': true
+						}
 					},
 					'ballistics': {
 						'desc': 'Damage from rockets increased by <span class="skill-highlight">50%</span>. '
@@ -797,7 +803,7 @@ $(function() {
 			});
 		}
 		// ----------------------------------
-		// Math for Offensive Statistics 
+		// Vars for Offensive Statistics (Before Passives so we can add)
 		// ----------------------------------
 		var mathSpeed = stats['speed'],
 				mathSpeedAdditive = 1,
@@ -805,78 +811,12 @@ $(function() {
 				mathDamageAvg = stats['dps'],
 				mathDamageAdd = 0,
 				mathDps = 0,
+				mathDpsSpecial = false,
+				mathDpsSpecialName = false,
 				mathCriticalHit = 5 + ((attrs['critical-hit']) ? attrs['critical-hit'] : 0),
-				mathCriticalHitDamage = 50 + ((attrs['critical-hit-damage']) ? attrs['critical-hit-damage'] : 0);
-		if(attrs['max-damage'] || attrs['min-damage']) {
-			mathDamageAdd = (((attrs['max-damage'])?attrs['max-damage']:0) + ((attrs['min-damage'])?attrs['min-damage']:0)) / 2;
-		}
-		// Calculate the Attack Speed (Additive)
-		$.each(attackSpeedIncs, function(k,v) {
-			mathSpeedAdditive += v;
-		}); 
-		mathSpeed = Math.round(mathSpeed * mathSpeedAdditive * 100)/100;
-		// Calculate the DPS
-		var preCrit = mathDamageAvg * mathSpeed * (attrs['intelligence'] / 100);
-		var critAddition = (preCrit * 1.74) * 0.325;
-		if(mathDamage) {
-			if(isDuelWielding) {
-				var mathDamageOH = stats['damage-oh'];
-				// ((
-				// (wepdmg1 + wepdmg2 + mindmg + maxdmg + dmg1 + dmg2) / 2 * 
-				// ((dex + basedex + 100) / 100) + 
-				// ((wepdmg1 + wepdmg2 + mindmg + maxdmg + dmg1 + dmg2) / 2 * ((dex + basedex + 100) / 100))
-				// * (cc + basecc) / 100 
-				// * (cb + basecb) / 100) 
-				// * attacks 
-				// * (1 + (double)ias / 100));
-				// 
-				// wepdmg1 and wepdmg2 stand for the dmg on the item description
-				// mindmg-maxdmg the sum of your min and max dmg modificators (dont count in the weapon modigicators as they are already calculated in the weapon!)
-				// base(value) are the values that your characters have already w/o items (like lvl 60dh has 187 dex)
-				// cc-critical_chance
-				// cb-critical_bonus
-				var wd1 = (mathDamage.min + mathDamage.max) / 2,
-						wd2 = (mathDamageOH.min + mathDamageOH.max) / 2,
-						bd = mathDamageAdd,
-						bs = mathSpeedAdditive,
-						as1 = stats['speed'],
-						as2 = stats['speed-oh'],
-						cd = (mathCriticalHit / 100) * (mathCriticalHitDamage / 100) + 1,
-						mathDps = Math.round((wd1+wd2+(bd*2))*((as1+as2)*(bs+0.15)/4)*cd*(primaryAttr/100) * 100)/100;
-				mathSpeed = Math.round(mathSpeed * 1.15 * 100) / 100;
-				// console.log(test, wd1, wd2, bd, as1, as2, cd);
-				// console.log("(" + wd1 + " + " + wd2 + " + (" + bd + " * 2)) * ((" + as1 + " + " + as2 + ")*(" + bs + " + 0.15)/4) * " + cd + "*" + (primaryAttr/100) + " = " + test);
-				// Wd1 = avg weapon damage 1
-				// Wd2= avg weapon damage 2
-				// Bd= avg bonus damage from gear
-				// Bs= bonus atk speed from gear 
-				// As 1= atk speed wep 1
-				// As2= atk speed wep 2
-				// Cd= crit modifier ( same as your original crit mod)
-				// Dex= dex mod (same as yours)
-				// (wd1+wd2+2(Bd))((As1+As2)(1+bs+15%)/4)(cd)(dex)= dmg
-				
-				// If we are duel wielding, use different math
-				// mathSpeedAdditive = mathSpeedAdditive * 1.15;
-				// mhDps = (((mathDamage.min + mathDamage.max) / 2 + mathDamageAdd) * stats['speed']) * mathSpeedAdditive * (primaryAttr / 100 + 1) * 1 * ((mathCriticalHit / 100) * (mathCriticalHitDamage/100)+ 1);
-				// ohDps = (((mathDamageOH.min + mathDamageOH.max) / 2 + mathDamageAdd) * stats['speed']) * mathSpeedAdditive * (primaryAttr / 100 + 1) * 1 * ((mathCriticalHit / 100) * (mathCriticalHitDamage/100)+ 1);
-				// cDps = 1.15 * ((mhDps + ohDps) / 2) / (1/stats['speed'])+(1/stats['speed-oh']);
-				// console.log(mhDps, ohDps, cDps);
-				// // mathDps = 1.15 * (((mathDamage.min + mathDamage.max) / 2 + mathDamageAdd) + ((mathDamageOH.min + mathDamageOH.max) / 2 + mathDamageAdd)) / ((1 / stats['speed']) + (1 / stats['speed-oh']));
-				// console.log(mathDps);
-				// // mathDps = (((mathDamage.min + mathDamage.max) / 2 + mathDamageAdd) * stats['speed']) * mathSpeedAdditive * (primaryAttr / 100 + 1) * 1 * ((mathCriticalHit / 100) * (mathCriticalHitDamage/100)+ 1);
-				// mathDps = Math.round(cDps * 100) / 100;		
-				// mathSpeed = 1.15 * mathSpeed ;
-				// console.log(mathSpeed);
-				// dual wield dps = 1.15 × (main-hand damage + off-hand damage) / ((1 / main-hand attacks per second) + (1 / off-hand attacks per second))	
-				// tabOffense.append("((" + mathDamage.min + "+" + mathDamage.max + ")" + "/ 2 + " + mathDamageAdd + ") * " + stats['speed'] + ") * " + mathSpeedAdditive + ") * " + "(" + primaryAttr + "/ 100 + 1) * 1 * ((" + mathCriticalHit + "/ 100) * (" + mathCriticalHitDamage + "/100)+ 1)");				
-			} else {
-				// Else single weapon, do normally
-				mathDps = (((mathDamage.min + mathDamage.max) / 2 + mathDamageAdd) * stats['speed']) * mathSpeedAdditive * (primaryAttr / 100 + 1) * 1 * ((mathCriticalHit / 100) * (mathCriticalHitDamage/100)+ 1);
-				mathDps = Math.round(mathDps * 100) / 100;		
-				// tabOffense.append("((" + mathDamage.min + "+" + mathDamage.max + ")" + "/ 2 + " + mathDamageAdd + ") * " + stats['speed'] + ") * " + mathSpeedAdditive + ") * " + "(" + primaryAttr + "/ 100 + 1) * 1 * ((" + mathCriticalHit + "/ 100) * (" + mathCriticalHitDamage + "/100)+ 1)");				
-			}
-		}
+				mathCriticalHitDamage = 50 + ((attrs['critical-hit-damage']) ? attrs['critical-hit-damage'] : 0), 
+				mathPlusDamage = false;
+		
 		// ----------------------------------
 		// Modifications of Attributes/Skills based on passives
 		// ----------------------------------
@@ -886,6 +826,11 @@ $(function() {
 				if(typeof passives[heroClass][v]['effect'] != "undefined") {
 					$.each(passives[heroClass][v]['effect'], function(effect,value) {
 						switch(effect) {
+							case "sharpshooter":
+								mathDpsSpecialName = 'Sharpshooter';
+								mathDpsSpecial = (((mathDamage.min + mathDamage.max) / 2 + mathDamageAdd) * stats['speed']) * mathSpeedAdditive * (primaryAttr / 100 + 1) * 1 * ((100 / 100) * (mathCriticalHitDamage/100)+ 1);
+								mathDpsSpecial = Math.round(mathDps * 100) / 100;
+								break;
 							case "plus-armor":
 								mathArmor = Math.round(mathArmor * (1 + value) * 100) / 100;
 								mathReduction = mathArmor / (50 * vsLevel + mathArmor);
@@ -897,7 +842,12 @@ $(function() {
 								}
 								break;
 							case "plus-damage": 
-								mathDps = Math.round(mathDps * (1 + value) * 100) / 100;
+								if(mathPlusDamage) {
+									mathPlusDamage += value;
+								} else {
+									mathPlusDamage = value;
+								}
+								// mathDps = Math.round(mathDps * (1 + value) * 100) / 100;
 								break;
 							case "flatten-resists":
 								var highest = 0;
@@ -997,9 +947,88 @@ $(function() {
 								break;
 						}
 					});						
+
 				}
 			});			
 		}	
+		// ----------------------------------
+		// Math for Actual Offensive Statistics (Before Passives so we can add)
+		// ----------------------------------
+		if(attrs['max-damage'] || attrs['min-damage']) {
+			mathDamageAdd = (((attrs['max-damage'])?attrs['max-damage']:0) + ((attrs['min-damage'])?attrs['min-damage']:0)) / 2;
+		}
+		// Calculate the Attack Speed (Additive)
+		$.each(attackSpeedIncs, function(k,v) {
+			mathSpeedAdditive += v;
+		}); 
+		mathSpeed = Math.round(mathSpeed * mathSpeedAdditive * 100)/100;
+		// Calculate the DPS
+		var preCrit = mathDamageAvg * mathSpeed * (attrs['intelligence'] / 100);
+		var critAddition = (preCrit * 1.74) * 0.325;
+		if(mathDamage) {
+			if(isDuelWielding) {
+				var mathDamageOH = stats['damage-oh'];
+				// ((
+				// (wepdmg1 + wepdmg2 + mindmg + maxdmg + dmg1 + dmg2) / 2 * 
+				// ((dex + basedex + 100) / 100) + 
+				// ((wepdmg1 + wepdmg2 + mindmg + maxdmg + dmg1 + dmg2) / 2 * ((dex + basedex + 100) / 100))
+				// * (cc + basecc) / 100 
+				// * (cb + basecb) / 100) 
+				// * attacks 
+				// * (1 + (double)ias / 100));
+				// 
+				// wepdmg1 and wepdmg2 stand for the dmg on the item description
+				// mindmg-maxdmg the sum of your min and max dmg modificators (dont count in the weapon modigicators as they are already calculated in the weapon!)
+				// base(value) are the values that your characters have already w/o items (like lvl 60dh has 187 dex)
+				// cc-critical_chance
+				// cb-critical_bonus
+				var wd1 = (mathDamage.min + mathDamage.max) / 2,
+						wd2 = (mathDamageOH.min + mathDamageOH.max) / 2,
+						bd = mathDamageAdd,
+						bs = mathSpeedAdditive,
+						as1 = stats['speed'],
+						as2 = stats['speed-oh'],
+						cd = (mathCriticalHit / 100) * (mathCriticalHitDamage / 100) + 1,
+						mathDps = Math.round((wd1+wd2+(bd*2))*((as1+as2)*(bs+0.15)/4)*cd*(primaryAttr/100) * 100)/100;
+				mathSpeed = Math.round(mathSpeed * 1.15 * 100) / 100;
+				// console.log("dw");
+				// console.log(test, wd1, wd2, bd, as1, as2, cd);
+				// console.log("(" + wd1 + " + " + wd2 + " + (" + bd + " * 2)) * ((" + as1 + " + " + as2 + ")*(" + bs + " + 0.15)/4) * " + cd + "*" + (primaryAttr/100) + " = " + test);
+				// Wd1 = avg weapon damage 1
+				// Wd2= avg weapon damage 2
+				// Bd= avg bonus damage from gear
+				// Bs= bonus atk speed from gear 
+				// As 1= atk speed wep 1
+				// As2= atk speed wep 2
+				// Cd= crit modifier ( same as your original crit mod)
+				// Dex= dex mod (same as yours)
+				// (wd1+wd2+2(Bd))((As1+As2)(1+bs+15%)/4)(cd)(dex)= dmg
+				
+				// If we are duel wielding, use different math
+				// mathSpeedAdditive = mathSpeedAdditive * 1.15;
+				// mhDps = (((mathDamage.min + mathDamage.max) / 2 + mathDamageAdd) * stats['speed']) * mathSpeedAdditive * (primaryAttr / 100 + 1) * 1 * ((mathCriticalHit / 100) * (mathCriticalHitDamage/100)+ 1);
+				// ohDps = (((mathDamageOH.min + mathDamageOH.max) / 2 + mathDamageAdd) * stats['speed']) * mathSpeedAdditive * (primaryAttr / 100 + 1) * 1 * ((mathCriticalHit / 100) * (mathCriticalHitDamage/100)+ 1);
+				// cDps = 1.15 * ((mhDps + ohDps) / 2) / (1/stats['speed'])+(1/stats['speed-oh']);
+				// console.log(mhDps, ohDps, cDps);
+				// // mathDps = 1.15 * (((mathDamage.min + mathDamage.max) / 2 + mathDamageAdd) + ((mathDamageOH.min + mathDamageOH.max) / 2 + mathDamageAdd)) / ((1 / stats['speed']) + (1 / stats['speed-oh']));
+				// console.log(mathDps);
+				// // mathDps = (((mathDamage.min + mathDamage.max) / 2 + mathDamageAdd) * stats['speed']) * mathSpeedAdditive * (primaryAttr / 100 + 1) * 1 * ((mathCriticalHit / 100) * (mathCriticalHitDamage/100)+ 1);
+				// mathDps = Math.round(cDps * 100) / 100;		
+				// mathSpeed = 1.15 * mathSpeed ;
+				// console.log(mathSpeed);
+				// dual wield dps = 1.15 × (main-hand damage + off-hand damage) / ((1 / main-hand attacks per second) + (1 / off-hand attacks per second))	
+				// tabOffense.append("((" + mathDamage.min + "+" + mathDamage.max + ")" + "/ 2 + " + mathDamageAdd + ") * " + stats['speed'] + ") * " + mathSpeedAdditive + ") * " + "(" + primaryAttr + "/ 100 + 1) * 1 * ((" + mathCriticalHit + "/ 100) * (" + mathCriticalHitDamage + "/100)+ 1)");				
+			} else {
+				// Else single weapon, do normally
+				mathDps = (((mathDamage.min + mathDamage.max) / 2 + mathDamageAdd) * stats['speed']) * mathSpeedAdditive * (primaryAttr / 100 + 1) * 1 * ((mathCriticalHit / 100) * (mathCriticalHitDamage/100)+ 1);
+				mathDps = Math.round(mathDps * 100) / 100;	
+				// console.log("2h");	
+				// tabOffense.append("((" + mathDamage.min + "+" + mathDamage.max + ")" + "/ 2 + " + mathDamageAdd + ") * " + stats['speed'] + ") * " + mathSpeedAdditive + ") * " + "(" + primaryAttr + "/ 100 + 1) * 1 * ((" + mathCriticalHit + "/ 100) * (" + mathCriticalHitDamage + "/100)+ 1)");				
+			}
+			if(mathPlusDamage) {
+				mathDps = Math.round(mathDps * (1 + mathPlusDamage) * 100) / 100;
+			}
+		}
 		// ----------------------------------
 		// After all modifications, determine percentages for display
 		// ----------------------------------
@@ -1094,6 +1123,9 @@ $(function() {
 		// Offensive Statistics Display
 		tabOffense.empty();
 		tabOffense.append(statLabel("DPS", mathDps));
+		if(mathDpsSpecial) {
+			tabOffense.append(statLabel("DPS w/ " + mathDpsSpecialName, mathDps));			
+		}
 		tabOffense.append(statLabel("Attacks per Second", mathSpeed));
 		tabOffense.append(statLabel("Critical Hit Chance", mathCriticalHit, 'per'));
 		tabOffense.append(statLabel("Critical Hit Damage", mathCriticalHitDamage, 'per'));
