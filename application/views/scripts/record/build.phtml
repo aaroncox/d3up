@@ -111,17 +111,19 @@
 		<? endif ?>
 	</ul>
 	<div id="hero-skills">
+		<script type="text/javascript">
+			<? if($this->record->passives && $this->record->passives != "null" && count($this->record->passives)): ?>
+				var activePassives = <?= json_encode($this->record->passives->export()); ?>
+			<? else: ?>
+				var activePassives = [];
+			<? endif; ?>
+		</script>
 		<? if($profile && $this->record->_createdBy && $profile->createReference() == $this->record->_createdBy->createReference()): ?>
 			<p>Please select the 3 passive skills you're using:</p>
-			<script type="text/javascript">
-				<? if($this->record->passives && $this->record->passives != "null" && count($this->record->passives)): ?>
-					var activePassives = <?= json_encode($this->record->passives->export()); ?>
-				<? else: ?>
-					var activePassives = [];
-				<? endif; ?>
-			</script>
-			<select id="passives" multiple="multiple" name="passives[]" style="width: 450px"></select>
+		<? else: ?>
+			<p style="color: #c80000">Note: You can use this to toggle passives on and off, but it will not save.</p>
 		<? endif; ?>
+		<select id="passives" multiple="multiple" name="passives[]" style="width: 450px"></select>
 		<ul id="passive-display">
 			<li>No Passives Detected</li>
 		</ul>
