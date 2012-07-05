@@ -226,6 +226,6 @@ ul#navigation li {
 .create-form .chzn-container-single .chzn-default {
 	color: #444;
 }
-.chzn-container .chzn-results li em {
-	background-color: #bbb;
+.create-form .chzn-container .chzn-results li em {
+	background: #bbb;
 }
