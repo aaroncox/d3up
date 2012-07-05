@@ -782,8 +782,13 @@ Copyright (c) 2011 by Harvest
       results = 0;
       searchText = this.search_field.val() === this.default_text ? "" : $('<div/>').text($.trim(this.search_field.val())).html();
       regexAnchor = this.search_contains ? "" : "^";
-      regex = new RegExp(regexAnchor + searchText.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&"), 'i');
-      zregex = new RegExp(searchText.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&"), 'i');
+	    var searchElements, regexSearch = "", _index, _words
+	    searchElements = searchText.replace(/[-[\]{}()*+?.,\\^$|#]/g, "\\$&").split(" ");
+	    for (_index = 0, _words = searchElements.length; _index < _words; _index++){
+	        regexSearch += "(?=.*" + searchElements[_index] + ")";
+	    }
+	    regex = new RegExp(regexAnchor + regexSearch, 'i');
+	    zregex = new RegExp(regexSearch, 'i');
       _ref = this.results_data;
       for (_i = 0, _len = _ref.length; _i < _len; _i++) {
         option = _ref[_i];
