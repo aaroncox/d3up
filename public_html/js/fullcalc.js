@@ -421,7 +421,7 @@ $(function() {
 		}
 		passiveSelect.append($("<option value='"+k+"' "+selected+"/>").html(k.replace(/\-/g," ").capitalize()));			
 	});
-	passiveSelect.select2({
+	passiveSelect.chosen({
 		placeholder: 'Which passives skills are you using?',
 		allowClear: true
 	});
