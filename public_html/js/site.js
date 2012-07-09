@@ -1,6 +1,5 @@
 $(function() {
 	$(".class-selector img").bind('click', function() {
-		console.log($(this).data('class'));
 		var resultsTable = $(".recent-builds table tbody"),
 				buildClass = $(this).data('class');
 		resultsTable.addClass("ui-state-disabled");
