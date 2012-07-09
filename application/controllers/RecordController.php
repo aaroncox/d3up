@@ -110,11 +110,27 @@ class RecordController extends Epic_Controller_Action
 	}
 	public function viewAction() {
 		$record = $this->getRecord();
+		// if($record->_type == "build") {
+			// Get all the comments and the comment form
+			// $this->view->commentForm = $commentForm = new D3Up_form_Record_Build_Comment(array('build' => $record));
+			// $this->_handleForm($commentForm);
+			// Get all the comments for this build
+			// $comments = Epic_Mongo::db('comment')->fetchAll(array('build' => $record->createReference()), array('_created' => -1));
+			// $paginator = Zend_Paginator::factory($comments);
+			// $paginator->setCurrentPageNumber($this->getRequest()->getParam('page', 1))->setItemCountPerPage(20);
+			// $this->view->comments = $paginator;
+		// }
 		// NOTE - This logic kinda sucks, but it works for now (Mainly AJAX handling)
 		// See if someone owns the hero and if someone is currently logged in
 		if($record->_createdBy && $profile = Epic_Auth::getInstance()->getProfile()) {
 			// See if the createdBy and current user match
 			if($record->_createdBy->createReference() == $profile->createReference()) {
+				// Is this a build?
+				if($record->_type == "build") {
+					// Add the Guide form since we own it
+					$this->view->guideForm = $guideForm = new D3Up_Form_Record_Build_Guide(array('build' => $record));					
+					$this->_handleForm($guideForm);
+				}
 				// Now see if they've issued an action against the hero
 				if($a = $this->getRequest()->getParam('a')) {
 					// Do something based on the action

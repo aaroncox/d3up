@@ -9,6 +9,7 @@
 	<script type="text/javascript" src="http://code.jquery.com/jquery-1.7.2.js"></script>
 	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.18/jquery-ui.js"></script>
 	<script type="text/javascript" src="/js/chosen.jquery.js"></script>
+	<script type="text/javascript" src="/js/site.js"></script>
 	<script type="text/javascript" src="/js/tooltip.js"></script>
 	<script type="text/javascript" src="/js/jquery.diff.js"></script>
 	<script type="text/javascript" src="/js/jquery.dataTables.js"></script>
@@ -19,6 +20,7 @@
 		<ul id="navigation">
 			<li><a href="/">Home</a></li>
 			<li><a href="/item/create">Create Item</a></li>
+			<li><a href="/build">All Builds</a></li>
 			<li><a href="/user/builds">My Builds</a></li>
 			<li><a href="/user/items">My Items</a></li>
 			<? if($profile = Epic_Auth::getInstance()->getProfile()): ?>
@@ -30,7 +32,7 @@
 			<? endif; ?>
 		</ul>
 		<div id="sys-message" class="ui-widget ui-widget-content ui-corner-all">
-			<b>System Message</b>: Update #5 Deployed - You can now edit your builds and add a description if you wish. You can also make a Copy of other peoples builds, which will copy all of the details, skills, and items into a new build that you control. <a href="http://www.reddit.com/r/Diablo/comments/vpetk/ready_for_testers_item_comparison_character/">Read it all on the /r/diablo post</a>. Please submit feedback/bugs/complains/praise/whatever on the <a href="http://www.reddit.com/r/Diablo/comments/vpetk/ready_for_testers_item_comparison_character/">/r/diablo post</a> for now, or you can email me directly at <a href="mailto:aaron.cox@greymass.com">aaron.cox@greymass.com</a>. Thanks!
+			<b>System Message</b>: Update #6 - Created the "<a href="/build/">Builds</a>" page to browse all builds and you can now publish a guide to go with your build by visiting the "Guide" tab on your build, use it to explain how you play and how your build is used! For a full list of changes or to submit feedback/bugs/complains/praise/whatever, visit the post on <a href="http://www.reddit.com/r/Diablo/comments/vpetk/ready_for_testers_item_comparison_character/">/r/diablo</a>, or you can email me directly at <a href="mailto:aaron.cox@greymass.com">aaron.cox@greymass.com</a>.
 		</div>
 		<div id="main">
 			<div id="content">

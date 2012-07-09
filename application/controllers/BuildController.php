@@ -7,6 +7,23 @@
  **/
 class BuildController extends Epic_Controller_Action
 {
+	public function indexAction() {
+		$query = array(
+		);
+		$sort = array(
+			'_created' => -1,
+		);
+		if($class = $this->getRequest()->getParam('build-class')) {
+			$this->view->buildClass = $query['class'] = $class;
+		}
+		$builds = Epic_Mongo::db('build')->fetchAll($query, $sort);	
+		$paginator = Zend_Paginator::factory($builds);
+		$paginator->setCurrentPageNumber($this->getRequest()->getParam('page', 1))->setItemCountPerPage(15);
+		$this->view->builds = $paginator;
+		if($this->_request->isXmlHttpRequest()) {
+			$this->_helper->layout->disableLayout();
+		}
+	}
 	public function createAction() {
 		$profile = Epic_Auth::getInstance()->getProfile();
 		if($profile) {		

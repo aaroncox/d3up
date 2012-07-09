@@ -229,3 +229,65 @@ ul#navigation li {
 .create-form .chzn-container .chzn-results li em {
 	background: #bbb;
 }
+.home {
+	margin: 0 10px;
+	width: 610px;
+}
+.home h2 {
+	margin: 5px 10px;
+}
+.recent-items {
+	padding: 2px;
+}
+.info {
+	width: 300px;
+	margin: 0 10px;
+}
+.info .ui-widget {
+	padding: 0 10px;
+	margin-bottom: 10px;
+}
+.info .ui-widget h3 {
+	color: #70B1D5;
+}
+#recent-builds {
+	width: 99%;
+}
+#recent-builds  {
+	border: 2px solid #111;
+}
+#recent-builds tbody tr:nth-child(2n) {
+	background-color: #333;
+}
+#recent-builds td {
+	padding: 5px;
+	border: 1px solid #111;
+}
+#recent-builds td.name {
+	width: 150px;
+	line-height: 32px;
+	padding-left: 10px;
+}
+#recent-builds td.icon {
+	width: 42px;
+	padding: 0;
+}
+.build-paginator, 
+.more-builds {
+	text-align: center;
+	font-size: 1.25em;
+}
+div.filters {
+	float: right;
+	padding: 10px;
+}
+.icon-frame {
+	background-color: black;
+  border-color: #574320 #59411C #463419 #3A2912;
+  border-left: 1px solid #3A2912;
+  border-radius: 2px 2px 2px 2px;
+  border-right: 1px solid #59411C;
+  border-style: solid;
+  border-width: 1px;
+  padding: 1px;
+}

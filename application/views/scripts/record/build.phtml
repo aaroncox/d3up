@@ -2,13 +2,18 @@
 	$profile = Epic_Auth::getInstance()->getProfile();
 	$this->headTitle($this->record->name); 
 	$this->headTitle(ucwords(str_replace("-", " ", $this->record->class))); 
+	$myBuild = false;
+	if($profile && $this->record->_createdBy && $profile->createReference() == $this->record->_createdBy->createReference()) {
+		$myBuild = true;
+	}
+	
 ?>
 <style type="text/css">
 	#gear-change {
 		display: none;
 	}
 	#character {
-		width: 500px;
+		width: 550px;
 	}
 	#compare-notes {
 		list-style: none;
@@ -81,6 +86,48 @@
 		float: right;
 		padding: 5px;
 	}
+	.comment {
+		margin: 15px 0;
+	}
+	.comment .comment-body {
+		padding: 3px 15px;
+		background-color: #333;
+	}
+	.comment .comment-author {
+		font-size: 1.2em;
+		font-weight: bold;
+		color: #7FCDFF;
+	}
+	.comment.reply .comment-author {
+		font-size: 1.0em;
+	}
+	.comment .comment-buttons {
+		color: #ccc;
+		background-color: #333;
+		font-weight: bold;
+		text-align: right;
+	}
+	.comment .comment-buttons a {
+		cursor: pointer;
+		margin: 0 5px;
+	}
+	.comment.reply {
+		margin-left: 30px;
+	}
+	.comment .comment-expand {
+		text-align: center;
+		background-color: #333;
+		font-weight: bold;
+		color: #7FCDFF;
+		margin-top: 5px;
+	}
+	.comment #source-label,
+	#replyTo-label,
+	#replyTo-element,
+	#referrer-element, 
+	#referrer-label {
+		display: none;
+	}
 </style>
 <div class="build-header ui-widget ui-widget-content ui-corner-all">
 	<? if($profile && $this->record->_createdBy): ?>
@@ -104,13 +151,19 @@
 </div>
 <div id="character" class="inline-flow" data-class="<?= $this->record->class ?>">
 	<ul>
-		<li><a href="#hero-gear">Gear</a></li>
-		<li><a href="#hero-skills">Skills</a></li>
-		<? if($profile && $this->record->_createdBy && $profile->createReference() == $this->record->_createdBy->createReference()): ?>
-			<li><a href="#hero-compare">Gear Compare</a></li>
+		<li><a href="#build-gear">Gear</a></li>
+		<li><a href="#build-skills">Skills</a></li>
+		<? if($myBuild): ?>
+			<li><a href="#build-compare">Compare</a></li>
+		<? endif ?>
+		<? if($this->record->guideIsPublished || $myBuild): ?>
+			<li><a href="#build-guide">Guide</a></li>
+		<? endif ?>
+		<? if($this->comments): ?>
+			<li><a href="#build-comments">Comments (<?= $this->comments->getTotalItemCount()?>)</a></li>
 		<? endif ?>
 	</ul>
-	<div id="hero-skills">
+	<div id="build-skills">
 		<script type="text/javascript">
 			<? if($this->record->passives && $this->record->passives != "null" && count($this->record->passives)): ?>
 				var activePassives = <?= json_encode($this->record->passives->export()); ?>
@@ -118,7 +171,7 @@
 				var activePassives = [];
 			<? endif; ?>
 		</script>
-		<? if($profile && $this->record->_createdBy && $profile->createReference() == $this->record->_createdBy->createReference()): ?>
+		<? if($myBuild): ?>
 			<p>Please select the 3 passive skills you're using:</p>
 		<? else: ?>
 			<p style="color: #c80000">Note: You can use this to toggle passives on and off, but it will not save.</p>
@@ -128,8 +181,22 @@
 			<li>No Passives Detected</li>
 		</ul>
 	</div>
-	<? if($profile && $this->record->_createdBy && $profile->createReference() == $this->record->_createdBy->createReference()): ?>
-	<div id="hero-compare">
+	<? if($this->record->guide || $myBuild): ?>
+		<div id="build-guide">
+			<? if($myBuild): ?>
+				<p>You may build a guide to help explain this build using the textbox below. Guides may be created using <a href="http://en.wikipedia.org/wiki/Markdown#Syntax_examples">Markdown Syntax</a> and limited HTML tags similar to sites such as <a href="http://reddit.com">Reddit</a>.</p>
+				<p><strong>NOTE:</strong> The GUIDE tab on your build will not be publicly available until you check the "Publish" checkbox and hit save at the bottom of the form.</p>
+				<?= $this->guideForm ?>
+				<p>Shown below is how your guide appears:</p>
+				<hr/>
+			<? endif ?>
+			<? if($this->record->guide && $this->record->guideIsPublished): ?>
+				<?= $this->record->guide ?>
+			<? endif ?>
+		</div>
+	<? endif ?>
+	<? if($myBuild): ?>
+	<div id="build-compare">
 		<p>This compare tool will compare what you are <b>currently wearing</b> to an item you select from the database.</p>
 		<p>Please select the <i>slot</i> of the item you wish to compare first, then select the item from your items from the drop down or type the ID # of the item in the text box next to it.</p>
 		<p>Which item slot should we compare?</p>
@@ -152,8 +219,8 @@
 		<p><b>Note</b>: Currently the item HAS to be created by you before you are able to compare them.</p>
 	</div>
 	<? endif; ?>
-	<div id="hero-gear">
-		<? if($profile && $this->record->_createdBy && $profile->createReference() == $this->record->_createdBy->createReference()): ?>
+	<div id="build-gear">
+		<? if($myBuild): ?>
 		<p>Adding gear to your build will dynamically update the statistics displayed in the statistics panel.</p>
 		<p>
 			<a href="/item/create" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only gear-change"><span class="ui-button-text">Create New Item</span></a>
@@ -166,7 +233,7 @@
 				<td>
 					<?= ucfirst($slot) ?>
 				</td>
-				<? if($profile && $this->record->_createdBy && $profile->createReference() == $this->record->_createdBy->createReference()): ?>
+				<? if($myBuild): ?>
 				<td>
 					<button id="change-<?= $slot ?>" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only gear-change" data-item-type="<?= $slot ?>" role="button" aria-disabled="false"><span class="ui-button-text">Change</span></button>
 				</td>
@@ -184,8 +251,47 @@
 		<? endforeach ?>
 		</table>
 	</div>
+	<? if($this->comments): ?>
+	<div id="build-comments" style="display: none">
+		<?= $this->commentForm ?>
+		<hr/>
+		<? foreach($this->comments as $comment): ?>
+			<div class='comment' id="comment-<?= $comment->id ?>" data-comment="<?= $comment->id ?>">
+				<div class='comment-meta'>
+					<span class='comment-author'><?= $comment->profile->username?:'Anonymous' ?></span> - 
+					<span class='comment-time'>
+						<?= $this->timeAgo($comment->_created) ?>
+					</span>
+				</div>
+				<div class='comment-body'>
+					<?= $comment->body ?>
+				</div>
+				<div class='comment-buttons'>
+					<a href="#">permalink</a>
+					<a class='comment-reply'>reply</a>
+				</div>
+				<div class='comment-extra'></div>
+				<div class="comment-replies">
+				<? foreach($comment->getReplies() as $reply): ?>
+					<div class='comment reply' id="comment-<?= $reply->id ?>" data-comment="<?= $reply->id ?>">
+						<div class='comment-meta'>
+							<span class='comment-author'><?= $comment->profile->username?:'Anonymous' ?></span> - 
+							<span class='comment-time'>
+								<?= $this->timeAgo($reply->_created) ?>
+							</span>
+						</div>
+						<div class='comment-body'>
+							<?= $reply->body ?>
+						</div>
+					</div>
+				<? endforeach ?>
+				</div>
+			</div>
+		<? endforeach ?>
+	</div>
+	<? endif; ?>
 </div>
-<div class="inline-flow" style="width: 446px">
+<div class="inline-flow" style="width: 396px">
 	<div class="calc-stats ui-widget ui-widget-content ui-corner-all">
 		<ul>
 			<li><a href="#tab-base">Stats</a></li>
@@ -226,6 +332,39 @@
 </div>
 <script type="text/javascript" src="/js/calc.js"></script>
 <script type="text/javascript">
-$("#character").tabs();
+$("#character").tabs({
+    select: function(event, ui){
+      window.location = ui.tab.href;
+    }
+});
 $(".calc-stats").tabs();
+$(".comment").each(function() {
+	var $this = $(this), 
+			comment = $this.data("comment");
+	$this.find(".comment-replies").each(function() {
+		var replies = $(this), 
+				count = 0;
+		count = $(this).find(".comment.reply").length;
+		replies.hide();
+		if(count) {
+			var expander = $("<div class='comment-expand'>").html("Show " + count + " Replies");
+			expander.bind('click', function() {
+				replies.show();
+				$(this).hide();
+			});
+			$(this).after(expander);			
+		}
+	});
+	$(this).find("a.comment-reply").bind('click', function() {
+		$.ajax({
+			url: '/c/'+comment+'/reply',
+			type: 'json',
+			success: function(data) {
+				var json = $.parseJSON(data),
+						form = json.form;
+				$this.find('.comment-extra').empty().append(form);				
+			}
+		});
+	});
+});
 </script>

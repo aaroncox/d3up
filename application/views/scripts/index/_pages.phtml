@@ -2,16 +2,16 @@
 <div style="text-align: right">
 	<!-- Previous page link -->
 	<?php if ($this->prevoius != 1 && $this->current != 1): ?>
-		<a href="?page=1">&laquo;</a>
+		<a href="?page=1<?= ($this->buildClass) ? "&build-class=".$this->buildClass : "" ?>">&laquo;</a>
 	<?php endif; ?>
 	<?php if (isset($this->previous)): ?>
-		<a href="?page=<?= $this->previous ?>">&lsaquo;</a>
+		<a href="?page=<?= $this->previous ?><?= ($this->buildClass) ? "&build-class=".$this->buildClass : "" ?>">&lsaquo;</a>
 	<?php endif; ?>
 
 	<!-- Numbered page links -->
 	<?php foreach ($this->pagesInRange as $page): ?>
 		<?php if ($page != $this->current): ?>
-			<a href="?page=<?= $page ?>"><?php echo $page; ?></a>
+			<a href="?page=<?= $page ?><?= ($this->buildClass) ? "&build-class=".$this->buildClass : "" ?>"><?php echo $page; ?></a>
 		<?php else: ?>
 			<span><?php echo $page; ?></span>
 		<?php endif; ?>
@@ -19,10 +19,10 @@
 
 	<!-- Next page link -->
 	<?php if (isset($this->next)): ?>
-		<a href="?page=<?= $this->next ?>">&rsaquo;</a>
+		<a href="?page=<?= $this->next ?><?= ($this->buildClass) ? "&build-class=".$this->buildClass : "" ?>">&rsaquo;</a>
 	<?php endif; ?>
 	<?php if (isset($this->last) && $this->last != $this->next && $this->last != $this->current): ?>
-		<a href="?page=<?= $this->last ?>">&raquo;</a>
+		<a href="?page=<?= $this->last ?><?= ($this->buildClass) ? "&build-class=".$this->buildClass : "" ?>">&raquo;</a>
 	<?php endif; ?>
 </div>
 <?php endif; ?>

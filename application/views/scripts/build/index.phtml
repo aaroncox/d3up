@@ -1,0 +1,54 @@
+<div class="home inline-flow">
+	<div class="recent-builds">
+		<table id="recent-builds">
+			<thead>
+				<tr>
+					<td colspan="10">
+						<h2>Character Builds</h2>
+					</td>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td colspan="10" class="build-paginator">
+						<?php echo $this->paginationControl($this->builds,
+						                                    'Elastic',
+						                                    'index/_pages.phtml',
+																								array(
+																									'buildClass' => $this->buildClass
+																								)); ?>
+					</td>
+				</tr>
+			<? foreach($this->builds as $build): ?>
+				<tr>
+					<td class="icon"><img src="/images/<?= $build->class ?>.png"/></td>
+					<td class="name"><?= $this->mLink($build) ?></td>
+					<td><?= $build->description ?></td>
+				</tr>
+			<? endforeach; ?>
+				<tr>
+					<td colspan="10" class="build-paginator">
+						<?php echo $this->paginationControl($this->builds,
+						                                    'Elastic',
+						                                    'index/_pages.phtml',
+																								array(
+																									'buildClass' => $this->buildClass
+																								)); ?>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</div>
+<div class="info inline-flow">
+	<div class='ui-widget ui-widget-content ui-corner-all'>
+		<h3>Class</h3>
+		<div class="class-selector" style="text-align: center; margin: 5px 0;">
+		 <img data-class="barbarian" class='icon-frame' src='/images/barbarian.png'/>
+		 <img data-class="demon-hunter" class='icon-frame' src='/images/demon-hunter.png'/>
+		 <img data-class="monk" class='icon-frame' src='/images/monk.png'/>
+		 <img data-class="witch-doctor" class='icon-frame' src='/images/witch-doctor.png'/>
+		 <img data-class="wizard" class='icon-frame' src='/images/wizard.png'/>
+		</div>
+	</div>
+</div>

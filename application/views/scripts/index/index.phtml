@@ -1,27 +1,54 @@
-<style type="text/css" media="screen">
-	.home {
-		margin: 0 10px;
-		width: 610px;
-	}
-	.home h2 {
-		margin: 5px 10px;
-	}
-	.recent-items {
-		padding: 2px;
-	}
-	.info {
-		width: 300px;
-		margin: 0 10px;
-	}
-	.info .ui-widget {
-		padding: 0 10px;
-		margin-bottom: 10px;
-	}
-	.info .ui-widget h3 {
-		color: #70B1D5;
-	}
-</style>
 <div class="home inline-flow">
+	<div class="recent-builds">
+		<table id="recent-builds">
+			<thead>
+				<tr>
+					<td colspan="10">
+						<div class='filters'>
+							By Class: 
+							<select name="build-by-class" class="build-selector">
+								<option></option>
+								<option <?= ($this->buildClass == "barbarian") ? "selected='selected'" : "" ?> value="barbarian">Barbarian</option>
+								<option <?= ($this->buildClass == "demon-hunter") ? "selected='selected'" : "" ?> value="demon-hunter">Demon Hunter</option>
+								<option <?= ($this->buildClass == "monk") ? "selected='selected'" : "" ?> value="monk">Monk</option>
+								<option <?= ($this->buildClass == "witch-doctor") ? "selected='selected'" : "" ?> value="witch-doctor">Witch Doctor</option>
+								<option <?= ($this->buildClass == "wizard") ? "selected='selected'" : "" ?> value="wizard">Wizard</option>
+							</select>
+						</div>
+						<h2>Recent Character Builds</h2>
+					</td>
+				</tr>
+			</thead>
+			<tbody>
+			<? foreach($this->builds as $build): ?>
+				<tr>
+					<td class="icon"><img src="/images/<?= $build->class ?>.png"/></td>
+					<td class="name"><?= $this->mLink($build) ?></td>
+					<td><?= $build->description ?></td>
+				</tr>
+			<? endforeach; ?>
+			<tr>
+				<td colspan="10" class="more-builds">
+					Looking for more Builds? Check out the <a href="/build">Builds Page</a>.
+				</td>
+			</tr>
+			</tbody>
+		</table>
+		<script type="text/javascript">
+			$(".build-selector").bind('change', function() {
+				var resultsTable = $(".recent-builds table tbody");
+				resultsTable.addClass("ui-state-disabled");
+				$.ajax({
+					url: '/?build-class=' + $(this).val(),
+					type: 'html',
+					success: function(data) {
+						var results = $("<div/>").append(data);
+						resultsTable.replaceWith(results.find(".recent-builds table tbody"));
+					}
+				});
+			});
+		</script>
+	</div>
 	<div class="recent-items">
 		<h2>Recently Created Items</h2>
 		<ul>
@@ -32,19 +59,6 @@
 			<? endforeach; ?>
 		</ul>
 		<?php echo $this->paginationControl($this->items,
-		                                    'Elastic',
-		                                    'index/_pages.phtml'); ?>
-	</div>
-	<div class="recent-builds">
-		<h2>Recently Created Character Builds</h2>
-		<ul>
-			<? foreach($this->builds as $build): ?>
-				<li>
-					<?= $this->mLink($build) ?> (<?= ucwords(str_replace("-", " ", $build->class))?>)
-				</li>
-			<? endforeach; ?>
-		</ul>
-		<?php echo $this->paginationControl($this->builds,
 		                                    'Elastic',
 		                                    'index/_pages.phtml'); ?>
 	</div>
