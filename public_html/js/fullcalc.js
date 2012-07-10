@@ -538,7 +538,6 @@ $(function() {
 											case '2h-mace': 
 											case '2h-axe': 
 											case 'diabo': 
-											case 'crossbow': 
 											case '2h-mighty': 
 											case 'polearm': 
 											case 'staff': 
