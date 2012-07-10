@@ -1048,31 +1048,50 @@ $(function() {
 		
 		var mathDR = (mathDamageReduce/100),
 				mathAR = (mathAllResist / (5 * vsLevel + mathAllResist)),
+				mathDT = (1 - mathAR) * (1 - mathDR),
+				// Get Reduction Values from Attributes
 				mathMeleeReduce = (attrs['melee-reduce']) ? (attrs['melee-reduce']) : 0,
 				mathRangeReduce = (attrs['range-reduce']) ? (attrs['range-reduce']) : 0,
 				mathEliteReduce = (attrs['elite-reduce']) ? (attrs['elite-reduce']) : 0,
+				// Calculate the Damage Reduction for each resistance based on the vsLevel
 				mathARPhysical = (mathResists.physical / (5 * vsLevel + mathResists.physical)),
 				mathARCold = (mathResists.cold / (5 * vsLevel + mathResists.cold)),
 				mathARFire = (mathResists.fire / (5 * vsLevel + mathResists.fire)),
 				mathARLightning = (mathResists.lightning / (5 * vsLevel + mathResists.lightning)),
 				mathARPoison = (mathResists.poison / (5 * vsLevel + mathResists.poison)),
 				mathARArcane = (mathResists.arcane / (5 * vsLevel + mathResists.arcane)),
-				mathDT = (1 - mathAR) * (1 - mathDR),
-				mathDTDodge = mathDT * (1 - mathDodgePercent / 100),
-				mathDTMelee = mathDT * (1 - mathMeleeReduce / 100),
-				mathDTRange = mathDT * (1 - mathRangeReduce / 100),
-				mathDTElite = mathDT * (1 - mathEliteReduce / 100),
-				mathEPH = mathLifeTotal / mathDT,
-				mathEPHDodge = mathLifeTotal / mathDTDodge,
-				mathEPHMelee = mathLifeTotal / mathDTMelee,
-				mathEPHRange = mathLifeTotal / mathDTRange,
-				mathEPHElite = mathLifeTotal / mathDTElite,
+				// Calculate EHP For each resistance individually
 				mathEPHPhysical = mathLifeTotal / ((1 - mathAR) * (1 - mathARPhysical)),
 				mathEPHCold = mathLifeTotal / ((1 - mathAR) * (1 - mathARCold)),
 				mathEPHFire = mathLifeTotal / ((1 - mathAR) * (1 - mathARFire)),
 				mathEPHLightning = mathLifeTotal / ((1 - mathAR) * (1 - mathARLightning)),
 				mathEPHPoison = mathLifeTotal / ((1 - mathAR) * (1 - mathARPoison)),
 				mathEPHArcane = mathLifeTotal / ((1 - mathAR) * (1 - mathARArcane));
+		// Are we a Monk or Barbarian?
+		if(heroClass == "monk" || heroClass == "barbarian") {
+			// Add the Passive 30% Damage Reduction those two classes get
+			mathDT = (1 - mathAR) * (1 - mathDR) * (1 - 0.3);
+			// Recalculate the individual resistance EPHs including the 30% Reduction
+			var mathEPHPhysical = mathLifeTotal / ((1 - mathAR) * (1 - mathARPhysical) * (1 - 0.3)),
+					mathEPHCold = mathLifeTotal / ((1 - mathAR) * (1 - mathARCold) * (1 - 0.3)),
+					mathEPHFire = mathLifeTotal / ((1 - mathAR) * (1 - mathARFire) * (1 - 0.3)),
+					mathEPHLightning = mathLifeTotal / ((1 - mathAR) * (1 - mathARLightning) * (1 - 0.3)),
+					mathEPHPoison = mathLifeTotal / ((1 - mathAR) * (1 - mathARPoison) * (1 - 0.3)),
+					mathEPHArcane = mathLifeTotal / ((1 - mathAR) * (1 - mathARArcane) * (1 - 0.3));						
+		}	
+		// Finally Calculate the EPH
+		var	mathEPH = mathLifeTotal / mathDT,
+				// Calculate the Damage Taken for special cases (dodge, melee, ranged, elite)
+				mathDTDodge = mathDT * (1 - mathDodgePercent / 100),
+				mathDTMelee = mathDT * (1 - mathMeleeReduce / 100),
+				mathDTRange = mathDT * (1 - mathRangeReduce / 100),
+				mathDTElite = mathDT * (1 - mathEliteReduce / 100),
+				// Calculate the EHP for special cases (dodge, melee, ranged, elite)
+				mathEPHDodge = mathLifeTotal / mathDTDodge,
+				mathEPHMelee = mathLifeTotal / mathDTMelee,
+				mathEPHRange = mathLifeTotal / mathDTRange,
+				mathEPHElite = mathLifeTotal / mathDTElite;
+
 		// Most simply, EH = Health / [(1 – Damage Reduction A)*(1 – Damage Reduction B)*...] or, EH = Health / Damage Taken
 		tabEPH.empty();
 		tabEPH.append(statLabel("EHP", mathEPH, 'round'));
