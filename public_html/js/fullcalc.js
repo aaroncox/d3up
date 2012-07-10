@@ -449,7 +449,11 @@ $(function() {
 		stats[k] = v;
 		switch(format) {
 			case "per":
-				v = v + "%";
+				if(v) {
+					v = v + "%";					
+				} else {
+					v = "0%";
+				}
 				break;
 			case "round":
 				v = Math.round(v * 100) / 100;
@@ -1098,6 +1102,8 @@ $(function() {
 		tabBase.append(statLabel("Dexterity", attrs['dexterity']));
 		tabBase.append(statLabel("Intelligence", attrs['intelligence']));
 		tabBase.append(statLabel("Vitality", attrs['vitality']));
+		tabBase.append(statLabel("Magic Find", attrs['plus-magic-find'], 'per'));
+		tabBase.append(statLabel("Gold Find", attrs['plus-gold-find'], 'per'));
 		// Defensive Statistics Display
 		tabDefense.empty();
 		tabDefense.append(statLabel("Armor", mathArmor, '', mathDamageReduce));
