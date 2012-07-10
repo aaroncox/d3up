@@ -291,3 +291,9 @@ div.filters {
   border-width: 1px;
   padding: 1px;
 }
+#footer {
+	color: #aaa;
+	margin: 50px 0 ;
+	font-size: 0.9em;
+	text-align: center;
+}
