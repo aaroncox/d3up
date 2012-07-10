@@ -978,7 +978,7 @@ $(function() {
 				// 		cd = (mathCriticalHit / 100) * (mathCriticalHitDamage / 100) + 1,
 				// 		mathDps = Math.round((wd1+wd2+(bd*2))*((as1+as2)*(bs+1)/4)*cd*(primaryAttr/100) * 100)/100,
 				// 		mathSpeed = Math.round(mathSpeed * (bs) * 100)/100;
-				var mathSpeed = Math.round(mathSpeed * (1 + mathSpeedAdditive) * 100)/100;
+				var mathSpeed = Math.round(mathSpeed * (1 + mathSpeedAdditive + 0.15) * 100)/100;
 						wda1 = ((mathDamage.min + mathDamage.max) / 2) + mathDamageAdd,
 						as1 = stats['speed'],
 						cd1 = 1 + ((mathCriticalHit/100) * (mathCriticalHitDamage/100));
