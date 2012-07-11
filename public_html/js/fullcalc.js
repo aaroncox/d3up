@@ -813,6 +813,8 @@ $(function() {
 				mathDamage = stats['damage'],
 				mathDamageAvg = stats['dps'],
 				mathDamageAdd = 0,
+				mathDamageAddMin = 0,
+				mathDamageAddMax = 0,
 				mathDps = 0,
 				mathDpsSpecial = false,
 				mathDpsSpecialName = false,
@@ -961,6 +963,12 @@ $(function() {
 		// ----------------------------------
 		if(attrs['max-damage'] || attrs['min-damage']) {
 			mathDamageAdd = (((attrs['max-damage'])?attrs['max-damage']:0) + ((attrs['min-damage'])?attrs['min-damage']:0)) / 2;
+			if(attrs['min-damage']) {
+				mathDamageAddMin = attrs['min-damage'];				
+			}
+			if(attrs['max-damage']) {
+				mathDamageAddMax = attrs['max-damage'];
+			}
 		}
 		// Calculate the Attack Speed (Additive)
 		$.each(attackSpeedIncs, function(k,v) {
@@ -980,19 +988,45 @@ $(function() {
 				// 		as2 = stats['speed-oh'],
 				// 		cd = (mathCriticalHit / 100) * (mathCriticalHitDamage / 100) + 1,
 				// 		mathDps = Math.round((wd1+wd2+(bd*2))*((as1+as2)*(bs+1)/4)*cd*(primaryAttr/100) * 100)/100,
-				// 		mathSpeed = Math.round(mathSpeed * (bs) * 100)/100;
-				var mathSpeed = Math.round(mathSpeed * (1 + mathSpeedAdditive + 0.15) * 100)/100;
-						wda1 = ((mathDamage.min + mathDamage.max) / 2) + mathDamageAdd,
-						as1 = stats['speed'],
-						cd1 = 1 + ((mathCriticalHit/100) * (mathCriticalHitDamage/100));
-						ms1 = (primaryAttr/100),
-						av1 = ((stats['speed'] + stats['speed-oh']) / 2) / stats['speed'],
-						wda2 = ((mathDamageOH.min + mathDamageOH.max) / 2) + mathDamageAdd,
-						as2 = stats['speed-oh'],
-						cd2 = 1 + ((mathCriticalHit/100) * (mathCriticalHitDamage/100));
-						ms2 = (primaryAttr/100),
-						av2 = ((stats['speed'] + stats['speed-oh']) / 2) / stats['speed-oh'],
-						mathDps = Math.round(((wda1 * as1 * cd1 * ms1 * av1) + ((wda2 * as2 * cd2 * ms2 * av2) * 0.575)) * 100) / 100;
+				// 		mathSpeed = Math.round(mathSpeed * (1 + mathSpeedAdditive + 0.15) * 100)/100;
+				// console.log("Bonus Attack Speed = " + Math.round(mathSpeedAdditive * 100) + "%");
+				// console.log("MH Min Damage = " + mathDamage.min);
+				// console.log("MH Max Damage = " + mathDamage.max);
+				// console.log("OH Min Damage = " + mathDamageOH.min);
+				// console.log("OH Max Damage = " + mathDamageOH.max);
+				// console.log("AVG Bonus Damage = " + mathDamageAdd);
+				// console.log("MH Speed = " + stats['speed']);
+				// console.log("OH Speed = " + stats['speed-oh']);
+				// console.log("Critical Hit Chance = " + mathCriticalHit);
+				// console.log("Critical Hit Damage = " + mathCriticalHitDamage);
+				// console.log("Primary Attribute = " + primaryAttr);
+				var mathS = ((mathDamage.min + mathDamage.max + mathDamageOH.min + mathDamageOH.max) / 2 + mathDamageAddMin + mathDamageAddMax) / 2,
+						mathC = (stats['speed'] + stats['speed-oh']) / 2,
+						mathR = 1 + 0.15 + mathSpeedAdditive,
+						mathA = 1 + primaryAttr / 100,
+						mathM = 1 + (mathCriticalHit / 100) * (mathCriticalHitDamage / 100),
+						mathDps = Math.round((mathS * mathC * mathR * mathA * mathM) * 100) / 100,
+						mathSpeed = Math.round(mathSpeed * (1 + mathSpeedAdditive + 0.15) * 100)/100;
+				// console.log(mathDamage.min,mathDamage.max,mathDamageOH.min, mathDamageOH.max, mathDamageAddMin, mathDamageAddMax);
+				// console.log(mathS, mathC, mathR, mathA, mathM);
+				// var s = ((stats.mhmin + stats.mhmax + stats.ohmin + stats.ohmax) / 2 + 6 + 12) / 2, 
+				//     c = (1.4 + 1.4) / 2,
+				//     r = 1 + 0.15 + stats.as,
+				//     a = 1 + stats.attr / 100,
+				//     m = 1 + stats.chc * stats.chd,
+				//     dps = a * b * c * d * e;
+				// var mathSpeed = Math.round(mathSpeed * (1 + mathSpeedAdditive + 0.15) * 100)/100;
+				// 		wda1 = ((mathDamage.min + mathDamage.max) / 2) + mathDamageAdd,
+				// 		as1 = stats['speed'],
+				// 		cd1 = 1 + ((mathCriticalHit/100) * (mathCriticalHitDamage/100));
+				// 		ms1 = (primaryAttr/100),
+				// 		av1 = ((stats['speed'] + stats['speed-oh']) / 2) / stats['speed'],
+				// 		wda2 = ((mathDamageOH.min + mathDamageOH.max) / 2) + mathDamageAdd,
+				// 		as2 = stats['speed-oh'],
+				// 		cd2 = 1 + ((mathCriticalHit/100) * (mathCriticalHitDamage/100));
+				// 		ms2 = (primaryAttr/100),
+				// 		av2 = ((stats['speed'] + stats['speed-oh']) / 2) / stats['speed-oh'],
+				// 		mathDps = Math.round(((wda1 * as1 * cd1 * ms1 * av1) + ((wda2 * as2 * cd2 * ms2 * av2) * 0.575)) * 100) / 100;
 						// mathDps1 = (((mathDamage.min + mathDamage.max) / 2 + mathDamageAdd) * stats['speed']) * (1 + mathSpeedAdditive) * (primaryAttr / 100 ) * 1 * ((mathCriticalHit / 100) * (mathCriticalHitDamage/100) + 1),
 						// mathDps2 = (((mathDamageOH.min + mathDamageOH.max) / 2 + mathDamageAdd) * stats['speed']) * (1 + mathSpeedAdditive) * (primaryAttr / 100 ) * 1 * ((mathCriticalHit / 100) * (mathCriticalHitDamage/100) + 1),
 						// mathDps = (mathDps1 + mathDps2) / 2 * 1.15;
