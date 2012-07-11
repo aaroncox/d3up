@@ -183,6 +183,7 @@ class D3Up_Form_Record_Item extends Epic_Form
 				array('StringLength', false, array(2, 50)),
 			),
 			'filters' => array('StripTags'),
+			'tabindex' => 10,
 		));
 
 		$this->addElement("select", "itemType", array(
@@ -231,6 +232,7 @@ class D3Up_Form_Record_Item extends Epic_Form
 				'shield' => 'Shield',
 			),
 			'filters' => array('StripTags'),
+			'tabindex' => 15,
 		));
 		
 		$this->addElement("select", "quality", array(
@@ -248,6 +250,7 @@ class D3Up_Form_Record_Item extends Epic_Form
 			 	7 => 'Set',
 			),
 			'filters' => array('StripTags'),
+			'tabindex' => 20,
 		));
 		
 		$this->addElement("select", "attributes", array(
@@ -255,6 +258,7 @@ class D3Up_Form_Record_Item extends Epic_Form
 			'data-placeholder' => 'Select all of the stats you wish to display',
 			'multiple' => true,
 			'multiOptions' => array(null => '') + $this->_attributes,
+			'tabindex' => 25,			
 		));
 		$this->attributes->setRegisterInArrayValidator(false);
 		
@@ -267,6 +271,7 @@ class D3Up_Form_Record_Item extends Epic_Form
 				3 => '3 Sockets',
 			),
 			'filters' => array('StripTags'),
+			'tabindex' => 30,
 		));
 		
 		$this->addElement("text", "base_armor", array(
@@ -276,6 +281,7 @@ class D3Up_Form_Record_Item extends Epic_Form
 				array('LessThan', false, array('max' => 10000)),
 			),
 			'filters' => array('StripTags'),
+			'tabindex' => 35,
 		));
 
 		$this->addElement("text", "base_dps", array(
@@ -285,6 +291,7 @@ class D3Up_Form_Record_Item extends Epic_Form
 				array('LessThan', false, array('max' => 10000)),
 			),
 			'filters' => array('StripTags'),
+			'tabindex' => 40,
 		));
 
 		$this->addElement("text", "base_damage_min", array(
@@ -294,6 +301,7 @@ class D3Up_Form_Record_Item extends Epic_Form
 				array('LessThan', false, array('max' => 10000)),
 			),
 			'filters' => array('StripTags'),
+			'tabindex' => 45,
 		));
 
 		$this->addElement("text", "base_damage_max", array(
@@ -303,6 +311,7 @@ class D3Up_Form_Record_Item extends Epic_Form
 				array('LessThan', false, array('max' => 10000)),
 			),
 			'filters' => array('StripTags'),
+			'tabindex' => 50,
 		));
 
 		$this->addElement("text", "base_speed", array(
@@ -312,6 +321,7 @@ class D3Up_Form_Record_Item extends Epic_Form
 				array('LessThan', false, array('max' => 10000)),
 			),
 			'filters' => array('StripTags'),
+			'tabindex' => 55,
 		));
 		
 		$this->addElement("text", "base_block_chance", array(
@@ -321,6 +331,7 @@ class D3Up_Form_Record_Item extends Epic_Form
 				array('LessThan', false, array('max' => 10000)),
 			),
 			'filters' => array('StripTags'),
+			'tabindex' => 60,
 		));
 
 		$this->addElement("text", "base_block_amount_min", array(
@@ -330,6 +341,7 @@ class D3Up_Form_Record_Item extends Epic_Form
 				array('LessThan', false, array('max' => 10000)),
 			),
 			'filters' => array('StripTags'),
+			'tabindex' => 65,
 		));
 
 		$this->addElement("text", "base_block_amount_max", array(
@@ -339,6 +351,7 @@ class D3Up_Form_Record_Item extends Epic_Form
 				array('LessThan', false, array('max' => 10000)),
 			),
 			'filters' => array('StripTags'),
+			'tabindex' => 70,
 		));
 		
 		$attrs = array();

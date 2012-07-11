@@ -354,7 +354,7 @@ $("#sockets").bind("change", function() {
 	container.empty();
 	if(sockets > 0) {
 		for(i=0; i<sockets; i++) {
-			var select = $("<select name='socket"+i+"' style='width: 300px'><option></option></select>"),
+			var select = $("<select tabindex='150' name='socket"+i+"' style='width: 300px'><option></option></select>"),
 					itemType = $("#itemType").val(),
 					effect = "unknown";
 			$.each(gems, function(k,v) {
@@ -404,7 +404,7 @@ $("#sockets").bind("change", function() {
 			});
 			container.append($("<li>").append(select));
 		}
-		container.find("select").chosen();
+		// container.find("select").chosen();
 	}
 });
 $("#quality").bind("change", function() {
@@ -432,7 +432,7 @@ $("#attributes").bind("change", function() {
 					attr = $("<li></li>");
 			if(!exists.length) {
 				var label = td[v],
-						input = "<input type='text' name='" + v + "' value=''/>";
+						input = "<input type='text' name='" + v + "' value='' tabindex='100'/>";
 				label = label.replace("VVV", input);
 				attr.html(label);
 				attr.addClass(v);
