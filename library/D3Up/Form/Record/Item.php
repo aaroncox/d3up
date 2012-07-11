@@ -265,7 +265,7 @@ class D3Up_Form_Record_Item extends Epic_Form
 		$this->addElement("select", "sockets", array(
 			'label' => 'Does this item have sockets?',
 			'multiOptions' => array(
-				null => '',
+				null => '0 Sockets',
 				1 => '1 Socket',
 				2 => '2 Sockets',
 				3 => '3 Sockets',
