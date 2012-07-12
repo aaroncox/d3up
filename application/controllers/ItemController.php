@@ -7,6 +7,34 @@
  **/
 class ItemController extends Epic_Controller_Action
 {
+	public function indexAction() {
+		$query = array();
+		if($type = $this->getRequest()->getParam('type')) {
+			$this->view->itemType = $query['type'] = $type;
+		}
+		$sort = array();
+		if($sortAttr = $this->getRequest()->getParam('sort')) {
+			$sortAttrs = explode(",", $sortAttr);
+			foreach($sortAttrs as $k => $v) {
+				$key = 'attrs.'.$v;
+				$query[$key] = array(
+					'$ne' => '',
+					'$exists' => true
+				);				
+				$sort[$key] = -1;
+			}
+			$this->view->sortAttrs = $sortAttrs;
+		}
+		// var_dump($query); exit;
+		$items = Epic_Mongo::db('item')->fetchAll($query, $sort); 
+		$paginator = Zend_Paginator::factory($items);
+		$paginator->setCurrentPageNumber($this->getRequest()->getParam('page', 1))->setItemCountPerPage(20);
+		$this->view->items = $paginator;
+		if($this->_request->isXmlHttpRequest()) {
+			$this->view->disableScripts = true;
+			$this->_helper->layout->disableLayout();
+		}
+	}
 	public function createAction() {
 		// Create a new Item
 		$item = Epic_Mongo::newDoc('item');

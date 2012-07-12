@@ -250,25 +250,25 @@ ul#navigation li {
 .info .ui-widget h3 {
 	color: #70B1D5;
 }
-#recent-builds {
+.d3up-table {
 	width: 99%;
 }
-#recent-builds  {
+.d3up-table  {
 	border: 2px solid #111;
 }
-#recent-builds tbody tr:nth-child(2n) {
+.d3up-table tbody tr:nth-child(2n) {
 	background-color: #333;
 }
-#recent-builds td {
+.d3up-table td {
 	padding: 5px;
 	border: 1px solid #111;
 }
-#recent-builds td.name {
+.d3up-table td.name {
 	width: 150px;
 	line-height: 32px;
 	padding-left: 10px;
 }
-#recent-builds td.icon {
+.d3up-table td.icon {
 	width: 42px;
 	padding: 0;
 }
