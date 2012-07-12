@@ -283,13 +283,12 @@
 				var resultsTable = $("#recent-items tbody"),
 						itemType = $("#itemType").val(),
 						sortAttr = $("#sortAttributes").val(),
-						url = '/item?';
-				console.log(itemType, sortAttr);
+						url = '/item/index';
 				if(itemType && itemType != "") {
-					url += '&type=' + itemType;
+					url += '/type/' + itemType;
 				}
 				if(sortAttr && sortAttr != "") {
-					url += '&sort=' + sortAttr;
+					url += '/sort/' + sortAttr;
 				}
 				resultsTable.addClass("ui-state-disabled");
 				$.ajax({
