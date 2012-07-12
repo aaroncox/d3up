@@ -131,7 +131,7 @@ ul#navigation {
 /*	border-bottom: 1px solid #777;*/
 }
 ul#navigation > li {
-	display: inline-block;
+	float: left;
 	padding: 0px 15px;
 }
 .select2-result {
@@ -320,4 +320,11 @@ div.filters {
 }
 .ui-widget-content a {
 	color: #70B1D5;
+}
+.chzn-container-active,
+.create-form input:focus {
+	box-shadow: 0 -1px 0 rgba(0, 0, 0, 0.3), 0 1px 2px rgba(0, 0, 0, 0.1) inset, 0 0 10px rgba(255, 255, 255, 0.9);	
+}
+dd:has(:focus) .chzn-container {
+	box-shadow: 0 -1px 0 rgba(0, 0, 0, 0.3), 0 1px 2px rgba(0, 0, 0, 0.1) inset, 0 0 10px rgba(255, 255, 255, 0.9);
 }
