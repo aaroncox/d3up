@@ -6,6 +6,8 @@
 	<link rel="stylesheet" href="/css/style.css" type="text/css" charset="utf-8">	
 	<link rel="stylesheet" href="/css/chosen.css" type="text/css" charset="utf-8">	
 	<link rel="stylesheet" href="/css/tooltip.css" type="text/css" charset="utf-8">	
+	<link rel="stylesheet" href="/css/jquery.dropdown.css" type="text/css" media="screen, projection"/>
+
 	<script type="text/javascript" src="http://code.jquery.com/jquery-1.7.2.js"></script>
 	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.18/jquery-ui.js"></script>
 	<script type="text/javascript" src="/js/chosen.jquery.js"></script>
@@ -13,25 +15,39 @@
 	<script type="text/javascript" src="/js/tooltip.js"></script>
 	<script type="text/javascript" src="/js/jquery.diff.js"></script>
 	<script type="text/javascript" src="/js/jquery.dataTables.js"></script>
+	<script type="text/javascript" language="javascript" src="/js/jquery.dropdown.js"></script>
+	
 </head>
 <body>
 	<div id="wrapper">
 		<div id="header">D3Up</div>
-		<ul id="navigation">
-			<li><a href="/">Home</a></li>
-			<li><a href="/item/create">Create Item</a></li>
-			<li><a href="/build">All Builds</a></li>
-			<li><a href="/user/builds">My Builds</a></li>
-			<li><a href="/user/items">My Items</a></li>
-			<li><a href="/updates">Updates</a></li>
-			<? if($profile = Epic_Auth::getInstance()->getProfile()): ?>
-				<!-- <li><a href="/user"><?= $profile->username ?></a></li>	 -->
-				<li><a href="/user/logout">Logout</a></li>
-			<? else: ?>
-				<li><a href="/user/login">Login</a></li>
-				<li><a href="/user/register">Register</a></li>
-			<? endif; ?>
-		</ul>
+		<div>
+			<ul id="navigation" class="dropdown ui-helper-clearfix"  style="text-align: center">
+				<li><a href="/">Home</a></li>
+				<li><a href="/item">Items</a>
+					<ul class="sub_menu">
+						<li><a href="/item/create">Create Item</a></li>
+						<li><a href="/item">All Items</a></li>
+						<li><a href="/user/items">My Items</a></li>
+					</ul>
+				</li>
+				<li><a href="/build">Builds</a>
+					<ul class="sub_menu">
+						<li><a href="/build/create">Create Build</a></li>
+						<li><a href="/build">All Builds</a></li>
+						<li><a href="/user/builds">My Builds</a></li>
+					</ul>
+				</li>
+				<li><a href="/updates">Updates</a></li>
+				<? if($profile = Epic_Auth::getInstance()->getProfile()): ?>
+					<!-- <li><a href="/user"><?= $profile->username ?></a></li>	 -->
+					<li><a href="/user/logout">Logout</a></li>
+				<? else: ?>
+					<li><a href="/user/login">Login</a></li>
+					<li><a href="/user/register">Register</a></li>
+				<? endif; ?>
+			</ul>
+		</div>
 		<div id="sys-message" class="ui-widget ui-widget-content ui-corner-all">
 			<b>System Message</b>: Instead of spamming everyone at the top of the page all the time, I've created a section for updates. You'll see the link on the navigation bar, and this bar will soon be reserved for critical announcements. Please submit feedback/bugs/complains/praise/whatever on the <a href="http://www.reddit.com/r/Diablo/comments/vpetk/ready_for_testers_item_comparison_character/">/r/diablo post</a> for now, or you can email me directly at <a href="mailto:aaron.cox@greymass.com">aaron.cox@greymass.com</a>. Thanks!</a>.
 		</div>
