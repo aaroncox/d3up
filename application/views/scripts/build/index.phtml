@@ -19,11 +19,18 @@
 																								)); ?>
 					</td>
 				</tr>
+				<tr>
+					<th></th>
+					<th>Name</th>
+					<th>Description</th>
+					<th>Guide?</th>
+				</tr>
 			<? foreach($this->builds as $build): ?>
 				<tr>
 					<td class="icon"><img src="/images/<?= $build->class ?>.png"/></td>
 					<td class="name"><?= $this->mLink($build) ?></td>
-					<td><?= $build->description ?></td>
+					<td class="description"><?= $build->description ?></td>
+					<td><?= ($build->guideIsPublished)?"Yes":"No" ?></td>
 				</tr>
 			<? endforeach; ?>
 				<tr>
@@ -50,5 +57,11 @@
 		 <img data-class="witch-doctor" class='icon-frame' src='/images/witch-doctor.png'/>
 		 <img data-class="wizard" class='icon-frame' src='/images/wizard.png'/>
 		</div>
+		<p>Has a Guide? 
+			<select id="hasGuide">
+				<option value="false">No</option>
+				<option value="true">Yes</option>
+			</select> 
+		</p>
 	</div>
 </div>

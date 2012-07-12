@@ -16,6 +16,11 @@ class BuildController extends Epic_Controller_Action
 		if($class = $this->getRequest()->getParam('build-class')) {
 			$this->view->buildClass = $query['class'] = $class;
 		}
+		if($hasGuide = $this->getRequest()->getParam('guide')) {
+			if($hasGuide == "true") {				
+				$query['guideIsPublished'] = true;
+			}
+		}
 		$builds = Epic_Mongo::db('build')->fetchAll($query, $sort);	
 		$paginator = Zend_Paginator::factory($builds);
 		$paginator->setCurrentPageNumber($this->getRequest()->getParam('page', 1))->setItemCountPerPage(15);
