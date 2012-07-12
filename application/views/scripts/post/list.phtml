@@ -1,0 +1,14 @@
+<div class="home inline-flow">
+	<?= $this->render("./post/_breadcrumb.phtml") ?>
+
+	<? foreach($this->posts as $post): ?>
+		<?= $this->partial("./post/types/".$post->_type.".phtml", array('post' => $post)) ?>
+	<? endforeach; ?>
+
+	<?php echo $this->paginationControl($this->posts,
+	                                    'Elastic',
+	                                    'index/_pages.phtml'); ?>
+</div>
+<div class="info inline-flow">
+	<?= $this->render("./post/_sidebar.phtml")?>
+</div>

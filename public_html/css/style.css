@@ -297,3 +297,23 @@ div.filters {
 	font-size: 0.9em;
 	text-align: center;
 }
+.breadcrumb {
+	margin: 10px;
+}
+.d3up-post {
+	margin-top: 10px;
+}
+.d3up-post h3 {
+	margin: 15px 20px 35px;
+}
+.d3up-post div.meta {
+	color: #aaa;
+	float: right;
+	margin: 20px 10px;
+}
+.d3up-post .post-body {
+	padding: 0 20px;
+}
+.ui-widget-content a {
+	color: #70B1D5;
+}

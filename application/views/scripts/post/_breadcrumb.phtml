@@ -1,0 +1,7 @@
+<div class="breadcrumb">
+	<a href="/">Home</a>
+	\ <a href="/<?= $this->type ?>s"><?= ucwords($this->type)?>s</a> 
+	<? if($this->post && $this->post->id ): ?>
+		\ <a href="/<?= $this->post->_type ?>/<?= $this->post->id ?>">Version <?= $this->post->version ?></a>
+	<? endif; ?>
+</div>

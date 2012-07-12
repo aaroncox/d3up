@@ -23,6 +23,7 @@
 			<li><a href="/build">All Builds</a></li>
 			<li><a href="/user/builds">My Builds</a></li>
 			<li><a href="/user/items">My Items</a></li>
+			<li><a href="/updates">Updates</a></li>
 			<? if($profile = Epic_Auth::getInstance()->getProfile()): ?>
 				<!-- <li><a href="/user"><?= $profile->username ?></a></li>	 -->
 				<li><a href="/user/logout">Logout</a></li>
@@ -32,7 +33,7 @@
 			<? endif; ?>
 		</ul>
 		<div id="sys-message" class="ui-widget ui-widget-content ui-corner-all">
-			<b>System Message</b>: Update #7 - Bunch of Bug Fixes, <a href="http://www.reddit.com/r/Diablo/comments/vpetk/ready_for_testers_item_comparison_character/c5c29e7">listed here</a>. Update #6 - Created the "<a href="/build/">Builds</a>" page to browse all builds and you can now publish a guide to go with your build by visiting the "Guide" tab on your build, use it to explain how you play and how your build is used! For a full list of changes or to submit feedback/bugs/complains/praise/whatever, visit the post on <a href="http://www.reddit.com/r/Diablo/comments/vpetk/ready_for_testers_item_comparison_character/">/r/diablo</a>, or you can email me directly at <a href="mailto:aaron.cox@greymass.com">aaron.cox@greymass.com</a>.
+			<b>System Message</b>: Instead of spamming everyone at the top of the page all the time, I've created a section for updates. You'll see the link on the navigation bar, and this bar will soon be reserved for critical announcements. Please submit feedback/bugs/complains/praise/whatever on the <a href="http://www.reddit.com/r/Diablo/comments/vpetk/ready_for_testers_item_comparison_character/">/r/diablo post</a> for now, or you can email me directly at <a href="mailto:aaron.cox@greymass.com">aaron.cox@greymass.com</a>. Thanks!</a>.
 		</div>
 		<div id="main">
 			<div id="content">

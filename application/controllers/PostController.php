@@ -10,9 +10,28 @@ class PostController extends Epic_Controller_Action
 	public function getPost() {
 		return $this->view->post = $this->getRequest()->getParam('post');
 	}
-	
+	public function createAction() {
+		$profile = Epic_Auth::getInstance()->getProfile();
+		if($profile && $profile->id == 2 && $type = $this->getRequest()->getParam('type')) {
+			$post = Epic_Mongo::newDoc($type);
+			$this->view->form = $form = $post->getEditForm();
+			$this->_handleForm($form);
+		} else {
+			$this->_redirect("/user/login");
+		}
+	}	
+	public function listAction() {
+		$this->view->type = $type = $this->getRequest()->getParam('type');
+		$query = array();
+		$sort = array("_created" => -1);
+		$posts = Epic_Mongo::db($type)->fetchAll($query, $sort);
+		$paginator = Zend_Paginator::factory($posts);
+		$paginator->setCurrentPageNumber($this->getRequest()->getParam('page', 1))->setItemCountPerPage(20);
+		$this->view->posts = $paginator;
+	}
 	public function viewAction() {
-		
+		$this->getPost();
+		$this->view->type = $type = $this->getRequest()->getParam('type');
 	}
 	public function replyAction() {
 		$post = $this->getPost();

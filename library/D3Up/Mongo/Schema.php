@@ -19,6 +19,7 @@ class D3Up_Mongo_Schema extends Epic_Mongo_Schema {
 		), 
 		'post' => array(
 			'comment' => 'D3Up_Mongo_Record_Build_Comment',
+			'update' => 'D3Up_Mongo_Post_Update',
 		),
 		'user' => array(
 			
