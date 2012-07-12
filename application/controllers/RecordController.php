@@ -48,17 +48,21 @@ class RecordController extends Epic_Controller_Action
 			);
 			$dupe = Epic_Mongo::db("item")->fetchOne($query);
 			if($dupe) {
-				$this->_redirect("/i/".$dupe->id);
-				throw new Exception("You've already copied this item to your items. To prevent abuse, you can't copy an item to your items more than once.");
+				// $this->_redirect();
+				throw new Exception("You've already copied this item to your items, here's a <a href='/i/".$dupe->id."'>link to your copy</a>. To prevent abuse, you can't copy an item to your items more than once.");
 			}
-			$new = Epic_Mongo::newDoc('item');
-			$export = $record->export();
-			unset($export['id'], $export['_id'], $export['_createdBy']);
-			$new->setFromArray($export);	
-			$new->_original = $record;
-			$new->_createdBy = $profile;
-			$new->save();
-			$this->_redirect("/i/".$new->id);		
+			if($confirm = $this->getRequest()->getParam("confirm")) {			
+				$new = Epic_Mongo::newDoc('item');
+				$export = $record->export();
+				unset($export['id'], $export['_id'], $export['_createdBy']);
+				$new->attrs->setFromArray($export['attrs']);
+				unset($export['attrs']);
+				$new->setFromArray($export);	
+				$new->_original = $record;
+				$new->_createdBy = $profile;
+				$new->save();
+				$this->_redirect("/i/".$new->id);		
+			}
 		}
 		if($record instanceOf D3Up_Mongo_Record_Build) {
 			if($confirm = $this->getRequest()->getParam("confirm")) {

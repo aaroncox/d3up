@@ -83,7 +83,7 @@ $(function() {
 				offset: "0 10",
 				collision: "flip"
 			};
-			tooltip.appendTo("body").position(position).hide().fadeIn();
+			tooltip.appendTo("body").position(position);
 		}).mouseout(function() {
 			tooltip.empty();
 		});

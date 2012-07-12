@@ -8,7 +8,7 @@
 		$params .= "&sort=".implode(",",$this->sortAttrs);
 	}
 ?>
-<div style="text-align: right">
+<div id="item-pagination" style="text-align: right">
 	<!-- Previous page link -->
 	<?php if ($this->prevoius != 1 && $this->current != 1): ?>
 		<a href="?page=1<?= $params ?>">&laquo;</a>
