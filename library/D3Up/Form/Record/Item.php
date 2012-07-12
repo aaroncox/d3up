@@ -491,7 +491,7 @@ class D3Up_Form_Record_Item extends Epic_Form
 		// Determine Valid Attributes to Save (Somewhat Protected the form)
 		$valid = D3Up_View_Helper_DisplayItem::getAttributeMap();
 		// Loop through attributes passed in and parse them into the attrs array
-		$attrs = array();
+		$attrs = new D3Up_Mongo_Record_Item_Attributes();
 		foreach($this->_allData as $key => $value) {
 			if(array_key_exists($key, $valid)) {
 				if(is_float($value) || is_numeric($value)) {
