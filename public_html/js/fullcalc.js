@@ -839,7 +839,12 @@ function calc(target, passiveSkills) {
 			mathCriticalHit = 5 + ((attrs['critical-hit']) ? attrs['critical-hit'] : 0),
 			mathCriticalHitDamage = 50 + ((attrs['critical-hit-damage']) ? attrs['critical-hit-damage'] : 0), 
 			mathPlusDamage = false;
-	
+	if(typeof(mathDamage) == 'undefined') {
+		mathDamage = {
+			min: 0,
+			max: 0
+		};
+	}
 	// ----------------------------------
 	// Modifications of Attributes/Skills based on passives
 	// ----------------------------------
