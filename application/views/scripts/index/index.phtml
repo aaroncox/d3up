@@ -1,66 +1,93 @@
 <div class="home inline-flow">
 	<div class="recent-builds">
+		<h2 class="table-header">Recent Character Builds</h2>
 		<table id="recent-builds" class="d3up-table">
-			<thead>
-				<tr>
-					<td colspan="10">
-						<div class='filters'>
-							By Class: 
-							<select name="build-by-class" class="build-selector">
-								<option></option>
-								<option <?= ($this->buildClass == "barbarian") ? "selected='selected'" : "" ?> value="barbarian">Barbarian</option>
-								<option <?= ($this->buildClass == "demon-hunter") ? "selected='selected'" : "" ?> value="demon-hunter">Demon Hunter</option>
-								<option <?= ($this->buildClass == "monk") ? "selected='selected'" : "" ?> value="monk">Monk</option>
-								<option <?= ($this->buildClass == "witch-doctor") ? "selected='selected'" : "" ?> value="witch-doctor">Witch Doctor</option>
-								<option <?= ($this->buildClass == "wizard") ? "selected='selected'" : "" ?> value="wizard">Wizard</option>
-							</select>
-						</div>
-						<h2>Recent Character Builds</h2>
-					</td>
-				</tr>
-			</thead>
 			<tbody>
 			<? foreach($this->builds as $build): ?>
-				<tr>
+				<tr class="item-row">
 					<td class="icon"><img src="/images/<?= $build->class ?>.png"/></td>
 					<td class="name"><?= $this->mLink($build) ?></td>
 					<td><?= $build->description ?></td>
 				</tr>
 			<? endforeach; ?>
-			<tr>
-				<td colspan="10" class="more-builds">
-					Looking for more Builds? Check out the <a href="/build">Builds Page</a>.
-				</td>
-			</tr>
 			</tbody>
 		</table>
-		<script type="text/javascript">
-			$(".build-selector").bind('change', function() {
-				var resultsTable = $(".recent-builds table tbody");
-				resultsTable.addClass("ui-state-disabled");
-				$.ajax({
-					url: '/?build-class=' + $(this).val(),
-					type: 'html',
-					success: function(data) {
-						var results = $("<div/>").append(data);
-						resultsTable.replaceWith(results.find(".recent-builds table tbody"));
-					}
-				});
-			});
-		</script>
 	</div>
 	<div class="recent-items">
-		<h2>Recently Created Items</h2>
-		<ul>
+		<h2 class='table-header'>Recently Created Items</h2>
+		<table class="d3up-table">
+		<tbody>
 			<? foreach($this->items as $item): ?>
-				<li>
-					<?= $this->itemLink($item) ?> (<?= ucwords(str_replace("-", " ", $item->type))?>)
-				</li>
+			<tr class="item-row" id="item-<?= $item->id ?>">
+					<td class="name">
+						<div class="item-stat">
+							<span class="value">
+								<?= $this->itemLink($item) ?>
+							</span>
+						<? if($item->stats): ?>
+							<span class="stat">
+							<? if($item->stats->armor): ?>
+								<?= $item->stats->armor . " Armor"?>
+							<? endif; ?>
+							<? if($item->stats->dps): ?>
+								<?= $item->stats->dps." dps" ." @ ".$item->stats->speed." A/S" ?>
+							<? endif; ?>
+							</span>
+						<? endif; ?>
+					</td>
+					<?
+						if($item->stats) {
+							$stats = $item->stats->export();								
+						}
+						$attrs = $item->attrs->getAttributesArray($item->type);
+						$export = $item->cleanExport();
+						if(isset($export['socketAttrs'])) {
+							$socketAttrs = $export['socketAttrs'];
+						}
+						// Put whatever we're filtering in first 
+						if($this->sortAttrs) {
+							foreach($this->sortAttrs as $k => $v) {
+								switch($v) {
+									case "base_armor":
+										$val = $stats['armor'];
+										break;
+									case "base_dps":
+										$val = $stats['dps'];
+										break;
+									default:
+										$val = $attrs[$v];
+										break;
+								}
+								if(isset($socketAttrs[$k])) {
+									$val += $socketAttrs[$k];
+								}
+								unset($attrs[$v]);
+								echo "<td class='sorted'>".$this->itemStat(ucwords(str_replace("_", " ", $v)), $val)."</td>";							
+							}
+						}
+						$count = count($this->sortAttrs);
+					?>
+					<? foreach($attrs as $k => $v): ?>
+						<? 
+							$count++;
+							$val = $v;
+							if(isset($socketAttrs[$k])) {
+								$val += $socketAttrs[$k];
+							}
+						?>
+						<? if($count > 6) { continue; } ?>
+						<td><?= $this->itemStat($k, $val) ?></td>
+					<? endforeach ?>
+					<? if($count < 6): ?>
+						<? for($i = $count; $i < 6; $i++): ?>
+							<td>&nbsp;</td>
+						<? endfor ?>
+					<? endif ?>
+
+				</tr>
 			<? endforeach; ?>
-		</ul>
-		<?php echo $this->paginationControl($this->items,
-		                                    'Elastic',
-		                                    'index/_pages.phtml'); ?>
+		</tbody>
+	</table>
 	</div>
 </div>
 <div class="info inline-flow">

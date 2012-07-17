@@ -1,67 +1,91 @@
-<div class="home inline-flow">
-	<div class="recent-builds">
-		<table id="recent-builds" class="d3up-table">
-			<thead>
-				<tr>
-					<td colspan="10">
-						<h2>Character Builds</h2>
-					</td>
-				</tr>
-			</thead>
-			<tbody>
-				<tr>
-					<td colspan="10" class="build-paginator">
-						<?php echo $this->paginationControl($this->builds,
-						                                    'Elastic',
-						                                    'index/_pages.phtml',
-																								array(
-																									'buildClass' => $this->buildClass
-																								)); ?>
-					</td>
-				</tr>
-				<tr>
-					<th></th>
-					<th>Name</th>
-					<th>Description</th>
-					<th>Guide?</th>
-				</tr>
-			<? foreach($this->builds as $build): ?>
-				<tr>
-					<td class="icon"><img src="/images/<?= $build->class ?>.png"/></td>
-					<td class="name"><?= $this->mLink($build) ?></td>
-					<td class="description"><?= $build->description ?></td>
-					<td><?= ($build->guideIsPublished)?"Yes":"No" ?></td>
-				</tr>
-			<? endforeach; ?>
-				<tr>
-					<td colspan="10" class="build-paginator">
-						<?php echo $this->paginationControl($this->builds,
-						                                    'Elastic',
-						                                    'index/_pages.phtml',
-																								array(
-																									'buildClass' => $this->buildClass
-																								)); ?>
-					</td>
-				</tr>
-			</tbody>
-		</table>
-	</div>
-</div>
-<div class="info inline-flow">
-	<div class='ui-widget ui-widget-content ui-corner-all'>
-		<h3>Class</h3>
-		<div class="class-selector" style="text-align: center; margin: 5px 0;">
-		 <img data-class="barbarian" class='icon-frame' src='/images/barbarian.png'/>
-		 <img data-class="demon-hunter" class='icon-frame' src='/images/demon-hunter.png'/>
-		 <img data-class="monk" class='icon-frame' src='/images/monk.png'/>
-		 <img data-class="witch-doctor" class='icon-frame' src='/images/witch-doctor.png'/>
-		 <img data-class="wizard" class='icon-frame' src='/images/wizard.png'/>
-		</div>
-		<p>Has a Guide? 
-			<select id="hasGuide">
-				<option value="false">No</option>
-				<option value="true">Yes</option>
-			</select> 
-		</p>
-	</div>
+<?
+	$this->headTitle('Character Builds & Guides'); 
+?>
+<div class="recent-builds">				
+	<h2 class="table-header">Character Builds</h2>
+	<table id="all-builds" class="d3up-table">
+		<thead>
+			<tr>
+				<td colspan="10">
+					<div class="table-filters">
+						<select id="hasGuide" data-placeholder="Has Guide">
+							<option value=""></option>
+							<option value="true">Yes</option>
+							<option value="false">No</option>
+						</select> 
+						<select id="isGeared" data-placeholder="Geared Profile">
+							<option value=""></option>
+							<option value="true">Yes</option>
+							<option value="false">No</option>
+						</select> 
+						<select id="classSelect" data-placeholder="Filter by Class">
+							<option value=""></option>
+							<option value="">All Classes</option>
+							<option value="barbarian">Barbarian</option>
+							<option value="demon-hunter">Demon Hunter</option>
+							<option value="monk">Monk</option>
+							<option value="witch-doctor">Witch Doctor</option>
+							<option value="wizard">Wizard</option>
+						</select>
+					</div>
+					<script type="text/javascript">
+						<? if($this->class): ?>
+							$("#classSelect option[value=<?= $this->class ?>]").attr("selected", "selected");
+						<? endif?>
+						<? if($this->hasGuide): ?>
+							$("#hasGuide option[value=<?= ($this->hasGuide)?"true":"false" ?>]").attr("selected", "selected");
+						<? endif?>
+						<? if($this->isGeared): ?>
+							$("#isGeared option[value=<?= ($this->isGeared)?"true":"false" ?>]").attr("selected", "selected");
+						<? endif?>
+						$("#classSelect, #isGeared, #hasGuide").chosen({allow_single_deselect: true});
+					</script>
+				</td>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td colspan="10" class="build-paginator td-paginator">
+					<?php echo $this->paginationControl($this->builds,
+					                                    'Elastic',
+					                                    'build/_pages.phtml',
+																							array(
+																								'class' => $this->class,
+																								'hasGuide' => $this->hasGuide,
+																								'isGeared' => $this->isGeared,
+																							)); ?>
+				</td>
+			</tr>
+			<tr>
+				<th></th>
+				<th>Name</th>
+				<th>DPS</th>
+				<th>EHP</th>
+				<th>Geared?</th>
+				<th>Guide?</th>
+			</tr>
+		<? foreach($this->builds as $build): ?>
+			<tr class='build-row'>
+				<td class="icon"><img src="/images/<?= $build->class ?>.png"/></td>
+				<td class="name"><?= $this->mLink($build) ?></td>
+				<td class="stat"><?= $this->prettyStat($build->stats['dps']) ?></td>
+				<td class="stat"><?= $this->prettyStat($build->stats['ehp']) ?></td>
+				<td class="meta"><?= (count($build->equipment) > 10)?"<span class='pos'>Yes</span>":"<span class='neg'>No</span>" ?></td>
+				<td class="meta"><?= ($build->guideIsPublished)?"<span class='pos'>Yes</span>":"<span class='neg'>No</span>" ?></td>
+			</tr>
+		<? endforeach; ?>
+			<tr>
+				<td colspan="10" class="build-paginator td-paginator">
+					<?php echo $this->paginationControl($this->builds,
+					                                    'Elastic',
+					                                    'build/_pages.phtml',
+																							array(
+																								'class' => $this->buildClass,
+																								'hasGuide' => $this->hasGuide,
+																								'isGeared' => $this->isGeared,
+																							)); ?>
+				</td>
+			</tr>
+		</tbody>
+	</table>
 </div>

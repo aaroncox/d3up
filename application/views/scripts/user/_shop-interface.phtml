@@ -1,0 +1,379 @@
+<style type="text/css">
+	#item-picker,
+	#sellPanel,
+	#completePanel {
+		display: none;
+		margin-bottom: 20px;
+	}
+	#itemDisplay {
+		float: right;
+	}
+	.sellMethod {
+		display: none;
+	}
+	.sellBody {
+		padding: 5px 20px;
+	}
+	.readable {
+		font-size: 1.5em;
+		margin: 0 15px;
+	}
+	.sellBody .alert {
+		color: #f00;
+		font-weight: bold;
+	}
+	.content-widget {
+		padding: 0 20px 10px;
+		margin-bottom: 20px;
+	}
+</style>
+<div style="float: right">
+	<button id="sellButton" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only"><span class="ui-button-text">Sell an Item</span></button>
+</div>
+<h2>My Shop</h2>
+<div class="ui-widget ui-widget-content ui-corner-all" style="margin-bottom: 5px; padding: 0 10px 10px;">
+	<h3>We will show you online to other users until <span class='pos'><?= date("r", $this->profile->_lastSeen + 900) ?></span>.</h3>
+	Each time you refresh this page, we will update your "online" status shown on your auctions and show you online for 15 minutes. 
+</div>
+<div class='ui-widget ui-widget-content ui-corner-all content-widget ui-helper-clearfix' id="item-picker">
+	<h3>Sell an Item!</h3>
+	<p>Which Item do you want to sell?</p>
+	<p>
+		<select name="sellItem" id="sellItem">
+			<option>Loading</option>
+		</select>
+	</p>
+	<p>
+		<select name="sellItemFilter" id="sellItemFilter">
+			<option label="" value="">No Filter</option>
+	    <option label="Amulet" value="amulet">Amulet</option>
+	    <option label="Belt" value="belt">Belt</option>
+	    <option label="Boots" value="boots">Boots</option>
+	    <option label="Bracers" value="bracers">Bracers</option>
+	    <option label="Chest Armor" value="chest-armor">Chest Armor</option>
+	    <option label="Cloak" value="cloak">Cloak</option>
+	    <option label="Gloves" value="gloves">Gloves</option>
+	    <option label="Helm" value="helm">Helm</option>
+	    <option label="Pants" value="pants">Pants</option>
+	    <option label="Mighty Belt" value="mighty-belt">Mighty Belt</option>
+	    <option label="Ring" value="ring">Ring</option>
+	    <option label="Shoulder" value="shoulder">Shoulder</option>
+	    <option label="Spirit Stone" value="spirit-stone">Spirit Stone</option>
+	    <option label="Voodoo Mask" value="voodoo-mask">Voodoo Mask</option>
+	    <option label="Wizard Hat" value="wizard-hat">Wizard Hat</option>
+	    <option label="Two-Handed Mace" value="2h-mace">Two-Handed Mace</option>
+	    <option label="Two-Handed Axe" value="2h-axe">Two-Handed Axe</option>
+	    <option label="Bow" value="bow">Bow</option>
+	    <option label="Diabo" value="diabo">Diabo</option>
+	    <option label="Crossbow" value="crossbow">Crossbow</option>
+	    <option label="Two-Handed Mighty Weapon" value="2h-mighty">Two-Handed Mighty Weapon</option>
+	    <option label="Polearm" value="polearm">Polearm</option>
+	    <option label="Staff" value="staff">Staff</option>
+	    <option label="Two-Handed Sword" value="2h-sword">Two-Handed Sword</option>
+	    <option label="Axe" value="axe">Axe</option>
+	    <option label="Ceremonial Knife" value="ceremonial-knife">Ceremonial Knife</option>
+	    <option label="Hand Crossbow" value="hand-crossbow">Hand Crossbow</option>
+	    <option label="Dagger" value="dagger">Dagger</option>
+	    <option label="Fist Weapon" value="fist-weapon">Fist Weapon</option>
+	    <option label="Mace" value="mace">Mace</option>
+	    <option label="Mighty Weapon" value="mighty-weapon">Mighty Weapon</option>
+	    <option label="Spear" value="spear">Spear</option>
+	    <option label="Sword" value="sword">Sword</option>
+	    <option label="Wand" value="wand">Wand</option>
+	    <option label="Mojo" value="mojo">Mojo</option>
+	    <option label="Source" value="source">Source</option>
+	    <option label="Quiver" value="quiver">Quiver</option>
+	    <option label="Shield" value="shield">Shield</option>
+		</select>
+	</p>
+	<a class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" href="/item/create?return=store"><span class="ui-button-text">Create New Item to Sell</span></a>
+</div>
+<div class="user-shop">
+	<ul>
+		<li><a href="#tab-shop">For Sale</a></li>
+		<li><a href="#tab-complete">Completed</a></li>
+	</ul>
+	<div id="tab-shop">
+		<?= $this->render("./user/shop/shop.phtml")?>
+	</div>
+	<div id="tab-complete">
+		<?= $this->render("./user/shop/completed.phtml") ?>
+	</div>
+</div>
+<script type="text/javascript">
+	$(function() {
+		var selected = null,
+				selectedMethod = null,
+				selectedDuration = null,
+				selectedValue = null,
+				sellButton = $("#sellButton"),
+				sellItem = $("#sellItem"),
+				sellItemFilter = $("#sellItemFilter"),
+				sellMethod = $("#sellMethod"),
+				sellDuration = $("#sellDuration"),
+				sellValue = $("#sellValue"),
+				sellValueReadable = $("#sellValueReadable"),
+				postSaleButton = $("#postSaleButton"),
+				postSale = $("#postSale"),
+				sellPanel = $("#sellPanel"),
+				sellForm = $("#sellForm"),
+				itemId = $("#itemId"),
+				itemFilter = null,
+				itemPicker = $("#item-picker");
+		$(".user-shop").tabs();
+		// Get the Users Items
+		getMyItems();
+		// If we pick an item, show the sell display
+		sellItem.bind('change', function() {
+			selected = $(this).find(":selected").data('json');
+			itemId.val(selected.id);
+			if(selected) {
+				var itemTitle = sellPanel.find("#itemForSale");
+				// Set the Item Name
+				itemTitle.html(selected.name);
+				// Show the Sales Panel
+				sellPanel.dialog({
+					width: 700,
+					modal: true,
+					title: 'Create a Sale'
+				});
+			}
+		});
+		// Show the Item Picker when the Sell button is clicked
+		sellButton.bind('click', function() {
+			itemPicker.show();
+			// When we change the filter, rerun the function and set the filter
+			sellItemFilter.chosen().bind('change', function() {
+				itemFilter = $(this).val();
+				getMyItems();
+			});
+		});
+		// Show the Options if a user picks a selling method
+		sellMethod.bind('change', function() {
+			$(".sellMethod").hide();
+			selectedMethod = $(this).find(":selected").val();
+			if(selectedMethod) {
+				if(selectedMethod == 'ah') {
+					sellDuration.parent().hide();
+				} 
+				$("#method-" + selectedMethod).show();									
+			}
+		});
+		// Save the users sell duration
+		sellDuration.bind('change', function() {
+			var value = $(this).val();
+			if(value) {
+				selectedDuration = value;
+			}
+		});
+		$(".btn-complete").each(function() {
+			var btn = $(this),
+					sale = $(this).data("id"), 
+					method = $(this).data("method"),
+					completeForm = $("#completeForm"),
+					methodOptions = $("#methodOptions"), 
+					completeSaleId = $("#completeSaleId"),
+					completeSaleResult = $("#completeSaleResult");
+			btn.click(function() {
+				switch(method) {
+					case "ah":
+						methodOptions.html("");
+						methodOptions.append($("<p>").html("How much did it sell for (after AH cut, the value on your 'Completed' tab)?"));
+						methodOptions.append("<input name='completeSaleValue'/>");
+						break;
+				}
+				completeSaleId.val(sale);
+				$("#completePanel").dialog({
+					title: "How did this sale complete?",
+					width: 700,
+					modal: true,
+					buttons: {
+						"Sold": function() {
+							completeSaleResult.val("true");
+							completeForm.trigger("submit");
+						}, 
+						"Didn't Sell": function() {
+							completeSaleResult.val("false");
+							completeForm.trigger("submit");
+						},
+						Cancel: function() {
+							$( this ).dialog("close");
+						}						
+					}
+				});
+			});
+		});
+		$(".btn-cancel").each(function() {
+			var btn = $(this),
+					sale = $(this).data("id"),
+					row = $("#sale-" + sale);
+			btn.click(function() {
+				$("<p>Are you sure you want to cancel this auction?</p>").dialog({
+					resizable: false,
+					modal: true,
+					buttons: {
+						"Cancel this Auction": function() {
+							row.addClass("ui-state-disabled");
+							$.ajax({
+								type: 'json',
+								url: '/user/shop?a=cancel&saleId=' + sale,
+								success: function() {
+									row.remove();
+								}, 
+								error: function() {
+									row.removeClass("ui-state-disabled");
+								}
+							});
+							$( this ).dialog("close");
+						},
+						Cancel: function() {
+							$( this ).dialog( "close" );
+						}
+					}
+				});
+			});
+		});
+		// Bind Flat Sale Functions
+		postSale.bind('click', function() {
+			if(!selected) {
+				$("<p>You need to select an item before you can submit your sale.</p>").dialog({
+					height: 140,
+					modal: true,
+					title: 'Error'
+				});
+				return false;
+			}
+			if(!selectedMethod) {
+				$("<p>You need to select a method to sell this item before you can submit your sale.</p>").dialog({
+					height: 180,
+					modal: true,
+					title: 'Error'
+				});				
+				return false;
+			}
+			if(selectMethod != "ah" && !selectedDuration) {
+				$("<p>You need to select a length for this sale to run before you can submit your sale.</p>").dialog({
+					height: 180,
+					modal: true,
+					title: 'Error'
+				});				
+				return false;
+			}
+			if(selectedMethod == 'flat') {
+				if(!selectedValue) {
+					$("<p>You need to name your price before you can submit your sale.</p>").dialog({
+						height: 180,
+						modal: true,
+						title: 'Error'
+					});				
+					return false;
+				}	
+			} 
+			sellForm.trigger("submit");
+		});
+		// Do some readability
+		sellValue.bind('keyup', function() {
+			var value = $(this).val(),
+					formatted = value.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,"), 
+					abbrv = null;
+			selectedValue = value;
+			sellValueReadable.html(formatted);
+			if(value > 1000) {
+				abbrv = (Math.round(value / 1000 * 100) / 100) + "k";
+			}
+			if(value > 1000000) {
+				abbrv = (Math.round(value / 1000000 * 100) / 100) + "m";
+			}
+			if(value > 1000000000) {
+				abbrv = (Math.round(value / 1000000000 * 100) / 100) + "b";
+			}
+			if(abbrv) {
+				sellValueReadable.append(" (" + abbrv +")");				
+			}
+		});
+		// A function to retrieve the users items
+		function getMyItems() {
+			var url = '/user/shop?a=getItems';
+			if(itemFilter) {
+				url = url + '&filter=' + itemFilter;
+			}
+			$.ajax({
+				url: url,
+				type: 'json',
+				success: function(data) {
+					sellItem.empty().append("<option></option>");
+					var json = $.parseJSON(data);
+					$.each(json, function(k,v) {
+						var i = $.parseJSON(v);
+						var item = $("<option/>").attr("value", i.id).attr("data-json", v);
+						<? if($this->selectItem): ?>
+						if(i.id == <?= $this->selectItem ?>) {
+							item.attr("selected", "selected");
+							setTimeout(function() {
+								sellItem.trigger('change');															
+							}, 0);
+						}
+						<? endif ?>
+						item.html(i.name);
+						item.bindTooltip();
+						sellItem.append(item);
+					})
+				}
+			});
+		}
+	});
+</script>
+<div class='ui-widget ui-widget-content ui-corner-all ui-helper-clearfix content-widget inline-flow' id="sellPanel">
+	<h3>Options for selling <span id="itemForSale">Item</span></h3>
+	<div class="sellBody">
+		<form method="post" id="sellForm">
+			<input type="hidden" name="itemId" id="itemId" value=""/>
+			<input type="hidden" name="a" id="a" value="postSale"/>
+			<p>How would you like to sell this item?</p>
+			<select name="sellMethod" id="sellMethod">
+				<option value="">Pick an Option</option>
+				<option value="flat">Flat Price</option>
+				<option value="offers">Taking Offers</option>
+				<option value="ah">Up on AH</option>
+			</select>
+			<div>	
+				<p>How long should this sale remain active?</p>
+				<select name="sellDuration" id="sellDuration">
+					<option value="">Pick a Duration</option>
+					<option value="1">1 Day</option>
+					<option value="2">2 Days</option>
+					<option value="3">3 Days</option>
+					<option value="5">5 Days</option>
+					<option value="7">7 Days</option>
+				</select>						
+			</div>
+			<div id="method-flat" class="sellMethod">
+				<p>Sell for How much?</p>
+				<input name="sellValue" type="textbox" id="sellValue"/>
+				<span><img src="/images/goldcoin.png"><span class="readable" id="sellValueReadable">0</span> Gold</span>
+			</div>
+			<div id="method-offers" class="sellMethod">
+				<p class='alert'>The "Taking Offers" sell method allows other users to offer amounts to you for the item.</p>
+			</div>
+			<div id="method-ah" class="sellMethod">
+				<p>What did you post as the buyout?</p>
+				<input name="ahBuyout" type="textbox" id="soldBuyout"/>
+				<p>What did you post as the minimum bid?</p>
+				<input name="ahBid" type="textbox" id="soldMinBid"/>
+				<p class='alert'>By choosing this option, your auction will not appear in the bazaar, but will appear in your "My Store" page. The purpose of this feature is so that you can log which items you've sold and for how much.</p>
+			</div>
+			<p id="postSaleButton"><button id="postSale" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only gear-change" aria-disabled="false"><span class="ui-button-text">List Item</span></button></p>
+		</form>
+	</div>
+</div>
+<div class='ui-widget ui-widget-content ui-corner-all ui-helper-clearfix content-widget inline-flow' id="completePanel">
+	<div class="sellBody">
+		<form method="post" id="completeForm">
+			<input type="hidden" name="completeSaleId" id="completeSaleId" value=""/>
+			<input type="hidden" name="a" id="a" value="completeSale"/>
+			<input type="hidden" name="completeSaleResult" id="completeSaleResult" value="true"/>
+			<div id="methodOptions">
+			</div>
+		</form>
+	</div>
+</div>

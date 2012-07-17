@@ -1,0 +1,37 @@
+<table id="user-complete" class="d3up-table">
+	<thead>
+		<tr>
+			<th>Item</th>
+			<th>Results</th>
+			<th>Status</th>
+			<th>Price</th>
+			<th>Date</th>
+	</thead>
+	<tbody>
+		<? foreach($this->completed as $sale): ?>
+			<tr class="item-row" id="sale-<?= $sale->id ?>">
+				<td class='name'><?= $this->saleLink($sale) ?></td>
+				<td class="data">
+					<? if($sale->soldSuccess): ?>
+						<span class='pos'>Sold</span> 
+					<? else: ?>
+						<span class='neg'>Not Sold</span>
+					<? endif ?>
+				</td>
+				<td class='data'>
+					<?= $this->methodCleaner($sale->method) ?>
+					<img src="/images/goldcoin.png"> 
+					<? if($sale->method == 'ah'): ?>
+						<?= $this->prettyStat($sale->buyout) ?> bin / 
+						<?= $this->prettyStat($sale->bid) ?> bid
+					<? else: ?>
+					<? endif ?>
+				</td>
+				<td class="data"> 
+					<?= $this->prettyStat($sale->soldFor) ?>
+				</td>
+				<td class="data"><?= $this->timeAgo($sale->soldOn) ?></td>
+			</tr>
+		<? endforeach ?>
+	</tbody>
+</table>

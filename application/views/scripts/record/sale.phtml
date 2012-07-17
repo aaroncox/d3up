@@ -1,0 +1,44 @@
+<?
+	$profile = Epic_Auth::getInstance()->getProfile();
+	$this->headTitle($this->record->name); 
+?>
+<style type="text/css">
+</style>
+<div class="sale-info ui-helper-clearfix ui-widget ui-widget-content ui-corner-all">
+	<div class="item-info inline-flow" style="float: right">
+		<?= $this->displayItem($this->record->item) ?>
+		<p style='text-align: center'>
+			Link: <input type='text' value='http://d3up.com<?= $this->url(array('record' => $this->record), $this->record->route, true) ?>'/>
+			<? if($profile && $this->record->_createdBy && $profile->createReference() == $this->record->_createdBy->createReference()): ?>
+			<a href="/i/<?= $this->record->id ?>/edit" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only gear-change"><span class="ui-button-text">Edit</span></a>
+			<? endif; ?>
+			<? if($profile && $this->record->_createdBy && $profile->createReference() != $this->record->_createdBy->createReference()): ?>
+			<a href="/i/<?= $this->record->id ?>/copy" class="has-tooltip ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only gear-change"><span class="ui-button-text" data-tooltip="Copy this item into 'My Items'">Make a Copy</span></a>
+			<? endif; ?>
+		</p>
+	</div>
+	<div style="padding: 0 10px">
+		<h3>Sales Information</h3>
+		<h2>
+			Cost: 
+			<img src="/images/goldcoin.png">
+			<?= number_format($this->record->value) ?> (<?= $this->prettyStat($this->record->value)?>)
+		</h2>
+		<ul>
+			<li>Region: <?= $this->regionDisplay($this->record->seller->region) ?></li>
+			<li>Sale Type: <?= $this->methodCleaner($this->record->method) ?></li>
+			<li>Seller Status: 
+				<? if(time() - $this->record->seller->_lastSeen <= 900): ?>
+					<span class='pos' title="Last Seen: <?= date("r", $this->record->seller->_lastSeen) ?>">Online</span>
+				<? else: ?>                                                                               
+					<span class='neg' title="Last Seen: <?= date("r", $this->record->seller->_lastSeen) ?>">Offline</span>
+				<? endif ?>
+			</li>
+			<li>Seller Rating: ~</li>
+		</ul>
+		<p>Clicking the purchase button will notify the seller of your interest in the item. It is then the seller's responsibility to contact you and arrange the trade. For more information, please visit our <a href='/bazaar/faq'>Bazaar FAQ</a>.</p>
+		<p>
+			<a href="?confirm=true" class='ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only' style="padding: 5px; width: 450px">Purchase for <?= number_format($this->record->value) ?> gold</a>
+		</p>
+	</div>
+</div>

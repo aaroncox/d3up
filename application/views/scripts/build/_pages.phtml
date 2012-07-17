@@ -1,27 +1,18 @@
 <?php if ($this->pageCount > 1): ?>
 <?
 	$params = "";
-	if($this->itemType) {
-		$params .= "&type=".$this->itemType;
+	if($this->class) {
+		$params .= "&class=".$this->class;
 	}
-	if($this->slotType) {
-		$params .= "&slot=".$this->slotType;
+	if($this->isGeared) {
+		$params .= "&geared=true";
 	}
-	if($this->sortAttrs) {
-		$params .= "&sort=".implode(",",$this->sortAttrs);
-	}
-	if($this->sellMethod) {
-		$params .= "&sellMethod=".$this->sellMethod;
-	}
-	if($this->limit) {
-		$params .= "&limit=".$this->limit;
+	if($this->hasGuide) {
+		$params .= "&guide=true";
 	}
 ?>
-<div id="item-pagination" style="float: right">
+<div id="item-pagination" style="text-align: right">
 	<!-- Previous page link -->
-	<?php if ($this->prevoius != 1 && $this->current != 1): ?>
-		<a href="?page=1<?= $params ?>">&laquo;</a>
-	<?php endif; ?>
 	<?php if (isset($this->previous)): ?>
 		<a href="?page=<?= $this->previous ?><?= $params ?>">&lsaquo;</a>
 	<?php endif; ?>

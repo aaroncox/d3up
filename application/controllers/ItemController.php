@@ -9,14 +9,32 @@ class ItemController extends Epic_Controller_Action
 {
 	public function indexAction() {
 		$query = array();
+		if($slot = $this->getRequest()->getParam('slot')) {
+			$possible = D3Up_Mongo_Record_Item::$slotTypeMap;
+			$query['type']['$in'] = $possible[$slot];
+			$this->view->slotType = $slot;
+		}
 		if($type = $this->getRequest()->getParam('type')) {
 			$this->view->itemType = $query['type'] = $type;
 		}
+		// echo "<pre>"; 
+		// var_dump($query); exit;
 		$sort = array();
 		if($sortAttr = $this->getRequest()->getParam('sort')) {
 			$sortAttrs = explode(",", $sortAttr);
 			foreach($sortAttrs as $k => $v) {
-				$key = 'attrs.'.$v;
+				switch($v) {
+					// Special Cases
+					case "base_armor":
+						$key = 'stats.armor';
+						break;
+					case "base_dps":
+						$key = 'stats.dps';
+						break;
+					default:
+						$key = 'attrs.'.$v;
+						break;
+				}
 				$query[$key] = array(
 					'$ne' => '',
 					'$exists' => true
@@ -24,11 +42,12 @@ class ItemController extends Epic_Controller_Action
 				$sort[$key] = -1;
 			}
 			$this->view->sortAttrs = $sortAttrs;
+		} else {
+			$sort['_created'] = -1;
 		}
-		// var_dump($query); exit;
 		$items = Epic_Mongo::db('item')->fetchAll($query, $sort); 
 		$paginator = Zend_Paginator::factory($items);
-		$paginator->setCurrentPageNumber($this->getRequest()->getParam('page', 1))->setItemCountPerPage(20);
+		$paginator->setCurrentPageNumber($this->getRequest()->getParam('page', 1))->setItemCountPerPage(20)->setPageRange(3);
 		$this->view->items = $paginator;
 		if($this->_request->isXmlHttpRequest()) {
 			$this->view->disableScripts = true;
@@ -40,11 +59,27 @@ class ItemController extends Epic_Controller_Action
 		$item = Epic_Mongo::newDoc('item');
 		// Get Form for Item
 		$form = $this->view->form = $item->getEditForm();
+		$form->itemType->setValue($this->getRequest()->getParam("slot"));
+		$form->setBuildToEquip($this->getRequest()->getParam("b"));
+		$form->setReturnMethod($this->getRequest()->getParam("return"));
 		if($this->getRequest()->isPost()) {
 			$result = $form->process($this->getRequest()->getParams());
 			if($result) {
-				$i = Epic_Mongo::db('item')->find($result['upserted']);
-				$this->_redirect("/i/".$i->id);				
+				if(!is_array($result)) {
+					switch($result) {
+						case "build":
+							$build = $form->getBuild();
+							$this->_redirect("/b/".$build->id);
+							break;
+						case "store":
+							$item = $form->getItem();
+							$this->_redirect("/user/shop?selectItem=".$item->id);
+							break;
+					}
+				} else {
+					$i = Epic_Mongo::db('item')->find($result['upserted']);
+					$this->_redirect("/i/".$i->id);									
+				}
 			}
 		}
 	}
@@ -86,5 +121,60 @@ class ItemController extends Epic_Controller_Action
 			echo json_encode($data); exit;
 		}
 		return false;
+	}
+	
+	public function bazaarAction() {
+		$query = array();
+		if($slot = $this->getRequest()->getParam('slot')) {
+			$possible = D3Up_Mongo_Record_Item::$slotTypeMap;
+			$query['item.type']['$in'] = $possible[$slot];
+			$this->view->slotType = $slot;
+		}
+		if($type = $this->getRequest()->getParam('type')) {
+			$this->view->itemType = $query['item.type'] = $type;
+		}
+		if($limit = $this->getRequest()->getParam('limit')) {
+			$this->view->limit = $query['value']['$lte'] = (int) $limit;
+		}
+		$query['method'] = array('$ne' => 'ah');
+		if($sellMethod = $this->getRequest()->getParam('sellMethod')) {
+			$this->view->sellMethod = $query['method'] = $sellMethod;
+		}
+		// echo "<pre>"; 
+		// var_dump($query); exit;
+		$sort = array();
+		if($sortAttr = $this->getRequest()->getParam('sort')) {
+			$sortAttrs = explode(",", $sortAttr);
+			foreach($sortAttrs as $k => $v) {
+				switch($v) {
+					// Special Cases
+					case "base_armor":
+						$key = 'item.stats.armor';
+						break;
+					case "base_dps":
+						$key = 'item.stats.dps';
+						break;
+					default:
+						$key = 'item.attrs.'.$v;
+						break;
+				}
+				$query[$key] = array(
+					'$ne' => '',
+					'$exists' => true
+				);				
+				$sort[$key] = -1;
+			}
+			$this->view->sortAttrs = $sortAttrs;
+		} else {
+			$sort['_created'] = -1;
+		}
+		$items = Epic_Mongo::db('sale')->fetchAll($query, $sort); 
+		$paginator = Zend_Paginator::factory($items);
+		$paginator->setCurrentPageNumber($this->getRequest()->getParam('page', 1))->setItemCountPerPage(20)->setPageRange(3);
+		$this->view->items = $paginator;
+		if($this->_request->isXmlHttpRequest()) {
+			$this->view->disableScripts = true;
+			$this->_helper->layout->disableLayout();
+		}
 	}
 } // END class ItemController extends Epic_Controller_Action

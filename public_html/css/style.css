@@ -123,16 +123,49 @@ a:active .ui-button-text, a:visited .ui-button-text {
 	font-size: 3em;
 /*	border-bottom: 1px solid #777;*/
 }
+#navigation-wrapper {
+	text-align: center;
+	margin-bottom: 20px;
+}
 ul#navigation {
 	text-align: center;
-	padding: 5px;
-	margin: 0;
+	margin: 0 0 5px;
+	padding: 0;
 	list-style: none;
-/*	border-bottom: 1px solid #777;*/
+	border: 1px solid #000;
+	width: auto;
+	display: inline-block;
 }
 ul#navigation > li {
 	float: left;
-	padding: 0px 15px;
+	border-right: 1px solid #000;
+}
+ul#navigation > li a {
+	padding: 5px 15px;
+}
+ul.sub_menu > li {
+	height: 42px;
+	line-height: 32px;
+	background-repeat: no-repeat; 
+	background-position: middle left;	
+}
+ul#navigation > li ul.sub_menu > li a {
+	padding-left: 46px;
+}
+ul.sub_menu > li.barbarian {
+	background-image: url('/images/barbarian.png');
+}
+ul.sub_menu > li.wizard {
+	background-image: url('/images/wizard.png');
+}
+ul.sub_menu > li.demon-hunter {
+	background-image: url('/images/demon-hunter.png');
+}
+ul.sub_menu > li.monk {
+	background-image: url('/images/monk.png');
+}
+ul.sub_menu > li.witch-doctor {
+	background-image: url('/images/witch-doctor.png');
 }
 .select2-result {
 	color: #222;
@@ -221,6 +254,7 @@ ul#navigation > li {
 	background-image: none;
 }
 .chzn-results {
+	z-index: 99999 !important;
 	color: #000;
 }
 .create-form .chzn-container-single .chzn-default {
@@ -251,22 +285,25 @@ ul#navigation > li {
 	color: #70B1D5;
 }
 .d3up-table {
-	width: 99%;
+	width: 100%;
 }
 .d3up-table  {
 	border: 2px solid #111;
 }
-.d3up-table tbody tr:nth-child(2n) {
-	background-color: #333;
+.d3up-table tbody tr.build-row:nth-child(2n),
+.d3up-table tbody tr.item-row:nth-child(2n) {
+	background-color: #191919;
 }
 .d3up-table td {
 	padding: 5px;
 	border: 1px solid #111;
 }
 .d3up-table td.name {
-	width: 150px;
-	line-height: 32px;
+	width: 350px;
 	padding-left: 10px;
+}
+.d3up-table td.data {
+	line-height: 32px;	
 }
 .d3up-table td.description {
 	max-width: 380px;
@@ -283,7 +320,7 @@ ul#navigation > li {
 }
 div.filters {
 	float: right;
-	padding: 10px;
+	padding: 0 10px;
 }
 .icon-frame {
 	background-color: black;
@@ -327,4 +364,319 @@ div.filters {
 }
 dd:has(:focus) .chzn-container {
 	box-shadow: 0 -1px 0 rgba(0, 0, 0, 0.3), 0 1px 2px rgba(0, 0, 0, 0.1) inset, 0 0 10px rgba(255, 255, 255, 0.9);
+}
+#gear-change {
+	display: none;
+}
+#character {
+	width: 550px;
+}
+#compare-notes {
+	list-style: none;
+	padding: 15px;
+	margin: 0;
+	color: #F00;
+}
+.equipment-table {
+}
+.equipment-table td {
+	padding: 5px;
+	vertical-align: middle;
+	width: 150px;
+}
+.equipment-table td:first-child {
+	width: 60px;
+}
+.equipment-table td.primary {
+	width: auto;
+}
+.calc-stats ul {
+	list-style: none;
+	margin: 0 0 10px;
+	padding: 0;
+}
+.compare-diff {
+	padding: 10px;
+	font-size: 0.9em;
+}
+.compare-diff table {
+	width: 99%;
+	margin: 10px 0;
+}
+.compare-diff table th {
+	font-size: 1.1em;
+}
+.compare-diff table tr:first-child {
+	border-top: 1px solid #555;		
+}
+.compare-diff table tr {
+	border-bottom: 1px solid #555;
+}
+.compare-diff table th,
+.compare-diff table td {
+	padding: 2px 5px;
+	text-align: center;
+}
+.compare-diff table th:first-child,
+.compare-diff table td:first-child {
+	text-align: right;
+}
+.pos {
+	color: #0F0;
+}
+.neg {
+	color: #F00;
+}
+.stat-ehp, 
+.stat-dps {
+	font-size: 24px;
+	font-weight: bold;
+	margin: 0 0 10px;
+}
+.build-header {
+	margin: 5px 0;
+	padding: 5px 20px;
+}
+.build-header h2 {
+	color: #7FCDFF;
+	margin: 5px 0;
+}
+.build-header .controls {
+	float: right;
+	padding: 5px;
+}
+.comment {
+	margin: 15px 0;
+}
+.comment .comment-body {
+	padding: 3px 15px;
+	background-color: #333;
+}
+.comment .comment-author {
+	font-size: 1.2em;
+	font-weight: bold;
+	color: #7FCDFF;
+}
+.comment.reply .comment-author {
+	font-size: 1.0em;
+}
+.comment .comment-buttons {
+	color: #ccc;
+	background-color: #333;
+	font-weight: bold;
+	text-align: right;
+}
+.comment .comment-buttons a {
+	cursor: pointer;
+	margin: 0 5px;
+}
+.comment.reply {
+	margin-left: 30px;
+}
+.comment .comment-expand {
+	text-align: center;
+	background-color: #333;
+	font-weight: bold;
+	color: #7FCDFF;
+	margin-top: 5px;
+}
+.comment #source-label,
+#replyTo-label,
+#replyTo-element,
+#referrer-element, 
+#referrer-label {
+	display: none;
+}
+#all-builds td.icon {
+	width: 30px;
+	max-width: 30px;
+}
+#all-builds td.meta,
+#all-builds td.stat {
+	text-align: center;
+	font-size: 1.3em;
+	width: 80px;
+	max-width: 80px;
+	overflow: hidden;
+}
+#all-builds td.meta {
+	font-size: 0.9em;
+	width: 50px;
+	max-width: 50px;
+}
+#all-builds td.name {
+	width: 50%;
+}
+#all-builds td.description {
+	width: 160px;
+	max-width: 160px;
+	overflow: hidden;
+}
+#sortAttributes {
+	width: 100%;
+}
+.bazaar #sortAttributes {
+	width: 70%;
+}
+.bazaar #sellMethod_chzn,
+.bazaar #sellMethod, 
+.bazaar #maxPrice {
+	float: right;
+	height: 22px;
+	width: 120px;
+	margin-left: 10px;
+}
+#recent-items td {
+	width: 120px;
+	max-width: 120px;
+	overflow: hidden;
+}
+.d3up-table thead td {
+	overflow: visible !important;
+}
+#recent-items td.name {
+	width: 200px;
+	max-width: 200px;
+	overflow: hidden;
+}
+#recent-items td.name .item-stat {
+	text-align: left;
+}
+#recent-items td.name span.value {
+	font-size: 1.1em;
+	line-height: 1.5em;
+	overflow: hidden;
+	height: 1.5em;
+}
+#recent-items td.name span.stat {
+	font-size: 0.8em;
+	line-height: 1.1em;
+}
+.item-list .filters {
+	float: right;
+}
+#recent-items td.controls,
+.item-stat {
+	text-align: center;
+}
+.item-stat .value {
+	font-size: 1.2em;
+	display: block;
+}
+.item-stat .stat {
+	display: block; 
+	font-size: 10px;
+}
+td.sorted .value {
+	color: #8AFF57;
+}
+#my-builds {
+	display: none;
+}
+.compareThis {
+/*	display: none;*/
+}
+.wearing .helper {
+	font-size: 10px;
+	line-height: 12px;
+	margin: 0;
+}
+.d3up-table td.name.wearing {
+	line-height: 20px;
+}
+tr.compared {
+	background: #111;
+}
+tr.compared > td {
+	padding: 10px;
+}
+tr.compared > td:first-child {
+}
+.compared td.diff table {
+	line-height: 15px;
+	font-size: 12px;
+	border: 0;
+	border-spacing:1px;
+  border-collapse:collapse;
+	
+}
+.compared td.diff table th,
+.compared td.diff table td {
+	width: auto;
+	border: 0;
+	background-color: #222;
+	padding: 2px 5px;
+	margin: 1px;
+}
+.compared td.diff table th {
+	border-bottom: 1px solid #000;
+}
+.compared td.diff {
+	overflow: auto; 
+}
+.compared td.diff table tr th,
+.compared td.diff table tr td {
+	text-align: center;
+	border-right: 1px solid #000;
+}
+.compared td.diff table tr th {
+	font-size: 0.75em;
+}
+.compared td.diff table tr td.bg-pos {
+	background-color: #166E00;
+}
+.compared td.diff table tr td.bg-neg {
+	background-color: #6A0000;
+}
+.compared-against {
+	border-top: 2px solid #ccc;
+	border-left: 2px solid #ccc;
+	border-right: 2px solid #ccc;
+}
+.compared-to {
+	border-bottom: 2px solid #ccc;
+	border-left: 2px solid #ccc;
+	border-right: 2px solid #ccc;
+}
+.ui-tabs-panel .d3up-table {
+	border: 0;
+}
+#user-complete.d3up-table td.name {
+	width: 250px;
+}
+.home .recent-items .d3up-table td.name {
+	width: 200px;
+}
+.home .recent-items .d3up-table td.name .item-stats {
+	text-align: left;
+}
+.table-filters {
+	float: right;
+}
+.table-filters select {
+	min-width: 150px;
+}
+.d3up-table .td-paginator {
+	padding: 0;
+}
+.d3up-table .td-paginator div span,
+.d3up-table .td-paginator div a {
+	text-align: center;
+	border-right: 1px solid #000;
+	float: left;
+	width: 36px;
+	font-size: 13px;
+	line-height: 28px;
+}
+.d3up-table .td-paginator div span:nth-child(2n),
+.d3up-table .td-paginator div a:nth-child(2n) {
+	background: #191919;
+}
+.table-header {
+	margin: 0;
+	text-transform: uppercase;
+	color: #666;
+	letter-spacing: 0.2em;
+	font-size: 20px;
+	margin-left: 20px;
 }

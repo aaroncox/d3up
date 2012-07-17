@@ -426,7 +426,7 @@ class D3Up_View_Helper_DisplayItem extends Zend_View_Helper_Abstract
 			if($this->_item->_original->id) {
 				$extra = " (Copied from <a href='/i/".$this->_item->_original->id."'>Here</a>)";
 			}
-			return "Item Owner: ".$this->_item->_createdBy->username.$extra;
+			// return "Item Owner: ".$this->_item->_createdBy->username.$extra;
 		}
 		return " ";
 	}

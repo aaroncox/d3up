@@ -1,4 +1,4 @@
-var maxHeight = 400;
+var maxHeight = 700;
 
 $(function(){
 
@@ -20,7 +20,7 @@ $(function(){
         $list
             .show()
             .css({
-                paddingTop: $container.data("origHeight")
+                paddingTop: $container.data("origHeight") + 2
             });
         
         // don't do any animation if list shorter than max

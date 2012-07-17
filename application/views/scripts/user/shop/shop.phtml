@@ -1,0 +1,37 @@
+<table id="user-shop" class="d3up-table">
+	<thead>
+		<tr>
+			<th>Item</th>
+			<th>Method</th>
+			<th>Price</th>
+			<th>Ends</th>
+	</thead>
+	<tbody>
+		<? foreach($this->forSale as $sale): ?>
+			<tr class="item-row" id="sale-<?= $sale->id ?>">
+				<td class="name"><?= $this->saleLink($sale) ?></td>
+				<td class="data">
+					<?= $this->methodCleaner($sale->method) ?>
+				</td>
+				<td class="data"> 
+					<img src="/images/goldcoin.png"> 
+					<? if($sale->method == 'ah'): ?>
+							<?= $this->prettyStat($sale->buyout) ?>
+							(Bid: <?= $this->prettyStat($sale->bid) ?>)
+					<? else: ?>
+						<?= number_format($sale->value) ?>
+					<? endif ?>
+				</td>
+				<td class="data"><?= $this->timeAgo($sale->end) ?></td>
+				<td class="controls">
+					<? if($sale->method == 'ah'): ?>
+						<button data-id="<?= $sale->id ?>" data-method="<?= $sale->method ?>" style="padding: 0px 10px" class="btn-complete ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only">Complete</button>
+					<? else: ?>
+						<a data-id="<?= $sale->id ?>" data-method="<?= $sale->method ?>" style="padding: 0px 10px" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" href="/sale/<?= $sale->id ?>/offers">View</a>
+					<? endif ?>
+					<button data-id="<?= $sale->id ?>" style="padding: 0px 10px" class="btn-cancel ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only">Cancel</button>							
+				</td>
+			</tr>
+		<? endforeach ?>
+	</tbody>
+</table>

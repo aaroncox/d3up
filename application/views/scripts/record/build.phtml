@@ -8,127 +8,6 @@
 	}
 	
 ?>
-<style type="text/css">
-	#gear-change {
-		display: none;
-	}
-	#character {
-		width: 550px;
-	}
-	#compare-notes {
-		list-style: none;
-		padding: 15px;
-		margin: 0;
-		color: #F00;
-	}
-	.equipment-table {
-	}
-	.equipment-table td {
-		padding: 5px;
-		vertical-align: middle;
-		width: 70px;
-	}
-	.equipment-table td.primary {
-		width: auto;
-	}
-	.calc-stats ul {
-		list-style: none;
-		margin: 0 0 10px;
-		padding: 0;
-	}
-	.compare-diff {
-		padding: 10px;
-		font-size: 0.9em;
-	}
-	.compare-diff table {
-		width: 99%;
-		margin: 10px 0;
-	}
-	.compare-diff table th {
-		font-size: 1.1em;
-	}
-	.compare-diff table tr:first-child {
-		border-top: 1px solid #555;		
-	}
-	.compare-diff table tr {
-		border-bottom: 1px solid #555;
-	}
-	.compare-diff table th,
-	.compare-diff table td {
-		padding: 2px 5px;
-		text-align: center;
-	}
-	.compare-diff table th:first-child,
-	.compare-diff table td:first-child {
-		text-align: right;
-	}
-	.compare-diff .pos {
-		color: #0F0;
-	}
-	.compare-diff .neg {
-		color: #F00;
-	}
-	.stat-ehp, 
-	.stat-dps {
-		font-size: 24px;
-		font-weight: bold;
-		margin: 0 0 10px;
-	}
-	.build-header {
-		margin: 5px 0;
-		padding: 5px 20px;
-	}
-	.build-header h2 {
-		color: #7FCDFF;
-		margin: 5px 0;
-	}
-	.build-header .controls {
-		float: right;
-		padding: 5px;
-	}
-	.comment {
-		margin: 15px 0;
-	}
-	.comment .comment-body {
-		padding: 3px 15px;
-		background-color: #333;
-	}
-	.comment .comment-author {
-		font-size: 1.2em;
-		font-weight: bold;
-		color: #7FCDFF;
-	}
-	.comment.reply .comment-author {
-		font-size: 1.0em;
-	}
-	.comment .comment-buttons {
-		color: #ccc;
-		background-color: #333;
-		font-weight: bold;
-		text-align: right;
-	}
-	.comment .comment-buttons a {
-		cursor: pointer;
-		margin: 0 5px;
-	}
-	.comment.reply {
-		margin-left: 30px;
-	}
-	.comment .comment-expand {
-		text-align: center;
-		background-color: #333;
-		font-weight: bold;
-		color: #7FCDFF;
-		margin-top: 5px;
-	}
-	.comment #source-label,
-	#replyTo-label,
-	#replyTo-element,
-	#referrer-element, 
-	#referrer-label {
-		display: none;
-	}
-</style>
 <div class="build-header ui-widget ui-widget-content ui-corner-all">
 	<? if($profile && $this->record->_createdBy): ?>
 	<div class="controls">
@@ -149,7 +28,7 @@
 		<p><?= $this->record->description ?></p>
 	<? endif ?>
 </div>
-<div id="character" class="inline-flow" data-class="<?= $this->record->class ?>">
+<div id="character" class="inline-flow" data-class="<?= $this->record->class ?>" <? if($myBuild) { echo "data-owner='true'"; } ?>>
 	<ul>
 		<li><a href="#build-gear">Gear</a></li>
 		<li><a href="#build-skills">Skills</a></li>
@@ -236,6 +115,7 @@
 				<? if($myBuild): ?>
 				<td>
 					<button id="change-<?= $slot ?>" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only gear-change" data-item-type="<?= $slot ?>" role="button" aria-disabled="false"><span class="ui-button-text">Change</span></button>
+					<a id="new-<?= $slot ?>" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" href="/item/create?b=<?= $this->record->id ?>&slot=<?= $slot ?>&return=build"><span class="ui-button-text">New</span></a>
 				</td>
 				<? endif; ?>
 				<td class="primary">
@@ -330,8 +210,9 @@
 	</fieldset>
 	</form>
 </div>
-<script type="text/javascript" src="/js/calc.js"></script>
+<script type="text/javascript" src="/js/fullcalc.js"></script>
 <script type="text/javascript">
+calc(".equipped a");
 $("#character").tabs({
     select: function(event, ui){
       window.location = ui.tab.href;

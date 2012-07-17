@@ -1,6 +1,6 @@
 <!doctype html>
 <head>
-	<?= $this->headTitle("Diablo 3 Upgrade Calculator")->setSeparator(' | '); ?>
+	<?= $this->headTitle("Diablo 3 Build Calculator")->setSeparator(' | '); ?>
 	<link rel="stylesheet" href="/css/jquery.dataTables.css" type="text/css" charset="utf-8">	
 	<link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.19/themes/dot-luv/jquery-ui.css" type="text/css" />
 	<link rel="stylesheet" href="/css/style.css" type="text/css" charset="utf-8">	
@@ -21,36 +21,54 @@
 <body>
 	<div id="wrapper">
 		<div id="header">D3Up</div>
-		<div>
-			<ul id="navigation" class="dropdown ui-helper-clearfix"  style="text-align: center">
+		<div id="navigation-wrapper">
+			<ul id="navigation" class="dropdown ui-helper-clearfix ui-widget ui-widget-content"  style="text-align: center">
 				<li><a href="/">Home</a></li>
-				<li><a href="/item">Items</a>
+				<li><a href="/items">Items</a>
 					<ul class="sub_menu">
 						<li><a href="/item/create">Create Item</a></li>
-						<li><a href="/item">All Items</a></li>
 						<li><a href="/user/items">My Items</a></li>
+						<li><a href="/items">Item Search</a></li>
 					</ul>
 				</li>
 				<li><a href="/build">Builds</a>
 					<ul class="sub_menu">
 						<li><a href="/build/create">Create Build</a></li>
-						<li><a href="/build">All Builds</a></li>
 						<li><a href="/user/builds">My Builds</a></li>
+						<li class='barbarian'><a href="/build?class=barbarian">Barbarian</a></li>
+						<li class='demon-hunter'><a href="/build?class=demon-hunter">Demon Hunter</a></li>
+						<li class='monk'><a href="/build?class=monk">Monk</a></li>
+						<li class='witch-doctor'><a href="/build?class=witch-doctor">Witch Doctor</a></li>
+						<li class='wizard'><a href="/build?class=wizard">Wizard</a></li>
+						<li><a href="/build">All Builds</a></li>
 					</ul>
 				</li>
+				<? if(true == false): ?>
+				<li><a href="/bazaar">Bazaar</a>
+					<ul class="sub_menu">
+						<li><a href="/user/shop">My Shop</a></li>
+					</ul>
+				</li>					
+				<? endif ?>
 				<li><a href="/updates">Updates</a></li>
-				<? if($profile = Epic_Auth::getInstance()->getProfile()): ?>
-					<!-- <li><a href="/user"><?= $profile->username ?></a></li>	 -->
-					<li><a href="/user/logout">Logout</a></li>
-				<? else: ?>
-					<li><a href="/user/login">Login</a></li>
-					<li><a href="/user/register">Register</a></li>
-				<? endif; ?>
+				<li><a>User</a>
+					<ul>
+					<? if($profile = Epic_Auth::getInstance()->getProfile()): ?>
+						<!-- <li><a href="/user"><?= $profile->username ?></a></li>	 -->
+						<li><a href="/user/logout">Logout</a></li>
+					<? else: ?>
+						<li><a href="/user/login">Login</a></li>
+						<li><a href="/user/register">Register</a></li>
+					<? endif; ?>
+					</ul>
+				</li>
 			</ul>
 		</div>
-		<div id="sys-message" class="ui-widget ui-widget-content ui-corner-all">
+
+		<!-- <div id="sys-message" class="ui-widget ui-widget-content ui-corner-all">
 			<b>System Message</b>: I'm tired of seeing giagantic letters at the top of the page, so I'm looking for a logo or some sort of mascot. Want more details? Check out <a href="http://www.reddit.com/r/Diablo/comments/wgxtg/any_artsycomicy_people_want_to_do_up_a_logo_for/">the reddit thread with some ideas</a>. Thanks!</a>.
-		</div>
+		</div> -->
+
 		<div id="main">
 			<div id="content">
 				<?= $this->layout()->content ?>

@@ -4,3 +4,6 @@
 <? if($this->record->_type == 'build'): ?>
 	<?= $this->render('record/build.phtml') ?>
 <? endif; ?>
+<? if($this->record->_type == 'sale'): ?>
+	<?= $this->render('record/sale.phtml') ?>
+<? endif; ?>

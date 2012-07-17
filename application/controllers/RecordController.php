@@ -163,15 +163,29 @@ class RecordController extends Epic_Controller_Action
 								$record->equipment['offhand'] = null;
 							}
 							$record->equipment[$slot] = $item;
+							$record->equipmentCount = count($record->equipment);
+							$record->stats = $this->getRequest()->getParam('stats');
+							$this->getResponse()->setHeader('Content-type', 'application/json');
 							echo json_encode($record->save()); exit;
 							break;
 						case "passive-skills":
 							$record->passives = $this->getRequest()->getParam('passives');
+							$this->getResponse()->setHeader('Content-type', 'application/json');
 							echo json_encode($record->save()); exit;
 							break;
 					}
 				}
 			}
 		}
+	}
+	public function purchaseAction() {
+		$record = $this->getRecord();
+		if($confirm = $this->getRequest()->getParam('confirm')) {
+			
+		}
+	}
+	public function offersAction() {
+		$record = $this->getRecord();
+		
 	}
 } // END class RecordController extends Epic_Controller_Action

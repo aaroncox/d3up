@@ -7,6 +7,7 @@
  **/
 class D3Up_Form_Record_Item extends Epic_Form
 {
+
 	protected $_item = null;
 	
 	protected $_attributes = array(
@@ -146,6 +147,22 @@ class D3Up_Form_Record_Item extends Epic_Form
 	{
 		$this->_item = $item;
 		return $this;
+	}
+	
+	protected $_build = null;
+	
+	public function setBuildToEquip($id) {
+		$this->_build = Epic_Mongo::db('build')->fetchOne(array("id" => (int) $id));
+	}
+	
+	public function getBuild() {
+		return $this->_build;
+	}
+	
+	protected $_return = null;
+	
+	public function setReturnMethod($method) {
+		$this->_return = $method;
 	}
 
 	/**
@@ -510,6 +527,23 @@ class D3Up_Form_Record_Item extends Epic_Form
 		// Do we have a user creating this? If so, add it.
 		if($profile = Epic_Auth::getInstance()->getProfile()) {
 			$item->_createdBy = $profile;
+		}
+		// Are we equipping this onto a build?
+		if($this->_build) {
+			// What type of item is this?
+			$type = $this->itemType->getValue();
+			// Save the Item
+			$item->save();
+			// Equip the new Item
+			$this->_build->equipment->$type = $item;
+			// Save the Build
+			$this->_build->save();
+			// Redirect to the build now
+		}
+		// Do we have a return path?
+		if($this->_return) {
+			$item->save();
+			return $this->_return;
 		}
 		// Return the Item
 		return $item->save();

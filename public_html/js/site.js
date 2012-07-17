@@ -1,7 +1,9 @@
 $(function() {
-	$(".class-selector img").bind('click', setClass);
+	$("#classSelect").bind('change', classFilter);
 	$("#hasGuide").bind("change", classFilter);
-	$(".build-paginator a").bind('click', function() {
+	$("#isGeared").bind("change", classFilter);
+	$(".build-paginator a").bind('click', setupPaginator);
+	function setupPaginator() {
 		var resultsTable = $(".recent-builds table tbody"),
 				link = $(this).prop("href");
 		resultsTable.addClass("ui-state-disabled");
@@ -11,29 +13,28 @@ $(function() {
 			success: function(data) {
 				var results = $("<div/>").append(data);
 				resultsTable.replaceWith(results.find(".recent-builds table tbody"));
+				$("#item-pagination a").bind('click', setupPaginator);
 			}
 		});
 		return false;
-	});	
-	var selectedClass = null;
-	function setClass() {
-		selectedClass = $(this).data('class');
-		classFilter();
-	}
+	};	
 	function classFilter() {
 		var resultsTable = $(".recent-builds table tbody"),
-				hasGuide = $("#hasGuide").val();
-		if(selectedClass) {
+				selectedClass = $("#classSelect").val(),
+				hasGuide = $("#hasGuide").val(),
+				isGeared = $("#isGeared").val();
+		// if(selectedClass) {
 			resultsTable.addClass("ui-state-disabled");
 			$.ajax({
-				url: '/build?build-class=' + selectedClass + "&guide=" + hasGuide,
+				url: '/build?class=' + selectedClass + "&guide=" + hasGuide + "&geared=" + isGeared,
 				type: 'html',
 				success: function(data) {
 					var results = $("<div/>").append(data);
 					resultsTable.replaceWith(results.find(".recent-builds table tbody"));
-					$(".recent-builds table tfoot").replaceWith(results.find(".recent-builds table tfoot"))
+					$(".recent-builds table tfoot").replaceWith(results.find(".recent-builds table tfoot"));
+					$("#item-pagination a").bind('click', setupPaginator);
 				}
 			});			
-		}
+		// }
 	}
 });

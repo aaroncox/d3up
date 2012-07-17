@@ -16,6 +16,22 @@ class D3Up_Mongo_Record_Item extends Epic_Mongo_Document_Record
 		'attrs' => array('Document:D3Up_Mongo_Record_Item_Attributes'),
 	);
 	
+	public static $slotTypeMap = array(
+		'amulet' => array('amulet'),
+		'pants' => array('pants'),
+		'boots' => array('boots'),
+		'bracers' => array('bracers'),
+		'gloves' => array('gloves'),
+		'chest' => array('chest-armor', 'cloak'),
+		'belt' => array('belt', 'mighty-belt'),
+		'ring1' => array('ring'),
+		'ring2' => array('ring'),
+		'shoulder' => array('shoulder'),
+		'helm' => array('helm', 'spirit-stone', 'wizard-hat', 'voodoo-mask'),
+		'mainhand' => array('2h-mace', '2h-axe', 'bow', 'diabo', 'crossbow', '2h-mighty', 'polearm', 'staff', '2h-sword', 'wand', 'ceremonial-knife', 'axe', 'dagger', 'hand-crossbow', 'fist-weapon', 'mace', 'mighty-weapon', 'spear', 'sword'),
+		'offhand' => array('axe', 'dagger', 'hand-crossbow', 'fist-weapon', 'mace', 'mighty-weapon', 'spear', 'sword', 'mojo', 'source', 'quiver', 'shield'),
+	);
+	
 	public function getEditForm() {
 		return new D3Up_Form_Record_Item(array('item' => $this));
 	}
@@ -41,6 +57,12 @@ class D3Up_Mongo_Record_Item extends Epic_Mongo_Document_Record
 					}
 					$sockets[$k] = $helper->prettyDisplay($effect[0], $effect[1]);					
 				}
+			}
+		}
+		$export['slots'] = array();
+		foreach(self::$slotTypeMap as $slot => $types) {
+			if(in_array($export['type'], $types)) {
+				$export['slots'][] = $slot;
 			}
 		}
 		// if($export['id'] == 28) {

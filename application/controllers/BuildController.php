@@ -13,17 +13,27 @@ class BuildController extends Epic_Controller_Action
 		$sort = array(
 			'_created' => -1,
 		);
-		if($class = $this->getRequest()->getParam('build-class')) {
-			$this->view->buildClass = $query['class'] = $class;
+		if($class = $this->getRequest()->getParam('class')) {
+			if($class != "null") {				
+				$this->view->class = $query['class'] = $class;
+			}
 		}
 		if($hasGuide = $this->getRequest()->getParam('guide')) {
 			if($hasGuide == "true") {				
-				$query['guideIsPublished'] = true;
+				$this->view->hasGuide = $query['guideIsPublished'] = true;
+			}
+		}
+		if($isGeared = $this->getRequest()->getParam('geared')) {
+			if($isGeared == "true") {				
+				$query['equipmentCount'] = array(
+					'$gt' => 10
+				);
+				$this->view->isGeared = true;
 			}
 		}
 		$builds = Epic_Mongo::db('build')->fetchAll($query, $sort);	
 		$paginator = Zend_Paginator::factory($builds);
-		$paginator->setCurrentPageNumber($this->getRequest()->getParam('page', 1))->setItemCountPerPage(15);
+		$paginator->setCurrentPageNumber($this->getRequest()->getParam('page', 1))->setItemCountPerPage(15)->setPageRange(3);
 		$this->view->builds = $paginator;
 		if($this->_request->isXmlHttpRequest()) {
 			$this->_helper->layout->disableLayout();

@@ -82,11 +82,11 @@
 		    <option label="Shield" value="shield">Shield</option>
 			</select>
 		</div>
-		<h2 class="table-header">Item Search</h2>
-		<table id="recent-items" class="d3up-table">
+		<h2>Bazaar - Items for Sale</h2>
+		<table id="recent-items" class="bazaar d3up-table">
 			<thead>
 				<tr>
-					<td colspan="100" class="sorting">
+					<td colspan="100">
 						<select data-placeholder="Filter & Sort by Multiple Stats" id="sortAttributes" multiple="multiple">
 							<option label="" value=""></option>
 							<option label="DPS" value="base_dps">DPS</option>
@@ -207,6 +207,13 @@
 							<option label="Increases Shock Pulse damage" value="wz-shock-pulse">Increases Shock Pulse damage</option>
 							<option label="Increases Spectral Blade damage" value="wz-spectral-blade">Increases Spectral Blade damage</option>
 						</select>
+						<input name="maxPrice" id="maxPrice" placeholder="Max Price"/>
+						<select name="sellMethod" id="sellMethod" data-placeholder="Sale Type">
+							<option value=""></option>
+							<option value="flat">Flat Price</option>
+							<option value="bid">Bid/Buyout</option>
+							<option value="offer">Taking Offers</option>
+						</select>
 					</td>
 				</tr>
 			</thead>
@@ -231,10 +238,13 @@
 																									'itemType' => $this->itemType,
 																									'sortAttrs' => $this->sortAttrs,
 																									'slotType' => $this->slotType,
+																									'sellMethod' => $this->sellMethod, 
+																									'limit' => $this->limit,
 																								)); ?>
 					</td>
 				</tr>
-				<? foreach($this->items as $item): ?>
+				<? foreach($this->items as $sale): ?>
+				<? $item = $sale->item ?>
 				<tr class="item-row" id="item-<?= $item->id ?>">
 						<td class="name">
 							<div class="item-stat">
@@ -292,7 +302,7 @@
 									$val += $socketAttrs[$k];
 								}
 							?>
-							<? if($count > 6) { continue; } ?>
+							<? if($count > 4) { continue; } ?>
 							<td><?= $this->itemStat($k, $val) ?></td>
 						<? endforeach ?>
 						<? if($count < 6): ?>
@@ -301,9 +311,61 @@
 							<? endfor ?>
 						<? endif ?>
 						<? if($profile): ?>
+						<td>
+							<div class="item-stat">
+								<? if($sale->method == 'flat'): ?>						
+									<span class="value">
+										<img src="/images/goldcoin.png"> <?= $this->prettyStat($sale->value) ?>
+									</span>
+									<span class="stat">
+										Flat Price
+									</span>									
+								<? endif ?>
+								<? if($sale->method == 'bid'): ?>
+									<span class="value">
+										<img src="/images/goldcoin.png"> <?= $this->prettyStat($sale->value) ?>
+									</span>
+									<span class="stat">
+										Current Bid
+									</span>									
+								<? endif ?>
+							</div>
+						</td>
+						<td>
+							<div class="item-stat">
+								<span class="value">
+									<? if($sale->method == 'offer'): ?>
+										<button data-id="<?= $sale->id ?>" style="padding: 0px 10px" class="btn-complete ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only">Offer</button>
+									<? endif ?>
+									<? if($sale->method == 'flat'): ?>
+										<a data-id="<?= $sale->id ?>" style="padding: 0px 10px" class="btn-complete ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" href="/sale/<?= $sale->id?>/purchase">Buy</a>
+									<? endif ?>
+									<? if($sale->method == 'bid'): ?>
+										<button data-id="<?= $sale->id ?>" style="padding: 0px 10px" class="btn-complete ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only">Bid</button>
+									<? endif ?>
+								</span>
+								<span class="stat">
+									<? if(time() - $sale->seller->_lastSeen <= 900): ?>
+										<span class='pos' title="Last Seen: <?= date("r", $sale->seller->_lastSeen) ?>">Seller Online</span>
+									<? else: ?>
+										<span class='neg' title="Last Seen: <?= date("r", $sale->seller->_lastSeen) ?>">Seller Offline</span>
+									<? endif ?>									
+								</span>
+							</div>
+						</td>
+						<td>
+							<div class="item-stat">
+								<span class="value">
+									~
+								</span>
+								<span class="stat">
+									Seller's Rating
+								</span>
+							</div>
+						</td>
 						<td class='controls'>
-								<?= $this->mLink($item, array('action' => 'copy', 'text' => 'Copy'))?>
-								<a class="compareThis" data-item="<?= $item->id ?>">Compare</a>
+							<!-- <a data-item="<?= $item->id ?>" style="padding: 0px 10px" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" href="/i/<?= $item->id ?>/copy">Copy</a> -->
+							<a data-item="<?= $item->id ?>" style="padding: 0px 10px" class="compareThis ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only">Compare</a>
 						</td>
 					<? endif ?>
 					</tr>
@@ -317,6 +379,8 @@
 																									'itemType' => $this->itemType,
 																									'sortAttrs' => $this->sortAttrs,
 																									'slotType' => $this->slotType,																									
+																									'sellMethod' => $this->sellMethod, 
+																									'limit' => $this->limit,
 																								)); ?>
 					</td>
 				</tr>
