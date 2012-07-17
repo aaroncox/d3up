@@ -26,4 +26,7 @@ class IndexController extends Epic_Controller_Action {
 			$this->_helper->layout->disableLayout();
 		}
 	}
+	public function ripAction() {
+		$this->_helper->layout->disableLayout();		
+	}
 }

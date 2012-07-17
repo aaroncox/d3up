@@ -8,7 +8,7 @@
 	<table id="all-builds" class="d3up-table">
 		<thead>
 			<tr>
-				<td colspan="10">
+				<td colspan="10" class='sorting'>
 					<a href="/build/create" style="padding: 5px 20px" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only">Add Character Build</a>
 					<div style="float: right; padding: 11px">
 						Guide? 
@@ -71,7 +71,7 @@
 				<th>Guide?</th>
 			</tr>
 		<? foreach($this->builds as $build): ?>
-			<tr>
+			<tr class='build-row'>
 				<td class="icon"><img src="/images/<?= $build->class ?>.png"/></td>
 				<td class="name"><?= $this->mLink($build) ?></td>
 				<td class="stat"><?= $this->prettyStat($build->stats['dps']) ?></td>

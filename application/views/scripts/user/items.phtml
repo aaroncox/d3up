@@ -3,33 +3,361 @@
 	<p>When logged in, the database will save the items you create and associate them to your account for ease of access.</p>
 	<p>Interested? Feel free to wander over to the <a href="/user/register">registration page</a> to create an account, or if you already have one, you can <a href="/user/login">login</a>.</p>
 <? else: ?>
-	<p><a href="/item/create" style="padding: 5px 20px" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only">Add Item</a></p>
-	<? if($this->items->count()):?>
-	<table id="my-items">
-		<thead>
-			<tr>
-				<th>Name</th>
-				<th>Type</th>
-				<!-- <th>Status</th> -->
-				<th>Actions</th>
-			</tr>
-		</thead>
-		<tbody>
-			<? foreach($this->items as $item): ?>
+<? $profile = Epic_Auth::getInstance()->getProfile(); ?>
+	<? if(!$this->disableScripts): ?>
+	<?
+		$this->headTitle('My Items'); 
+		if($profile) {
+			$query = array(
+				'_createdBy' => $profile->createReference()
+			);
+			$builds = Epic_Mongo::db('build')->fetchAll($query);
+		}
+	?>
+	<div class="item-list">
+		<div class="filters">
+			<? if($profile): ?>
+			<select id="buildSelect" data-placeholder="Compare Items against build...">
+				<option value=""></option>
+				<? foreach($builds as $build): ?>
+					<option value="<?= $build->id ?>"><?= $build->name ?></option>
+				<? endforeach ?>
+			</select>
+			<? endif; ?>
+			<select data-placeholder="Filter by Slot" id="slotType" name="slotType" style="width: 150px">
+		    <option label="" value=""></option>
+				<? foreach(D3Up_Mongo_Record_Item::$slotTypeMap as $slot => $type): ?>
+					<? 
+						switch($slot) {
+							case "ring1":
+								$name = "ring";
+								break;
+							case "ring2":
+								$name = null;
+								break;
+							default:
+								$name = $slot;
+								break;
+						}
+					?>
+					<? if($name): ?>
+			    	<option label="<?= ucfirst($name) ?>" value="<?= $slot ?>"><?= ucfirst($name) ?></option>					
+					<? endif; ?>
+				<? endforeach ?>
+			</select>
+			<select data-placeholder="Filter by Item Type" id="itemType" name="itemType">
+		    <option label="" value=""></option>
+		    <option label="Amulet" value="amulet">Amulet</option>
+		    <option label="Belt" value="belt">Belt</option>
+		    <option label="Boots" value="boots">Boots</option>
+		    <option label="Bracers" value="bracers">Bracers</option>
+		    <option label="Chest Armor" value="chest-armor">Chest Armor</option>
+		    <option label="Cloak" value="cloak">Cloak</option>
+		    <option label="Gloves" value="gloves">Gloves</option>
+		    <option label="Helm" value="helm">Helm</option>
+		    <option label="Pants" value="pants">Pants</option>
+		    <option label="Mighty Belt" value="mighty-belt">Mighty Belt</option>
+		    <option label="Ring" value="ring">Ring</option>
+		    <option label="Shoulder" value="shoulder">Shoulder</option>
+		    <option label="Spirit Stone" value="spirit-stone">Spirit Stone</option>
+		    <option label="Voodoo Mask" value="voodoo-mask">Voodoo Mask</option>
+		    <option label="Wizard Hat" value="wizard-hat">Wizard Hat</option>
+		    <option label="Two-Handed Mace" value="2h-mace">Two-Handed Mace</option>
+		    <option label="Two-Handed Axe" value="2h-axe">Two-Handed Axe</option>
+		    <option label="Bow" value="bow">Bow</option>
+		    <option label="Diabo" value="diabo">Diabo</option>
+		    <option label="Crossbow" value="crossbow">Crossbow</option>
+		    <option label="Two-Handed Mighty Weapon" value="2h-mighty">Two-Handed Mighty Weapon</option>
+		    <option label="Polearm" value="polearm">Polearm</option>
+		    <option label="Staff" value="staff">Staff</option>
+		    <option label="Two-Handed Sword" value="2h-sword">Two-Handed Sword</option>
+		    <option label="Axe" value="axe">Axe</option>
+		    <option label="Ceremonial Knife" value="ceremonial-knife">Ceremonial Knife</option>
+		    <option label="Hand Crossbow" value="hand-crossbow">Hand Crossbow</option>
+		    <option label="Dagger" value="dagger">Dagger</option>
+		    <option label="Fist Weapon" value="fist-weapon">Fist Weapon</option>
+		    <option label="Mace" value="mace">Mace</option>
+		    <option label="Mighty Weapon" value="mighty-weapon">Mighty Weapon</option>
+		    <option label="Spear" value="spear">Spear</option>
+		    <option label="Sword" value="sword">Sword</option>
+		    <option label="Wand" value="wand">Wand</option>
+		    <option label="Mojo" value="mojo">Mojo</option>
+		    <option label="Source" value="source">Source</option>
+		    <option label="Quiver" value="quiver">Quiver</option>
+		    <option label="Shield" value="shield">Shield</option>
+			</select>
+		</div>
+		<h2 class="table-header">My Items</h2>
+		<table id="recent-items" class="d3up-table">
+			<thead>
 				<tr>
-					<td><?= $this->itemLink($item) ?></td>
-					<td><?= ucwords(str_replace("-", " ", $item->type)) ?></td>
-					<!-- <td>
-						<span class='neg'>Not for Sale</span>
-					</td> -->
-					<td>
-						<?= $this->itemLink($item, array('action' => 'edit', 'text' => 'Edit', 'button' => true)) ?>
-						<?= $this->itemLink($item, array('action' => 'delete', 'text' => 'Delete', 'button' => true)) ?>
+					<td colspan="100" class="sorting">
+						<select data-placeholder="Filter & Sort by Multiple Stats" id="sortAttributes" multiple="multiple">
+							<option label="" value=""></option>
+							<option label="DPS" value="base_dps">DPS</option>
+							<option label="Armor" value="base_armor">Armor</option>
+							<option label="Strength" value="strength">Strength</option>
+							<option label="Intelligence" value="intelligence">Intelligence</option>
+							<option label="Vitality" value="vitality">Vitality</option>
+							<option label="Dexterity" value="dexterity">Dexterity</option>
+							<option label="Resistance to All Elements" value="resist-all">Resistance to All Elements</option>
+							<option label="% Life" value="plus-life">% Life</option>
+							<option label="Regenerates Life per Second" value="life-regen">Regenerates Life per Second</option>
+							<option label="Chance to Block" value="plus-block">Chance to Block</option>
+							<option label="Reduces the duration of control impairing effects" value="cc-reduce">Reduces the duration of control impairing effects</option>
+							<option label="Reduces damage from elites" value="elite-reduce">Reduces damage from elites</option>
+							<option label="Reduces damage from melee attacks" value="melee-reduce">Reduces damage from melee attacks</option>
+							<option label="Reduces damage from ranged attacks" value="range-reduce">Reduces damage from ranged attacks</option>
+							<option label="Arcane Resistance" value="arcane-resist">Arcane Resistance</option>
+							<option label="Cold Resistance" value="cold-resist">Cold Resistance</option>
+							<option label="Fire Resistance" value="fire-resist">Fire Resistance</option>
+							<option label="Lightning Resistance" value="lightning-resist">Lightning Resistance</option>
+							<option label="Physical Resistance" value="physical-resist">Physical Resistance</option>
+							<option label="Poison Resistance" value="poison-resist">Poison Resistance</option>
+							<option label="Melee attackers take damage per hit" value="thorns">Melee attackers take damage per hit</option>
+							<option label="Attack speed increased" value="attack-speed">Attack speed increased</option>
+							<option label="Critical Hit Chance increased" value="critical-hit">Critical Hit Chance increased</option>
+							<option label="Critical Hit Damage increased" value="critical-hit-damage">Critical Hit Damage increased</option>
+							<option label="+% Damage" value="plus-damage">+% Damage</option>
+							<option label="Minimum Damage" value="min-damage">Minimum Damage</option>
+							<option label="Maximum Damage" value="max-damage">Maximum Damage</option>
+							<option label="Arcane Damage" value="arcane-damage">Arcane Damage</option>
+							<option label="Cold Damage" value="cold-damage">Cold Damage</option>
+							<option label="Fire Damage" value="fire-damage">Fire Damage</option>
+							<option label="Holy Damage" value="holy-damage">Holy Damage</option>
+							<option label="Lightning Damage" value="lightning-damage">Lightning Damage</option>
+							<option label="Poison Damage" value="poison-damage">Poison Damage</option>
+							<option label="Increases Damage against Elites" value="elite-damage">Increases Damage against Elites</option>
+							<option label="Chance to inflict Bleed" value="chance-bleed">Chance to inflict Bleed</option>
+							<option label="Chance to Blind on Hit" value="chance-blind">Chance to Blind on Hit</option>
+							<option label="Chance to Chill on Hit" value="chance-chill">Chance to Chill on Hit</option>
+							<option label="Chance to Fear on Hit" value="chance-fear">Chance to Fear on Hit</option>
+							<option label="Chance to Freeze on Hit" value="chance-freeze">Chance to Freeze on Hit</option>
+							<option label="Chance to Immobilize on Hit" value="chance-immobilize">Chance to Immobilize on Hit</option>
+							<option label="Chance to Knockback on Hit" value="chance-knockback">Chance to Knockback on Hit</option>
+							<option label="Chance to Slow on Hit" value="chance-slow">Chance to Slow on Hit</option>
+							<option label="Chance to Stun on Hit" value="chance-stun">Chance to Stun on Hit</option>
+							<option label="Movement Speed" value="plus-movement">Movement Speed</option>
+							<option label="Increases Gold and Health pickup" value="plus-pickup-radius">Increases Gold and Health pickup</option>
+							<option label="Experience" value="plus-experience">Experience</option>
+							<option label="Gold Find" value="plus-gold-find">Gold Find</option>
+							<option label="Magic Find" value="plus-magic-find">Magic Find</option>
+							<option label="Health Globes grant Life" value="health-globes">Health Globes grant Life</option>
+							<option label="Damage Dealt is Converted to Life" value="life-steal">Damage Dealt is Converted to Life</option>
+							<option label="Life after each Kill" value="life-kill">Life after each Kill</option>
+							<option label="Each hit adds Life" value="life-hit">Each hit adds Life</option>
+							<option label="Level Requirement reduced" value="level-reduce">Level Requirement reduced</option>
+							<option label="Ignores durability loss" value="indestructable">Ignores durability loss</option>
+							<option label="Increases bash damage" value="bb-bash">Increases bash damage</option>
+							<option label="Increases cleave damage" value="bb-cleave">Increases cleave damage</option>
+							<option label="Increases frenzy damage" value="bb-frenzy">Increases frenzy damage</option>
+							<option label="Reduces resource cost of Rend" value="bb-rend">Reduces resource cost of Rend</option>
+							<option label="Increases Critical Hit Chance of Revenge" value="bb-revenge">Increases Critical Hit Chance of Revenge</option>
+							<option label="Reduces resource cost of Weapon Throw" value="bb-weapon-throw">Reduces resource cost of Weapon Throw</option>
+							<option label="Reduces resource cost of Hammer of the Ancients" value="bb-hammer-of-the-ancients">Reduces resource cost of Hammer of the Ancients</option>
+							<option label="Increases Critical Hit Chance of Whirlwind" value="bb-whirlwind">Increases Critical Hit Chance of Whirlwind</option>
+							<option label="Increases Critical Hit Chance of Overpower" value="bb-overpower">Increases Critical Hit Chance of Overpower</option>
+							<option label="Increases Critical Hit Chance of Seismic Slam" value="bb-seismic-slam">Increases Critical Hit Chance of Seismic Slam</option>
+							<option label="Maximum Fury" value="fury-max">Maximum Fury</option>
+							<option label="Increases Hatred Regeneration" value="hatred-regen">Increases Hatred Regeneration</option>
+							<option label="Maximum Discipline" value="max-discipline">Maximum Discipline</option>
+							<option label="Reduces resource cost of Chakram" value="dh-chakram">Reduces resource cost of Chakram</option>
+							<option label="Increases Evasive Fire damage" value="dh-evasive-fire">Increases Evasive Fire damage</option>
+							<option label="Increases Grenades Damage" value="dh-grenades">Increases Grenades Damage</option>
+							<option label="Reduces resource cost of Impale" value="dh-impale">Reduces resource cost of Impale</option>
+							<option label="Increases Spike Trap damage" value="dh-spike-trap">Increases Spike Trap damage</option>
+							<option label="Increases Bola Shot damage" value="dh-bola-shot">Increases Bola Shot damage</option>
+							<option label="Increases Elemental Arrow damage" value="dh-elemental-arrow">Increases Elemental Arrow damage</option>
+							<option label="Increases Entangling Shot damage" value="dh-entangling-shot">Increases Entangling Shot damage</option>
+							<option label="Increases Hungering Arrow damage" value="dh-hungering-arrow">Increases Hungering Arrow damage</option>
+							<option label="Increases Critical Hit Chance of Multishot" value="dh-multishot">Increases Critical Hit Chance of Multishot</option>
+							<option label="Increases Critical Hit Chance of Rapid Fire" value="dh-rapid-fire">Increases Critical Hit Chance of Rapid Fire</option>
+							<option label="Gain Life per Spirit Spent" value="spirit-spent-life">Gain Life per Spirit Spent</option>
+							<option label="Increases Spirit Regeneration" value="spirit-regen">Increases Spirit Regeneration</option>
+							<option label="Increases Crippling Wave damage" value="mk-crippling-wave">Increases Crippling Wave damage</option>
+							<option label="Reduces resource cost of Cyclone Strike" value="mk-cyclone-strike">Reduces resource cost of Cyclone Strike</option>
+							<option label="Increases Deadly Reach damage" value="mk-deadly-reach">Increases Deadly Reach damage</option>
+							<option label="Increases Exploding Palm damage" value="mk-exploding-palm">Increases Exploding Palm damage</option>
+							<option label="Increases Fist of Thunder damage" value="mk-fists-of-thunder">Increases Fist of Thunder damage</option>
+							<option label="Increases Sweeping Wind damage" value="mk-sweeping-wind">Increases Sweeping Wind damage</option>
+							<option label="Increases Way of the Hundred Fists damage" value="mk-way-of-the-hundred-fists">Increases Way of the Hundred Fists damage</option>
+							<option label="Reduces resource cost of Lashing Tail Kick" value="mk-lashing-tail-kick">Reduces resource cost of Lashing Tail Kick</option>
+							<option label="Increases Critical Hit Chance of Tempest Rush" value="mk-tempest-rush">Increases Critical Hit Chance of Tempest Rush</option>
+							<option label="Increases Critical Hit Chance of Wave of Light" value="mk-wave-of-light">Increases Critical Hit Chance of Wave of Light</option>
+							<option label="Increases Mana Regeneration" value="mana-regen">Increases Mana Regeneration</option>
+							<option label="Maximum Mana" value="mana-max">Maximum Mana</option>
+							<option label="Reduces resource cost of Firebomb" value="wd-firebomb">Reduces resource cost of Firebomb</option>
+							<option label="Increases Haunt Damage" value="wd-haunt">Increases Haunt Damage</option>
+							<option label="Increases Critical Hit Chance of Acid Clouds" value="wd-acid-clouds">Increases Critical Hit Chance of Acid Clouds</option>
+							<option label="Reduces resource cost of Firebats" value="wd-firebats">Reduces resource cost of Firebats</option>
+							<option label="Reduces cooldown of Summon Zombie Dogs" value="wd-zombie-dogs">Reduces cooldown of Summon Zombie Dogs</option>
+							<option label="Increases Plague of Toads damage" value="wd-plague-of-toads">Increases Plague of Toads damage</option>
+							<option label="Increaeses Poison Darts damage" value="wd-poison-darts">Increaeses Poison Darts damage</option>
+							<option label="Increases Spirit Barrage damage" value="wd-spirit-barrage">Increases Spirit Barrage damage</option>
+							<option label="Reduces cooldown of Wall of Zombies" value="wd-wall-of-zombies">Reduces cooldown of Wall of Zombies</option>
+							<option label="Reduces resource cost of Zombie Charger" value="wd-zombie-charger">Reduces resource cost of Zombie Charger</option>
+							<option label="Critical Hits grant Arcane Power" value="ap-on-crit">Critical Hits grant Arcane Power</option>
+							<option label="Maximum Arcane Power" value="ap-max">Maximum Arcane Power</option>
+							<option label="Reduces resource cost of Arcane Torrent" value="wz-arcane-torrent">Reduces resource cost of Arcane Torrent</option>
+							<option label="Reduces resource cost of Disintegrate" value="wz-disintegrate">Reduces resource cost of Disintegrate</option>
+							<option label="Increases Electrocute damage" value="wz-electrocute">Increases Electrocute damage</option>
+							<option label="Increases Critical Hit Chance of Explosive Blast" value="wz-explosive-blast">Increases Critical Hit Chance of Explosive Blast</option>
+							<option label="Reduces resource cost of Hydra" value="wz-hydra">Reduces resource cost of Hydra</option>
+							<option label="Increases Critical Hit Chance of Ray of Frost" value="wz-ray-of-frost">Increases Critical Hit Chance of Ray of Frost</option>
+							<option label="Increases Critical Hit Chance of Energy Twister" value="wz-energy-twister">Increases Critical Hit Chance of Energy Twister</option>
+							<option label="Increases Magic Missle damage" value="wz-magic-missle">Increases Magic Missle damage</option>
+							<option label="Increases Critical Hit Chance of Arcane Orb" value="wz-arcane-orb">Increases Critical Hit Chance of Arcane Orb</option>
+							<option label="Increases duration of Blizzard" value="wz-blizzard">Increases duration of Blizzard</option>
+							<option label="Reduces resource cost of Meteor" value="wz-meteor">Reduces resource cost of Meteor</option>
+							<option label="Increases Shock Pulse damage" value="wz-shock-pulse">Increases Shock Pulse damage</option>
+							<option label="Increases Spectral Blade damage" value="wz-spectral-blade">Increases Spectral Blade damage</option>
+						</select>
 					</td>
 				</tr>
-			<? endforeach ?>
+			</thead>
+	<? endif; ?>
+	<? if(!count($this->items)): ?>
+		<tbody>
+			<tr>
+				<td colspan="10">	
+					<h3 style="text-align: center; color: #f00">No Items found with your search parameters</h3>
+				</td>
+			</tr>
 		</tbody>
-	</table>
+		<? exit; ?>
+	<? endif ?>
+			<tbody>
+				<tr>
+					<td colspan="10" class="item-paginator td-paginator">
+						<?php echo $this->paginationControl($this->items,
+						                                    'Elastic',
+						                                    'item/_pages.phtml',
+																								array(
+																									'itemType' => $this->itemType,
+																									'sortAttrs' => $this->sortAttrs,
+																									'slotType' => $this->slotType,
+																								)); ?>
+					</td>
+				</tr>
+				<? foreach($this->items as $item): ?>
+				<tr class="item-row" id="item-<?= $item->id ?>">
+						<td class="name">
+							<div class="item-stat">
+								<span class="value">
+									<?= $this->itemLink($item) ?>
+								</span>
+							<? if($item->stats): ?>
+								<span class="stat">
+								<? if($item->stats->armor): ?>
+									<?= $item->stats->armor . " Armor"?>
+								<? endif; ?>
+								<? if($item->stats->dps): ?>
+									<?= $item->stats->dps." dps" ." @ ".$item->stats->speed." A/S" ?>
+								<? endif; ?>
+								</span>
+							<? endif; ?>
+						</td>
+						<?
+							if($item->stats) {
+								$stats = $item->stats->export();								
+							}
+							$attrs = $item->attrs->getAttributesArray($item->type);
+							$export = $item->cleanExport();
+							if(isset($export['socketAttrs'])) {
+								$socketAttrs = $export['socketAttrs'];
+							}
+							// Put whatever we're filtering in first 
+							if($this->sortAttrs) {
+								foreach($this->sortAttrs as $k => $v) {
+									switch($v) {
+										case "base_armor":
+											$val = $stats['armor'];
+											break;
+										case "base_dps":
+											$val = $stats['dps'];
+											break;
+										default:
+											$val = $attrs[$v];
+											break;
+									}
+									if(isset($socketAttrs[$k])) {
+										$val += $socketAttrs[$k];
+									}
+									unset($attrs[$v]);
+									echo "<td class='sorted'>".$this->itemStat(ucwords(str_replace("_", " ", $v)), $val)."</td>";							
+								}
+							}
+							$count = count($this->sortAttrs);
+						?>
+						<? foreach($attrs as $k => $v): ?>
+							<? 
+								$count++;
+								$val = $v;
+								if(isset($socketAttrs[$k])) {
+									$val += $socketAttrs[$k];
+								}
+							?>
+							<? if($count > 6) { continue; } ?>
+							<td><?= $this->itemStat($k, $val) ?></td>
+						<? endforeach ?>
+						<? if($count < 6): ?>
+							<? for($i = $count; $i < 6; $i++): ?>
+								<td>&nbsp;</td>
+							<? endfor ?>
+						<? endif ?>
+						<? if($profile): ?>
+						<td class='controls'>
+								<?= $this->mLink($item, array('action' => 'delete', 'text' => 'Delete'))?>
+								<a class="compareThis" data-item="<?= $item->id ?>">Compare</a>
+						</td>
+					<? endif ?>
+					</tr>
+				<? endforeach; ?>
+				<tr>
+					<td colspan="10" class="item-paginator td-paginator">
+						<?php echo $this->paginationControl($this->items,
+						                                    'Elastic',
+						                                    'item/_pages.phtml',
+																								array(
+																									'itemType' => $this->itemType,
+																									'sortAttrs' => $this->sortAttrs,
+																									'slotType' => $this->slotType,																									
+																								)); ?>
+					</td>
+				</tr>
+			</tbody>
+	<? if(!$this->disableScripts): ?>
+		</table>
+	</div>
+	<? if($profile): ?>
+	<div id="my-builds">
+		<? foreach($builds as $build): ?>
+		<div class="build-parent" id="build-<?= $build->id ?>" data-class="<?= $build->class ?>">
+			<div class="build-items">
+				<? foreach($build->equipment as $slot => $gear):?>
+					<span class="<?= $slot ?>" data-slot="<?= $slot ?>"><?= $this->itemLink($gear) ?></span>
+				<? endforeach ?>
+			</div>
+			<div class="build-passives" data-json='<?= ($build->passives)?json_encode($build->passives->export()):"" ?>'></div>
+		</div>
+		<? endforeach ?>
+	</div>
+	<? endif ?>
+
+	<? if($this->itemType): ?>
+	<script type="text/javascript">
+		$(function() {
+			$("#itemType").find("option[value=<?= $this->itemType ?>]").attr("selected", "selected");			
+		});
+		<? if($this->sortAttrs) {
+			foreach($this->sortAttrs as $attr) {
+				echo "$('#sortAttributes option[value=".$attr."]').attr('selected','selected');";					
+			}
+		} ?>
+	</script>
+	<? endif ?>
+	<script type="text/javascript" src="/js/calc.js"></script>
+	<script type="text/javascript" src="/js/fullbrowser.js"></script>
 	<? else: ?>
 	<p>You don't have any items yet!</p>
 	<p>Click the "Add Item" button above to get started.</p>

@@ -28,7 +28,17 @@
 					<? endif ?>
 				</td>
 				<td class="data"> 
-					<?= $this->prettyStat($sale->soldFor) ?>
+					<div class='item-stat'>
+						<? if($sale->method == 'ah'): ?>
+							<span class='value'>
+								<img src="/images/goldcoin.png"> <?= $this->prettyStat($sale->soldFor) ?>
+							</span>
+							<span class="stat">
+								<?= $this->prettyStat($sale->soldForActual) ?> before AH cut
+							</span>
+						<? else: ?>
+						<? endif ?>
+					</div>
 				</td>
 				<td class="data"><?= $this->timeAgo($sale->soldOn) ?></td>
 			</tr>

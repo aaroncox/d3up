@@ -1,7 +1,7 @@
 <? $profile = Epic_Auth::getInstance()->getProfile(); ?>
 <? if(!$this->disableScripts): ?>
 	<?
-		$this->headTitle('Item DB'); 
+		$this->headTitle('Item Search'); 
 		if($profile) {
 			$query = array(
 				'_createdBy' => $profile->createReference()

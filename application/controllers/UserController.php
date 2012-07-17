@@ -45,10 +45,58 @@ class UserController extends Epic_Controller_Action
 	public function itemsAction() {
 		$profile = Epic_Auth::getInstance()->getProfile();
 		if($profile) {
-			$items = Epic_Mongo::db('item')->fetchAll(array('_createdBy' => $profile->createReference()), array("_created" => -1));			
+			$query = array(
+				"_createdBy" => $profile->createReference(),
+			);
+			if($slot = $this->getRequest()->getParam('slot')) {
+				$possible = D3Up_Mongo_Record_Item::$slotTypeMap;
+				$query['type']['$in'] = $possible[$slot];
+				$this->view->slotType = $slot;
+			}
+			if($type = $this->getRequest()->getParam('type')) {
+				$this->view->itemType = $query['type'] = $type;
+			}
+			$query['method'] = array('$ne' => 'ah');
+			if($sellMethod = $this->getRequest()->getParam('sellMethod')) {
+				$this->view->sellMethod = $query['method'] = $sellMethod;
+			}
+			$sort = array();
+			if($sortAttr = $this->getRequest()->getParam('sort')) {
+				$sortAttrs = explode(",", $sortAttr);
+				foreach($sortAttrs as $k => $v) {
+					switch($v) {
+						// Special Cases
+						case "base_armor":
+							$key = 'stats.armor';
+							break;
+						case "base_dps":
+							$key = 'stats.dps';
+							break;
+						default:
+							$key = 'attrs.'.$v;
+							break;
+					}
+					$query[$key] = array(
+						'$ne' => '',
+						'$exists' => true
+					);				
+					$sort[$key] = -1;
+				}
+				$this->view->sortAttrs = $sortAttrs;
+			} else {
+				$sort['_created'] = -1;
+			}
+			$items = Epic_Mongo::db('item')->fetchAll($query, $sort);			
+			$paginator = Zend_Paginator::factory($items);
+			$paginator->setCurrentPageNumber($this->getRequest()->getParam('page', 1))->setItemCountPerPage(20)->setPageRange(3);
+			$this->view->items = $paginator;
+			if($this->_request->isXmlHttpRequest()) {
+				$this->view->disableScripts = true;
+				$this->_helper->layout->disableLayout();
+			}
 			// $paginator = Zend_Paginator::factory($items);
 			// $paginator->setCurrentPageNumber($this->getRequest()->getParam('page', 1))->setItemCountPerPage(20);
-			$this->view->items = $items;
+			// $this->view->items = $items;
 		} else {
 			$this->view->notLoggedIn = true;
 		}
@@ -95,6 +143,9 @@ class UserController extends Epic_Controller_Action
 							$result = $this->getRequest()->getParam('completeSaleResult');
 							if($result == 'true') {
 								$sale->soldFor = (int) $this->getRequest()->getParam('completeSaleValue');
+								if($sale->method == "ah") {
+									$sale->soldForActual = $sale->soldFor * 1.15; // What the sale was before AH Cut									
+								}
 								$sale->soldOn = time();
 								$sale->soldSuccess = true;
 							} else {

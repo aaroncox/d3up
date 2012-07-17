@@ -1,0 +1,93 @@
+<script type="text/javascript" src="http://code.jquery.com/jquery-1.7.2.js"></script>
+<script type="text/javascript" src="http://d3db.com/skill/load_power?346712"></script>
+<script type="text/javascript">
+	$(function() {
+		var skills = {
+			'undefined': [],
+			'barbarian': [],
+			'demon-hunter': [],
+			'monk': [],
+			'witch-doctor': [],
+			'wizard': [],
+			'enchantress': [],
+			'templar': [],
+			'scoundrel': []
+		};
+		var map = {"\b":" ", "\t":" ", "\n":" ", "\v":" ", "\f":" ", "\r":" "};
+		$.each(tooltips, function(k,v) {
+			var newSkill = {};
+			// target.append("\r" + v.slug + ": {");
+			var html = $(v.tooltip);
+			newSkill.name = html.find("#d3tt_nameset").html();
+			newSkill.class = 'undefined';
+			if(html.text().indexOf("Wizard") > 0) {
+				newSkill.class = 'wizard';
+			}
+			if(html.text().indexOf("Demon Hunter") > 0) {
+				newSkill.class = 'demon-hunter';
+			}
+			if(html.text().indexOf("Monk") > 0) {
+				newSkill.class = 'monk';
+			}
+			if(html.text().indexOf("Barbarian") > 0) {
+				newSkill.class = 'barbarian';
+			}
+			if(html.text().indexOf("Witch Doctor") > 0) {
+				newSkill.class = 'witch-doctor';
+			}
+			if(html.text().indexOf("Enchantress") > 0) {
+				newSkill.class = 'enchantress';
+			}
+			if(html.text().indexOf("Templar") > 0) {
+				newSkill.class = 'templar';
+			}
+			if(html.text().indexOf("Scoundrel") > 0) {
+				newSkill.class = 'scoundrel';
+			}
+			if(newSkill.class == 'undefined') {
+				console.log(html.text());				
+			}
+			newSkill.slug = v.slug;
+			$.each($(v.tooltip).find(".d3tt_primary_active"), function(k,v) {
+				var frag = $(v);
+				if(k == 0) {
+					var clean = frag.text().replace(/[\b\t\n\v\f\r]/g, function(val) { return map[val]; });
+					newSkill.desc = clean;
+					// target.append("\r\tdesc: '" + clean + "',");					
+				}
+				if(k == 1){
+					var clean = frag.text().replace(/[\b\t\n\v\f\r]/g, function(val) { return map[val]; });
+					newSkill.rune = clean
+					// target.append("\r\trune: '" + clean + "',");										
+				}
+			});
+			if(newSkill.class == 'undefined') {
+				console.log("Unknown: " + html.text());				
+			} else {
+				skills[newSkill.class].push(newSkill);				
+			}
+			
+		});
+		console.log(skills);
+		var target = $("#json");
+		$.each(skills, function(k,v) {
+			if(k != 'undefined') {
+				target.append("\n" + k + ": {");
+				$.each(v, function(i, s) {
+					target.append("\n\t" + s.slug + ": {");		
+					target.append("\n\t\tname: '" + s.name.trim() + "',");
+					if(s.desc && s.desc != "undefined") {
+						target.append("\n\t\tdesc: '" + s.desc.trim() + "',");
+					}
+					if(s.rune && s.rune != "undefined") {
+						target.append("\n\t\trune: '" + s.rune.trim() + "',");					
+					}
+					target.append("\n\t},");		
+				});
+				target.append("\n},");
+			}
+		});
+	});
+</script>
+<pre id="json">
+</pre>

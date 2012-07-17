@@ -297,10 +297,13 @@ ul.sub_menu > li.witch-doctor {
 .d3up-table td {
 	padding: 5px;
 	border: 1px solid #111;
+	line-height: 32px;
 }
 .d3up-table td.name {
 	width: 350px;
-	padding-left: 10px;
+}
+.d3up-table td.name a {
+	display: block;
 }
 .d3up-table td.data {
 	line-height: 32px;	
@@ -558,14 +561,17 @@ dd:has(:focus) .chzn-container {
 #recent-items td.controls,
 .item-stat {
 	text-align: center;
+	line-height: 1.5em;
 }
 .item-stat .value {
+	line-height: 1.5em;
 	font-size: 1.2em;
 	display: block;
 }
 .item-stat .stat {
 	display: block; 
 	font-size: 10px;
+	line-height: 1.5em;
 }
 td.sorted .value {
 	color: #8AFF57;
@@ -679,4 +685,7 @@ tr.compared > td:first-child {
 	letter-spacing: 0.2em;
 	font-size: 20px;
 	margin-left: 20px;
+}
+.d3up-table td.sorting {
+	line-height: 1em;
 }
