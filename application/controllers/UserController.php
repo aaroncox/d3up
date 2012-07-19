@@ -103,10 +103,10 @@ class UserController extends Epic_Controller_Action
 	}
 	public function shopAction() {
 		$this->view->profile = $profile = Epic_Auth::getInstance()->getProfile();
-		$profile->_lastSeen = time();
-		$profile->save();
-		$this->view->selectItem = $this->getRequest()->getParam("selectItem");
 		if($profile) {
+			$profile->_lastSeen = time();
+			$profile->save();
+			$this->view->selectItem = $this->getRequest()->getParam("selectItem");
 			if(!$profile->region) {
 				$this->view->form = $form = new D3Up_Form_User_Shop(array('user' => $profile));
 				$this->_handleForm($form);

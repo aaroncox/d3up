@@ -307,8 +307,9 @@
 						<? endif ?>
 						<? if($profile): ?>
 						<td class='controls'>
-								<?= $this->mLink($item, array('action' => 'delete', 'text' => 'Delete'))?>
-								<a class="compareThis" data-item="<?= $item->id ?>">Compare</a>
+							<?= $this->mLink($item, array('action' => 'delete', 'text' => 'Delete'))?>
+							<a class="compareThis" data-item="<?= $item->id ?>">Compare</a>
+							<a href="/user/shop?selectItem=<?= $item->id ?>">Sell</a>
 						</td>
 					<? endif ?>
 					</tr>

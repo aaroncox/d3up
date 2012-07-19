@@ -1,7 +1,8 @@
 <? if($this->notLoggedIn): ?>
-	<p>This feature is only available to logged in users due to the nature of the application.</p>
-	<p>A logged in user is allowed to flag his/her items for sale using this customer interface.</p>
-	<p>Interested? Feel free to wander over to the <a href="/user/register">registration page</a> to create an account, or if you already have one, you can <a href="/user/login">login</a>.</p>
+	<h1 class="table-header">My Shop</h1>
+	<div class="ui-widget ui-corner-all ui-widget-content ui-helper-clearfix" style="padding: 0 20px">
+		<?= $this->render("./user/shop/help.phtml") ?>
+	</div>
 <? else: ?>
 	<? if($this->form): ?>
 	<div class="create-form ui-widget ui-widget-content ui-corner-all">

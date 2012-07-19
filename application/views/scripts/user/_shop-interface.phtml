@@ -28,62 +28,63 @@
 	}
 </style>
 <div style="float: right">
-	<button id="sellButton" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only"><span class="ui-button-text">Sell an Item</span></button>
+	<button id="sellButton" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only"><span class="ui-button-text">Create Sale</span></button>
 </div>
-<h2>My Shop</h2>
+<h2 class="table-header">My Shop</h2>
 <div class="ui-widget ui-widget-content ui-corner-all" style="margin-bottom: 5px; padding: 0 10px 10px; display: none">
 	<h3>We will show you online to other users until <span class='pos'><?= date("r", $this->profile->_lastSeen + 900) ?></span>.</h3>
 	Each time you refresh this page, we will update your "online" status shown on your auctions and show you online for 15 minutes. 
 </div>
 <div class='ui-widget ui-widget-content ui-corner-all content-widget ui-helper-clearfix' id="item-picker">
-	<h3>Sell an Item!</h3>
-	<p>Which Item do you want to sell?</p>
+	<h3>Create a Sale</h3>
+	<p>Which of your items do you wish to post as a sale?</p>
 	<p>
 		<select name="sellItem" id="sellItem">
 			<option>Loading</option>
 		</select>
 	</p>
+	<p>Filter my Items:</p>
 	<p>
 		<select name="sellItemFilter" id="sellItemFilter">
 			<option label="" value="">No Filter</option>
-	    <option label="Amulet" value="amulet">Amulet</option>
-	    <option label="Belt" value="belt">Belt</option>
-	    <option label="Boots" value="boots">Boots</option>
-	    <option label="Bracers" value="bracers">Bracers</option>
-	    <option label="Chest Armor" value="chest-armor">Chest Armor</option>
-	    <option label="Cloak" value="cloak">Cloak</option>
-	    <option label="Gloves" value="gloves">Gloves</option>
-	    <option label="Helm" value="helm">Helm</option>
-	    <option label="Pants" value="pants">Pants</option>
-	    <option label="Mighty Belt" value="mighty-belt">Mighty Belt</option>
-	    <option label="Ring" value="ring">Ring</option>
-	    <option label="Shoulder" value="shoulder">Shoulder</option>
-	    <option label="Spirit Stone" value="spirit-stone">Spirit Stone</option>
-	    <option label="Voodoo Mask" value="voodoo-mask">Voodoo Mask</option>
-	    <option label="Wizard Hat" value="wizard-hat">Wizard Hat</option>
-	    <option label="Two-Handed Mace" value="2h-mace">Two-Handed Mace</option>
-	    <option label="Two-Handed Axe" value="2h-axe">Two-Handed Axe</option>
-	    <option label="Bow" value="bow">Bow</option>
-	    <option label="Diabo" value="diabo">Diabo</option>
-	    <option label="Crossbow" value="crossbow">Crossbow</option>
-	    <option label="Two-Handed Mighty Weapon" value="2h-mighty">Two-Handed Mighty Weapon</option>
-	    <option label="Polearm" value="polearm">Polearm</option>
-	    <option label="Staff" value="staff">Staff</option>
-	    <option label="Two-Handed Sword" value="2h-sword">Two-Handed Sword</option>
-	    <option label="Axe" value="axe">Axe</option>
-	    <option label="Ceremonial Knife" value="ceremonial-knife">Ceremonial Knife</option>
-	    <option label="Hand Crossbow" value="hand-crossbow">Hand Crossbow</option>
-	    <option label="Dagger" value="dagger">Dagger</option>
-	    <option label="Fist Weapon" value="fist-weapon">Fist Weapon</option>
-	    <option label="Mace" value="mace">Mace</option>
-	    <option label="Mighty Weapon" value="mighty-weapon">Mighty Weapon</option>
-	    <option label="Spear" value="spear">Spear</option>
-	    <option label="Sword" value="sword">Sword</option>
-	    <option label="Wand" value="wand">Wand</option>
-	    <option label="Mojo" value="mojo">Mojo</option>
-	    <option label="Source" value="source">Source</option>
-	    <option label="Quiver" value="quiver">Quiver</option>
-	    <option label="Shield" value="shield">Shield</option>
+		    <option label="Amulet" value="amulet">Amulet</option>
+		    <option label="Belt" value="belt">Belt</option>
+		    <option label="Boots" value="boots">Boots</option>
+		    <option label="Bracers" value="bracers">Bracers</option>
+		    <option label="Chest Armor" value="chest-armor">Chest Armor</option>
+		    <option label="Cloak" value="cloak">Cloak</option>
+		    <option label="Gloves" value="gloves">Gloves</option>
+		    <option label="Helm" value="helm">Helm</option>
+		    <option label="Pants" value="pants">Pants</option>
+		    <option label="Mighty Belt" value="mighty-belt">Mighty Belt</option>
+		    <option label="Ring" value="ring">Ring</option>
+		    <option label="Shoulder" value="shoulder">Shoulder</option>
+		    <option label="Spirit Stone" value="spirit-stone">Spirit Stone</option>
+		    <option label="Voodoo Mask" value="voodoo-mask">Voodoo Mask</option>
+		    <option label="Wizard Hat" value="wizard-hat">Wizard Hat</option>
+		    <option label="Two-Handed Mace" value="2h-mace">Two-Handed Mace</option>
+		    <option label="Two-Handed Axe" value="2h-axe">Two-Handed Axe</option>
+		    <option label="Bow" value="bow">Bow</option>
+		    <option label="Diabo" value="diabo">Diabo</option>
+		    <option label="Crossbow" value="crossbow">Crossbow</option>
+		    <option label="Two-Handed Mighty Weapon" value="2h-mighty">Two-Handed Mighty Weapon</option>
+		    <option label="Polearm" value="polearm">Polearm</option>
+		    <option label="Staff" value="staff">Staff</option>
+		    <option label="Two-Handed Sword" value="2h-sword">Two-Handed Sword</option>
+		    <option label="Axe" value="axe">Axe</option>
+		    <option label="Ceremonial Knife" value="ceremonial-knife">Ceremonial Knife</option>
+		    <option label="Hand Crossbow" value="hand-crossbow">Hand Crossbow</option>
+		    <option label="Dagger" value="dagger">Dagger</option>
+		    <option label="Fist Weapon" value="fist-weapon">Fist Weapon</option>
+		    <option label="Mace" value="mace">Mace</option>
+		    <option label="Mighty Weapon" value="mighty-weapon">Mighty Weapon</option>
+		    <option label="Spear" value="spear">Spear</option>
+		    <option label="Sword" value="sword">Sword</option>
+		    <option label="Wand" value="wand">Wand</option>
+		    <option label="Mojo" value="mojo">Mojo</option>
+		    <option label="Source" value="source">Source</option>
+		    <option label="Quiver" value="quiver">Quiver</option>
+		    <option label="Shield" value="shield">Shield</option>
 		</select>
 	</p>
 	<a class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" href="/item/create?return=store"><span class="ui-button-text">Create New Item to Sell</span></a>
@@ -92,12 +93,16 @@
 	<ul>
 		<li><a href="#tab-shop">For Sale</a></li>
 		<li><a href="#tab-complete">Completed</a></li>
+		<li><a href="#tab-help">What is this?</a></li>
 	</ul>
 	<div id="tab-shop">
 		<?= $this->render("./user/shop/shop.phtml")?>
 	</div>
 	<div id="tab-complete">
 		<?= $this->render("./user/shop/completed.phtml") ?>
+	</div>
+	<div id="tab-help">
+		<?= $this->render("./user/shop/help.phtml") ?>
 	</div>
 </div>
 <script type="text/javascript">
@@ -311,7 +316,7 @@
 						if(i.id == <?= $this->selectItem ?>) {
 							item.attr("selected", "selected");
 							setTimeout(function() {
-								sellItem.trigger('change');															
+								sellItem.trigger('change');
 							}, 0);
 						}
 						<? endif ?>
