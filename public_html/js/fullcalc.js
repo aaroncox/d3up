@@ -94,13 +94,7 @@ var stats = [],
 									'effect': {
 										
 									}
-								},
-								{
-									"case": "sword|dagger|2h-sword",
-									'effect': {
-										'plus-damage': 0.15
-									}
-								},																		
+								}																		
 							]
 						}
 					}
@@ -970,6 +964,13 @@ function calc(target, passiveSkills) {
 										if(l == gearJSON[value.var][value.lookup]) {
 											$.each(c.effect, function(e, eff) {
 												switch(e) {
+													case 'plus-damage':
+														if(mathPlusDamage) {
+															mathPlusDamage += eff;
+														} else {
+															mathPlusDamage = eff;
+														}
+														break;
 													case "critical-hit-damage":
 														mathCriticalHitDamage = mathCriticalHitDamage + (eff * 100);
 														break;
