@@ -9,7 +9,7 @@
 			<th>Date</th>
 	</thead>
 	<tbody>
-		<? foreach($this->completed as $sale): ?>
+		<? foreach($this->allcompleted as $sale): ?>
 			<tr class="item-row" id="sale-<?= $sale->id ?>">
 				<td class='name'><?= $this->saleLink($sale) ?></td>
 				<td class="data">

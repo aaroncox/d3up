@@ -149,6 +149,7 @@ class UserController extends Epic_Controller_Action
 								$sale->soldOn = time();
 								$sale->soldSuccess = true;
 							} else {
+								$sale->soldOn = time();
 								$sale->soldSuccess = false;
 							}
 							$sale->_completed = true;
@@ -214,7 +215,13 @@ class UserController extends Epic_Controller_Action
 			);
 			$this->view->forSale = Epic_Mongo::db('sale')->fetchAll($query);
 			$query['_completed'] = true;
-			$this->view->completed = Epic_Mongo::db('sale')->fetchAll($query);
+			$sort = array(
+				'soldOn' => -1,
+			);
+			$this->view->completed = Epic_Mongo::db('sale')->fetchAll($query, $sort);
+			$query = array();
+			$query['_completed'] = true;
+			$this->view->allcompleted = Epic_Mongo::db('sale')->fetchAll($query, $sort);
 		} else {
 			$this->view->notLoggedIn = true;
 		}		

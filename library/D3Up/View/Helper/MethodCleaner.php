@@ -10,7 +10,7 @@ class D3Up_View_Helper_MethodCleaner extends Zend_View_Helper_Abstract
 	protected $_methods = array(
 		'flat' => 'Buyout Only',
 		'offer' => 'Taking Offers',
-		'ah' => 'On Auction House',
+		'ah' => 'Gold AH',
 	);
 	
 	public function methodCleaner($method) {
