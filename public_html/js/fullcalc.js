@@ -1044,13 +1044,28 @@ function calc(target, passiveSkills) {
 			// console.log("Critical Hit Chance = " + mathCriticalHit);
 			// console.log("Critical Hit Damage = " + mathCriticalHitDamage);
 			// console.log("Primary Attribute = " + primaryAttr);
+			mathSpeedAdditive = Math.round(mathSpeedAdditive * 1000) / 1000;
+			console.log(stats['speed'], stats['speed-oh'], mathSpeedAdditive);
+			// stats['speed'] = 1.2;
+			// stats['speed-oh'] = 1.3;
+			// mathSpeedAdditive = 0.14;
+			stats['speed'] = Math.floor(stats['speed'] * 1024) / 1024;
+			stats['speed-oh'] = Math.floor(stats['speed-oh'] * 1024) / 1024;
 			var mathS = ((mathDamage.min + mathDamage.max + mathDamageOH.min + mathDamageOH.max) / 2 + mathDamageAddMin + mathDamageAddMax) / 2,
+					// 		  1/((trunc(Main Hand APS*1024)/1024)*(1+% Attack Speed Bonus+.15)) + 1/((trunc(Off Hand APS*1024)/1024)*(1+% Attack Speed Bonus+.15)) = 1.2428082
+					// mathC = (1 / ((Math.floor(stats['speed'] * 1024)/1024) * (1 + mathSpeedAdditive + 0.15))) + (1 / ((Math.floor(stats['speed-oh'] * 1024) / 1024) * (1 + mathSpeedAdditive + 0.15))),
 					mathC = (stats['speed'] + stats['speed-oh']) / 2,
 					mathR = 1 + 0.15 + mathSpeedAdditive,
 					mathA = 1 + primaryAttr / 100,
 					mathM = 1 + (mathCriticalHit / 100) * (mathCriticalHitDamage / 100),
 					mathDps = Math.round((mathS * mathC * mathR * mathA * mathM) * 100) / 100,
 					mathSpeed = Math.round(mathSpeed * (1 + mathSpeedAdditive + 0.15) * 100)/100;
+
+			var orig = (stats['speed'] + stats['speed-oh']) / 2, 
+					newMath = 1/((Math.round(stats['speed'] * 1024)/1024) * (1 + mathSpeedAdditive)) + 1/((Math.round(stats['speed-oh'] * 1024) / 1024) * (1 + mathSpeedAdditive));
+			
+			console.log(orig, mathC, mathSpeedAdditive);
+			
 			// console.log(mathDamage.min,mathDamage.max,mathDamageOH.min, mathDamageOH.max, mathDamageAddMin, mathDamageAddMax);
 			// console.log(mathS, mathC, mathR, mathA, mathM);
 			// var s = ((stats.mhmin + stats.mhmax + stats.ohmin + stats.ohmax) / 2 + 6 + 12) / 2, 
@@ -1096,6 +1111,15 @@ function calc(target, passiveSkills) {
 			* 0.575 
 			*/
 		} else {
+			stats['speed'] = Math.floor(stats['speed'] * 1024) / 1024;
+			// var mathS = ((mathDamage.min + mathDamage.max) + (mathDamageAddMin + mathDamageAddMax)) / 2,
+			// 		mathC = stats['speed'],
+			// 		mathR = 1 + mathSpeedAdditive,
+			// 		mathA = 1 + primaryAttr / 100,
+			// 		mathM = 1 + (mathCriticalHit / 100) * (mathCriticalHitDamage / 100),
+			// 		mathDps = Math.round((mathS * mathC * mathR * mathA * mathM) * 100) / 100,
+					// mathSpeed = Math.round(mathSpeed * (1 + mathSpeedAdditive) * 100)/100;
+			// console.log(mathDps);
 			// Else single weapon, do normally
 			mathSpeed = Math.round(mathSpeed * (1 + mathSpeedAdditive) * 100)/100;
 			mathDps = (((mathDamage.min + mathDamage.max) / 2 + mathDamageAdd) * stats['speed']) * (1 + mathSpeedAdditive) * (primaryAttr / 100 + 1) * 1 * ((mathCriticalHit / 100) * (mathCriticalHitDamage/100)+ 1);
