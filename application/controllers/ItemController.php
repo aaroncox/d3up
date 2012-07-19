@@ -25,6 +25,9 @@ class ItemController extends Epic_Controller_Action
 			foreach($sortAttrs as $k => $v) {
 				switch($v) {
 					// Special Cases
+					case "has_sockets":
+						$query['sockets'] = array('$exists' => true);
+						break;
 					case "base_armor":
 						$key = 'stats.armor';
 						break;
@@ -35,11 +38,13 @@ class ItemController extends Epic_Controller_Action
 						$key = 'attrs.'.$v;
 						break;
 				}
-				$query[$key] = array(
-					'$ne' => '',
-					'$exists' => true
-				);				
-				$sort[$key] = -1;
+				if($key) {
+					$query[$key] = array(
+						'$ne' => '',
+						'$exists' => true
+					);				
+					$sort[$key] = -1;					
+				}
 			}
 			$this->view->sortAttrs = $sortAttrs;
 		} else {

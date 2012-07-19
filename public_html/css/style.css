@@ -491,8 +491,8 @@ dd:has(:focus) .chzn-container {
 	display: none;
 }
 #all-builds td.icon {
-	width: 30px;
-	max-width: 30px;
+	width: 42px;
+	max-width: 42px;
 }
 #all-builds td.meta,
 #all-builds td.stat {
@@ -688,4 +688,11 @@ tr.compared > td:first-child {
 }
 .d3up-table td.sorting {
 	line-height: 1em;
+}
+#quick-compared-input li {
+	margin: 5px
+}
+#quick-compared-input input {
+	width: 60px;
+	margin: 0 5px;
 }

@@ -28,8 +28,9 @@ class RecordController extends Epic_Controller_Action
 		$record = $this->getRecord();
 		if($confirm = $this->getRequest()->getParam("confirm")) {
 			unset($record->_createdBy);
+			$type = $record->_type;
 			$record->save();
-			$this->_redirect("/user/items");
+			$this->_redirect("/user/".$type."s");
 		}
 	}
 	public function copyAction() {

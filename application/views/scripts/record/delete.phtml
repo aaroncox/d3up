@@ -1,12 +1,17 @@
 <div class="ui-widget ui-corner-all ui-widget-content" style="padding: 20px">
-	<div style="float: right">
-		<?= $this->displayItem($this->record) ?>
-	</div>
+	<? if($this->record->_type == 'item'): ?>
+		<div style="float: right">
+			<?= $this->displayItem($this->record) ?>
+		</div>
+	<? endif ?>
 	<h2 style="color: #C80000">Are you sure you want to delete this?</h2>
 	<p style="font-size: 1.2em; line-height: 1.6em">Deleting this will not actually delete the it completely, it will just remove it from the list of your things. You'll be able to find it again by searching or save this link for future reference:</p>
 	<?
 		if($this->record->_type == "item") {
 			$link = "/i/".$this->record->id;
+		}
+		if($this->record->_type == "build") {
+			$link = "/b/".$this->record->id;
 		}
 	?>
 	<input type="text" value="http://d3up.com<?= $link ?>" style="width: 300px"/>

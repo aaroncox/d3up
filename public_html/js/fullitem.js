@@ -173,7 +173,7 @@ td['wz-arcane-orb'] = 'Increases Critical Hit Chance of Arcane Orb by VVV%';
 td['wz-blizzard'] = 'Increases duration of Blizzard by VVV Seconds';
 td['wz-meteor'] = 'Reduces resource cost of Meteor by VVV Arcane Power';
 td['wz-shock-pulse'] = 'Increases Shock Pulse damage by VVV%';
-td['wz-spectral-blade'] = 'Increases Spectral Blade damage by VVV%'
+td['wz-spectral-blade'] = 'Increases Spectral Blade damage by VVV%';
 switch($("#itemType").val()) {
 		case "shield":
 			$("#base_dps-element, #base_damage_min-element, #base_damage_max-element, #base_speed-element, #base_dps-label, #base_damage_min-label, #base_damage_max-label, #base_speed-label").hide();

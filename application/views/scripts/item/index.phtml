@@ -89,6 +89,7 @@
 					<td colspan="100" class="sorting">
 						<select data-placeholder="Filter & Sort by Multiple Stats" id="sortAttributes" multiple="multiple">
 							<option label="" value=""></option>
+							<option label="Sockets" value="has_sockets">Sockets</option>
 							<option label="DPS" value="base_dps">DPS</option>
 							<option label="Armor" value="base_armor">Armor</option>
 							<option label="Strength" value="strength">Strength</option>
@@ -265,6 +266,9 @@
 							if($this->sortAttrs) {
 								foreach($this->sortAttrs as $k => $v) {
 									switch($v) {
+										case "has_sockets":
+											$val = count($item->sockets);
+											break;
 										case "base_armor":
 											$val = $stats['armor'];
 											break;

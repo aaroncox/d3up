@@ -29,4 +29,7 @@ class IndexController extends Epic_Controller_Action {
 	public function ripAction() {
 		$this->_helper->layout->disableLayout();		
 	}
+	public function faqAction() {
+		$this->view->faq = $this->getRequest()->getParam('faq');
+	}
 }

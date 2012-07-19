@@ -1,4 +1,4 @@
-<h2>My Character Builds</h2>
+<h2 class="table-header">My Character Builds</h2>
 <? if($this->notLoggedIn): ?>
 	<p>This feature is only available to logged in users due to the nature of the application.</p>
 	<p>When logged in, the database will save your character builds, the gear you choose to wear, the skills you use and more. This allows you to quickly compare items against your current gear, with detailed stats about your character immediately generated allowing you to make informed decisions about gear changes without actually having to purchase the gear itself.</p>
@@ -78,6 +78,7 @@
 				<td class="stat"><?= $this->prettyStat($build->stats['ehp']) ?></td>
 				<td class="meta"><?= (count($build->equipment) > 10)?"<span class='pos'>Yes</span>":"<span class='neg'>No</span>" ?></td>
 				<td class="meta"><?= ($build->guideIsPublished)?"<span class='pos'>Yes</span>":"<span class='neg'>No</span>" ?></td>
+				<td class="controls"><?= $this->mLink($build, array('action' => 'delete', 'text' => 'Delete')) ?></td>
 			</tr>
 		<? endforeach; ?>
 			<tr>

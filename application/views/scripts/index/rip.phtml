@@ -1,5 +1,5 @@
 <script type="text/javascript" src="http://code.jquery.com/jquery-1.7.2.js"></script>
-<script type="text/javascript" src="http://d3db.com/skill/load_power?346712"></script>
+<script type="text/javascript" src="/js/d3db.js"></script>
 <script type="text/javascript">
 	$(function() {
 		var skills = {
@@ -48,10 +48,199 @@
 				console.log(html.text());				
 			}
 			newSkill.slug = v.slug;
+			newSkill.icon = $(v.tooltip).find("img").attr("src");
+			var effectMap = [
+				{
+					find: [
+						/Cost: (\d+) Fury/
+					],
+					effect: 'cost-fury',
+				},
+				{
+					find: [
+						/with a (\d+)% chance to Knockback/
+					],
+					effect: 'chance-knockback',
+				},
+				{
+					find: [
+						/Generate: (\d+) Fury per attack/,
+						/Generate (\d+) additional Fury/,
+						/Generate: (\d+) Fury/
+					],
+					effect: 'generate-fury',
+				},
+				{
+					find: [
+						/Cooldown: (\d+) seconds/
+					],
+					effect: 'cooldown'
+				},
+				{
+					find: [
+						/Generate: (\d+) Spirit per attack/
+					],
+					effect: 'generate-spirit',
+				},
+				{
+					find: [
+						/damage of your skills by (\d+)% for 5 seconds after using Bash/
+					],
+					effect: 'damage-buff',
+					multiple: 3
+				},
+				{
+					find: [
+						/Enemies in the area also take (\d+)% weapon damage/,
+						/shockwave that inflicts (\d+)% weapon damage/,
+						/for (\d+)% weapon damage/,
+						/a shockwave that deals (\d+)% weapon damage/,
+						/deal (\d+)% weapon damage/,
+						/dealing (\d+)% weapon damage to all/,
+						/and dealing (\d+)% weapon damage/
+					],
+					effect: 'weapon-damage'
+				},
+				{
+					find: [
+						/Add 2 reverberations that cause (\d.+)%/,
+					],
+					effect: 'weapon-damage',
+					multiple: 2
+				},
+				{
+					find: [
+						/Generate (\d+) additional Fury per attack/
+					],
+					effect: 'generate-fury'
+				},
+				{
+					find: [
+						/has a (\d+)% increased Critical Hit Chance/
+					],
+					effect: 'bonus-crit-hit'
+				},
+				{
+					find: [
+						/Gain (\d+)% of the damage done by Rend as Life/,
+						/Gain Life equal to (\d+)% of the damage/
+					],
+					effect: 'life-steal'
+				},
+				// Remove Attribute Effects Below
+				{
+					find: [
+						/Removes the chance for Knockback/
+					],
+					remove: 'chance-knockback',
+				},
+				// Remove and Replace Effects Below
+				{
+					find: [
+						/Instead of Knockback, each hit has a (\d+)% chance to Stun/
+					],
+					effect: 'chance-stun',
+					remove: 'chance-knockback'
+				},
+				{
+					find: [
+						/Increase damage to (\d+)% weapon damage/,
+						/Increase damage to (\d.+)% weapon damage/
+					], 
+					effect: 'weapon-damage',
+					remove: 'weapon-damage'
+				},
+				{
+					find: [
+						/Increases Fury gained to (\d+)/
+					],
+					effect: 'generate-fury', 
+					remove: 'generate-fury'
+				}
+			];
+			function determineEffects(skill) {
+				$.each(effectMap, function(k,v) {
+					$.each(v['find'], function(idx, regex) {
+						// Get the Base Effect
+						matches = regex.exec(skill.desc);
+						if(matches) {
+							if(typeof(skill.effect) == 'undefined') {
+								skill.effect = {};
+							}
+							if(v.remove) {
+								delete skill.effect[v.remove];
+							}
+							if(matches[1]) {
+								if(!skill.effect[v.effect]) {
+									skill.effect[v.effect] = 0;
+								}
+								var multiplier = 1;
+								if(v.multiple) {
+									multiplier = v.multiple;
+								}
+								if(v.effect) {
+									skill.effect[v.effect] += parseFloat(matches[1]) * multiplier;	
+								}
+							}
+						}
+						// Do the Rune Effect
+						matches = regex.exec(skill.rune);
+						if(matches) {
+							if(typeof(skill.effect) == 'undefined') {
+								skill.effect = {};
+							}
+							if(v.remove) {
+								delete skill.effect[v.remove];
+							}
+							if(matches[1]) {
+								if(!skill.effect[v.effect]) {
+									skill.effect[v.effect] = 0;
+								}
+								var multiplier = 1;
+								if(v.multiple) {
+									multiplier = v.multiple;
+								}
+								if(v.effect) {
+									skill.effect[v.effect] += parseFloat(matches[1]) * multiplier;	
+								}
+							}
+						}
+						// if(matches) {
+						// 	if(typeof(skill.effect) == 'undefined') {
+						// 		skill.effect = {};
+						// 	}
+						// 	$.each(matches, function(i,match) {
+						// 		if(i != 0) {
+						// 			if(skill.effect[v.effect]) {
+						// 				if(v.multiple) {
+						// 					skill.effect[v.effect] += parseFloat(match) * v.multiple;
+						// 				} else {
+						// 					skill.effect[v.effect] += parseFloat(match);										
+						// 				}
+						// 			} else {
+						// 				if(v.multiple) {
+						// 					skill.effect[v.effect] = parseFloat(match) * v.multiple;
+						// 				} else {
+						// 					skill.effect[v.effect] = parseFloat(match);										
+						// 				}
+						// 			}
+						// 		}
+						// 	});							
+						// }
+					});
+					
+											
+					// Check for effects on the Rune and overwrite the base skills effects
+
+				});
+				return skill;
+			}
 			$.each($(v.tooltip).find(".d3tt_primary_active"), function(k,v) {
 				var frag = $(v);
 				if(k == 0) {
 					var clean = frag.text().replace(/[\b\t\n\v\f\r]/g, function(val) { return map[val]; });
+					// Bunch of Logic to build the skills...
+					// console.log(clean);
 					newSkill.desc = clean;
 					// target.append("\r\tdesc: '" + clean + "',");					
 				}
@@ -64,16 +253,22 @@
 			if(newSkill.class == 'undefined') {
 				console.log("Unknown: " + html.text());				
 			} else {
+				newSkill = determineEffects(newSkill);
 				skills[newSkill.class].push(newSkill);				
 			}
 			
 		});
 		console.log(skills);
+		
+		var wgets = $("#wgets")
 		var target = $("#json");
 		$.each(skills, function(k,v) {
 			if(k != 'undefined') {
 				target.append("\n" + k + ": {");
 				$.each(v, function(i, s) {
+					var baseSkill = s.slug.split("~"),
+							newFilename = s.class + "-" + baseSkill[0] + ".png"
+					wgets.append("\nwget -O " + newFilename + " " + s.icon);
 					target.append("\n\t" + s.slug + ": {");		
 					target.append("\n\t\tname: '" + s.name.trim() + "',");
 					if(s.desc && s.desc != "undefined") {
@@ -82,6 +277,13 @@
 					if(s.rune && s.rune != "undefined") {
 						target.append("\n\t\trune: '" + s.rune.trim() + "',");					
 					}
+					if(s.effect && s.effect != "undefined") {
+						target.append("\n\t\teffect: {");
+						$.each(s.effect, function(name, effect) {
+							target.append("\n\t\t\t" + name + ": '" + effect + "',");							
+						});
+						target.append("\n\t\t},");
+					}
 					target.append("\n\t},");		
 				});
 				target.append("\n},");
@@ -89,5 +291,6 @@
 		});
 	});
 </script>
+<textarea id="wgets"></textarea>
 <pre id="json">
 </pre>
