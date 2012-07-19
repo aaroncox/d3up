@@ -124,6 +124,7 @@ td['bb-seismic-slam'] = 'Increases Critical Hit Chance of Seismic Slam by VVV%';
 td['fury-max'] = '+VVV Maximum Fury';
 td['hatred-regen'] = 'Increases Hatred Regeneration by VVV per Second';
 td['max-discipline'] = '+VVV Maximum Discipline';
+td['dh-cluster-arrow'] = 'Reduces resource cost of Cluster Arrow by VVV Hatred.';
 td['dh-chakram'] = 'Reduces resource cost of Chakram by VVV Hatred';
 td['dh-evasive-fire'] = 'Increases Evasive Fire damage by VVV%';
 td['dh-grenades'] = 'Increases Grenades Damage by [V]%';

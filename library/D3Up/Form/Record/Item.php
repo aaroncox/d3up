@@ -77,6 +77,7 @@ class D3Up_Form_Record_Item extends Epic_Form
 		'fury-max' => 'Maximum Fury',
 		'hatred-regen' => 'Increases Hatred Regeneration',
 		'max-discipline' => 'Maximum Discipline',
+		'dh-cluster-arrow' => 'Reduces resource cost of Cluster Arrow',
 		'dh-chakram' => 'Reduces resource cost of Chakram',
 		'dh-evasive-fire' => 'Increases Evasive Fire damage',
 		'dh-grenades' => 'Increases Grenades Damage',
