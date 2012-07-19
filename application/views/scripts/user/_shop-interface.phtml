@@ -31,7 +31,7 @@
 	<button id="sellButton" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only"><span class="ui-button-text">Sell an Item</span></button>
 </div>
 <h2>My Shop</h2>
-<div class="ui-widget ui-widget-content ui-corner-all" style="margin-bottom: 5px; padding: 0 10px 10px;">
+<div class="ui-widget ui-widget-content ui-corner-all" style="margin-bottom: 5px; padding: 0 10px 10px; display: none">
 	<h3>We will show you online to other users until <span class='pos'><?= date("r", $this->profile->_lastSeen + 900) ?></span>.</h3>
 	Each time you refresh this page, we will update your "online" status shown on your auctions and show you online for 15 minutes. 
 </div>
@@ -159,6 +159,7 @@
 				$("#method-" + selectedMethod).show();									
 			}
 		});
+		sellMethod.trigger('change');
 		// Save the users sell duration
 		sellDuration.bind('change', function() {
 			var value = $(this).val();
@@ -331,10 +332,10 @@
 			<input type="hidden" name="a" id="a" value="postSale"/>
 			<p>How would you like to sell this item?</p>
 			<select name="sellMethod" id="sellMethod">
-				<option value="">Pick an Option</option>
-				<option value="flat">Flat Price</option>
-				<option value="offers">Taking Offers</option>
-				<option value="ah">Up on AH</option>
+				<!-- <option value="">Pick an Option</option> -->
+				<!-- <option value="flat">Flat Price</option>
+				<option value="offers">Taking Offers</option> -->
+				<option value="ah" selected="selected">Up on AH</option>
 			</select>
 			<div>	
 				<p>How long should this sale remain active?</p>

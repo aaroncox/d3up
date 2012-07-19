@@ -2,7 +2,10 @@
 <head>
 	<?= $this->headTitle("Diablo 3 Build Calculator")->setSeparator(' | '); ?>
 	<link rel="stylesheet" href="/css/jquery.dataTables.css" type="text/css" charset="utf-8">	
+	
 	<link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.19/themes/dot-luv/jquery-ui.css" type="text/css" />
+	<!-- <link rel="stylesheet" href="http://local.r2-db.com/css/r2db/jquery-ui-1.8.12.custom.css"> -->
+
 	<link rel="stylesheet" href="/css/style.css" type="text/css" charset="utf-8">	
 	<link rel="stylesheet" href="/css/chosen.css" type="text/css" charset="utf-8">	
 	<link rel="stylesheet" href="/css/tooltip.css" type="text/css" charset="utf-8">	
@@ -10,6 +13,9 @@
 
 	<script type="text/javascript" src="http://code.jquery.com/jquery-1.7.2.js"></script>
 	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.18/jquery-ui.js"></script>
+	<!-- // <script type="text/javascript" src="http://local.r2-db.com/js/jquery.js"></script> -->
+	<!-- // <script type="text/javascript" src="http://local.r2-db.com/js/jquery-ui.min.js"></script> -->
+
 	<script type="text/javascript" src="/js/chosen.jquery.js"></script>
 	<script type="text/javascript" src="/js/site.js"></script>
 	<script type="text/javascript" src="/js/tooltip.js"></script>
@@ -43,7 +49,7 @@
 						<li><a href="/build">All Builds</a></li>
 					</ul>
 				</li>
-				<? if(true == false): ?>
+				<?  if(true == false): ?>
 				<li><a href="/bazaar">Bazaar</a>
 					<ul class="sub_menu">
 						<li><a href="/user/shop">My Shop</a></li>
@@ -55,6 +61,7 @@
 					<ul>
 					<? if($profile = Epic_Auth::getInstance()->getProfile()): ?>
 						<!-- <li><a href="/user"><?= $profile->username ?></a></li>	 -->
+						<li><a href="/user/shop">My Shop</a></li>
 						<li><a href="/user/logout">Logout</a></li>
 					<? else: ?>
 						<li><a href="/user/login">Login</a></li>
