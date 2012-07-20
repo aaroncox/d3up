@@ -68,7 +68,7 @@ class D3Up_Mongo_Schema extends Epic_Mongo_Schema {
 				$results = $db->records->find(array('_type' => 'sale'));
 				foreach($results as $idx => $res) {
 					$profile = $db->users->findOne(array('_id' => $res['seller']['$id']));
-					$db->execute("db.records.update({_id: new ObjectId('".$res['_id']."')}, {\$set: {region: ".$profile['region']."}})");
+					$db->execute("db.records.update({_id: new ObjectId('".$res['_id']."')}, {\$set: {region: ".(int)$profile['region']."}})");
 				}
 				// $db->execute('db.users.insert({id: 1, name: "admin", username: "admin", password: "'.md5('admin').'", _access: "admin", _type: "user"})');
 				// $db->execute('db.sequences.insert({"id" : "user", "sequence" : 1 })');
