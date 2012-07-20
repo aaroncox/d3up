@@ -166,12 +166,7 @@ class UserController extends Epic_Controller_Action
 							$query = array(
 								'seller' => $profile->createReference(),
 								'item.id' => $item->id,
-								'_soldSuccess' => array('$ne' => true)
 							);
-							$sale = Epic_Mongo::db('sale')->fetchOne($query);
-							if($sale) {
-								throw new Exception("You've already listed this item for sale!");
-							}
 							$sale = Epic_Mongo::newDoc('sale');
 							$sale->item = $item;
 							$sale->seller = $profile;
