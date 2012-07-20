@@ -1,6 +1,7 @@
 <script type="text/javascript" src="http://code.jquery.com/jquery-1.7.2.js"></script>
 <script type="text/javascript" src="/js/d3db.js"></script>
 <script type="text/javascript">
+	// Stopped on Caltrops
 	$(function() {
 		var skills = {
 			'undefined': [],
@@ -58,17 +59,29 @@
 				},
 				{
 					find: [
+						/Cost: (\d+) Hatred/
+					],
+					effect: 'cost-hatred'
+				},
+				{
+					find: [
 						/with a (\d+)% chance to Knockback/
 					],
 					effect: 'chance-knockback',
 				},
 				{
 					find: [
-						/Generate: (\d+) Fury per attack/,
 						/Generate (\d+) additional Fury/,
-						/Generate: (\d+) Fury/
+						/Generate: (\d+) Fury/,
+						/Gain (\d+) Fury/
 					],
 					effect: 'generate-fury',
+				},
+				{
+					find: [
+						/Generate: (\d+) Hatred/
+					],
+					effect: 'generate-hatred'
 				},
 				{
 					find: [
@@ -91,13 +104,59 @@
 				},
 				{
 					find: [
+						/Reduces all damage taken by (\d+)%/,
+						/reducing damage done by enemies within 25 yards by (\d+)%/
+					],
+					effect: 'damage-reduce'
+				},
+				{
+					find: [
+						/Add a (\d+)% chance to call down a bolt of lightning from above, stunning/,
+						/Add a (\d+)% chance of stunning/,
+						/(\d+)% chance to Stun/,
+					],
+					effect: 'chance-stun'
+				},
+				{
+					find: [
+						/Increases Dodge Chance by (\d+)% while sprinting/,
+						/also grants a (\d+)% bonus to Dodge Chance/,
+						/Dodge Chance: (\d+)%/
+					],
+					effect: 'bonus-dodge'
+				},
+				{
+					find: [
+						/Movement Speed: (\d+)%/
+					],
+					effect: 'bonus-movement-speed'
+				},
+				{
+					find: [
+						/All of your resistances are increased by (\d+)%/,
+					],
+					effect: 'bonus-resist-all'
+				},
+				{
+					find: [
 						/Enemies in the area also take (\d+)% weapon damage/,
 						/shockwave that inflicts (\d+)% weapon damage/,
 						/for (\d+)% weapon damage/,
 						/a shockwave that deals (\d+)% weapon damage/,
 						/deal (\d+)% weapon damage/,
 						/dealing (\d+)% weapon damage to all/,
-						/and dealing (\d+)% weapon damage/
+						/and dealing (\d+)% weapon damage/,
+						/destruction that deals (\d+)% weapon damage/,
+						/Inflict (\d+)% weapon damage to all nearby enemies/,
+						/each one inflicting (\d+)% weapon damage/,
+						/and inflicting (\d+)% weapon damage/,
+						/Shake the ground violently, dealing (\d+)% weapon damage/,
+						/Each deals (\d+)% weapon damage per swing/,
+						/Deal (\d+)% weapon damage to all targets/,
+						/and deals (\d+)% weapon damage/,
+						/Light the arrow on fire, dealing (\d+)% additional weapon damage/,
+						/that deals (\d+)% weapon damage/,
+						/that do an additional (\d.+)% weapon damage/
 					],
 					effect: 'weapon-damage'
 				},
@@ -110,20 +169,71 @@
 				},
 				{
 					find: [
-						/Generate (\d+) additional Fury per attack/
-					],
-					effect: 'generate-fury'
-				},
-				{
-					find: [
-						/has a (\d+)% increased Critical Hit Chance/
+						/has a (\d+)% increased Critical Hit Chance/,
+						/your Critical Hit Chance is increased by (\d+)%/,
+						/which increases damage by 15% and Critical Hit Chance by (\d+)%/,
+						/Your Critical Hit Chance is increased by (\d+)%/,
+						/Critical Hit Chance: (\d+)%/
 					],
 					effect: 'bonus-crit-hit'
 				},
 				{
 					find: [
+						/Critical Hits cause (\d+)% additional damage/
+					],
+					effect: 'bonus-crit-hit-damage'
+				},
+				{
+					find: [
+						/Enter a rage which increases damage by (\d+)%/	,
+						/While active your damage is also increased by (\d+)%/				
+					], 
+					effect: 'bonus-damage'
+				},
+				{
+					find: [
+						/Each Frenzy effect also increases your damage by (\d+)%/
+					],
+					effect: 'bonus-damage',
+					multiple: 5
+				},
+				{
+					find: [
+						/Attack Speed: (\d+)%/
+					],
+					effect: 'bonus-attack-speed'
+				},
+				{
+					find: [
+						/Frenzy attack speed increases by (\d+)% with each swing/,
+					],
+					effect: 'bonus-attack-speed',
+					multiple: 5
+				},
+				{
+					find: [
+						/rallying cry to increase Armor for you and all allies within 50 yards by (\d+)%/
+					],
+					effect: 'bonus-armor'
+				},
+				{
+					find: [
+						/Increases maximum Life by (\d+)%/
+					],
+					effect: 'bonus-life'
+				},
+				{
+					find: [
+						/regenerates (\d.+) Life per second/
+					],
+					effect: 'bonus-life-regen'
+				},
+				{
+					find: [
 						/Gain (\d+)% of the damage done by Rend as Life/,
-						/Gain Life equal to (\d+)% of the damage/
+						/Gain Life equal to (\d+)% of the damage/,
+						/gain (\d+)% of all damage dealt as Life/,
+						/Gain (\d+)% of the damage dealt as Life/
 					],
 					effect: 'life-steal'
 				},
@@ -133,6 +243,12 @@
 						/Removes the chance for Knockback/
 					],
 					remove: 'chance-knockback',
+				},
+				{
+					find: [
+						/Removes the Fury cost/
+					],
+					remove: 'cost-fury'
 				},
 				// Remove and Replace Effects Below
 				{
@@ -145,17 +261,66 @@
 				{
 					find: [
 						/Increase damage to (\d+)% weapon damage/,
-						/Increase damage to (\d.+)% weapon damage/
+						/Increase damage to (\d.+)% weapon damage/,
+						/Strike a smaller area for (\d+)% weapon damage./,
+						/damage is increased to (\d+)% weapon damage/,
+						/Focus the seismic shockwaves along a narrow path to inflict (\d+)% weapon damage/,
+						/Increase thrown weapon damage to (\d+)% weapon damage/,
+						/Increase damage at the destination to (\d+)% weapon damage/,
+						/The Ancients inflict (\d+)% weapon damage/
 					], 
 					effect: 'weapon-damage',
 					remove: 'weapon-damage'
 				},
 				{
 					find: [
+						/Increase Fury gained to (\d+)./,
 						/Increases Fury gained to (\d+)/
 					],
 					effect: 'generate-fury', 
 					remove: 'generate-fury'
+				},
+				{
+					find: [
+						/Increase the Hatred generated to (\d+) per/
+					],
+					effect: 'generate-hatred',
+					remove: 'generate-hatred'
+				},
+				{
+					find: [
+						/Reduce Fury cost to (\d+) Fury./
+					],
+					effect: 'cost-fury',
+					remove: 'cost-fury'
+				},
+				{
+					find: [
+						/and reduces the cooldown to (\d+) seconds/
+					],
+					effect: 'cooldown',
+					remove: 'cooldown'
+				},
+				{
+					find: [
+						/Increase damage bonus to (\d+)%/
+					],
+					effect: 'bonus-damage',
+					remove: 'bonus-damage'
+				},
+				{
+					find: [
+						/Increases the Armor bonus to (\d+)%/
+					],
+					effect: 'bonus-armor',
+					remove: 'bonus-armor'
+				},
+				{
+					find: [
+						/Increases bonus to Dodge Chance to (\d+)%/
+					],
+					effect: 'bonus-dodge',
+					remove: 'bonus-dodge'
 				}
 			];
 			function determineEffects(skill) {
@@ -235,6 +400,10 @@
 				});
 				return skill;
 			}
+			var runeName = $(v.tooltip).find("strong").html();
+			if(runeName) {
+				newSkill.name = newSkill.name + " - " + runeName.trim();
+			}
 			$.each($(v.tooltip).find(".d3tt_primary_active"), function(k,v) {
 				var frag = $(v);
 				if(k == 0) {
@@ -245,13 +414,13 @@
 					// target.append("\r\tdesc: '" + clean + "',");					
 				}
 				if(k == 1){
-					var clean = frag.text().replace(/[\b\t\n\v\f\r]/g, function(val) { return map[val]; });
-					newSkill.rune = clean
+					var clean = frag.text().replace(/[\b\t\n\v\f\r]/g, function(val) { return map[val]; });					
+					newSkill.rune = clean;
 					// target.append("\r\trune: '" + clean + "',");										
 				}
 			});
-			if(newSkill.class == 'undefined') {
-				console.log("Unknown: " + html.text());				
+			if(newSkill.class == 'undefined' || typeof(newSkill.desc) == 'undefined') {
+				// console.log("Unknown: " + html.text());				
 			} else {
 				newSkill = determineEffects(newSkill);
 				skills[newSkill.class].push(newSkill);				

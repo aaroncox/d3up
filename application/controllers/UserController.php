@@ -144,7 +144,7 @@ class UserController extends Epic_Controller_Action
 							if($result == 'true') {
 								$sale->soldFor = (int) $this->getRequest()->getParam('completeSaleValue');
 								if($sale->method == "ah") {
-									$sale->soldForActual = $sale->soldFor * 1.15; // What the sale was before AH Cut									
+									
 								}
 								$sale->soldOn = time();
 								$sale->soldSuccess = true;

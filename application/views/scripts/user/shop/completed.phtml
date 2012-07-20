@@ -37,7 +37,7 @@
 								<img src="/images/goldcoin.png"> <?= $this->prettyStat($sale->soldFor) ?>
 							</span>
 							<span class="stat">
-								<?= $this->prettyStat($sale->soldForActual) ?> before AH cut
+								<?= $this->prettyStat($sale->soldFor / 0.85) ?> before AH cut
 							</span>
 						<? else: ?>
 						<? endif ?>
