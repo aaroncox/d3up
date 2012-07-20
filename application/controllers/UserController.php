@@ -165,7 +165,7 @@ class UserController extends Epic_Controller_Action
 							$sale = Epic_Mongo::newDoc('sale');
 							$sale->item = $item;
 							$sale->seller = $profile;
-							$sale->region = $profile->region;
+							$sale->region = (int) $profile->region;
 							$sale->method = $this->getRequest()->getParam('sellMethod');
 							switch($sale->method) {
 								case "ah":
