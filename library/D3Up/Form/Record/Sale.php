@@ -78,6 +78,7 @@ class D3Up_Form_Record_Sale extends Epic_Form
 		$this->setDefaults(array(
 			'bid' => $sale->bid,
 			'buyout' => $sale->buyout,
+			'soldFor' => $sale->soldFor,
 			'method' => $sale->method,
 		));
 		
