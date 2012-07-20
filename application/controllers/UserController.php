@@ -174,6 +174,7 @@ class UserController extends Epic_Controller_Action
 							$sale = Epic_Mongo::newDoc('sale');
 							$sale->item = $item;
 							$sale->seller = $profile;
+							$sale->region = $profile->region;
 							$sale->method = $this->getRequest()->getParam('sellMethod');
 							switch($sale->method) {
 								case "ah":
@@ -228,6 +229,10 @@ class UserController extends Epic_Controller_Action
 			$this->view->notLoggedIn = true;
 		}		
 		$query = array('_completed' => true);
+		if($profile) {
+			$query['region'] = (int) $profile->region;
+		}
+		// var_dump($query);
 		$sort = array('soldOn' => -1);
 		$this->view->allcompleted = Epic_Mongo::db('sale')->fetchAll($query, $sort);
 	}

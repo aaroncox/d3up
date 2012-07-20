@@ -30,7 +30,7 @@
 <div style="float: right">
 	<button id="sellButton" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only"><span class="ui-button-text">Create Sale</span></button>
 </div>
-<h2 class="table-header">My Shop</h2>
+<h2 class="table-header">My Shop @ Battle.net - <?= $this->regionDisplay($this->profile->region) ?></h2>
 <div class="ui-widget ui-widget-content ui-corner-all" style="margin-bottom: 5px; padding: 0 10px 10px; display: none">
 	<h3>We will show you online to other users until <span class='pos'><?= date("r", $this->profile->_lastSeen + 900) ?></span>.</h3>
 	Each time you refresh this page, we will update your "online" status shown on your auctions and show you online for 15 minutes. 
