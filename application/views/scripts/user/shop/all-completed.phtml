@@ -34,10 +34,10 @@
 					<div class='item-stat'>
 						<? if($sale->method == 'ah'): ?>
 							<span class='value'>
-								<img src="/images/goldcoin.png"> <?= $this->prettyStat($sale->soldFor) ?>
+								<img src="/images/goldcoin.png"> <?= $this->prettyStat($sale->soldFor / 0.85) ?>
 							</span>
 							<span class="stat">
-								<?= $this->prettyStat($sale->soldFor / 0.85) ?> before AH cut
+								<?= $this->prettyStat($sale->soldFor) ?> after AH cut
 							</span>
 						<? else: ?>
 						<? endif ?>
