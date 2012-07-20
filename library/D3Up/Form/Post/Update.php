@@ -11,7 +11,7 @@ class D3Up_Form_Post_Update extends Epic_Form
 
 	public function getUpdate()
 	{
-		if (!$this->_update instanceOf Epic_Mongo_Document_Record) {
+		if (!$this->_update instanceOf Epic_Mongo_Document_Post) {
 			$this->_update = Epic_Mongo::newDoc('update');			
 		}
 		return $this->_update;

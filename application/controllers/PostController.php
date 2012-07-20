@@ -20,6 +20,14 @@ class PostController extends Epic_Controller_Action
 			$this->_redirect("/user/login");
 		}
 	}	
+	public function editAction() {
+		$profile = Epic_Auth::getInstance()->getProfile();
+		if($profile && $profile->id == 2 && $type = $this->getRequest()->getParam('type')) {
+			$post = $this->getPost();
+			$this->view->form = $form = $post->getEditForm();
+			$this->_handleForm($form);
+		}
+	}
 	public function listAction() {
 		$this->view->type = $type = $this->getRequest()->getParam('type');
 		$query = array();
