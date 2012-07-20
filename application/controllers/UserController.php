@@ -166,6 +166,7 @@ class UserController extends Epic_Controller_Action
 							$query = array(
 								'seller' => $profile->createReference(),
 								'item.id' => $item->id,
+								'_soldSuccess' => array('$ne' => true)
 							);
 							$sale = Epic_Mongo::db('sale')->fetchOne($query);
 							if($sale) {
