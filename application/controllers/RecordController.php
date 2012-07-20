@@ -105,8 +105,16 @@ class RecordController extends Epic_Controller_Action
 				foreach($record->equipment as $slot => $item) {
 					$newItem = Epic_Mongo::newDoc('item');
 					$exportItem = $item->export();
-					unset($exportItem['id'], $exportItem['_id'], $exportItem['_createdBy'], $exportItem['_original']);
-					$newItem->setFromArray($exportItem);			
+					unset($exportItem['id'], $exportItem['_id'], $exportItem['_createdBy'], $exportItem['_original'], $exportItem['_type']);
+					if($exportItem['attrs']) {
+						$newItem->attrs->setFromArray($exportItem['attrs']);
+						unset($exportItem['attrs']);						
+					}
+					try {
+						$newItem->setFromArray($exportItem);									
+					} catch (Exception $e) {
+						echo "<pre>"; var_dump($exportItem); exit;						
+					}
 					$newItem->_original = $item;
 					$newItem->_createdBy = $profile;
 					$newItem->save();
