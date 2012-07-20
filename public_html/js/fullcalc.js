@@ -1244,7 +1244,7 @@ function calc(target, passiveSkills) {
 		slotStats.life = 36 + 4 * 60 + (60 - 25) * slotStats.vitality;
 		if(data.socketAttrs) {
 			if(data.socketAttrs['plus-life']) {
-				slotStats.life = slotStats.life * (1 + data.socketAttrs.plusLife);
+				slotStats.life = slotStats.life * (1 + (data.socketAttrs['plus-life'] / 100));
 			}
 		}
 		if(slotStats.armor) {
@@ -1254,10 +1254,11 @@ function calc(target, passiveSkills) {
 		// Do the EHP Calc
 		slotStats.mathAR = (slotStats.mathAllResist / (5 * parseInt(vsLevel) + slotStats.mathAllResist));
 		slotStats.mathDT = (1 - slotStats.mathAR) * (1 - slotStats.mathReduction);
-		if(slotStats.mathDT) {
+		// if(slotStats.mathDT) {
 			slotStats.mathEHP = slotStats.life / slotStats.mathDT;			
-		}
+		// }
 		slotEHP[slot] = slotStats.mathEHP;			
+		// console.log(slotEHP[slot], slotStats.mathAR, slotStats.mathDT, slotStats.mathAllResist, slotStats.life);
 		// if(data.stats) {
 		// 	$.each(data.stats, function(k,v) {
 		// 		switch(k) {
@@ -1283,6 +1284,8 @@ function calc(target, passiveSkills) {
 	$.each(slotEHP, function(k,v) {
 		if(v && v > 4721) {
 			ehpGear.append(statLabel(k + " EHP", v, 'round'));			
+		} else {
+			ehpGear.append(statLabel(k + " EHP", '~'));			
 		}
 	});
 	$("#stats-ehp-gear").append(ehpGear);
