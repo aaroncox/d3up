@@ -744,11 +744,16 @@ tr.compared > td:first-child {
 	margin:0 0 2px 0;  
 	padding:0;  
 }  
+.r2-Record-form .buttons,
 .zend_form input[type=submit],
 .zend_form .buttons {
 	width: 200px;
-	margin: 0 auto;
+	margin: 10px auto;
 	text-align: center;
+}
+.r2-Record-form .buttons input {
+	margin-top: 50px;
+	width: 350px;
 }
 
 .zend_form .required:after {
