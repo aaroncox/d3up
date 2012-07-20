@@ -1,7 +1,8 @@
 <div class="d3up-post ui-widget ui-widget-content ui-corner-all" id="<?= $this->post->_type ?>-<?= $this->post->id ?>">
 	<div class="meta"><?= $this->timeAgo($this->post->_created) ?></div>
-	<h3><a href="/update/<?= $this->post->id ?>#disqus_thread">Version <?= $this->post->version ?></a></h3>
+	<h3><a href="/update/<?= $this->post->id ?>">Version <?= $this->post->version ?></a></h3>
 	<div class="post-body">
 		<?= $this->post->body ?>
 	</div>
+	<p style="padding: 0 10px; text-align: right"><a href="/update/<?= $this->post->id ?>#disqus_thread">Loading Comments</a></p>
 </div>
