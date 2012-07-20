@@ -62,7 +62,6 @@ class D3Up_Form_Post_Update extends Epic_Form
 	
 	public function save() {
 		$update = $this->getUpdate();
-		$update = Epic_Mongo::newDoc('update');
 		$update->version = $this->version->getValue();
 		$update->source = $this->source->getValue();
 		$update->body = $this->source->getRenderedValue();
