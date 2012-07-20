@@ -1,16 +1,18 @@
 <table id="user-complete" class="d3up-table">
 	<thead>
 		<tr>
-			<th>Item</th>
-			<th>Results</th>
-			<th>Sales Method</th>
-			<th>Sale Info</th>
-			<th>Sold For</th>
 			<th>Date</th>
+			<th>Item</th>
+			<th>Result</th>
+			<th>Where</th>
+			<th>Bid</th>
+			<th>Buyout</th>
+			<th>Sold For</th>
 	</thead>
 	<tbody>
-		<? foreach($this->completed as $sale): ?>
+		<? foreach($this->allcompleted as $sale): ?>
 			<tr class="item-row" id="sale-<?= $sale->id ?>">
+				<td class="data"><?= $this->timeAgo($sale->soldOn) ?></td>
 				<td class='name'><?= $this->saleLink($sale) ?></td>
 				<td class="data">
 					<? if($sale->soldSuccess): ?>
@@ -25,8 +27,14 @@
 				<td class='data'>
 					<img src="/images/goldcoin.png"> 
 					<? if($sale->method == 'ah'): ?>
-						<?= $this->prettyStat($sale->buyout) ?> bin / 
-						<?= $this->prettyStat($sale->bid) ?> bid
+						<?= $this->prettyStat($sale->bid) ?>
+					<? else: ?>
+					<? endif ?>
+				</td>
+				<td class='data'>
+					<img src="/images/goldcoin.png"> 
+					<? if($sale->method == 'ah'): ?>
+						<?= $this->prettyStat($sale->buyout) ?>
 					<? else: ?>
 					<? endif ?>
 				</td>
@@ -43,7 +51,6 @@
 						<? endif ?>
 					</div>
 				</td>
-				<td class="data"><?= $this->timeAgo($sale->soldOn) ?></td>
 				<td class="controls"><?= $this->mLink($sale, array('action' => 'edit', 'text' => 'Edit')) ?></td>
 			</tr>
 		<? endforeach ?>

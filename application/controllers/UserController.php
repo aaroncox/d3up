@@ -224,10 +224,11 @@ class UserController extends Epic_Controller_Action
 			$this->view->completed = Epic_Mongo::db('sale')->fetchAll($query, $sort);
 			// Now get all items that've completed
 			unset($query['seller']);
-			$query['_completed'] = true;
-			$this->view->allcompleted = Epic_Mongo::db('sale')->fetchAll($query, $sort);
 		} else {
 			$this->view->notLoggedIn = true;
 		}		
+		$query = array('_completed' => true);
+		$sort = array('soldOn' => -1);
+		$this->view->allcompleted = Epic_Mongo::db('sale')->fetchAll($query, $sort);
 	}
 } // END class UserController extends Epic_Controller_Action

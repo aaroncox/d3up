@@ -297,7 +297,7 @@ ul.sub_menu > li.witch-doctor {
 .d3up-table td {
 	padding: 5px;
 	border: 1px solid #111;
-	line-height: 32px;
+	line-height: 42px;
 }
 .d3up-table td.name {
 	width: 350px;
@@ -306,7 +306,7 @@ ul.sub_menu > li.witch-doctor {
 	display: block;
 }
 .d3up-table td.data {
-	line-height: 32px;	
+	text-align: center;
 }
 .d3up-table td.description {
 	max-width: 380px;

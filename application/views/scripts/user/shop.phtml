@@ -1,8 +1,22 @@
 <? if($this->notLoggedIn): ?>
 	<h1 class="table-header">My Shop</h1>
-	<div class="ui-widget ui-corner-all ui-widget-content ui-helper-clearfix" style="padding: 0 20px">
-		<?= $this->render("./user/shop/help.phtml") ?>
+	<div class="user-shop">
+		<ul>
+			<li><a href="#tab-all-complete">All Completed Sales</a></li>
+			<li><a href="#tab-help">What is this?</a></li>
+		</ul>
+		<div id="tab-all-complete">
+			<?= $this->render("./user/shop/all-completed.phtml") ?>
+		</div>
+		<div id="tab-help">
+			<?= $this->render("./user/shop/help.phtml") ?>
+		</div>
 	</div>
+	<script type="text/javascript">
+		$(function() {
+			$(".user-shop").tabs();			
+		});
+	</script>
 <? else: ?>
 	<? if($this->form): ?>
 	<div class="create-form ui-widget ui-widget-content ui-corner-all">
