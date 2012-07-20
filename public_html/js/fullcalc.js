@@ -1162,12 +1162,12 @@ function calc(target, passiveSkills) {
 			mathARPoison = (mathResists.poison / (5 * vsLevel + mathResists.poison)),
 			mathARArcane = (mathResists.arcane / (5 * vsLevel + mathResists.arcane)),
 			// Calculate EHP For each resistance individually
-			mathEHPPhysical = mathLifeTotal / ((1 - mathAR) * (1 - mathARPhysical)),
-			mathEHPCold = mathLifeTotal / ((1 - mathAR) * (1 - mathARCold)),
-			mathEHPFire = mathLifeTotal / ((1 - mathAR) * (1 - mathARFire)),
-			mathEHPLightning = mathLifeTotal / ((1 - mathAR) * (1 - mathARLightning)),
-			mathEHPPoison = mathLifeTotal / ((1 - mathAR) * (1 - mathARPoison)),
-			mathEHPArcane = mathLifeTotal / ((1 - mathAR) * (1 - mathARArcane));
+			mathEHPPhysical = mathLifeTotal / ((1 - mathDR) * (1 - mathARPhysical)),
+			mathEHPCold = mathLifeTotal / ((1 - mathDR) * (1 - mathARCold)),
+			mathEHPFire = mathLifeTotal / ((1 - mathDR) * (1 - mathARFire)),
+			mathEHPLightning = mathLifeTotal / ((1 - mathDR) * (1 - mathARLightning)),
+			mathEHPPoison = mathLifeTotal / ((1 - mathDR) * (1 - mathARPoison)),
+			mathEHPArcane = mathLifeTotal / ((1 - mathDR) * (1 - mathARArcane));
 	// Are we a Monk or Barbarian?
 	if(heroClass == "monk" || heroClass == "barbarian") {
 		// console.log("Adding monk/barb bonus");
