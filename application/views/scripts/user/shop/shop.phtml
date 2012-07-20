@@ -9,7 +9,7 @@
 	<tbody>
 		<? foreach($this->forSale as $sale): ?>
 			<tr class="item-row" id="sale-<?= $sale->id ?>">
-				<td class="name"><?= $this->saleLink($sale) ?></td>
+				<td class='name'><?= $this->itemLink($sale->item) ?></td>
 				<td class="data">
 					<?= $this->methodCleaner($sale->method) ?>
 				</td>
