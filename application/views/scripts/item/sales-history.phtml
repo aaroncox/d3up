@@ -1,24 +1,10 @@
 <? $profile = Epic_Auth::getInstance()->getProfile(); ?>
 <? if(!$this->disableScripts): ?>
 	<?
-		$this->headTitle('Item DB'); 
-		if($profile) {
-			$query = array(
-				'_createdBy' => $profile->createReference()
-			);
-			$builds = Epic_Mongo::db('build')->fetchAll($query);
-		}
+		$this->headTitle('Item Sales History'); 
 	?>
 	<div class="item-list">
 		<div class="filters">
-			<? if($profile): ?>
-			<select id="buildSelect" data-placeholder="Compare Items against build...">
-				<option value=""></option>
-				<? foreach($builds as $build): ?>
-					<option value="<?= $build->id ?>"><?= $build->name ?></option>
-				<? endforeach ?>
-			</select>
-			<? endif; ?>
 			<select data-placeholder="Filter by Slot" id="slotType" name="slotType" style="width: 150px">
 		    <option label="" value=""></option>
 				<? foreach(D3Up_Mongo_Record_Item::$slotTypeMap as $slot => $type): ?>
@@ -82,7 +68,7 @@
 		    <option label="Shield" value="shield">Shield</option>
 			</select>
 		</div>
-		<h2>Bazaar - Items for Sale</h2>
+		<h2 class="table-header">Global Item Sales History</h2>
 		<table id="recent-items" class="bazaar d3up-table">
 			<thead>
 				<tr>
@@ -209,12 +195,6 @@
 							<option label="Increases Spectral Blade damage" value="wz-spectral-blade">Increases Spectral Blade damage</option>
 						</select>
 						<input name="maxPrice" id="maxPrice" placeholder="Max Price"/>
-						<select name="sellMethod" id="sellMethod" data-placeholder="Sale Type">
-							<option value=""></option>
-							<option value="flat">Flat Price</option>
-							<option value="bid">Bid/Buyout</option>
-							<option value="offer">Taking Offers</option>
-						</select>
 					</td>
 				</tr>
 			</thead>
@@ -242,6 +222,17 @@
 																									'limit' => $this->limit,
 																								)); ?>
 					</td>
+				</tr>
+				<tr>
+					<th>Item</th>
+					<th>S1</th>
+					<th>S2</th>
+					<th>S3</th>
+					<th>S4</th>
+					<th>S5</th>
+					<th>S6</th>
+					<th>Region</th>
+					<th>Sold For</th>
 				</tr>
 				<? foreach($this->items as $sale): ?>
 				<? $item = $sale->item ?>
@@ -302,72 +293,34 @@
 									$val += $socketAttrs[$k];
 								}
 							?>
-							<? if($count > 4) { continue; } ?>
+							<? if($count > 6) { continue; } ?>
 							<td><?= $this->itemStat($k, $val) ?></td>
 						<? endforeach ?>
 						<? if($count < 6): ?>
 							<? for($i = $count; $i < 6; $i++): ?>
-								<td>&nbsp;</td>
+								<td class='data'>&nbsp;</td>
 							<? endfor ?>
 						<? endif ?>
-						<? if($profile): ?>
-						<td>
+						<td class='data'>
 							<div class="item-stat">
-								<? if($sale->method == 'flat'): ?>						
-									<span class="value">
-										<img src="/images/goldcoin.png"> <?= $this->prettyStat($sale->value) ?>
+								<span class="stat" style="padding: 10px 0">
+									<?= $this->regionDisplay($sale->region)?>
+								</span>
+							</div>
+						</td>
+						<td class="data"> 
+							<div class='item-stat'>
+								<? if($sale->method == 'ah'): ?>
+									<span class='value'>
+										<img src="/images/goldcoin.png"> <?= $this->prettyStat($sale->soldFor / 0.85) ?>
 									</span>
 									<span class="stat">
-										Flat Price
-									</span>									
-								<? endif ?>
-								<? if($sale->method == 'bid'): ?>
-									<span class="value">
-										<img src="/images/goldcoin.png"> <?= $this->prettyStat($sale->value) ?>
+										<?= $this->timeAgo($sale->soldOn) ?>
 									</span>
-									<span class="stat">
-										Current Bid
-									</span>									
+								<? else: ?>
 								<? endif ?>
 							</div>
 						</td>
-						<td>
-							<div class="item-stat">
-								<span class="value">
-									<? if($sale->method == 'offer'): ?>
-										<button data-id="<?= $sale->id ?>" style="padding: 0px 10px" class="btn-complete ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only">Offer</button>
-									<? endif ?>
-									<? if($sale->method == 'flat'): ?>
-										<a data-id="<?= $sale->id ?>" style="padding: 0px 10px" class="btn-complete ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" href="/sale/<?= $sale->id?>/purchase">Buy</a>
-									<? endif ?>
-									<? if($sale->method == 'bid'): ?>
-										<button data-id="<?= $sale->id ?>" style="padding: 0px 10px" class="btn-complete ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only">Bid</button>
-									<? endif ?>
-								</span>
-								<span class="stat">
-									<? if(time() - $sale->seller->_lastSeen <= 900): ?>
-										<span class='pos' title="Last Seen: <?= date("r", $sale->seller->_lastSeen) ?>">Seller Online</span>
-									<? else: ?>
-										<span class='neg' title="Last Seen: <?= date("r", $sale->seller->_lastSeen) ?>">Seller Offline</span>
-									<? endif ?>									
-								</span>
-							</div>
-						</td>
-						<td>
-							<div class="item-stat">
-								<span class="value">
-									~
-								</span>
-								<span class="stat">
-									Seller's Rating
-								</span>
-							</div>
-						</td>
-						<td class='controls'>
-							<!-- <a data-item="<?= $item->id ?>" style="padding: 0px 10px" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" href="/i/<?= $item->id ?>/copy">Copy</a> -->
-							<a data-item="<?= $item->id ?>" style="padding: 0px 10px" class="compareThis ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only">Compare</a>
-						</td>
-					<? endif ?>
 					</tr>
 				<? endforeach; ?>
 				<tr>
@@ -415,6 +368,5 @@
 		} ?>
 	</script>
 	<? endif ?>
-	<script type="text/javascript" src="/js/calc.js"></script>
 	<script type="text/javascript" src="/js/browser.js"></script>
 <? endif ?>

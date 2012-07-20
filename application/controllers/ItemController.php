@@ -127,7 +127,61 @@ class ItemController extends Epic_Controller_Action
 		}
 		return false;
 	}
-	
+	public function salesHistoryAction() {
+		$query = array();
+		if($slot = $this->getRequest()->getParam('slot')) {
+			$possible = D3Up_Mongo_Record_Item::$slotTypeMap;
+			$query['item.type']['$in'] = $possible[$slot];
+			$this->view->slotType = $slot;
+		}
+		if($type = $this->getRequest()->getParam('type')) {
+			$this->view->itemType = $query['item.type'] = $type;
+		}
+		$query['method'] = 'ah';
+		$query['soldFor'] = array('$exists' => true);
+		$query['soldOn'] = array('$exists' => true);
+		if($limit = $this->getRequest()->getParam('limit')) {
+			$this->view->limit = $query['soldFor']['$lte'] = (int) $limit * 0.85;
+		}
+		// echo "<pre>"; 
+		// var_dump($query); exit;
+		$sort = array('soldOn' => -1);
+		if($sortAttr = $this->getRequest()->getParam('sort')) {
+			$sort = array();
+			$sortAttrs = explode(",", $sortAttr);
+			foreach($sortAttrs as $k => $v) {
+				switch($v) {
+					// Special Cases
+					case "base_armor":
+						$key = 'item.stats.armor';
+						break;
+					case "base_dps":
+						$key = 'item.stats.dps';
+						break;
+					default:
+						$key = 'item.attrs.'.$v;
+						break;
+				}
+				$query[$key] = array(
+					'$ne' => '',
+					'$exists' => true
+				);				
+				$sort[$key] = -1;
+			}
+			$sort['soldOn'] = -1;
+			$this->view->sortAttrs = $sortAttrs;
+		} else {
+			$sort['_created'] = -1;
+		}
+		$items = Epic_Mongo::db('sale')->fetchAll($query, $sort); 
+		$paginator = Zend_Paginator::factory($items);
+		$paginator->setCurrentPageNumber($this->getRequest()->getParam('page', 1))->setItemCountPerPage(20)->setPageRange(3);
+		$this->view->items = $paginator;
+		if($this->_request->isXmlHttpRequest()) {
+			$this->view->disableScripts = true;
+			$this->_helper->layout->disableLayout();
+		}		
+	}
 	public function bazaarAction() {
 		$query = array();
 		if($slot = $this->getRequest()->getParam('slot')) {

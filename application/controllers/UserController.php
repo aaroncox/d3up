@@ -227,4 +227,26 @@ class UserController extends Epic_Controller_Action
 		$sort = array('soldOn' => -1);
 		$this->view->allcompleted = Epic_Mongo::db('sale')->fetchAll($query, $sort);
 	}
+	public function reportsAction() {
+		// phpinfo(); exit;
+		$this->view->profile = $profile = Epic_Auth::getInstance()->getProfile();
+		$query = array(
+			'seller' => $profile->createReference(),
+			'soldFor' => array('$exists' => true),
+			'soldOn' => array('$exists' => true),
+		);
+		$completed = $this->view->completed = Epic_Mongo::db('sale')->fetchAll($query);
+		$json = array();
+		foreach($completed as $complete) {
+			$date = date("Y-m-d", $complete->soldOn);
+			if(isset($json[$date])) {
+				$json[$date] += $complete->soldFor;				
+			} else {
+				$json[$date] = $complete->soldFor;								
+			}
+		}
+		$this->view->json = array(
+			'completed' => json_encode($json)
+		);
+	}
 } // END class UserController extends Epic_Controller_Action
