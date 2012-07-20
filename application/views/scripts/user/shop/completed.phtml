@@ -10,7 +10,7 @@
 			<th>Sold For</th>
 	</thead>
 	<tbody>
-		<? foreach($this->allcompleted as $sale): ?>
+		<? foreach($this->completed as $sale): ?>
 			<tr class="item-row" id="sale-<?= $sale->id ?>">
 				<td class="data"><?= $this->timeAgo($sale->soldOn) ?></td>
 				<td class='name'><?= $this->saleLink($sale) ?></td>
