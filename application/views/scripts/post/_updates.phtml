@@ -1,9 +1,14 @@
 <div class='ui-widget ui-widget-content ui-corner-all'>
-	<? $posts = Epic_Mongo::db('update')->fetchAll(array(), array("_created" => -1), 1)?>
-	<? foreach($posts as $p): ?>
-	<h3>Update V<?= $p->version ?></h3>
-	<p style="font-size: 0.75em"><?= $this->timeAgo($p->_created) ?></p>
-	<?= substr($p->body, 0, 150) ?> <span style="color: #777">[more...]</span>
-	<p><a href="/update/<?= $p->id ?>">Read it All</a></p>
+	<h3>Site Updates</h3>
+	<p>Patch notes, updates, news...</p>
+	<? $posts = Epic_Mongo::db('update')->fetchAll(array(), array("_created" => -1), 5)?>
+	<ul style="padding: 10px 0; margin: 0; list-style: none">
+		<? foreach($posts as $p): ?>
+			<li>
+				<a href="/update/<?= $p->id ?>">V0.<?= $p->version ?></a>
+				<span style="font-size: 11px">(<?= $this->timeAgo($p->_created)?>)</span>
+			</li>
 	<? endforeach ?>
+	</ul>
+	
 </div>
