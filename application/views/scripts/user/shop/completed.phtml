@@ -44,6 +44,7 @@
 					</div>
 				</td>
 				<td class="data"><?= $this->timeAgo($sale->soldOn) ?></td>
+				<td class="controls"><?= $this->mLink($sale, array('action' => 'edit', 'text' => 'Edit')) ?></td>
 			</tr>
 		<? endforeach ?>
 	</tbody>

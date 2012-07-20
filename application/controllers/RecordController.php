@@ -13,7 +13,7 @@ class RecordController extends Epic_Controller_Action
 	public function indexAction() {		
 	}
 	public function editAction() {
-		$record = $this->getRequest()->getParam('record');
+		$record = $this->getRecord();
 		switch($record->_type) {
 			case "item":
 				$this->_redirect("/item/edit/id/".$record->id);
@@ -21,11 +21,22 @@ class RecordController extends Epic_Controller_Action
 			case "build":
 				$this->_redirect("/build/edit/id/".$record->id);
 				break;
+			case "sale":
+				$profile = Epic_Auth::getInstance()->getProfile();
+				if($profile->createReference() != $record->seller->createReference()) {
+					throw new Exception("This is not your ".$record->_type);
+				}
+				$this->view->form = $form = $record->getEditForm();
+				$this->_handleForm($form);
+				break;
 		}
-		var_dump($record); exit;
 	}
 	public function deleteAction() {
 		$record = $this->getRecord();
+		$profile = Epic_Auth::getInstance()->getProfile();
+		if($profile->createReference() != $record->_createdBy->createReference()) {
+			throw new Exception("This is not your ".$record->_type);
+		}
 		if($confirm = $this->getRequest()->getParam("confirm")) {
 			unset($record->_createdBy);
 			$type = $record->_type;

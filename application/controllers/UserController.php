@@ -212,14 +212,18 @@ class UserController extends Epic_Controller_Action
 			// Get what items you're currently selling
 			$query = array(
 				'seller' => $profile->createReference(),
+				'_cancelled' => array('$exists' => false),
+				'_completed' => array('$exists' => false),
 			);
 			$this->view->forSale = Epic_Mongo::db('sale')->fetchAll($query);
+			// Now get items that you've completed
 			$query['_completed'] = true;
 			$sort = array(
 				'soldOn' => -1,
 			);
 			$this->view->completed = Epic_Mongo::db('sale')->fetchAll($query, $sort);
-			$query = array();
+			// Now get all items that've completed
+			unset($query['seller']);
 			$query['_completed'] = true;
 			$this->view->allcompleted = Epic_Mongo::db('sale')->fetchAll($query, $sort);
 		} else {

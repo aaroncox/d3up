@@ -1045,7 +1045,7 @@ function calc(target, passiveSkills) {
 			// console.log("Critical Hit Damage = " + mathCriticalHitDamage);
 			// console.log("Primary Attribute = " + primaryAttr);
 			mathSpeedAdditive = Math.round(mathSpeedAdditive * 1000) / 1000;
-			console.log(stats['speed'], stats['speed-oh'], mathSpeedAdditive);
+			// console.log(stats['speed'], stats['speed-oh'], mathSpeedAdditive);
 			// stats['speed'] = 1.2;
 			// stats['speed-oh'] = 1.3;
 			// mathSpeedAdditive = 0.14;
@@ -1064,7 +1064,7 @@ function calc(target, passiveSkills) {
 			var orig = (stats['speed'] + stats['speed-oh']) / 2, 
 					newMath = 1/((Math.round(stats['speed'] * 1024)/1024) * (1 + mathSpeedAdditive)) + 1/((Math.round(stats['speed-oh'] * 1024) / 1024) * (1 + mathSpeedAdditive));
 			
-			console.log(orig, mathC, mathSpeedAdditive);
+			// console.log(orig, mathC, mathSpeedAdditive);
 			
 			// console.log(mathDamage.min,mathDamage.max,mathDamageOH.min, mathDamageOH.max, mathDamageAddMin, mathDamageAddMax);
 			// console.log(mathS, mathC, mathR, mathA, mathM);
@@ -1170,15 +1170,16 @@ function calc(target, passiveSkills) {
 			mathEHPArcane = mathLifeTotal / ((1 - mathAR) * (1 - mathARArcane));
 	// Are we a Monk or Barbarian?
 	if(heroClass == "monk" || heroClass == "barbarian") {
+		// console.log("Adding monk/barb bonus");
 		// Add the Passive 30% Damage Reduction those two classes get
 		mathDT = (1 - mathAR) * (1 - mathDR) * (1 - 0.3);
 		// Recalculate the individual resistance EHPs including the 30% Reduction
-		var mathEHPPhysical = mathLifeTotal / ((1 - mathAR) * (1 - mathARPhysical) * (1 - 0.3)),
-				mathEHPCold = mathLifeTotal / ((1 - mathAR) * (1 - mathARCold) * (1 - 0.3)),
-				mathEHPFire = mathLifeTotal / ((1 - mathAR) * (1 - mathARFire) * (1 - 0.3)),
-				mathEHPLightning = mathLifeTotal / ((1 - mathAR) * (1 - mathARLightning) * (1 - 0.3)),
-				mathEHPPoison = mathLifeTotal / ((1 - mathAR) * (1 - mathARPoison) * (1 - 0.3)),
-				mathEHPArcane = mathLifeTotal / ((1 - mathAR) * (1 - mathARArcane) * (1 - 0.3));						
+		mathEHPPhysical = mathLifeTotal / ((1 - mathDR) * (1 - mathARPhysical) * (1 - 0.3));
+		mathEHPCold = mathLifeTotal / ((1 - mathDR) * (1 - mathARCold) * (1 - 0.3));
+		mathEHPFire = mathLifeTotal / ((1 - mathDR) * (1 - mathARFire) * (1 - 0.3));
+		mathEHPLightning = mathLifeTotal / ((1 - mathDR) * (1 - mathARLightning) * (1 - 0.3));
+		mathEHPPoison = mathLifeTotal / ((1 - mathDR) * (1 - mathARPoison) * (1 - 0.3));
+		mathEHPArcane = mathLifeTotal / ((1 - mathDR) * (1 - mathARArcane) * (1 - 0.3));						
 	}	
 	// Finally Calculate the EHP
 	var	mathEHP = mathLifeTotal / mathDT,

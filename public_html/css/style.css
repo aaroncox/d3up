@@ -696,3 +696,77 @@ tr.compared > td:first-child {
 	width: 60px;
 	margin: 0 5px;
 }
+/*Form Styles */
+
+.zend_form {  
+	margin:5px auto;  
+	padding:0;  
+	overflow:auto;  
+}  
+
+.zend_form dt{  
+	padding:0;  
+	clear:both;  
+	width:25%;  
+	float:left;  
+	text-align:right;  
+	margin:10px 15px 5px 0;  
+	line-height: 1.4em;
+}  
+
+.zend_form dd {  
+	padding:0;  
+	float:left;  
+	width:70%;  
+	margin:5px 2px 5px 0;  
+	line-height: 2em;
+}  
+
+#content .zend_form dd p {
+	margin: 0;
+}
+
+.zend_form fieldset {
+	border: 1px solid #ccc;
+	padding: 10px;
+	margin: 20px 10px;
+}
+
+.zend_form fieldset legend {
+	font-weight: bold;
+	text-transform: uppercase;
+}
+
+.zend_form input, 
+.zend_form textarea,
+.zend_form select {  
+	width: 400px;
+	margin:0 0 2px 0;  
+	padding:0;  
+}  
+.zend_form input[type=submit],
+.zend_form .buttons {
+	width: 200px;
+	margin: 0 auto;
+	text-align: center;
+}
+
+.zend_form .required:after {
+	content:' *'
+}  
+#content .zend_form li,
+#content .zend_form ul {
+	font-family: Verdana,Arial,Helvetica,sans-serif;
+	font-size: 14px;
+	font-weight: normal;
+	margin: 0;
+	padding: 2px 5px;	
+}
+#content .zend_form ul.errors {
+	padding: 0;
+	width: 400px;
+	list-style: none;
+}
+#content .zend_form ul.errors li {
+	color: #f00;
+}

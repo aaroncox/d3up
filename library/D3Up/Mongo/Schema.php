@@ -10,7 +10,7 @@
  **/
 class D3Up_Mongo_Schema extends Epic_Mongo_Schema {
 	protected $_version = 3;
-  protected $_tag = 'd3up';
+  	protected $_tag = 'd3up';
 	protected $_classMap = array(
 		'record' => array(
 			'item' => 'D3Up_Mongo_Record_Item',
