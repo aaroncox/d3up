@@ -162,11 +162,6 @@ class UserController extends Epic_Controller_Action
 								'id' => (int) $this->getRequest()->getParam('itemId'),
 							);
 							$item = Epic_Mongo::db('item')->fetchOne($query);
-							// See if we're already selling this item...
-							$query = array(
-								'seller' => $profile->createReference(),
-								'item.id' => $item->id,
-							);
 							$sale = Epic_Mongo::newDoc('sale');
 							$sale->item = $item;
 							$sale->seller = $profile;
