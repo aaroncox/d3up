@@ -198,10 +198,14 @@ ul.sub_menu > li.witch-doctor {
 }
 .controls {
 	text-align: center;
-	padding: 20px;
+	float: right;
 }
 .controls input {
 	padding: 10px;
+}
+#skill-display {
+	display: none;
+	background: #111;
 }
 #sys-message {
 	text-align: center;
@@ -223,15 +227,18 @@ ul.sub_menu > li.witch-doctor {
 .skill-highlight {
 	color: #0F0;
 }
+#active-display,
 #passive-display {
 	list-style: none;
-	margin: 20px 10px;
-	padding: 0;
+	padding: 0 20px;
+	margin: 5px 0 0;
+	display: inline-block;
 }
+#active-display > li,
 #passive-display > li {
-	border: 1px solid #777;
-	padding: 5px;
-	margin: 10px 0;
+	display: inline-block;
+	float: left;
+	padding: 0 15px;
 }
 .calc-stats .resist-specific {
 }

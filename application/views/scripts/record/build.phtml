@@ -5,33 +5,48 @@
 	$myBuild = false;
 	if($profile && $this->record->_createdBy && $profile->createReference() == $this->record->_createdBy->createReference()) {
 		$myBuild = true;
-	}
-	
+	}	
 ?>
-<div class="build-header ui-widget ui-widget-content ui-corner-all">
-	<? if($profile && $this->record->_createdBy): ?>
-	<div class="controls">
-		<? if($profile->createReference() == $this->record->_createdBy->createReference()): ?>
-			<a href="/b/<?= $this->record->id ?>/edit" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only gear-change"><span class="ui-button-text">Edit</span></a>			
-		<? else: ?>
-			<a href="/b/<?= $this->record->id ?>/copy" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only gear-change"><span class="ui-button-text">Copy this Build</span></a>
-		<? endif; ?>
-	</div>
+<script type="text/javascript">
+<? if($this->record->passives && $this->record->passives != "null" && count($this->record->passives)): ?>
+var activePassives = <?= json_encode($this->record->passives->export()); ?>;
+<? else: ?>
+var activePassives = [];
+<? endif; ?>
+<? if($this->record->actives && $this->record->actives != "null" && count($this->record->actives)): ?>
+var activeActives = <?= json_encode($this->record->actives->export()); ?>;
+<? else: ?>
+var activeActives = [];
+<? endif; ?>
+</script>
+
+<? if($profile && $this->record->_createdBy): ?>
+<div class="controls">
+	<? if($profile->createReference() == $this->record->_createdBy->createReference()): ?>
+		<a href="/b/<?= $this->record->id ?>/edit" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only gear-change"><span class="ui-button-text">Edit</span></a>			
+	<? else: ?>
+		<a href="/b/<?= $this->record->id ?>/copy" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only gear-change"><span class="ui-button-text">Copy this Build</span></a>
 	<? endif; ?>
-	<h2>
-		<?= $this->record->name ?> (<?= ucwords(str_replace("-", " ", $this->record->class)) ?>)
-	</h2>
-	<? if($this->record->_original->id): ?>
-		<p>Based on the original build: <a href="/b/<?= $this->record->_original->id ?>"><?= $this->record->_original->name ?> (<?= ucwords(str_replace("-", " ", $this->record->_original->class)) ?>)</a></p>
-	<? endif; ?>
-	<? if($this->record->description): ?>
-		<p><?= $this->record->description ?></p>
-	<? endif ?>
 </div>
+<? endif; ?>
+
+<h2 class="table-header">
+	<?= $this->record->name ?> (<?= ucwords(str_replace("-", " ", $this->record->class)) ?>)
+</h2>
+
+<div id="skill-display" class="build-header ui-widget ui-corner-all" >
+	<ul id="active-display">
+		<li>No Passives Selected</li>
+	</ul>
+	<ul id="passive-display">
+		<li>No Passives Selected</li>
+	</ul>
+</div>
+
 <div id="character" class="inline-flow" data-class="<?= $this->record->class ?>" <? if($myBuild) { echo "data-owner='true'"; } ?>>
 	<ul>
 		<li><a href="#build-gear">Gear</a></li>
-		<li><a href="#build-skills">Skills</a></li>
+			<li><a href="#build-skills" <?= (!$myBuild) ? "style='display: none'" : ""?>>Skills</a></li>
 		<? if($myBuild): ?>
 			<li><a href="#build-compare">Compare</a></li>
 		<? endif ?>
@@ -40,23 +55,11 @@
 		<? endif ?>
 		<!-- <li><a href="#">Comments</a></li> -->
 	</ul>
-	<div id="build-skills">
-		<script type="text/javascript">
-			<? if($this->record->passives && $this->record->passives != "null" && count($this->record->passives)): ?>
-				var activePassives = <?= json_encode($this->record->passives->export()); ?>
-			<? else: ?>
-				var activePassives = [];
-			<? endif; ?>
-		</script>
-		<? if($myBuild): ?>
-			<p>Please select the 3 passive skills you're using:</p>
-		<? else: ?>
-			<p style="color: #c80000">Note: You can use this to toggle passives on and off, but it will not save.</p>
-		<? endif; ?>
-		<select id="passives" multiple="multiple" name="passives[]" style="width: 450px"></select>
-		<ul id="passive-display">
-			<li>No Passives Detected</li>
-		</ul>
+	<div id="build-skills" <?= (!$myBuild) ? "style='display: none'" : ""?>>
+			<h3>Please select the 3 passive skills you're using:</h3>
+			<select id="passives" multiple="multiple" name="passives[]" style="width: 450px"></select>
+			<h3>Please select the 6 abilities/skills you're using:</h3>
+			<select id="actives" multiple="multiple" name="actives[]" style="width: 450px"></select>
 	</div>
 	<? if($this->record->guide || $myBuild): ?>
 		<div id="build-guide">
@@ -209,6 +212,7 @@
 	</fieldset>
 	</form>
 </div>
+<script type="text/javascript" src="/js/fullskills.js"></script>
 <script type="text/javascript" src="/js/fullcalc.js"></script>
 <script type="text/javascript">
 calc(".equipped a");
@@ -247,4 +251,32 @@ $(".comment").each(function() {
 		});
 	});
 });
+$("#active-display, #passive-display").find("li img").each(bindSkilltip);
+function bindSkilltip() {
+	var tooltip = $("<div class='d3up-tooltip'/>");
+	var container = $("<div class='d3-item'/>"),
+			header = $("<div class='top'/>"),
+			content = $("<div class='item'/>"),
+			footer = $("<div class='bottom'/>");
+	header.html($("<p>").append($(this).data("name")));
+	content.html($("<p>").append($(this).data("tooltip")));
+	container.append(header, content, footer);
+	$(this).mouseover(function() {
+		var $this = $(this);
+		tooltip.css({
+				position: 'absolute'
+		});
+		tooltip.empty().append(container);
+		var position = {
+			of: $this,
+			at: "right top",
+			my: "left top",
+			offset: "0 10",
+			collision: "flip"
+		};
+		tooltip.appendTo("body").position(position);
+	}).mouseout(function() {
+		tooltip.empty();
+	});
+}
 </script>

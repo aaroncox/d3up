@@ -14,12 +14,12 @@
 			'templar': [],
 			'scoundrel': []
 		};
-		var map = {"\b":" ", "\t":" ", "\n":" ", "\v":" ", "\f":" ", "\r":" "};
+		var map = {"\b":" ", "\t":" ", "\n":" ", "\v":" ", "\f":" ", "\r":" ", "'": "\\'"};
 		$.each(tooltips, function(k,v) {
 			var newSkill = {};
 			// target.append("\r" + v.slug + ": {");
 			var html = $(v.tooltip);
-			newSkill.name = html.find("#d3tt_nameset").html();
+			newSkill.name = html.find("#d3tt_nameset").html().replace(/[\b\t\n\v\f\r']/g, function(val) { return map[val]; });
 			newSkill.class = 'undefined';
 			if(html.text().indexOf("Wizard") > 0) {
 				newSkill.class = 'wizard';
@@ -48,7 +48,7 @@
 			if(newSkill.class == 'undefined') {
 				console.log(html.text());				
 			}
-			newSkill.slug = v.slug;
+			newSkill.slug = v.slug.replace(/[\b\t\n\v\f\r']/g, function(val) { return map[val]; });
 			newSkill.icon = $(v.tooltip).find("img").attr("src");
 			var effectMap = [
 				{
@@ -62,6 +62,12 @@
 						/Cost: (\d+) Hatred/
 					],
 					effect: 'cost-hatred'
+				},
+				{
+					find: [
+						/Cost: (\d+) Discipline/
+					],
+					effect: 'cost-discipline'
 				},
 				{
 					find: [
@@ -79,7 +85,8 @@
 				},
 				{
 					find: [
-						/Generate: (\d+) Hatred/
+						/Generate: (\d+) Hatred/,
+						/While invisible you gain (\d+) Hatred per second/
 					],
 					effect: 'generate-hatred'
 				},
@@ -105,12 +112,15 @@
 				{
 					find: [
 						/Reduces all damage taken by (\d+)%/,
-						/reducing damage done by enemies within 25 yards by (\d+)%/
+						/reducing damage done by enemies within 25 yards by (\d+)%/,
+						/Reduce incoming damage by (\d+)% while Shadow Power/,
+						/that reduces damage taken by allies by (\d+)%/
 					],
 					effect: 'damage-reduce'
 				},
 				{
 					find: [
+						/have a (\d+)% chance to be stunned/,
 						/Add a (\d+)% chance to call down a bolt of lightning from above, stunning/,
 						/Add a (\d+)% chance of stunning/,
 						/(\d+)% chance to Stun/,
@@ -156,16 +166,44 @@
 						/and deals (\d+)% weapon damage/,
 						/Light the arrow on fire, dealing (\d+)% additional weapon damage/,
 						/that deals (\d+)% weapon damage/,
-						/that do an additional (\d.+)% weapon damage/
+						/that do an additional (\d.+)% weapon damage/,
+						/dealing (\d+)% weapon damage as Fire/,
+						/that does (\d+)% weapon damage as/,
+						/doing (\d+)% weapon damage to all/,
+						/trap does (\d+)% weapon damage/,
+						/periodically peck at enemies for (\d+)% of your weapon damage/,
+						/firing at nearby enemies for (\d+)%/,
+						/the sky dealing (\d.+)% weapon damage/
 					],
 					effect: 'weapon-damage'
 				},
 				{
 					find: [
-						/Add 2 reverberations that cause (\d.+)%/,
+						/weapon damage for (\d+) seconds/,
+					],
+					effect: 'weapon-damage-for'
+				},
+				{
+					find: [
+						/Add 2 reverberations that cause (\d.+)%/
 					],
 					effect: 'weapon-damage',
 					multiple: 2
+				},
+				{
+					find: [
+						/launch 3 homing rockets every second. Each rocket deals (\d+)% weapon damage/
+					],
+					effect: 'weapon-damage',
+					multiple: 3
+				},
+				{
+					find: [
+						/Summon 20 Shadow Beasts to drop bombs on enemies, dealing (\d+)% weapon damage each/
+					],
+					effect: 'weapon-damage',
+					multiple: 20,
+					remove: 'weapon-damage-for'
 				},
 				{
 					find: [
@@ -173,13 +211,15 @@
 						/your Critical Hit Chance is increased by (\d+)%/,
 						/which increases damage by 15% and Critical Hit Chance by (\d+)%/,
 						/Your Critical Hit Chance is increased by (\d+)%/,
-						/Critical Hit Chance: (\d+)%/
+						/Critical Hit Chance: (\d+)%/,
+						/gaining an additional (\d+)% Critical Hit Chance with all/
 					],
 					effect: 'bonus-crit-hit'
 				},
 				{
 					find: [
-						/Critical Hits cause (\d+)% additional damage/
+						/Critical Hits cause (\d+)% additional damage/,
+						/that do an extra (\d+)% damage on successful Critical Hits/
 					],
 					effect: 'bonus-crit-hit-damage'
 				},
@@ -199,7 +239,8 @@
 				},
 				{
 					find: [
-						/Attack Speed: (\d+)%/
+						/Attack Speed: (\d+)%/,
+						/Increases your attack speed by (\d+)% when using Strafe/
 					],
 					effect: 'bonus-attack-speed'
 				},
@@ -233,11 +274,21 @@
 						/Gain (\d+)% of the damage done by Rend as Life/,
 						/Gain Life equal to (\d+)% of the damage/,
 						/gain (\d+)% of all damage dealt as Life/,
-						/Gain (\d+)% of the damage dealt as Life/
+						/Gain (\d+)% of the damage dealt as Life/,
+						/gaining (\d+)% of all damage done/,
+						/path and return (\d+)% of damage dealt as Life for/,
+						/Heal attackers for (\d+)% of the damage/,
+						/You will gain (\d+)% of the damage done as Life/
 					],
 					effect: 'life-steal'
 				},
 				// Remove Attribute Effects Below
+				{
+					find: [
+						/Removes the Discipline cost/
+					],
+					remove: 'cost-discipline'
+				},
 				{
 					find: [
 						/Removes the chance for Knockback/
@@ -260,6 +311,13 @@
 				},
 				{
 					find: [
+						/Increases damage done as Life to (\d+)%/
+					],
+					effect: 'life-steal',
+					remove: 'life-steal'
+				},
+				{
+					find: [
 						/Increase damage to (\d+)% weapon damage/,
 						/Increase damage to (\d.+)% weapon damage/,
 						/Strike a smaller area for (\d+)% weapon damage./,
@@ -267,10 +325,72 @@
 						/Focus the seismic shockwaves along a narrow path to inflict (\d+)% weapon damage/,
 						/Increase thrown weapon damage to (\d+)% weapon damage/,
 						/Increase damage at the destination to (\d+)% weapon damage/,
-						/The Ancients inflict (\d+)% weapon damage/
+						/The Ancients inflict (\d+)% weapon damage/,
+						/Rapidly fire grenades that explode for (\d+)% weapon damage/,
+						/Shoot 3 bolas that each deal (\d+)% weapon damage as Poison/,
+						/Augment the bola to deal (\d+)% weapon damage as Arcane/,
+						/The Chakram path turns into a loop, dealing (\d+)% weapon damage/,
+						/The Chakram follows a slow curve, dealing (\d+)% weapon damage/,
+						/The Chakram spirals out from the targeted location dealing (\d+)% weapon damage as/,
+						/Surround yourself with spinning Chakrams for 120 seconds, dealing (\d+)% weapon damage per/,
+						/that hit up to 3 targets for (\d+)% weapon damage each/,
+						/Throw gas grenades that explode for (\d+)% weapon damage/,
+						/Throw cluster grenades that deal (\d+)% weapon damage/,
+						/Throw a single grenade that deals (\d+)% weapon/,
+						/Surround yourself with whirling blades that deal (\d+)% weapon damage/,
+						/but increases damage to (\d+)% weapon damage/,
+						/bounce to up to 3 enemies for (\d+)% weapon damage/,
+						/Throw out bouncy grenades that explode for (\d+)% weapon damage/,
+						/that electrocutes enemies along its path for (\d+)% weapon damage/,
+						/Shadow tentacles deal (\d+)% weapon damage to enemies along/,
+						/damage of Multishot to (\d+)% weapon/,
+						/shoots up to 3 rockets at nearby enemies dealing (\d+)% weapon damage/,
+						/dropping bombs in a straight line that each explode for (\d+)% weapon damage/,
+						/releases shadow energy that deals (\d+)% weapon damage/,
+						/guided arrows that rain down on enemies for (\d+)% weapon damage/,
+						/from the sky for 10 seconds dealing (\d+)% weapon damage/
 					], 
 					effect: 'weapon-damage',
 					remove: 'weapon-damage'
+				},
+				{
+					find: [
+						/A second Chakram mirrors the first.  Each Chakram deals (\d+)% weapon damage as Physical./
+					],
+					effect: 'weapon-damage',
+					multiple: 2,
+					remove: 'weapon-damage'
+				},
+				{
+					find: [
+						/group of 8 Shadow Beasts plummet from the sky at a targeted location dealing (\d+)% weapon damage each/
+					],
+					effect: 'weapon-damage',
+					multiple: 8,
+					remove: 'weapon-damage'
+				},
+				{
+					find: [
+						/wave of 10 Shadow Beasts to tear across the ground, knocking back enemies and dealing (\d+)% weapon damage/
+					], 
+					effect: 'weapon-damage',
+					multiple: 10,
+					remove: 'weapon-damage'
+				},
+				{
+					find: [
+						/wave of 10 Shadow Beasts to tear across the ground, knocking back enemies and dealing (\d+)% weapon damage/,
+						/group of 8 Shadow Beasts plummet from the sky at a targeted location dealing (\d+)% weapon damage each/
+					],
+					remove: 'weapon-damage-for'					
+				},
+				{
+					find: [
+						/rain down on enemies for 35% weapon damage for (\d+) seconds/,
+						/drops grenades from the sky for (\d+) seconds/
+					],
+					effect: 'weapon-damage-for',
+					remove: 'weapon-damage-for'
 				},
 				{
 					find: [
@@ -289,10 +409,26 @@
 				},
 				{
 					find: [
+						/Reduces the cost of Caltrops to (\d+) Discipline./,
+						/Reduce the cost to (\d+) Discipline/,
+						/Decreases the Discipline cost to (\d+)/
+					],
+					effect: 'cost-discipline',
+					remove: 'cost-discipline',
+				},
+				{
+					find: [
 						/Reduce Fury cost to (\d+) Fury./
 					],
 					effect: 'cost-fury',
 					remove: 'cost-fury'
+				},
+				{
+					find: [
+						/Reduces the initial Hatred cost to (\d+)/
+					],
+					effect: 'cost-hatred',
+					remove: 'cost-hatred'
 				},
 				{
 					find: [
@@ -303,7 +439,8 @@
 				},
 				{
 					find: [
-						/Increase damage bonus to (\d+)%/
+						/Increase damage bonus to (\d+)%/,
+						/The marked enemy will take (\d+)% additional damage/
 					],
 					effect: 'bonus-damage',
 					remove: 'bonus-damage'
@@ -402,19 +539,19 @@
 			}
 			var runeName = $(v.tooltip).find("strong").html();
 			if(runeName) {
-				newSkill.name = newSkill.name + " - " + runeName.trim();
+				newSkill.name = newSkill.name + " - " + runeName.trim().replace(/[\b\t\n\v\f\r']/g, function(val) { return map[val]; });
 			}
 			$.each($(v.tooltip).find(".d3tt_primary_active"), function(k,v) {
 				var frag = $(v);
 				if(k == 0) {
-					var clean = frag.text().replace(/[\b\t\n\v\f\r]/g, function(val) { return map[val]; });
+					var clean = frag.text().replace(/[\b\t\n\v\f\r']/g, function(val) { return map[val]; });
 					// Bunch of Logic to build the skills...
 					// console.log(clean);
 					newSkill.desc = clean;
 					// target.append("\r\tdesc: '" + clean + "',");					
 				}
 				if(k == 1){
-					var clean = frag.text().replace(/[\b\t\n\v\f\r]/g, function(val) { return map[val]; });					
+					var clean = frag.text().replace(/[\b\t\n\v\f\r']/g, function(val) { return map[val]; });					
 					newSkill.rune = clean;
 					// target.append("\r\trune: '" + clean + "',");										
 				}
@@ -433,12 +570,12 @@
 		var target = $("#json");
 		$.each(skills, function(k,v) {
 			if(k != 'undefined') {
-				target.append("\n" + k + ": {");
+				target.append("\n'" + k + "': {");
 				$.each(v, function(i, s) {
 					var baseSkill = s.slug.split("~"),
 							newFilename = s.class + "-" + baseSkill[0] + ".png"
 					wgets.append("\nwget -O " + newFilename + " " + s.icon);
-					target.append("\n\t" + s.slug + ": {");		
+					target.append("\n\t'" + s.slug + "': {");		
 					target.append("\n\t\tname: '" + s.name.trim() + "',");
 					if(s.desc && s.desc != "undefined") {
 						target.append("\n\t\tdesc: '" + s.desc.trim() + "',");
@@ -449,7 +586,7 @@
 					if(s.effect && s.effect != "undefined") {
 						target.append("\n\t\teffect: {");
 						$.each(s.effect, function(name, effect) {
-							target.append("\n\t\t\t" + name + ": '" + effect + "',");							
+							target.append("\n\t\t\t'" + name + "': '" + effect + "',");							
 						});
 						target.append("\n\t\t},");
 					}

@@ -25,23 +25,6 @@ var stats = [],
 		selectVs = $("#vsLevel"),
 		heroClass = $("#character").data("class"),
 		isOwner = $("#character").data("owner"),
-		actives = {
-			'barbarian': {
-				
-			},
-			'demon-hunter': {
-				
-			},
-			'monk': {
-				
-			},
-			'witch-doctor': {
-				
-			},
-			'wizard': {
-				
-			}
-		},
 		passives = {
 			'barbarian': {
 				'pound-of-flesh': {
@@ -421,8 +404,24 @@ var stats = [],
 				},
 			}
 		};	
-var passiveSelect = $("#passives"),
+var skillDisplay = $("#skill-display"),
+		activeSelect = $("#actives"),
+		activeDisplay = $("#active-display"),
+		passiveSelect = $("#passives"),
 		passiveDisplay = $("#passive-display");
+if(activeSkills && activeSkills[heroClass]) {
+	$.each(window.activeSkills[heroClass], function(k,v) {
+		var selected = '';
+		if(typeof activeActives != "undefined") {
+			$.each(activeActives, function(key,active) {
+				if(k == active) {
+					selected = 'selected="selected"';
+				}
+			}); 			
+		}		
+		activeSelect.append($("<option value='"+k+"' "+selected+"/>").html(v.name));			
+	});
+};
 if(passives && passives[heroClass]) {
 	$.each(passives[heroClass], function(k,v) {
 		var selected = '';
@@ -435,15 +434,48 @@ if(passives && passives[heroClass]) {
 		}
 		passiveSelect.append($("<option value='"+k+"' "+selected+"/>").html(k.replace(/\-/g," ").capitalize()));			
 	});		
-}
+};
+activeSelect.chosen({
+	placeholder: 'Which skills/abilities do you use?',
+	allowClear: true
+});
 passiveSelect.chosen({
 	placeholder: 'Which passives skills are you using?',
 	allowClear: true
 });
+activeSelect.bind('change', function() {
+	var skills = ($(this).val()) ? $(this).val() : [];
+	console.log(skills.length);
+	if(!skills || activeActives.length != skills.length) {
+		if(isOwner && skills.length <= 6) {
+			$.ajax({
+				data: {
+					a: 'active-skills',
+					actives: skills
+				}
+			});							
+		}
+	}
+	activeDisplay.empty();
+	$.each(skills, function(k,v) {
+		skillDisplay.show();
+		if(k >= 6) {
+			return false;
+		}
+		var skill = activeSkills[heroClass][v],
+				cleaned = v.split("~"),
+				icon = "/images/icons/" + heroClass + "-" + cleaned[0] + ".png";
+				img = $("<img/>").attr("src", icon);
+		img.attr('data-name', skill.name);
+		img.attr('title', skill.name);
+		img.attr('data-tooltip', skill.desc);
+		activeDisplay.append($("<li/>").html(img));			
+	});
+});
 passiveSelect.bind('change', function() {
 	var skills = ($(this).val()) ? $(this).val() : [];
 	if(!skills || activePassives.length != skills.length) {
-		if(isOwner) {
+		if(isOwner && skills.length <= 3) {
 			$.ajax({
 				data: {
 					a: 'passive-skills',
@@ -454,12 +486,18 @@ passiveSelect.bind('change', function() {
 	}
 	passiveDisplay.empty();
 	$.each(skills, function(k,v) {
+		skillDisplay.show();
 		var skill = passives[heroClass][v],
-				display = $("<span/>").append($("<strong>").html(v.replace(/\-/g," ").capitalize() + ": "), skill.desc);
-		passiveDisplay.append($("<li/>").html(display));			
+				icon = "/images/icons/" + heroClass + "-" + v + ".png";
+				img = $("<img/>").attr("src", icon);
+		img.attr('data-name', v.replace(/\-/g," ").capitalize());
+		img.attr('title', v.replace(/\-/g," ").capitalize());
+		img.attr('data-tooltip', skill.desc);
+		passiveDisplay.append($("<li/>").html(img));
 	});
 	calc(".equipped a");
 });
+activeSelect.trigger('change');
 passiveSelect.trigger('change');
 selectVs.bind('change', function() {
 	calc(".equipped a");
