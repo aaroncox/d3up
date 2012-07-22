@@ -468,7 +468,11 @@ activeSelect.bind('change', function() {
 				img = $("<img/>").attr("src", icon);
 		img.attr('data-name', skill.name);
 		img.attr('title', skill.name);
-		img.attr('data-tooltip', skill.desc);
+		if(skill.rune) {
+			img.attr('data-tooltip', skill.desc.replace(/  /, "<br/><br/>") + "<br/><br/>" + skill.rune);
+		} else { 
+			img.attr('data-tooltip', skill.desc);
+		}
 		activeDisplay.append($("<li/>").html(img));			
 	});
 });
