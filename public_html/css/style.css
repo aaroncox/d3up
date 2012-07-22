@@ -230,7 +230,7 @@ ul.sub_menu > li.witch-doctor {
 #active-display,
 #passive-display {
 	list-style: none;
-	padding: 0 20px;
+	padding: 0 15px;
 	margin: 5px 0 0;
 	display: inline-block;
 }
