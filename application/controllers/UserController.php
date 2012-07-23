@@ -225,7 +225,7 @@ class UserController extends Epic_Controller_Action
 		}
 		// var_dump($query);
 		$sort = array('soldOn' => -1);
-		$this->view->allcompleted = Epic_Mongo::db('sale')->fetchAll($query, $sort);
+		$this->view->allcompleted = Epic_Mongo::db('sale')->fetchAll($query, $sort, 50);
 	}
 	public function reportsAction() {
 		// phpinfo(); exit;
