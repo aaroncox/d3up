@@ -215,68 +215,47 @@ var activeActives = [];
 <script type="text/javascript" src="/js/skills.js"></script>
 <script type="text/javascript" src="/js/calc.js"></script>
 <script type="text/javascript">
-calc(".equipped a");
-$("#character").tabs({
-    select: function(event, ui){
-      window.location = ui.tab.href;
-    }
-});
-$(".calc-stats").tabs();
-$(".comment").each(function() {
-	var $this = $(this), 
-			comment = $this.data("comment");
-	$this.find(".comment-replies").each(function() {
-		var replies = $(this), 
-				count = 0;
-		count = $(this).find(".comment.reply").length;
-		replies.hide();
-		if(count) {
-			var expander = $("<div class='comment-expand'>").html("Show " + count + " Replies");
-			expander.bind('click', function() {
-				replies.show();
-				$(this).hide();
-			});
-			$(this).after(expander);			
-		}
+$(function() {
+	
+	calc(".equipped a");
+	$("#character").tabs({
+	    select: function(event, ui){
+	      window.location = ui.tab.href;
+	    }
 	});
-	$(this).find("a.comment-reply").bind('click', function() {
-		$.ajax({
-			url: '/c/'+comment+'/reply',
-			type: 'json',
-			success: function(data) {
-				var json = $.parseJSON(data),
-						form = json.form;
-				$this.find('.comment-extra').empty().append(form);				
+	$(".calc-stats").tabs();
+	$(".comment").each(function() {
+		var $this = $(this), 
+				comment = $this.data("comment");
+		$this.find(".comment-replies").each(function() {
+			var replies = $(this), 
+					count = 0;
+			count = $(this).find(".comment.reply").length;
+			replies.hide();
+			if(count) {
+				var expander = $("<div class='comment-expand'>").html("Show " + count + " Replies");
+				expander.bind('click', function() {
+					replies.show();
+					$(this).hide();
+				});
+				$(this).after(expander);			
 			}
 		});
+		$(this).find("a.comment-reply").bind('click', function() {
+			$.ajax({
+				url: '/c/'+comment+'/reply',
+				type: 'json',
+				success: function(data) {
+					var json = $.parseJSON(data),
+							form = json.form;
+					$this.find('.comment-extra').empty().append(form);				
+				}
+			});
+		});
+	});
+	$("#active-display, #passive-display").find("li img").each(function() {
+		$(this).bindSkilltip();
 	});
 });
-$("#active-display, #passive-display").find("li img").each(bindSkilltip);
-function bindSkilltip() {
-	var tooltip = $("<div class='d3up-tooltip'/>");
-	var container = $("<div class='d3-item'/>"),
-			header = $("<div class='top'/>"),
-			content = $("<div class='item'/>"),
-			footer = $("<div class='bottom'/>");
-	header.html($("<p>").append($(this).data("name")));
-	content.html($("<p>").append($(this).data("tooltip")));
-	container.append(header, content, footer);
-	$(this).mouseover(function() {
-		var $this = $(this);
-		tooltip.css({
-				position: 'absolute'
-		});
-		tooltip.empty().append(container);
-		var position = {
-			of: $this,
-			at: "right top",
-			my: "left top",
-			offset: "0 10",
-			collision: "flip"
-		};
-		tooltip.appendTo("body").position(position);
-	}).mouseout(function() {
-		tooltip.empty();
-	});
-}
+
 </script>

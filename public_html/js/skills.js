@@ -1,6 +1,386 @@
+String.prototype.capitalize = function(){
+   return this.replace( /(^|\s)([a-z])/g , function(m,p1,p2){ return p1+p2.toUpperCase(); } );
+};
+var passives = {
+	'barbarian': {
+		'pound-of-flesh': {
+			'desc': 'Increases the chance of finding a health globe by <span class="skill-highlight">25%</span> and you gain <span class="skill-highlight">100%</span> additional Life from health globes.',
+			'effect': {
+				'health-globes': 1,
+			}
+		},
+		'ruthless': {
+			'desc': 'Critical Hit Chance increased by <span class="skill-highlight">5%</span>. Critical Hit Damage increased by <span class="skill-highlight">50%</span>.',
+			'effect': {
+				'critical-hit': 0.05,
+				'critical-hit-damage': 0.5
+			}
+		},
+		'nerves-of-steel': {
+			'desc': 'Your Armor is increased by <span class="skill-highlight">100%</span> of your Vitality.',
+			'effect': {
+				'vitality-to-armor': 1,
+			}
+		},
+		'weapons-master': {
+			'desc': 'Gain a bonus based on the weapon type of your main hand weapon:<br />Swords/Daggers: <span class="skill-highlight">15%</span> increased damage<br />Maces/Axes: <span class="skill-highlight">10%</span> Critical Hit Chance<br />Polearms/Spears: <span class="skill-highlight">10%</span> attack speed<br />Mighty Weapons: <span class="skill-highlight">3</span> Fury per hit',
+			'effect': {
+				'switch': {
+					'lookup': 'type',
+					'var': 'mainhand',
+					'cases': [
+					// '2h-mace', '2h-axe', 'bow', 'diabo', 'crossbow', '2h-mighty', 'polearm', 'staff', '2h-sword', 'axe', 'ceremonial-knife', 'hand-crossbow', 'dagger', 'fist-weapon', 'mace', 'mighty-weapon', 'spear', 'sword', 'wand'
+						{
+							"case": "sword|dagger|2h-sword",
+							'effect': {
+								'plus-damage': 0.15
+							}
+						},
+						{
+							"case": "mace|axe|2h-axe|2h-mace",
+							'effect': {
+								'critical-hit': 0.1
+							}
+						},
+						{
+							"case": "spear|polearm",
+							'effect': {
+								'attack-speed': 0.1
+							}
+						},
+						{
+							"case": "mighty|2h-mighty",
+							'effect': {
+								
+							}
+						}																		
+					]
+				}
+			}
+		},
+		'berserker-rage': {
+			'desc': 'You inflict an additional <span class="skill-highlight">25%</span> damage while at maximum Fury.'
+		},
+		'inspiring-presence': {
+			'desc': 'The duration of your shouts is doubled. After using a shout you regenerate <span class="skill-highlight">1%</span> of your maximum Life per second for <span class="skill-highlight">60</span> seconds.'
+		},
+		'bloodthirst': {
+			'desc': 'Gain <span class="skill-highlight">3%</span> of all damage done as Life.',
+			'effect': {
+				'life-steal': 0.03
+			}
+		},
+		'animosity': {
+			'desc': 'Increases Fury generation by <span class="skill-highlight">10%</span> and maximum Fury is increased by <span class="skill-highlight">20</span>.',
+			'effect': {
+				'max-fury': 20
+			}
+		},
+		'superstition': {
+			'desc': 'Reduces all non-Physical damage by <span class="skill-highlight">20%</span>. Whenever you take damage from a ranged or elemental attack, you have a chance to gain <span class="skill-highlight">3</span> Fury.'
+		},
+		'tough-as-nails': {
+			'desc': 'Increases Armor by <span class="skill-highlight">25%</span>.<br />Thorns damage dealt increased by <span class="skill-highlight">50%</span>.',
+			'effect': {
+				'plus-armor': 0.25,
+				'plus-thorns': 0.5
+			}
+		},
+		'no-escape': {
+			'desc': 'Increases the damage of Ancient Spear and Weapon Throw by <span class="skill-highlight">10%</span>. In addition, a Critical Hit with Ancient Spear resets the cooldown while Critical Hits with Weapon Throw have a chance to return <span class="skill-highlight">14</span> Fury.'
+		},
+		'relentless': {
+			'desc': 'While below <span class="skill-highlight">20%</span> Life, all skills cost no Fury and all damage taken is reduced by <span class="skill-highlight">50%</span>.'
+		},
+		'brawler': {
+			'desc': 'As long as there are <span class="skill-highlight">3</span> enemies within <span class="skill-highlight">8</span> yards, all of your damage is increased by <span class="skill-highlight">30%</span>.'
+		},
+		'juggernaut': {
+			'desc': 'The duration of control impairing effects on you are reduced by <span class="skill-highlight">20%</span>. In addition, whenever a Stun, Fear, Immobilize or Charm is cast on you, you have a chance to recover <span class="skill-highlight">15%</span> of your maximum Life.',
+			'effect': {
+				'cc-reduce': 0.2
+			}
+		},
+		'unforgiving': {
+			'desc': 'You no longer degenerate Fury. Instead, you gain <span class="skill-highlight">1</span> Fury every <span class="skill-highlight">2</span> seconds.'
+		},
+		'boon-of-bul-kathos': {
+				'desc': 'The cooldown on your Earthquake, Call of the Ancients, and Wrath of the Berserker skills is reduced by <span class="skill-highlight">30</span> seconds.'
+		}
+	},
+	'monk': {
+		'fleet-footed': {
+			'desc': 'Increases movement speed by <span class="skill-highlight">10%</span>.',
+			'effect': {
+				'plus-movement-speed': 0.1
+			}
+		},
+		'resolve': {
+			'desc': 'Damage you deal reduces enemy damage by <span class="skill-highlight">25%</span> for <span class="skill-highlight">2.5</span> seconds.'
+		},
+		'exalted-soul': {
+			'desc': 'Increases maximum Spirit by <span class="skill-highlight">100</span>.',
+			'effect': {
+				'max-spirit': 100
+			}
+		},
+		'transcendence': {
+			'desc': 'Every point of Spirit spent heals you for <span class="skill-highlight">62.0</span> Life.'
+		},
+		'chant-of-resonance': {
+			'desc': 'Duration of all Mantras increased by <span class="skill-highlight">7</span> minutes. While one of your Mantras is active you gain <span class="skill-highlight">2</span> Spirit every second.'
+		},
+		'seize-the-initiative': {
+			'desc': 'Your Armor is increased by <span class="skill-highlight">100%</span> of your Dexterity.',
+			'effect': {
+				'dexterity-to-armor': 1
+			}
+		},
+		'the-guardians-path': {
+			'desc': 'While dual-wielding, you gain a <span class="skill-highlight">15%</span> chance to dodge incoming attacks. While using a two-handed weapon, all Spirit generation is increased by <span class="skill-highlight">25%</span>.',
+			'effect': {
+				'switch': {
+					'var': 'slot',
+					'cases': [
+						{
+							"case": "mainhand|offhand",
+							'effect': {
+								'plus-dodge': 0.15
+							}
+						},
+						{
+							"case": "mainhand",
+							'effect': {
+								'plus-spirit-regen': 0.25
+							}
+						}
+					]
+				}
+			}
+		},
+		'sixth-sense': {
+			'desc': 'Your dodge chance is increased by an amount equal to <span class="skill-highlight">30%</span> of your Critical Hit Chance.',
+			'effect': {
+				'critical-to-dodge': 0.3
+			}
+		},
+		'pacifism': {
+			'desc': 'While you are under a Stun, Fear or Charm effect, all damage taken is reduced by <span class="skill-highlight">75%</span>.'
+		},
+		'beacon-of-ytar': {
+			'desc': 'Reduces all cooldowns by <span class="skill-highlight">15%</span>.'
+		},
+		'guiding-light': {
+			'desc': 'Whenever you use a direct heal skill on another player you and the other player deal <span class="skill-highlight">16%</span> more damage for <span class="skill-highlight">15</span> seconds.'
+		},
+		'one-with-everything': {
+			'desc': 'Your resistance to all elements is equal to your highest elemental resistance.',
+			'effect': {
+				'flatten-resists': 1
+			}
+		},
+		'combination-strike': {
+			'desc': 'Each different Spirit Generator ability you use increases your damage by <span class="skill-highlight">8%</span> for <span class="skill-highlight">3</span> seconds.'
+		},
+		'near-death-experience': {
+			'desc': 'When receiving fatal damage, you are instead restored to <span class="skill-highlight">35%</span> of maximum Life and <span class="skill-highlight">35%</span> Spirit.'
+		},
+	},
+	'wizard': {
+		'blur': {
+			'desc': 'Decreases melee damage taken by <span class="skill-highlight">20%</span>.',
+			'effect': {
+				'melee-reduce': 0.20
+			},
+		},
+		'power-hungry': {
+			'desc': 'Gain <span class="skill-highlight">30</span> Arcane Power whenever you are healed by a health globe.'
+		},
+		'evocation': {
+			'desc': 'Reduces all cooldowns by <span class="skill-highlight">15%</span>.'
+		},
+		'glass-cannon': {
+			'desc': 'Increases all damage done by <span class="skill-highlight">15%</span>, but decreases Armor and resistances by <span class="skill-highlight">10%</span>.',
+			'effect': {
+				'plus-damage': 0.15,
+				'plus-resist-all': -0.10,
+				'plus-armor': -0.10
+			}
+		},
+		'prodigy': {
+			'desc': 'When you deal damage with a Signature spell, you gain <span class="skill-highlight">4</span> Arcane Power.<br/>The following skills are Signature spells:<ul><li>Magic Missile</li><li>Shock Pulse</li><li>Spectral Blade</li><li>Electrocute</li></ul>'
+		},
+		'astral-presence': {
+			'desc': 'Increases your maximum Arcane Power by <span class="skill-highlight">20</span> and Arcane Power regeneration by <span class="skill-highlight">2</span> per second.'
+		},
+		'illusionist': {
+			'desc': 'Whenever you suffer more than <span class="skill-highlight">15%</span> of your Life in a single hit, the cooldowns on Mirror Image and Teleport are automatically reset.'
+		},
+		'cold-blooded': {
+			'desc': 'Cold damage dealt to chilled and frozen targets is increased by <span class="skill-highlight">20%</span>.'
+		},
+		'conflaguration': {
+			'desc': 'Fire damage dealt to enemies applies a burning effect, increasing all damage done to them by <span class="skill-highlight">10%</span> for 3 seconds.'
+		},
+		'paralysis': {
+			'desc': 'Lightning damage dealt to enemies has up to a <span class="skill-highlight">8%</span> chance to Stun the target for <span class="skill-highlight">2</span> seconds.'
+		},
+		'galvanizing-ward': {
+			'desc': 'Increases the duration of your Armor spells by <span class="skill-highlight">120</span> seconds. As long as an Armor spell is active, you gain <span class="skill-highlight">310</span> Life per second. The following skills are improved:<ul><li>Energy Armor</li><li>Ice Armor</li><li>Storm Armor</li></ul>'
+		},
+		'temporal-flux': {
+			'desc': 'Whenever you deal Arcane damage, enemies are slowed by <span class="skill-highlight">30%</span> for <span class="skill-highlight">2</span> seconds.'
+		},
+		'critical-mass': {
+			'desc': 'Critical Hits have a chance to reduce the cooldown of your spells by <span class="skill-highlight">1</span> second.'
+		},
+		'arcane-dynamo': {
+			'desc': 'When you deal damage with a Signature spell you may gain a Flash of Insight. After 5 Flashes of Insight, your next non-Signature spell deals <span class="skill-highlight">75%</span> additional damage. The following skills are Signature spells:<ul><li>Magic Missile</li><li>Shock Pulse</li><li>Spectral Blade</li><li>Electrocute</li></ul>'
+		},
+		'unstable-anomaly': {
+			'desc': 'When reduced below <span class="skill-highlight">20%</span> Life, release a shockwave that knocks all enemies back. This effect cannot occur more than once every 60 seconds.'
+		}
+	},
+	'demon-hunter': {
+		'tactical-advantage': {
+			'desc': 'Whenever you use Vault, Smoke Screen, or backflip with Evasive Fire you gain <span class="skill-highlight">60%</span> movement speed for <span class="skill-highlight">2</span> seconds.'
+		},
+		'thrill-of-the-hunt': {
+			'desc': 'Every <span class="skill-highlight">10</span> seconds, your next bow attack will immobilize your target for <span class="skill-highlight">3</span> seconds.'
+		},
+		'vengeance': {
+			'desc': 'Your maximum Hatred is increased by <span class="skill-highlight">25</span>. In addition, gain <span class="skill-highlight">20</span> Hatred and <span class="skill-highlight">2</span> Discipline whenever you are healed by a health globe.',
+			'effect': {
+				'max-hatred': 25
+			}
+		},
+		'steady-aim': {
+			'desc': 'As long as there are no enemies within <span class="skill-highlight">10</span> yards, all damage is increased by <span class="skill-highlight">20%</span>.',
+			'effect': {
+				'plus-damage': 0.2
+			}
+		},
+		'cull-the-weak': {
+			'desc': 'Damage against slowed enemies increased by <span class="skill-highlight">15%</span>.'
+		},
+		'night-stalker': {
+			'desc': 'Critical Hits have a chance to restore <span class="skill-highlight">1</span> Discipline.'
+		},
+		'brooding': {
+			'desc': 'As long as you have not taken damage in the last <span class="skill-highlight">3</span> seconds you gain <span class="skill-highlight">1%</span> of your maximum Life per second.'
+		},
+		'hot-pursuit': {
+			'desc': 'Whenever you are at full Hatred, movement speed is increased by <span class="skill-highlight">15%</span>.'
+		},
+		'archery': {
+			'desc': 'Gain a bonus based on the weapon type of your main hand weapon:<br />Bow: <span class="skill-highlight">15%</span> increased damage<br />Crossbows: <span class="skill-highlight">50%</span> Critical Hit Damage<br />Hand Crossbows: <span class="skill-highlight">10%</span> Critical Hit Chance',
+			'effect': {
+				'switch': {
+					'lookup': 'type',
+					'var': 'mainhand',
+					'cases': [
+						{
+							"case": "bow",
+							'effect': {
+								'plus-damage': 0.15
+							}
+						},
+						{
+							"case": "crossbow",
+							'effect': {
+								'critical-hit-damage': 0.5
+							}
+						},
+						{
+							"case": "hand-crossbow",
+							'effect': {
+								'critical-hit': 0.1
+							}
+						}
+					]
+				}
+			}
+		},
+		'numbing-traps': {
+			'desc': 'Enemies hit by Fan of Knives, Spike Trap, and Caltrops have their damage reduced by <span class="skill-highlight">25%</span> for <span class="skill-highlight">3</span> seconds.'
+		},
+		'perfectionist': {
+			'desc': 'Reduces the Discipline cost of all skills by <span class="skill-highlight">10%</span>.'
+		},
+		'custom-engineering': {
+			'desc': 'The duration of your Caltrops, Marked for Death, Spike Trap, and Sentry is increased by <span class="skill-highlight">100%</span>.'
+		},
+		'grenadier': {
+			'desc': 'Increases Hatred generated from Grenades by <span class="skill-highlight">2</span> and reduces the Hatred cost of Cluster Arrow by <span class="skill-highlight">10</span>. Upon death, you drop a giant grenade that explodes for <span class="skill-highlight">450%</span> weapon damage as Fire.'
+		},
+		'sharpshooter': {
+			'desc': 'Gain <span class="skill-highlight">3%</span> Critical Hit Chance every second. This bonus is reset <span class="skill-highlight">1</span> second after you successfully critically hit.',
+			'effect': {
+				'sharpshooter': true
+			}
+		},
+		'ballistics': {
+			'desc': 'Damage from rockets increased by <span class="skill-highlight">50%</span>. '
+		},
+	},
+	'witch-doctor': {
+		'circle-of-life': {
+			'desc': 'Whenever an enemy dies within <span class="skill-highlight">12</span> yards, there is a <span class="skill-highlight">5%</span> chance that a Zombie Dog will automatically emerge. The range of this effect is increased by items that increase your gold pickup radius.'
+		},
+		'jungle-fortitude': {
+			'desc': 'Reduces all damage taken by you and your pets by <span class="skill-highlight">20%</span>.',
+			'effect': {
+				'reduce-damage': 0.20
+			}
+		},
+		'spiritual-attunement': {
+			'desc': 'Maximum Mana is increased by <span class="skill-highlight">20%</span>. Regenerate <span class="skill-highlight">1%</span> of your maximum Mana per second.',
+			'effect': {
+				'plus-mana': 0.2
+			}
+		},
+		'gruesome-feast': {
+			'desc': 'Whenever you are healed by a health globe, you gain <span class="skill-highlight">10%</span> of your maximum Mana and <span class="skill-highlight">10%</span> Intelligence for <span class="skill-highlight">10</span> seconds. The Intelligence bonus can stack up to <span class="skill-highlight">5</span> times.'
+		},
+		'bad-medicine': {
+			'desc': 'Whenever you deal Poison damage to an enemy, their damage is reduced by <span class="skill-highlight">20%</span> for <span class="skill-highlight">3</span> seconds.'
+		},
+		'blood-ritual': {
+			'desc': '<span class="skill-highlight">15%</span> of Mana costs are paid with Life. In addition, you regenerate <span class="skill-highlight">1%</span> of your maximum Life per second.'
+		},
+		'zombie-handler': {
+			'desc': 'You can have <span class="skill-highlight">4</span> Zombie Dogs summoned at one time. The health of your Zombie Dogs and Gargantuan is increased by <span class="skill-highlight">20%</span>.'
+		},
+		'pierce-the-veil': {
+			'desc': 'All of your damage is increased by <span class="skill-highlight">20%</span>, but your Mana costs are increased by <span class="skill-highlight">30%</span>.',
+			'effect': {
+				'plus-damage': 0.2
+			}
+		},
+		'fetish-sycophants': {
+			'desc': 'Whenever you cast a physical realm spell, you have a <span class="skill-highlight">3%</span> chance to summon a dagger-wielding Fetish to fight by your side for <span class="skill-highlight">60</span> seconds.'
+		},
+		'spirit-vessel': {
+			'desc': 'Reduces the cooldown of your Horrify, Spirit Walk, and Soul Harvest spells by <span class="skill-highlight">2</span> seconds. In addition, the next time you receive fatal damage, you automatically enter the spirit realm for <span class="skill-highlight">3</span> seconds and heal to <span class="skill-highlight">10%</span> of your maximum Life. This effect cannot occur more than once every <span class="skill-highlight">90</span> seconds.'
+		},
+		'rush-of-essence': {
+			'desc': 'Spirit spells return <span class="skill-highlight">30%</span> of their Mana cost over <span class="skill-highlight">10</span> seconds.'
+		},
+		'vision-quest': {
+			'desc': 'Any time you have <span class="skill-highlight">4</span> or more skills on cooldown, your Mana regeneration is increased by <span class="skill-highlight">300%</span>.'
+		},
+		'fierce-loyalty': {
+			'desc': 'All your pets get <span class="skill-highlight">100%</span> of the benefit of your Thorns and Life regeneration items.'
+		},
+		'grave-injustice': {
+			'desc': 'Whenever an enemy dies within <span class="skill-highlight">8</span> yards, regain <span class="skill-highlight">1%</span> of your maximum Life and Mana and the cooldown on all of your abilities is reduced by <span class="skill-highlight">1</span> second. This range is extended by items that increase your gold pickup radius.'
+		},
+		'tribal-rites': {
+			'desc': 'The cooldowns of your Fetish Army, Big Bad Voodoo, and Hex abilities are reduced by <span class="skill-highlight">25%</span>.'
+		},
+	}
+}
 var activeSkills = {
-
-
 	'barbarian': {
 		'bash': {
 			name: 'Bash',
@@ -5604,4 +5984,3 @@ var activeSkills = {
 		},
 	}
 };
-console.log(activeSkills);

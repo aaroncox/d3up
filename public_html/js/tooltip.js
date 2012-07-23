@@ -1,5 +1,5 @@
 $(function() {
-	var tooltip = $("<div class='d3up-tooltip'/>");
+	var tooltip = $(".d3up-tooltip");
 	$.fn.bindTooltip = function() {
 		var item = $.parseJSON($(this).attr('data-json'));
 		var container = $("<div class='d3-item'/>"),
@@ -88,6 +88,33 @@ $(function() {
 			tooltip.empty();
 		});
 		
+	}
+	$.fn.bindSkilltip = function() {
+		var tooltip = $(".d3up-tooltip");
+		var container = $("<div class='d3-item'/>"),
+				header = $("<div class='top'/>"),
+				content = $("<div class='item'/>"),
+				footer = $("<div class='bottom'/>");
+		header.html($("<p>").append($(this).data("name")));
+		content.html($("<p>").append($(this).data("tooltip")));
+		container.append(header, content, footer);
+		$(this).mouseover(function() {
+			var $this = $(this);
+			tooltip.css({
+					position: 'absolute'
+			});
+			tooltip.empty().append(container);
+			var position = {
+				of: $this,
+				at: "right top",
+				my: "left top",
+				offset: "0 10",
+				collision: "flip"
+			};
+			tooltip.appendTo("body").position(position);
+		}).mouseout(function() {
+			tooltip.empty();
+		});
 	}
 	function checkTooltip() {
 		if($(this).attr('data-json')) {			

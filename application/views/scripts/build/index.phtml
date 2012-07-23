@@ -59,6 +59,7 @@
 			<tr>
 				<th></th>
 				<th>Name</th>
+				<th>Skills</th>
 				<th>DPS</th>
 				<th>EHP</th>
 				<th>Geared?</th>
@@ -68,6 +69,26 @@
 			<tr class='build-row'>
 				<td class="icon"><img src="/images/<?= $build->class ?>.png"/></td>
 				<td class="name"><?= $this->mLink($build) ?></td>
+				<td class="skills">
+					<? if($build->actives): ?>
+						<? foreach($build->actives as $active): ?>
+							<? 
+								$explode = explode("~", $active);
+								$skill = $explode[0];
+							?>
+							<img data-class="<?= $build->class ?>" data-id="<?= $active ?>" src="/images/icons/<?= $build->class ?>-<?= $skill ?>.png" class="skill-tip"/>
+						<? endforeach ?>
+					<? endif ?>
+					<? if($build->passives): ?>
+						<? foreach($build->passives as $passive): ?>
+							<? 
+								$explode = explode("~", $passive);
+								$skill = $explode[0];
+							?>
+							<img data-class="<?= $build->class ?>" data-id="<?= $passive ?>" src="/images/icons/<?= $build->class ?>-<?= $skill ?>.png" class="skill-tip"/>
+						<? endforeach ?>
+					<? endif ?>
+				</td>
 				<td class="stat"><?= $this->prettyStat($build->stats['dps']) ?></td>
 				<td class="stat"><?= $this->prettyStat($build->stats['ehp']) ?></td>
 				<td class="meta"><?= (count($build->equipment) > 10)?"<span class='pos'>Yes</span>":"<span class='neg'>No</span>" ?></td>

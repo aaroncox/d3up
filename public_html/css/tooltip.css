@@ -98,6 +98,7 @@
 	color: #000;
 }
 .d3-item .bottom {
+	text-align: right;
 	background: url("/images/item-bottom.png") no-repeat scroll left top transparent;
 	height: 54px;
 	line-height: 52px;

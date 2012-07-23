@@ -12,11 +12,15 @@
 	<?= $this->displayItem($this->record) ?>
 	<div style="background-color: #111; margin: 5px; padding: 5px" class='ui-widget ui-corner-all'>
 	<h3 style="margin: 0">Perfection Ratings</h3>
-	<table style="width: 100%">
+	<table class="perfection-rating">
 		<tr>
 			<? foreach($this->record->rating as $key => $value): ?>
+				<? if($key == 'total') { continue; } ?>
 				<td><?= $this->itemStat($key, round($value, 1) . "%", $value)?></td>
 			<? endforeach ?>			
+			<td>
+				<?= $this->itemStat('total', $this->record->rating['total']."%", $this->record->rating['total'])  ?>
+			</td>
 		</tr>
 	</table>
 	</div>

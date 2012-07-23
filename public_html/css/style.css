@@ -309,9 +309,13 @@ ul.sub_menu > li.witch-doctor {
 	padding: 5px;
 	border-top: 1px solid #111;
 	line-height: 42px;
+	overflow: hidden;
 }
 .d3up-table td.name {
 	width: 350px;
+}
+.home .d3up-table td.name {
+	width: 150px;
 }
 .d3up-table td.name a {
 	display: block;
@@ -508,10 +512,13 @@ dd:has(:focus) .chzn-container {
 #all-builds td.meta,
 #all-builds td.stat {
 	text-align: center;
-	font-size: 1.3em;
-	width: 80px;
-	max-width: 80px;
 	overflow: hidden;
+}
+.d3up-table td.skills {
+	width: 280px;
+}
+.d3up-table td.skills img {
+	width: 25px;
 }
 #all-builds td.meta {
 	font-size: 0.9em;
@@ -519,7 +526,7 @@ dd:has(:focus) .chzn-container {
 	max-width: 50px;
 }
 #all-builds td.name {
-	width: 50%;
+
 }
 #all-builds td.description {
 	width: 160px;
@@ -812,12 +819,15 @@ tr.compared > td:first-child {
 }
 .per-50 {
 	color: #0a0;	
-	
 }
 .per-40 {
 	color: #090;	
-	
 }
 .per-30 {
 	color: #080;		
+}
+.perfection-rating td {
+	border: 1px solid #333;
+	padding: 5px;
+	width: 50px;
 }
