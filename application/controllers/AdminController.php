@@ -20,10 +20,13 @@ class AdminController extends Epic_Controller_Action
 		}
 	}
 	public function resaveItemsAction() {
-		foreach(Epic_Mongo::db('item')->fetchAll() as $item) {
+		$query = array(
+			'rating' => array('$exists' => false)
+		);
+		foreach(Epic_Mongo::db('item')->fetchAll($query) as $item) {
 			$item->save();
 		}
-		foreach(Epic_Mongo::db('sale')->fetchAll() as $sale) {
+		foreach(Epic_Mongo::db('sale')->fetchAll($query) as $sale) {
 			$sale->item->save();
 		}
 		echo "Resaved all items"; exit;
