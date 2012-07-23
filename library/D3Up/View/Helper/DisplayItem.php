@@ -172,7 +172,7 @@ class D3Up_View_Helper_DisplayItem extends Zend_View_Helper_Abstract
 		'life-kill' => '+[v] Life after each Kill',
 		'life-hit' => 'Each hit adds +[v] Life',
 		'level-reduce' => 'Level Requirement reduced by [v]',
-		'indestructable' => 'Ignores durability loss',
+		'indestructible' => 'Ignores durability loss',
 		// Barbarian
 		'bb-bash' => 'Increases bash damage by [v]%',
 		'bb-cleave' => 'Increases cleave damage by [v]%',

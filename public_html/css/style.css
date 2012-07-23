@@ -301,9 +301,13 @@ ul.sub_menu > li.witch-doctor {
 .d3up-table tbody tr.item-row:nth-child(2n) {
 	background-color: #191919;
 }
+.d3up-table tbody tr th:last-child,
+.d3up-table tbody tr td:last-child {
+	border-right: 1px solid #000;
+}
 .d3up-table td {
 	padding: 5px;
-	border: 1px solid #111;
+	border-top: 1px solid #111;
 	line-height: 42px;
 }
 .d3up-table td.name {
@@ -580,8 +584,12 @@ dd:has(:focus) .chzn-container {
 	font-size: 10px;
 	line-height: 1.5em;
 }
+.d3up-table td.sorted {
+	border-left: 1px solid #FF0;
+	border-right: 1px solid #FF0;
+}
 td.sorted .value {
-	color: #8AFF57;
+/*	color: #FF0;*/
 }
 #my-builds {
 	display: none;
@@ -781,4 +789,35 @@ tr.compared > td:first-child {
 }
 #content .zend_form ul.errors li {
 	color: #f00;
+}
+.per-min {
+	color: #070;
+}
+.per-max {
+	color: #0f0;	
+}
+.per-90 {
+	color: #0e0;	
+}
+.per-80 {
+	color: #0d0;	
+	
+}
+.per-70 {
+	color: #0c0;	
+	
+}
+.per-60 {
+	color: #0b0;	
+}
+.per-50 {
+	color: #0a0;	
+	
+}
+.per-40 {
+	color: #090;	
+	
+}
+.per-30 {
+	color: #080;		
 }

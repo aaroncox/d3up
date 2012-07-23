@@ -19,4 +19,13 @@ class AdminController extends Epic_Controller_Action
 			$build->save();
 		}
 	}
+	public function resaveItemsAction() {
+		foreach(Epic_Mongo::db('item')->fetchAll() as $item) {
+			$item->save();
+		}
+		foreach(Epic_Mongo::db('sale')->fetchAll() as $sale) {
+			$sale->item->save();
+		}
+		echo "Resaved all items"; exit;
+	}
 } // END class AdminController extends Epic_Controller_Action

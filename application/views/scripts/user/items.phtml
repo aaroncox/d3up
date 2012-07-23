@@ -285,7 +285,7 @@
 										$val += $socketAttrs[$k];
 									}
 									unset($attrs[$v]);
-									echo "<td class='sorted'>".$this->itemStat(ucwords(str_replace("_", " ", $v)), $val)."</td>";							
+									echo "<td class='sorted'>".$this->itemStat($v, $val, $item->rating[$v])."</td>";							
 								}
 							}
 							$count = count($this->sortAttrs);
@@ -299,7 +299,7 @@
 								}
 							?>
 							<? if($count > 6) { continue; } ?>
-							<td><?= $this->itemStat($k, $val) ?></td>
+							<td><?= $this->itemStat($k, $val, $item->rating[$k]) ?></td>
 						<? endforeach ?>
 						<? if($count < 6): ?>
 							<? for($i = $count; $i < 6; $i++): ?>

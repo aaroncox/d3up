@@ -36,6 +36,11 @@ class D3Up_Mongo_Record_Item extends Epic_Mongo_Document_Record
 		return new D3Up_Form_Record_Item(array('item' => $this));
 	}
 	
+	public function save() {
+		$this->rating = D3Up_Tool_MaxStat::getInstance()->calc($this);
+		return parent::save();
+	}
+	
 	public function cleanExport() {
 		$export = $this->export();
 		// Get rid of some mongo settings
