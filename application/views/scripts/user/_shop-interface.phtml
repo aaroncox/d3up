@@ -92,12 +92,16 @@
 <div class="user-shop">
 	<ul>
 		<li><a href="#tab-shop">For Sale</a></li>
+		<li><a href="#tab-summary">Statistics</a></li>
 		<li><a href="#tab-complete">Completed</a></li>
 		<li><a href="#tab-all-complete">All Completed Sales</a></li>
 		<li><a href="#tab-help">What is this?</a></li>
 	</ul>
 	<div id="tab-shop">
 		<?= $this->render("./user/shop/shop.phtml")?>
+	</div>
+	<div id="tab-summary">
+		<?= $this->render("./user/shop/summary.phtml")?>
 	</div>
 	<div id="tab-complete">
 		<?= $this->render("./user/shop/completed.phtml") ?>

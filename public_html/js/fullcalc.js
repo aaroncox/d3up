@@ -855,69 +855,79 @@ function calc(target, passiveSkills) {
 			mathEHPElite = mathLifeTotal / mathDTElite;
 
 	// Calculate EHP by each piece of gear
-	var slotEHP = {};
-	$(target).each(function() {
-		var data = $(this).data("json"),
-			slot = $(this).parent().data("slot"), 
-			slotStats = {
-				mathEHP: 0,
-				mathReduction: 0,
-				resistAll: 0,
-				armor: 0,
-				intelligence: 0,
-				vitality: 127,
-				life: 0
-			};		
-
-		if(data.stats) {
-			if(data.stats.armor) {
-				slotStats.armor += data.stats.armor;
-			}			
-		}
-		if(data.attrs) {
-			if(data.attrs['intelligence']) {
-				slotStats.intelligence += data.attrs.intelligence;
-			}
-			if(data.attrs['strength']) {
-				slotStats.armor += data.attrs['strength'];
-			}
-			if(data.attrs['resist-all']) {
-				slotStats.resistAll += data.attrs['resist-all'];
-			}
-			if(data.attrs['vitality']) {
-				slotStats.vitality += data.attrs['vitality'];
-			}
-		}
-		if(data.socketAttrs) {
-			if(data.socketAttrs['vitality']) {
-				// slotStats.vitality += data.socketAttrs['vitality'];
-			}
-			if(data.socketAttrs['intelligence']) {
-				slotStats.intelligence += data.socketAttrs.intelligence;
-			}
-			if(data.socketAttrs['strength']) {
-				slotStats.armor += data.socketAttrs['strength'];
-			}
-		}
-
-		// Calc Life
-		slotStats.life = 36 + 4 * 60 + (60 - 25) * slotStats.vitality;
-		if(data.socketAttrs) {
-			if(data.socketAttrs['plus-life']) {
-				slotStats.life = slotStats.life * (1 + (data.socketAttrs['plus-life'] / 100));
-			}
-		}
-		if(slotStats.armor) {
-			slotStats.mathReduction = slotStats.armor / (50 * vsLevel * slotStats.armor);						
-		}
-		slotStats.mathAllResist = Math.round(slotStats.resistAll + (slotStats.intelligence / 10));
-		// Do the EHP Calc
-		slotStats.mathAR = (slotStats.mathAllResist / (5 * parseInt(vsLevel) + slotStats.mathAllResist));
-		slotStats.mathDT = (1 - slotStats.mathAR) * (1 - slotStats.mathReduction);
-		// if(slotStats.mathDT) {
-			slotStats.mathEHP = slotStats.life / slotStats.mathDT;			
+	// var slotEHP = {};
+	// var originalStats = {},
+	// jQuery.extend(original)
+	// $(target).each(function() {
+	// 	var data = $(this).data("json"),
+	// 			slot = $(this).parent().data("slot");
+	// 	
+	// 	console.log(data, slot); 
+		
+		// calc(".equipped a");
+		// Get the new possible stats
+		// var possible = {};
+		// jQuery.extend(possible,stats);
+				
+		// 	slotStats = {
+		// 		mathEHP: 0,
+		// 		mathReduction: 0,
+		// 		resistAll: 0,
+		// 		armor: 0,
+		// 		intelligence: 0,
+		// 		vitality: 127,
+		// 		life: 0
+		// 	};		
+		// 
+		// if(data.stats) {
+		// 	if(data.stats.armor) {
+		// 		slotStats.armor += data.stats.armor;
+		// 	}			
 		// }
-		slotEHP[slot] = slotStats.mathEHP;			
+		// if(data.attrs) {
+		// 	if(data.attrs['intelligence']) {
+		// 		slotStats.intelligence += data.attrs.intelligence;
+		// 	}
+		// 	if(data.attrs['strength']) {
+		// 		slotStats.armor += data.attrs['strength'];
+		// 	}
+		// 	if(data.attrs['resist-all']) {
+		// 		slotStats.resistAll += data.attrs['resist-all'];
+		// 	}
+		// 	if(data.attrs['vitality']) {
+		// 		slotStats.vitality += data.attrs['vitality'];
+		// 	}
+		// }
+		// if(data.socketAttrs) {
+		// 	if(data.socketAttrs['vitality']) {
+		// 		// slotStats.vitality += data.socketAttrs['vitality'];
+		// 	}
+		// 	if(data.socketAttrs['intelligence']) {
+		// 		slotStats.intelligence += data.socketAttrs.intelligence;
+		// 	}
+		// 	if(data.socketAttrs['strength']) {
+		// 		slotStats.armor += data.socketAttrs['strength'];
+		// 	}
+		// }
+		// 
+		// // Calc Life
+		// slotStats.life = 36 + 4 * 60 + (60 - 25) * slotStats.vitality;
+		// if(data.socketAttrs) {
+		// 	if(data.socketAttrs['plus-life']) {
+		// 		slotStats.life = slotStats.life * (1 + (data.socketAttrs['plus-life'] / 100));
+		// 	}
+		// }
+		// if(slotStats.armor) {
+		// 	slotStats.mathReduction = slotStats.armor / (50 * vsLevel * slotStats.armor);						
+		// }
+		// slotStats.mathAllResist = Math.round(slotStats.resistAll + (slotStats.intelligence / 10));
+		// // Do the EHP Calc
+		// slotStats.mathAR = (slotStats.mathAllResist / (5 * parseInt(vsLevel) + slotStats.mathAllResist));
+		// slotStats.mathDT = (1 - slotStats.mathAR) * (1 - slotStats.mathReduction);
+		// // if(slotStats.mathDT) {
+		// 	slotStats.mathEHP = slotStats.life / slotStats.mathDT;			
+		// // }
+		// slotEHP[slot] = slotStats.mathEHP;			
 		// console.log(slotEHP[slot], slotStats.mathAR, slotStats.mathDT, slotStats.mathAllResist, slotStats.life);
 		// if(data.stats) {
 		// 	$.each(data.stats, function(k,v) {
@@ -936,7 +946,7 @@ function calc(target, passiveSkills) {
 		// }
 
 
-	});
+	// });
 
 	// EHP by Gear
 	$("#stats-ehp-gear").html('');

@@ -1,0 +1,175 @@
+<style type="text/css">
+	.d3up-table.kpi td {
+		width: 33%;
+	}
+	.bar {
+		border: 1px solid #000;
+		height: 30px;
+		background: #0d0;
+		color: #000;
+		font-size: 12px;
+		text-align: right;
+		line-height: 30px;
+		padding: 4px;
+	}
+	.kpi {
+		font-size: 2em;
+		padding: 10px 25px;
+		margin-bottom: 30px;
+	}
+</style>
+<?
+	$totalValue = 0;
+	$totalSales = 0;
+	$totalFailed = 0;
+	$totalPendingSales = 0;
+	$totalPendingBuyout = 0;
+	$totalPendingBid = 0;
+ 	$byDate = array();
+	foreach($this->allSales as $sale) {
+		$date = strtotime(date("Y-m-d", $sale->soldOn));
+		if($date > 0) {
+			// Setup date if needed
+			if(!isset($byDate[$date])) {
+				$byDate[$date]['sales'] = 0;
+				$byDate[$date]['value'] = 0;
+				$byDate[$date]['failed'] = 0;
+			}
+			if($sale->soldSuccess) {
+				// Record Successful Sales
+				$byDate[$date]['sales']++;
+				$byDate[$date]['value'] += $sale->soldFor;			
+				$totalSales++;
+				$totalValue += $sale->soldFor;				
+			} else {
+				// Record Failed Stats
+				$byDate[$date]['failed']++;
+				$totalSales++;
+				$totalFailed++;
+			}
+		} else {
+			$totalPendingSales++;
+			$totalPendingBuyout += $sale->buyout;
+			$totalPendingBid += $sale->bid;
+		}
+	}
+	krsort($byDate);
+	
+	// $globalValue = 0;
+	// $globalSales = 0;
+	// foreach($this->allcompleted as $sale) {
+	// 	if($sale->soldSuccess) {
+	// 		// Record Successful Sales
+	// 		$globalSales++;
+	// 		$globalValue += $sale->soldFor;
+	// 	}
+	// }
+	
+	// var_dump($this->allSales->export()); exit;
+	// var_dump($byDate); exit;
+?>
+<table class="d3up-table kpi">
+	<tr>
+		<td>
+			<div class='item-stat'>
+				<span class="stat">
+					Pending Sales
+				</span>
+				<span class='value'>
+					<?= $totalPendingSales ?>
+				</span>
+				<span class="stat">
+					<?= $this->prettyStat($totalPendingBid)?> bids 
+					/ 
+					<?= $this->prettyStat($totalPendingBuyout)?> buyouts 
+				</span>
+			</div>
+		</td>
+		<td>
+			<div class='item-stat'>
+				<span class="stat">
+					Total Sales
+				</span>
+				<span class='value'>
+					<?= $totalSales ?>
+				</span>
+				<span class="stat">
+					<span class="pos"><?= $totalSales - $totalFailed ?></span> Sold / 
+					<span class="neg"><?= $totalFailed ?></span> Failed
+				</span>
+			</div>
+		</td>
+		<td>
+			<div class='item-stat'>
+				<span class="stat">
+					Total Sales Value
+				</span>
+				<span class='value'>
+					<img src="/images/goldcoin.png"> <?= $this->prettyStat($totalValue / 0.85) ?>
+				</span>
+				<span class="stat">
+					<?= $this->prettyStat($totalValue) ?> after AH cut
+				</span>
+			</div>
+		</td>
+	</tr>
+</table>
+<table class="d3up-table">
+	<thead>
+		<tr>
+			<th>Date</th>
+			<th colspan="2">Total Sales</th>
+			<th>Earnings</th>
+			<th>Avg Sale</th>
+			<th>Portion of Total Sales Displayed</th>
+		</tr>
+	</thead>
+	<tbody>
+		<? foreach($byDate as $date => $sale): ?>
+		<tr class="item-row">
+			<td class='data'>
+				<div class='item-stat'>
+					<span class='value'><?= date("Y-m-d", $date) ?></span>
+					<span class='stat'><?= date("l", $date) ?></span>
+				</div>
+			</td>
+			<td class='data'>
+				<div class='item-stat'>
+					<span class='value pos'><?= $sale['sales'] ?></span>
+					<span class='stat'>Sales</span>
+				</div>
+			</td>
+			<td class='data'>
+				<div class='item-stat'>
+					<span class='value neg'><?= $sale['failed'] ?></span>
+					<span class='stat'>Failed Auctions</span>
+				</div>
+			</td>
+			<td class='data'>
+				<div class='item-stat'>
+					<span class='value'>
+						<img src="/images/goldcoin.png"> <?= $this->prettyStat($sale['value'] / 0.85) ?>
+					</span>
+					<span class="stat">
+						<?= $this->prettyStat($sale['value']) ?> after AH cut
+					</span>
+				</div>
+			</td>
+			<td class='data'>
+				<div class='item-stat'>
+					<span class='value'>
+						<img src="/images/goldcoin.png"> <?= $this->prettyStat(round(($sale['value'] / $sale['sales']), 1) / 0.85) ?>
+					</span>
+					<span class="stat">
+						<?= $this->prettyStat(round(($sale['value'] / $sale['sales']), 1)) ?> after AH cut
+					</span>
+				</div>
+			</td>
+			<td class='name'>
+				<? $per = round($sale['value'] / $totalValue * 100) ?>
+				<div class="bar" style="width: <?= $per ?>%"><?= $per ?>%</div> 
+			</td>
+		</tr>
+		<? endforeach ?>
+	</tbody>
+</table>
