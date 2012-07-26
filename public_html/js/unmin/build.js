@@ -449,11 +449,11 @@ $(function() {
 		simAgainst.bindTooltip();
 		simAgainstDisplay.find(".top p").empty().append(simAgainst);
 		simAttrs.val(null);
+		var statsValue = simAgainstDisplay.find(".stats-primary .big-stat").empty(),
+				statsValueHelper = simAgainstDisplay.find(".stats-primary .stat-helper").empty(),
+				statsPercent = simAgainstDisplay.find(".stats-extra-percent").empty(),
+				statsRange = simAgainstDisplay.find(".stats-extra-range").empty();
 		if(simAgainstData.stats) {			
-			var statsValue = simAgainstDisplay.find(".stats-primary .big-stat").empty(),
-					statsValueHelper = simAgainstDisplay.find(".stats-primary .stat-helper").empty(),
-					statsPercent = simAgainstDisplay.find(".stats-extra-percent").empty(),
-					statsRange = simAgainstDisplay.find(".stats-extra-range").empty();
 			$.each(simAgainstData.stats, function(k,v) {
 				var input = $("<input name='" + k + "' type='text'/>");
 				input.val(v);
