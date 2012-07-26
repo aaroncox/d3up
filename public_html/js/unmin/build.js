@@ -654,7 +654,7 @@ $(function() {
 				break;
 		}
 		// Add the new item
-		calc.parseItem(newItem);
+		calc.parseItem(newItem, slot);
 		// Get new stats
 		var newStats = calc.run();
 		// calculate the diff

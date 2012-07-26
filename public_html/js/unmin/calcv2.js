@@ -217,7 +217,7 @@ var buildCalculator = {
 									var match = false;
 									// console.log(c,i);
 									_.each(c.case.split("|"), function(l, n) {
-										// console.log("now", value.var, value.lookup);
+										// console.log("now", value.var, value.lookup, this.gear[value.var][value.lookup], this.gear);
 										if(l == this.gear[value.var][value.lookup]) {
 											_.each(c.effect, function(eff, e) {
 												switch(e) {
@@ -230,6 +230,7 @@ var buildCalculator = {
 														break;
 													case "critical-hit-damage":
 														this.attrs['critical-hit-damage'] = this.attrs['critical-hit-damage'] + (eff * 100);
+														// console.log("up chd" , this.attrs['critical-hit-damage']);
 														break;
 													case "attack-speed": 
 														if(this.attrs['attack-speed-incs']) {
