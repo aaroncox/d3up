@@ -140,16 +140,16 @@ var passives = {
 			'desc': 'While dual-wielding, you gain a <span class="skill-highlight">15%</span> chance to dodge incoming attacks. While using a two-handed weapon, all Spirit generation is increased by <span class="skill-highlight">25%</span>.',
 			'effect': {
 				'switch': {
-					'var': 'slot',
+					'var': 'isDuelWielding',
 					'cases': [
 						{
-							"case": "mainhand|offhand",
+							"case": true,
 							'effect': {
 								'plus-dodge': 0.15
 							}
 						},
 						{
-							"case": "mainhand",
+							"case": false,
 							'effect': {
 								'plus-spirit-regen': 0.25
 							}
@@ -330,7 +330,7 @@ var passives = {
 		'jungle-fortitude': {
 			'desc': 'Reduces all damage taken by you and your pets by <span class="skill-highlight">20%</span>.',
 			'effect': {
-				'reduce-damage': 0.20
+				'damage-reduce': 0.20
 			}
 		},
 		'spiritual-attunement': {
@@ -5984,3 +5984,121 @@ var activeSkills = {
 		},
 	}
 };
+var td = [];
+td['strength'] = '+VVV Strength';
+td['intelligence'] = '+VVV Intelligence';
+td['vitality'] = '+VVV Vitality';
+td['dexterity'] = '+VVV Dexterity';
+td['resist-all'] = '+VVV Resistance to All Elements';
+td['armor'] = '+VVV Armor';
+td['plus-life'] = '+VVV% Life';
+td['life-regen'] = 'Regenerates VVV Life per Second';
+td['plus-block'] = '+VVV% Chance to Block';
+td['cc-reduce'] = 'Reduces the duration of control impairing effects by VVV%';
+td['elite-reduce'] = 'Reduces damage from elites by VVV%';
+td['melee-reduce'] = 'Reduces damage from melee attacks by VVV%';
+td['range-reduce'] = 'Reduces damage from ranged attacks by VVV%';
+td['arcane-resist'] = '+VVV Arcane Resistance';
+td['cold-resist'] = '+VVV Cold Resistance';
+td['fire-resist'] = '+VVV Fire Resistance';
+td['lightning-resist'] = '+VVV Lightning Resistance';
+td['physical-resist'] = '+VVV Physical Resistance';
+td['poison-resist'] = '+VVV Poison Resistance';
+td['thorns'] = 'Melee attackers take VVV damage per hit';
+td['attack-speed'] = 'Attack speed increased by VVV%';
+td['critical-hit'] = 'Critical Hit Chance increased by VVV%';
+td['critical-hit-damage'] = 'Critical Hit Damage increased by VVV%';
+td['plus-damage'] = '+VVV% Damage';
+td['min-damage'] = '+VVV Minimum Damage';
+td['max-damage'] = '+VVV Maximum Damage';
+td['arcane-damage'] = '+VVV Arcane Damage';
+td['cold-damage'] = '+VVV Cold Damage';
+td['fire-damage'] = '+VVV Fire Damage';
+td['holy-damage'] = '+VVV Holy Damage';
+td['lightning-damage'] = '+VVV Lightning Damage';
+td['poison-damage'] = '+VVV Poison Damage';
+td['elite-damage'] = 'Increases Damage against Elites by VVV%';
+td['chance-bleed'] = 'VVV% chance to inflict Bleed for VVV damage over 5 seconds';
+td['chance-blind'] = 'VVV% chance to Blind on Hit';
+td['chance-chill'] = 'VVV% chance to Chill on Hit';
+td['chance-fear'] = 'VVV% chance to Fear on Hit';
+td['chance-freeze'] = 'VVV% chance to Freeze on Hit';
+td['chance-immobilize'] = 'VVV% chance to Immobilize on Hit';
+td['chance-knockback'] = 'VVV% chance to Knockback on Hit';
+td['chance-slow'] = 'VVV% chance to Slow on Hit';
+td['chance-stun'] = 'VVV% chance to Stun on Hit';
+td['plus-movement'] = '+VVV% Movement Speed';
+td['plus-pickup-radius'] = 'Increases Gold and Health pickup by VVV yards';
+td['plus-experience'] = 'Monster kills grant +VVV experience';
+td['plus-gold-find'] = '+VVV% Extra Gold from Monsters';
+td['plus-magic-find'] = 'VVV% Better Chance of finding Magic Items';
+td['health-globes'] = 'Health Globes grant +VVV Life';
+td['life-steal'] = 'VVV% of Damage Dealt is Converted to Life (Steal)';
+td['life-kill'] = '+VVV Life after each Kill';
+td['life-hit'] = 'Each hit adds +VVV Life';
+td['level-reduce'] = 'Level Requirement reduced by VVV';
+td['indestructable'] = 'Ignores durability loss';
+td['bb-bash'] = 'Increases bash damage by VVV%';
+td['bb-cleave'] = 'Increases cleave damage by VVV%';
+td['bb-frenzy'] = 'Increases frenzy damage by VVV%';
+td['bb-rend'] = 'Reduces resource cost of Rend by VVV Fury';
+td['bb-revenge'] = 'Increases Critical Hit Chance of Revenge by VVV%';
+td['bb-weapon-throw'] = 'Reduces resource cost of Weapon Throw by VVV Fury';
+td['bb-hammer-of-the-ancients'] = 'Reduces resource cost of Hammer of the Ancients by VVV Fury';
+td['bb-whirlwind'] = 'Increases Critical Hit Chance of Whirlwind by VVV%';
+td['bb-overpower'] = 'Increases Critical Hit Chance of Overpower by VVV%';
+td['bb-seismic-slam'] = 'Increases Critical Hit Chance of Seismic Slam by VVV%';
+td['fury-max'] = '+VVV Maximum Fury';
+td['hatred-regen'] = 'Increases Hatred Regeneration by VVV per Second';
+td['max-discipline'] = '+VVV Maximum Discipline';
+td['dh-cluster-arrow'] = 'Reduces resource cost of Cluster Arrow by VVV Hatred.';
+td['dh-chakram'] = 'Reduces resource cost of Chakram by VVV Hatred';
+td['dh-evasive-fire'] = 'Increases Evasive Fire damage by VVV%';
+td['dh-grenades'] = 'Increases Grenades Damage by [V]%';
+td['dh-impale'] = 'Reduces resource cost of Impale by VVV Hatred';
+td['dh-spike-trap'] = 'Increases Spike Trap damage by VVV%';
+td['dh-bola-shot'] = 'Increases Bola Shot damage by VVV%';
+td['dh-elemental-arrow'] = 'Increases Elemental Arrow damage by VVV%';
+td['dh-entangling-shot'] = 'Increases Entangling Shot damage by VVV%';
+td['dh-hungering-arrow'] = 'Increases Hungering Arrow damage by VVV%';
+td['dh-multishot'] = 'Increases Critical Hit Chance of Multishot by VVV%';
+td['dh-rapid-fire'] = 'Increases Critical Hit Chance of Rapid Fire by VVV%';
+td['spirit-spent-life'] = 'Gain VVV per Spirit Spent';
+td['spirit-regen'] = 'Increases Spirit Regeneration by VVV per Second';
+td['mk-crippling-wave'] = 'Increases Crippling Wave damage by VVV%';
+td['mk-cyclone-strike'] = 'Reduces resource cost of Cyclone Strike by VVV Spirit';
+td['mk-deadly-reach'] = 'Increases Deadly Reach damage by VVV%';
+td['mk-exploding-palm'] = 'Increases Exploding Palm damage by VVV%';
+td['mk-fists-of-thunder'] = 'Increases Fist of Thunder damage by VVV%';
+td['mk-sweeping-wind'] = 'Increases Sweeping Wind damage by VVV%';
+td['mk-way-of-the-hundred-fists'] = 'Increases Way of the Hundred Fists damage by VVV%';
+td['mk-lashing-tail-kick'] = 'Reduces resource cost of Lashing Tail Kick by VVV Spirit';
+td['mk-tempest-rush'] = 'Increases Critical Hit Chance of Tempest Rush by VVV%';
+td['mk-wave-of-light'] = 'Increases Critical Hit Chance of Wave of Light by VVV%';
+td['mana-regen'] = 'Increases Mana Regeneration by VVV per Second';
+td['mana-max'] = '+VVV Maximum Mana';
+td['wd-firebomb'] = 'Reduces resource cost of Firebomb by VVV Mana';
+td['wd-haunt'] = 'Increases Haunt Damage by VVV%';
+td['wd-acid-clouds'] = 'Increases Critical Hit Chance of Acid Clouds by VVV%';
+td['wd-firebats'] = 'Reduces resource cost of Firebats by VVV Mana';
+td['wd-zombie-dogs'] = 'Reduces cooldown of Summon Zombie Dogs by VVV Seconds';
+td['wd-plague-of-toads'] = 'Increases Plague of Toads damage by VVV%';
+td['wd-poison-darts'] = 'Increaeses Poison Darts damage by VVV%';
+td['wd-spirit-barrage'] = 'Increases Spirit Barrage damage by VVV%';
+td['wd-wall-of-zombies'] = 'Reduces cooldown of Wall of Zombies by VVV Seconds';
+td['wd-zombie-charger'] = 'Reduces resource cost of Zombie Charger by VVV Mana';
+td['ap-on-crit'] = 'Critical Hits grant VVV Arcane Power';
+td['ap-max'] = '+VVV Maximum Arcane Power';
+td['wz-arcane-torrent'] = 'Reduces resource cost of Arcane Torrent by VVV Arcane Power';
+td['wz-disintegrate'] = 'Reduces resource cost of Disintegrate by VVV Arcane Power';
+td['wz-electrocute'] = 'Increases Electrocute damage by VVV%';
+td['wz-explosive-blast'] = 'Increases Critical Hit Chance of Explosive Blast by VVV%';
+td['wz-hydra'] = 'Reduces resource cost of Hydra by VVV Arcane Power';
+td['wz-ray-of-frost'] = 'Increases Critical Hit Chance of Ray of Frost by VVV%';
+td['wz-energy-twister'] = 'Increases Critical Hit Chance of Energy Twister by VVV%';
+td['wz-magic-missle'] = 'Increases Magic Missle damage by VVV%';
+td['wz-arcane-orb'] = 'Increases Critical Hit Chance of Arcane Orb by VVV%';
+td['wz-blizzard'] = 'Increases duration of Blizzard by VVV Seconds';
+td['wz-meteor'] = 'Reduces resource cost of Meteor by VVV Arcane Power';
+td['wz-shock-pulse'] = 'Increases Shock Pulse damage by VVV%';
+td['wz-spectral-blade'] = 'Increases Spectral Blade damage by VVV%';

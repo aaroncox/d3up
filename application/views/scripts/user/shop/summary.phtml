@@ -4,13 +4,17 @@
 	}
 	.bar {
 		border: 1px solid #000;
-		height: 30px;
+		height: 15px;
 		background: #0d0;
 		color: #000;
 		font-size: 12px;
 		text-align: right;
-		line-height: 30px;
+		line-height: 15px;
 		padding: 4px;
+		min-width: 20px;
+	}
+	.bar.bar-neg {
+		background: #d00;		
 	}
 	.kpi {
 		font-size: 2em;
@@ -25,7 +29,19 @@
 	$totalPendingSales = 0;
 	$totalPendingBuyout = 0;
 	$totalPendingBid = 0;
+	$totalExpenses = 0;
  	$byDate = array();
+	foreach($this->expenses as $expense) {
+		$date = strtotime(date("Y-m-d", $expense->date));
+		if(!isset($byDate[$date])) {
+			$byDate[$date]['sales'] = 0;
+			$byDate[$date]['value'] = 0;
+			$byDate[$date]['failed'] = 0;
+			$byDate[$date]['expenses'] = 0;	
+		}
+		$byDate[$date]['expenses'] += $expense->amount;
+		$totalExpenses += $expense->amount;
+	}
 	foreach($this->allSales as $sale) {
 		$date = strtotime(date("Y-m-d", $sale->soldOn));
 		if($date > 0) {
@@ -34,6 +50,7 @@
 				$byDate[$date]['sales'] = 0;
 				$byDate[$date]['value'] = 0;
 				$byDate[$date]['failed'] = 0;
+				$byDate[$date]['expenses'] = 0;
 			}
 			if($sale->soldSuccess) {
 				// Record Successful Sales
@@ -121,7 +138,8 @@
 			<th colspan="2">Total Sales</th>
 			<th>Earnings</th>
 			<th>Avg Sale</th>
-			<th>Portion of Total Sales Displayed</th>
+			<th>Expenses</th>
+			<th>Portion of Total Earnings / % Profit Spent</th>
 		</tr>
 	</thead>
 	<tbody>
@@ -158,16 +176,39 @@
 			<td class='data'>
 				<div class='item-stat'>
 					<span class='value'>
-						<img src="/images/goldcoin.png"> <?= $this->prettyStat(round(($sale['value'] / $sale['sales']), 1) / 0.85) ?>
+						<img src="/images/goldcoin.png"> 
+						<? if($sale['value'] > 0 && $sale['sales'] > 0): ?>
+							<?= $this->prettyStat(round(($sale['value'] / $sale['sales']), 1) / 0.85) ?>
+						<? else: ?>
+							~
+						<? endif ?>
 					</span>
 					<span class="stat">
-						<?= $this->prettyStat(round(($sale['value'] / $sale['sales']), 1)) ?> after AH cut
+						<? if($sale['value'] > 0 && $sale['sales'] > 0): ?>
+							<?= $this->prettyStat(round(($sale['value'] / $sale['sales']), 1)) ?> after AH cut
+						<? else: ?>
+							~
+						<? endif ?>
+					</span>
+				</div>
+			</td>
+			<td class='data'>
+				<div class='item-stat'>
+					<span class='value'>
+						<?= $this->prettyStat($sale['expenses']) ?>
 					</span>
 				</div>
 			</td>
 			<td class='name'>
-				<? $per = round($sale['value'] / $totalValue * 100) ?>
+				<? 
+				$per = round($sale['value'] / $totalValue * 100);
+				$exp = 0;
+				if($sale['value']) {
+					$exp = round($sale['expenses'] / $sale['value'] * 100);					
+				}
+				?>
 				<div class="bar" style="width: <?= $per ?>%"><?= $per ?>%</div> 
+				<div class="bar bar-neg" style="width: <?= $exp ?>%"><?= $exp ?>%</div>
 			</td>
 		</tr>
 		<? endforeach ?>

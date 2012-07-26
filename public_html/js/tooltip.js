@@ -19,7 +19,9 @@ $(function() {
 				itemSockets = $("<ul class='sockets'/>");
 		
 		itemName.html(item.name);
-		itemQuality.html(item.display.quality);
+		if(item.display && item.display.quality) {
+			itemQuality.html(item.display.quality);			
+		}
 		itemType.html(item.display.type);
 		// Add the Header to the Tooltip
 		container.append(header.append(itemName.addClass("quality-" + item.quality)));

@@ -96,7 +96,7 @@ class RecordController extends Epic_Controller_Action
 				// echo "<pre>"; var_dump($query, $dupe); exit;
 				if($dupe) {
 					// $this->_redirect("/b/".$dupe->id);
-					throw new Exception("You've already copied this build to your builds. To prevent abuse, you can't copy a build to your builds more than once.");
+					// throw new Exception("You've already copied this build to your builds. To prevent abuse, you can't copy a build to your builds more than once.");
 				}
 				$new = Epic_Mongo::newDoc('build');
 				$export = $record->export();
@@ -115,7 +115,7 @@ class RecordController extends Epic_Controller_Action
 					} catch (Exception $e) {
 						echo "<pre>"; var_dump($exportItem); exit;						
 					}
-					$newItem->_original = $item;
+					// $newItem->_original = $item;
 					$newItem->_createdBy = $profile;
 					$newItem->save();
 					$new->equipment->$slot = $newItem;

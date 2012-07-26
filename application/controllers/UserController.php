@@ -117,6 +117,15 @@ class UserController extends Epic_Controller_Action
 				}
 				if($action = $this->getRequest()->getParam("a")) {
 					switch($action) {
+						case "postExpense":
+							$expense = Epic_Mongo::newDoc('expense');
+							$expense->profile = $profile;
+							$expense->type = $this->getRequest()->getParam('expenseType');
+							$expense->amount = $this->getRequest()->getParam('expenseAmount');
+							$expense->date = time();
+							$expense->save();
+							// var_dump($expense->export(), $this->getRequest()->getParams()); exit;
+							break;
 						case "cancel":
 							$query = array(
 								'seller' => $profile->createReference(),
@@ -148,6 +157,12 @@ class UserController extends Epic_Controller_Action
 								}
 								$sale->soldOn = time();
 								$sale->soldSuccess = true;
+								// Find the Original and remove the profile
+								$toRemove = Epic_Mongo::db('item')->fetchOne(array("id" => $sale->item->id));
+								if($toRemove) {
+									$toRemove->_createdBy = null;
+									$toRemove->save();
+								}
 							} else {
 								$sale->soldOn = time();
 								$sale->soldSuccess = false;
@@ -192,15 +207,16 @@ class UserController extends Epic_Controller_Action
 						case "getItems":	
 							$this->getResponse()->setHeader('Content-type', 'application/json');
 							$data = array();
-							$items = Epic_Mongo::db('item')->fetchAll($query, array("_created" => -1));							
+							$items = Epic_Mongo::db('item')->fetchAll($query, array("name" => 1));							
 							foreach($items as $item) {
-								$data[$item->id] = json_encode($item->cleanExport());
+								$data[] = json_encode($item->cleanExport());
 							}
 							echo json_encode($data); exit;
 							break;
 					}
 				}
 			}
+			$this->view->expenses = Epic_Mongo::db('expense')->fetchAll(array('profile' => $profile->createReference()), array("date" => -1));
 			$query = array(
 				'seller' => $profile->createReference(),
 				'_cancelled' => array('$exists' => false),

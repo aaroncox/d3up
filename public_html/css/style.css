@@ -192,6 +192,7 @@ ul.sub_menu > li.witch-doctor {
 	float: right;
 	display: inline-block;
 }
+ul#simulate-stats input,
 .item-preview ul.attrs input {
 	margin: 2px 5px;
 	width: 30px;
@@ -830,4 +831,24 @@ tr.compared > td:first-child {
 	border: 1px solid #333;
 	padding: 5px;
 	width: 50px;
+}
+.ui-slider-horizontal .ui-slider-handle {
+	-webkit-touch-callout: none;
+	-webkit-user-select: none;
+	-khtml-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+	outline: none;
+	border: none;
+}
+#simulate-stats {
+	margin: 30px auto;
+}
+#simulate-stats input {
+	width: 50px;
+	margin: 0 5px;
+}
+#simulate-stats .big-stat input {
+	width: 200px;
 }

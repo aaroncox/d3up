@@ -1,0 +1,18 @@
+<table id="user-expenses" class="d3up-table">
+	<thead>
+		<tr>
+			<th>Date</th>
+			<th>Type</th>
+			<th>Value</th>
+	</thead>
+	<tbody>
+		<? foreach($this->expenses as $expense): ?>
+			<tr class="item-row" id="sale-<?= $expense->id ?>">
+				<td class="data"><?= $this->timeAgo($expense->date) ?></td>
+				<td class='name'><?= $this->expenseDisplay($expense->type) ?></td>
+				<td class="data"><?= $this->prettyStat($expense->amount) ?></td>
+				<td class="controls"></td>
+			</tr>
+		<? endforeach ?>
+	</tbody>
+</table>

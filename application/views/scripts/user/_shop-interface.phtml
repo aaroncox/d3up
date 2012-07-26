@@ -1,4 +1,5 @@
 <style type="text/css">
+	#expense-picker,
 	#item-picker,
 	#sellPanel,
 	#completePanel {
@@ -29,11 +30,32 @@
 </style>
 <div style="float: right">
 	<button id="sellButton" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only"><span class="ui-button-text">Create Sale</span></button>
+	<button id="expenseButton" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only"><span class="ui-button-text">Add Expense</span></button>
 </div>
 <h2 class="table-header">My Shop @ Battle.net - <?= $this->regionDisplay($this->profile->region) ?></h2>
 <div class="ui-widget ui-widget-content ui-corner-all" style="margin-bottom: 5px; padding: 0 10px 10px; display: none">
 	<h3>We will show you online to other users until <span class='pos'><?= date("r", $this->profile->_lastSeen + 900) ?></span>.</h3>
 	Each time you refresh this page, we will update your "online" status shown on your auctions and show you online for 15 minutes. 
+</div>
+<div class='ui-widget ui-widget-content ui-corner-all content-widget ui-helper-clearfix' id="expense-picker">
+	<h3>Add an Expense</h3>
+	<p>This section allows you to record how much you've spent on crafting resources to gauge your actual profit levels.</p>
+	<p>Simply pick the type of expense (or don't, and just leave on "Expense") and enter how much gold you spent and it will log the expense.</p>
+	<form method="post">
+		<input type="hidden" name="a" value="postExpense">
+		<p>
+			<select name="expenseType">
+				<option value="generic">Generic Expense</option>
+				<option value="essenses">Essenses</option>
+				<option value="tome-secrets">Tome of Secrets</option>
+				<option value="tome-jc">Tome of Jewelcrafting</option>
+				<option value="tome-bs">Tome of Blacksmithing</option>
+			</select>
+		</p>
+		<p>How much gold was this transaction?</p>
+		<p><input type="text" name="expenseAmount"/></p>
+		<input type='submit' class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" value="Create Expense"/>
+	</form>
 </div>
 <div class='ui-widget ui-widget-content ui-corner-all content-widget ui-helper-clearfix' id="item-picker">
 	<h3>Create a Sale</h3>
@@ -94,6 +116,7 @@
 		<li><a href="#tab-shop">For Sale</a></li>
 		<li><a href="#tab-summary">Statistics</a></li>
 		<li><a href="#tab-complete">Completed</a></li>
+		<li><a href="#tab-expenses">Expenses</a></li>
 		<li><a href="#tab-all-complete">All Completed Sales</a></li>
 		<li><a href="#tab-help">What is this?</a></li>
 	</ul>
@@ -105,6 +128,9 @@
 	</div>
 	<div id="tab-complete">
 		<?= $this->render("./user/shop/completed.phtml") ?>
+	</div>
+	<div id="tab-expenses">
+		<?= $this->render("./user/shop/expenses.phtml") ?>
 	</div>
 	<div id="tab-all-complete">
 		<?= $this->render("./user/shop/all-completed.phtml") ?>
@@ -119,6 +145,7 @@
 				selectedMethod = null,
 				selectedDuration = null,
 				selectedValue = null,
+				expenseButton = $("#expenseButton"),
 				sellButton = $("#sellButton"),
 				sellItem = $("#sellItem"),
 				sellItemFilter = $("#sellItemFilter"),
@@ -132,7 +159,8 @@
 				sellForm = $("#sellForm"),
 				itemId = $("#itemId"),
 				itemFilter = null,
-				itemPicker = $("#item-picker");
+				itemPicker = $("#item-picker"),
+				expensePicker = $("#expense-picker");
 		$(".user-shop").tabs();
 		// Get the Users Items
 		getMyItems();
@@ -151,6 +179,10 @@
 					title: 'Create a Sale'
 				});
 			}
+		});
+		// Add an expense to your history
+		expenseButton.bind('click', function() {
+			expensePicker.show();
 		});
 		// Show the Item Picker when the Sell button is clicked
 		sellButton.bind('click', function() {

@@ -49,6 +49,7 @@ var activeActives = [];
 			<li><a href="#build-skills" <?= (!$myBuild) ? "style='display: none'" : ""?>>Skills</a></li>
 		<? if($myBuild): ?>
 			<li><a href="#build-compare">Compare</a></li>
+			<li><a href="#item-simulate">Simulate Item</a></li>
 		<? endif ?>
 		<? if($this->record->guideIsPublished || $myBuild): ?>
 			<li><a href="#build-guide">Guide</a></li>
@@ -76,9 +77,48 @@ var activeActives = [];
 		</div>
 	<? endif ?>
 	<? if($myBuild): ?>
+	<div id="item-simulate">
+		<p>Which item do you wish to simulate changes on?</p>
+		<p><select id="simulate-slot">
+			<option></option>
+			<? foreach($this->record->equipment->getSlots() as $slot): ?>
+				<option class="slot" value="<?= $slot ?>"><?= ucfirst($slot) ?></option>
+			<? endforeach; ?>
+		</select></p>
+		<p><span id="simulate-against"></span></p>
+		<div id="simulation-stats">
+			<p>Loaded below are the stats currently on the item, feel free to adjust them to see the changes live in your build as well as a table of differences that's automatically generated below.</p>
+			<p>Attributes</p>
+			<select id="simulate-attributes" data-placeholder="Select Attributes for Item" multiple="multiple" style="width: 510px">
+				<?= $this->render("./item/_itemAttributeOptions.phtml") ?>
+			</select>
+			<div id="simulate-stats" class="d3-item">
+				<div class="top"><p class="">Name</p></div>
+				<div class="item">
+					<p class="stats stats-primary">
+						<span class="big-stat"></span>
+						<span class="stat-helper"></span>
+					</p>
+					<p class="stats stats-extra-percent"></p>
+					<p class="stats stats-extra-range"></p>
+					<ul class="attrs">
+					</ul>
+					<ul class="sockets">
+					</ul>
+				</div>
+				<div class="bottom"> 
+					<? if($profile = Epic_Auth::getInstance()->getProfile()): ?>
+						Created by: <?= $profile->username ?>
+					<? endif; ?>
+				</div>
+			</div>
+			<div class="compare-diff"></div>
+			<p>Please note: When working with a weapon, the +% Damage, +Elemental Damage, +% Speed and other attributes don't matter. The only things that matter are the Min/Max damage and Attacks per Second (Obviously Primary Stats, Crit, etc all still matter).</p>
+		</div>
+	</div>
 	<div id="build-compare">
 		<p>This compare tool will compare what you are <b>currently wearing</b> to an item you select from the database.</p>
-		<p>Please select the <i>slot</i> of the item you wish to compare first, then select the item from your items from the drop down or type the ID # of the item in the text box next to it.</p>
+		<p>Please select the <i>slot</i> of the item you wish to compare first, then select the item from your items from the drop down.</p>
 		<p>Which item slot should we compare?</p>
 		<select id="compared-slot">
 			<option></option>
@@ -94,8 +134,7 @@ var activeActives = [];
 		<!-- or
 		<input type="text" id="compare-to-id" style="width: 50px"/> (Enter Item ID) -->
 		<ul id="compare-notes"></ul>
-		<div class="compare-diff">
-		</div>
+		<div class="compare-diff"></div>
 		<p><b>Note</b>: Currently the item HAS to be created by you before you are able to compare them.</p>
 	</div>
 	<? endif; ?>
@@ -195,7 +234,7 @@ var activeActives = [];
 			<ul id="stats-misc"></ul>
 		</div>
 		<div id="tab-dps">
-			Coming Soon
+			<ul id="stats-dps-gear"><li>test</li></ul>
 		</div>
 		<div id="tab-ehp">
 			<ul id="stats-ehp"><li>test</li></ul>
@@ -213,49 +252,5 @@ var activeActives = [];
 	</form>
 </div>
 <script type="text/javascript" src="/js/skills.js"></script>
-<script type="text/javascript" src="/js/calc.js"></script>
-<script type="text/javascript">
-$(function() {
-	
-	calc(".equipped a");
-	$("#character").tabs({
-	    select: function(event, ui){
-	      window.location = ui.tab.href;
-	    }
-	});
-	$(".calc-stats").tabs();
-	$(".comment").each(function() {
-		var $this = $(this), 
-				comment = $this.data("comment");
-		$this.find(".comment-replies").each(function() {
-			var replies = $(this), 
-					count = 0;
-			count = $(this).find(".comment.reply").length;
-			replies.hide();
-			if(count) {
-				var expander = $("<div class='comment-expand'>").html("Show " + count + " Replies");
-				expander.bind('click', function() {
-					replies.show();
-					$(this).hide();
-				});
-				$(this).after(expander);			
-			}
-		});
-		$(this).find("a.comment-reply").bind('click', function() {
-			$.ajax({
-				url: '/c/'+comment+'/reply',
-				type: 'json',
-				success: function(data) {
-					var json = $.parseJSON(data),
-							form = json.form;
-					$this.find('.comment-extra').empty().append(form);				
-				}
-			});
-		});
-	});
-	$("#active-display, #passive-display").find("li img").each(function() {
-		$(this).bindSkilltip();
-	});
-});
-
-</script>
+<script type="text/javascript" src="/js/calcv2.js"></script>
+<script type="text/javascript" src="/js/build.js"></script>
