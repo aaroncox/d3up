@@ -429,14 +429,15 @@ var buildCalculator = {
 				mh: Math.floor(this.stats['speed'] * 1024) / 1024,
 				oh: Math.floor(this.stats['speed-oh'] * 1024) / 1024,
 			};
-			var mathS = ((this.values['dps-damage'].min + this.values['dps-damage'].max + this.values['dps-damage-oh'].min + this.values['dps-damage-oh'].max) / 2 + this.values['dps-addDamageAvg']) / 2,
+			// console.log(this.values['dps-speed'].mh, this.values['dps-speed'].oh);
+			var mathS = ((this.values['dps-damage'].min + this.values['dps-damage'].max + this.values['dps-damage-oh'].min + this.values['dps-damage-oh'].max) / 2 + this.values['dps-addDamageMin'] + this.values['dps-addDamageMax']) / 2,
 					mathC = (this.values['dps-speed'].mh + this.values['dps-speed'].oh) / 2,
 					mathR = 1 + 0.15 + this.values['dps-addAttackSpeed'],
-					mathA = 1 + this.attrs[this.attrs.primary] / 100,
+					mathA = 1 + this.attrs[this.attrs.primary] * 0.01,
 					mathM = 1 + (this.attrs['critical-hit'] / 100) * (this.attrs['critical-hit-damage'] / 100);
-			// console.log(mathS, mathC, mathR, mathA, mathM);
 			this.values['dps-speedTotal'] = Math.round(this.values['dps-speed'].mh * (1 + this.values['dps-addAttackSpeed'] + 0.15) * 100)/100;
-			dps = Math.round((mathS * mathC * mathR * mathA * mathM) * 100) / 100;
+			dps = mathS * mathC * mathR * mathA * mathM;
+			// console.log(mathS, mathC, mathR, mathA, mathM, dps);
 		} else {
 			this.values['dps-speed'] = Math.floor(this.values['dps-speed'] * 1024) / 1024;
 			this.values['dps-speedTotal'] = Math.round(this.values['dps-speed'] * (1 + this.values['dps-addAttackSpeed']) * 100)/100;
@@ -446,7 +447,7 @@ var buildCalculator = {
 		}
 		// Add any bonus damage onto the damage calculation
 		if(this.bonuses['plus-damage']) {
-			return Math.round(dps * (1 + this.bonuses['plus-damage']) * 100) / 100;
+			return dps * (1 + this.bonuses['plus-damage']);
 		}
 		return dps;
 	},
