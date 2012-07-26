@@ -129,9 +129,11 @@ var buildCalculator = {
 					// console.log(value, effect);
 					switch(effect) {
 						case "sharpshooter":
-							mathDpsSpecialName = 'Sharpshooter';
-							mathDpsSpecial = (((mathDamage.min + mathDamage.max) / 2 + mathDamageAdd) * this.stats['speed']) * mathSpeedAdditive * (primaryAttr / 100 + 1) * 1 * ((100 / 100) * (mathCriticalHitDamage/100)+ 1);
-							mathDpsSpecial = Math.round(mathDps * 100) / 100;
+							this.bonuses['sharpshooter'] = true;
+							// TODO
+							// mathDpsSpecialName = 'Sharpshooter';
+							// mathDpsSpecial = (((mathDamage.min + mathDamage.max) / 2 + mathDamageAdd) * this.stats['speed']) * mathSpeedAdditive * (primaryAttr / 100 + 1) * 1 * ((100 / 100) * (mathCriticalHitDamage/100)+ 1);
+							// mathDpsSpecial = Math.round(mathDps * 100) / 100;
 							break;
 						case "plus-thorns":
 						case "plus-armor":
@@ -165,7 +167,7 @@ var buildCalculator = {
 							}
 							break;
 						case "damage-reduce":
-							mathDamageReduce = mathDamageReduce * (1 + value);
+							// mathDamageReduce = mathDamageReduce * (1 + value);
 							break;
 						case "health-globes":
 							// if(attrs['health-globes'] && attrs['health-globes'] > 0) {
