@@ -407,7 +407,9 @@ var buildCalculator = {
 			// Don't deal with MH/OH atm
 			// if(i != "mainhand" && i != "offhand") {
 				// Calculate the difference in DPS if you took this piece off
-				this.values['dps-' + i] = this.values['dps'] - this.calculateDps();				
+				if(this.values['dps-damage']) {
+					this.values['dps-' + i] = this.values['dps'] - this.calculateDps();				
+				}
 			// }
 			// Readd the Item to the set
 			this.parseItem(g, i);
