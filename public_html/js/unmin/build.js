@@ -231,8 +231,8 @@ $(function() {
 										slot: itemType,
 										newItem: gearSelect.val(),
 										stats: {
-											dps: stats['DPS'],
-											ehp: stats['EHP']
+											dps: stats.dps,
+											ehp: stats.ehp
 										}
 									}, 
 									success: function(data) {
