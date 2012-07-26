@@ -152,6 +152,9 @@ var buildCalculator = {
 							_.each(resistArray, function(r) {
 								this.attrs[r] = highest;
 							},this);
+							// this.attrs['resist-all'] = highest;
+							// console.log(this.attrs['resist-all'], highest, this.attrs['resist-all'] + highest);
+							this.bonuses['flatten-resists'] = true;
 							break;
 						case "melee-reduce":
 						case "plus-movement-speed":
@@ -281,6 +284,10 @@ var buildCalculator = {
 		this.values['resist-lightning'] = (this.values.allResist + this.attrs['lightning-resist']);
 		this.values['resist-poison'] = (this.values.allResist + this.attrs['poison-resist']);
 		this.values['resist-arcane'] = (this.values.allResist + this.attrs['arcane-resist']);
+		// Adjust All resist to match Flatten Resist
+		if(this.bonuses['flatten-resists']) {
+			this.values.allResist += this.attrs['physical-resist']; // This could be any, but since they are the same, doesn't matter
+		}
 		// ----------------------------------
 		// After all modifications, determine percentages for display
 		// ----------------------------------
@@ -357,6 +364,17 @@ var buildCalculator = {
 					strength = this.attrs['strength'],
 					plusLife = this.attrs['plus-life'], 
 					bonusArmor = this.attrs['armor'];
+			// Special case for monks flatten resists
+			// if(this.bonuses['flatten-resists']) {
+			// 	var highest = 0, 
+			// 			resistArray = ['fire-resist', 'cold-resist', 'arcane-resist', 'lightning-resist', 'poison-resist', 'physical-resist'];
+			// 	_.each(resistArray, function(k) {
+			// 		if(this.attrs[k] > 0 && this.attrs[k] > highest) {
+			// 			highest = this.attrs[k];
+			// 		}
+			// 	}, this);
+			// 	resistAll = highest;
+			// }
 			// Do the EHP calculations without those stats
 			var life = 36 + 4 * 60 + (60 - 25) * vitality,
 					lifeTotal = life + (life * (plusLife / 100)),
@@ -373,6 +391,7 @@ var buildCalculator = {
 			this.values['ehp-' + i] = this.values['ehp'] - (lifeTotal / damageTaken);
 			// Readd the Item to the set
 			this.parseItem(g, i);
+			// Reparse Passives
 		}, this);
 		// ----------------------------------
 		// Define Offensive Statistics before Passives so we can add to them
@@ -380,24 +399,6 @@ var buildCalculator = {
 		this.values['dps-speed'] = this.stats['speed'];
 		this.values['dps-damage'] = this.stats['damage'];
 		this.values['dps'] = 0;
-		this.values['dps-addDamageAvg'] = 0;
-		this.values['dps-addDamageMin'] = 0;
-		this.values['dps-addDamageMax'] = 0;
-		if(this.stats['damage-oh']) {
-			this.values['dps-damage-oh'] = this.stats['damage-oh'];
-		}
-		// Calculate the Average and Min/Max Bonus Damage from other items
-		if(this.attrs['max-damage'] || this.attrs['min-damage']) {
-			this.values['dps-addDamageAvg'] = (((this.attrs['max-damage'])?this.attrs['max-damage']:0) + ((this.attrs['min-damage'])?this.attrs['min-damage']:0)) / 2;
-			if(this.attrs['min-damage']) {
-				this.values['dps-addDamageMin'] = this.attrs['min-damage'];				
-			}
-			if(this.attrs['max-damage']) {
-				this.values['dps-addDamageMax'] = this.attrs['max-damage'];
-			}
-		}
-		// Calculate Attack Speed Bonuses
-		this.values['dps-addAttackSpeed'] = (this.attrs['attack-speed-incs']) ? this.attrs['attack-speed-incs'] : 0;
 		// Do we have a weapon?
 		if(this.values['dps-damage']) {
 			this.values['dps'] = this.calculateDps();
@@ -424,6 +425,24 @@ var buildCalculator = {
 	},
 	calculateDps: function() {
 		var dps = 0; // Value to Return
+		this.values['dps-addDamageAvg'] = 0;
+		this.values['dps-addDamageMin'] = 0;
+		this.values['dps-addDamageMax'] = 0;
+		if(this.stats['damage-oh']) {
+			this.values['dps-damage-oh'] = this.stats['damage-oh'];
+		}
+		// Calculate the Average and Min/Max Bonus Damage from other items
+		if(this.attrs['max-damage'] || this.attrs['min-damage']) {
+			this.values['dps-addDamageAvg'] = (((this.attrs['max-damage'])?this.attrs['max-damage']:0) + ((this.attrs['min-damage'])?this.attrs['min-damage']:0)) / 2;
+			if(this.attrs['min-damage']) {
+				this.values['dps-addDamageMin'] = this.attrs['min-damage'];				
+			}
+			if(this.attrs['max-damage']) {
+				this.values['dps-addDamageMax'] = this.attrs['max-damage'];
+			}
+		}
+		// Calculate Attack Speed Bonuses
+		this.values['dps-addAttackSpeed'] = (this.attrs['attack-speed-incs']) ? this.attrs['attack-speed-incs'] : 0;
 		// Are we duel wielding?
 		if(this.isDuelWielding) {
 			this.values['dps-speed'] = {

@@ -23,55 +23,60 @@
 </head>
 <body>
 	<div id="wrapper">
-		<div id="header">D3Up</div>
-		<div id="navigation-wrapper">
-			<ul id="navigation" class="dropdown ui-helper-clearfix ui-widget ui-widget-content"  style="text-align: center">
-				<li><a href="/">Home</a></li>
-				<li><a href="/items">Items</a>
-					<ul class="sub_menu">
-						<li><a href="/item/create">Create Item</a></li>
-						<li><a href="/user/items">My Items</a></li>
-						<li><a href="/items">Item Search</a></li>
-						<li><a href="/item/sales-history">Sales History</a></li>
-					</ul>
-				</li>
-				<li><a href="/build">Builds</a>
-					<ul class="sub_menu">
-						<li><a href="/build/create">Create Build</a></li>
-						<li><a href="/user/builds">My Builds</a></li>
-						<li class='barbarian'><a href="/build?class=barbarian">Barbarian</a></li>
-						<li class='demon-hunter'><a href="/build?class=demon-hunter">Demon Hunter</a></li>
-						<li class='monk'><a href="/build?class=monk">Monk</a></li>
-						<li class='witch-doctor'><a href="/build?class=witch-doctor">Witch Doctor</a></li>
-						<li class='wizard'><a href="/build?class=wizard">Wizard</a></li>
-						<li><a href="/build">All Builds</a></li>
-					</ul>
-				</li>
-				<li><a href="/user/shop">My Shop</a></li>
-				<?  if(true == false): ?>
-				<li><a href="/bazaar">Bazaar</a>
-					<ul class="sub_menu">
+		<div id="header">
+			<div class="inline-flow">
+				<a href="/"><img src="/images/logo.jpg" alt="D3Up.com" /></a>
+			</div>
+			<div id="header-content" class="inline-flow">
+				<div id="navigation-wrapper">
+					<ul id="navigation" class="dropdown ui-helper-clearfix ui-widget ui-widget-content"  style="text-align: center">
+						<li><a href="/">Home</a></li>
+						<li><a href="/items">Items</a>
+							<ul class="sub_menu">
+								<li><a href="/item/create">Create Item</a></li>
+								<li><a href="/user/items">My Items</a></li>
+								<li><a href="/items">Item Search</a></li>
+								<li><a href="/item/sales-history">Sales History</a></li>
+							</ul>
+						</li>
+						<li><a href="/build">Builds</a>
+							<ul class="sub_menu">
+								<li><a href="/build/create">Create Build</a></li>
+								<li><a href="/user/builds">My Builds</a></li>
+								<li class='barbarian'><a href="/build?class=barbarian">Barbarian</a></li>
+								<li class='demon-hunter'><a href="/build?class=demon-hunter">Demon Hunter</a></li>
+								<li class='monk'><a href="/build?class=monk">Monk</a></li>
+								<li class='witch-doctor'><a href="/build?class=witch-doctor">Witch Doctor</a></li>
+								<li class='wizard'><a href="/build?class=wizard">Wizard</a></li>
+								<li><a href="/build">All Builds</a></li>
+							</ul>
+						</li>
 						<li><a href="/user/shop">My Shop</a></li>
+						<?  if(true == false): ?>
+						<li><a href="/bazaar">Bazaar</a>
+							<ul class="sub_menu">
+								<li><a href="/user/shop">My Shop</a></li>
+							</ul>
+						</li>					
+						<? endif ?>
+						<li><a href="/updates">Updates</a></li>
+						<li><a>User</a>
+							<ul>
+							<? if($profile = Epic_Auth::getInstance()->getProfile()): ?>
+								<!-- <li><a href="/user"><?= $profile->username ?></a></li>	 -->
+								<li><a href="/user/logout">Logout</a></li>
+							<? else: ?>
+								<li><a href="/user/login">Login</a></li>
+								<li><a href="/user/register">Register</a></li>
+							<? endif; ?>
+							</ul>
+						</li>
 					</ul>
-				</li>					
-				<? endif ?>
-				<li><a href="/updates">Updates</a></li>
-				<li><a>User</a>
-					<ul>
-					<? if($profile = Epic_Auth::getInstance()->getProfile()): ?>
-						<!-- <li><a href="/user"><?= $profile->username ?></a></li>	 -->
-						<li><a href="/user/logout">Logout</a></li>
-					<? else: ?>
-						<li><a href="/user/login">Login</a></li>
-						<li><a href="/user/register">Register</a></li>
-					<? endif; ?>
-					</ul>
-				</li>
-			</ul>
-		</div>
-
-		<div id="sys-message" class="ui-widget ui-widget-content ui-corner-all">
-			<b>System Message</b>: Huge update today, including the new "Item Simulator" and "DPS Contributions from Gear" - <a href="http://d3up.com/update/17">Read more about it here</a>. If you find any bugs, hold down shift and click refresh. If that doesn't work, please email me at <a href="mailto:aaron.cox@greymass.com">aaron.cox@greymass.com</a>.	
+				</div>
+				<div id="sys-message" class="ui-widget ui-widget-content ui-corner-all">
+					<b>System Message</b>: Huge update today, including the new "Item Simulator" and "DPS Contributions from Gear" - <a href="http://d3up.com/update/17">Read more about it here</a>. If you find any bugs, hold down shift and click refresh. If that doesn't work, please email me at <a href="mailto:aaron.cox@greymass.com">aaron.cox@greymass.com</a>.	
+				</div>
+			</div>
 		</div>
 
 		<div id="main">

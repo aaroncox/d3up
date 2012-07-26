@@ -281,7 +281,7 @@ $(function() {
 		tabEHP.append($("<ul class='resist-specific'/>").append(
 			statLabel("EHP", stats.ehp, 'round'),
 			statLabel("EHP w/ Dodge", stats['ehp-dodge'], 'round'),
-			statLabel("EHP w/ Block", stats['ehp-block'], 'round')
+			statLabel("EHP w/ Block", "Not Implemented") //stats['ehp-block']
 		));
 		tabEHP.append($("<ul class='resist-specific'/>").append(
 			$("<li class='header'/>").html("VS Damage Source EHP"),

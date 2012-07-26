@@ -63,10 +63,11 @@ class ItemController extends Epic_Controller_Action
 		// Create a new Item
 		$item = Epic_Mongo::newDoc('item');
 		// Get Form for Item
-		$form = $this->view->form = $item->getEditForm();
-		$form->itemType->setValue($this->getRequest()->getParam("slot"));
-		$form->setBuildToEquip($this->getRequest()->getParam("b"));
+		$form = $item->getEditForm();
+		$form->setBuildToEquip($this->getRequest()->getParam("b"), $this->getRequest()->getParam("slot"));
 		$form->setReturnMethod($this->getRequest()->getParam("return"));
+		$form->itemType->setValue($this->getRequest()->getParam("slot"));
+		$this->view->form = $form;
 		if($this->getRequest()->isPost()) {
 			$result = $form->process($this->getRequest()->getParams());
 			if($result) {

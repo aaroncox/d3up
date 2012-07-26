@@ -382,13 +382,15 @@ class D3Up_Form_Record_Item extends Epic_Form
 			$sockets = count($item->sockets); 
 		}
 
-		$this->setDefaults(array(
-			'name' => $item->name,
-			'itemType' => $item->type,
-			'quality' => $item->quality,
-			'attributes' => array_keys($attrs),
-			'sockets' => $sockets,
-		));
+		if(!$item->isNewDocument()) {
+			$this->setDefaults(array(
+				'name' => $item->name,
+				'itemType' => $item->type,
+				'quality' => $item->quality,
+				'attributes' => array_keys($attrs),
+				'sockets' => $sockets,
+			));			
+		}
 				
 		if(isset($item->stats['armor'])) {
 			$this->base_armor->setValue($item->stats['armor']);

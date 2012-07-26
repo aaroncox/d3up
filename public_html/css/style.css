@@ -119,11 +119,16 @@ a:active .ui-button-text, a:visited .ui-button-text {
 	margin: 0 auto;
 }
 #header {
+	height: 200px;
+}
+#header-content {
 	text-align: center;
-	font-size: 3em;
-/*	border-bottom: 1px solid #777;*/
+	margin-top: 50px;
+	margin-left: 20px;
+	width: 760px;
 }
 #navigation-wrapper {
+	display: inline;
 	text-align: center;
 	margin-bottom: 20px;
 }
