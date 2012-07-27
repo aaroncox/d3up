@@ -91,6 +91,7 @@ var activeActives = [];
 			<p>Attributes</p>
 			<select id="simulate-attributes" data-placeholder="Select Attributes for Item" multiple="multiple" style="width: 510px">
 				<?= $this->render("./item/_itemAttributeOptions.phtml") ?>
+				<option value="armor" label="+ Armor">+ Armor</option>
 			</select>
 			<div id="simulate-stats" class="d3-item">
 				<div class="top"><p class="">Name</p></div>
@@ -251,6 +252,6 @@ var activeActives = [];
 	</fieldset>
 	</form>
 </div>
-<script type="text/javascript" src="/js/skills.js"></script>
-<script type="text/javascript" src="/js/calcv2.js?time=<?= time() ?>"></script>
-<script type="text/javascript" src="/js/build.js?time=<?= time() ?>"></script>
+<script type="text/javascript" src="/js/unmin/skills.js"></script>
+<script type="text/javascript" src="/js/unmin/calcv2.js?time=<?= time() ?>"></script>
+<script type="text/javascript" src="/js/unmin/build.js?time=<?= time() ?>"></script>
