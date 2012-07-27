@@ -174,11 +174,48 @@
 				itemTitle.html(selected.name);
 				// Show the Sales Panel
 				sellPanel.dialog({
-					width: 700,
+					width: 800,
 					modal: true,
 					title: 'Create a Sale'
 				});
+				var itemLink = $("<a href='/i/" + selected.id + "' data-json='" + JSON.stringify(selected) + "' class='quality-" + selected.quality + "'>" + selected.name + "</a>");
+				itemLink.bindTooltip();
+				$("#similar-current").html(itemLink);
+				$.each(selected.attrs, function(k,v) {
+					var option = $("<option value='"+k+"'>"+k+"</option>");
+					option.attr("selected", "selected");
+					$("#similar-attributes").append(option)
+				}); 
+				// Similar Code
+				$("#similar-attributes").chosen().trigger('change');
+				
 			}
+		});
+		$("#similar-attributes").bind('change', function() {
+			selected = sellItem.find(":selected").data('json');
+			$.ajax({
+				url: '/user/shop?a=getSimilar&id='+selected.id+'&attrs='+JSON.stringify($("#similar-attributes").val()),
+				type: 'json',
+				success: function(data) {
+					var target = $("#similar-items tbody").empty(),
+							json = JSON.parse(data);
+					$.each(json, function(k,v) {
+						var item = v.item,
+								link = $('<a class="quality-'+item.quality+'" href="/i/'+item.id+'">'+item.name+'</a>').attr("data-json", JSON.stringify(v.item)),
+								tr = $("<tr class='item-row'/>");
+						link.bindTooltip();
+						// console.log(item);
+						tr.append($("<td/>").append(link));
+						tr.append($("<td/>").append('<img src="/images/goldcoin.png"> ' + v.price));
+						tr.append($("<td/>").append(v.date));
+						target.append(tr);
+					});
+					if(json.length == 0) {
+						target.html("<tr><td colspan='3' style='line-height: 1.5em'>No similar items have been found, try removing some of the attributes above to broaden the search.</td></tr>");
+					}
+				}
+			});
+			
 		});
 		// Add an expense to your history
 		expenseButton.bind('click', function() {
@@ -370,12 +407,28 @@
 	});
 </script>
 <div class='ui-widget ui-widget-content ui-corner-all ui-helper-clearfix content-widget inline-flow' id="sellPanel">
-	<h3>Options for selling <span id="itemForSale">Item</span></h3>
 	<div class="sellBody">
+		<div style="float: right; width: 450px">
+			<h3>Items Similar to <span id="similar-current"></span></h3>
+			<select data-placeholder="Which attributes?" id="similar-attributes" multiple="multiple" style="width: 440px">
+				<option></option>
+			</select>
+			<table id="similar-items" class="d3up-table">
+				<thead>
+					<tr class="item-row">
+						<th>Name</th>
+						<th>Sold For</th>
+						<th>Date</th>
+					</tr>
+				</thead>
+				<tbody>
+				</tbody>
+			</table>
+		</div>
 		<form method="post" id="sellForm">
 			<input type="hidden" name="itemId" id="itemId" value=""/>
 			<input type="hidden" name="a" id="a" value="postSale"/>
-			<p>How would you like to sell this item?</p>
+			<p><strong>Selling Method</strong></p>
 			<select name="sellMethod" id="sellMethod">
 				<!-- <option value="">Pick an Option</option> -->
 				<!-- <option value="flat">Flat Price</option>

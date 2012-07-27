@@ -204,6 +204,45 @@ class UserController extends Epic_Controller_Action
 							$sale->save();
 							$this->_redirect("/user/shop");
 							break;
+						case "getSimilar":
+							$toCompare = json_decode($this->getRequest()->getParam('attrs'));
+							$item = Epic_Mongo::db("item")->fetchOne(array("id" => (int) $this->getRequest()->getParam("id")));
+							$query = array(
+								"item.type" => $item->type,
+								"soldSuccess" => true,
+							);
+							if(empty($toCompare)) {
+								$toCompare = array_keys($item->rating->export());
+								unset($toCompare['total']);
+							}
+							foreach($toCompare as $attr) {
+								if($item->rating[$attr]) {
+									$value = $item->rating[$attr];
+									$query['item.rating.'.$attr] = array(
+										'$gt' => ($value - 10),
+										'$lt' => ($value + 10),
+									);
+									// var_dump($item->rating[$attr]);
+								}
+							}
+							$sales = Epic_Mongo::db('sale')->fetchAll($query, array("soldOn" => -1), 5);							
+							// $sale = Epic_Mongo::db('sale')
+
+							// var_dump($item->export(), "----", $query, "----", $sales->export()); exit;
+							$this->getResponse()->setHeader('Content-type', 'application/json');
+							$data = array();
+							$helper = new D3Up_View_Helper_PrettyStat();
+							foreach($sales as $sale) {
+								$data[$sale->id] = array(
+									'date' => date("Y-m-d", $sale->soldOn),
+									'status' => $sale->soldSuccess,
+									'price' => $helper->prettyStat($sale->soldFor),
+									'item' => $sale->item->cleanExport()
+								);
+							}
+							// var_dump($data);
+							echo json_encode($data); exit;
+							break;
 						case "getItems":	
 							$this->getResponse()->setHeader('Content-type', 'application/json');
 							$data = array();
