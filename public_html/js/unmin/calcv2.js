@@ -243,6 +243,7 @@ var buildCalculator = {
 														}
 														break;
 													case "critical-hit":
+													console.log("adding");
 														this.attrs['critical-hit'] = this.attrs['critical-hit'] + (eff * 100);														
 														break;
 													default:
@@ -403,6 +404,18 @@ var buildCalculator = {
 		if(this.values['dps-damage']) {
 			this.values['dps'] = this.calculateDps();
 		}
+		if(this.isDuelWielding) {
+			this.values['dps-speedTotal'] = Math.round(this.values['dps-speed'].mh * (1 + this.values['dps-addAttackSpeed'] + 0.15) * 100)/100;
+		} else {
+			this.values['dps-speedTotal'] = Math.round(this.values['dps-speed'] * (1 + this.values['dps-addAttackSpeed']) * 100)/100;
+		}
+		// if(this.bonuses['sharpshooter']) {
+		// 	var oldCrit = this.attrs['critical-hit'];
+		// 	this.attrs['critical-hit'] = 100;
+		// 	this.values['dps-sharpshooter'] = this.calculateDps();
+		// 	this.attrs['critical-hit'] = oldCrit;
+		// 	console.log(this.values['dps-sharpshooter'])
+		// }
 		// Some Wackyness to calculate DPS contributions per piece
 		_.each(this.gear, function(g, i) {
 			var item = i;
@@ -455,12 +468,10 @@ var buildCalculator = {
 					mathR = 1 + 0.15 + this.values['dps-addAttackSpeed'],
 					mathA = 1 + this.attrs[this.attrs.primary] * 0.01,
 					mathM = 1 + (this.attrs['critical-hit'] / 100) * (this.attrs['critical-hit-damage'] / 100);
-			this.values['dps-speedTotal'] = Math.round(this.values['dps-speed'].mh * (1 + this.values['dps-addAttackSpeed'] + 0.15) * 100)/100;
-			dps = mathS * mathC * mathR * mathA * mathM;
+			dps = mathS * mathC * mathR * mathA * mathM;			
 			// console.log(mathS, mathC, mathR, mathA, mathM, dps);
 		} else {
 			this.values['dps-speed'] = Math.floor(this.values['dps-speed'] * 1024) / 1024;
-			this.values['dps-speedTotal'] = Math.round(this.values['dps-speed'] * (1 + this.values['dps-addAttackSpeed']) * 100)/100;
 			// console.log(this.values.dps, this.attrs[this.attrs.primary]);
 			dps = (((this.values['dps-damage'].min + this.values['dps-damage'].max) / 2 + this.values['dps-addDamageAvg']) * this.values['dps-speed']) * (1 + this.values['dps-addAttackSpeed']) * (this.attrs[this.attrs.primary] / 100 + 1) * 1 * ((this.attrs['critical-hit'] / 100) * (this.attrs['critical-hit-damage']/100) + 1);
 			// console.log(this.values.dps.dps);
@@ -535,6 +546,7 @@ var buildCalculator = {
 							case "quiver":
 							case "mojo":
 							case "source":
+								// console.log(json.type + " atk speed " + (av/100));
 								this.attrs['attack-speed-incs'] -= (av/100);
 								break;
 							default:
