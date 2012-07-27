@@ -142,6 +142,7 @@
 							if($item->stats) {
 								$stats = $item->stats->export();								
 							}
+							$socketAttrs = array();
 							$attrs = $item->attrs->getAttributesArray($item->type);
 							$export = $item->cleanExport();
 							if(isset($export['socketAttrs'])) {
