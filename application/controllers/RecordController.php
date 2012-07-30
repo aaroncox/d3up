@@ -189,11 +189,13 @@ class RecordController extends Epic_Controller_Action
 							break;
 						case "active-skills":
 							$record->actives = $this->getRequest()->getParam('actives');
+							$record->stats = $this->getRequest()->getParam('stats');
 							$this->getResponse()->setHeader('Content-type', 'application/json');
 							echo json_encode($record->save()); exit;
 							break;
 						case "passive-skills":
 							$record->passives = $this->getRequest()->getParam('passives');
+							$record->stats = $this->getRequest()->getParam('stats');
 							$this->getResponse()->setHeader('Content-type', 'application/json');
 							echo json_encode($record->save()); exit;
 							break;
