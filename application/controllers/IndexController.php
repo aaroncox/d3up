@@ -10,16 +10,17 @@ class IndexController extends Epic_Controller_Action {
 		$sort = array(
 			'_created' => -1,
 		);
-		$this->view->items = $items = Epic_Mongo::db('item')->fetchAll($query, $sort, 200);	
-		$paginator = Zend_Paginator::factory($items);
-		$paginator->setCurrentPageNumber($this->getRequest()->getParam('page', 1))->setItemCountPerPage(20);
-		$this->view->items = $paginator;
+		$this->view->items = $items = Epic_Mongo::db('item')->fetchAll($query, $sort, 10);	
+		// $paginator = Zend_Paginator::factory($items);
+		// $paginator->setCurrentPageNumber($this->getRequest()->getParam('page', 1))->setItemCountPerPage(20);
+		// $this->view->items = $paginator;
 		$query['equipmentCount'] = array(
 			'$gt' => 10
 		);
 		if($class = $this->getRequest()->getParam('build-class')) {
 			$this->view->buildClass = $query['class'] = $class;
 		}
+		$this->view->sales = $sales = Epic_Mongo::db('sale')->fetchAll(array('soldSuccess' => true), array('soldOn' => -1), 10);
 		$this->view->builds = $builds = Epic_Mongo::db('build')->fetchAll($query, $sort, 10);	
 		$this->view->counts = array(
 			'builds' => count(Epic_Mongo::db("build")->fetchAll()),
