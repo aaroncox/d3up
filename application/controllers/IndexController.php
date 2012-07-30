@@ -14,6 +14,9 @@ class IndexController extends Epic_Controller_Action {
 		$paginator = Zend_Paginator::factory($items);
 		$paginator->setCurrentPageNumber($this->getRequest()->getParam('page', 1))->setItemCountPerPage(20);
 		$this->view->items = $paginator;
+		$query['equipmentCount'] = array(
+			'$gt' => 10
+		);
 		if($class = $this->getRequest()->getParam('build-class')) {
 			$this->view->buildClass = $query['class'] = $class;
 		}

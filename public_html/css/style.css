@@ -314,7 +314,7 @@ ul#simulate-stats input,
 .d3up-table td {
 	padding: 5px;
 	border-top: 1px solid #111;
-	line-height: 42px;
+	line-height: 34px;
 	overflow: hidden;
 }
 .d3up-table td.name {
@@ -322,9 +322,13 @@ ul#simulate-stats input,
 }
 .home .d3up-table td.name {
 	width: 150px;
+	max-width: 150px;
+	overflow: hidden;
 }
 .d3up-table td.name a {
 	display: block;
+	white-space: nowrap;
+	overflow: hidden;
 }
 .d3up-table td.data {
 	text-align: center;
@@ -566,6 +570,7 @@ dd:has(:focus) .chzn-container {
 	max-width: 200px;
 	overflow: hidden;
 }
+.d3up-table td.name .item-stat,
 #recent-items td.name .item-stat {
 	text-align: left;
 }
