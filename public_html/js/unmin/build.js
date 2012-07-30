@@ -452,7 +452,105 @@ $(function() {
 		var statsValue = simAgainstDisplay.find(".stats-primary .big-stat").empty(),
 				statsValueHelper = simAgainstDisplay.find(".stats-primary .stat-helper").empty(),
 				statsPercent = simAgainstDisplay.find(".stats-extra-percent").empty(),
-				statsRange = simAgainstDisplay.find(".stats-extra-range").empty();
+				statsRange = simAgainstDisplay.find(".stats-extra-range").empty(),
+				statsSockets = simAgainstDisplay.find("ul.sockets").empty();
+		// if(simAgainstData.socket)
+		if(simAgainstData.sockets) {
+			for(i=0; i<simAgainstData.sockets.length; i++) {
+				var select = $("<select class='sockets' name='socket"+i+"' style='width: 300px'><option value=''>None</option></select>"),
+						effect = "unknown";
+				$.each(gems, function(k,v) {
+					var selected = false;
+					if(simAgainstData.sockets[i] == k) {
+						selected = true;
+					}
+					switch(simAgainstData.type) {
+						case "spirit-stone":
+						case "voodoo-mask":
+						case "wizard-hat":
+						case "helm":
+							effectNum = 1;
+							effect = v[1];						
+							break;
+						case "shield":
+						case "belt":
+						case "boots":
+						case "bracers":
+						case "chest-armor":
+						case "cloak":
+						case "gloves":
+						case "pants":
+						case "mighty-belt":
+						case "shoulder":
+						default:
+							effectNum = 3;
+							effect = v[3];
+							break;
+						case "2h-mace":
+						case "2h-axe":
+						case "bow":
+						case "diabo":
+						case "crossbow":
+						case "2h-mighty":
+						case "polearm":
+						case "staff":
+						case "2h-sword":
+						case "axe":
+						case "ceremonial-knife":
+						case "hand-crossbow":
+						case "dagger":
+						case "fist-weapon":
+						case "mace":
+						case "mighty-weapon":
+						case "spear":
+						case "sword":
+						case "wand":
+							effectNum = 2;
+							effect = v[2];							
+							break;
+					}
+					var option = $("<option value='" + k + "'>" + v[0] + " (" + effect + ")</option>");
+					if(selected) {
+						option.attr("selected", "selected");
+					}
+					select.append(option);
+				});
+				select.bind('change', function() {
+					simAgainstData.socketAttrs = {};
+					simAgainstDisplay.find('select.sockets').each(function(k,v) {
+						if(gemEffect[$(this).val()]) {
+							var newEffect = gemEffect[$(this).val()][effectNum];
+							if(simAgainstData.socketAttrs[newEffect[0]]) {
+								simAgainstData.socketAttrs[newEffect[0]] += newEffect[1];
+							} else {
+								simAgainstData.socketAttrs[newEffect[0]] = newEffect[1];							
+							}
+						}
+					});
+					// Init the Calc
+					calc.init();
+					// Setup the Class for the Calculator
+					calc.setClass($("#character").data('class'));
+					// Pass in which gear we are calculating
+					calc.setGear(".equipped a");
+					// Pass in the Passives we're using
+					calc.setPassives(activePassives);
+					// Remove Item in Slot
+					calc.removeItem(simItemType);
+					// Add in the fake item
+					calc.parseItem(simAgainstData, simItemType);
+					stats = calc.run();
+					calcDiff(prevStats, simAgainstData, simItemType, true);
+					displayStats();
+				});
+				statsSockets.append($("<li>").html(select));
+			}
+		}
+		// if(simAgainstData.socketAttrs) {
+		// 	$.each(simAgainstData.socketAttrs, function(k,v) {
+		// 		
+		// 	});
+		// }
 		if(simAgainstData.stats) {			
 			$.each(simAgainstData.stats, function(k,v) {
 				var input = $("<input name='" + k + "' type='text'/>");
