@@ -227,7 +227,7 @@ class UserController extends Epic_Controller_Action
 									'method' => $sale->method,
 									'date' => date("Y-m-d", $sale->soldOn),
 									'status' => $sale->soldSuccess,
-									'price' => $helper->prettyStat($sale->soldFor),
+									'price' => $helper->prettyStat($sale->soldFor?:$sale->buyout),
 									'item' => $sale->item->cleanExport()
 								);
 							}

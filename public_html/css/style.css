@@ -450,9 +450,11 @@ dd:has(:focus) .chzn-container {
 .compare-diff table td:first-child {
 	text-align: right;
 }
+.sold-true,
 .pos {
 	color: #0F0;
 }
+.sold-false, 
 .neg {
 	color: #F00;
 }

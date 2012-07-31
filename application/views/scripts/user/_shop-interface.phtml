@@ -207,12 +207,14 @@
 						link.bindTooltip();
 						// console.log(item);
 						tr.append($("<td/>").append(link));
-						tr.append($("<td/>").append('<img src="/images/' + v.method + '.png"> ' + v.price));
+						tr.append($("<td class='sold-"+v.status+"'/>").append('<img src="/images/' + v.method + '.png"> ' + v.price));
 						tr.append($("<td/>").append(v.date));
 						target.append(tr);
 					});
 					if(json.length == 0) {
 						target.html("<tr><td colspan='3' style='line-height: 1.5em'>No similar items have been found, try removing some of the attributes above to broaden the search.</td></tr>");
+					} else {
+						target.append("<tr><td colspan='3'>Red indicates it didn't sell, green means it did.</td></tr>");
 					}
 				}
 			});
