@@ -39,6 +39,7 @@ var buildCalculator = {
 			'melee-reduce': 0,
 			'range-reduce': 0,
 			'elite-reduce': 0,
+			'resist-all': 0,
 		};
 		this.gear = {};
 		this.values = {};
@@ -243,7 +244,6 @@ var buildCalculator = {
 														}
 														break;
 													case "critical-hit":
-													console.log("adding");
 														this.attrs['critical-hit'] = this.attrs['critical-hit'] + (eff * 100);														
 														break;
 													default:

@@ -560,6 +560,13 @@ $(function() {
 						statsValue.html(input);
 						statsValueHelper.html("Total Armor");
 						break;
+					case "block-amount":
+						var i1 = $("<input name='" + k + "-min' type='text'/>"),
+								i2 = $("<input name='" + k + "-max' type='text'/>");
+						i1.val(v.min);
+						i2.val(v.max);
+						statsRange.append(i1, "-", i2).append(" Block Amount");
+						break;
 					case "block-chance":
 						statsPercent.html(input).append(" Block Chance");
 						break;
@@ -617,7 +624,7 @@ $(function() {
 				input.bind('keyup', function() {
 					switch(k) {
 						case "block-chance":
-							simAgainstData.stats[$(this).attr("name")] = ($(this).val()) ? parseFloat($(this).val()) / 100 : 0;
+							simAgainstData.stats[$(this).attr("name")] = ($(this).val()) ? parseFloat($(this).val()): 0;
 							break;
 						default:
 							simAgainstData.stats[$(this).attr("name")] = ($(this).val()) ? parseFloat($(this).val()) : 0;
