@@ -100,16 +100,6 @@ $(function() {
 	});
 	activeSelect.bind('change', function() {
 		var skills = ($(this).val()) ? $(this).val() : [];
-		if(!skills || activeActives.length != skills.length) {
-			if(isOwner && skills.length <= 6) {
-				$.ajax({
-					data: {
-						a: 'active-skills',
-						actives: skills
-					}
-				});							
-			}
-		}
 		activeDisplay.empty();
 		$.each(skills, function(k,v) {
 			skillDisplay.show();
@@ -131,19 +121,23 @@ $(function() {
 			activeDisplay.append($("<li/>").html(img));			
 		});
 		recalc();
+		if(!skills || activeActives.length != skills.length) {
+			if(isOwner && skills.length <= 6) {
+				setTimeout(function() {
+					$.ajax({
+						data: {
+							a: 'active-skills',
+							actives: skills,
+							stats: stats
+						}
+					});												
+				}, 0);
+			}
+		}
+		activeActives = $(this).val();		
 	});
 	passiveSelect.bind('change', function() {
 		var skills = ($(this).val()) ? $(this).val() : [];
-		if(!skills || activePassives.length != skills.length) {
-			if(isOwner && skills.length <= 3) {
-				$.ajax({
-					data: {
-						a: 'passive-skills',
-						passives: skills
-					}
-				});							
-			}
-		}
 		passiveDisplay.empty();
 		$.each(skills, function(k,v) {
 			skillDisplay.show();
@@ -157,6 +151,20 @@ $(function() {
 			passiveDisplay.append($("<li/>").html(img));
 		});
 		recalc();
+		if(!skills || activePassives.length != skills.length) {
+			if(isOwner && skills.length <= 3) {
+				setTimeout(function() {
+					$.ajax({
+						data: {
+							a: 'passive-skills',
+							passives: skills, 
+							stats: stats
+						}
+					});												
+				}, 0);
+			}
+		}
+		activePassives = $(this).val();		
 	});
 	activeSelect.trigger('change');
 	passiveSelect.trigger('change');
@@ -225,46 +233,43 @@ $(function() {
 						buttons: {
 							Equip: function() {	
 								var dialog = $(this);
-								$.ajax({
-									data: {
-										a: 'equip',
-										slot: itemType,
-										newItem: gearSelect.val(),
-										stats: {
-											dps: stats.dps,
-											ehp: stats.ehp
-										}
-									}, 
-									success: function(data) {
-										if(gearSelect.val() != "") {
-											var itemLink = $("<a/>"),
-													itemSelected = gearSelect.find(":selected"),
-													itemData = $.parseJSON(itemSelected.attr("data-json"));
-											// Unequip offhand if we're equipping a 2h weapon
-											switch(itemData.type) {
-												case '2h-mace': 
-												case '2h-axe': 
-												case 'diabo': 
-												case '2h-mighty': 
-												case 'polearm': 
-												case 'staff': 
-												case '2h-sword':
-													$("#equipped-offhand").html("Nothing");
-													break;
-											}
-											itemLink.attr("href", "/i/" + gearSelect.val());
-											itemLink.attr("data-json", JSON.stringify(itemData));
-											itemLink.addClass("quality-" + itemData.quality);
-											itemLink.html(itemData.name);
-											itemLink.bindTooltip();
-											itemDisplay.html(itemLink);
-										} else {
-											itemDisplay.html("Nothing");
-										}
-										dialog.dialog( "close" );		
-										recalc();
+								if(gearSelect.val() != "") {
+									var itemLink = $("<a/>"),
+											itemSelected = gearSelect.find(":selected"),
+											itemData = $.parseJSON(itemSelected.attr("data-json"));
+									// Unequip offhand if we're equipping a 2h weapon
+									switch(itemData.type) {
+										case '2h-mace': 
+										case '2h-axe': 
+										case 'diabo': 
+										case '2h-mighty': 
+										case 'polearm': 
+										case 'staff': 
+										case '2h-sword':
+											$("#equipped-offhand").html("Nothing");
+											break;
 									}
-								});
+									itemLink.attr("href", "/i/" + gearSelect.val());
+									itemLink.attr("data-json", JSON.stringify(itemData));
+									itemLink.addClass("quality-" + itemData.quality);
+									itemLink.html(itemData.name);
+									itemLink.bindTooltip();
+									itemDisplay.html(itemLink);
+								} else {
+									itemDisplay.html("Nothing");
+								}
+								dialog.dialog( "close" );		
+								recalc();
+								setTimeout(function() {
+									$.ajax({
+										data: {
+											a: 'equip',
+											slot: itemType,
+											newItem: gearSelect.val(),
+											stats: stats
+										}
+									});									
+								}, 0);
 							},
 							Cancel: function() {
 								$(this).dialog( "close" );
