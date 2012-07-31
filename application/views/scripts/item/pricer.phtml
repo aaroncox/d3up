@@ -1,0 +1,86 @@
+<div id="pricer" class="inline-flow">
+	<ul>
+		<li><a href="#build-gear">Simulate</a></li>
+	</ul>
+	<div id="pricer-simulate" class="pricer-tab">
+		<p>
+			<select name="itemType" id="itemType" data-placeholder="What type of item is this?">
+			    <option value="" label="" selected="selected"></option>
+			    <option value="amulet" label="Amulet">Amulet</option>
+			    <option value="belt" label="Belt">Belt</option>
+			    <option value="boots" label="Boots">Boots</option>
+			    <option value="bracers" label="Bracers">Bracers</option>
+			    <option value="chest-armor" label="Chest Armor">Chest Armor</option>
+			    <option value="cloak" label="Cloak">Cloak</option>
+			    <option value="gloves" label="Gloves">Gloves</option>
+			    <option value="helm" label="Helm">Helm</option>
+			    <option value="pants" label="Pants">Pants</option>
+			    <option value="mighty-belt" label="Mighty Belt">Mighty Belt</option>
+			    <option value="ring" label="Ring">Ring</option>
+			    <option value="shoulder" label="Shoulder">Shoulder</option>
+			    <option value="spirit-stone" label="Spirit Stone">Spirit Stone</option>
+			    <option value="voodoo-mask" label="Voodoo Mask">Voodoo Mask</option>
+			    <option value="wizard-hat" label="Wizard Hat">Wizard Hat</option>
+			    <option value="2h-mace" label="Two-Handed Mace">Two-Handed Mace</option>
+			    <option value="2h-axe" label="Two-Handed Axe">Two-Handed Axe</option>
+			    <option value="bow" label="Bow">Bow</option>
+			    <option value="diabo" label="Diabo">Diabo</option>
+			    <option value="crossbow" label="Crossbow">Crossbow</option>
+			    <option value="2h-mighty" label="Two-Handed Mighty Weapon">Two-Handed Mighty Weapon</option>
+			    <option value="polearm" label="Polearm">Polearm</option>
+			    <option value="staff" label="Staff">Staff</option>
+			    <option value="2h-sword" label="Two-Handed Sword">Two-Handed Sword</option>
+			    <option value="axe" label="Axe">Axe</option>
+			    <option value="ceremonial-knife" label="Ceremonial Knife">Ceremonial Knife</option>
+			    <option value="hand-crossbow" label="Hand Crossbow">Hand Crossbow</option>
+			    <option value="dagger" label="Dagger">Dagger</option>
+			    <option value="fist-weapon" label="Fist Weapon">Fist Weapon</option>
+			    <option value="mace" label="Mace">Mace</option>
+			    <option value="mighty-weapon" label="Mighty Weapon">Mighty Weapon</option>
+			    <option value="spear" label="Spear">Spear</option>
+			    <option value="sword" label="Sword">Sword</option>
+			    <option value="wand" label="Wand">Wand</option>
+			    <option value="mojo" label="Mojo">Mojo</option>
+			    <option value="source" label="Source">Source</option>
+			    <option value="quiver" label="Quiver">Quiver</option>
+			    <option value="shield" label="Shield">Shield</option>
+			</select>
+		</p>
+		<p>
+			<select id="simulate-attributes" data-placeholder="Select which attributes are on the item" multiple="multiple" style="width: 510px">
+				<?= $this->render("./item/_itemAttributeOptions.phtml") ?>
+				<option value="armor" label="+ Armor">+ Armor</option>
+			</select>
+		</p>
+		<div id="simulate-stats" class="d3-item">
+			<div class="top"><p class="">Name</p></div>
+			<div class="item">
+				<p class="stats stats-primary">
+					<span class="big-stat"></span>
+					<span class="stat-helper"></span>
+				</p>
+				<p class="stats stats-extra-percent"></p>
+				<p class="stats stats-extra-range"></p>
+				<ul class="attrs">
+				</ul>
+				<ul class="sockets">
+				</ul>
+			</div>
+			<div class="bottom"> 
+
+			</div>
+		</div>
+	</div>
+</div>
+<div id="pricer-stats" class="pricer-stats ui-widget ui-widget-content ui-corner-all inline-flow" style="width: 390px">
+	<ul>
+		<li><a href="#tab-similar">Similar Items</a></li>
+	</ul>
+	<div id="tab-similar" class="stats-tab">
+	</div>
+</div>
+<script type="text/javascript">
+	$("#pricer").tabs();
+	$("#pricer-stats").tabs();
+	$("#simulate-attributes, #itemType").chosen();
+</script>

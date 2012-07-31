@@ -59,6 +59,9 @@ class ItemController extends Epic_Controller_Action
 			$this->_helper->layout->disableLayout();
 		}
 	}
+	public function pricerAction() {
+		
+	}
 	public function createAction() {
 		// Create a new Item
 		$item = Epic_Mongo::newDoc('item');

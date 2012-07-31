@@ -20,6 +20,6 @@ class D3Up_View_Helper_PrettyStat extends Zend_View_Helper_Abstract
 		if($val >= 1000) {
 			return round($val / 1000, 2) ."k";
 		}
-		return round($val, 1);
+		return round($val, 2);
 	}
 } // END class D3Up_View_Helper_PrettyStat extends Zend_View_Helper_Abstrat

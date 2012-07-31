@@ -62,17 +62,7 @@
 						<?= $this->regionDisplay($sale->region) ?>
 					</td>
 					<td class="data"> 
-						<div class='item-stat'>
-							<? if($sale->method == 'ah'): ?>
-								<span class='value'>
-									<img src="/images/goldcoin.png"> <?= $this->prettyStat($sale->soldFor / 0.85) ?>
-								</span>
-								<span class="stat">
-									<?= $this->prettyStat($sale->soldFor) ?> after AH cut
-								</span>
-							<? else: ?>
-							<? endif ?>
-						</div>
+						<?= $this->priceDisplay($sale, 'soldFor') ?>
 					</td>					
 				</tr>
 				<? endforeach ?>

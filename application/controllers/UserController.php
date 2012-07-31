@@ -182,19 +182,9 @@ class UserController extends Epic_Controller_Action
 							$sale->seller = $profile;
 							$sale->region = (int) $profile->region;
 							$sale->method = $this->getRequest()->getParam('sellMethod');
-							switch($sale->method) {
-								case "ah":
-									$sale->bid = (int) $this->getRequest()->getParam('ahBid');
-									$sale->buyout = (int) $this->getRequest()->getParam('ahBuyout');
-									break;
-								case "bid":
-									break;
-								case "flat":
-									break;
-								case "offer":
-									break;
-							}
-							$sale->value = (int) $this->getRequest()->getParam('sellValue');
+							$sale->bid = (float) $this->getRequest()->getParam('ahBid');
+							$sale->buyout = (float) $this->getRequest()->getParam('ahBuyout');
+							$sale->value = (float) $this->getRequest()->getParam('sellValue');
 							if($sale->method == 'ah') {				
 								$sale->end = time() + (36 * 60 * 60);
 							} else {
@@ -234,6 +224,7 @@ class UserController extends Epic_Controller_Action
 							$helper = new D3Up_View_Helper_PrettyStat();
 							foreach($sales as $sale) {
 								$data[$sale->id] = array(
+									'method' => $sale->method,
 									'date' => date("Y-m-d", $sale->soldOn),
 									'status' => $sale->soldSuccess,
 									'price' => $helper->prettyStat($sale->soldFor),

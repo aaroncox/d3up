@@ -73,6 +73,11 @@ class D3Up_Form_Record_Build extends Epic_Form
 			'rows' => 5,
 			'filters' => array('StripTags'),			
 		));
+		
+		$this->addElement("checkbox", "private", array(
+			'label' => 'Private?',
+			'description' => 'Check this to make your build private'
+		));
 
 		$this->addElement("select", "class", array(
 			'required' => true,
@@ -90,6 +95,7 @@ class D3Up_Form_Record_Build extends Epic_Form
 		$this->setDefaults(array(
 			'name' => $build->name,
 			'description' => $build->description,
+			'private' => $build->private,
 		));
 		
 		if($this->isNewRecord()) {
@@ -113,6 +119,8 @@ class D3Up_Form_Record_Build extends Epic_Form
 		}
 		// Set the Quality of the Build
 		$build->class = $this->class->getValue();
+		// Set privacy
+		$build->private = (bool) $this->private->getValue();
 		// Set the Description
 		$build->description = $this->description->getValue();
 		// Do we have a user creating this? If so, add it.

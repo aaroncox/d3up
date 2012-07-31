@@ -1,0 +1,140 @@
+<table class="d3up-table kpi">
+	<tr>
+		<td>
+			<div class='item-stat'>
+				<span class="stat">
+					Pending Sales
+				</span>
+				<span class='value'>
+					<?= $this->data['totals']['pendingSales'][$this->type] ?>
+				</span>
+				<span class="stat">
+					<?= $this->prettyStat($this->data['totals']['pendingBid'][$this->type])?> bids 
+					/ 
+					<?= $this->prettyStat($this->data['totals']['pendingBuyout'][$this->type])?> buyouts 
+				</span>
+			</div>
+		</td>
+		<td>
+			<div class='item-stat'>
+				<span class="stat">
+					Total Sales
+				</span>
+				<span class='value'>
+					<?= $this->data['totals']['sales'][$this->type] ?>
+				</span>
+				<span class="stat">
+					<span class="pos"><?= $this->data['totals']['sales'][$this->type] - $this->data['totals']['failed'][$this->type] ?></span> Sold / 
+					<span class="neg"><?= $this->data['totals']['failed'][$this->type] ?></span> Failed
+				</span>
+			</div>
+		</td>
+		<td>
+			<div class='item-stat'>
+				<span class="stat">
+					Total Sales Value
+				</span>
+				<span class='value'>
+					<img src="/images/<?= $this->type ?>.png"> <?= $this->prettyStat($this->data['totals']['value'][$this->type] + $this->data['totals']['sales'][$this->type]) ?>
+				</span>
+				<span class="stat">
+					<?= $this->prettyStat($this->data['totals']['value'][$this->type]) ?> after AH cut
+				</span>
+			</div>
+		</td>
+	</tr>
+</table>
+<table class="d3up-table">
+	<thead>
+		<tr>
+			<th>Date</th>
+			<th colspan="2">Total Sales</th>
+			<th>Earnings</th>
+			<th>Avg Sale</th>
+			<th>Expenses</th>
+			<th>Portion of Total Earnings / % Profit Spent</th>
+		</tr>
+	</thead>
+	<tbody>
+		<? foreach($this->data['dates'][$this->type] as $date => $sale): ?>
+		<tr class="item-row">
+			<td class='data'>
+				<div class='item-stat'>
+					<span class='value'><?= date("Y-m-d", $date) ?></span>
+					<span class='stat'><?= date("l", $date) ?></span>
+				</div>
+			</td>
+			<td class='data'>
+				<div class='item-stat'>
+					<span class='value pos'><?= $sale['sales'] ?></span>
+					<span class='stat'>Sales</span>
+				</div>
+			</td>
+			<td class='data'>
+				<div class='item-stat'>
+					<span class='value neg'><?= $sale['failed'] ?></span>
+					<span class='stat'>Failed Auctions</span>
+				</div>
+			</td>
+			<td class='data'>
+				<div class='item-stat'>
+					<span class='value'>
+						<img src="/images/<?= $this->type ?>.png"> 
+						<? if($this->type == "ah"): ?>
+							<?= $this->prettyStat($sale['value'] / 0.85) ?>
+						<? endif ?>
+						<? if($this->type == "rmah"): ?>
+							<?= $this->prettyStat($sale['value'] + $sale['sales']) ?>
+						<? endif ?>
+					</span>
+					<span class="stat">
+						<?= $this->prettyStat($sale['value']) ?> after AH cut
+					</span>
+				</div>
+			</td>
+			<td class='data'>
+				<div class='item-stat'>
+					<span class='value'>
+						<img src="/images/<?= $this->type ?>.png"> 
+						<? if($sale['value'] > 0 && $sale['sales'] > 0): ?>
+							<? if($this->type == "ah"): ?>
+								<?= $this->prettyStat(round(($sale['value'] / $sale['sales']), 1) / 0.85) ?>
+							<? endif; ?>
+							<? if($this->type == "rmah"): ?>
+								<?= $this->prettyStat(round(($sale['value'] / $sale['sales']), 1)) ?>
+							<? endif; ?>
+						<? else: ?>
+							~
+						<? endif ?>
+					</span>
+					<span class="stat">
+						<? if($sale['value'] > 0 && $sale['sales'] > 0): ?>
+							<?= $this->prettyStat(round(($sale['value'] / $sale['sales']), 1)) ?> after AH cut
+						<? else: ?>
+							~
+						<? endif ?>
+					</span>
+				</div>
+			</td>
+			<td class='data'>
+				<div class='item-stat'>
+					<span class='value'>
+						<?= $this->prettyStat($sale['expenses']) ?>
+					</span>
+				</div>
+			</td>
+			<td class='name'>
+				<? 
+				$per = round($sale['value'] / $this->data['totals']['value'][$this->type] * 100);
+				$exp = 0;
+				if($sale['value']) {
+					$exp = round($sale['expenses'] / $sale['value'] * 100);					
+				}
+				?>
+				<div class="bar" style="width: <?= $per ?>%"><?= $per ?>%</div> 
+				<!-- <div class="bar bar-neg" style="width: <?= $exp ?>%"><?= $exp ?>%</div> -->
+			</td>
+		</tr>
+		<? endforeach ?>
+	</tbody>
+</table>

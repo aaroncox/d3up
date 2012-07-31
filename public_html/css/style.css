@@ -396,6 +396,7 @@ dd:has(:focus) .chzn-container {
 #gear-change {
 	display: none;
 }
+#pricer, 
 #character {
 	width: 550px;
 }
@@ -861,4 +862,10 @@ tr.compared > td:first-child {
 }
 #simulate-stats .big-stat input {
 	width: 200px;
+}
+.pricer-tab {
+	padding: 10px 20px;
+}
+#tab-summary {
+	padding: 10px 0;
 }

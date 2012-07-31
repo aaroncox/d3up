@@ -10,6 +10,7 @@
 </style>
 <div class="single-item">
 	<?= $this->displayItem($this->record) ?>
+	<? if($this->record->rating): ?>
 	<div style="background-color: #111; margin: 5px; padding: 5px" class='ui-widget ui-corner-all'>
 	<h3 style="margin: 0">Perfection Ratings</h3>
 	<table class="perfection-rating">
@@ -24,6 +25,7 @@
 		</tr>
 	</table>
 	</div>
+	<? endif ?>
 	<p style='text-align: center'>
 		Link: <input type='text' value='http://d3up.com<?= $this->url(array('record' => $this->record), $this->record->route, true) ?>'/>
 		<? if($profile && $this->record->_createdBy && $profile->createReference() == $this->record->_createdBy->createReference()): ?>

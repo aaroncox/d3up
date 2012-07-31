@@ -25,31 +25,13 @@
 					<?= $this->methodCleaner($sale->method) ?>
 				</td>
 				<td class='data'>
-					<img src="/images/goldcoin.png"> 
-					<? if($sale->method == 'ah'): ?>
-						<?= $this->prettyStat($sale->bid) ?>
-					<? else: ?>
-					<? endif ?>
+					<?= $this->priceDisplay($sale, 'bid') ?>
 				</td>
 				<td class='data'>
-					<img src="/images/goldcoin.png"> 
-					<? if($sale->method == 'ah'): ?>
-						<?= $this->prettyStat($sale->buyout) ?>
-					<? else: ?>
-					<? endif ?>
+					<?= $this->priceDisplay($sale, 'buyout') ?>
 				</td>
 				<td class="data"> 
-					<div class='item-stat'>
-						<? if($sale->method == 'ah'): ?>
-							<span class='value'>
-								<img src="/images/goldcoin.png"> <?= $this->prettyStat($sale->soldFor / 0.85) ?>
-							</span>
-							<span class="stat">
-								<?= $this->prettyStat($sale->soldFor) ?> after AH cut
-							</span>
-						<? else: ?>
-						<? endif ?>
-					</div>
+					<?= $this->priceDisplay($sale, 'soldFor') ?>
 				</td>
 				<td class="controls"><?= $this->mLink($sale, array('action' => 'edit', 'text' => 'Edit')) ?></td>
 			</tr>

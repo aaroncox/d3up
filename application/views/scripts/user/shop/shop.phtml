@@ -14,17 +14,11 @@
 					<?= $this->methodCleaner($sale->method) ?>
 				</td>
 				<td class="data"> 
-					<img src="/images/goldcoin.png"> 
-					<? if($sale->method == 'ah'): ?>
-							<?= $this->prettyStat($sale->buyout) ?>
-							(Bid: <?= $this->prettyStat($sale->bid) ?>)
-					<? else: ?>
-						<?= number_format($sale->value) ?>
-					<? endif ?>
+					<?= $this->priceDisplay($sale) ?>
 				</td>
 				<td class="data"><?= $this->timeAgo($sale->end) ?></td>
 				<td class="controls">
-					<? if($sale->method == 'ah'): ?>
+					<? if($sale->method == 'ah' || $sale->method == 'rmah'): ?>
 						<button data-id="<?= $sale->id ?>" data-method="<?= $sale->method ?>" style="padding: 0px 10px" class="btn-complete ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only">Complete</button>
 					<? else: ?>
 						<a data-id="<?= $sale->id ?>" data-method="<?= $sale->method ?>" style="padding: 0px 10px" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" href="/sale/<?= $sale->id ?>/offers">View</a>

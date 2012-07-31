@@ -1,6 +1,9 @@
 $(function() {
 	var tooltip = $(".d3up-tooltip");
 	$.fn.bindTooltip = function() {
+		if(!$(this).attr('data-json')) {
+			return false;
+		}
 		var item = $.parseJSON($(this).attr('data-json'));
 		var container = $("<div class='d3-item'/>"),
 				header = $("<div class='top'/>"),

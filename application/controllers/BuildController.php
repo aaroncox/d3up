@@ -9,6 +9,7 @@ class BuildController extends Epic_Controller_Action
 {
 	public function indexAction() {
 		$query = array(
+			'private' => array('$ne' => true),
 		);
 		$sort = array(
 			'_created' => -1,

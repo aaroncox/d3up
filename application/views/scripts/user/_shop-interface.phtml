@@ -178,7 +178,8 @@
 					modal: true,
 					title: 'Create a Sale'
 				});
-				var itemLink = $("<a href='/i/" + selected.id + "' data-json='" + JSON.stringify(selected) + "' class='quality-" + selected.quality + "'>" + selected.name + "</a>");
+				var itemLink = $("<a href='/i/" + selected.id + "' class='quality-" + selected.quality + "'>" + selected.name + "</a>");
+				itemLink.attr("data-json", JSON.stringify(selected));
 				itemLink.bindTooltip();
 				$("#similar-current").html(itemLink);
 				$.each(selected.attrs, function(k,v) {
@@ -206,7 +207,7 @@
 						link.bindTooltip();
 						// console.log(item);
 						tr.append($("<td/>").append(link));
-						tr.append($("<td/>").append('<img src="/images/goldcoin.png"> ' + v.price));
+						tr.append($("<td/>").append('<img src="/images/' + v.method + '.png"> ' + v.price));
 						tr.append($("<td/>").append(v.date));
 						target.append(tr);
 					});
@@ -233,6 +234,9 @@
 		// Show the Options if a user picks a selling method
 		sellMethod.bind('change', function() {
 			$(".sellMethod").hide();
+			$(".sellMethod input").each(function() {
+				$(this).val("");
+			});
 			selectedMethod = $(this).find(":selected").val();
 			if(selectedMethod) {
 				if(selectedMethod == 'ah') {
@@ -259,6 +263,7 @@
 					completeSaleResult = $("#completeSaleResult");
 			btn.click(function() {
 				switch(method) {
+					case "rmah":
 					case "ah":
 						methodOptions.html("");
 						methodOptions.append($("<p>").html("How much did it sell for (after AH cut, the value on your 'Completed' tab)?"));
@@ -431,9 +436,10 @@
 			<p><strong>Selling Method</strong></p>
 			<select name="sellMethod" id="sellMethod">
 				<!-- <option value="">Pick an Option</option> -->
-				<!-- <option value="flat">Flat Price</option>
-				<option value="offers">Taking Offers</option> -->
-				<option value="ah" selected="selected">Up on AH</option>
+				<!-- <option value="flat">Flat Price</option> -->
+				<!-- <option value="bazaar">D3Up.com - Bazaar</option> -->
+				<option value="ah" selected="selected">Battle.net AH - Gold</option>
+				<option value="rmah">Battle.net AH - RMAH</option>
 			</select>
 			<div>	
 				<p>How long should this sale remain active?</p>
@@ -454,11 +460,25 @@
 			<div id="method-offers" class="sellMethod">
 				<p class='alert'>The "Taking Offers" sell method allows other users to offer amounts to you for the item.</p>
 			</div>
+			<div id="method-bazaar" class="sellMethod">
+				<p><strong>Minimum Bid</strong></p>
+				<input name="ahBid" type="textbox"/>
+				<p><strong>Buyout</strong></p>
+				<input name="ahBuyout" type="textbox"/>
+				<!-- <p class='alert'>By choosing this option, your auction will not appear in the bazaar, but will appear in your "My Store" page. The purpose of this feature is so that you can log which items you've sold and for how much.</p> -->
+			</div>
 			<div id="method-ah" class="sellMethod">
 				<p><strong>Minimum Bid</strong></p>
-				<input name="ahBid" type="textbox" id="soldMinBid"/>
+				<input name="ahBid" type="textbox"/>
 				<p><strong>Buyout</strong></p>
-				<input name="ahBuyout" type="textbox" id="soldBuyout"/>
+				<input name="ahBuyout" type="textbox"/>
+				<!-- <p class='alert'>By choosing this option, your auction will not appear in the bazaar, but will appear in your "My Store" page. The purpose of this feature is so that you can log which items you've sold and for how much.</p> -->
+			</div>
+			<div id="method-rmah" class="sellMethod">
+				<p><strong>Minimum Bid</strong></p>
+				<input name="ahBid" type="textbox"/>
+				<p><strong>Buyout</strong></p>
+				<input name="ahBuyout" type="textbox"/>
 				<!-- <p class='alert'>By choosing this option, your auction will not appear in the bazaar, but will appear in your "My Store" page. The purpose of this feature is so that you can log which items you've sold and for how much.</p> -->
 			</div>
 			<p id="postSaleButton"><button id="postSale" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only gear-change" aria-disabled="false"><span class="ui-button-text">List Item</span></button></p>

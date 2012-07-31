@@ -23,54 +23,66 @@
 	}
 </style>
 <?
-	$totalValue = 0;
-	$totalSales = 0;
-	$totalFailed = 0;
-	$totalPendingSales = 0;
-	$totalPendingBuyout = 0;
-	$totalPendingBid = 0;
-	$totalExpenses = 0;
- 	$byDate = array();
+	$data = array(
+		'totals' => array(
+			'value' 				=> array('ah' => 0, 'rmah' => 0),
+			'sales' 				=> array('ah' => 0, 'rmah' => 0),
+			'failed' 				=> array('ah' => 0, 'rmah' => 0),
+			'pendingSales' 	=> array('ah' => 0, 'rmah' => 0),
+			'pendingBuyout' => array('ah' => 0, 'rmah' => 0),
+			'pendingBid' 		=> array('ah' => 0, 'rmah' => 0),
+			'expenses' => 0,
+		),
+		'dates' => array(
+			'ah' => array(),
+			'rmah' => array(),
+		),
+	);
+	$data['totals']['expenses'] = 0;
+ 	$data['dates'] = array();
 	foreach($this->expenses as $expense) {
 		$date = strtotime(date("Y-m-d", $expense->date));
-		if(!isset($byDate[$date])) {
-			$byDate[$date]['sales'] = 0;
-			$byDate[$date]['value'] = 0;
-			$byDate[$date]['failed'] = 0;
-			$byDate[$date]['expenses'] = 0;	
+		if(!isset($data['dates']['expenses'][$date])) {
+			$data['dates']['expenses'][$date]['sales'] = 0;
+			$data['dates']['expenses'][$date]['value'] = 0;
+			$data['dates']['expenses'][$date]['failed'] = 0;
+			$data['dates']['expenses'][$date]['expenses'] = 0;	
 		}
-		$byDate[$date]['expenses'] += $expense->amount;
-		$totalExpenses += $expense->amount;
+		$data['dates']['expenses'][$date]['expenses'] += $expense->amount;
+		$data['totals']['expenses'] += $expense->amount;
 	}
 	foreach($this->allSales as $sale) {
 		$date = strtotime(date("Y-m-d", $sale->soldOn));
+		if(!isset($data['dates'][$sale->method])) {
+			$data['dates'][$sale->method] = array();
+		}
 		if($date > 0) {
 			// Setup date if needed
-			if(!isset($byDate[$date])) {
-				$byDate[$date]['sales'] = 0;
-				$byDate[$date]['value'] = 0;
-				$byDate[$date]['failed'] = 0;
-				$byDate[$date]['expenses'] = 0;
+			if(!isset($data['dates'][$sale->method][$date])) {
+				$data['dates'][$sale->method][$date]['sales'] = 0;
+				$data['dates'][$sale->method][$date]['value'] = 0;
+				$data['dates'][$sale->method][$date]['failed'] = 0;
+				$data['dates'][$sale->method][$date]['expenses'] = 0;
 			}
 			if($sale->soldSuccess) {
 				// Record Successful Sales
-				$byDate[$date]['sales']++;
-				$byDate[$date]['value'] += $sale->soldFor;			
-				$totalSales++;
-				$totalValue += $sale->soldFor;				
+				$data['dates'][$sale->method][$date]['sales']++;
+				$data['dates'][$sale->method][$date]['value'] += $sale->soldFor;			
+				$data['totals']['sales'][$sale->method]++;
+				$data['totals']['value'][$sale->method] += $sale->soldFor;				
 			} else {
 				// Record Failed Stats
-				$byDate[$date]['failed']++;
-				$totalSales++;
-				$totalFailed++;
+				$data['dates'][$sale->method][$date]['failed']++;
+				$data['totals']['sales'][$sale->method]++;
+				$data['totals']['failed'][$sale->method]++;
 			}
 		} else {
-			$totalPendingSales++;
-			$totalPendingBuyout += $sale->buyout;
-			$totalPendingBid += $sale->bid;
+			$data['totals']['pendingSales'][$sale->method]++;
+			$data['totals']['pendingBuyout'][$sale->method] += $sale->buyout;
+			$data['totals']['pendingBid'][$sale->method] += $sale->bid;
 		}
 	}
-	krsort($byDate);
+	krsort($data['dates']);
 	
 	// $globalValue = 0;
 	// $globalSales = 0;
@@ -83,134 +95,20 @@
 	// }
 	
 	// var_dump($this->allSales->export()); exit;
-	// var_dump($byDate); exit;
+	// var_dump($data['dates']); exit;
 ?>
-<table class="d3up-table kpi">
-	<tr>
-		<td>
-			<div class='item-stat'>
-				<span class="stat">
-					Pending Sales
-				</span>
-				<span class='value'>
-					<?= $totalPendingSales ?>
-				</span>
-				<span class="stat">
-					<?= $this->prettyStat($totalPendingBid)?> bids 
-					/ 
-					<?= $this->prettyStat($totalPendingBuyout)?> buyouts 
-				</span>
-			</div>
-		</td>
-		<td>
-			<div class='item-stat'>
-				<span class="stat">
-					Total Sales
-				</span>
-				<span class='value'>
-					<?= $totalSales ?>
-				</span>
-				<span class="stat">
-					<span class="pos"><?= $totalSales - $totalFailed ?></span> Sold / 
-					<span class="neg"><?= $totalFailed ?></span> Failed
-				</span>
-			</div>
-		</td>
-		<td>
-			<div class='item-stat'>
-				<span class="stat">
-					Total Sales Value
-				</span>
-				<span class='value'>
-					<img src="/images/goldcoin.png"> <?= $this->prettyStat($totalValue / 0.85) ?>
-				</span>
-				<span class="stat">
-					<?= $this->prettyStat($totalValue) ?> after AH cut
-				</span>
-			</div>
-		</td>
-	</tr>
-</table>
-<table class="d3up-table">
-	<thead>
-		<tr>
-			<th>Date</th>
-			<th colspan="2">Total Sales</th>
-			<th>Earnings</th>
-			<th>Avg Sale</th>
-			<th>Expenses</th>
-			<th>Portion of Total Earnings / % Profit Spent</th>
-		</tr>
-	</thead>
-	<tbody>
-		<? foreach($byDate as $date => $sale): ?>
-		<tr class="item-row">
-			<td class='data'>
-				<div class='item-stat'>
-					<span class='value'><?= date("Y-m-d", $date) ?></span>
-					<span class='stat'><?= date("l", $date) ?></span>
-				</div>
-			</td>
-			<td class='data'>
-				<div class='item-stat'>
-					<span class='value pos'><?= $sale['sales'] ?></span>
-					<span class='stat'>Sales</span>
-				</div>
-			</td>
-			<td class='data'>
-				<div class='item-stat'>
-					<span class='value neg'><?= $sale['failed'] ?></span>
-					<span class='stat'>Failed Auctions</span>
-				</div>
-			</td>
-			<td class='data'>
-				<div class='item-stat'>
-					<span class='value'>
-						<img src="/images/goldcoin.png"> <?= $this->prettyStat($sale['value'] / 0.85) ?>
-					</span>
-					<span class="stat">
-						<?= $this->prettyStat($sale['value']) ?> after AH cut
-					</span>
-				</div>
-			</td>
-			<td class='data'>
-				<div class='item-stat'>
-					<span class='value'>
-						<img src="/images/goldcoin.png"> 
-						<? if($sale['value'] > 0 && $sale['sales'] > 0): ?>
-							<?= $this->prettyStat(round(($sale['value'] / $sale['sales']), 1) / 0.85) ?>
-						<? else: ?>
-							~
-						<? endif ?>
-					</span>
-					<span class="stat">
-						<? if($sale['value'] > 0 && $sale['sales'] > 0): ?>
-							<?= $this->prettyStat(round(($sale['value'] / $sale['sales']), 1)) ?> after AH cut
-						<? else: ?>
-							~
-						<? endif ?>
-					</span>
-				</div>
-			</td>
-			<td class='data'>
-				<div class='item-stat'>
-					<span class='value'>
-						<?= $this->prettyStat($sale['expenses']) ?>
-					</span>
-				</div>
-			</td>
-			<td class='name'>
-				<? 
-				$per = round($sale['value'] / $totalValue * 100);
-				$exp = 0;
-				if($sale['value']) {
-					$exp = round($sale['expenses'] / $sale['value'] * 100);					
-				}
-				?>
-				<div class="bar" style="width: <?= $per ?>%"><?= $per ?>%</div> 
-				<div class="bar bar-neg" style="width: <?= $exp ?>%"><?= $exp ?>%</div>
-			</td>
-		</tr>
-		<? endforeach ?>
-	</tbody>
-</table>
+<div id="summary-methods">
+	<ul>
+		<li><a href="#summary-ah">Battle.net - Gold AH</a></li>
+		<li><a href="#summary-rmah">Battle.net - RMAH</a></li>
+	</ul>
+	<div id="summary-ah">		
+		<?= $this->partial("./user/shop/_summary-table.phtml", array('data' => $data, 'type' => 'ah'))?>
+	</div>
+	<div id="summary-rmah">
+		<?= $this->partial("./user/shop/_summary-table.phtml", array('data' => $data, 'type' => 'rmah'))?>		
+	</div>
+</div>
+<script type="text/javascript">
+	$("#summary-methods").tabs();
+</script>
