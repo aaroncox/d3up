@@ -169,7 +169,7 @@ class UserController extends Epic_Controller_Action
 							}
 							$sale->_completed = true;
 							$sale->save();
-							$this->_redirect("/user/shop");
+							// $this->_redirect("/user/shop");
 							break;
 						case "postSale":
 							// Get the item we want to sell

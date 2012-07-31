@@ -19,7 +19,7 @@
 				<td class="data"><?= $this->timeAgo($sale->end) ?></td>
 				<td class="controls">
 					<? if($sale->method == 'ah' || $sale->method == 'rmah'): ?>
-						<button data-id="<?= $sale->id ?>" data-method="<?= $sale->method ?>" style="padding: 0px 10px" class="btn-complete ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only">Complete</button>
+						<button data-id="<?= $sale->id ?>" data-item="<?= $sale->item->id ?>" data-method="<?= $sale->method ?>" style="padding: 0px 10px" class="btn-complete ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only">Complete</button>
 					<? else: ?>
 						<a data-id="<?= $sale->id ?>" data-method="<?= $sale->method ?>" style="padding: 0px 10px" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" href="/sale/<?= $sale->id ?>/offers">View</a>
 					<? endif ?>

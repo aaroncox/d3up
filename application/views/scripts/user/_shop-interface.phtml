@@ -258,6 +258,7 @@
 		$(".btn-complete").each(function() {
 			var btn = $(this),
 					sale = $(this).data("id"), 
+					item = $(this).data("item"),
 					method = $(this).data("method"),
 					completeForm = $("#completeForm"),
 					methodOptions = $("#methodOptions"), 
@@ -285,6 +286,13 @@
 						"Didn't Sell": function() {
 							completeSaleResult.val("false");
 							completeForm.trigger("submit");
+						},
+						"Didn't Sell, Repeat Sale": function() {
+							completeSaleResult.val("false");
+							completeForm.attr("action", "?selectItem=" + item);
+							setTimeout(function() {
+								completeForm.trigger("submit");															
+							},0);
 						},
 						Cancel: function() {
 							$( this ).dialog("close");
