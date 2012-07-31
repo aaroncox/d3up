@@ -185,7 +185,7 @@ class UserController extends Epic_Controller_Action
 							$sale->bid = (float) $this->getRequest()->getParam('ahBid');
 							$sale->buyout = (float) $this->getRequest()->getParam('ahBuyout');
 							$sale->value = (float) $this->getRequest()->getParam('sellValue');
-							if($sale->method == 'ah') {				
+							if($sale->method == 'ah' || $sale->method == 'rmah') {				
 								$sale->end = time() + (36 * 60 * 60);
 							} else {
 								$sale->duration = (int) $this->getRequest()->getParam('sellDuration');								
