@@ -19,6 +19,7 @@ class D3Up_Mongo_Schema extends Epic_Mongo_Schema {
 			'shop' => 'D3Up_Mongo_Record_Shop',
 			'sale' => 'D3Up_Mongo_Record_Sale',
 			'expense' => 'D3Up_Mongo_Record_Expense',
+			'stat' => 'D3Up_Mongo_Record_Stat',
 		), 
 		'post' => array(
 			'comment' => 'D3Up_Mongo_Record_Build_Comment',
