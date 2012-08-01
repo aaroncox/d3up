@@ -181,6 +181,7 @@ ul.sub_menu > li.witch-doctor {
 .ui-button-text-only .ui-button-text {
 	padding: 0.1em 0.5em;
 }
+.skill-calc-row .stat-helper, 
 .calc-stats .stat-helper {
 	color: #B18135;
 }
@@ -874,4 +875,26 @@ tr.compared > td:first-child {
 }
 #tab-summary {
 	padding: 10px 0;
+}
+#build-active-skills {
+	margin: 0;
+	padding: 5px 0;
+	list-style: none;
+}
+.skill-calc-row {
+	clear: both;
+	min-height: 72px;
+	font-size: 14px;
+	margin-bottom: 10px;
+}
+.skill-calc-row img {
+	float: left;
+	margin-right: 10px;
+}
+.skill-calc-row h3 {
+	color: #70B1D5;
+	margin: 0;
+}
+.skill-calc-row p {
+	margin: 0 0 10px 74px;
 }

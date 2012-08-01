@@ -65,7 +65,7 @@ $(function() {
 	// Debugging
 	// console.log(stats);
 	if(activeSkills && activeSkills[heroClass]) {
-		$.each(window.activeSkills[heroClass], function(k,v) {
+		$.each(activeSkills[heroClass], function(k,v) {
 			var selected = '';
 			if(typeof activeActives != "undefined") {
 				$.each(activeActives, function(key,active) {
@@ -121,7 +121,7 @@ $(function() {
 			activeDisplay.append($("<li/>").html(img));			
 		});
 		recalc();
-		if(!skills || activeActives.length != skills.length) {
+		if(!skills || !activeActives || activeActives.length != skills.length) {
 			if(isOwner && skills.length <= 6) {
 				setTimeout(function() {
 					$.ajax({
@@ -151,7 +151,7 @@ $(function() {
 			passiveDisplay.append($("<li/>").html(img));
 		});
 		recalc();
-		if(!skills || activePassives.length != skills.length) {
+		if(!skills || !activePassives || activePassives.length != skills.length) {
 			if(isOwner && skills.length <= 3) {
 				setTimeout(function() {
 					$.ajax({
@@ -179,6 +179,34 @@ $(function() {
 		calc.setGear(".equipped a");
 		stats = calc.run();
 		displayStats();
+		displaySkills();
+	}
+	function displaySkills() {
+		var target = $("#build-active-skills").empty(),
+				skills = activeSelect.val();
+		_.each(skills, function(skill) {
+			var data = activeSkills[heroClass][skill],
+					li = $("<li class='skill-calc-row'>").attr("data-json", JSON.stringify(data.effect)),
+					cleaned = skill.split("~"),
+					icon = $("<img src='/images/icons/" + heroClass + "-" + cleaned[0] + ".png'>"),
+					h3 = $("<h3>").html(data.name),
+					desc = $("<p>").html(data.desc),
+					damage = $("<p>"),
+					rune = null,
+					checkbox = $("<input type='checkbox'>");
+			if(data.rune) {
+				var rune = $("<p>").html("<span class='stat-helper'>Rune Bonus</span>: " + data.rune)
+			}
+			if(data.effect) {
+				
+			}
+			li.append(icon, h3, desc, rune, damage);
+			target.append(li);
+			// var damage = calc.calcSkillDamage(data);
+			console.log(data);
+
+		});
+		console.log(activeSelect.val());
 	}
 	if(isOwner) {
 		$(".gear-change").click(function() {
@@ -319,17 +347,17 @@ $(function() {
 		// Defensive Statistics Display
 		tabDefense.empty();
 		tabDefense.append(statLabel("Armor", stats.armor, 'round', stats.armorReduce));
-		tabDefense.append(statLabel("All Resist", stats.allResist, 'round', stats['resper-all']));
+		tabDefense.append(statLabel("All Resist", stats['resist-all'], 'round', stats['percent-resist-all']));
 		// tabDefense.append(statLabel("Block Amount", (stats['block-amount']) ? stats['block-amount'] : '~'));		
-		tabDefense.append(statLabel("Block Chance", stats.blockChance, 'per'));
-		tabDefense.append(statLabel("Dodge Chance", stats.dodgePercent, 'per'));
+		tabDefense.append(statLabel("Block Chance", stats['block-chance'], 'per'));
+		tabDefense.append(statLabel("Dodge Chance", stats['dodge-chance'], 'per'));
 		tabDefense.append(statLabel("Damage Reduction", stats.armorReduction, 'per'));
-		tabDefense.append(statLabel("Physical Resistance", stats['resist-physical'], 'round', stats['resper-physical']));
-		tabDefense.append(statLabel("Cold Resistance", stats['resist-cold'], 'round', stats['resper-cold']));
-		tabDefense.append(statLabel("Fire Resistance", stats['resist-fire'], 'round', stats['resper-fire']));
-		tabDefense.append(statLabel("Lightning Resistance", stats['resist-lightning'], 'round', stats['resper-lightning']));
-		tabDefense.append(statLabel("Poison Resistance", stats['resist-poison'], 'round', stats['resper-poison']));
-		tabDefense.append(statLabel("Arcane/Holy Resistance", stats['resist-arcane'], 'round', stats['resper-arcane']));
+		tabDefense.append(statLabel("Physical Resistance", stats['resist-physical'], 'round', stats['percent-resist-physical']));
+		tabDefense.append(statLabel("Cold Resistance", stats['resist-cold'], 'round', stats['percent-resist-cold']));
+		tabDefense.append(statLabel("Fire Resistance", stats['resist-fire'], 'round', stats['percent-resist-fire']));
+		tabDefense.append(statLabel("Lightning Resistance", stats['resist-lightning'], 'round', stats['percent-resist-lightning']));
+		tabDefense.append(statLabel("Poison Resistance", stats['resist-poison'], 'round', stats['percent-resist-poison']));
+		tabDefense.append(statLabel("Arcane/Holy Resistance", stats['resist-arcane'], 'round', stats['percent-resist-arcane']));
 		tabDefense.append(statLabel("Crowd Control Reduction", ((stats['cc-reduce'])?stats['cc-reduce']:0), 'per'));
 		tabDefense.append(statLabel("Missile Damage Reduction", stats['range-reduce'], 'per'));
 		tabDefense.append(statLabel("Melee Damage Reduction", stats['melee-reduce'], 'per'));
@@ -341,12 +369,12 @@ $(function() {
 		// if(mathDpsSpecial) {
 			// tabOffense.append(statLabel("DPS w/ " + mathDpsSpecialName, mathDps));			
 		// }
-		tabOffense.append(statLabel("Attacks per Second", stats['dps-speedTotal']));
+		tabOffense.append(statLabel("Attacks per Second", stats['dps-speed-display']));
 		tabOffense.append(statLabel("Critical Hit Chance", stats['critical-hit'], 'per'));
 		tabOffense.append(statLabel("Critical Hit Damage", stats['critical-hit-damage'], 'per'));
 		// Life Stastics Display
 		tabLife.empty();
-		tabLife.append(statLabel("Maximum Life", stats.lifeTotal));
+		tabLife.append(statLabel("Maximum Life", stats.life, 'round'));
 		tabLife.append(statLabel("Total Life Bonus", stats['plus-life'], 'per'));
 		tabLife.append(statLabel("Life per Second", (stats['life-regen']) ? stats['life-regen'] : 0));
 		tabLife.append(statLabel("Life Steal", (stats['life-steal']) ? stats['life-steal'] : 0, 'per'));
@@ -371,6 +399,7 @@ $(function() {
 		ehpGear.append(statLabel("Off Hand EHP", stats['ehp-offhand'], 'round'));			
 		$("#stats-ehp-gear").html(ehpGear);
 		// Add the DPS Gear Contributions
+		console.log(stats);
 		var dpsGear = $("<ul class='resist-specific'/>").append($("<li class='header'/>").html("Gear DPS Contributions (<a href='/faq/gear-based-dps'>?</a>)"));
 		dpsGear.append(statLabel("Helm DPS", stats['dps-helm'], 'round'));			
 		dpsGear.append(statLabel("Shoulder DPS", stats['dps-shoulders'], 'round'));			

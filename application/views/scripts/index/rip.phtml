@@ -56,18 +56,28 @@
 						/Cost: (\d+) Fury/
 					],
 					effect: 'cost-fury',
+					removeTip: true
 				},
 				{
 					find: [
 						/Cost: (\d+) Hatred/
 					],
-					effect: 'cost-hatred'
+					effect: 'cost-hatred',
+					removeTip: true
 				},
 				{
 					find: [
 						/Cost: (\d+) Discipline/
 					],
-					effect: 'cost-discipline'
+					effect: 'cost-discipline',
+					removeTip: true
+				},
+				{
+					find: [
+						/Cost: (\d+) Spirit/
+					],
+					effect: 'cost-spirit',
+					removeTip: true
 				},
 				{
 					find: [
@@ -77,30 +87,35 @@
 				},
 				{
 					find: [
+						/Generate: (\d+) Fury per attack/,
 						/Generate (\d+) additional Fury/,
 						/Generate: (\d+) Fury/,
 						/Gain (\d+) Fury/
 					],
 					effect: 'generate-fury',
+					removeTip: true
 				},
 				{
 					find: [
 						/Generate: (\d+) Hatred/,
 						/While invisible you gain (\d+) Hatred per second/
 					],
-					effect: 'generate-hatred'
-				},
-				{
-					find: [
-						/Cooldown: (\d+) seconds/
-					],
-					effect: 'cooldown'
+					effect: 'generate-hatred',
+					removeTip: true
 				},
 				{
 					find: [
 						/Generate: (\d+) Spirit per attack/
 					],
 					effect: 'generate-spirit',
+					removeTip: true
+				},
+				{
+					find: [
+						/Cooldown: (\d+) seconds/
+					],
+					effect: 'cooldown',
+					removeTip: true
 				},
 				{
 					find: [
@@ -133,19 +148,19 @@
 						/also grants a (\d+)% bonus to Dodge Chance/,
 						/Dodge Chance: (\d+)%/
 					],
-					effect: 'bonus-dodge'
+					effect: 'plus-dodge'
 				},
 				{
 					find: [
 						/Movement Speed: (\d+)%/
 					],
-					effect: 'bonus-movement-speed'
+					effect: 'plus-movement-speed'
 				},
 				{
 					find: [
 						/All of your resistances are increased by (\d+)%/,
 					],
-					effect: 'bonus-resist-all'
+					effect: 'plus-resist-all'
 				},
 				{
 					find: [
@@ -160,7 +175,7 @@
 						/Inflict (\d+)% weapon damage to all nearby enemies/,
 						/each one inflicting (\d+)% weapon damage/,
 						/and inflicting (\d+)% weapon damage/,
-						/Shake the ground violently, dealing (\d+)% weapon damage/,
+						// /Shake the ground violently, dealing (\d+)% weapon damage/,
 						/Each deals (\d+)% weapon damage per swing/,
 						/Deal (\d+)% weapon damage to all targets/,
 						/and deals (\d+)% weapon damage/,
@@ -214,27 +229,27 @@
 						/Critical Hit Chance: (\d+)%/,
 						/gaining an additional (\d+)% Critical Hit Chance with all/
 					],
-					effect: 'bonus-crit-hit'
+					effect: 'plus-crit-hit'
 				},
 				{
 					find: [
 						/Critical Hits cause (\d+)% additional damage/,
 						/that do an extra (\d+)% damage on successful Critical Hits/
 					],
-					effect: 'bonus-crit-hit-damage'
+					effect: 'plus-crit-hit-damage'
 				},
 				{
 					find: [
 						/Enter a rage which increases damage by (\d+)%/	,
 						/While active your damage is also increased by (\d+)%/				
 					], 
-					effect: 'bonus-damage'
+					effect: 'plus-damage'
 				},
 				{
 					find: [
 						/Each Frenzy effect also increases your damage by (\d+)%/
 					],
-					effect: 'bonus-damage',
+					effect: 'plus-damage',
 					multiple: 5
 				},
 				{
@@ -242,32 +257,32 @@
 						/Attack Speed: (\d+)%/,
 						/Increases your attack speed by (\d+)% when using Strafe/
 					],
-					effect: 'bonus-attack-speed'
+					effect: 'plus-attack-speed'
 				},
 				{
 					find: [
 						/Frenzy attack speed increases by (\d+)% with each swing/,
 					],
-					effect: 'bonus-attack-speed',
+					effect: 'plus-attack-speed',
 					multiple: 5
 				},
 				{
 					find: [
 						/rallying cry to increase Armor for you and all allies within 50 yards by (\d+)%/
 					],
-					effect: 'bonus-armor'
+					effect: 'plus-armor'
 				},
 				{
 					find: [
 						/Increases maximum Life by (\d+)%/
 					],
-					effect: 'bonus-life'
+					effect: 'plus-life'
 				},
 				{
 					find: [
 						/regenerates (\d.+) Life per second/
 					],
-					effect: 'bonus-life-regen'
+					effect: 'plus-life-regen'
 				},
 				{
 					find: [
@@ -442,22 +457,22 @@
 						/Increase damage bonus to (\d+)%/,
 						/The marked enemy will take (\d+)% additional damage/
 					],
-					effect: 'bonus-damage',
-					remove: 'bonus-damage'
+					effect: 'plus-damage',
+					remove: 'plus-damage'
 				},
 				{
 					find: [
 						/Increases the Armor bonus to (\d+)%/
 					],
-					effect: 'bonus-armor',
-					remove: 'bonus-armor'
+					effect: 'plus-armor',
+					remove: 'plus-armor'
 				},
 				{
 					find: [
 						/Increases bonus to Dodge Chance to (\d+)%/
 					],
-					effect: 'bonus-dodge',
-					remove: 'bonus-dodge'
+					effect: 'plus-dodge',
+					remove: 'plus-dodge'
 				}
 			];
 			function determineEffects(skill) {
@@ -466,6 +481,9 @@
 						// Get the Base Effect
 						matches = regex.exec(skill.desc);
 						if(matches) {
+							if(v.removeTip && v.removeTip == true) {
+								skill.desc = skill.desc.replace(regex, '');
+							}
 							if(typeof(skill.effect) == 'undefined') {
 								skill.effect = {};
 							}
@@ -473,15 +491,27 @@
 								delete skill.effect[v.remove];
 							}
 							if(matches[1]) {
-								if(!skill.effect[v.effect]) {
-									skill.effect[v.effect] = 0;
-								}
 								var multiplier = 1;
 								if(v.multiple) {
 									multiplier = v.multiple;
-								}
-								if(v.effect) {
-									skill.effect[v.effect] += parseFloat(matches[1]) * multiplier;	
+									if(!skill.effect['stack']) {
+										skill.effect['stack'] = {};
+									}
+									if(!skill.effect['stack'][v.effect]) {
+										skill.effect['stack'][v.effect] = {
+											value: 0,
+											limit: 0
+										};
+									}
+									skill.effect['stack'][v.effect]['limit'] += multiplier;
+									skill.effect['stack'][v.effect]['value'] += parseFloat(matches[1]);
+								} else {
+									if(!skill.effect[v.effect]) {
+										skill.effect[v.effect] = 0;
+									}
+									if(v.effect) {
+										skill.effect[v.effect] += parseFloat(matches[1]);	
+									}									
 								}
 							}
 						}
@@ -495,15 +525,27 @@
 								delete skill.effect[v.remove];
 							}
 							if(matches[1]) {
-								if(!skill.effect[v.effect]) {
-									skill.effect[v.effect] = 0;
-								}
 								var multiplier = 1;
 								if(v.multiple) {
 									multiplier = v.multiple;
-								}
-								if(v.effect) {
-									skill.effect[v.effect] += parseFloat(matches[1]) * multiplier;	
+									if(!skill.effect['stack']) {
+										skill.effect['stack'] = {};
+									}
+									if(!skill.effect['stack'][v.effect]) {
+										skill.effect['stack'][v.effect] = {
+											value: 0,
+											limit: 0
+										};
+									}
+									skill.effect['stack'][v.effect]['limit'] += multiplier;
+									skill.effect['stack'][v.effect]['value'] += parseFloat(matches[1]);
+								} else {
+									if(v.effect) {
+										if(!skill.effect[v.effect]) {
+											skill.effect[v.effect] = 0;
+										}
+										skill.effect[v.effect] += parseFloat(matches[1]);	
+									}									
 								}
 							}
 						}
@@ -586,7 +628,18 @@
 					if(s.effect && s.effect != "undefined") {
 						target.append("\n\t\teffect: {");
 						$.each(s.effect, function(name, effect) {
-							target.append("\n\t\t\t'" + name + "': '" + effect + "',");							
+							if(typeof(effect) == "object") {
+								target.append("\n\t\t\t'stack': {");
+								$.each(effect, function(k,v) {
+									target.append("\n\t\t\t\t'" + k + "': {");
+									target.append("\n\t\t\t\t\t'limit': " + v['limit'] + ",");
+									target.append("\n\t\t\t\t\t'value': " + v['value'] + ",");
+									target.append("\n\t\t\t\t},");
+								});
+								target.append("\n\t\t\t},");							
+							} else {
+								target.append("\n\t\t\t'" + name + "': " + effect + ",");															
+							}
 						});
 						target.append("\n\t\t},");
 					}

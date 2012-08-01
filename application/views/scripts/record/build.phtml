@@ -46,7 +46,7 @@ var activeActives = [];
 <div id="character" class="inline-flow" data-class="<?= $this->record->class ?>" <? if($myBuild) { echo "data-owner='true'"; } ?>>
 	<ul>
 		<li><a href="#build-gear">Gear</a></li>
-			<li><a href="#build-skills" <?= (!$myBuild) ? "style='display: none'" : ""?>>Skills</a></li>
+			<li><a href="#build-skills">Skills</a></li>
 		<? if($myBuild): ?>
 			<li><a href="#build-compare">Compare</a></li>
 			<li><a href="#item-simulate">Simulate Item</a></li>
@@ -56,11 +56,14 @@ var activeActives = [];
 		<? endif ?>
 		<!-- <li><a href="#">Comments</a></li> -->
 	</ul>
-	<div id="build-skills" <?= (!$myBuild) ? "style='display: none'" : ""?>>
-			<h3>Please select the 3 passive skills you're using:</h3>
-			<select id="passives" multiple="multiple" name="passives[]" style="width: 450px"></select>
-			<h3>Please select the 6 abilities/skills you're using:</h3>
-			<select id="actives" multiple="multiple" name="actives[]" style="width: 450px"></select>
+	<div id="build-skills">
+		<h3>Character Skills/Passives</h3>
+		<div <?= (!$myBuild) ? "style='display: none'" : ""?>>
+			<select id="passives" multiple="multiple" name="passives[]" style="width: 450px" data-placeholder="Choose the Passives you use"></select>
+			<select id="actives" multiple="multiple" name="actives[]" style="width: 450px" data-placeholder="Choose the Skills you use"></select>
+		</div>
+		<ul id='build-active-skills'></ul>
+		<ul id='build-passive-skills'></ul>
 	</div>
 	<? if($this->record->guide || $myBuild): ?>
 		<div id="build-guide">
@@ -252,6 +255,6 @@ var activeActives = [];
 	</fieldset>
 	</form>
 </div>
-<script type="text/javascript" src="/js/skills.js?time=<?= time() ?>"></script>
-<script type="text/javascript" src="/js/calcv2.js?time=<?= time() ?>"></script>
-<script type="text/javascript" src="/js/build.js?time=<?= time() ?>"></script>
+<script type="text/javascript" src="/js/unmin/skills.js?time=<?= time() ?>"></script>
+<script type="text/javascript" src="/js/unmin/calcv2.js?time=<?= time() ?>"></script>
+<script type="text/javascript" src="/js/unmin/build.js?time=<?= time() ?>"></script>

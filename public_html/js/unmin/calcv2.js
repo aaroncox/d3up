@@ -47,6 +47,7 @@ var buildCalculator = {
 			'plus-resist-all': 0,
 			'plus-armor': 0,
 			'plus-dodge': [], // Since Dodge is Multiplicative in it's percentage bonuses, we need to collect them
+			'plus-damage': 0,
 		};
 	},
 	setClass: function(newClass) {
@@ -121,6 +122,9 @@ var buildCalculator = {
 		var link = $("<a href='/i/" + item.id + "' class='quality-" + item.quality + "'/>").attr("data-json", JSON.stringify(item)).html(item.name);
 		link.bindTooltip();
 		return link;
+	},
+	applySkill: function(skill) {
+		console.log(skill);
 	},
 	applyPassives: function() {
 		_.each(this.passiveSkills, function(v,k) {
@@ -509,33 +513,74 @@ var buildCalculator = {
 				oh: Math.floor(this.attrs['speed-oh'] * 1024) / 1024,
 			};
 			// console.log(mhMinDamage, mhMaxDamage, ohMinDamage, ohMaxDamage, bnMinDamage, bnMaxDamage);
+			console.log(this.attrs['speed'], this.attrs['speed-oh']);
 			console.log(rendered['dps-speed'].mh, rendered['dps-speed'].oh);
 			var mathS = 1 + this.attrs[this.attrs.primary] * 0.01,
 					mathC = 1 + (this.attrs['critical-hit'] * 0.01) * (this.attrs['critical-hit-damage'] * 0.01),
-					mathR = (rendered['dps-speed'].mh + rendered['dps-speed'].oh) / 2 * (1 + atkSpeedInc) * (1 + 0.15),
-					mathA = ((mhMinDamage + mhMaxDamage) / 2 + (ohMinDamage + ohMaxDamage) / 2 + bnMinDamage + bnMaxDamage),
-					mathM = 1;
+					mathR = (rendered['dps-speed'].mh + rendered['dps-speed'].oh) / 2 * (1 + atkSpeedInc + 0.15),
+					mathA = ((mhMinDamage + mhMaxDamage) / 2 + (ohMinDamage + ohMaxDamage) / 2 + bnMinDamage + bnMaxDamage) / 2,
+					mathM = (1 + this.bonuses['plus-damage']);
 			rendered['dps'] = mathS * mathC * mathR * mathA * mathM;			
 			rendered['dps-speed-display'] = Math.round(mathR * 100) / 100;
-			console.log(mathS, mathC, mathR, mathA, mathM, rendered['dps'], "dw");
+			console.log(mathS, mathC, mathR, mathA, mathM, rendered['dps'], "dw", rendered);
 		} else {
 			rendered['dps-speed'] = Math.floor(this.attrs['speed'] * 1024) / 1024;
 			var mathS = 1 + this.attrs[this.attrs.primary] * 0.01,
 					mathC = 1 + (this.attrs['critical-hit'] * 0.01) * (this.attrs['critical-hit-damage'] * 0.01),
-					mathR = 1.2, // rendered['dps-speed'] * (1 + atkSpeedInc),
-					mathA = (mhMinDamage + mhMaxDamage) / 2 + bnMinDamage + bnMaxDamage,
-					mathM = 1;
+					mathR = rendered['dps-speed'] * (1 + atkSpeedInc),
+					mathA = (mhMinDamage + mhMaxDamage) / 2 + (bnMinDamage + bnMaxDamage) / 2,
+					mathM = (1 + this.bonuses['plus-damage']);
 			rendered['dps'] = mathS * mathC * mathR * mathA * mathM;		
-			console.log(mhMinDamage, mhMaxDamage, bnMinDamage, bnMaxDamage);
+			// console.log(mhMinDamage, mhMaxDamage, bnMinDamage, bnMaxDamage);
 			console.log(mathS, mathC, mathR, mathA, mathM, rendered['dps'], "1w");
 			// rendered['dps'] = (((mhMinDamage + mhMaxDamage) / 2 + bnAvgDamage) * rendered['dps-speed']) * (1 + atkSpeedInc) * (this.attrs[this.attrs.primary] / 100 + 1) * 1 * ((this.attrs['critical-hit'] / 100) * (this.attrs['critical-hit-damage']/100) + 1);
 			rendered['dps-speed-display'] = Math.round(mathR * 100) / 100;
 		}
 		// Add any bonus damage onto the damage calculation
-		if(this.bonuses['plus-damage']) {
+		// if(this.bonuses['plus-damage']) {
 			// console.log(this.bonuses['plus-damage']);
-			return rendered['dps'] * (1 + this.bonuses['plus-damage']);
+			// return rendered['dps'] * (1 + this.bonuses['plus-damage']);
+		// }
+		return rendered;
+	},
+	calcSAME: function(mathE) {
+		var rendered = {}, // Storage for Rendered Statistics
+				mhMinDamage = 0,
+				mhMaxDamage = 0,
+				ohMinDamage = 0,
+				ohMaxDamage = 0,
+				bnMinDamage = 0,
+				bnMaxDamage = 0,
+				bnAvgDamage = 0; 
+		if(this.attrs['damage']) {
+			mhMinDamage = this.attrs['damage'].min;
+			mhMaxDamage = this.attrs['damage'].max;
+			if(this.attrs['damage-oh']) {
+				ohMinDamage = this.attrs['damage-oh'].min;
+				ohMaxDamage = this.attrs['damage-oh'].max;
+			}
 		}
+		// Calculate the Average and Min/Max Bonus Damage from other items
+		if(this.attrs['max-damage']) {
+			bnMaxDamage = this.attrs['max-damage'];			
+		}
+		if(this.attrs['min-damage']) {
+			bnMinDamage = this.attrs['min-damage'];				
+		}
+		bnAvgDamage = (bnMinDamage + bnMaxDamage) / 2;
+		// Convert mathE to a percentage
+		mathE = mathE / 100;
+		// Are we duel wielding?
+		if(this.isDuelWielding) {
+			var mathS = 1 + this.attrs[this.attrs.primary] * 0.01,
+					mathA = ((mhMinDamage + mhMaxDamage) / 2 + (ohMinDamage + ohMaxDamage) / 2 + bnMinDamage + bnMaxDamage),
+					mathM = (1 + this.bonuses['plus-damage']);
+		} else {
+			var mathS = 1 + this.attrs[this.attrs.primary] * 0.01,
+					mathA = (mhMinDamage + mhMaxDamage) / 2 + bnMinDamage + bnMaxDamage,
+					mathM = (1 + this.bonuses['plus-damage']);
+		}
+		rendered['damage'] = mathS * mathA * mathM * mathE;			
 		return rendered;
 	},
 	run: function() {
@@ -570,20 +615,21 @@ var buildCalculator = {
 		// 	console.log(this.values['dps-sharpshooter'])
 		// }
 		// Some Wackyness to calculate DPS contributions per piece
-		// _.each(this.gear, function(g, i) {
-		// 	var item = i;
-		// 	// Unset the Item from the stats
-		// 	this.removeItem(i);
-		// 	// Don't deal with MH/OH atm
-		// 	// if(i != "mainhand" && i != "offhand") {
-		// 		// Calculate the difference in DPS if you took this piece off
-		// 		if(this.values['dps-damage']) {
-		// 			this.values['dps-' + i] = this.values['dps'] - this.calculateDps();				
-		// 		}
-		// 	// }
-		// 	// Readd the Item to the set
-		// 	this.parseItem(g, i);
-		// }, this);
+		_.each(this.gear, function(g, i) {
+			var item = i;
+			// Unset the Item from the stats
+			this.removeItem(i);
+			// Don't deal with MH/OH atm
+			// if(i != "mainhand" && i != "offhand") {
+				// Calculate the difference in DPS if you took this piece off
+				// if(this.values['dps-damage']) {
+					var newDps = this.calcOffense();
+					this.values['dps-' + i] = this.values['dps'] - newDps['dps'];				
+				// }
+			// }
+			// Readd the Item to the set
+			this.parseItem(g, i);
+		}, this);
 		// Append Attributes into the values
 		this.values = jQuery.extend(this.attrs, this.values);
 		// Return the values
@@ -823,9 +869,7 @@ var buildCalculator = {
 						}
 						if(slot == "offhand") {
 							this.isDuelWielding = true;
-							this.stats['speed-oh'] = parseFloat(av);
-						} else {
-							this.isDuelWielding = false;
+							this.attrs['speed-oh'] = parseFloat(av);
 						}
 						break;
 					case "damage":
