@@ -111,6 +111,9 @@
 					tr.append($("<td/>").append(v.date));
 					similar.append(tr);
 				});
+				if(!json.length) {
+					similar.append("<tr><td colspan='3'>No similar items found!</td></tr>");
+				}
 			}
 		});
 	});

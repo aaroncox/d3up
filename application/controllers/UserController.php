@@ -199,7 +199,7 @@ class UserController extends Epic_Controller_Action
 							$item = Epic_Mongo::db("item")->fetchOne(array("id" => (int) $this->getRequest()->getParam("id")));
 							$query = array(
 								"item.type" => $item->type,
-								"soldOn" => array('$ne' => false),
+								'soldOn' => array('$ne' => null),
 							);
 							if(empty($toCompare)) {
 								$toCompare = array_keys($item->rating->export());
