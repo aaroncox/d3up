@@ -186,24 +186,26 @@ $(function() {
 					itemDisplay = $("#equipped-" + itemType);
 			if(itemType == 'offhand') {
 				var mh = $("#equipped-mainhand a").data("json");
-				switch(mh.type) {
-					case '2h-mace': 
-					case '2h-axe': 
-					case 'diabo': 
-					case '2h-mighty': 
-					case 'polearm': 
-					case 'staff': 
-					case '2h-sword':
-						$($("<div style='padding: 20px'/>").html("<p>You're currently wearing a two handed weapon, an offhand isn't allowed.")).dialog({
-							modal: true,
-							buttons: {
-								Ok: function() {
-									$( this ).dialog( "close" );
+				if(mh) {
+					switch(mh.type) {
+						case '2h-mace': 
+						case '2h-axe': 
+						case 'diabo': 
+						case '2h-mighty': 
+						case 'polearm': 
+						case 'staff': 
+						case '2h-sword':
+							$($("<div style='padding: 20px'/>").html("<p>You're currently wearing a two handed weapon, an offhand isn't allowed.")).dialog({
+								modal: true,
+								buttons: {
+									Ok: function() {
+										$( this ).dialog( "close" );
+									}
 								}
-							}
-						});
-						return false;
-						break;
+							});
+							return false;
+							break;
+					}					
 				}
 			}
 			$.ajax({
