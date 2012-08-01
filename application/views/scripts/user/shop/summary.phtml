@@ -82,7 +82,12 @@
 			$data['totals']['pendingBid'][$sale->method] += $sale->bid;
 		}
 	}
-	krsort($data['dates']);
+	if(isset($data['dates']['ah'])) {
+		krsort($data['dates']['ah']);
+	}
+	if(isset($data['dates']['rmah'])) {
+		krsort($data['dates']['rmah']);		
+	}
 	
 	// $globalValue = 0;
 	// $globalSales = 0;
