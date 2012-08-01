@@ -577,6 +577,10 @@ dd:has(:focus) .chzn-container {
 #recent-items td.name .item-stat {
 	text-align: left;
 }
+#tab-similar .d3up-table td.name {
+	width: 150px;
+	max-width: 150px;
+}
 #recent-items td.name span.value {
 	font-size: 1.1em;
 	line-height: 1.5em;

@@ -1,8 +1,10 @@
 <div id="pricer" class="inline-flow">
 	<ul>
-		<li><a href="#build-gear">Simulate</a></li>
+		<li><a href="#build-gear">Search</a></li>
 	</ul>
 	<div id="pricer-simulate" class="pricer-tab">
+		<p>Need Help? Read more on the <a href="/faq/item-pricer">Item Pricer's FAQ</a>.</p>
+		<p>What type of item is this?</p>
 		<p>
 			<select name="itemType" id="itemType" data-placeholder="What type of item is this?">
 			    <option value="" label="" selected="selected"></option>
@@ -46,30 +48,14 @@
 			    <option value="shield" label="Shield">Shield</option>
 			</select>
 		</p>
+		<p>What attributes does this item have?</p>
 		<p>
 			<select id="simulate-attributes" data-placeholder="Select which attributes are on the item" multiple="multiple" style="width: 510px">
 				<?= $this->render("./item/_itemAttributeOptions.phtml") ?>
 				<option value="armor" label="+ Armor">+ Armor</option>
 			</select>
 		</p>
-		<div id="simulate-stats" class="d3-item">
-			<div class="top"><p class="">Name</p></div>
-			<div class="item">
-				<p class="stats stats-primary">
-					<span class="big-stat"></span>
-					<span class="stat-helper"></span>
-				</p>
-				<p class="stats stats-extra-percent"></p>
-				<p class="stats stats-extra-range"></p>
-				<ul class="attrs">
-				</ul>
-				<ul class="sockets">
-				</ul>
-			</div>
-			<div class="bottom"> 
-
-			</div>
-		</div>
+		<div id="simulate-stats" class="d3-item"></div>
 	</div>
 </div>
 <div id="pricer-stats" class="pricer-stats ui-widget ui-widget-content ui-corner-all inline-flow" style="width: 390px">
@@ -77,10 +63,56 @@
 		<li><a href="#tab-similar">Similar Items</a></li>
 	</ul>
 	<div id="tab-similar" class="stats-tab">
+		<table id="similar-items" class='d3up-table'></table>
 	</div>
 </div>
+
+<script type="text/javascript" src="/js/skills.js?time=<?= time() ?>"></script>
+<script type="text/javascript" src="/js/itembuilder.js?time=<?= time() ?>"></script>
+
 <script type="text/javascript">
 	$("#pricer").tabs();
 	$("#pricer-stats").tabs();
 	$("#simulate-attributes, #itemType").chosen();
+	var similar = $("#similar-items");
+	var builder = Object.create(itemBuilder);
+	// Set the Type Selector
+	builder.setItemTypeSelect($("#itemType"));
+	// Set the Attribute Selector
+	builder.setAttributeSelect($("#simulate-attributes"));
+	// Set the Item Preview
+	builder.setItemPreview($("#simulate-stats"));
+	// Initialize the Item Builder
+	builder.init();
+	// Create our compare button
+	var button = $("<button>Find Similar Items</button>");
+	button.click(function() {
+		var item = builder.getItem();
+		if(item.type == null) {
+			$("<p>You need to select the type of item.</p>").dialog({
+				height: 140,
+				modal: true,
+				title: 'Error'
+			});
+			return false;
+		}
+		$.ajax({
+			data: item,
+			success: function(data) {
+				similar.empty();
+				var json = JSON.parse(data);
+				$.each(json, function(k,v) {
+					var item = v.item,
+							link = $('<a class="quality-'+item.quality+'" href="/i/'+item.id+'">'+item.name+'</a>').attr("data-json", JSON.stringify(v.item)),
+							tr = $("<tr class='item-row'/>");
+					link.bindTooltip();
+					tr.append($("<td class='name'/>").append(link));
+					tr.append($("<td class='sold-"+v.status+"'/>").append('<img src="/images/' + v.method + '.png"> ' + v.price));
+					tr.append($("<td/>").append(v.date));
+					similar.append(tr);
+				});
+			}
+		});
+	});
+	builder.addFooter(button);
 </script>

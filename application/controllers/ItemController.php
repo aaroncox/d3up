@@ -60,7 +60,76 @@ class ItemController extends Epic_Controller_Action
 		}
 	}
 	public function pricerAction() {
-		
+		if($type = $this->getRequest()->getParam('type')) {
+			$query = array(
+				'item.type' => $type,
+				'soldOn' => array('$ne' => null),
+			);
+			$fake = Epic_Mongo::newDoc('item');
+			$fake->type = $type;
+			// var_dump($this->getRequest()->getParams()); exit;
+			if($stats = $this->getRequest()->getParam('stats')) {
+				$fake->stats = $stats;
+				foreach($fake->stats as $stat => $value) {
+					switch($stat) {
+						case "damage-min":
+							$query['item.stats.damage.min'] = array(
+								'$gt' => ($value - 20),
+								'$lt' => ($value + 20),	
+							);
+							break;
+						case "damage-max":
+							$query['item.stats.damage.max'] = array(
+								'$gt' => ($value - 20),
+								'$lt' => ($value + 20),	
+							);
+							break;
+						case "armor":
+							$query['item.stats.armor'] = array(
+								'$gt' => ($value - 20),
+								'$lt' => ($value + 20),									
+							);
+							break;
+					}
+				}		
+			}
+			if($attrs = $this->getRequest()->getParam('attrs')) {
+				$fake->attrs->setFromArray($attrs);
+				$ratings = D3Up_Tool_MaxStat::getInstance()->calc($fake);
+				unset($ratings['total']);
+				foreach($ratings as $attr => $value) {
+					if($value > 0) {
+						$query['item.rating.'.$attr] = array(
+							'$gt' => ($value - 10),
+							'$lt' => ($value + 10),
+						);						
+					} else {
+						$query['item.rating.'.$attr] = array(
+							'$exists' => true
+						);
+					}
+				}				
+			}
+			$sales = Epic_Mongo::db('sale')->fetchAll($query, array("soldOn" => -1), 10);
+			$this->getResponse()->setHeader('Content-type', 'application/json');
+			$data = array();
+			$helper = new D3Up_View_Helper_PrettyStat();
+			$count = 0;
+			foreach($sales as $idx => $sale) {
+				$data[$count] = array(
+					'method' => $sale->method,
+					'date' => date("Y-m-d", $sale->soldOn),
+					'status' => $sale->soldSuccess,
+					'price' => $helper->prettyStat($sale->soldFor?:$sale->buyout),
+					'item' => $sale->item->cleanExport()
+				);
+				$count++;
+			}
+			// var_dump($data);
+			echo json_encode($data); exit;
+			var_dump($data); 
+			var_dump($query, $this->getRequest()->getParams()); exit;			
+		}
 	}
 	public function createAction() {
 		// Create a new Item
