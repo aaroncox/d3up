@@ -716,6 +716,8 @@ var buildCalculator = {
 						if(slot == "offhand") {
 							this.isDuelWielding = true;
 							this.stats['speed-oh'] = parseFloat(av);
+						} else {
+							this.isDuelWielding = false;
 						}
 						break;
 					case "damage":
