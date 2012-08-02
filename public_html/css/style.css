@@ -460,7 +460,8 @@ dd:has(:focus) .chzn-container {
 	color: #F00;
 }
 .stat-ehp, 
-.stat-dps {
+.stat-dps,
+.stat-average-hit {
 	font-size: 24px;
 	font-weight: bold;
 	margin: 0 0 10px;
@@ -885,16 +886,36 @@ tr.compared > td:first-child {
 	clear: both;
 	min-height: 72px;
 	font-size: 14px;
-	margin-bottom: 10px;
+	margin: 10px 0;
 }
 .skill-calc-row img {
 	float: left;
 	margin-right: 10px;
 }
 .skill-calc-row h3 {
+	font-size: 1.3em;
 	color: #70B1D5;
 	margin: 0;
 }
 .skill-calc-row p {
-	margin: 0 0 10px 74px;
+	color: #888;
+	margin: 0 0 0 74px;
+}
+.skill-calc-row p:first-child {
+	margin-bottom: 10px;
+}
+.skill-calc-row .control {
+	color: #777;
+	font-weight: bold;
+	float: right;
+}
+.skill-calc-row .details {
+	list-style: none;
+	padding: 0;
+	color: #fff;
+	margin: 0 0 5px 74px;
+	font-size: 1.2em;
+}
+.skill-calc-row .stat-average-hit {
+	margin: 0;
 }

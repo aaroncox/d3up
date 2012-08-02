@@ -121,7 +121,7 @@
 					find: [
 						/damage of your skills by (\d+)% for 5 seconds after using Bash/
 					],
-					effect: 'damage-buff',
+					effect: 'plus-damage',
 					multiple: 3
 				},
 				{
@@ -131,7 +131,7 @@
 						/Reduce incoming damage by (\d+)% while Shadow Power/,
 						/that reduces damage taken by allies by (\d+)%/
 					],
-					effect: 'damage-reduce'
+					effect: 'plus-damage-reduce'
 				},
 				{
 					find: [
@@ -255,15 +255,15 @@
 				{
 					find: [
 						/Attack Speed: (\d+)%/,
-						/Increases your attack speed by (\d+)% when using Strafe/
 					],
 					effect: 'plus-attack-speed'
 				},
 				{
 					find: [
+						/Increases your attack speed by (\d+)% when using Strafe/,
 						/Frenzy attack speed increases by (\d+)% with each swing/,
 					],
-					effect: 'plus-attack-speed',
+					effect: 'plus-attack-speed-this',
 					multiple: 5
 				},
 				{
@@ -363,7 +363,8 @@
 						/dropping bombs in a straight line that each explode for (\d+)% weapon damage/,
 						/releases shadow energy that deals (\d+)% weapon damage/,
 						/guided arrows that rain down on enemies for (\d+)% weapon damage/,
-						/from the sky for 10 seconds dealing (\d+)% weapon damage/
+						/from the sky for 10 seconds dealing (\d+)% weapon damage/,
+						/to throw a piercing axe at a nearby enemy that deals (\d+)% weapon damage to all enemies in its path./
 					], 
 					effect: 'weapon-damage',
 					remove: 'weapon-damage'
@@ -401,6 +402,8 @@
 				},
 				{
 					find: [
+						/dealing 2000% weapon damage as Fire over (\d+) seconds/,
+						/a twister of pure energy that deals 360% weapon damage as Arcane over (\d+) seconds/,
 						/rain down on enemies for 35% weapon damage for (\d+) seconds/,
 						/drops grenades from the sky for (\d+) seconds/
 					],

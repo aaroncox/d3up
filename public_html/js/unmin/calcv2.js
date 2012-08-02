@@ -3,6 +3,7 @@ var buildCalculator = {
 	gearSelector: null,		// Where is the gear on the page?
 	passiveSkills: [],		// What passives are active?
 	activeSkills: [],			// Which active skills do we use?
+	enabledSkills: [],			// Skills that are ACTIVE
 	// Storage
 	gear: {},
 	attrs: {},
@@ -48,6 +49,8 @@ var buildCalculator = {
 			'plus-armor': 0,
 			'plus-dodge': [], // Since Dodge is Multiplicative in it's percentage bonuses, we need to collect them
 			'plus-damage': 0,
+			'plus-attack-speed': 0,
+			'plus-damage-reduce': 0
 		};
 	},
 	setClass: function(newClass) {
@@ -80,6 +83,12 @@ var buildCalculator = {
 	getClass: function() {
 		return this.class;
 	},
+	setActives: function(actives) {
+		this.activeSkills = actives;
+	},
+	setEnabledSkills: function(actives) {
+		this.enabledSkills = actives;
+	},
 	setPassives: function(passives) {
 		this.passiveSkills = passives;
 	},
@@ -89,6 +98,11 @@ var buildCalculator = {
 		} else {
 			this.bonuses[effect] = value;
 		}
+	},
+	removeBonus: function(effect, value) {
+		if(this.bonuses[effect]) {
+			this.bonuses[effect] -= value;								
+		} 
 	},
 	setVsLevel: function(level) {
 		this.vsLevel = level;
@@ -123,8 +137,43 @@ var buildCalculator = {
 		link.bindTooltip();
 		return link;
 	},
-	applySkill: function(skill) {
-		console.log(skill);
+	applyEnabledSkill: function(e, i) {
+		switch(i) {
+			case "plus-dodge":
+				var value = e / 100;
+				this.bonuses['plus-dodge'].push(value);
+				break;
+			case "plus-crit-hit":
+				this.attrs['critical-hit'] += e;
+				break;
+			case "plus-damage-reduce":
+			case "plus-resist-all":
+			case "plus-attack-speed":
+			case "plus-damage":
+			case "plus-armor":
+				var value = e / 100;
+				// console.log(i, value);
+				this.addBonus(i, value);
+				break;
+			default:
+			 	console.log("Unhandled Active: " + e + " " + i);
+				break;
+		}
+	},
+	applyEnabledSkills: function() {
+		// console.log(this.activeSkills);
+		_.each(this.enabledSkills, function(v,k) {
+			// console.log(v,k);
+			_.each(v.effect, function(e,i) {
+				if(i == "stack") {
+					_.each(e, function(se, si) {
+						this.applyEnabledSkill(se.limit * se.value, si);
+					}, this);
+				} else {
+					this.applyEnabledSkill(e,i)
+				}
+			}, this);
+		}, this);
 	},
 	applyPassives: function() {
 		_.each(this.passiveSkills, function(v,k) {
@@ -378,7 +427,7 @@ var buildCalculator = {
 			_.each(this.bonuses['plus-dodge'], function(v) {
 				percentage = (1 - percentage) * (1 - v);
 			});
-			rendered['dodge-chance'] = percentage * 100;
+			rendered['dodge-chance'] = (1 - percentage) * 100;
 		}
 		// Return the Values for Defenses
 		return rendered;
@@ -399,9 +448,9 @@ var buildCalculator = {
 		if(this.class == "monk" || this.class == "barbarian") {
 			// ----------------------------------
 			// Damage Taken Percent
-			// Formula: ( 1 - Percentage Resist All ) * ( 1 - Percentage Armor Reduction ) * (1 - 30% Melee Damage Reduction )
+			// Formula: ( 1 - Percentage Resist All ) * ( 1 - Percentage Armor Reduction ) * (1 - Bonus Damage Reduction) * (1 - 30% Melee Damage Reduction )
 			// ----------------------------------
-			rendered.damageTaken 			= ( 1 - defenses['percent-resist-all'] ) * ( 1 - defenses.armorReduction ) * ( 1 - 0.3 );
+			rendered.damageTaken 			= ( 1 - defenses['percent-resist-all'] ) * ( 1 - defenses.armorReduction ) * (1 - this.bonuses['plus-damage-reduce']) * ( 1 - 0.3 );
 			// ----------------------------------
 			// Individual EHP Calculations for each resist
 			// Formula: ( Life / ( 1 - Percentage Armor Reduction ) * ( 1 - Percentage Individual Resist ) * (1 - 30% Melee Damage Reduction ) )
@@ -417,7 +466,7 @@ var buildCalculator = {
 			// Damage Taken Percent
 			// Formula: ( 1 - Percentage Resist All ) * ( 1 - Percentage Armor Reduction )
 			// ----------------------------------
-			rendered.damageTaken 			= ( 1 - defenses['percent-resist-all'] ) * ( 1 - defenses.armorReduction );
+			rendered.damageTaken 			= ( 1 - defenses['percent-resist-all'] ) * (1 - this.bonuses['plus-damage-reduce']) * ( 1 - defenses.armorReduction );
 			// ----------------------------------
 			// Individual EHP Calculations for each resist
 			// Formula: ( Life / ( 1 - Percentage Armor Reduction ) * ( 1 - Percentage Individual Resist ) )
@@ -513,16 +562,16 @@ var buildCalculator = {
 				oh: Math.floor(this.attrs['speed-oh'] * 1024) / 1024,
 			};
 			// console.log(mhMinDamage, mhMaxDamage, ohMinDamage, ohMaxDamage, bnMinDamage, bnMaxDamage);
-			console.log(this.attrs['speed'], this.attrs['speed-oh']);
-			console.log(rendered['dps-speed'].mh, rendered['dps-speed'].oh);
+			// console.log(this.attrs['speed'], this.attrs['speed-oh']);
+			// console.log(rendered['dps-speed'].mh, rendered['dps-speed'].oh);
 			var mathS = 1 + this.attrs[this.attrs.primary] * 0.01,
 					mathC = 1 + (this.attrs['critical-hit'] * 0.01) * (this.attrs['critical-hit-damage'] * 0.01),
-					mathR = (rendered['dps-speed'].mh + rendered['dps-speed'].oh) / 2 * (1 + atkSpeedInc + 0.15),
+					mathR = (rendered['dps-speed'].mh + rendered['dps-speed'].oh) / 2 * (1 + atkSpeedInc + 0.15 + this.bonuses['plus-attack-speed']),
 					mathA = ((mhMinDamage + mhMaxDamage) / 2 + (ohMinDamage + ohMaxDamage) / 2 + bnMinDamage + bnMaxDamage) / 2,
 					mathM = (1 + this.bonuses['plus-damage']);
 			rendered['dps'] = mathS * mathC * mathR * mathA * mathM;			
 			rendered['dps-speed-display'] = Math.round(mathR * 100) / 100;
-			console.log(mathS, mathC, mathR, mathA, mathM, rendered['dps'], "dw", rendered);
+			// console.log(mathS, mathC, mathR, mathA, mathM, rendered['dps'], "dw", rendered);
 		} else {
 			rendered['dps-speed'] = Math.floor(this.attrs['speed'] * 1024) / 1024;
 			var mathS = 1 + this.attrs[this.attrs.primary] * 0.01,
@@ -532,7 +581,7 @@ var buildCalculator = {
 					mathM = (1 + this.bonuses['plus-damage']);
 			rendered['dps'] = mathS * mathC * mathR * mathA * mathM;		
 			// console.log(mhMinDamage, mhMaxDamage, bnMinDamage, bnMaxDamage);
-			console.log(mathS, mathC, mathR, mathA, mathM, rendered['dps'], "1w");
+			// console.log(mathS, mathC, mathR, mathA, mathM, rendered['dps'], "1w");
 			// rendered['dps'] = (((mhMinDamage + mhMaxDamage) / 2 + bnAvgDamage) * rendered['dps-speed']) * (1 + atkSpeedInc) * (this.attrs[this.attrs.primary] / 100 + 1) * 1 * ((this.attrs['critical-hit'] / 100) * (this.attrs['critical-hit-damage']/100) + 1);
 			rendered['dps-speed-display'] = Math.round(mathR * 100) / 100;
 		}
@@ -543,8 +592,9 @@ var buildCalculator = {
 		// }
 		return rendered;
 	},
-	calcSAME: function(mathE) {
+	calcSAME: function(mathE, duration) {
 		var rendered = {}, // Storage for Rendered Statistics
+				atkSpeedInc = 0,
 				mhMinDamage = 0,
 				mhMaxDamage = 0,
 				ohMinDamage = 0,
@@ -560,6 +610,9 @@ var buildCalculator = {
 				ohMaxDamage = this.attrs['damage-oh'].max;
 			}
 		}
+		if(this.attrs['attack-speed-incs']) {
+			atkSpeedInc = this.attrs['attack-speed-incs'];
+		}
 		// Calculate the Average and Min/Max Bonus Damage from other items
 		if(this.attrs['max-damage']) {
 			bnMaxDamage = this.attrs['max-damage'];			
@@ -572,27 +625,108 @@ var buildCalculator = {
 		mathE = mathE / 100;
 		// Are we duel wielding?
 		if(this.isDuelWielding) {
+			rendered['dps-speed'] = {
+				// mh: this.attrs['speed'],
+				// oh: this.attrs['speed-oh'],
+				mh: Math.floor(this.attrs['speed'] * 1024) / 1024,
+				oh: Math.floor(this.attrs['speed-oh'] * 1024) / 1024,
+			};
 			var mathS = 1 + this.attrs[this.attrs.primary] * 0.01,
-					mathA = ((mhMinDamage + mhMaxDamage) / 2 + (ohMinDamage + ohMaxDamage) / 2 + bnMinDamage + bnMaxDamage),
+					mathAl = (mhMinDamage + ohMinDamage + bnMinDamage),
+					mathAh = (mhMaxDamage + ohMaxDamage + bnMaxDamage),
 					mathM = (1 + this.bonuses['plus-damage']);
+					mathR = (rendered['dps-speed'].mh + rendered['dps-speed'].oh) / 2 * (1 + atkSpeedInc + 0.15 + this.bonuses['plus-attack-speed']),
+					mathC = 1 + (this.attrs['critical-hit'] * 0.01) * (this.attrs['critical-hit-damage'] * 0.01),
+					dLow = Math.round(mathS * mathAl * mathM * mathE * 100) / 100;
+					dHigh = Math.round(mathS * mathAh * mathM * mathE * 100) / 100;
+					// console.log(mathS, mathAl, mathAh, mathM, dLow, dHigh, mathE);
 		} else {
+			rendered['dps-speed'] = Math.floor(this.attrs['speed'] * 1024) / 1024;
 			var mathS = 1 + this.attrs[this.attrs.primary] * 0.01,
-					mathA = (mhMinDamage + mhMaxDamage) / 2 + bnMinDamage + bnMaxDamage,
+					mathC = 1 + (this.attrs['critical-hit'] * 0.01) * (this.attrs['critical-hit-damage'] * 0.01),
+					mathR = rendered['dps-speed'] * (1 + atkSpeedInc),
+					mathAl = (mhMinDamage + bnMinDamage),
+					mathAh = (mhMaxDamage + bnMaxDamage),
 					mathM = (1 + this.bonuses['plus-damage']);
+					dLow = Math.round(mathS * mathAl * mathM * mathE * 100) / 100;
+					dHigh = Math.round(mathS * mathAh * mathM * mathE * 100) / 100;
 		}
-		rendered['damage'] = mathS * mathA * mathM * mathE;			
+		dps = Math.round(((dLow + dHigh) / 2 ) * mathC * 100)/100;
+		if(duration) {
+			// dps = Math.round(((dLow + dHigh) / 2 ) * mathC * 100)/100;
+			rendered['average-hit'] = Math.round(dps / duration * 100) / 100;
+			rendered['damage-tick'] = Math.round(dLow / duration * 100)/100 + " - " + Math.round(dHigh / duration * 100)/100;
+			rendered['critical-hit-tick'] = Math.round(dLow / duration * (1 + (this.attrs['critical-hit-damage'] * 0.01)) * 10) / 10 + " - " + Math.round(dHigh / duration * (1 + (this.attrs['critical-hit-damage'] * 0.01)) * 10) / 10;
+		} else {
+			rendered['average-hit'] = dps;			
+			rendered['damage'] = dLow + " - " + dHigh;
+			console.log(this.attrs['critical-hit-damage']);
+			rendered['critical-hit'] = Math.round(dLow * ((this.attrs['critical-hit-damage'] * 0.01)) * 10) / 10 + " - " + Math.round(dHigh * ((this.attrs['critical-hit-damage'] * 0.01)) * 10) / 10;
+		}
 		return rendered;
+	},
+	calcSkills: function() {
+		var rendered = {};
+		_.each(this.activeSkills, function(v,k) {
+			var calcDot = false,
+					calcSame = false,
+					bonuses = {};
+			_.each(v.effect, function(e,i) {
+				switch(i) {
+					default:
+						// console.log("not supported ",e,i);
+						break;
+					case "stack":
+						_.each(e, function(se, si) {
+							switch(si) {
+								case "plus-attack-speed-this":
+									bonuses["plus-attack-speed"] = (se.value / 100) * se.limit;
+									break;
+							}
+						}, this);
+						break;
+					case "weapon-damage":
+						calcSame = e;
+						break;
+					case "weapon-damage-for":
+						calcDot = e;
+						break;
+				}
+			}, this);
+			if(calcSame) {
+				// Add the Skills Bonuses
+				_.each(bonuses, function(val,b) {
+					this.addBonus(b, val);
+				}, this);
+				if(calcDot) {
+					// This is a dot, pass in the duration
+					rendered[k] = this.calcSAME(calcSame, calcDot);					
+				} else {
+					// Calculate the SAME Damage with these bonuses
+					rendered[k] = this.calcSAME(calcSame);					
+				}
+				// Remove the Skills Bonuses
+				_.each(bonuses, function(val,b) {
+					this.removeBonus(b, val);
+				}, this)	
+			}
+		}, this);
+		// console.log(rendered);
+		return {skillData: rendered};
 	},
 	run: function() {
 		// Apply all of the passive bonuses into the this.bonuses array for use in the math below
 		this.applyPassives();
+		// Apply all bonuses from the Active skills indicated
+		this.applyEnabledSkills();
 		// Calculate Defensive Statistics
 		var defenses = this.calcDefenses(),
 		 		ehp = this.calcEffectiveHealth(defenses), 
 				gearEhp = this.calcGearEhp(defenses, ehp),
-				dps = this.calcOffense();
+				dps = this.calcOffense(), 
+				skills = this.calcSkills();
 		// Add all of our calculated values into the values object for returning
-		$.extend(this.values, defenses, ehp, gearEhp, dps);		
+		$.extend(this.values, defenses, ehp, gearEhp, dps, skills);		
 		// ----------------------------------
 		// Define Offensive Statistics before Passives so we can add to them
 		// ----------------------------------
@@ -639,6 +773,9 @@ var buildCalculator = {
 		var json = this.gear[slot];
 		if(json.attrs) {
 			_.each(json.attrs, function(av, ak) {
+				if(isNaN(parseFloat(av))) {
+					av = 0;
+				}
 				switch(ak) {
 					case "armor":
 						if(json.type == 'ring' || json.type == 'amulet') {
@@ -758,6 +895,9 @@ var buildCalculator = {
 		this.gear[slot] = json;
 		if(json.attrs) {
 			_.each(json.attrs, function(av, ak) {
+				if(isNaN(parseFloat(av))) {
+					av = 0;
+				}
 				switch(ak) {
 					case "armor":
 						if(json.type == 'ring' || json.type == 'amulet') {

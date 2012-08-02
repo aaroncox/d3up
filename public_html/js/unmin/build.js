@@ -49,7 +49,8 @@ $(function() {
 			activeSelect = $("#actives"),
 			activeDisplay = $("#active-display"),
 			passiveSelect = $("#passives"),
-			passiveDisplay = $("#passive-display"),			
+			passiveDisplay = $("#passive-display"),	
+			activeActivesData = {},		
 			calc = Object.create(buildCalculator);
 			
 	// Setup Defaults and Reset
@@ -65,18 +66,27 @@ $(function() {
 	// Debugging
 	// console.log(stats);
 	if(activeSkills && activeSkills[heroClass]) {
+		var idx = 0;
 		$.each(activeSkills[heroClass], function(k,v) {
-			var selected = '';
-			if(typeof activeActives != "undefined") {
-				$.each(activeActives, function(key,active) {
-					if(k == active) {
-						selected = 'selected="selected"';
-					}
-				}); 			
-			}		
-			activeSelect.append($("<option value='"+k+"' "+selected+"/>").html(v.name));			
+			var selected = false;
+			activeSelect.append($("<option value='"+k+"' rel='"+idx+"'/>").html(v.name));			
+			idx++;
 		});
 	};
+	// consol
+	activeSelect.chosen({
+		placeholder: 'Which skills/abilities do you use?',
+		allowClear: true
+	});
+	$.each(activeActives, function(key, active) {
+		activeSelect.find("option[value=" + active + "]").attr("selected", "selected");
+		console.log(key, active);
+		// if(k == active) {
+		// 	selected = 'selected="selected"';
+		// }
+	}); 			
+	activeSelect.trigger("liszt:updated");
+	
 	if(passives && passives[heroClass]) {
 		$.each(passives[heroClass], function(k,v) {
 			var selected = '';
@@ -90,17 +100,20 @@ $(function() {
 			passiveSelect.append($("<option value='"+k+"' "+selected+"/>").html(k.replace(/\-/g," ").capitalize()));			
 		});		
 	};
-	activeSelect.chosen({
-		placeholder: 'Which skills/abilities do you use?',
-		allowClear: true
-	});
 	passiveSelect.chosen({
 		placeholder: 'Which passives skills are you using?',
 		allowClear: true
 	});
+
 	activeSelect.bind('change', function() {
-		var skills = ($(this).val()) ? $(this).val() : [];
+		var select = $(this),
+				skills = [];
+		$("#" + $(this).attr("id") + "_chzn ul li a").each(function() {
+			skills.push(select.find("option[rel=" + $(this).attr("rel") + "]").attr("value"));
+		});
 		activeDisplay.empty();
+		$("#build-active-skills").empty();
+		activeActivesData = {};
 		$.each(skills, function(k,v) {
 			skillDisplay.show();
 			if(k >= 6) {
@@ -119,22 +132,24 @@ $(function() {
 			}
 			img.bindSkilltip();
 			activeDisplay.append($("<li/>").html(img));			
+			activeActivesData[v] = skill;	
 		});
 		recalc();
-		if(!skills || !activeActives || activeActives.length != skills.length) {
-			if(isOwner && skills.length <= 6) {
-				setTimeout(function() {
-					$.ajax({
-						data: {
-							a: 'active-skills',
-							actives: skills,
-							stats: stats
-						}
-					});												
-				}, 0);
-			}
-		}
-		activeActives = $(this).val();		
+		// if(!skills || !activeActives || activeActives.length != skills.length) {
+		// 	if(isOwner && skills.length <= 6) {
+		// 		setTimeout(function() {
+		// 			$.ajax({
+		// 				data: {
+		// 					a: 'active-skills',
+		// 					actives: skills,
+		// 					// stats: stats
+		// 				}
+		// 			});												
+		// 		}, 0);
+		// 	}
+		// }
+		// activeActives = skills;
+		displaySkills();	
 	});
 	passiveSelect.bind('change', function() {
 		var skills = ($(this).val()) ? $(this).val() : [];
@@ -173,40 +188,61 @@ $(function() {
 		recalc();
 	});
 	function recalc() {
+		var activeSkills = {},
+				enabledSkills = {};
 		calc.init();
+		$('.skill-activate').each(function() {
+			activeSkills[$(this).data('skill')] = activeActivesData[$(this).data('skill')];
+			if($(this).is(":checked")) {
+				enabledSkills[$(this).data('skill')] = activeActivesData[$(this).data('skill')];
+			}
+		});
+		// console.log(activeSkills);
+		calc.setActives(activeSkills);
+		calc.setEnabledSkills(enabledSkills);
 		calc.setPassives(passiveSelect.val());
 		calc.setClass($("#character").data('class'));
 		calc.setGear(".equipped a");
 		stats = calc.run();
+		_.each(stats.skillData, function(v,k) {
+			console.log(k,v);
+		}, this);
 		displayStats();
-		displaySkills();
 	}
+	displaySkills();
 	function displaySkills() {
 		var target = $("#build-active-skills").empty(),
 				skills = activeSelect.val();
 		_.each(skills, function(skill) {
 			var data = activeSkills[heroClass][skill],
-					li = $("<li class='skill-calc-row'>").attr("data-json", JSON.stringify(data.effect)),
+					li = $("<li class='skill-calc-row'>").attr("data-json", JSON.stringify(data.effect)).attr("data-id", skill),
 					cleaned = skill.split("~"),
 					icon = $("<img src='/images/icons/" + heroClass + "-" + cleaned[0] + ".png'>"),
 					h3 = $("<h3>").html(data.name),
-					desc = $("<p>").html(data.desc),
-					damage = $("<p>"),
-					rune = null,
-					checkbox = $("<input type='checkbox'>");
+					details = $("<ul class='details'>"),
+					desc = $("<p><span class='stat-helper'>Description</span>: </p>").append(data.desc),
+					rune = $("<p>"),
+					control = $("<div class='control'>Activate </div>");
 			if(data.rune) {
-				var rune = $("<p>").html("<span class='stat-helper'>Rune Bonus</span>: " + data.rune)
+				var rune = $("<p>").html("<span class='stat-helper'>Rune Bonus</span>: " + data.rune);
 			}
 			if(data.effect) {
-				
+				console.log("effect ", data.effect);
+				var checkbox = $("<input type='checkbox' class='skill-activate' data-skill='" + skill + "'>");
+				checkbox.click(function() {
+					recalc();
+				});
+				control.append(checkbox);
 			}
-			li.append(icon, h3, desc, rune, damage);
+			// console.log(details);
+			li.append(icon, control, h3, details, desc, rune);
 			target.append(li);
 			// var damage = calc.calcSkillDamage(data);
-			console.log(data);
+			// console.log(data);
 
 		});
-		console.log(activeSelect.val());
+		recalc();
+		// console.log(activeSelect.val());
 	}
 	if(isOwner) {
 		$(".gear-change").click(function() {
@@ -334,6 +370,34 @@ $(function() {
 			statLabel("Arcane/Holy EHP", stats['ehp-arcane'], 'round')
 		));
 		// ----------------------------------
+		// Render Skill Damage
+		// ----------------------------------
+		var containerSkills = $("#build-active-skills");
+		// console.log(stats.skillData);
+		$.each(stats.skillData, function(k,v) {
+			// console.log(k);
+			var target = containerSkills.find("li[data-id=\"" + k + "\"] ul.details").empty();
+			$.each(v, function(s,i) {
+				switch(s) {
+					case "average-hit":
+						target.append(statLabel("Average Hit", i));
+						break;
+					case "damage-tick":
+						target.append(statLabel("Per Tick", i));
+						break;
+					case "damage":
+						target.append(statLabel("Damage Range", i));
+						break;
+					case "critical-hit":
+						target.append(statLabel("Crit Damage Range", i));
+						break;
+					case "critical-hit-tick":
+						target.append(statLabel("Per Tick Crit Damage", i));
+						break;
+				}
+			});
+		});
+		// ----------------------------------
 		// Render the Stasistics below
 		// ----------------------------------	
 		// Base Statistics Display
@@ -399,7 +463,6 @@ $(function() {
 		ehpGear.append(statLabel("Off Hand EHP", stats['ehp-offhand'], 'round'));			
 		$("#stats-ehp-gear").html(ehpGear);
 		// Add the DPS Gear Contributions
-		console.log(stats);
 		var dpsGear = $("<ul class='resist-specific'/>").append($("<li class='header'/>").html("Gear DPS Contributions (<a href='/faq/gear-based-dps'>?</a>)"));
 		dpsGear.append(statLabel("Helm DPS", stats['dps-helm'], 'round'));			
 		dpsGear.append(statLabel("Shoulder DPS", stats['dps-shoulders'], 'round'));			

@@ -416,7 +416,7 @@ var activeSkills = {
 				'chance-knockback': 20,
 				'generate-fury': 6,
 				'stack': {
-					'damage-buff': {
+					'plus-damage': {
 						'limit': 3,
 						'value': 6,
 					},
@@ -801,7 +801,7 @@ var activeSkills = {
 				'generate-fury': 3,
 				'weapon-damage': 110,
 				'stack': {
-					'plus-attack-speed': {
+					'plus-attack-speed-this': {
 						'limit': 5,
 						'value': 15,
 					},
@@ -820,7 +820,7 @@ var activeSkills = {
 						'limit': 5,
 						'value': 4,
 					},
-					'plus-attack-speed': {
+					'plus-attack-speed-this': {
 						'limit': 5,
 						'value': 15,
 					},
@@ -833,13 +833,13 @@ var activeSkills = {
 			rune: 'Each strike has a 25% chance to throw a piercing axe at a nearby enemy that deals 110% weapon damage to all enemies in its path.',
 			effect: {
 				'generate-fury': 3,
-				'weapon-damage': 220,
 				'stack': {
-					'plus-attack-speed': {
+					'plus-attack-speed-this': {
 						'limit': 5,
 						'value': 15,
 					},
 				},
+				'weapon-damage': 110,
 			},
 		},
 		'frenzy~c': {
@@ -850,7 +850,7 @@ var activeSkills = {
 				'generate-fury': 3,
 				'weapon-damage': 110,
 				'stack': {
-					'plus-attack-speed': {
+					'plus-attack-speed-this': {
 						'limit': 5,
 						'value': 15,
 					},
@@ -866,7 +866,7 @@ var activeSkills = {
 				'chance-stun': 20,
 				'weapon-damage': 110,
 				'stack': {
-					'plus-attack-speed': {
+					'plus-attack-speed-this': {
 						'limit': 5,
 						'value': 15,
 					},
@@ -881,7 +881,7 @@ var activeSkills = {
 				'generate-fury': 3,
 				'weapon-damage': 110,
 				'stack': {
-					'plus-attack-speed': {
+					'plus-attack-speed-this': {
 						'limit': 5,
 						'value': 15,
 					},
@@ -1101,7 +1101,7 @@ var activeSkills = {
 			effect: {
 				'generate-fury': 15,
 				'cooldown': 15,
-				'damage-reduce': 20,
+				'plus-damage-reduce': 20,
 			},
 		},
 		'threatening-shout~a': {
@@ -1111,7 +1111,7 @@ var activeSkills = {
 			effect: {
 				'generate-fury': 15,
 				'cooldown': 15,
-				'damage-reduce': 20,
+				'plus-damage-reduce': 20,
 			},
 		},
 		'threatening-shout~b': {
@@ -1121,7 +1121,7 @@ var activeSkills = {
 			effect: {
 				'generate-fury': 15,
 				'cooldown': 15,
-				'damage-reduce': 20,
+				'plus-damage-reduce': 20,
 			},
 		},
 		'threatening-shout~c': {
@@ -1131,7 +1131,7 @@ var activeSkills = {
 			effect: {
 				'generate-fury': 15,
 				'cooldown': 15,
-				'damage-reduce': 20,
+				'plus-damage-reduce': 20,
 			},
 		},
 		'threatening-shout~d': {
@@ -1141,7 +1141,7 @@ var activeSkills = {
 			effect: {
 				'generate-fury': 15,
 				'cooldown': 15,
-				'damage-reduce': 20,
+				'plus-damage-reduce': 20,
 			},
 		},
 		'threatening-shout~e': {
@@ -1151,7 +1151,7 @@ var activeSkills = {
 			effect: {
 				'generate-fury': 15,
 				'cooldown': 15,
-				'damage-reduce': 20,
+				'plus-damage-reduce': 20,
 			},
 		},
 		'earthquake': {
@@ -1161,6 +1161,7 @@ var activeSkills = {
 				'cost-fury': 50,
 				'cooldown': 120,
 				'weapon-damage': 2000,
+				'weapon-damage-for': 8,
 			},
 		},
 		'earthquake~a': {
@@ -1171,6 +1172,7 @@ var activeSkills = {
 				'cost-fury': 50,
 				'cooldown': 120,
 				'weapon-damage': 2000,
+				'weapon-damage-for': 8,
 			},
 		},
 		'earthquake~b': {
@@ -1181,6 +1183,7 @@ var activeSkills = {
 				'cost-fury': 50,
 				'cooldown': 120,
 				'weapon-damage': 2000,
+				'weapon-damage-for': 8,
 			},
 		},
 		'earthquake~c': {
@@ -1191,6 +1194,7 @@ var activeSkills = {
 				'cost-fury': 50,
 				'cooldown': 120,
 				'weapon-damage': 2000,
+				'weapon-damage-for': 8,
 			},
 		},
 		'earthquake~d': {
@@ -1199,6 +1203,7 @@ var activeSkills = {
 			rune: 'Removes the Fury cost and reduces the cooldown to 105 seconds.',
 			effect: {
 				'weapon-damage': 2000,
+				'weapon-damage-for': 8,
 				'cooldown': 105,
 			},
 		},
@@ -1210,6 +1215,7 @@ var activeSkills = {
 				'cost-fury': 50,
 				'cooldown': 120,
 				'weapon-damage': 2000,
+				'weapon-damage-for': 8,
 			},
 		},
 		'whirlwind': {
@@ -1330,7 +1336,7 @@ var activeSkills = {
 			desc: 'Reduces all damage taken by 65% for 5 seconds.',
 			effect: {
 				'cooldown': 30,
-				'damage-reduce': 65,
+				'plus-damage-reduce': 65,
 			},
 		},
 		'ignore-pain~a': {
@@ -1339,7 +1345,7 @@ var activeSkills = {
 			rune: 'Reflects 50% of ignored damage back at the enemy.',
 			effect: {
 				'cooldown': 30,
-				'damage-reduce': 65,
+				'plus-damage-reduce': 65,
 			},
 		},
 		'ignore-pain~b': {
@@ -1348,7 +1354,7 @@ var activeSkills = {
 			rune: 'Increases duration to 7 seconds.',
 			effect: {
 				'cooldown': 30,
-				'damage-reduce': 65,
+				'plus-damage-reduce': 65,
 			},
 		},
 		'ignore-pain~c': {
@@ -1357,7 +1363,7 @@ var activeSkills = {
 			rune: 'Extend the effect to nearby allies, reducing damage taken by 65% for 5 seconds.',
 			effect: {
 				'cooldown': 30,
-				'damage-reduce': 65,
+				'plus-damage-reduce': 65,
 			},
 		},
 		'ignore-pain~d': {
@@ -1366,7 +1372,7 @@ var activeSkills = {
 			rune: 'When activated, Knockback all enemies within 12 yards and deal 50% weapon damage to them.',
 			effect: {
 				'cooldown': 30,
-				'damage-reduce': 65,
+				'plus-damage-reduce': 65,
 				'weapon-damage': 50,
 			},
 		},
@@ -1376,7 +1382,7 @@ var activeSkills = {
 			rune: 'While Ignore Pain is active, gain 20% of all damage dealt as Life.',
 			effect: {
 				'cooldown': 30,
-				'damage-reduce': 65,
+				'plus-damage-reduce': 65,
 				'life-steal': 20,
 			},
 		},
@@ -2367,7 +2373,7 @@ var activeSkills = {
 			rune: 'Reduce incoming damage by 65% while Shadow Power is active.',
 			effect: {
 				'cost-discipline': 14,
-				'damage-reduce': 65,
+				'plus-damage-reduce': 65,
 				'life-steal': 20,
 			},
 		},
@@ -2579,7 +2585,12 @@ var activeSkills = {
 			effect: {
 				'cost-hatred': 15,
 				'weapon-damage': 120,
-				'plus-attack-speed': 20,
+				'stack': {
+					'plus-attack-speed-this': {
+						'limit': 5,
+						'value': 20,
+					},
+				},
 			},
 		},
 		'strafe~c': {
@@ -2821,7 +2832,7 @@ var activeSkills = {
 			rune: 'The turret also creates a shield that reduces damage taken by allies by 15%.',
 			effect: {
 				'cost-discipline': 10,
-				'damage-reduce': 15,
+				'plus-damage-reduce': 15,
 				'weapon-damage': 20,
 			},
 		},
@@ -5426,6 +5437,7 @@ var activeSkills = {
 			desc: 'Cost: 35 Arcane Power  Unleash a twister of pure energy that deals 360% weapon damage as Arcane over 6 seconds to everything in its path.',
 			effect: {
 				'weapon-damage': 360,
+				'weapon-damage-for': 6,
 			},
 		},
 		'energy-twister~a': {
@@ -5434,6 +5446,7 @@ var activeSkills = {
 			rune: 'Increases the damage of Energy Twister to 468% weapon damage as Arcane.',
 			effect: {
 				'weapon-damage': 360,
+				'weapon-damage-for': 6,
 			},
 		},
 		'energy-twister~b': {
@@ -5442,6 +5455,7 @@ var activeSkills = {
 			rune: 'When two Energy Twisters collide, they merge into a tornado with increased area of effect that causes 360% weapon damage as Arcane over 6 seconds.',
 			effect: {
 				'weapon-damage': 360,
+				'weapon-damage-for': 6,
 			},
 		},
 		'energy-twister~c': {
@@ -5450,6 +5464,7 @@ var activeSkills = {
 			rune: 'Casting Energy Twister grants you a Wind Charge. You can store up to 3 Wind Charges at a time. Casting a Signature spell releases all Wind Charges as a giant Energy Twister that deals 75% weapon damage as Arcane per Wind Charge.  The following skills are Signature spells:  Magic Missile  Shock Pulse  Spectral Blade  Electrocute',
 			effect: {
 				'weapon-damage': 435,
+				'weapon-damage-for': 6,
 			},
 		},
 		'energy-twister~d': {
@@ -5458,6 +5473,7 @@ var activeSkills = {
 			rune: 'Reduces casting cost of Energy Twister to 20 Arcane Power.',
 			effect: {
 				'weapon-damage': 360,
+				'weapon-damage-for': 6,
 			},
 		},
 		'energy-twister~e': {
@@ -5466,6 +5482,7 @@ var activeSkills = {
 			rune: 'Twisters no longer travel but spin in place, dealing 252% weapon damage as Arcane over 6 seconds to everything caught in them.',
 			effect: {
 				'weapon-damage': 360,
+				'weapon-damage-for': 6,
 			},
 		},
 		'ice-armor': {
