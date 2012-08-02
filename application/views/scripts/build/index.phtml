@@ -13,11 +13,6 @@
 							<option value="true">Yes</option>
 							<option value="false">No</option>
 						</select> 
-						<select id="isGeared" data-placeholder="Geared Profile">
-							<option value=""></option>
-							<option value="true">Yes</option>
-							<option value="false">No</option>
-						</select> 
 						<select id="classSelect" data-placeholder="Filter by Class">
 							<option value=""></option>
 							<option value="">All Classes</option>
@@ -35,9 +30,6 @@
 						<? if($this->hasGuide): ?>
 							$("#hasGuide option[value=<?= ($this->hasGuide)?"true":"false" ?>]").attr("selected", "selected");
 						<? endif?>
-						<? if($this->isGeared): ?>
-							$("#isGeared option[value=<?= ($this->isGeared)?"true":"false" ?>]").attr("selected", "selected");
-						<? endif?>
 						$("#classSelect, #isGeared, #hasGuide").chosen({allow_single_deselect: true});
 					</script>
 				</td>
@@ -52,7 +44,6 @@
 																							array(
 																								'class' => $this->class,
 																								'hasGuide' => $this->hasGuide,
-																								'isGeared' => $this->isGeared,
 																							)); ?>
 				</td>
 			</tr>
@@ -62,7 +53,6 @@
 				<th>Skills</th>
 				<th>DPS</th>
 				<th>EHP</th>
-				<th>Geared?</th>
 				<th>Guide?</th>
 			</tr>
 		<? foreach($this->builds as $build): ?>
@@ -91,7 +81,6 @@
 				</td>
 				<td class="stat"><?= $this->prettyStat($build->stats['dps']) ?></td>
 				<td class="stat"><?= $this->prettyStat($build->stats['ehp']) ?></td>
-				<td class="meta"><?= (count($build->equipment) > 10)?"<span class='pos'>Yes</span>":"<span class='neg'>No</span>" ?></td>
 				<td class="meta"><?= ($build->guideIsPublished)?"<span class='pos'>Yes</span>":"<span class='neg'>No</span>" ?></td>
 			</tr>
 		<? endforeach; ?>
@@ -103,7 +92,6 @@
 																							array(
 																								'class' => $this->buildClass,
 																								'hasGuide' => $this->hasGuide,
-																								'isGeared' => $this->isGeared,
 																							)); ?>
 				</td>
 			</tr>

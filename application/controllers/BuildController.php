@@ -10,6 +10,9 @@ class BuildController extends Epic_Controller_Action
 	public function indexAction() {
 		$query = array(
 			'private' => array('$ne' => true),
+			'stats.dps' => array('$exists' => true),
+			'actives' => array('$exists' => true),
+			'passives' => array('$exists' => true),
 		);
 		$sort = array(
 			'_created' => -1,
@@ -22,14 +25,6 @@ class BuildController extends Epic_Controller_Action
 		if($hasGuide = $this->getRequest()->getParam('guide')) {
 			if($hasGuide == "true") {				
 				$this->view->hasGuide = $query['guideIsPublished'] = true;
-			}
-		}
-		if($isGeared = $this->getRequest()->getParam('geared')) {
-			if($isGeared == "true") {				
-				$query['equipmentCount'] = array(
-					'$gt' => 10
-				);
-				$this->view->isGeared = true;
 			}
 		}
 		$builds = Epic_Mongo::db('build')->fetchAll($query, $sort);	

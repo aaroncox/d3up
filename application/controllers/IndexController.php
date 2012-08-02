@@ -21,6 +21,12 @@ class IndexController extends Epic_Controller_Action {
 			$this->view->buildClass = $query['class'] = $class;
 		}
 		$this->view->sales = $sales = Epic_Mongo::db('sale')->fetchAll(array('soldSuccess' => true), array('soldOn' => -1), 10);
+		$query = array(
+			'private' => array('$ne' => true),
+			'stats.dps' => array('$exists' => true),
+			'actives' => array('$exists' => true),
+			'passives' => array('$exists' => true),
+		);
 		$this->view->builds = $builds = Epic_Mongo::db('build')->fetchAll($query, $sort, 10);	
 		$this->view->counts = array(
 			'builds' => count(Epic_Mongo::db("build")->fetchAll()),
