@@ -832,6 +832,8 @@ $(function() {
 		// 	$(this).bindTooltip();
 		// });			
 		$(".compare-diff").append(table);
+		calc.removeItem(slot);
+		calc.parseItem(oldItem, slot);
 		// return diff['mod'];
 	}
 });
