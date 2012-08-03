@@ -466,8 +466,7 @@ dd:has(:focus) .chzn-container {
 	color: #F00;
 }
 .stat-ehp, 
-.stat-dps,
-.stat-average-hit {
+.stat-dps {
 	font-size: 24px;
 	font-weight: bold;
 	margin: 0 0 10px;
@@ -922,6 +921,6 @@ tr.compared > td:first-child {
 	margin: 0 0 5px 74px;
 	font-size: 1.2em;
 }
-.skill-calc-row .stat-average-hit {
+.skill-calc-row .stat-dps {
 	margin: 0;
 }

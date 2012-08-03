@@ -79,7 +79,7 @@ $(function() {
 		allowClear: true
 	});
 	$.each(activeActives, function(key, active) {
-		activeSelect.find("option[value=" + active + "]").attr("selected", "selected");
+		activeSelect.find("option[value='" + active + "']").attr("selected", "selected");
 		console.log(key, active);
 		// if(k == active) {
 		// 	selected = 'selected="selected"';
@@ -135,20 +135,20 @@ $(function() {
 			activeActivesData[v] = skill;	
 		});
 		recalc();
-		// if(!skills || !activeActives || activeActives.length != skills.length) {
-		// 	if(isOwner && skills.length <= 6) {
-		// 		setTimeout(function() {
-		// 			$.ajax({
-		// 				data: {
-		// 					a: 'active-skills',
-		// 					actives: skills,
-		// 					// stats: stats
-		// 				}
-		// 			});												
-		// 		}, 0);
-		// 	}
-		// }
-		// activeActives = skills;
+		if(!skills || !activeActives || activeActives.length != skills.length) {
+			if(isOwner && skills.length <= 6) {
+				setTimeout(function() {
+					$.ajax({
+						data: {
+							a: 'active-skills',
+							actives: skills,
+							// stats: stats
+						}
+					});												
+				}, 0);
+			}
+		}
+		activeActives = skills;
 		displaySkills();	
 	});
 	passiveSelect.bind('change', function() {
@@ -223,9 +223,13 @@ $(function() {
 					desc = $("<p><span class='stat-helper'>Description</span>: </p>").append(data.desc),
 					rune = $("<p>"),
 					control = $("<div class='control'>Activate </div>");
+			icon.attr('data-tooltip', data.desc);
+			icon.attr('data-name', data.name);
 			if(data.rune) {
+				icon.attr('data-tooltip', data.desc.replace(/  /, "<br/><br/>") + "<br/><br/>" + data.rune);
 				var rune = $("<p>").html("<span class='stat-helper'>Rune Bonus</span>: " + data.rune);
 			}
+			icon.bindSkilltip();
 			if(data.effect) {
 				console.log("effect ", data.effect);
 				var checkbox = $("<input type='checkbox' class='skill-activate' data-skill='" + skill + "'>");
@@ -387,6 +391,9 @@ $(function() {
 						break;
 					case "damage":
 						target.append(statLabel("Damage Range", i));
+						break;
+					case "dps":
+						target.append(statLabel("DPS", i));
 						break;
 					case "critical-hit":
 						target.append(statLabel("Crit Damage Range", i));

@@ -632,13 +632,14 @@ var buildCalculator = {
 				oh: Math.floor(this.attrs['speed-oh'] * 1024) / 1024,
 			};
 			var mathS = 1 + this.attrs[this.attrs.primary] * 0.01,
+					mathA = ((mhMinDamage + mhMaxDamage) / 2 + (ohMinDamage + ohMaxDamage) / 2 + bnMinDamage + bnMaxDamage) / 2,
 					mathAl = (mhMinDamage + ohMinDamage + bnMinDamage),
 					mathAh = (mhMaxDamage + ohMaxDamage + bnMaxDamage),
 					mathM = (1 + this.bonuses['plus-damage']);
 					mathR = (rendered['dps-speed'].mh + rendered['dps-speed'].oh) / 2 * (1 + atkSpeedInc + 0.15 + this.bonuses['plus-attack-speed']),
 					mathC = 1 + (this.attrs['critical-hit'] * 0.01) * (this.attrs['critical-hit-damage'] * 0.01),
-					dLow = Math.round(mathS * mathAl * mathM * mathE * 100) / 100;
-					dHigh = Math.round(mathS * mathAh * mathM * mathE * 100) / 100;
+					dLow = mathS * mathAl * mathM * mathE;
+					dHigh = mathS * mathAh * mathM * mathE;
 					// console.log(mathS, mathAl, mathAh, mathM, dLow, dHigh, mathE);
 		} else {
 			rendered['dps-speed'] = Math.floor(this.attrs['speed'] * 1024) / 1024;
@@ -648,18 +649,21 @@ var buildCalculator = {
 					mathAl = (mhMinDamage + bnMinDamage),
 					mathAh = (mhMaxDamage + bnMaxDamage),
 					mathM = (1 + this.bonuses['plus-damage']);
-					dLow = Math.round(mathS * mathAl * mathM * mathE * 100) / 100;
-					dHigh = Math.round(mathS * mathAh * mathM * mathE * 100) / 100;
+					dLow = mathS * mathAl * mathM * mathE;
+					dHigh = mathS * mathAh * mathM * mathE;
 		}
-		dps = Math.round(((dLow + dHigh) / 2 ) * mathC * 100)/100;
+		dps = Math.round(((dLow + dHigh) / 2 ) * mathR * mathC * 100)/100;
+		hit = Math.round(((dLow + dHigh) / 2 ) * mathC * 100)/100;
 		if(duration) {
 			// dps = Math.round(((dLow + dHigh) / 2 ) * mathC * 100)/100;
-			rendered['average-hit'] = Math.round(dps / duration * 100) / 100;
+			rendered['dps'] = Math.round(dps / duration * 100) / 100;
+			rendered['average-hit'] = Math.round(hit / duration * 100) / 100;
 			rendered['damage-tick'] = Math.round(dLow / duration * 100)/100 + " - " + Math.round(dHigh / duration * 100)/100;
 			rendered['critical-hit-tick'] = Math.round(dLow / duration * (1 + (this.attrs['critical-hit-damage'] * 0.01)) * 10) / 10 + " - " + Math.round(dHigh / duration * (1 + (this.attrs['critical-hit-damage'] * 0.01)) * 10) / 10;
 		} else {
-			rendered['average-hit'] = dps;			
-			rendered['damage'] = dLow + " - " + dHigh;
+			rendered['dps'] = dps;			
+			rendered['average-hit'] = hit;			
+			rendered['damage'] = Math.round(dLow * 100)/100 + " - " + Math.round(dHigh * 100)/100;;
 			console.log(this.attrs['critical-hit-damage']);
 			rendered['critical-hit'] = Math.round(dLow * ((this.attrs['critical-hit-damage'] * 0.01)) * 10) / 10 + " - " + Math.round(dHigh * ((this.attrs['critical-hit-damage'] * 0.01)) * 10) / 10;
 		}
