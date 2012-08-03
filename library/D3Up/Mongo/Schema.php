@@ -73,7 +73,7 @@ class D3Up_Mongo_Schema extends Epic_Mongo_Schema {
 				}
 			case 4:
 				$db->execute('db.records.update({type: "shoulder"}, {$set: {type: "shoulders"}}, false, true)');
-				$db->execute('db.records.update({type: "chest-armor"}, {$set: {type: "chest"}}, false, true)');
+				$db->execute('db.records.update({type: "chest"}, {$set: {type: "chest"}}, false, true)');
 				// $db->execute('db.users.insert({id: 1, name: "admin", username: "admin", password: "'.md5('admin').'", _access: "admin", _type: "user"})');
 				// $db->execute('db.sequences.insert({"id" : "user", "sequence" : 1 })');
 			// case 0:

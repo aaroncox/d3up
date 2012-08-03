@@ -474,7 +474,7 @@ class D3Up_Form_Record_Item extends Epic_Form
 			case "helm":
 			case "pants":
 			case "mighty-belt":
-			case "shoulder":
+			case "shoulders":
 			case "spirit-stone":
 			case "voodoo-mask":
 			case "wizard-hat":
