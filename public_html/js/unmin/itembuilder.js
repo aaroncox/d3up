@@ -13,7 +13,7 @@ var itemBuilder = {
 	itemPreview: null,				// Selector for the Item's Preview
 	itemClass: {
 		"none": ["amulet", "ring", "mojo", "source", "quiver"],
-		"armor": ["belt","boots","bracers","chest-armor","cloak","gloves","helm","pants","mighty-belt","shoulder","spirit-stone","voodoo-mask","wizard-hat"],
+		"armor": ["belt","boots","bracers","chest","cloak","gloves","helm","pants","mighty-belt","shoulders","spirit-stone","voodoo-mask","wizard-hat"],
 		"weapon": ["2h-mace","2h-axe","bow","diabo","crossbow","2h-mighty","polearm","staff","2h-sword","axe","ceremonial-knife","hand-crossbow","dagger","fist-weapon","mace","mighty-weapon","spear","sword","wand"],	
 		"shield": ["shield"],
 	},

@@ -151,9 +151,16 @@ class D3Up_Form_Record_Item extends Epic_Form
 	}
 	
 	protected $_build = null;
+	protected $_slot = null;
 	
 	public function setBuildToEquip($id) {
 		$this->_build = Epic_Mongo::db('build')->fetchOne(array("id" => (int) $id));
+	}
+
+	public function setSlot($slot) {
+		$this->_slot = $slot;
+		$acceptable = Epic_Mongo::db('gearset')->getAcceptableTypes($slot);
+		$this->itemType->setValue(array_pop($acceptable));
 	}
 	
 	public function getBuild() {
@@ -214,14 +221,14 @@ class D3Up_Form_Record_Item extends Epic_Form
 				'belt' => 'Belt',
 				'boots' => 'Boots',
 				'bracers' => 'Bracers',
-				'chest-armor' => 'Chest Armor',
+				'chest' => 'Chest Armor',
 				'cloak' => 'Cloak',
 				'gloves' => 'Gloves',
 				'helm' => 'Helm',
 				'pants' => 'Pants',
 				'mighty-belt' => 'Mighty Belt',
 				'ring' => 'Ring',
-				'shoulder' => 'Shoulder',
+				'shoulders' => 'Shoulders',
 				'spirit-stone' => 'Spirit Stone',
 				'voodoo-mask' => 'Voodoo Mask',
 				'wizard-hat' => 'Wizard Hat',
@@ -461,7 +468,7 @@ class D3Up_Form_Record_Item extends Epic_Form
 			case "belt":
 			case "boots":
 			case "bracers":
-			case "chest-armor":
+			case "chest":
 			case "cloak":
 			case "gloves":
 			case "helm":
@@ -532,9 +539,9 @@ class D3Up_Form_Record_Item extends Epic_Form
 			$item->_createdBy = $profile;
 		}
 		// Are we equipping this onto a build?
-		if($this->_build) {
+		if($this->_build && $this->_slot) {
 			// What type of item is this?
-			$type = $this->itemType->getValue();
+			$type = $this->_slot;
 			// Save the Item
 			$item->save();
 			// Equip the new Item

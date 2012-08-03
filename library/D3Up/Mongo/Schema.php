@@ -9,7 +9,7 @@
  * @package undocumented class
  **/
 class D3Up_Mongo_Schema extends Epic_Mongo_Schema {
-	protected $_version = 4;
+	protected $_version = 5;
   	protected $_tag = 'd3up';
 	protected $_classMap = array(
 		'record' => array(
@@ -71,6 +71,9 @@ class D3Up_Mongo_Schema extends Epic_Mongo_Schema {
 					$profile = $db->users->findOne(array('_id' => $res['seller']['$id']));
 					$db->execute("db.records.update({_id: new ObjectId('".$res['_id']."')}, {\$set: {region: ".(int)$profile['region']."}})");
 				}
+			case 4:
+				$db->execute('db.records.update({type: "shoulder"}, {$set: {type: "shoulders"}}, false, true)');
+				$db->execute('db.records.update({type: "chest-armor"}, {$set: {type: "chest"}}, false, true)');
 				// $db->execute('db.users.insert({id: 1, name: "admin", username: "admin", password: "'.md5('admin').'", _access: "admin", _type: "user"})');
 				// $db->execute('db.sequences.insert({"id" : "user", "sequence" : 1 })');
 			// case 0:

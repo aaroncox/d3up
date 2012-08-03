@@ -489,12 +489,12 @@ $(function() {
 						case "belt":
 						case "boots":
 						case "bracers":
-						case "chest-armor":
+						case "chest":
 						case "cloak":
 						case "gloves":
 						case "pants":
 						case "mighty-belt":
-						case "shoulder":
+						case "shoulders":
 						default:
 							effectNum = 3;
 							effect = v[3];

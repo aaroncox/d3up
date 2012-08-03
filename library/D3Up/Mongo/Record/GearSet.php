@@ -26,9 +26,9 @@ class D3Up_Mongo_Record_GearSet extends Epic_Mongo_Document
 	
 	public $_gearMap = array(
 		'helm' => array('spirit-stone','voodoo-mask','wizard-hat','helm'),
-		'shoulders' => array('shoulder'),
+		'shoulders' => array('shoulders'),
 		'amulet' => array('amulet'),
-		'chest' => array('chest-armor','cloak'),
+		'chest' => array('chest','cloak'),
 		'gloves' => array('gloves'),
 		'bracers' => array('bracers'),
 		'belt' => array('belt','mighty-belt'),

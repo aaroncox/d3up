@@ -504,13 +504,13 @@ var buildCalculator = {
 							case "belt":
 							case "boots":
 							case "bracers":
-							case "chest-armor":
+							case "chest":
 							case "cloak":
 							case "gloves":
 							case "helm":
 							case "pants":
 							case "mighty-belt":
-							case "shoulder":
+							case "shoulders":
 							case "spirit-stone":
 							case "voodoo-mask":
 							case "wizard-hat":
@@ -531,13 +531,13 @@ var buildCalculator = {
 							case "belt":
 							case "boots":
 							case "bracers":
-							case "chest-armor":
+							case "chest":
 							case "cloak":
 							case "gloves":
 							case "helm":
 							case "pants":
 							case "mighty-belt":
-							case "shoulder":
+							case "shoulders":
 							case "spirit-stone":
 							case "voodoo-mask":
 							case "wizard-hat":
@@ -631,13 +631,13 @@ var buildCalculator = {
 							case "belt":
 							case "boots":
 							case "bracers":
-							case "chest-armor":
+							case "chest":
 							case "cloak":
 							case "gloves":
 							case "helm":
 							case "pants":
 							case "mighty-belt":
-							case "shoulder":
+							case "shoulders":
 							case "spirit-stone":
 							case "voodoo-mask":
 							case "wizard-hat":
@@ -662,13 +662,13 @@ var buildCalculator = {
 							case "belt":
 							case "boots":
 							case "bracers":
-							case "chest-armor":
+							case "chest":
 							case "cloak":
 							case "gloves":
 							case "helm":
 							case "pants":
 							case "mighty-belt":
-							case "shoulder":
+							case "shoulders":
 							case "spirit-stone":
 							case "voodoo-mask":
 							case "wizard-hat":
