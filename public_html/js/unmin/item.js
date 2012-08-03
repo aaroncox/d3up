@@ -6,13 +6,13 @@ switch($("#itemType").val()) {
 		case "belt":
 		case "boots":
 		case "bracers":
-		case "chest-armor":
+		case "chest":
 		case "cloak":
 		case "gloves":
 		case "helm":
 		case "pants":
 		case "mighty-belt":
-		case "shoulder":
+		case "shoulders":
 		case "spirit-stone":
 		case "voodoo-mask":
 		case "wizard-hat":
@@ -88,13 +88,13 @@ $("#itemType").bind("change", function() {
 		case "belt":
 		case "boots":
 		case "bracers":
-		case "chest-armor":
+		case "chest":
 		case "cloak":
 		case "gloves":
 		case "helm":
 		case "pants":
 		case "mighty-belt":
-		case "shoulder":
+		case "shoulders":
 		case "spirit-stone":
 		case "voodoo-mask":
 		case "wizard-hat":
@@ -193,12 +193,12 @@ $("#sockets").bind("change", function() {
 					case "belt":
 					case "boots":
 					case "bracers":
-					case "chest-armor":
+					case "chest":
 					case "cloak":
 					case "gloves":
 					case "pants":
 					case "mighty-belt":
-					case "shoulder":
+					case "shoulders":
 					default:
 						effect = v[3];
 						break;

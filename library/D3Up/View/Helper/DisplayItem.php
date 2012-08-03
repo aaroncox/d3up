@@ -12,7 +12,7 @@ class D3Up_View_Helper_DisplayItem extends Zend_View_Helper_Abstract
 		'belt' => 'Belt',
 		'boots' => 'Boots',
 		'bracers' => 'Bracers',
-		'chest-armor' => 'Chest Armor',
+		'chest' => 'Chest Armor',
 		'cloak' => 'Cloak',
 		'gloves' => 'Gloves',
 		'helm' => 'Helm',
@@ -292,13 +292,13 @@ class D3Up_View_Helper_DisplayItem extends Zend_View_Helper_Abstract
 			case 'belt': 
 			case 'boots': 
 			case 'bracers': 
-			case 'chest-armor': 
+			case 'chest': 
 			case 'cloak': 
 			case 'gloves': 
 			case 'pants': 
 			case 'mighty-belt': 
 			case 'ring': 
-			case 'shoulder': 
+			case 'shoulders': 
 			case 'wand': 
 			case 'mojo': 
 			case 'source': 

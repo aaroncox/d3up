@@ -135,7 +135,10 @@ $(function() {
 			activeActivesData[v] = skill;	
 		});
 		recalc();
-		if(!skills || !activeActives || activeActives.length != skills.length) {
+		if(!activeActives) {
+			activeActives = [];
+		}
+		if(!skills || activeActives.length != skills.length) {
 			if(isOwner && skills.length <= 6) {
 				setTimeout(function() {
 					$.ajax({
@@ -166,7 +169,10 @@ $(function() {
 			passiveDisplay.append($("<li/>").html(img));
 		});
 		recalc();
-		if(!skills || !activePassives || activePassives.length != skills.length) {
+		if(!activePassives) {
+			activePassives = [];
+		}
+		if(!skills || activePassives.length != skills.length) {
 			if(isOwner && skills.length <= 3) {
 				setTimeout(function() {
 					$.ajax({
@@ -582,12 +588,12 @@ $(function() {
 						case "belt":
 						case "boots":
 						case "bracers":
-						case "chest-armor":
+						case "chest":
 						case "cloak":
 						case "gloves":
 						case "pants":
 						case "mighty-belt":
-						case "shoulder":
+						case "shoulders":
 						default:
 							effectNum = 3;
 							effect = v[3];
@@ -925,6 +931,8 @@ $(function() {
 		// 	$(this).bindTooltip();
 		// });			
 		$(".compare-diff").append(table);
+		calc.removeItem(slot);
+		calc.parseItem(oldItem, slot);
 		// return diff['mod'];
 	}
 });
