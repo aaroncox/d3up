@@ -121,6 +121,9 @@ $(function() {
 			activeDisplay.append($("<li/>").html(img));			
 		});
 		recalc();
+		if(!activeActives) {
+			activeActives = [];
+		}
 		if(!skills || activeActives.length != skills.length) {
 			if(isOwner && skills.length <= 6) {
 				setTimeout(function() {
@@ -151,6 +154,9 @@ $(function() {
 			passiveDisplay.append($("<li/>").html(img));
 		});
 		recalc();
+		if(!activePassives) {
+			activePassives = [];
+		}
 		if(!skills || activePassives.length != skills.length) {
 			if(isOwner && skills.length <= 3) {
 				setTimeout(function() {
