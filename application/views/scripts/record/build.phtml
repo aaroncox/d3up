@@ -30,19 +30,37 @@ var activeActives = [];
 </div>
 <? endif; ?>
 
-<h2 class="table-header">
+<h1 class="table-header">
 	<?= $this->record->name ?> (<?= ucwords(str_replace("-", " ", $this->record->class)) ?>)
-</h2>
+</h1>
 
 <div id="skill-display" class="build-header ui-widget ui-corner-all" >
+	<h3 class="inline-flow">Skills</h3>
 	<ul id="active-display">
 		<li>No Passives Selected</li>
 	</ul>
+	<h3 class="inline-flow">Passives</h3>
 	<ul id="passive-display">
 		<li>No Passives Selected</li>
 	</ul>
+	<div id="ratings-display">
+		<h3 class="inline-flow">Build Score</h3>
+		<div class='item-stat inline-flow'>
+			<span class='value'>1023</span>
+			<span class='stat'>Votes</span>
+		</div>
+		<img id="button-upboat" src="/images/upboat.png" class="ui-state-disabled" data-name="Upvote this Build!" data-tooltip="Like this build? Think this build is helpful or has a good guide? Click here to give them an up vote!">
+		<div class='item-stat inline-flow'>
+			<span class='value'><?= $this->prettyStat($this->record->views) ?></span>
+			<span class='stat'>Views</span>
+		</div>
+	</div>
 </div>
-
+<script type="text/javascript">
+	$(function() {
+		$("#button-upboat").bindSkilltip();		
+	});
+</script>
 <div id="character" class="inline-flow" data-class="<?= $this->record->class ?>" <? if($myBuild) { echo "data-owner='true'"; } ?>>
 	<ul>
 		<li><a href="#build-gear">Gear</a></li>

@@ -19,4 +19,11 @@ class D3Up_Mongo_Record_Build extends Epic_Mongo_Document_Record
 	public function getEditForm() {
 		return new D3Up_Form_Record_Build(array('build' => $this));
 	}
+	
+	public function viewCounter() {
+		if(Epic_Mongo::db('view')->track($this, $_SERVER)) {
+			$this->views++;
+			$this->save();
+		}
+	}
 } // END class D3Up_Mongo_Record_Hero extends Epic_Mongo_Document_Record

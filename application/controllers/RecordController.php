@@ -134,6 +134,7 @@ class RecordController extends Epic_Controller_Action
 	}
 	public function viewAction() {
 		$record = $this->getRecord();
+		$record->viewCounter();
 		// if($record->_type == "build") {
 			// Get all the comments and the comment form
 			// $this->view->commentForm = $commentForm = new D3Up_form_Record_Build_Comment(array('build' => $record));

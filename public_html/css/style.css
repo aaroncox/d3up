@@ -214,6 +214,18 @@ ul#simulate-stats input,
 	display: none;
 	background: #111;
 }
+#skill-display h3 {
+	margin: 0;
+	padding: 10px 0;
+	color: #70B1D5;
+/*	float: left;*/
+}
+#ratings-display {
+	float: right;
+}
+#ratings-display .item-stat {
+	padding: 3px 10px;
+}
 #sys-message {
 	text-align: center;
 	font-size: 14px;
@@ -234,6 +246,7 @@ ul#simulate-stats input,
 .skill-highlight {
 	color: #0F0;
 }
+
 #active-display,
 #passive-display {
 	list-style: none;
@@ -245,7 +258,11 @@ ul#simulate-stats input,
 #passive-display > li {
 	display: inline-block;
 	float: left;
-	padding: 0 15px;
+	padding: 0 5px;
+}
+#active-display > li img,
+#passive-display > li img {
+	width: 32px;
 }
 .calc-stats .resist-specific {
 }
