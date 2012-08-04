@@ -53,9 +53,32 @@
 			var effectMap = [
 				{
 					find: [
+						/plus an additional 10 Spirit while channeling/,
+						/This is a Signature spell. Signature spells are free to cast./,
+						/\|4minute\:/,
+						/;./
+					],
+					removeTip: true
+				},
+				{
+					find: [
+						/Cost: (\d.+) Mana/
+					],
+					effect: 'cost-mana',
+					removeTip: true
+				},
+				{
+					find: [
 						/Cost: (\d+) Fury/
 					],
 					effect: 'cost-fury',
+					removeTip: true
+				},
+				{
+					find: [
+						/Cost: (\d+) Arcane Power/
+					],
+					effect: 'cost-arcane-power',
 					removeTip: true
 				},
 				{
@@ -159,15 +182,18 @@
 				{
 					find: [
 						/All of your resistances are increased by (\d+)%/,
+						/Increases all of your resistances by (\d+)% while Energy Armor/,
+						/and your Armor and resistances are increased by (\d+)%/
 					],
 					effect: 'plus-resist-all'
 				},
 				{
 					find: [
+						/Also deals (\d+)% weapon damage while running/,
 						/Enemies in the area also take (\d+)% weapon damage/,
 						/shockwave that inflicts (\d+)% weapon damage/,
 						/for (\d+)% weapon damage/,
-						/a shockwave that deals (\d+)% weapon damage/,
+						// /a shockwave that deals (\d+)% weapon damage/,
 						/deal (\d+)% weapon damage/,
 						/dealing (\d+)% weapon damage to all/,
 						/and dealing (\d+)% weapon damage/,
@@ -188,13 +214,40 @@
 						/trap does (\d+)% weapon damage/,
 						/periodically peck at enemies for (\d+)% of your weapon damage/,
 						/firing at nearby enemies for (\d+)%/,
-						/the sky dealing (\d.+)% weapon damage/
+						/the sky dealing (\d.+)% weapon damage/,
+						/large sweeping attacks that cause (\d+)% weapon damage to all enemies in front of you/,
+						/The ally deals (\d+)% of your weapon damage as Physical per swing/,
+						/and an additional (\d+)% weapon damage as Poison over 2 seconds/,
+						/Each dog deals (\d+)% of your weapon damage as Physical per hit./,
+						/Haunt an enemy with a spirit, dealing (\d+)% weapon damage as Arcane/,
+						/each dealing (\d+)% of your weapon damage as Physical/,
+						/The Gargantuan attacks for (\d+)% of your weapon damage/,
+						/swarms an enemy, dealing (\d+)% weapon damage as Poison over 8 seconds/,
+						/that deals an additional (\d+)% weapon damage as Fire to all/, 
+						/dealing an initial (\d+)% weapon damage as Poison/,
+						/The Fetishes attack for (\d+)% of your weapon damage/,
+						/, causing (\d+)% weapon damage as Arcane/,
+						/Project a beam of frozen ice that blasts (\d+)% weapon damage/,
+						/dealing (\d+)% weapon damage as Arcane to all/,
+						/diamond shards explode in all directions dealing (\d+)% weapon damage/,
+						/ for an additional (\d+)% weapon damage/,
+						/Melee attackers also take (\d+)% weapon damage as Cold/,
+						/Nova centered on the attacker, dealing 75% weapon damage as Cold/,
+						/your fingertips, dealing (\d+)% weapon damage as Lightning/,
+						/ causing (\d+)% weapon damage as Physical to all enemies within/,
+						/pure energy forward, dealing (\d+)% weapon damage/,
+						/from the sky, causing (\d+)% weapon damage as Fire to all enemies it crashes into/,
+						/dealing (\d+)% weapon damage as Cold to all enemies in the area over 6 seconds./,
 					],
 					effect: 'weapon-damage'
 				},
 				{
 					find: [
+						/weapon damage as Poison over (\d+) seconds/,
 						/weapon damage for (\d+) seconds/,
+						/deals 160% weapon damage as Cold over (\d+) seconds/,
+						/weapon damage as Cold over (\d+) seconds/,
+						/dealing 210% weapon damage as Cold to all enemies in the area over (\d+) seconds./,
 					],
 					effect: 'weapon-damage-for'
 				},
@@ -203,18 +256,38 @@
 						/Add 2 reverberations that cause (\d.+)%/
 					],
 					effect: 'weapon-damage',
-					multiple: 2
+					add: 2
 				},
 				{
 					find: [
-						/launch 3 homing rockets every second. Each rocket deals (\d+)% weapon damage/
+						/launch 3 homing rockets every second. Each rocket deals (\d+)% weapon damage/,
+						/vortex that continuously deals (\d+)% weapon damage to all enemies within/,
+						/Intensify the vortex, increasing the damage per stack to (\d+)% weapon damage./,
 					],
 					effect: 'weapon-damage',
+					remove: 'stack',
 					multiple: 3
 				},
 				{
 					find: [
-						/Summon 20 Shadow Beasts to drop bombs on enemies, dealing (\d+)% weapon damage each/
+						/4 spiders that attack nearby enemies for (\d+)% weapon damage as/,
+					],
+					remove: 'weapon-damage',
+					effect: 'weapon-damage',
+					multiple: 4
+				},
+				{
+					find: [
+						/to reach their target and attack for (\d+)% weapon damage as Physical/,
+						/Summon fire spiders that deal (\d+)% weapon damage as Fire/,
+					],
+					remove: 'stack',
+					effect: 'weapon-damage',
+					multiple: 4
+				},
+				{
+					find: [
+						/Summon 20 Shadow Beasts to drop bombs on enemies, dealing (\d+)% weapon damage each/,
 					],
 					effect: 'weapon-damage',
 					multiple: 20,
@@ -222,12 +295,37 @@
 				},
 				{
 					find: [
-						/has a (\d+)% increased Critical Hit Chance/,
+						/Unleash a volley of 7 smaller Meteors that each strike for (\d+)% weapon damage as Fire/
+					], 
+					remove: 'weapon-damage',
+					effect: 'weapon-damage',
+					add: 7
+				},
+				{
+					find: [
+						/Dash rapidly between nearby enemies, dealing (\d+)% weapon damage over 7 hits./,
+					], 
+					effect: 'weapon-damage',
+					multiple: 7
+				},
+				{
+					find: [
+						/increasing damage done to (\d+)% weapon damage over 7 strikes/
+					],
+					remove: 'stack',
+					effect: 'weapon-damage-for',
+					multiple: 7
+				},
+				{
+					find: [
 						/your Critical Hit Chance is increased by (\d+)%/,
 						/which increases damage by 15% and Critical Hit Chance by (\d+)%/,
 						/Your Critical Hit Chance is increased by (\d+)%/,
 						/Critical Hit Chance: (\d+)%/,
-						/gaining an additional (\d+)% Critical Hit Chance with all/
+						/gaining an additional (\d+)% Critical Hit Chance with all/,
+						/you gain a (\d+)% bonus to Critical Hit Chance for/,
+						/Increases your chance to critically hit by (\d+)% while Energy /,
+						/Increases Critical Hit Chance by (\d+)% for the Scoundrel and his allies/
 					],
 					effect: 'plus-crit-hit'
 				},
@@ -241,7 +339,10 @@
 				{
 					find: [
 						/Enter a rage which increases damage by (\d+)%/	,
-						/While active your damage is also increased by (\d+)%/				
+						/While active your damage is also increased by (\d+)%/,
+						/Breath of Heaven increases the damage of your attacks by (\d+)% for/,
+						/The Fetish increases the damage of all nearby allies by (\d+)%/,
+						/that increases the damage of all attacks by (\d+)%/
 					], 
 					effect: 'plus-damage'
 				},
@@ -255,8 +356,17 @@
 				{
 					find: [
 						/Attack Speed: (\d+)%/,
+						/ that increases the attack speed and movement speed of all nearby allies by (\d+)%/,
+						/in the area, increasing their attack speed by (\d+)%/,
+						/An aura that increases attack speed by (\d+)% for allies within 40 yards./
 					],
 					effect: 'plus-attack-speed'
+				},
+				{
+					find: [
+						/has a (\d+)% increased Critical Hit Chance/,
+					],
+					effect: 'plus-critical-hit-this',
 				},
 				{
 					find: [
@@ -268,13 +378,23 @@
 				},
 				{
 					find: [
-						/rallying cry to increase Armor for you and all allies within 50 yards by (\d+)%/
+						/rallying cry to increase Armor for you and all allies within 50 yards by (\d+)%/,
+						/and your Armor and resistances are increased by (\d+)%/,
+						/Enchantress buffs herself and her allies, increasing Armor by (\d+)%./
 					],
 					effect: 'plus-armor'
 				},
 				{
 					find: [
-						/Increases maximum Life by (\d+)%/
+						/by a melee attack, your Armor is increased by (\d+)% for 30/
+					],
+					effect: 'plus-armor',
+					multiple: 3
+				},
+				{
+					find: [
+						/Increases maximum Life by (\d+)%/,
+						/Maximum Life for you and the ally is increased by (\d+)%/
 					],
 					effect: 'plus-life'
 				},
@@ -338,6 +458,7 @@
 						/Strike a smaller area for (\d+)% weapon damage./,
 						/damage is increased to (\d+)% weapon damage/,
 						/Focus the seismic shockwaves along a narrow path to inflict (\d+)% weapon damage/,
+						/Create a shockwave that deals (\d+)% weapon damage to all enemies within/,
 						/Increase thrown weapon damage to (\d+)% weapon damage/,
 						/Increase damage at the destination to (\d+)% weapon damage/,
 						/The Ancients inflict (\d+)% weapon damage/,
@@ -364,7 +485,52 @@
 						/releases shadow energy that deals (\d+)% weapon damage/,
 						/guided arrows that rain down on enemies for (\d+)% weapon damage/,
 						/from the sky for 10 seconds dealing (\d+)% weapon damage/,
-						/to throw a piercing axe at a nearby enemy that deals (\d+)% weapon damage to all enemies in its path./
+						/to throw a piercing axe at a nearby enemy that deals (\d+)% weapon damage to all enemies in its path./,
+						/Release bursts of energy that deal (\d+)% weapon damage as Holy to nearby enemies/,
+						/The ally gains the ability to perform a wave attack that deals (\d+)% of your weapon damage/,
+						/the ability to create a wave of earth, dealing (\d+)% of your/,
+						/Ignite the dart so that it deals (\d+)% weapon damage as Fire at once/,
+						/Increases the damage done to (\d+)% weapon damage/,
+						/bats that travel up to 40 yards and hit for (\d+)% weapon damage as Fire/,
+						/bats that seek out nearby enemies for (\d+)% weapon damage as Fire./,
+						/Damage is slow at first, but can increase over time to a maximum of (\d+)% weapon damage/,
+						/Mutate to fire bullfrogs that explode for (\d+)% weapon damage as Fire/,
+						/Cause toads to rain from the sky that deal (\d+)% weapon damage as Poison/,
+						/Mutate to yellow frogs that deal (\d+)% weapon damage as /,
+						/Summon a vengeful spirit that does (\d+)% weapon damage as Arcane over 2 seconds./,
+						/Each bear deals (\d+)% weapon damage as Poison to enemies/,
+						/toward your target before exploding, dealing (\d+)% weapon damage as/,
+						/allowing its attacks to hit multiple targets for (\d+)% of your weapon damage /,
+						/fists burn with fire, dealing (\d+)% of your weapon damage as Fire/,
+						/Engulf the target with burning locusts that deal (\d+)% /,
+						/Create a column of flame that spews fire at the closest enemy for (\d+)% weapon damage as Fire over 3 seconds./,
+						/Raise a corpse from the ground that explodes for (\d+)% weapon damage as Poison to enemies in the area/,
+						/Increases the damage of Magic Missile to (\d+)% weapon/,
+						/increases damage over 1.5 seconds to inflict a maximum of (\d+)% weapon damage as Cold/,
+						/Cast bolts of fire that each deal (\d+)% weapon damage as Fire/,
+						/electrocuting nearby enemies for (\d+)% weapon damage as Lightning/,
+						/Increase the damage of the explosion to deal (\d+)% weapon damage/,
+						/Modify the orb to deal (\d+)% weapon damage/,
+						/Create 4 Arcane Orbs that orbit you, exploding for (\d+)% weapon damage as/,
+						/Increases damage to (\d+)% weapon damage as Physical/,
+						/explode when an enemy approaches, dealing (\d+)% weapon damage as Arcane/,
+						/Increases the damage of Energy Twister to (\d+)% weapon damage as Arcane./,
+						/Twisters no longer travel but spin in place, dealing (\d+)% weapon damage/,
+						/that pierce through targets, hitting all enemies for (\d+)% weapon damage as Lightning/,
+						/Increase the damage of the shock to (\d+)% weapon/,
+						/originally cast after 2.5 seconds for (\d+)% weapon damage as/,
+						/Frost Hydra that breathes a short range cone of frost, causing (\d+)% weapon damage/,
+						/Summon a Lightning Hydra that electrocutes enemies for (\d+)% weapon/,
+						/that leaves a pool of acid that causes (\d+)% weapon damage per second/,
+						/breathes a river of flame at nearby enemies, dealing (\d+)% weapon damage per/,
+						/that spits Arcane Orbs, which explode on impact, causing (\d+)% weapon/,
+						/slowly over time to inflict a maximum of (\d.+)% weapon/,
+						/into a short-ranged cone that deals (\d.+)% weapon/,
+						/projectiles explode on impact, dealing (\d+)% weapon damage as/,
+						/upon arrival, dealing (\d+)% weapon damage/,
+						/Increases the damage of the Meteor impact to (\d+)% weapon damage/,
+						/Transforms the Meteor to ice that deals (\d+)% weapon damage as Cold/,
+						/Increases the duration of Blizzard to deal (\d+)% weapon damage as Cold over 8 seconds./,
 					], 
 					effect: 'weapon-damage',
 					remove: 'weapon-damage'
@@ -375,6 +541,17 @@
 					],
 					effect: 'weapon-damage',
 					multiple: 2,
+					remove: 'weapon-damage'
+				},
+				{
+					find: [
+						/Shoot 3 Poison Darts that deal (\d+)% weapon damage as Poison each/,
+						/Summon 3 Zombie Chargers that each deal (\d+)% weapon damage as Poison/,
+						/Fire 3 missiles that each deal (\d+)% weapon damage as Arcane./,
+						/3 consecutive explosions cascade off you, each causing (\d+)% weapon damage as Physical/
+					],
+					effect: 'weapon-damage',
+					add: 3,
 					remove: 'weapon-damage'
 				},
 				{
@@ -396,7 +573,8 @@
 				{
 					find: [
 						/wave of 10 Shadow Beasts to tear across the ground, knocking back enemies and dealing (\d+)% weapon damage/,
-						/group of 8 Shadow Beasts plummet from the sky at a targeted location dealing (\d+)% weapon damage each/
+						/group of 8 Shadow Beasts plummet from the sky at a targeted location dealing (\d+)% weapon damage each/,
+						/Raise a corpse from the ground that explodes for 200% weapon damage as Poison to enemies in the area/,
 					],
 					remove: 'weapon-damage-for'					
 				},
@@ -405,7 +583,15 @@
 						/dealing 2000% weapon damage as Fire over (\d+) seconds/,
 						/a twister of pure energy that deals 360% weapon damage as Arcane over (\d+) seconds/,
 						/rain down on enemies for 35% weapon damage for (\d+) seconds/,
-						/drops grenades from the sky for (\d+) seconds/
+						/drops grenades from the sky for (\d+) seconds/,
+						/Haunt an enemy with a spirit, dealing 575% weapon damage as Arcane over (\d+) seconds./,
+						/from the sky, dealing 80% weapon damage as Physical over (\d+) seconds/,
+						/weapon damage as Physical for (\d+) seconds./,
+						/ to enemies in the area over (\d+) seconds./,
+						/Summon a vengeful spirit that does 288% weapon damage as Arcane over (\d+) seconds./,
+						/Increases the duration of the swarm to (\d+) seconds./,
+						/Create a column of flame that spews fire at the closest enemy for 140% weapon damage as Fire over (\d+) seconds./,
+						/Increases the duration of Blizzard to deal 280% weapon damage as Cold over (\d+) seconds./
 					],
 					effect: 'weapon-damage-for',
 					remove: 'weapon-damage-for'
@@ -458,21 +644,43 @@
 				{
 					find: [
 						/Increase damage bonus to (\d+)%/,
-						/The marked enemy will take (\d+)% additional damage/
+						/The marked enemy will take (\d+)% additional damage/,
+						/enemies within 20 yards of you to take (\d+)% additional damage/,
+						/Enemies take (\d+)% more damage while frozen or chilled by/,
+						/Enemies caught in the bubble of warped time take (\d+)% more damage/,
+						/with magical energy, granting it (\d+)% increased damage/,
+						/Increases the damage bonus of Magic Weapon to (\d+)% damage,/
 					],
 					effect: 'plus-damage',
 					remove: 'plus-damage'
 				},
 				{
 					find: [
-						/Increases the Armor bonus to (\d+)%/
+						/Attacks poison enemies, dealing (\d+)% weapon damage as Poison over 3 seconds/
+					],
+					remove: 'plus-damage',
+					effect: 'weapon-damage'
+				},
+				{
+					find: [
+						/Attacks have a chance to cause lightning to arc to 3 nearby enemies, dealing (\d+)% weapon damage as Lightning./
+					],
+					remove: 'plus-damage',
+					effect: 'weapon-damage',
+					multiple: 3
+				},
+				{
+					find: [
+						/Increases the Armor bonus to (\d+)%/,
+						/Focus your energies, increasing your Armor by (\d+)% but decreasing/
 					],
 					effect: 'plus-armor',
 					remove: 'plus-armor'
 				},
 				{
 					find: [
-						/Increases bonus to Dodge Chance to (\d+)%/
+						/Increases bonus to Dodge Chance to (\d+)%/,
+						/grants you and your allies within 40 yards a (\d+)% chance to dodge attacks/
 					],
 					effect: 'plus-dodge',
 					remove: 'plus-dodge'
@@ -513,7 +721,11 @@
 										skill.effect[v.effect] = 0;
 									}
 									if(v.effect) {
-										skill.effect[v.effect] += parseFloat(matches[1]);	
+										if(v.add) {
+											skill.effect[v.effect] += parseFloat(matches[1] * v.add);	
+										} else {
+											skill.effect[v.effect] += parseFloat(matches[1]);												
+										}
 									}									
 								}
 							}
@@ -547,7 +759,11 @@
 										if(!skill.effect[v.effect]) {
 											skill.effect[v.effect] = 0;
 										}
-										skill.effect[v.effect] += parseFloat(matches[1]);	
+										if(v.add) {
+											skill.effect[v.effect] += parseFloat(matches[1] * v.add);	
+										} else {
+											skill.effect[v.effect] += parseFloat(matches[1]);												
+										}
 									}									
 								}
 							}

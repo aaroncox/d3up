@@ -156,7 +156,7 @@ var buildCalculator = {
 				this.addBonus(i, value);
 				break;
 			default:
-			 	console.log("Unhandled Active: " + e + " " + i);
+			 	// console.log("Unhandled Active: " + e + " " + i);
 				break;
 		}
 	},
@@ -592,7 +592,7 @@ var buildCalculator = {
 		// }
 		return rendered;
 	},
-	calcSAME: function(mathE, duration) {
+	calcSAME: function(skill, duration) {
 		var rendered = {}, // Storage for Rendered Statistics
 				atkSpeedInc = 0,
 				mhMinDamage = 0,
@@ -601,7 +601,9 @@ var buildCalculator = {
 				ohMaxDamage = 0,
 				bnMinDamage = 0,
 				bnMaxDamage = 0,
-				bnAvgDamage = 0; 
+				bnAvgDamage = 0,
+				mathE = skill.effect['weapon-damage'],
+				hasCooldown = (skill.effect['cooldown']) ? true : false; 
 		if(this.attrs['damage']) {
 			mhMinDamage = this.attrs['damage'].min;
 			mhMaxDamage = this.attrs['damage'].max;
@@ -661,42 +663,56 @@ var buildCalculator = {
 			rendered['damage-tick'] = Math.round(dLow / duration * 100)/100 + " - " + Math.round(dHigh / duration * 100)/100;
 			rendered['critical-hit-tick'] = Math.round(dLow / duration * (1 + (this.attrs['critical-hit-damage'] * 0.01)) * 10) / 10 + " - " + Math.round(dHigh / duration * (1 + (this.attrs['critical-hit-damage'] * 0.01)) * 10) / 10;
 		} else {
-			rendered['dps'] = dps;			
+			if(!hasCooldown) {
+				rendered['dps'] = dps;							
+			}
 			rendered['average-hit'] = hit;			
 			rendered['damage'] = Math.round(dLow * 100)/100 + " - " + Math.round(dHigh * 100)/100;;
-			console.log(this.attrs['critical-hit-damage']);
 			rendered['critical-hit'] = Math.round(dLow * ((this.attrs['critical-hit-damage'] * 0.01)) * 10) / 10 + " - " + Math.round(dHigh * ((this.attrs['critical-hit-damage'] * 0.01)) * 10) / 10;
 		}
 		return rendered;
 	},
 	calcSkills: function() {
 		var rendered = {};
+		// console.log(this.activeSkills);
 		_.each(this.activeSkills, function(v,k) {
 			var calcDot = false,
 					calcSame = false,
+					activate = false,
 					bonuses = {};
-			_.each(v.effect, function(e,i) {
-				switch(i) {
-					default:
-						// console.log("not supported ",e,i);
-						break;
-					case "stack":
-						_.each(e, function(se, si) {
-							switch(si) {
-								case "plus-attack-speed-this":
-									bonuses["plus-attack-speed"] = (se.value / 100) * se.limit;
-									break;
-							}
-						}, this);
-						break;
-					case "weapon-damage":
-						calcSame = e;
-						break;
-					case "weapon-damage-for":
-						calcDot = e;
-						break;
-				}
-			}, this);
+			if(v && v.effect) {
+				_.each(v.effect, function(e,i) {
+					// console.log(e,i);
+					switch(i) {
+						case "plus-armor":
+						case "plus-resist-all":
+						case "stack":
+							activate = true;
+							break;
+						default:
+							// console.log("not supported ",e,i);
+							break;
+						case "plus-critical-hit-this":
+							bonuses["plus-critical-hit"] = (se.value / 100) * se.limit;
+							break;
+						case "stack":
+							_.each(e, function(se, si) {
+								switch(si) {
+									case "plus-attack-speed-this":
+										bonuses["plus-attack-speed"] = (se.value / 100) * se.limit;
+										break;
+								}
+							}, this);
+							break;
+						case "weapon-damage":
+							calcSame = v; // Pass in the whole skill
+							break;
+						case "weapon-damage-for":
+							calcDot = e; // Pass in duration
+							break;
+					}
+				}, this);	
+			}
 			if(calcSame) {
 				// Add the Skills Bonuses
 				_.each(bonuses, function(val,b) {
@@ -713,6 +729,13 @@ var buildCalculator = {
 				_.each(bonuses, function(val,b) {
 					this.removeBonus(b, val);
 				}, this)	
+			}
+			// console.log(k, activate);
+			if(activate) {
+				if(!rendered[k]) {
+					rendered[k] = {};
+				}
+				rendered[k].activate = true;
 			}
 		}, this);
 		// console.log(rendered);

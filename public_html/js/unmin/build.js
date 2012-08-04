@@ -80,7 +80,7 @@ $(function() {
 	});
 	$.each(activeActives, function(key, active) {
 		activeSelect.find("option[value='" + active + "']").attr("selected", "selected");
-		console.log(key, active);
+		// console.log(key, active);
 		// if(k == active) {
 		// 	selected = 'selected="selected"';
 		// }
@@ -108,11 +108,11 @@ $(function() {
 	activeSelect.bind('change', function() {
 		var select = $(this),
 				skills = [];
+		activeActivesData = {};
 		$("#" + $(this).attr("id") + "_chzn ul li a").each(function() {
 			skills.push(select.find("option[rel=" + $(this).attr("rel") + "]").attr("value"));
 		});
-		activeActivesData = {};
-		if(skills.length > 0) {
+		if(skills.length >= 0) {
 			activeDisplay.empty();
 			$("#build-active-skills").empty();
 			$.each(skills, function(k,v) {
@@ -140,6 +140,7 @@ $(function() {
 		if(!activeActives) {
 			activeActives = [];
 		}
+		// console.log(skills);
 		if(!skills || activeActives.length != skills.length) {
 			if(isOwner && skills.length <= 6) {
 				setTimeout(function() {
@@ -215,7 +216,9 @@ $(function() {
 		calc.setGear(".equipped a");
 		stats = calc.run();
 		_.each(stats.skillData, function(v,k) {
-			console.log(k,v);
+			if(v.activate) {
+				$(".skill-calc-row[data-id='" + k + "'] .control").show();
+			}
 		}, this);
 		displayStats();
 	}
@@ -225,14 +228,14 @@ $(function() {
 				skills = activeSelect.val();
 		_.each(skills, function(skill) {
 			var data = activeSkills[heroClass][skill],
-					li = $("<li class='skill-calc-row'>").attr("data-json", JSON.stringify(data.effect)).attr("data-id", skill),
+					li = $("<li class='skill-calc-row'>").attr("data-json", JSON.stringify(data.effect)).attr("data-id", skill).attr("id", "skill-" + skill),
 					cleaned = skill.split("~"),
 					icon = $("<img src='/images/icons/" + heroClass + "-" + cleaned[0] + ".png'>"),
 					h3 = $("<h3>").html(data.name),
 					details = $("<ul class='details'>"),
 					desc = $("<p><span class='stat-helper'>Description</span>: </p>").append(data.desc),
 					rune = $("<p>"),
-					control = $("<div class='control'>Activate </div>");
+					control = $("<div class='control'></div>");
 			icon.attr('data-tooltip', data.desc);
 			icon.attr('data-name', data.name);
 			if(data.rune) {
@@ -241,12 +244,12 @@ $(function() {
 			}
 			icon.bindSkilltip();
 			if(data.effect) {
-				console.log("effect ", data.effect);
+				// console.log("effect ", data.effect);
 				var checkbox = $("<input type='checkbox' class='skill-activate' data-skill='" + skill + "'>");
 				checkbox.click(function() {
 					recalc();
 				});
-				control.append(checkbox);
+				control.append("Activate ", checkbox).hide();					
 			}
 			// console.log(details);
 			li.append(icon, control, h3, details, desc, rune);

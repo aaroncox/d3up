@@ -1,6 +1,7 @@
 <?
 	$this->headTitle('Character Builds & Guides'); 
 ?>
+<script type="text/javascript" src="/js/skills.js?time=<?= time() ?>"></script>
 <div class="recent-builds">				
 	<h2 class="table-header">Character Builds</h2>
 	<table id="all-builds" class="d3up-table">
@@ -77,7 +78,7 @@
 								$explode = explode("~", $active);
 								$skill = $explode[0];
 							?>
-							<img data-class="<?= $build->class ?>" data-id="<?= $active ?>" src="/images/icons/<?= $build->class ?>-<?= $skill ?>.png" class="skill-tip"/>
+							<img data-class="<?= $build->class ?>" data-id="<?= $active ?>" data-class="<?= $build->class ?>" src="/images/icons/<?= $build->class ?>-<?= $skill ?>.png" class="skill-tip"/>
 						<? endforeach ?>
 					<? endif ?>
 					<? if($build->passives): ?>
@@ -97,6 +98,7 @@
 		<? endforeach; ?>
 			<tr>
 				<td colspan="10" class="build-paginator td-paginator">
+					
 					<?php echo $this->paginationControl($this->builds,
 					                                    'Elastic',
 					                                    'build/_pages.phtml',
@@ -110,3 +112,23 @@
 		</tbody>
 	</table>
 </div>
+<script type="text/javascript">
+	$(function() {
+		$("td.skills img").each(function() {
+			var skill = activeSkills[$(this).attr("data-class")][$(this).attr("data-id")];
+			if(!skill) {
+				skill = passives[$(this).attr("data-class")][$(this).attr("data-id")];
+				skill.name = $(this).attr("data-id").replace(/\-/g," ").capitalize();
+			}
+			var tooltip = skill.desc;
+			if(skill) {
+				if(skill.rune) {
+					tooltip = tooltip + "<br/><br/>" + skill.rune;
+				}
+				$(this).attr("data-name", skill.name);
+				$(this).attr("data-tooltip", tooltip);
+				$(this).bindSkilltip();				
+			}
+		});
+	});
+</script>
