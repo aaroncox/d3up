@@ -10,13 +10,29 @@ class BuildController extends Epic_Controller_Action
 	public function indexAction() {
 		$query = array(
 			'private' => array('$ne' => true),
-			'stats.dps' => array('$exists' => true),
+			'stats.dps' => array('$gt' => 0),
+			'stats.ehp' => array('$gt' => 0),
 			'actives' => array('$exists' => true),
 			'passives' => array('$exists' => true),
 		);
 		$sort = array(
 			'_created' => -1,
 		);
+		if($this->view->sortBy = $sortBy = $this->getRequest()->getParam('sort')) {
+			$sort = array();
+			switch($sortBy) {
+				case "dps":
+				case "ehp":
+					$query['stats.'.$sortBy] = array('$ne' => null);
+					$sort['stats.'.$sortBy] = -1;
+					break;
+				case "votes":
+				case "views":
+					$sort[$sortBy] = -1;
+					break;
+			}
+		}
+		// var_dump($sort, $query);
 		if($class = $this->getRequest()->getParam('class')) {
 			if($class != "null") {				
 				$this->view->class = $query['class'] = $class;

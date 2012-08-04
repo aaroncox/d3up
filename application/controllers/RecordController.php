@@ -132,9 +132,25 @@ class RecordController extends Epic_Controller_Action
 			// echo "<pre>"; var_dump($record, $export); exit;
 		}
 	}
+	public function checkVote() {
+		if($profile = Epic_Auth::getInstance()->getProfile()) {
+			$record = $this->getRecord();
+			$this->view->alreadyVoted = Epic_Mongo::db('vote')->check($record, $profile);
+			if($vote = $this->getRequest()->getParam('vote')) {
+				if($vote == "up" || $vote == "down") {
+					Epic_Mongo::db('vote')->vote($record, $profile, $vote);
+				}
+			}
+		} else {
+			// echo "not logged in";
+		}
+	}
 	public function viewAction() {
 		$record = $this->getRecord();
-		$record->viewCounter();
+		if($record->_type == "build") {
+			$this->checkVote();
+			$record->viewCounter();
+		}
 		// if($record->_type == "build") {
 			// Get all the comments and the comment form
 			// $this->view->commentForm = $commentForm = new D3Up_form_Record_Build_Comment(array('build' => $record));
@@ -184,19 +200,25 @@ class RecordController extends Epic_Controller_Action
 							}
 							$record->equipment[$slot] = $item;
 							$record->equipmentCount = count($record->equipment);
-							$record->stats = $this->getRequest()->getParam('stats');
+							foreach($this->getRequest()->getParam('stats') as $k => $v) {
+								$record->stats->$k = floatVal($v);
+							}
 							$this->getResponse()->setHeader('Content-type', 'application/json');
 							echo json_encode($record->save()); exit;
 							break;
 						case "active-skills":
 							$record->actives = $this->getRequest()->getParam('actives');
-							$record->stats = $this->getRequest()->getParam('stats');
+							foreach($this->getRequest()->getParam('stats') as $k => $v) {
+								$record->stats->$k = floatVal($v);
+							}
 							$this->getResponse()->setHeader('Content-type', 'application/json');
 							echo json_encode($record->save()); exit;
 							break;
 						case "passive-skills":
 							$record->passives = $this->getRequest()->getParam('passives');
-							$record->stats = $this->getRequest()->getParam('stats');
+							foreach($this->getRequest()->getParam('stats') as $k => $v) {
+								$record->stats->$k = floatVal($v);
+							}
 							$this->getResponse()->setHeader('Content-type', 'application/json');
 							echo json_encode($record->save()); exit;
 							break;

@@ -37,30 +37,25 @@ var activeActives = [];
 <div id="skill-display" class="build-header ui-widget ui-corner-all" >
 	<h3 class="inline-flow">Skills</h3>
 	<ul id="active-display">
-		<li>No Passives Selected</li>
+		<li style="padding: 9px">None Selected</li>
 	</ul>
 	<h3 class="inline-flow">Passives</h3>
 	<ul id="passive-display">
-		<li>No Passives Selected</li>
+		<li style="padding: 9px">None Selected</li>
 	</ul>
 	<div id="ratings-display">
-		<h3 class="inline-flow">Build Score</h3>
-		<div class='item-stat inline-flow'>
-			<span class='value'>1023</span>
-			<span class='stat'>Votes</span>
-		</div>
-		<img id="button-upboat" src="/images/upboat.png" class="ui-state-disabled" data-name="Upvote this Build!" data-tooltip="Like this build? Think this build is helpful or has a good guide? Click here to give them an up vote!">
 		<div class='item-stat inline-flow'>
 			<span class='value'><?= $this->prettyStat($this->record->views) ?></span>
 			<span class='stat'>Views</span>
 		</div>
+		<img id="button-upvote" src="/images/upvote.png" class="ui-state-disabled ui-corner-all" data-name="Build Voting	" data-tooltip="In order to record your vote, we require to to be logged in. Please login or create an account!">
+		<div class='item-stat inline-flow'>
+			<span class='value' id="vote-count" data-count="<?= $this->record->votes ?>"><?= $this->record->votes ?></span>
+			<span class='stat'>Votes</span>
+		</div>
+		<img id="button-downvote" src="/images/downvote.png" class="ui-state-disabled ui-corner-all" data-name="Build Voting	" data-tooltip="In order to record your vote, we require to to be logged in. Please login or create an account!">
 	</div>
 </div>
-<script type="text/javascript">
-	$(function() {
-		$("#button-upboat").bindSkilltip();		
-	});
-</script>
 <div id="character" class="inline-flow" data-class="<?= $this->record->class ?>" <? if($myBuild) { echo "data-owner='true'"; } ?>>
 	<ul>
 		<li><a href="#build-gear">Gear</a></li>
@@ -273,6 +268,18 @@ var activeActives = [];
 	</fieldset>
 	</form>
 </div>
+<script type="text/javascript">
+	<? if($this->alreadyVoted): ?>
+	var voted = '<?= $this->alreadyVoted ?>';
+	<? else: ?>
+	var voted = false;
+	<? endif ?>
+	<? if($profile): ?>
+	var isLoggedIn = true;
+	<? else: ?>
+	var isLoggedIn = false;
+	<? endif ?>
+</script>
 <script type="text/javascript" src="/js/unmin/skills.js?time=<?= time() ?>"></script>
 <script type="text/javascript" src="/js/unmin/calcv2.js?time=<?= time() ?>"></script>
 <script type="text/javascript" src="/js/unmin/build.js?time=<?= time() ?>"></script>

@@ -211,7 +211,6 @@ ul#simulate-stats input,
 	padding: 10px;
 }
 #skill-display {
-	display: none;
 	background: #111;
 }
 #skill-display h3 {
@@ -940,4 +939,10 @@ tr.compared > td:first-child {
 }
 .skill-calc-row .stat-dps {
 	margin: 0;
+}
+#button-downvote,
+#button-upvote {
+	border: 2px solid #75ABFF; 
+	width: 36px;
+	margin-top: 4px;
 }

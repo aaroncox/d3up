@@ -25,7 +25,7 @@ class D3Up_Mongo_Record_View extends Epic_Mongo_Document
 			$visit = Epic_Mongo::newDoc('view');
 			$visit->object = $doc;
 			$visit->who = $who['REMOTE_ADDR'];
-			$visit->when = time() + 900;
+			$visit->when = time() + 1800;
 			$visit->save();
 			return true;
 		} else {

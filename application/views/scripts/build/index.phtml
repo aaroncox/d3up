@@ -44,20 +44,31 @@
 																							array(
 																								'class' => $this->class,
 																								'hasGuide' => $this->hasGuide,
+																								'sortBy' => $this->sortBy,
 																							)); ?>
 				</td>
 			</tr>
 			<tr>
 				<th></th>
-				<th>Name</th>
+				<th><a href="?sort=votes<?= ($this->class) ? "&class=".$this->class : "" ?>">Votes</a></th>
+				<th><a href="?sort=views<?= ($this->class) ? "&class=".$this->class : "" ?>">Views</a></th>
+				<th><a href="?sort=name<?= ($this->class) ? "&class=".$this->class : "" ?>">Name</a></th>
 				<th>Skills</th>
-				<th>DPS</th>
-				<th>EHP</th>
+				<th><a href="?sort=dps<?= ($this->class) ? "&class=".$this->class : "" ?>">DPS</a></th>
+				<th><a href="?sort=ehp<?= ($this->class) ? "&class=".$this->class : "" ?>">EHP</a></th>
 				<th>Guide?</th>
 			</tr>
 		<? foreach($this->builds as $build): ?>
 			<tr class='build-row'>
 				<td class="icon"><img src="/images/<?= $build->class ?>.png"/></td>
+				<td class="stat">
+					<? if($build->votes): ?>
+						+<?= $this->prettyStat($build->votes) ?>
+					<? else: ?>	
+						-
+					<? endif ?>
+				</td>
+				<td class="stat"><?= $this->prettyStat($build->views) ?></td>
 				<td class="name"><?= $this->mLink($build) ?></td>
 				<td class="skills">
 					<? if($build->actives): ?>
@@ -92,6 +103,7 @@
 																							array(
 																								'class' => $this->buildClass,
 																								'hasGuide' => $this->hasGuide,
+																								'sortBy' => $this->sortBy,
 																							)); ?>
 				</td>
 			</tr>

@@ -111,29 +111,31 @@ $(function() {
 		$("#" + $(this).attr("id") + "_chzn ul li a").each(function() {
 			skills.push(select.find("option[rel=" + $(this).attr("rel") + "]").attr("value"));
 		});
-		activeDisplay.empty();
-		$("#build-active-skills").empty();
 		activeActivesData = {};
-		$.each(skills, function(k,v) {
-			skillDisplay.show();
-			if(k >= 6) {
-				return false;
-			}
-			var skill = activeSkills[heroClass][v],
-					cleaned = v.split("~"),
-					icon = "/images/icons/" + heroClass + "-" + cleaned[0] + ".png";
-					img = $("<img/>").attr("src", icon);
-			img.attr('data-name', skill.name);
-			img.attr('title', skill.name);
-			if(skill.rune) {
-				img.attr('data-tooltip', skill.desc.replace(/  /, "<br/><br/>") + "<br/><br/>" + skill.rune);
-			} else { 
-				img.attr('data-tooltip', skill.desc);
-			}
-			img.bindSkilltip();
-			activeDisplay.append($("<li/>").html(img));			
-			activeActivesData[v] = skill;	
-		});
+		if(skills.length > 0) {
+			activeDisplay.empty();
+			$("#build-active-skills").empty();
+			$.each(skills, function(k,v) {
+				skillDisplay.show();
+				if(k >= 6) {
+					return false;
+				}
+				var skill = activeSkills[heroClass][v],
+						cleaned = v.split("~"),
+						icon = "/images/icons/" + heroClass + "-" + cleaned[0] + ".png";
+						img = $("<img/>").attr("src", icon);
+				img.attr('data-name', skill.name);
+				img.attr('title', skill.name);
+				if(skill.rune) {
+					img.attr('data-tooltip', skill.desc.replace(/  /, "<br/><br/>") + "<br/><br/>" + skill.rune);
+				} else { 
+					img.attr('data-tooltip', skill.desc);
+				}
+				img.bindSkilltip();
+				activeDisplay.append($("<li/>").html(img));			
+				activeActivesData[v] = skill;	
+			});	
+		}
 		recalc();
 		if(!activeActives) {
 			activeActives = [];
@@ -145,7 +147,7 @@ $(function() {
 						data: {
 							a: 'active-skills',
 							actives: skills,
-							// stats: stats
+							stats: stats
 						}
 					});												
 				}, 0);
@@ -156,19 +158,21 @@ $(function() {
 	});
 	passiveSelect.bind('change', function() {
 		var skills = ($(this).val()) ? $(this).val() : [];
-		passiveDisplay.empty();
-		$.each(skills, function(k,v) {
-			skillDisplay.show();
-			var skill = passives[heroClass][v],
-					icon = "/images/icons/" + heroClass + "-" + v + ".png";
-					img = $("<img/>").attr("src", icon);
-			img.attr('data-name', v.replace(/\-/g," ").capitalize());
-			img.attr('title', v.replace(/\-/g," ").capitalize());
-			img.attr('data-tooltip', skill.desc);
-			img.bindSkilltip();
-			passiveDisplay.append($("<li/>").html(img));
-		});
-		recalc();
+		if(skills.length > 0) {
+			passiveDisplay.empty();
+			$.each(skills, function(k,v) {
+				skillDisplay.show();
+				var skill = passives[heroClass][v],
+						icon = "/images/icons/" + heroClass + "-" + v + ".png";
+						img = $("<img/>").attr("src", icon);
+				img.attr('data-name', v.replace(/\-/g," ").capitalize());
+				img.attr('title', v.replace(/\-/g," ").capitalize());
+				img.attr('data-tooltip', skill.desc);
+				img.bindSkilltip();
+				passiveDisplay.append($("<li/>").html(img));
+			});
+			recalc();			
+		}
 		if(!activePassives) {
 			activePassives = [];
 		}
@@ -935,4 +939,60 @@ $(function() {
 		calc.parseItem(oldItem, slot);
 		// return diff['mod'];
 	}
+	// Vote button logic
+	var upvote = $("#button-upvote"),
+			downvote = $("#button-downvote");
+	if(isLoggedIn) {
+		upvote.attr("data-tooltip", "Do you find this build useful or just simply awesome? Give them an upvote!");
+		downvote.attr("data-tooltip", "Is this build not useful at all or full of made-up things? Feel free to downvote.");
+		switch(voted) {
+			case "up":
+				upvote.removeClass('ui-state-disabled');			
+				break;
+			case "down":
+				downvote.removeClass('ui-state-disabled');			
+				break;
+		}
+		upvote.click(function() {
+			castVote('up');
+		});
+		downvote.click(function() {
+			castVote('down');
+		});
+		function castVote(how) {
+			$.ajax({
+				url: '?vote=' + how
+			});
+			var change = 0;
+			if(how == 'up') {
+				if(upvote.hasClass('ui-state-disabled')) {
+					if(!downvote.hasClass('ui-state-disabled')) {
+						change = 2;
+					} else {
+						change = 1;
+					}
+				} else {
+					change = -1;
+				}
+				upvote.toggleClass('ui-state-disabled');				
+				downvote.addClass('ui-state-disabled');
+			} else {
+				if(downvote.hasClass('ui-state-disabled')) {
+					if(!upvote.hasClass('ui-state-disabled')) {
+						change = -2;
+					} else {
+						change = -1;
+					}
+				} else {
+					change = 1;
+				}			
+				upvote.addClass('ui-state-disabled');
+				downvote.toggleClass('ui-state-disabled');
+			}
+			$("#vote-count").html(parseInt($("#vote-count").text()) + change).attr("data-count", change);
+		}		
+	}
+	upvote.bindSkilltip();
+	downvote.bindSkilltip();
+	
 });

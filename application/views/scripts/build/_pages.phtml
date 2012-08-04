@@ -10,6 +10,9 @@
 	if($this->hasGuide) {
 		$params .= "&guide=true";
 	}
+	if($this->sortBy) {
+		$params .= "&sort=".$this->sortBy;
+	}
 ?>
 <div id="item-pagination" style="text-align: right">
 	<!-- Previous page link -->

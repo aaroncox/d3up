@@ -19,6 +19,16 @@ class AdminController extends Epic_Controller_Action
 			$build->save();
 		}
 	}
+	public function fixBuildStatsAction() {
+		foreach(Epic_Mongo::db('build')->fetchAll() as $build) {
+			if($build->stats) {
+				foreach($build->stats as $k => $v) {
+					$build->stats->$k = floatVal($v);
+				}
+				$build->save();
+			}
+		}
+	}
 	public function resaveItemsAction() {
 		$query = array(
 			'rating' => array('$exists' => false)
