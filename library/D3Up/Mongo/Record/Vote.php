@@ -38,7 +38,7 @@ class D3Up_Mongo_Record_Vote extends Epic_Mongo_Document
 		$exists = Epic_Mongo::db('vote')->fetchOne($query);
 		if(!$exists) {
 			// Record Vote
-			echo "New Vote";
+			// echo "New Vote";
 			$vote = Epic_Mongo::newDoc('vote');
 			$vote->object = $doc;
 			$vote->who = $who;
@@ -47,24 +47,25 @@ class D3Up_Mongo_Record_Vote extends Epic_Mongo_Document
 			$vote->save();
 		} else {
 			if($exists->how == $how) {
-				echo "Removing Vote";
+				// echo "Removing Vote";
 				if($how == 'up') {
-					echo "Removing 1";
+					// echo "Removing 1";
 					$doc->votes--;					
 				} else {
-					echo "Adding 1";
+					// echo "Adding 1";
 					$doc->votes++;
 				}
 				$exists->delete();			
 				$doc->save();
+				// Leave
 				return;
 			} else {
 				echo "Swapping Vote";
 				if($how == 'up') {
-					echo "Removing 1";
+					// echo "Removing 1";
 					$doc->votes++;					
 				} else {
-					echo "Adding 1";
+					// echo "Adding 1";
 					$doc->votes--;
 				}
 				$exists->how = $how; 
@@ -72,10 +73,10 @@ class D3Up_Mongo_Record_Vote extends Epic_Mongo_Document
 			}
 		}
 		if($how == 'up') {
-			echo "Adding 1";
+			// echo "Adding 1";
 			$doc->votes++;					
 		} else {
-			echo "Removing 1";
+			// echo "Removing 1";
 			$doc->votes--;
 		}
 		$doc->save();

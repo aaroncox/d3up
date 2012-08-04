@@ -111,7 +111,7 @@ $(function() {
 			tooltip.empty().append(container);
 			var position = {
 				of: $this,
-				at: "right top",
+				at: "right bottom",
 				my: "left top",
 				offset: "0 10",
 				collision: "flip"
