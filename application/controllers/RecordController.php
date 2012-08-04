@@ -139,6 +139,9 @@ class RecordController extends Epic_Controller_Action
 			if($vote = $this->getRequest()->getParam('vote')) {
 				if($vote == "up" || $vote == "down") {
 					Epic_Mongo::db('vote')->vote($record, $profile, $vote);
+					if($this->_request->isXmlHttpRequest()) {
+						exit;
+					}
 				}
 			}
 		} else {

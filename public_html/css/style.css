@@ -215,7 +215,7 @@ ul#simulate-stats input,
 }
 #skill-display h3 {
 	margin: 0;
-	padding: 10px 0;
+	padding: 10px 0 0 10px;
 	color: #70B1D5;
 /*	float: left;*/
 }
@@ -361,7 +361,7 @@ ul#simulate-stats input,
 .d3up-table th {
 	color: #B18135;
 	background: #191919;
-	font-size: 1em;
+	font-size: 0.8em;
 	border-top: 1px solid #111;
 }
 .build-paginator, 

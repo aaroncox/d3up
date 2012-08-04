@@ -50,7 +50,7 @@ var activeActives = [];
 		</div>
 		<img id="button-upvote" src="/images/upvote.png" class="ui-state-disabled ui-corner-all" data-name="Build Voting	" data-tooltip="In order to record your vote, we require to to be logged in. Please login or create an account!">
 		<div class='item-stat inline-flow'>
-			<span class='value' id="vote-count" data-count="<?= $this->record->votes ?>"><?= $this->record->votes ?></span>
+			<span class='value' id="vote-count" data-count="<?= $this->record->votes ?: 0 ?>"><?= $this->record->votes ?: 0 ?></span>
 			<span class='stat'>Votes</span>
 		</div>
 		<img id="button-downvote" src="/images/downvote.png" class="ui-state-disabled ui-corner-all" data-name="Build Voting	" data-tooltip="In order to record your vote, we require to to be logged in. Please login or create an account!">
