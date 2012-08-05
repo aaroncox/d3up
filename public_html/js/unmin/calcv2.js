@@ -576,7 +576,7 @@ var buildCalculator = {
 			rendered['dps-speed'] = Math.floor(this.attrs['speed'] * 1024) / 1024;
 			var mathS = 1 + this.attrs[this.attrs.primary] * 0.01,
 					mathC = 1 + (this.attrs['critical-hit'] * 0.01) * (this.attrs['critical-hit-damage'] * 0.01),
-					mathR = rendered['dps-speed'] * (1 + atkSpeedInc),
+					mathR = rendered['dps-speed'] * (1 + atkSpeedInc + this.bonuses['plus-attack-speed']),
 					mathA = (mhMinDamage + mhMaxDamage) / 2 + (bnMinDamage + bnMaxDamage) / 2,
 					mathM = (1 + this.bonuses['plus-damage']);
 			rendered['dps'] = mathS * mathC * mathR * mathA * mathM;		
@@ -647,7 +647,7 @@ var buildCalculator = {
 			rendered['dps-speed'] = Math.floor(this.attrs['speed'] * 1024) / 1024;
 			var mathS = 1 + this.attrs[this.attrs.primary] * 0.01,
 					mathC = 1 + (this.attrs['critical-hit'] * 0.01) * (this.attrs['critical-hit-damage'] * 0.01),
-					mathR = rendered['dps-speed'] * (1 + atkSpeedInc),
+					mathR = rendered['dps-speed'] * (1 + atkSpeedInc + this.bonuses['plus-attack-speed']),
 					mathAl = (mhMinDamage + bnMinDamage),
 					mathAh = (mhMaxDamage + bnMaxDamage),
 					mathM = (1 + this.bonuses['plus-damage']);
@@ -684,6 +684,7 @@ var buildCalculator = {
 				_.each(v.effect, function(e,i) {
 					// console.log(e,i);
 					switch(i) {
+						case "plus-attack-speed":
 						case "plus-damage":
 						case "plus-armor":
 						case "plus-resist-all":
