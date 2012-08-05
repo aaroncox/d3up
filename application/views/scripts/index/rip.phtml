@@ -238,6 +238,7 @@
 						/pure energy forward, dealing (\d+)% weapon damage/,
 						/from the sky, causing (\d+)% weapon damage as Fire to all enemies it crashes into/,
 						/dealing (\d+)% weapon damage as Cold to all enemies in the area over 6 seconds./,
+						/3 consecutive explosions cascade off you, each causing (\d+)% weapon damage as Physical/,
 					],
 					effect: 'weapon-damage'
 				},
@@ -548,7 +549,6 @@
 						/Shoot 3 Poison Darts that deal (\d+)% weapon damage as Poison each/,
 						/Summon 3 Zombie Chargers that each deal (\d+)% weapon damage as Poison/,
 						/Fire 3 missiles that each deal (\d+)% weapon damage as Arcane./,
-						/3 consecutive explosions cascade off you, each causing (\d+)% weapon damage as Physical/
 					],
 					effect: 'weapon-damage',
 					add: 3,
@@ -591,7 +591,8 @@
 						/Summon a vengeful spirit that does 288% weapon damage as Arcane over (\d+) seconds./,
 						/Increases the duration of the swarm to (\d+) seconds./,
 						/Create a column of flame that spews fire at the closest enemy for 140% weapon damage as Fire over (\d+) seconds./,
-						/Increases the duration of Blizzard to deal 280% weapon damage as Cold over (\d+) seconds./
+						/Increases the duration of Blizzard to deal 280% weapon damage as Cold over (\d+) seconds./,
+						/(\d+) consecutive explosions cascade off you, each causing (\d+)% weapon damage as Physical/
 					],
 					effect: 'weapon-damage-for',
 					remove: 'weapon-damage-for'

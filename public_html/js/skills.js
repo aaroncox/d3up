@@ -383,6 +383,8 @@ var passives = {
 var activeSkills = {
 
 
+
+
 	'barbarian': {
 		'bash': {
 			name: 'Bash',
@@ -6175,7 +6177,8 @@ var activeSkills = {
 			effect: {
 				'cost-arcane-power': 20,
 				'cooldown': 6,
-				'weapon-damage': 291,
+				'weapon-damage': 322,
+				'weapon-damage-for': 3,
 			},
 		},
 		'magic-weapon': {

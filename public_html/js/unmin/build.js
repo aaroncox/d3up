@@ -396,6 +396,12 @@ $(function() {
 			var target = containerSkills.find("li[data-id=\"" + k + "\"] ul.details").empty();
 			$.each(v, function(s,i) {
 				switch(s) {
+					case "per-tick":
+						target.append(statLabel("DPS", i, 'round'));
+						break;
+					case "total-damage":
+						target.append(statLabel("Total Damage per Cast", i, 'round'));
+						break;
 					case "average-hit":
 						target.append(statLabel("Average Hit", i));
 						break;

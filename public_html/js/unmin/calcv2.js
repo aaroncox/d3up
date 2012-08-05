@@ -658,8 +658,8 @@ var buildCalculator = {
 		hit = Math.round(((dLow + dHigh) / 2 ) * mathC * 100)/100;
 		if(duration) {
 			// dps = Math.round(((dLow + dHigh) / 2 ) * mathC * 100)/100;
-			rendered['dps'] = Math.round(dps / duration * 100) / 100;
-			rendered['average-hit'] = Math.round(hit / duration * 100) / 100;
+			rendered['per-tick'] = Math.round(hit / duration * 100) / 100;
+			rendered['total-damage'] = rendered['per-tick'] * duration;
 			rendered['damage-tick'] = Math.round(dLow / duration * 100)/100 + " - " + Math.round(dHigh / duration * 100)/100;
 			rendered['critical-hit-tick'] = Math.round(dLow / duration * (1 + (this.attrs['critical-hit-damage'] * 0.01)) * 10) / 10 + " - " + Math.round(dHigh / duration * (1 + (this.attrs['critical-hit-damage'] * 0.01)) * 10) / 10;
 		} else {
@@ -684,6 +684,7 @@ var buildCalculator = {
 				_.each(v.effect, function(e,i) {
 					// console.log(e,i);
 					switch(i) {
+						case "plus-damage":
 						case "plus-armor":
 						case "plus-resist-all":
 						case "stack":
