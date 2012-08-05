@@ -218,9 +218,6 @@ var passives = {
 		},
 		'cold-blooded': {
 			'desc': 'Cold damage dealt to chilled and frozen targets is increased by <span class="skill-highlight">20%</span>.',
-			'effect': {
-				'plus-damage': 0.2,
-			}
 		},
 		'conflaguration': {
 			'desc': 'Fire damage dealt to enemies applies a burning effect, increasing all damage done to them by <span class="skill-highlight">10%</span> for 3 seconds.'
