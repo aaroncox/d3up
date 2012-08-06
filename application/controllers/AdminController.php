@@ -29,6 +29,19 @@ class AdminController extends Epic_Controller_Action
 			}
 		}
 	}
+	public function removeBadFieldsAction() {
+		$slots = Epic_Mongo::db('gearset')->getSlots();
+		foreach(Epic_Mongo::db('build')->fetchAll() as $build) {
+			foreach($build->equipment as $slot => $item) {
+				if(!in_array($slot, $slots)) {
+					echo "Bad: ". $slot;
+					unset($build->equipment->$slot);
+				}
+ 				// var_dump($slot);
+			}
+			$build->save();
+		}
+	}
 	public function resaveItemsAction() {
 		$query = array(
 			'rating' => array('$exists' => false)

@@ -159,6 +159,7 @@ class D3Up_Form_Record_Item extends Epic_Form
 
 	public function setSlot($slot) {
 		$this->_slot = $slot;
+		if(!$slot) return null;
 		$acceptable = Epic_Mongo::db('gearset')->getAcceptableTypes($slot);
 		$this->itemType->setValue(array_pop($acceptable));
 	}

@@ -100,9 +100,10 @@ class RecordController extends Epic_Controller_Action
 				}
 				$new = Epic_Mongo::newDoc('build');
 				$export = $record->export();
-				unset($export['id'], $export['_id'], $export['_createdBy'], $export['equipment']);
+				unset($export['id'], $export['_id'], $export['_createdBy'], $export['equipment'], $export['views'], $export['votes']);
 				$new->setFromArray($export);			
-				foreach($record->equipment as $slot => $item) {
+				foreach(Epic_Mongo::db('gearset')->getSlots() as $slot) {
+					$item = $record->equipment->$slot;
 					$newItem = Epic_Mongo::newDoc('item');
 					$exportItem = $item->export();
 					unset($exportItem['id'], $exportItem['_id'], $exportItem['_createdBy'], $exportItem['_original'], $exportItem['_type']);
@@ -117,6 +118,7 @@ class RecordController extends Epic_Controller_Action
 					}
 					// $newItem->_original = $item;
 					$newItem->_createdBy = $profile;
+					// var_dump($newItem); exit;
 					$newItem->save();
 					$new->equipment->$slot = $newItem;
 				}

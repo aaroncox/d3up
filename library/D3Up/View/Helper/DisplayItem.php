@@ -19,7 +19,7 @@ class D3Up_View_Helper_DisplayItem extends Zend_View_Helper_Abstract
 		'pants' => 'Pants',
 		'mighty-belt' => 'Mighty Belt',
 		'ring' => 'Ring',
-		'shoulder' => 'Shoulder',
+		'shoulders' => 'Shoulders',
 		'spirit-stone' => 'Spirit Stone',
 		'voodoo-mask' => 'Voodoo Mask',
 		'wizard-hat' => 'Wizard Hat',

@@ -47,6 +47,7 @@ class D3Up_Mongo_Record_GearSet extends Epic_Mongo_Document
 	}
 	
 	public function getAcceptableTypes($type) {
+		if(!$type) return null;
 		return $this->_gearMap[$type];
 	}
 } // END class D3Up_Mongo_GearSet extends Epic_Mongo_Document
