@@ -118,7 +118,7 @@ class D3Up_Tool_Crawler
 		'thorns' => 'Melee attackers take [v] damage per hit',
 		// Offensive Stats
 		'attack-speed' => 'Attack speed increased by [v]%',
-		'attack-speed' => 'Increases attack speed by [v]%',
+		'attack-speed~2' => 'Increases attack speed by [v]%',
 		'critical-hit' => 'Critical Hit Chance increased by [v]%',
 		'critical-hit-damage' => 'Critical Hit Damage increased by [v]%',
 		'plus-damage' => '+[v]% Damage',
@@ -366,6 +366,8 @@ class D3Up_Tool_Crawler
 				foreach($attrs as $attr) {
 					// var_dump();
 					foreach(static::$_attrMap as $stat => $regex) {
+						$parts = explode("~", $stat);
+						$stat = $parts[0];
 						$text = str_replace("–", "-", $attr->plaintext);
 						$regex = "/".str_replace(array('+', '[v]'), array('\+','(\d+(\.\d+)?)'), $regex)."/i";
 						// var_dump($text, $regex);
