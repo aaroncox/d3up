@@ -4,8 +4,8 @@ class Bootstrap extends Epic_Application_Bootstrap
 {
   public function _initApplication()
   {
-		ini_set('session.gc_maxlifetime', 2592000);
-	  ini_set('session.cookie_lifetime', 25920000);
+		// ini_set('session.gc_maxlifetime', 2592000);
+		// 	  ini_set('session.cookie_lifetime', 25920000);
     $this->bootstrap(array('mongo','view')); 
 		if(APPLICATION_ENV != "production") {
 			$logger = new Zend_Log();
