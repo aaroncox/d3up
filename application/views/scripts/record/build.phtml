@@ -73,9 +73,8 @@ var activeActives = [];
 		<!-- <li><a href="#">Comments</a></li> -->
 	</ul>
 	<div id="build-skills">
-		<div <?= (!$myBuild) ? "style='display: none'" : ""?>>
-			<select id="passives" multiple="multiple" name="passives[]" style="width: 450px" data-placeholder="Choose the Passives you use"></select>
-			<select id="actives" multiple="multiple" name="actives[]" style="width: 450px" data-placeholder="Choose the Skills you use"></select>
+		<a <?= (!$myBuild) ? "style='display: none'" : ""?>  class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only skill-change"><span class="ui-button-text">Change My Skills</span></a>
+		<div id="skill-chooser">
 		</div>
 		<ul id='build-active-skills'></ul>
 		<ul id='build-passive-skills'></ul>

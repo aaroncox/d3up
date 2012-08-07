@@ -956,3 +956,12 @@ tr.compared > td:first-child {
 .item-preview ul.attrs .minmax {
 	width: 110px;
 }
+.skill-label {
+	text-align: right;
+	margin-right: 10px;
+	width: 100px;
+	display: inline-block;
+}
+#skill-chooser button {
+	margin-left: 120px;
+}

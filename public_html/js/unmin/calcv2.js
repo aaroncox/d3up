@@ -180,7 +180,7 @@ var buildCalculator = {
 	},
 	applyPassives: function() {
 		_.each(this.passiveSkills, function(v,k) {
-			if(typeof passives[this.class][v]['effect'] != "undefined") {
+			if(passives[this.class][v] && typeof passives[this.class][v]['effect'] != "undefined") {
 				// console.log(k,v);
 				_.each(passives[this.class][v]['effect'], function(value, effect) {
 					// console.log(value, effect);

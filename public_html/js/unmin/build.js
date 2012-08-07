@@ -46,9 +46,9 @@ $(function() {
 			heroClass = $("#character").data('class'),
 			isOwner = $("#character").data("owner"),
 			skillDisplay = $("#skill-display"),
-			activeSelect = $("#actives"),
+			// activeSelect = $("#actives"),
 			activeDisplay = $("#active-display"),
-			passiveSelect = $("#passives"),
+			// passiveSelect = $("#passives"),
 			passiveDisplay = $("#passive-display"),	
 			activeActivesData = {},		
 			calc = Object.create(buildCalculator);
@@ -63,137 +63,213 @@ $(function() {
 	calc.setPassives(activePassives);
 	// Get the Calculated Stats
 	var stats = calc.run();
+	
+	
+	var activeSelects = [1,2,3,4,5,6],
+			passiveSelects = [1,2,3],
+			choosers = $("#skill-chooser");
+	$.each(activeSelects, function(k, v) {
+		var select = $("<select data-index='"+(v - 1)+"' data-placeholder='Select a Skill...' name='activeSelect"+v+"'>"),
+				label = $("<span class='skill-label'>").html("Skill #" + v);
+		select.append("<option value=''>None</option>");
+		$.each(activeSkills[heroClass], function(slug, data) {
+			var option = $("<option value='" + slug + "'>").html(data.name),
+					idx = v - 1;
+			if(activeActives[idx] && activeActives[idx] == slug) {
+				option.attr("selected", "selected");
+				activeActivesData[slug] = activeSkills[heroClass][slug];	
+			}
+			select.append(option);
+		});
+		choosers.append($("<p>").append(label, select));
+		select.chosen({
+			allow_single_deselect: true
+		});
+		select.bind('change', function() {
+			var slug = $(this).val();
+			activeActives[$(this).data("index")] = slug;
+			activeActivesData[slug] = activeSkills[heroClass][slug];	
+			displaySkills();
+		});
+	});
+	$.each(passiveSelects, function(k, v) {
+		var select = $("<select data-index='"+(v - 1)+"' data-placeholder='Select a Skill...' name='passiveSelect"+v+"'>"),
+				label = $("<span class='skill-label'>").html("Passive #" + v);
+		select.append("<option value=''>None</option>");
+		$.each(passives[heroClass], function(slug, data) {
+			var option = $("<option value='" + slug + "'>").html(slug.replace("-", " ")),
+					idx = v - 1;
+			if(activePassives[idx] && activePassives[idx] == slug) {
+				option.attr("selected", "selected");
+			}
+			select.append(option);
+		});
+		choosers.append($("<p>").append(label, select));
+		select.chosen({
+			allow_single_deselect: true
+		});
+		select.bind('change', function() {
+			activePassives[$(this).data("index")] = $(this).val();
+			displaySkills();
+		});
+	});
+	var saveButton = $("<button>").html("Save Skills");
+	saveButton.click(function() {
+		$.ajax({
+			data: {
+				a: 'skills',
+				actives: activeActives,
+				passives: activePassives,
+				stats: stats,
+				success: function() {
+					$($("<div style='padding: 20px'/>").html("Saved!")).dialog({
+						modal: true,
+						buttons: {
+							Ok: function() {
+								$( this ).dialog( "close" );
+							}
+						}
+					});
+				}
+			}
+		});
+	});
+	choosers.hide();
+	choosers.append(saveButton);
+	$(".skill-change").click(function() {
+		choosers.show();
+	});
 	// Debugging
 	// console.log(stats);
-	if(activeSkills && activeSkills[heroClass]) {
-		var idx = 0;
-		$.each(activeSkills[heroClass], function(k,v) {
-			var selected = false;
-			activeSelect.append($("<option value='"+k+"' rel='"+idx+"'/>").html(v.name));			
-			idx++;
-		});
-	};
-	// consol
-	activeSelect.chosen({
-		placeholder: 'Which skills/abilities do you use?',
-		allowClear: true
-	});
-	$.each(activeActives, function(key, active) {
-		activeSelect.find("option[value='" + active + "']").attr("selected", "selected");
-		// console.log(key, active);
-		// if(k == active) {
-		// 	selected = 'selected="selected"';
-		// }
-	}); 			
-	activeSelect.trigger("liszt:updated");
-	
-	if(passives && passives[heroClass]) {
-		$.each(passives[heroClass], function(k,v) {
-			var selected = '';
-			if(typeof activePassives != "undefined") {
-				$.each(activePassives, function(key,active) {
-					if(k == active) {
-						selected = 'selected="selected"';
-					}
-				}); 			
-			}
-			passiveSelect.append($("<option value='"+k+"' "+selected+"/>").html(k.replace(/\-/g," ").capitalize()));			
-		});		
-	};
-	passiveSelect.chosen({
-		placeholder: 'Which passives skills are you using?',
-		allowClear: true
-	});
-
-	activeSelect.bind('change', function() {
-		var select = $(this),
-				skills = [];
-		activeActivesData = {};
-		$("#" + $(this).attr("id") + "_chzn ul li a").each(function() {
-			skills.push(select.find("option[rel=" + $(this).attr("rel") + "]").attr("value"));
-		});
-		if(skills.length >= 0) {
-			activeDisplay.empty();
-			$("#build-active-skills").empty();
-			$.each(skills, function(k,v) {
-				skillDisplay.show();
-				if(k >= 6) {
-					return false;
-				}
-				var skill = activeSkills[heroClass][v],
-						cleaned = v.split("~"),
-						icon = "/images/icons/" + heroClass + "-" + cleaned[0] + ".png";
-						img = $("<img/>").attr("src", icon);
-				img.attr('data-name', skill.name);
-				img.attr('title', skill.name);
-				if(skill.rune) {
-					img.attr('data-tooltip', skill.desc.replace(/  /, "<br/><br/>") + "<br/><br/>" + skill.rune);
-				} else { 
-					img.attr('data-tooltip', skill.desc);
-				}
-				img.bindSkilltip();
-				activeDisplay.append($("<li/>").html(img));			
-				activeActivesData[v] = skill;	
-			});	
-		}
-		recalc();
-		if(!activeActives) {
-			activeActives = [];
-		}
-		// console.log(skills);
-		if(!skills || activeActives.length != skills.length) {
-			if(isOwner && skills.length <= 6) {
-				setTimeout(function() {
-					$.ajax({
-						data: {
-							a: 'active-skills',
-							actives: skills,
-							stats: stats
-						}
-					});												
-				}, 0);
-			}
-		}
-		activeActives = skills;
-		displaySkills();	
-	});
-	passiveSelect.bind('change', function() {
-		var skills = ($(this).val()) ? $(this).val() : [];
-		if(skills.length > 0) {
-			passiveDisplay.empty();
-			$.each(skills, function(k,v) {
-				skillDisplay.show();
-				var skill = passives[heroClass][v],
-						icon = "/images/icons/" + heroClass + "-" + v + ".png";
-						img = $("<img/>").attr("src", icon);
-				img.attr('data-name', v.replace(/\-/g," ").capitalize());
-				img.attr('title', v.replace(/\-/g," ").capitalize());
-				img.attr('data-tooltip', skill.desc);
-				img.bindSkilltip();
-				passiveDisplay.append($("<li/>").html(img));
-			});
-			recalc();			
-		}
-		if(!activePassives) {
-			activePassives = [];
-		}
-		if(!skills || activePassives.length != skills.length) {
-			if(isOwner && skills.length <= 3) {
-				setTimeout(function() {
-					$.ajax({
-						data: {
-							a: 'passive-skills',
-							passives: skills, 
-							stats: stats
-						}
-					});												
-				}, 0);
-			}
-		}
-		activePassives = $(this).val();		
-	});
-	activeSelect.trigger('change');
-	passiveSelect.trigger('change');
+	// if(activeSkills && activeSkills[heroClass]) {
+	// 	var idx = 0;
+	// 	$.each(activeSkills[heroClass], function(k,v) {
+	// 		var selected = false;
+	// 		activeSelect.append($("<option value='"+k+"' rel='"+idx+"'/>").html(v.name));			
+	// 		idx++;
+	// 	});
+	// };
+	// // consol
+	// activeSelect.chosen({
+	// 	placeholder: 'Which skills/abilities do you use?',
+	// 	allowClear: true
+	// });
+	// $.each(activeActives, function(key, active) {
+	// 	activeSelect.find("option[value='" + active + "']").attr("selected", "selected");
+	// 	// console.log(key, active);
+	// 	// if(k == active) {
+	// 	// 	selected = 'selected="selected"';
+	// 	// }
+	// }); 			
+	// activeSelect.trigger("liszt:updated");
+	// 
+	// if(passives && passives[heroClass]) {
+	// 	$.each(passives[heroClass], function(k,v) {
+	// 		var selected = '';
+	// 		if(typeof activePassives != "undefined") {
+	// 			$.each(activePassives, function(key,active) {
+	// 				if(k == active) {
+	// 					selected = 'selected="selected"';
+	// 				}
+	// 			}); 			
+	// 		}
+	// 		passiveSelect.append($("<option value='"+k+"' "+selected+"/>").html(k.replace(/\-/g," ").capitalize()));			
+	// 	});		
+	// };
+	// passiveSelect.chosen({
+	// 	placeholder: 'Which passives skills are you using?',
+	// 	allowClear: true
+	// });
+	// 
+	// activeSelect.bind('change', function() {
+	// 	var select = $(this),
+	// 			skills = [];
+	// 	activeActivesData = {};
+	// 	$("#" + $(this).attr("id") + "_chzn ul li a").each(function() {
+	// 		skills.push(select.find("option[rel=" + $(this).attr("rel") + "]").attr("value"));
+	// 	});
+	// 	if(skills.length >= 0) {
+	// 		activeDisplay.empty();
+	// 		$("#build-active-skills").empty();
+	// 		$.each(skills, function(k,v) {
+	// 			skillDisplay.show();
+	// 			if(k >= 6) {
+	// 				return false;
+	// 			}
+	// 			var skill = activeSkills[heroClass][v],
+	// 					cleaned = v.split("~"),
+	// 					icon = "/images/icons/" + heroClass + "-" + cleaned[0] + ".png";
+	// 					img = $("<img/>").attr("src", icon);
+	// 			img.attr('data-name', skill.name);
+	// 			img.attr('title', skill.name);
+	// 			if(skill.rune) {
+	// 				img.attr('data-tooltip', skill.desc.replace(/  /, "<br/><br/>") + "<br/><br/>" + skill.rune);
+	// 			} else { 
+	// 				img.attr('data-tooltip', skill.desc);
+	// 			}
+	// 			img.bindSkilltip();
+	// 			activeDisplay.append($("<li/>").html(img));			
+	// 			
+	// 		});	
+	// 	}
+	// 	recalc();
+	// 	if(!activeActives) {
+	// 		activeActives = [];
+	// 	}
+	// 	// console.log(skills);
+	// 	if(!skills || activeActives.length != skills.length) {
+	// 		if(isOwner && skills.length <= 6) {
+	// 			setTimeout(function() {
+	// 				$.ajax({
+	// 					data: {
+	// 						a: 'active-skills',
+	// 						actives: skills,
+	// 						stats: stats
+	// 					}
+	// 				});												
+	// 			}, 0);
+	// 		}
+	// 	}
+	// 	activeActives = skills;
+	// 	displaySkills();	
+	// });
+	// passiveSelect.bind('change', function() {
+	// 	var skills = ($(this).val()) ? $(this).val() : [];
+	// 	if(skills.length > 0) {
+	// 		passiveDisplay.empty();
+	// 		$.each(skills, function(k,v) {
+	// 			skillDisplay.show();
+	// 			var skill = passives[heroClass][v],
+	// 					icon = "/images/icons/" + heroClass + "-" + v + ".png";
+	// 					img = $("<img/>").attr("src", icon);
+	// 			img.attr('data-name', v.replace(/\-/g," ").capitalize());
+	// 			img.attr('title', v.replace(/\-/g," ").capitalize());
+	// 			img.attr('data-tooltip', skill.desc);
+	// 			img.bindSkilltip();
+	// 			passiveDisplay.append($("<li/>").html(img));
+	// 		});
+	// 		recalc();			
+	// 	}
+	// 	if(!activePassives) {
+	// 		activePassives = [];
+	// 	}
+	// 	if(!skills || activePassives.length != skills.length) {
+	// 		if(isOwner && skills.length <= 3) {
+	// 			setTimeout(function() {
+	// 				$.ajax({
+	// 					data: {
+	// 						a: 'passive-skills',
+	// 						passives: skills, 
+	// 						stats: stats
+	// 					}
+	// 				});												
+	// 			}, 0);
+	// 		}
+	// 	}
+	// 	activePassives = $(this).val();		
+	// });
+	// activeSelect.trigger('change');
+	// passiveSelect.trigger('change');
 	selectVs.bind('change', function() {
 		calc.setVsLevel($(this).val());
 		recalc();
@@ -208,10 +284,9 @@ $(function() {
 				enabledSkills[$(this).data('skill')] = activeActivesData[$(this).data('skill')];
 			}
 		});
-		// console.log(activeSkills);
 		calc.setActives(activeSkills);
 		calc.setEnabledSkills(enabledSkills);
-		calc.setPassives(passiveSelect.val());
+		calc.setPassives(activePassives);
 		calc.setClass($("#character").data('class'));
 		calc.setGear(".equipped a");
 		stats = calc.run();
@@ -225,38 +300,57 @@ $(function() {
 	displaySkills();
 	function displaySkills() {
 		var target = $("#build-active-skills").empty(),
-				skills = activeSelect.val();
+				skills = activeActives,
+				passiveSkills = activePassives;
+		if(passiveSkills.length) {
+			passiveDisplay.empty();			
+		}
+		if(skills.length) {
+			activeDisplay.empty();			
+		}
+		_.each(passiveSkills, function(v) {
+			var skill = passives[heroClass][v],
+					icon = "/images/icons/" + heroClass + "-" + v + ".png";
+					img = $("<img/>").attr("src", icon);
+			img.attr('data-name', v.replace(/\-/g," ").capitalize());
+			img.attr('title', v.replace(/\-/g," ").capitalize());
+			img.attr('data-tooltip', skill.desc);
+			img.bindSkilltip();
+			passiveDisplay.append($("<li/>").html(img));
+		});
 		_.each(skills, function(skill) {
-			var data = activeSkills[heroClass][skill],
-					li = $("<li class='skill-calc-row'>").attr("data-json", JSON.stringify(data.effect)).attr("data-id", skill).attr("id", "skill-" + skill),
-					cleaned = skill.split("~"),
-					icon = $("<img src='/images/icons/" + heroClass + "-" + cleaned[0] + ".png'>"),
-					h3 = $("<h3>").html(data.name),
-					details = $("<ul class='details'>"),
-					desc = $("<p><span class='stat-helper'>Description</span>: </p>").append(data.desc),
-					rune = $("<p>"),
-					control = $("<div class='control'></div>");
-			icon.attr('data-tooltip', data.desc);
-			icon.attr('data-name', data.name);
-			if(data.rune) {
-				icon.attr('data-tooltip', data.desc.replace(/  /, "<br/><br/>") + "<br/><br/>" + data.rune);
-				var rune = $("<p>").html("<span class='stat-helper'>Rune Bonus</span>: " + data.rune);
+			if(skill != "undefined") {
+				var data = activeSkills[heroClass][skill],
+						li = $("<li class='skill-calc-row'>").attr("data-json", JSON.stringify(data.effect)).attr("data-id", skill).attr("id", "skill-" + skill),
+						cleaned = skill.split("~"),
+						icon = $("<img src='/images/icons/" + heroClass + "-" + cleaned[0] + ".png'>"),
+						h3 = $("<h3>").html(data.name),
+						details = $("<ul class='details'>"),
+						desc = $("<p><span class='stat-helper'>Description</span>: </p>").append(data.desc),
+						rune = $("<p>"),
+						control = $("<div class='control'></div>");
+				icon.attr('data-tooltip', data.desc);
+				icon.attr('data-name', data.name);
+				if(data.rune) {
+					icon.attr('data-tooltip', data.desc.replace(/  /, "<br/><br/>") + "<br/><br/>" + data.rune);
+					var rune = $("<p>").html("<span class='stat-helper'>Rune Bonus</span>: " + data.rune);
+				}
+				icon.bindSkilltip();
+				if(data.effect) {
+					// console.log("effect ", data.effect);
+					var checkbox = $("<input type='checkbox' class='skill-activate' data-skill='" + skill + "'>");
+					checkbox.click(function() {
+						recalc();
+					});
+					control.append("Activate ", checkbox).hide();					
+				}
+				// console.log(details);
+				activeDisplay.append($("<li>").append(icon.clone()));									
+				li.append(icon, control, h3, details, desc, rune);
+				target.append(li);
+				// var damage = calc.calcSkillDamage(data);
+				// console.log(data);				
 			}
-			icon.bindSkilltip();
-			if(data.effect) {
-				// console.log("effect ", data.effect);
-				var checkbox = $("<input type='checkbox' class='skill-activate' data-skill='" + skill + "'>");
-				checkbox.click(function() {
-					recalc();
-				});
-				control.append("Activate ", checkbox).hide();					
-			}
-			// console.log(details);
-			li.append(icon, control, h3, details, desc, rune);
-			target.append(li);
-			// var damage = calc.calcSkillDamage(data);
-			// console.log(data);
-
 		});
 		recalc();
 		// console.log(activeSelect.val());
