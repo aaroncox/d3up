@@ -1,0 +1,52 @@
+<h2 class="table-header">Battle.net Profile Crawler</h2>
+<? if($this->status): ?>
+	<div class="ui-widget ui-corner-all ui-widget-content ui-helper-clearfix" style="padding: 0 20px">
+		<h3>Crawl Results</h3>
+		<p>We've crawled your Diablo 3 Profile, using the following URL:</p>
+		<p><a href="<?= $this->record->profileUrl ?>"><?= $this->record->profileUrl ?></a></p>
+		<p>This process is EXTREMELY experimental still, please report any bugs using the feedback tab on the side or you can email me directly at <a href="mailto:aaron.cox@greymass.com">aaron.cox@greymass.com</a>. Please include a link to your D3Up build and what isn't working correctly so I can check it out from there!</p>
+		<table class='d3up-table'>
+			<tr>
+				<th>Slot</th>
+				<th>Item Name</th>
+				<th>Results</th>
+			</tr>
+		<? foreach($this->status as $status): ?>
+			<tr>
+				<td><?= $status['slot'] ?></td>
+				<td><?= $this->itemLink($status['item']) ?></td>
+				<td>
+					<? if($status['result'] == "new"): ?>
+						Created New Item
+					<? endif ?>
+					<? if($status['result'] == 'existed'): ?>
+						Already Existed, Equipped
+					<? endif ?>
+				</td>
+			</tr>
+		<? endforeach ?>
+		</table>
+	</div>
+<? else: ?>
+	<div class="ui-widget ui-corner-all ui-widget-content ui-helper-clearfix" style="padding: 20px">
+		<h2 style="color: #00C800">Are you sure you want to make a copy from Battle.net?</h2>
+		<p style="font-size: 1.2em; line-height: 1.6em">
+			Please take a moment to ensure that this link goes to your Character:
+		</p>
+		<p style="font-size: 1.2em; line-height: 1.6em">
+			<a href="<?= $this->record->profileUrl ?>"><?= $this->record->profileUrl ?></a>
+		</p>
+		<p style="font-size: 1.2em; line-height: 1.6em">
+			You can change the link to your character profile by visiting the <a href="/b/<?= $this->record->id ?>/edit">Edit Build</a> page.
+		</p>
+		<p style="font-size: 1.2em; line-height: 1.6em">
+			Copying your profile from Battle.net will equip all of the gear that currently shows on your Battle.net profile. Your old gear will still exist in the database, but your current gear will all change to reflect whatever is showing currently on your profile.
+		</p>
+		<p>
+			Please confirm your decision:
+		</p>
+		<p>
+			<a href="?confirm=true" class='ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only' style="padding: 5px; width: 450px">Yes, Copy my Profile.</a>
+		</p>
+	</div>
+<? endif ?>

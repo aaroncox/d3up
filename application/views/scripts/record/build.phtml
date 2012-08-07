@@ -23,6 +23,9 @@ var activeActives = [];
 <? if($profile && $this->record->_createdBy): ?>
 <div class="controls">
 	<? if($profile->createReference() == $this->record->_createdBy->createReference()): ?>
+		<? if($this->record->profileUrl): ?>
+			<a href="/b/<?= $this->record->id ?>/crawl" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only gear-change"><span class="ui-button-text">Copy from Battle.net</span></a>			
+		<? endif ?>
 		<a href="/b/<?= $this->record->id ?>/edit" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only gear-change"><span class="ui-button-text">Edit</span></a>			
 	<? else: ?>
 		<a href="/b/<?= $this->record->id ?>/copy" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only gear-change"><span class="ui-button-text">Copy this Build</span></a>

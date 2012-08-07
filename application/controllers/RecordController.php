@@ -242,4 +242,10 @@ class RecordController extends Epic_Controller_Action
 		$record = $this->getRecord();
 		
 	}
+	public function crawlAction() {
+		$record = $this->getRecord();
+		if($confirm = $this->getRequest()->getParam("confirm")) {			
+			$this->view->status = D3Up_Tool_Crawler::getInstance()->crawl($record);
+		}
+	}
 } // END class RecordController extends Epic_Controller_Action
