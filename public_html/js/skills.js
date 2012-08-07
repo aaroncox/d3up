@@ -217,7 +217,7 @@ var passives = {
 			'desc': 'Whenever you suffer more than <span class="skill-highlight">15%</span> of your Life in a single hit, the cooldowns on Mirror Image and Teleport are automatically reset.'
 		},
 		'cold-blooded': {
-			'desc': 'Cold damage dealt to chilled and frozen targets is increased by <span class="skill-highlight">20%</span>.'
+			'desc': 'Cold damage dealt to chilled and frozen targets is increased by <span class="skill-highlight">20%</span>.',
 		},
 		'conflaguration': {
 			'desc': 'Fire damage dealt to enemies applies a burning effect, increasing all damage done to them by <span class="skill-highlight">10%</span> for 3 seconds.'
@@ -6933,6 +6933,12 @@ td['fire-damage'] = '+VVV Fire Damage';
 td['holy-damage'] = '+VVV Holy Damage';
 td['lightning-damage'] = '+VVV Lightning Damage';
 td['poison-damage'] = '+VVV Poison Damage';
+td['plus-arcane-damage'] = '+VVV% Arcane Damage';
+td['plus-cold-damage'] = '+VVV% Cold Damage';
+td['plus-fire-damage'] = '+VVV% Fire Damage';
+td['plus-holy-damage'] = '+VVV% Holy Damage';
+td['plus-lightning-damage'] = '+VVV% Lightning Damage';
+td['plus-poison-damage'] = '+VVV% Poison Damage';
 td['elite-damage'] = 'Increases Damage against Elites by VVV%';
 td['chance-bleed'] = 'VVV% chance to inflict Bleed for VVV damage over 5 seconds';
 td['chance-blind'] = 'VVV% chance to Blind on Hit';
@@ -7079,3 +7085,207 @@ var gems = {
 };
 
 var gemEffect = {"chipped_amethyst":["Chipped Amethyst",["plus-life",5],["life-hit",2],["vitality",6]],"chipped_emerald":["Chipped Emerald",["plus-gold-find",5],["critical-hit-damage",10],["dexterity",6]],"chipped_ruby":["Chipped Ruby",["plus-experience-percent",5],["damage","2-4"],["strength",6]],"chipped_topaz":["Chipped Topaz",["plus-magic-find",5],["thorns",2],["intelligence",6]],"flawed_amethyst":["Flawed Amethyst",["plus-life",6],["life-hit",3],["vitality",10]],"flawed_emerald":["Flawed Emerald",["plus-gold-find",7],["critical-hit-damage",15],["dexterity",10]],"flawed_ruby":["Flawed Ruby",["plus-experience-percent",7],["damage","4-8"],["strength",10]],"flawed_topaz":["Flawed Topaz",["plus-magic-find",7],["thorns",3],["intelligence",10]],"amethyst":["Amethyst",["plus-life",7],["life-hit",6],["vitality",14]],"emerald":["Emerald",["plus-gold-find",9],["critical-hit-damage",20],["dexterity",14]],"ruby":["Ruby",["plus-experience-percent",9],["damage","8-16"],["strength",14]],"topaz":["Topaz",["plus-magic-find",9],["thorns",6],["intelligence",14]],"flawless_amethyst":["Flawless Amethyst",["plus-life",8],["life-hit",10],["vitality",18]],"flawless_emerald":["Flawless Emerald",["plus-gold-find",11],["critical-hit-damage",25],["dexterity",18]],"flawless_ruby":["Flawless Ruby",["plus-experience-percent",11],["damage","10-20"],["strength",18]],"flawless_topaz":["Flawless Topaz",["plus-magic-find",11],["thorns",10],["intelligence",18]],"perfect_amethyst":["Perfect Amethyst",["plus-life",9],["life-hit",15],["vitality",22]],"perfect_emerald":["Perfect Emerald",["plus-gold-find",13],["critical-hit-damage",30],["dexterity",22]],"perfect_ruby":["Perfect Ruby",["plus-experience-percent",13],["damage","11-22"],["strength",22]],"perfect_topaz":["Perfect Topaz",["plus-magic-find",13],["thorns",15],["intelligence",22]],"radiant_amethyst":["Radiant Amethyst",["plus-life",10],["life-hit",25],["vitality",26]],"radiant_emerald":["Radiant Emerald",["plus-gold-find",15],["critical-hit-damage",35],["dexterity",26]],"radiant_ruby":["Radiant Ruby",["plus-experience-percent",15],["damage","12-24"],["strength",26]],"radiant_topaz":["Radiant Topaz",["plus-magic-find",15],["thorns",30],["intelligence",26]],"square_amethyst":["Square Amethyst",["plus-life",11],["life-hit",35],["vitality",30]],"square_emerald":["Square Emerald",["plus-gold-find",17],["critical-hit-damage",40],["dexterity",30]],"square_ruby":["Square Ruby",["plus-experience-percent",17],["damage","13-26"],["strength",30]],"square_topaz":["Square Topaz",["plus-magic-find",17],["thorns",50],["intelligence",30]],"flawless_square_amethyst":["Flawless Square Amethyst",["plus-life",12],["life-hit",65],["vitality",34]],"flawless_square_emerald":["Flawless Square Emerald",["plus-gold-find",19],["critical-hit-damage",45],["dexterity",34]],"flawless_square_ruby":["Flawless Square Ruby",["plus-experience-percent",19],["damage","14-28"],["strength",34]],"flawless_square_topaz":["Flawless Square Topaz",["plus-magic-find",19],["thorns",100],["intelligence",34]],"perfect_square_amethyst":["Perfect Square Amethyst",["plus-life",13],["life-hit",105],["vitality",38]],"perfect_square_emerald":["Perfect Square Emerald",["plus-gold-find",21],["critical-hit-damage",50],["dexterity",38]],"perfect_square_ruby":["Perfect Square Ruby",["plus-experience-percent",21],["damage","15-30"],["strength",38]],"perfect_square_topaz":["Perfect Square Topaz",["plus-magic-find",21],["thorns",200],["intelligence",38]],"radiant_square_amethyst":["Radiant Square Amethyst",["plus-life",14],["life-hit",190],["vitality",42]],"radiant_square_emerald":["Radiant Square Emerald",["plus-gold-find",23],["critical-hit-damage",60],["dexterity",42]],"radiant_square_ruby":["Radiant Square Ruby",["plus-experience-percent",23],["damage","16-32"],["strength",42]],"radiant_square_topaz":["Radiant Square Topaz",["plus-magic-find",23],["thorns",350],["intelligence",42]],"star_amethyst":["Star Amethyst",["plus-life",15],["life-hit",300],["vitality",46]],"star_emerald":["Star Emerald",["plus-gold-find",25],["critical-hit-damage",70],["dexterity",46]],"star_ruby":["Star Ruby",["plus-experience-percent",25],["damage","17-34"],["strength",46]],"star_topaz":["Star Topaz",["plus-magic-find",25],["thorns",600],["intelligence",46]],"flawless_star_amethyst":["Flawless Star Amethyst",["plus-life",16],["life-hit",400],["vitality",50]],"flawless_star_emerald":["Flawless Star Emerald",["plus-gold-find",27],["critical-hit-damage",80],["dexterity",50]],"flawless_star_ruby":["Flawless Star Ruby",["plus-experience-percent",27],["damage","18-36"],["strength",50]],"flawless_star_topaz":["Flawless Star Topaz",["plus-magic-find",27],["thorns",900],["intelligence",50]],"perfect_star_amethyst":["Perfect Star Amethyst",["plus-life",17],["life-hit",500],["vitality",54]],"perfect_star_emerald":["Perfect Star Emerald",["plus-gold-find",29],["critical-hit-damage",90],["dexterity",54]],"perfect_star_ruby":["Perfect Star Ruby",["plus-experience-percent",29],["damage","19-38"],["strength",54]],"perfect_star_topaz":["Perfect Star Topaz",["plus-magic-find",29],["thorns",1250],["intelligence",54]],"radiant_star_amethyst":["Radiant Star Amethyst",["plus-life",18],["life-hit",600],["vitality",58]],"radiant_star_emerald":["Radiant Star Emerald",["plus-gold-find",31],["critical-hit-damage",100],["dexterity",58]],"radiant_star_ruby":["Radiant Star Ruby",["plus-experience-percent",31],["damage","20-40"],["strength",58]],"radiant_star_topaz":["Radiant Star Topaz",["plus-magic-find",31],["thorns",1800],["intelligence",58]]};
+
+var setBonuses = {
+	'cains-honor': {
+		name: 'Cain\'s Honor',
+		effect: {
+			2: {
+				'plus-attack-speed': 0.02
+			},
+			3: {
+				'plus-magic-find': 0.1
+			}
+		}
+	},
+	'aughilds-treasured': {
+		name: 'Aughild\'s Treasured',
+		effect: {
+			2: {
+				'melee-reduce': 0.02
+			},
+			3: {
+				'range-reduce': 0.02
+			}
+		}
+	},
+	'guardians-regalia': {
+		name: 'Guardian\'s Regalia',
+		effect: {
+			2: {
+				'vitality': 110,
+				'life-regen': 130,
+			}
+		}
+	},
+	'immortal-kings-will': {
+		name: 'Immortal Kings\' Will',
+		effect: {
+			2: {
+				'resist-all': 60
+			},
+			3: {
+				'melee-reduce': 0.02
+			},
+			5: {
+				'fury-max': 5,
+				'fury-spent-life': 5
+			}
+		}
+	},
+	'natalyas-wrath': {
+		name: 'Natalya\'s Wrath',
+		effect: {
+			2: {
+				'critical-hit': 0.07,
+			},
+			3: {
+				'dexterity': 130,
+			},
+			4: {
+				'discipline-regen': 2
+			}
+		}
+	},
+	'sages-wisdom': {
+		name: 'Sage\'s Wisdom',
+		effect: {
+			2: {
+				'strength': 35,
+				'dexterity': 35,
+				'intelligence': 35,
+				'vitality': 35,
+			}
+		}
+	},
+	'tal-rashas-wrappings': {
+		name: 'Tal Rasha\'s Wrappings',
+		effect: {
+			2: {
+				'plus-fire-damage': 0.03
+			},
+			3: {
+				'plus-lightning-damage': 0.03
+			},
+			4: {
+				'plus-cold-damage': 0.03
+			}
+		}
+	},
+	'borns-aegis': {
+		name: 'Born\'s Aegis',
+		effect: {
+			2: {
+				'plus-life': 0.02,
+				'plus-experience': 20
+			}
+		}
+	},
+	'ashearas-bindings': {
+		name: 'Asheara\'s Bindings',
+		effect: {
+			2: {
+				'resist-all': 30
+			},
+			3: {
+				'life-steal': 0.025,
+				'thorns': 300
+			}
+		}
+	},
+	'demons-carapace': {
+		name: 'Demon\'s Carapace',
+		effect: {
+			2: {
+				'thorns': 999
+			},
+			3: {
+				'chance-fear': 0.011
+			},
+			4: {
+				'demon-damage': 0.03
+			}
+		}
+	},
+	'blackthornes-regalia': {
+		name: 'Blackthorne\'s Regalia',
+		effect: {
+			2: {
+				'vitality': 100
+			}, 
+			3: {
+				'elite-damage': 0.02
+			},
+			4: {
+				'plus-gold-find': 0.05,
+				'plus-magic-find': 0.05
+			}
+		}
+	},
+	'innas-majesty': {
+		name: 'Inna\'s Majesty',
+		effect: {
+			2: {
+				'dexterity': 130
+			},
+			3: {
+				'spirit-regen': 0.0033
+			},
+			4: {
+				'spirit-spent-life': 10
+			}
+		}
+	},
+	'zunimassas-spirit': {
+		name: 'Zunimassa\'s Spirit',
+		effect: {
+			2: {
+				'intelligence': 130
+			},
+			3: {
+				'resist-all': 55
+			},
+			4: {
+				'mana-kill': 10
+			}
+		}
+	},
+	'captain-crimsons-attire': {
+		name: 'Captain Crimson\'s Attire',
+		effect: {
+			2: {
+				'life-regen': 20
+			},
+			3: {
+				'resist-all': 20
+			}
+		}
+	},
+	'endless-journey': {
+		name: 'Endless Journey',
+		effect: {
+			2: {
+				'vitality': 100,
+				'critical-hit-damage': 0.5
+			}
+		}
+	},
+	'legacy-of-nighttime-whispers': {
+		name: 'Legacy of Nighttime Whispers',
+		effect: {
+			2: {
+				'plus-gold-find': 0.15,
+				'plus-magic-find': 0.15
+			}
+		}
+	},
+	'hallowed-armaments': {
+		name: 'Hallowed Armaments',
+		effect: {
+			2: {
+				'resist-all': 40,
+				'plus-attack-speed': 0.05
+			}
+		}
+	}
+};

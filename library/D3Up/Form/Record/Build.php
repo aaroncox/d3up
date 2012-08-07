@@ -63,6 +63,7 @@ class D3Up_Form_Record_Build extends Epic_Form
 				array('StringLength', false, array(2, 50)),
 			),
 			'filters' => array('StripTags'),
+			'tabindex' => 10,
 		));
 		
 		$this->addElement("textarea", "description", array(
@@ -72,16 +73,19 @@ class D3Up_Form_Record_Build extends Epic_Form
 			),
 			'rows' => 5,
 			'filters' => array('StripTags'),			
+			'tabindex' => 15,
 		));
 		
 		$this->addElement("text", "profileUrl", array(
 			'label' => '(For Importing) Link to the Diablo 3 Profile this is based off of',
-			'description' => 'Example: http://us.battle.net/d3/en/profile/Jesta-1121/hero/1963090'
+			'description' => 'Example: http://us.battle.net/d3/en/profile/Jesta-1121/hero/1963090',
+			'tabindex' => 20,
 		));
 		
 		$this->addElement("checkbox", "private", array(
 			'label' => 'Private?',
-			'description' => 'Check this to make your build private'
+			'description' => 'Check this to make your build private',
+			'tabindex' => 25,
 		));
 
 		$this->addElement("select", "class", array(
@@ -94,7 +98,8 @@ class D3Up_Form_Record_Build extends Epic_Form
 				'witch-doctor' => 'Witch Doctor',
 				'monk' => 'Monk',
 				'demon-hunter' => 'Demon Hunter',
-			)
+			),
+			'tabindex' => 30,
 		));
 		
 		$this->setDefaults(array(

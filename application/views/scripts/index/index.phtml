@@ -168,3 +168,23 @@
 	</ul>
 	</div>
 </div>
+<script type="text/javascript">
+	$(function() {
+		$("td.skills img").each(function() {
+			var skill = activeSkills[$(this).attr("data-class")][$(this).attr("data-id")];
+			if(!skill) {
+				skill = passives[$(this).attr("data-class")][$(this).attr("data-id")];
+				skill.name = $(this).attr("data-id").replace(/\-/g," ").capitalize();
+			}
+			var tooltip = skill.desc;
+			if(skill) {
+				if(skill.rune) {
+					tooltip = tooltip + "<br/><br/>" + skill.rune;
+				}
+				$(this).attr("data-name", skill.name);
+				$(this).attr("data-tooltip", tooltip);
+				$(this).bindSkilltip();				
+			}
+		});
+	});
+</script>

@@ -23,8 +23,15 @@ class D3Up_View_Helper_ItemStat extends D3Up_View_Helper_DisplayItem
 		'plus-gold-find' => 'gold-find',
 	);
 	public function itemStat($stat, $value, $per = false) {
+		if(is_array($value)) {
+			$value = implode("-", $value);
+		}
+		
 		switch($stat) {
 			// Percentages
+			case "minmax-damage":
+				$stat = "Min/Max Dmg";
+				break;
 			case "critical-hit-damage":
 				$value = $value."%";
 				break;

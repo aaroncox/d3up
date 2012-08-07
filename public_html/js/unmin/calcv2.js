@@ -8,6 +8,7 @@ var buildCalculator = {
 	gear: {},
 	attrs: {},
 	stats: {},
+	sets: {},
 	bonuses: {},
 	values: {},
 	// Options
@@ -15,11 +16,13 @@ var buildCalculator = {
 	// Flags
 	isDuelWielding: false,	
 	init: function() {
+		// console.log("===== Clearing =====");
 		this.attrs = {
 			armor: 0,
 			'block-chance': 0,
 			'speed': 0
 		};
+		this.sets = {};
 		this.attrs = {
 			primary: null,
 			strength: 0,
@@ -622,6 +625,7 @@ var buildCalculator = {
 		if(this.attrs['min-damage']) {
 			bnMinDamage = this.attrs['min-damage'];				
 		}
+		// console.log(this.attrs);
 		bnAvgDamage = (bnMinDamage + bnMaxDamage) / 2;
 		// Convert mathE to a percentage
 		mathE = mathE / 100;
@@ -743,9 +747,28 @@ var buildCalculator = {
 		// console.log(rendered);
 		return {skillData: rendered};
 	},
+	applySetBonuses: function() {
+		_.each(this.sets, function(v,k) {
+			if(v > 1) {
+				_.each(setBonuses[k].effect, function(list, amount) {
+					if(k >= amount) {
+						_.each(list, function(value, stat) {
+							if(typeof(this.attrs[stat]) != "undefined") {
+								this.attrs[stat] += parseFloat(value);
+							} else {
+								this.attrs[stat] = parseFloat(value);
+							}
+						}, this);
+					}
+				}, this);
+			}
+		}, this);
+	},
 	run: function() {
 		// Apply all of the passive bonuses into the this.bonuses array for use in the math below
 		this.applyPassives();
+		// Apply all Set Bonuses
+		this.applySetBonuses();
 		// Apply all bonuses from the Active skills indicated
 		this.applyEnabledSkills();
 		// Calculate Defensive Statistics
@@ -800,9 +823,16 @@ var buildCalculator = {
 	},
 	removeItem: function(slot) {
 		var json = this.gear[slot];
+		this.gear[slot] = false;
+		// console.log("Removing Item from ["+slot+"], now: " + this.gear[slot]);
+		if(json.set) {
+			// console.log("=====", json.set);
+			// console.log("-1 for " + slot);
+			this.sets[json.set]--;
+		}
 		if(json.attrs) {
 			_.each(json.attrs, function(av, ak) {
-				if(isNaN(parseFloat(av))) {
+				if(typeof(av) != 'object' && isNaN(parseFloat(av))) {
 					av = 0;
 				}
 				switch(ak) {
@@ -816,6 +846,38 @@ var buildCalculator = {
 					// 		this.attrs[ak] -= parseFloat(av);
 					// 	}
 					// 	break;
+					case "minmax-damage":
+						switch(json.type) {
+							case "shield":
+							case "belt":
+							case "boots":
+							case "bracers":
+							case "chest":
+							case "cloak":
+							case "gloves":
+							case "helm":
+							case "pants":
+							case "mighty-belt":
+							case "shoulders":
+							case "spirit-stone":
+							case "voodoo-mask":
+							case "wizard-hat":
+							case "ring":
+							case "amulet":
+							case "quiver":
+							case "mojo":
+							case "source":
+								if(this.attrs['min-damage']) {
+									this.attrs['min-damage'] -= parseFloat(av.min);
+								}
+								if(this.attrs['max-damage']) {
+									this.attrs['max-damage'] -= parseFloat(av.max);
+								}
+								break;
+							default:
+								break;
+						}
+						break;
 					case "max-damage":
 					case "min-damage":
 					case "plus-damage":
@@ -917,14 +979,24 @@ var buildCalculator = {
 				}
 			}, this);					
 		}
-		this.gear[slot] = false;
 		// console.log(this.attrs);
 	},
 	parseItem: function(json, slot) {
+		// console.log(this.gear[slot]);
 		this.gear[slot] = json;
+		// console.log("Parsing item to slot ["+slot+"], now: " + this.gear[slot].name);
+		// Add to SetBonus Counter
+		if(json.set) {
+			// console.log("=====", json.set);
+			// console.log("+1 for " + slot);
+			if(!this.sets[json.set]) {
+				this.sets[json.set] = 0;
+			}
+			this.sets[json.set]++;
+		}
 		if(json.attrs) {
 			_.each(json.attrs, function(av, ak) {
-				if(isNaN(parseFloat(av))) {
+				if(typeof(av) != 'object' && isNaN(parseFloat(av))) {
 					av = 0;
 				}
 				switch(ak) {
@@ -944,6 +1016,42 @@ var buildCalculator = {
 							} else {
 								this.attrs[ak] = parseFloat(av);
 							}									
+						}
+						break;
+					case "minmax-damage":
+						switch(json.type) {
+							case "shield":
+							case "belt":
+							case "boots":
+							case "bracers":
+							case "chest":
+							case "cloak":
+							case "gloves":
+							case "helm":
+							case "pants":
+							case "mighty-belt":
+							case "shoulders":
+							case "spirit-stone":
+							case "voodoo-mask":
+							case "wizard-hat":
+							case "ring":
+							case "amulet":
+							case "quiver":
+							case "mojo":
+							case "source":
+								if(this.attrs['min-damage']) {
+									this.attrs['min-damage'] += parseFloat(av.min);
+								} else {
+									this.attrs['min-damage'] = parseFloat(av.min);
+								}
+								if(this.attrs['max-damage']) {
+									this.attrs['max-damage'] += parseFloat(av.max);
+								} else {
+									this.attrs['max-damage'] = parseFloat(av.max);
+								}
+								break;
+							default:
+								break;
 						}
 						break;
 					case "max-damage":

@@ -84,7 +84,7 @@ class D3Up_Mongo_Record_Item extends Epic_Mongo_Document_Record
 			'quality' => $helper->_qualityMap[$export['quality']],
 			'type' => ucwords(str_replace("-", " ", $export['type'])),
 			'attrs' => $attrs,
-			'sockets' => $sockets
+			'sockets' => $sockets,
 		);
 		$export['display'] = $display;
 		return $export;

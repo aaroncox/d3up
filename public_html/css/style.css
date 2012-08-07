@@ -201,7 +201,7 @@ ul.sub_menu > li.witch-doctor {
 ul#simulate-stats input,
 .item-preview ul.attrs input {
 	margin: 2px 5px;
-	width: 30px;
+	width: 45px;
 }
 .controls {
 	text-align: center;
@@ -885,9 +885,16 @@ tr.compared > td:first-child {
 #simulate-stats {
 	margin: 30px auto;
 }
+.item-preview .big-stat input {
+	width: 180px;
+}
+.item-preview input,
 #simulate-stats input {
 	width: 50px;
 	margin: 0 5px;
+}
+.item-preview select {
+	max-width: 300px;
 }
 #simulate-stats .big-stat input {
 	width: 200px;
@@ -945,4 +952,7 @@ tr.compared > td:first-child {
 	border: 2px solid #75ABFF; 
 	width: 36px;
 	margin-top: 4px;
+}
+.item-preview ul.attrs .minmax {
+	width: 110px;
 }

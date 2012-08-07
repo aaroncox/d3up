@@ -143,6 +143,15 @@ class D3Up_View_Helper_DisplayItem extends Zend_View_Helper_Abstract
 		'plus-damage' => '+[v]% Damage',
 		'min-damage' => '+[v] Minimum Damage',
 		'max-damage' => '+[v] Maximum Damage',
+		'minmax-damage' => '+[v] Damage',
+		// Elemental Damage
+		'plus-arcane-damage' => '+[v]% to Arcane Damage',
+		'plus-cold-damage' => '+[v]% to Cold Damage',
+		'plus-fire-damage' => '+[v]% to Fire Damage',
+		'plus-holy-damage' => '+[v]% to Holy Damage',
+		'plus-lightning-damage' => '+[v]% to Lightning Damage',
+		'plus-poison-damage' => '+[v]% to Poison Damage',
+		
 		'arcane-damage' => '+[v] Arcane Damage',
 		'cold-damage' => '+[v] Cold Damage',
 		'fire-damage' => '+[v] Fire Damage',
@@ -321,6 +330,9 @@ class D3Up_View_Helper_DisplayItem extends Zend_View_Helper_Abstract
 		}
 		if(isset(self::$_attrMap[$type])) {
 			if($value !== null) {
+				if($value instanceOf Shanty_Mongo_Document) {
+					$value = $value->export();
+				}
 				if(is_array($value)) {
 					return str_replace("[v]", implode("-", $value), self::$_attrMap[$type]);
 				}
@@ -417,6 +429,9 @@ class D3Up_View_Helper_DisplayItem extends Zend_View_Helper_Abstract
 				}
 			}
 			$html .= $this->view->htmlTag("ul", array('class' => 'sockets'), $socketHtml);
+		}
+		if($this->_item->set) {
+			$html .= $this->view->htmlTag("div", array('class' => 'setBonus quality-7', 'data-id' => $this->_item->set), "&nbsp;");			
 		}
 		return $html;
 	}

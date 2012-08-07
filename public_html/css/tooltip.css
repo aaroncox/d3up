@@ -65,6 +65,7 @@
 .d3-item .item p.item-type,
 .d3-item .item p.stats {
 	margin-left:70px;
+	margin-bottom: 5px;
 }
 .d3-item .item .stats-primary {
 	margin-bottom: 10px;
@@ -103,4 +104,24 @@
 	height: 54px;
 	line-height: 52px;
 	padding: 0 21px;
+}
+.setBonus {
+	margin: 20px 10px;
+}
+.setBonus .bonusName {
+	font-weight: bold;
+	margin-bottom: 5px;
+}
+.setBonus ul.bonuses {
+	margin: 10px 0;
+	padding: 0;
+	list-style: none;
+}
+.setBonus ul.bonuses div.data-count {
+	color: #909090 !important;
+}
+.setBonus ul.bonuses ul.amountBonus {
+	margin: 0 0px 0 20px;
+	padding: 5px;
+	list-style: none;
 }

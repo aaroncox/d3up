@@ -3,50 +3,65 @@
 ?>
 <div class="create-form ui-widget ui-widget-content ui-corner-all ui-helper-clearfix">
 	<form method="post">
-		<div class="item-preview">
-			<h3>Item Preview</h3>
-			<div class="d3-item">
-				<div class="top"><p class="">Name</p></div>
-				<div class="item">
-					<p class="item-type">
-						<span class="quality">Quality</span>
-						<span class="type">Type</span>
-					</p>
-					<p class="stats stats-primary">
-						<span class="big-stat"></span>
-						<span class="stat-helper"></span>
-					</p>
-					<p class="stats stats-extra-percent"></p>
-					<p class="stats stats-extra-range"></p>
-					<ul class="attrs">
-					</ul>
-					<ul class="sockets">
-					</ul>
-				</div>
-				<div class="bottom"> 
-					<? if($profile = Epic_Auth::getInstance()->getProfile()): ?>
-						Created by: <?= $profile->username ?>
-					<? endif; ?>
-				</div>
-			</div>
-		</div>
+		<div id="simulate-item" class="d3-item item-preview"></div>
 		<div>
 			<h2>Create an Item</h2>
 			<?= $this->form ?>
 		</div>
 	</form>
 </div>
-<script type="text/javascript" src="/js/skills.js?time=<?= time() ?>"></script>
-<script type="text/javascript" src="/js/item.js"></script>
 <script type="text/javascript">
+// Establish the Builder
+var builder = Object.create(itemBuilder);
+// Set the Name Field
+builder.setNameInput($("#name"));
+// Set the Quality Selector
+builder.setQualitySelect($("#quality"));
+// Set the Type Selector
+builder.setItemTypeSelect($("#itemType"));
+// Set the Attribute Selector
+builder.setAttributeSelect($("#attributes"));
+// Set the Socket selector
+builder.setSocketSelect($("#sockets"));
+// Set the Item Preview
+builder.setItemPreview($("#simulate-item"));
+// Initialize the Item Builder
+builder.init();
+
+$("#quality").chosen({
+	placeholder: 'Choose the item\'s quality...',
+	allowClear: true
+});
+$("#sockets").chosen({
+	placeholder: 'No Sockets...',
+	allowClear: true
+});
+$("#attributes").chosen({
+	placeholder: 'What attributes does this item have?',
+	allowClear: true
+});
+$("#itemType").chosen({
+	placeholder: 'Choose the item type...',
+	allowClear: true
+});
+<? if(isset($_GET['slot'])): ?>
+$("#sockets, #attributes, #quality, #itemType").trigger('change');	
+<? endif ?>
 <? if(!empty($_POST)): ?>
+$("#sockets, #attributes, #quality, #itemType").trigger('change');
 var post = <?= json_encode($_POST) ?>;
-$("ul.attrs li input").each(function() {
+$(".item-preview input").each(function() {
+	$(this).val(post[$(this).attr("name")]);
+});
+$(".item-preview select").each(function() {
 	$(this).val(post[$(this).attr("name")]);
 });
 $(".create-form input").each(function() {
 	$(this).val(post[$(this).attr("name")]);
-	$(this).trigger("keyup");
+	// $(this).trigger("keyup");
 });
-<? endif ?>	
+if(post.setBonus) {
+	$("#setBonus").val(post.setBonus);
+}
+<? endif ?>
 </script>

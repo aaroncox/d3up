@@ -19,7 +19,8 @@ $(function() {
 				itemExtraPercent = $("<p class='stats stats-extra-percent'/>"),
 				itemExtraRange = $("<p class='stats stats-extra-range'/>"),
 				itemAttrs = $("<ul class='attrs'/>"),
-				itemSockets = $("<ul class='sockets'/>");
+				itemSockets = $("<ul class='sockets'/>"),
+				itemSetBonus = $("<div class='setBonus quality-7'/>");
 		
 		itemName.html(item.name);
 		if(item.display && item.display.quality) {
@@ -72,6 +73,13 @@ $(function() {
 				itemSockets.append("<li class='gem_" + item.sockets[k] + "'>" + v + "</li>");
 			});
 			content.append(itemSockets);
+		}
+		
+		if(item.set) {
+			var builder = Object.create(itemBuilder);
+			var data = builder.getBonusHtml(item.set);
+			itemSetBonus.empty().append(data.name, data.list);
+			content.append(itemSetBonus);
 		}
 		
 		// Bind the mouse

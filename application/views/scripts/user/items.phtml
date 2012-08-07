@@ -310,6 +310,7 @@
 						<? if($profile): ?>
 						<td class='controls'>
 							<?= $this->mLink($item, array('action' => 'delete', 'text' => 'Delete'))?>
+							<?= $this->mLink($item, array('action' => 'edit', 'text' => 'Edit'))?>
 							<a class="compareThis" data-item="<?= $item->id ?>">Compare</a>
 							<a href="/user/shop?selectItem=<?= $item->id ?>">Sell</a>
 						</td>
@@ -359,7 +360,6 @@
 		} ?>
 	</script>
 	<? endif ?>
-	<script type="text/javascript" src="/js/skills.js"></script>
 	<script type="text/javascript" src="/js/calc.js"></script>
 	<script type="text/javascript" src="/js/browser.js"></script>
 	<? else: ?>

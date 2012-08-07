@@ -68,3 +68,13 @@
 </textarea>
 	</p>
 </div>
+<script type="text/javascript">
+	$(function() {
+		var set = $(".setBonus");
+		if(set.length) {
+			var builder = Object.create(itemBuilder);
+			var data = builder.getBonusHtml(set.data('id'));
+			set.empty().append(data.name, data.list);			
+		}
+	});
+</script>

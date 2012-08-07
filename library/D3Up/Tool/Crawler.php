@@ -26,13 +26,13 @@ class D3Up_Tool_Crawler
 
 	static public function getDOM($url) {
 		$config = array(
-			// 'adapter' => 'Zend_Http_Client_Adapter_Proxy',
-			// 'timeout' => '15',
-			// 'useragent' => '',
-			// 'proxy_host' => '192.168.1.7',
-			// 'proxy_port' => '8888',
-			// 'proxy_user' => '',
-			// 'proxy_pass' => '',
+			'adapter' => 'Zend_Http_Client_Adapter_Proxy',
+			'timeout' => '15',
+			'useragent' => '',
+			'proxy_host' => '192.168.1.7',
+			'proxy_port' => '8888',
+			'proxy_user' => '',
+			'proxy_pass' => '',
 			'encoding'      => 'UTF-8'
 		);
 		$client = new Zend_Http_Client($url, $config);
@@ -124,21 +124,21 @@ class D3Up_Tool_Crawler
 		'plus-damage' => '+[v]% Damage',
 		'min-damage' => '+[v] Minimum Damage',
 		'max-damage' => '+[v] Maximum Damage',
-		'arcane-damage' => '+[v] Arcane Damage',
-		'cold-damage' => '+[v] Cold Damage',
-		'fire-damage' => '+[v] Fire Damage',
-		'holy-damage' => '+[v] Holy Damage',
-		'lightning-damage' => '+[v] Lightning Damage',
-		'poison-damage' => '+[v] Poison Damage',
+		'plus-arcane-damage' => '+[v] Arcane Damage',
+		'plus-cold-damage' => '+[v] Cold Damage',
+		'plus-fire-damage' => '+[v] Fire Damage',
+		'plus-holy-damage' => '+[v] Holy Damage',
+		'plus-lightning-damage' => '+[v] Lightning Damage',
+		'plus-poison-damage' => '+[v] Poison Damage',
 		'elite-damage' => 'Increases Damage against Elites by [v]%',
 		// Ranges
 		'minmax-damage' => '+[v]-[v] Damage',
-		'plus-arcane-damage' => '+[v]-[v] Arcane Damage',
-		'plus-cold-damage' => '+[v]-[v] Cold Damage',
-		'plus-fire-damage' => '+[v]-[v] Fire Damage',
-		'plus-holy-damage' => '+[v]-[v] Holy Damage',
-		'plus-lightning-damage' => '+[v]-[v] Lightning Damage',
-		'plus-poison-damage' => '+[v]-[v] Poison Damage',
+		'arcane-damage' => '+[v]-[v] Arcane Damage',
+		'cold-damage' => '+[v]-[v] Cold Damage',
+		'fire-damage' => '+[v]-[v] Fire Damage',
+		'holy-damage' => '+[v]-[v] Holy Damage',
+		'lightning-damage' => '+[v]-[v] Lightning Damage',
+		'poison-damage' => '+[v]-[v] Poison Damage',
 		// Procs
 		'chance-bleed' => '[v]% chance to inflict Bleed for [v] damage over 5 seconds',
 		'chance-blind' => '[v]% chance to Blind on Hit',
@@ -323,9 +323,49 @@ class D3Up_Tool_Crawler
 				'name' => html_entity_decode($data->find(".tooltip-head h3", 0)->plaintext, ENT_QUOTES),
 				'_createdBy' => $who->createReference(),
 			);
+			// Do the Attributes on the Item
+			$attrsArray = array();
+			$socketsArray = array();
+			$attrs = $data->find(".d3-item-properties .item-effects li");
+			foreach($attrs as $attr) {
+				// var_dump();
+				foreach(static::$_attrMap as $stat => $regex) {
+					$parts = explode("~", $stat);
+					$stat = $parts[0];
+					$text = str_replace("–", "-", $attr->plaintext);
+					$regex = "/".str_replace(array('+', '[v]'), array('\+','(\d+(\.\d+)?)'), $regex)."/i";
+					// var_dump($text, $regex);
+					if(preg_match($regex, $text, $matches)) {
+						// echo $text . " match";
+						if(strpos($attr->getAttribute('class'), "socket")) {
+							foreach(static::$_gemMap as $gem => $effects) {
+								$search = array($stat, $matches[1]);
+								if(array_search($search, $effects)) {
+									$socketsArray[] = $gem;
+								}
+							}
+						} else {
+							if(count($matches) > 3) {
+								// var_dump($matches);
+								$attrsArray[$stat] = array(
+									'min' => (float) $matches[1],
+									'max' => (float) $matches[3],
+								);
+							} else {
+								$attrsArray[$stat] = (float) $matches[1];																					
+							}
+						}
+						break;
+					}
+					// echo $attr->plaintext."<br/>";
+					// var_dump($regex); exit;
+				}
+			}
 			// What slot is it in?
 			$slot = $gear->parent()->getAttribute("class");
 			$slot = static::$_slotMap[$slot];
+			// Add Attributes to the Item
+			$query['attrs'] = $attrsArray;
 			// Look to see if this item exists!
 			$found = Epic_Mongo::db('item')->fetchOne($query);
 			// Did we find this item already?
@@ -359,44 +399,6 @@ class D3Up_Tool_Crawler
 				}
 				
 				$new->stats = $statsArray;
-				// Do the Attributes on the Item
-				$attrsArray = array();
-				$socketsArray = array();
-				$attrs = $data->find(".d3-item-properties .item-effects li");
-				foreach($attrs as $attr) {
-					// var_dump();
-					foreach(static::$_attrMap as $stat => $regex) {
-						$parts = explode("~", $stat);
-						$stat = $parts[0];
-						$text = str_replace("–", "-", $attr->plaintext);
-						$regex = "/".str_replace(array('+', '[v]'), array('\+','(\d+(\.\d+)?)'), $regex)."/i";
-						// var_dump($text, $regex);
-						if(preg_match($regex, $text, $matches)) {
-							// echo $text . " match";
-							if(strpos($attr->getAttribute('class'), "socket")) {
-								foreach(static::$_gemMap as $gem => $effects) {
-									$search = array($stat, $matches[1]);
-									if(array_search($search, $effects)) {
-										$socketsArray[] = $gem;
-									}
-								}
-							} else {
-								if(count($matches) > 3) {
-									// var_dump($matches);
-									$attrsArray[$stat] = array(
-										'min' => (float) $matches[1],
-										'max' => (float) $matches[3],
-									);
-								} else {
-									$attrsArray[$stat] = (float) $matches[1];																					
-								}
-							}
-							break;
-						}
-						// echo $attr->plaintext."<br/>";
-						// var_dump($regex); exit;
-					}
-				}
 				$new->sockets = $socketsArray;
 				$new->attrs->setFromArray($attrsArray);
 				$new->_created = time();
