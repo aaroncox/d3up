@@ -75,7 +75,7 @@ class D3Up_Form_Record_Build extends Epic_Form
 		));
 		
 		$this->addElement("text", "profileUrl", array(
-			'label' => 'Link to your Diablo 3 Profile',
+			'label' => '(For Importing) Link to the Diablo 3 Profile this is based off of',
 			'description' => 'Example: http://us.battle.net/d3/en/profile/Jesta-1121/hero/1963090'
 		));
 		
