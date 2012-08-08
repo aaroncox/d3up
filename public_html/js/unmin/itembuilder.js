@@ -339,7 +339,7 @@ var itemBuilder = {
 	},
 	// Remove all existing attributes
 	removeAttributes: function(name) {
-		delete this.item.attrs = {};
+		this.item.attrs = {};
 	},
 	// Initialize the Preview
 	initPreview: function() {
