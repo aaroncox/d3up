@@ -457,7 +457,7 @@ var itemBuilder = {
 					if(v == 0) {
 						container.find("input").val("0-0").addClass("minmax");
 					} else {
-						console.log(v);
+						// console.log(v);
 						container.find("input").val(v.min + "-" + v.max).addClass("minmax");
 					}
 				}
@@ -565,7 +565,7 @@ var itemBuilder = {
 		this.preview.attrs.find("li").each(function() {
 			// Check to see if we're in the attributes
 			var nameCheck = $(this).find("input").attr("name").replace("-max", "").replace("-min", "");
-			console.log(builder.attrsSelected, nameCheck);
+			// console.log(builder.attrsSelected, nameCheck);
 			if(_.indexOf(builder.attrsSelected, nameCheck) < 0) {
 				$(this).remove();
 			}
