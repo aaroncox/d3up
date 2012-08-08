@@ -118,6 +118,7 @@ $(function() {
 		});
 		select.bind('change', function() {
 			activePassives[$(this).data("index")] = $(this).val();
+			activePassivesData[$(this).val()] = passives[heroClass][$(this).val()];	
 			displaySkills();
 		});
 	});
@@ -300,13 +301,14 @@ $(function() {
 			if($(this).is(":checked")) {
 				enabledSkills[$(this).data('skill')] = activePassivesData[$(this).data('skill')];
 			}
-			// console.log(activePassiveSkills);
+			// console.log(activePassiveSkills, $(this).data('skill'), activePassivesData);
 		});
 		calc.setActives(activeActiveSkills);
 		calc.setEnabledSkills(enabledSkills);
 		calc.setPassives(activePassiveSkills);
 		calc.setClass($("#character").data('class'));
 		calc.setGear(".equipped a");
+		// console.log(activePassiveSkills);
 		stats = calc.run();
 		_.each(stats.skillData, function(v,k) {
 			if(v.activate) {
