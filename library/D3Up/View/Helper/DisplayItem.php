@@ -209,7 +209,7 @@ class D3Up_View_Helper_DisplayItem extends Zend_View_Helper_Abstract
 		'dh-multishot' => 'Increases Critical Hit Chance of Multishot by [v]%',
 		'dh-rapid-fire' => 'Increases Critical Hit Chance of Rapid Fire by [v]%',
 		// Monk
-		'spirit-spent-life' => 'Gain [v] per Spirit Spent',
+		'spirit-spent-life' => 'Gain [v] Life per Spirit Spent',
 		'spirit-regen' => 'Increases Spirit Regeneration by [v] per Second',
 		'mk-crippling-wave' => 'Increases Crippling Wave damage by [v]%',
 		'mk-cyclone-strike' => 'Reduces resource cost of Cyclone Strike by [v] Spirit',
