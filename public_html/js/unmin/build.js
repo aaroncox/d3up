@@ -54,7 +54,11 @@ $(function() {
 			passiveDisplay = $("#passive-display"),	
 			activeActivesData = {},		
 			activePassivesData = {},
-			calc = Object.create(buildCalculator);
+			calc = Object.create(buildCalculator),
+			activeActiveSkills = {},
+			activePassiveSkills = {},
+			enabledSkills = {},
+			enabledPassiveSkills = {};
 			
 	// Setup Defaults and Reset
 	calc.init();
@@ -63,7 +67,7 @@ $(function() {
 	// Pass in which gear we are calculating
 	calc.setGear(".equipped a");
 	// Pass in the Passives we're using
-	calc.setPassives(activePassives);
+	calc.setPassives(activePassiveSkills);
 	// Get the Calculated Stats
 	var stats = calc.run();
 	
@@ -279,13 +283,13 @@ $(function() {
 		recalc();
 	});
 	function recalc() {
-		var activeSkills = {},
-				activePassiveSkills = {},
-				enabledSkills = {},
-				enabledPassiveSkills = {};
+		activeActiveSkills = {};
+		activePassiveSkills = {};
+		enabledSkills = {};
+		enabledPassiveSkills = {};
 		calc.init();
 		$('.skill-activate').each(function() {
-			activeSkills[$(this).data('skill')] = activeActivesData[$(this).data('skill')];
+			activeActiveSkills[$(this).data('skill')] = activeActivesData[$(this).data('skill')];
 			if($(this).is(":checked")) {
 				enabledSkills[$(this).data('skill')] = activeActivesData[$(this).data('skill')];
 			}
@@ -298,7 +302,7 @@ $(function() {
 			}
 			// console.log(activePassiveSkills);
 		});
-		calc.setActives(activeSkills);
+		calc.setActives(activeActiveSkills);
 		calc.setEnabledSkills(enabledSkills);
 		calc.setPassives(activePassiveSkills);
 		calc.setClass($("#character").data('class'));
@@ -801,7 +805,7 @@ $(function() {
 					// Pass in which gear we are calculating
 					calc.setGear(".equipped a");
 					// Pass in the Passives we're using
-					calc.setPassives(activePassives);
+					calc.setPassives(activePassiveSkills);
 					// Remove Item in Slot
 					calc.removeItem(simItemType);
 					// Add in the fake item
@@ -871,7 +875,7 @@ $(function() {
 							// Pass in which gear we are calculating
 							calc.setGear(".equipped a");
 							// Pass in the Passives we're using
-							calc.setPassives(activePassives);
+							calc.setPassives(activePassiveSkills);
 							// Remove Item in Slot
 							calc.removeItem(simItemType);
 							// Add in the fake item
@@ -908,7 +912,7 @@ $(function() {
 					// Pass in which gear we are calculating
 					calc.setGear(".equipped a");
 					// Pass in the Passives we're using
-					calc.setPassives(activePassives);
+					calc.setPassives(activePassiveSkills);
 					// Remove Item in Slot
 					calc.removeItem(simItemType);
 					// Add in the fake item
@@ -954,11 +958,12 @@ $(function() {
 							// Pass in which gear we are calculating
 							calc.setGear(".equipped a");
 							// Pass in the Passives we're using
-							calc.setPassives(activePassives);
+							calc.setPassives(activePassiveSkills);
 							// Remove Item in Slot
 							calc.removeItem(simItemType);
 							calc.parseItem(simAgainstData, simItemType);
 							stats = calc.run();
+							// console.log(simAgainstData, prevStats);
 							calcDiff(prevStats, simAgainstData, simItemType, true);
 							displayStats();
 							// console.log(stats, newStats, simItemType);
@@ -982,7 +987,7 @@ $(function() {
 				// Pass in which gear we are calculating
 				calc.setGear(".equipped a");
 				// Pass in the Passives we're using
-				calc.setPassives(activePassives);
+				calc.setPassives(activePassiveSkills);
 				// Remove Item in Slot
 				calc.removeItem(simItemType);
 				calc.parseItem(simAgainstData, simItemType);
@@ -1005,7 +1010,7 @@ $(function() {
 		// Pass in which gear we are calculating
 		calc.setGear(".equipped a");
 		// Pass in the Passives we're using
-		calc.setPassives(activePassives);
+		calc.setPassives(activePassiveSkills);
 		// Remove Item in Slot
 		calc.removeItem(slot);
 		// Should we automatically unequip the OH if it exists (since we're trying to use a 2h?)
