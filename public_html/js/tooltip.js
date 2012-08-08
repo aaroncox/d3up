@@ -79,6 +79,9 @@ $(function() {
 			var builder = Object.create(itemBuilder);
 			var data = builder.getBonusHtml(item.set);
 			itemSetBonus.empty().append(data.name, data.list);
+			if($(this).data("set-count")) {
+				data.list.find("div.data-count[data-count=" + $(this).data("set-count") +"]").addClass("quality-7");
+			}			
 			content.append(itemSetBonus);
 		}
 		

@@ -118,7 +118,7 @@
 	list-style: none;
 }
 .setBonus ul.bonuses div.data-count {
-	color: #909090 !important;
+	color: #909090;
 }
 .setBonus ul.bonuses ul.amountBonus {
 	margin: 0 0px 0 20px;

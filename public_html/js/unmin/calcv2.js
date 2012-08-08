@@ -818,6 +818,9 @@ var buildCalculator = {
 				_.each(setBonuses[k].effect, function(list, amount) {
 					if(k >= amount) {
 						_.each(list, function(value, stat) {
+							if(value < 1) {
+								value = value * 100;
+							}
 							if(typeof(this.attrs[stat]) != "undefined") {
 								this.attrs[stat] += parseFloat(value);
 							} else {

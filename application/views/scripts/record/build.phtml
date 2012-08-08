@@ -275,6 +275,22 @@ var activeActives = [];
 	</form>
 </div>
 <script type="text/javascript">
+	var bonusCounter = {};
+	$(".equipped a").each(function() {
+		var json = $(this).data("json");
+		if(json.set) {
+			if(!bonusCounter[json.set]) {
+				bonusCounter[json.set] = 0;
+			}
+			bonusCounter[json.set]++;
+		}
+	});
+	$(".equipped a").each(function() {
+		var json = $(this).data("json");
+		if(json.set) {
+			$(this).attr("data-set-count", bonusCounter[json.set]);
+		}
+	});
 	<? if($this->alreadyVoted): ?>
 	var voted = '<?= $this->alreadyVoted ?>';
 	<? else: ?>

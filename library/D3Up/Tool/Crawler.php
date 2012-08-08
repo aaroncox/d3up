@@ -326,6 +326,12 @@ class D3Up_Tool_Crawler
 			// Do the Attributes on the Item
 			$attrsArray = array();
 			$socketsArray = array();
+			$setName = $data->find(".d3-item-properties .item-itemset-name", 0);
+			$gearSet = null;
+			if($setName) {
+				$filter = new Epic_Filter_Slug();
+				$gearSet = $filter->filter($setName->plaintext);
+			}
 			$attrs = $data->find(".d3-item-properties .item-effects li");
 			foreach($attrs as $attr) {
 				// var_dump();
@@ -366,6 +372,9 @@ class D3Up_Tool_Crawler
 			$slot = static::$_slotMap[$slot];
 			// Add Attributes to the Item
 			$query['attrs'] = $attrsArray;
+			if($gearSet) {
+				$query['set'] = $gearSet;
+			}
 			// Look to see if this item exists!
 			$found = Epic_Mongo::db('item')->fetchOne($query);
 			// Did we find this item already?
@@ -378,6 +387,9 @@ class D3Up_Tool_Crawler
 				$qualityTypeResults = static::qualityType($qualityType);
 				$new->type = $qualityTypeResults['type'];
 				$new->quality = $qualityTypeResults['quality'];
+				if($gearSet) {
+					$new->set = $gearSet;
+				}
 				// Do the Stats on the item
 				$statsArray = array();
 				// Does this item have armor?
