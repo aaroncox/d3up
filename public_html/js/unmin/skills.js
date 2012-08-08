@@ -59,7 +59,10 @@ var passives = {
 			}
 		},
 		'berserker-rage': {
-			'desc': 'You inflict an additional <span class="skill-highlight">25%</span> damage while at maximum Fury.'
+			'desc': 'You inflict an additional <span class="skill-highlight">25%</span> damage while at maximum Fury.',
+			'effect': {
+				'plus-damage-conditional': 0.25
+			}
 		},
 		'inspiring-presence': {
 			'desc': 'The duration of your shouts is doubled. After using a shout you regenerate <span class="skill-highlight">1%</span> of your maximum Life per second for <span class="skill-highlight">60</span> seconds.'
@@ -218,6 +221,9 @@ var passives = {
 		},
 		'cold-blooded': {
 			'desc': 'Cold damage dealt to chilled and frozen targets is increased by <span class="skill-highlight">20%</span>.',
+			'effect': {
+				'plus-damage-conditional': 0.2
+			}
 		},
 		'conflaguration': {
 			'desc': 'Fire damage dealt to enemies applies a burning effect, increasing all damage done to them by <span class="skill-highlight">10%</span> for 3 seconds.'
@@ -257,7 +263,7 @@ var passives = {
 		'steady-aim': {
 			'desc': 'As long as there are no enemies within <span class="skill-highlight">10</span> yards, all damage is increased by <span class="skill-highlight">20%</span>.',
 			'effect': {
-				'plus-damage': 0.2
+				'plus-damage-conditional': 0.2
 			}
 		},
 		'cull-the-weak': {

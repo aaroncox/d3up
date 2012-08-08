@@ -39,6 +39,8 @@ $(function() {
 			tabBase = $("#stats-base"),
 			tabLife = $("#stats-life"),
 			tabMisc = $("#stats-misc"),
+			tabEHPGains = $("#stats-ehp-gains"),
+			tabDPSGains = $("#stats-dps-gains"),
 			tabEHP = $("#stats-ehp"),
 			tabEHPGear = $("#stats-ehp-gear"),
 			tabDPSGear = $("#stats-dps-gear"),
@@ -51,6 +53,7 @@ $(function() {
 			// passiveSelect = $("#passives"),
 			passiveDisplay = $("#passive-display"),	
 			activeActivesData = {},		
+			activePassivesData = {},
 			calc = Object.create(buildCalculator);
 			
 	// Setup Defaults and Reset
@@ -101,6 +104,7 @@ $(function() {
 					idx = v - 1;
 			if(activePassives[idx] && activePassives[idx] == slug) {
 				option.attr("selected", "selected");
+				activePassivesData[slug] = passives[heroClass][slug];	
 			}
 			select.append(option);
 		});
@@ -276,7 +280,9 @@ $(function() {
 	});
 	function recalc() {
 		var activeSkills = {},
-				enabledSkills = {};
+				activePassiveSkills = {},
+				enabledSkills = {},
+				enabledPassiveSkills = {};
 		calc.init();
 		$('.skill-activate').each(function() {
 			activeSkills[$(this).data('skill')] = activeActivesData[$(this).data('skill')];
@@ -284,9 +290,17 @@ $(function() {
 				enabledSkills[$(this).data('skill')] = activeActivesData[$(this).data('skill')];
 			}
 		});
+		$('.passive-activate').each(function() {
+			// console.log($(this).data('skill'));
+			activePassiveSkills[$(this).data('skill')] = activePassivesData[$(this).data('skill')];
+			if($(this).is(":checked")) {
+				enabledSkills[$(this).data('skill')] = activePassivesData[$(this).data('skill')];
+			}
+			// console.log(activePassiveSkills);
+		});
 		calc.setActives(activeSkills);
 		calc.setEnabledSkills(enabledSkills);
-		calc.setPassives(activePassives);
+		calc.setPassives(activePassiveSkills);
 		calc.setClass($("#character").data('class'));
 		calc.setGear(".equipped a");
 		stats = calc.run();
@@ -308,16 +322,6 @@ $(function() {
 		if(skills.length) {
 			activeDisplay.empty();			
 		}
-		_.each(passiveSkills, function(v) {
-			var skill = passives[heroClass][v],
-					icon = "/images/icons/" + heroClass + "-" + v + ".png";
-					img = $("<img/>").attr("src", icon);
-			img.attr('data-name', v.replace(/\-/g," ").capitalize());
-			img.attr('title', v.replace(/\-/g," ").capitalize());
-			img.attr('data-tooltip', skill.desc);
-			img.bindSkilltip();
-			passiveDisplay.append($("<li/>").html(img));
-		});
 		_.each(skills, function(skill) {
 			if(skill != "undefined") {
 				var data = activeSkills[heroClass][skill],
@@ -350,6 +354,33 @@ $(function() {
 				target.append(li);
 				// var damage = calc.calcSkillDamage(data);
 				// console.log(data);				
+			}
+		});
+		_.each(passiveSkills, function(v) {
+			var skill = v;
+			if(skill != "undefined" && skill != "") {
+				var data = passives[heroClass][skill],
+						li = $("<li class='skill-calc-row'>").attr("data-id", skill).attr("id", "skill-" + skill),
+						cleaned = skill.split("~"),
+						icon = $("<img src='/images/icons/" + heroClass + "-" + cleaned[0] + ".png'>"),
+						h3 = $("<h3>").html(v.replace("-", " ").capitalize()),
+						details = $("<ul class='details'>"),
+						desc = $("<p>").append(data.desc),
+						control = $("<div class='control'></div>");
+				icon.attr('data-tooltip', data.desc);
+				icon.attr('data-name', v.replace(/\-/g," ").capitalize())
+				icon.bindSkilltip();
+				if(data.effect) {
+					// console.log("effect ", data.effect);
+					var checkbox = $("<input type='checkbox' class='passive-activate' data-skill='" + skill + "'>");
+					checkbox.click(function() {
+						recalc();
+					});
+					control.append("Activate ", checkbox).hide();					
+				}
+				passiveDisplay.append($("<li/>").html(icon.clone()));
+				li.append(icon, control, h3, details, desc);
+				target.append(li);
 			}
 		});
 		recalc();
@@ -556,6 +587,23 @@ $(function() {
 		tabOffense.append(statLabel("Attacks per Second", stats['dps-speed-display']));
 		tabOffense.append(statLabel("Critical Hit Chance", stats['critical-hit'], 'per'));
 		tabOffense.append(statLabel("Critical Hit Damage", stats['critical-hit-damage'], 'per'));
+		// Gains Stats Display
+		tabDPSGains.empty();
+		tabDPSGains.append($("<li class='header'/>").html("DPS Gained per Stat"));
+		tabDPSGains.append(statLabel("+1 Primary Stat", stats['dps-pt-primary'], 'round'));
+		tabDPSGains.append(statLabel("+1% Crit Hit", stats['dps-pt-critical-hit'], 'round'));
+		tabDPSGains.append(statLabel("+1% Crit Hit Dmg", stats['dps-pt-critical-hit-damage'], 'round'));
+		tabDPSGains.append(statLabel("+1 Minimum Dmg", stats['dps-pt-min-damage'], 'round'));
+		tabDPSGains.append(statLabel("+1 Maximum Dmg", stats['dps-pt-max-damage'], 'round'));
+		tabDPSGains.append(statLabel("+1% Attack Speed", stats['dps-pt-attack-speed'], 'round'));
+		tabEHPGains.empty();
+		tabEHPGains.append($("<li class='header'/>").html("EHP Gained per Stat"));
+		tabEHPGains.append(statLabel("+1 Armor", stats['ehp-pt-armor'], 'round'))
+		tabEHPGains.append(statLabel("+1 Strength", stats['ehp-pt-strength'], 'round'))
+		tabEHPGains.append(statLabel("+1 Intelligence", stats['ehp-pt-intelligence'], 'round'))
+		tabEHPGains.append(statLabel("+1 Vitality", stats['ehp-pt-vitality'], 'round'))
+		tabEHPGains.append(statLabel("+1 Resist All", stats['ehp-pt-resist-all'], 'round'))
+		tabEHPGains.append(statLabel("+1% Life", stats['ehp-pt-plus-life'], 'round'))
 		// Life Stastics Display
 		tabLife.empty();
 		tabLife.append(statLabel("Maximum Life", stats.life, 'round'));

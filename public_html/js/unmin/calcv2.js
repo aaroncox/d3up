@@ -89,8 +89,8 @@ var buildCalculator = {
 	setActives: function(actives) {
 		this.activeSkills = actives;
 	},
-	setEnabledSkills: function(actives) {
-		this.enabledSkills = actives;
+	setEnabledSkills: function(skills) {
+		this.enabledSkills = skills;
 	},
 	setPassives: function(passives) {
 		this.passiveSkills = passives;
@@ -168,23 +168,32 @@ var buildCalculator = {
 		_.each(this.enabledSkills, function(v,k) {
 			// console.log(v,k);
 			_.each(v.effect, function(e,i) {
-				if(i == "stack") {
-					_.each(e, function(se, si) {
-						this.applyEnabledSkill(se.limit * se.value, si);
-					}, this);
-				} else {
-					this.applyEnabledSkill(e,i)
+				switch(i) {
+					case "stack":
+						_.each(e, function(se, si) {
+							this.applyEnabledSkill(se.limit * se.value, si);
+						}, this);
+						break;
+					case "plus-damage-conditional":
+						this.applyEnabledSkill((e * 100), 'plus-damage');
+						break;
+					default:
+						this.applyEnabledSkill(e,i)
+						break;
 				}
 			}, this);
 		}, this);
 	},
 	applyPassives: function() {
 		_.each(this.passiveSkills, function(v,k) {
-			if(passives[this.class][v] && typeof passives[this.class][v]['effect'] != "undefined") {
+			// if(passives[this.class][v] && typeof passives[this.class][v]['effect'] != "undefined") {
+			if(v.effect) {
 				// console.log(k,v);
-				_.each(passives[this.class][v]['effect'], function(value, effect) {
-					// console.log(value, effect);
+				_.each(v.effect, function(value, effect) {
 					switch(effect) {
+						case "plus-damage-conditional": 
+							// Ignore Here
+							break;
 						case "sharpshooter":
 							this.bonuses['sharpshooter'] = true;
 							// TODO
@@ -509,10 +518,40 @@ var buildCalculator = {
 			var tDefenses = this.calcDefenses(),
 					tEhp = this.calcEffectiveHealth(tDefenses);
 			// Calculate the Difference in EHP without the item
-			rendered['ehp-' + i] = ehp.ehp - tEhp['ehp'];				
+			rendered['ehp-' + i] = tEhp['ehp'] - ehp.ehp;				
 			// Re-add the Item to the gear set
 			this.parseItem(g, i);
 		}, this);
+		// Calculate EHP per Stat
+		var incs = {
+			'pt-resist-all': {'resist-all': 1},
+			'pt-armor': {'armor': 1},
+			'pt-vitality': {'vitality': 1},
+			'pt-plus-life': {'plus-life': 1},
+			'pt-intelligence': {'intelligence': 1},
+			'pt-strength': {'strength': 1},
+		};
+		_.each(incs, function(v, k) {
+			switch(k) {
+				case "pt-armor":
+					var item = {
+						stats: v,
+					};
+					break;
+				default:
+					var item = {
+						attrs: v
+					};
+					break;
+			}
+			this.parseItem(item, 'extra');
+			var tDefenses = this.calcDefenses(),
+					tEhp = this.calcEffectiveHealth(tDefenses);
+			// Calculate the Difference in EHP without the item
+			rendered['ehp-' + k] = tEhp['ehp'] - ehp.ehp;				
+			// Re-add the Item to the gear set
+			this.removeItem('extra');
+		}, this)
 		// Return rendered EHP Gear values
 		return rendered;
 	},
@@ -678,16 +717,18 @@ var buildCalculator = {
 	},
 	calcSkills: function() {
 		var rendered = {};
-		// console.log(this.activeSkills);
 		_.each(this.activeSkills, function(v,k) {
 			var calcDot = false,
 					calcSame = false,
 					activate = false,
 					bonuses = {};
+					// console.log(k,v);
 			if(v && v.effect) {
 				_.each(v.effect, function(e,i) {
 					// console.log(e,i);
 					switch(i) {
+						case "plus-damage-conditional":
+						case "plus-crit-hit":
 						case "plus-attack-speed":
 						case "plus-damage":
 						case "plus-armor":
@@ -737,6 +778,30 @@ var buildCalculator = {
 				}, this)	
 			}
 			// console.log(k, activate);
+			if(activate) {
+				if(!rendered[k]) {
+					rendered[k] = {};
+				}
+				rendered[k].activate = true;
+			}
+		}, this);
+		_.each(this.passiveSkills, function(v,k) {
+			var	activate = false,
+					bonuses = {};
+					// console.log(k,v);
+			if(v && v.effect) {
+				_.each(v.effect, function(e,i) {
+					// console.log(e,i);
+					switch(i) {
+						case "plus-damage-conditional":
+							activate = true;
+							break;
+						default:
+							// console.log("not supported ",e,i);
+							break;
+					}
+				}, this);	
+			}
 			if(activate) {
 				if(!rendered[k]) {
 					rendered[k] = {};
@@ -816,6 +881,39 @@ var buildCalculator = {
 			// Readd the Item to the set
 			this.parseItem(g, i);
 		}, this);
+		// Calculate DPS per Stat
+		var incs = {
+			'pt-primary': {'stat': 1},
+			'pt-critical-hit': {'critical-hit': 1},
+			'pt-critical-hit-damage': {'critical-hit-damage': 1},
+			'pt-min-damage': {'min-damage': 1},
+			'pt-max-damage': {'max-damage': 1},
+			'pt-attack-speed': {'attack-speed': 1},
+		};
+		_.each(incs, function(v, k) {
+			switch(k) {
+				case "pt-primary":
+					var item = { attrs: { } };
+					item.attrs[this.attrs.primary] = 1;
+					break;
+				case "pt-armor":
+					var item = {
+						stats: v,
+					};
+					break;
+				default:
+					var item = {
+						type: 'extra',
+						attrs: v
+					};
+					break;
+			}
+			this.parseItem(item, 'extra');
+			var newDps = this.calcOffense();
+			this.values['dps-' + k] = newDps['dps'] - this.values['dps'];				
+			// Re-add the Item to the gear set
+			this.removeItem('extra');
+		}, this)
 		// Append Attributes into the values
 		this.values = jQuery.extend(this.attrs, this.values);
 		// Return the values
@@ -848,6 +946,7 @@ var buildCalculator = {
 					// 	break;
 					case "minmax-damage":
 						switch(json.type) {
+							case "extra":
 							case "shield":
 							case "belt":
 							case "boots":
@@ -882,6 +981,7 @@ var buildCalculator = {
 					case "min-damage":
 					case "plus-damage":
 						switch(json.type) {
+							case "extra":
 							case "shield":
 							case "belt":
 							case "boots":
@@ -909,6 +1009,7 @@ var buildCalculator = {
 						break;
 					case "attack-speed":
 						switch(json.type) {
+							case "extra":
 							case "shield":
 							case "belt":
 							case "boots":
@@ -1020,6 +1121,7 @@ var buildCalculator = {
 						break;
 					case "minmax-damage":
 						switch(json.type) {
+							case "extra":
 							case "shield":
 							case "belt":
 							case "boots":
@@ -1058,6 +1160,7 @@ var buildCalculator = {
 					case "min-damage":
 					case "plus-damage":
 						switch(json.type) {
+							case "extra":
 							case "shield":
 							case "belt":
 							case "boots":
@@ -1089,6 +1192,7 @@ var buildCalculator = {
 						break;
 					case "attack-speed":
 						switch(json.type) {
+							case "extra":
 							case "shield":
 							case "belt":
 							case "boots":
