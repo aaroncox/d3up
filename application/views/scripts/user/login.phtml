@@ -1,1 +1,8 @@
-<?= $this->form ?>
+<div class="ui-widget ui-corner-all ui-widget-content ui-helper-clearfix" style="padding: 20px">
+	<h2>Login</h2>
+	<? if($this->afterReset): ?>
+		<p style="color: #f00">Your password has been changed, please login!</p>
+	<? endif ?>
+	<?= $this->form ?>
+	<p style="text-align: center"><a href="/user/reset">Help! I need to reset my password.</a></p>
+</div>

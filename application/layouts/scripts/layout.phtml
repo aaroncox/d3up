@@ -71,6 +71,7 @@
 							<ul>
 							<? if($profile = Epic_Auth::getInstance()->getProfile()): ?>
 								<!-- <li><a href="/user"><?= $profile->username ?></a></li>	 -->
+								<li><a href="/user/change-password">Change Password</a></li>
 								<li><a href="/user/logout">Logout</a></li>
 							<? else: ?>
 								<li><a href="/user/login">Login</a></li>

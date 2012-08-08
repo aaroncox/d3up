@@ -1,0 +1,12 @@
+<div class="ui-widget ui-corner-all ui-widget-content ui-helper-clearfix" style="padding: 20px">
+	<h2>Password Reset</h2>
+	<? if($this->sent == 'success'): ?>
+		<p style="color: #0f0">An email has been sent to the email address specified.</p>
+	<? elseif($this->sent == 'failed'): ?>
+		<p style="color: #f00">Invalid Email Address</p>
+		<?= $this->form ?>
+	<? else: ?>
+		<?= $this->form ?>
+	<? endif ?>
+	
+</div>

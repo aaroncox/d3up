@@ -769,6 +769,7 @@ tr.compared > td:first-child {
 	width: 200px;
 	margin: 10px auto;
 	text-align: center;
+	clear: both;
 }
 .r2-Record-form .buttons input {
 	margin-top: 50px;

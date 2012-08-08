@@ -12,7 +12,15 @@ class UserController extends Epic_Controller_Action
 	}
 	public function loginAction() {
 		$form = $this->view->form = new Epic_Auth_Form_Login();
-		$this->_handleForm($form);
+		if($this->view->afterReset = $this->getRequest()->getParam('afterReset')) {
+			if($this->getRequest()->isPost()) {
+				if($form->process($this->getRequest()->getParams())) {
+					$this->_redirect("/");
+				}
+			}
+		} else {
+			$this->_handleForm($form);			
+		}
 		if(Epic_Auth::getInstance()->getProfile()) {
 			$this->_redirect("/");
 		}
@@ -295,5 +303,44 @@ class UserController extends Epic_Controller_Action
 		$this->view->json = array(
 			'completed' => json_encode($json)
 		);
+	}
+	public function resetAction() {
+		$form = $this->view->form = new Epic_Auth_Form_ResetPassword();
+		if($this->getRequest()->isPost()) {
+			if($form->process($this->getRequest()->getParams())) {
+				// Send the Email
+				$this->view->user = $user = Epic_Mongo::db('user')->fetchOne(array('email' => $form->email->getValue()));
+				$mail = new Zend_Mail();
+				$mail->addTo($form->email->getValue());
+				$mail->setBodyHtml($this->view->render('user/forgot-email.phtml'));
+				$mail->setFrom('password-goblin@d3up.com', 'D3Up.com Password Goblins');
+				$mail->setSubject('D3Up.com - Reset Password Process');
+				$mail->send();
+				$this->view->sent = 'success';
+			} else{
+				$this->view->sent = 'failed';
+			}
+		}
+	}
+	public function changePasswordAction() {
+		$user = Epic_Auth::getInstance()->getProfile();
+		$form = $this->view->form = new Epic_Auth_Form_ChangePassword(array('user' => $user));
+		$id = $this->getRequest()->getParam('id');
+		$hash = $this->getRequest()->getParam('key');
+		if($id && $hash) {
+			if($user = Epic_Mongo::db('user')->find(new MongoId($id))) {
+				if($user->resetHash == $hash && $user->resetDate > time() - (60*60*6)) {
+					$form->setUser($user);
+					$form->removeElement("current_password");
+					if($this->getRequest()->isPost()) {
+						if($form->process($this->getRequest()->getParams())) {
+							$this->_redirect('/user/login?afterReset=true');
+						}
+					}
+				}
+			}
+		} else {
+			$this->_handleForm($form);			
+		}
 	}
 } // END class UserController extends Epic_Controller_Action
