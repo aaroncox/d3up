@@ -24,7 +24,7 @@ ul#navigation li a {
 	padding: 5px 15px;
 	display: block;
 	text-decoration: none;
-	padding: 5px 20px 5px 15px;
+	padding: 5px 15px 5px 15px;
 	margin-left: 1px;
 	white-space: nowrap;
 }
@@ -33,10 +33,10 @@ ul#navigation li a:hover {
 }
 ul#navigation li:hover ul {
 	display: block;
- 	position: absolute;
+	position: absolute;
 }
 ul#navigation li:hover li {
-	
+    float: none;
 }
 ul#navigation li:hover a { 
 
@@ -45,7 +45,7 @@ ul#navigation li:hover li a:hover {
 
 }
 ul.sub_menu {
-
+	z-index: 10;
 }
 ul.sub_menu > li {
 	background: #191919;
@@ -57,10 +57,10 @@ ul.sub_menu > li {
 	background-position: middle left;	
 }
 ul#navigation > li ul.sub_menu > li a {
-	padding-left: 52px;
+	padding-left: 56px;
 }
 ul.sub_menu > li.barbarian {
-	background-image: url('/images/barbarian.png');
+	background-image: url('/images/barbarian.png') !important;
 }
 ul.sub_menu > li.wizard {
 	background-image: url('/images/wizard.png');
