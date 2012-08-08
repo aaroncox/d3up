@@ -105,7 +105,7 @@ class D3Up_Tool_Crawler
 		'plus-life' => '+[v]% Life',
 		'life-regen' => 'Regenerates [v] Life per Second',
 		'plus-block' => '+[v]% Chance to Block',
-		'cc-reduce' => 'Reduces the duration of control impairing effects by [v]%',
+		'cc-reduce' => 'Reduces duration of control impairing effects by [v]%',
 		'elite-reduce' => 'Reduces damage from elites by [v]%',
 		'melee-reduce' => 'Reduces damage from melee attacks by [v]%',
 		'range-reduce' => 'Reduces damage from ranged attacks by [v]%',
@@ -330,7 +330,7 @@ class D3Up_Tool_Crawler
 			$gearSet = null;
 			if($setName) {
 				$filter = new Epic_Filter_Slug();
-				$gearSet = $filter->filter($setName->plaintext);
+				$gearSet = $filter->filter(html_entity_decode($setName->plaintext, ENT_QUOTES));
 			}
 			$attrs = $data->find(".d3-item-properties .item-effects li");
 			foreach($attrs as $attr) {
