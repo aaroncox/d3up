@@ -238,9 +238,17 @@ class RecordController extends Epic_Controller_Action
 		
 	}
 	public function crawlAction() {
-		$record = $this->getRecord();
-		if($confirm = $this->getRequest()->getParam("confirm")) {			
-			$this->view->status = D3Up_Tool_Crawler::getInstance()->crawl($record);
+		if($profile = Epic_Auth::getInstance()->getProfile()) {		
+			$record = $this->getRecord();
+			if($record->_createdBy->createReference() == $profile->createReference()) {
+				if($confirm = $this->getRequest()->getParam("confirm")) {			
+					$this->view->status = D3Up_Tool_Crawler::getInstance()->crawl($record);
+				}
+			} else {
+				throw new Exception("This isn't your profile!");
+			}
+		} else {
+			throw new Exception("You are not logged in!");
 		}
 	}
 } // END class RecordController extends Epic_Controller_Action
