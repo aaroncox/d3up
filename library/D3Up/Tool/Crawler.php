@@ -26,13 +26,13 @@ class D3Up_Tool_Crawler
 
 	static public function getDOM($url) {
 		$config = array(
-			'adapter' => 'Zend_Http_Client_Adapter_Proxy',
-			'timeout' => '15',
-			'useragent' => '',
-			'proxy_host' => '192.168.1.7',
-			'proxy_port' => '8888',
-			'proxy_user' => '',
-			'proxy_pass' => '',
+			// 'adapter' => 'Zend_Http_Client_Adapter_Proxy',
+			// 'timeout' => '15',
+			// 'useragent' => '',
+			// 'proxy_host' => '192.168.1.7',
+			// 'proxy_port' => '8888',
+			// 'proxy_user' => '',
+			// 'proxy_pass' => '',
 			'encoding'      => 'UTF-8'
 		);
 		$client = new Zend_Http_Client($url, $config);
