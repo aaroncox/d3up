@@ -127,51 +127,7 @@ a:active .ui-button-text, a:visited .ui-button-text {
 	margin-left: 20px;
 	width: 760px;
 }
-#navigation-wrapper {
-	display: inline;
-	text-align: center;
-	margin-bottom: 20px;
-}
-ul#navigation {
-	text-align: center;
-	margin: 0 0 5px;
-	padding: 0;
-	list-style: none;
-	border: 1px solid #000;
-	width: auto;
-	display: inline-block;
-}
-ul#navigation > li {
-	float: left;
-	border-right: 1px solid #000;
-}
-ul#navigation > li a {
-	padding: 5px 15px;
-}
-ul.sub_menu > li {
-	height: 42px;
-	line-height: 32px;
-	background-repeat: no-repeat; 
-	background-position: middle left;	
-}
-ul#navigation > li ul.sub_menu > li a {
-	padding-left: 46px;
-}
-ul.sub_menu > li.barbarian {
-	background-image: url('/images/barbarian.png');
-}
-ul.sub_menu > li.wizard {
-	background-image: url('/images/wizard.png');
-}
-ul.sub_menu > li.demon-hunter {
-	background-image: url('/images/demon-hunter.png');
-}
-ul.sub_menu > li.monk {
-	background-image: url('/images/monk.png');
-}
-ul.sub_menu > li.witch-doctor {
-	background-image: url('/images/witch-doctor.png');
-}
+
 .select2-result {
 	color: #222;
 }
