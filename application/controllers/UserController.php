@@ -337,7 +337,11 @@ class UserController extends Epic_Controller_Action
 							$this->_redirect('/user/login?afterReset=true');
 						}
 					}
+				} else {
+					throw new Exception("This password reset link is now expired, please issue a new one.");
 				}
+			} else {
+				throw new Exception("This reset link is invalid, please issue a new one");
 			}
 		} else {
 			$this->_handleForm($form);			
