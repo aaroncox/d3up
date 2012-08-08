@@ -104,7 +104,7 @@ $(function() {
 				label = $("<span class='skill-label'>").html("Passive #" + v);
 		select.append("<option value=''>None</option>");
 		$.each(passives[heroClass], function(slug, data) {
-			var option = $("<option value='" + slug + "'>").html(slug.replace("-", " ")),
+			var option = $("<option value='" + slug + "'>").html(slug.replace(/\-/g, " ").capitalize()),
 					idx = v - 1;
 			if(activePassives[idx] && activePassives[idx] == slug) {
 				option.attr("selected", "selected");
@@ -367,21 +367,21 @@ $(function() {
 						li = $("<li class='skill-calc-row'>").attr("data-id", skill).attr("id", "skill-" + skill),
 						cleaned = skill.split("~"),
 						icon = $("<img src='/images/icons/" + heroClass + "-" + cleaned[0] + ".png'>"),
-						h3 = $("<h3>").html(v.replace("-", " ").capitalize()),
+						h3 = $("<h3>").html(v.replace(/\-/g, " ").capitalize()),
 						details = $("<ul class='details'>"),
 						desc = $("<p>").append(data.desc),
 						control = $("<div class='control'></div>");
 				icon.attr('data-tooltip', data.desc);
 				icon.attr('data-name', v.replace(/\-/g," ").capitalize())
 				icon.bindSkilltip();
-				if(data.effect) {
+				// if(data.effect) {
 					// console.log("effect ", data.effect);
 					var checkbox = $("<input type='checkbox' class='passive-activate' data-skill='" + skill + "'>");
 					checkbox.click(function() {
 						recalc();
 					});
 					control.append("Activate ", checkbox).hide();					
-				}
+				// }
 				passiveDisplay.append($("<li/>").html(icon.clone()));
 				li.append(icon, control, h3, details, desc);
 				target.append(li);
