@@ -2849,10 +2849,10 @@ var activeSkills = {
 		'cluster-arrow~a': {
 			name: 'Cluster Arrow - Loaded for Bear',
 			desc: 'Fire a cluster arrow that explodes for 200% weapon damage as Fire into a series of additional miniature bombs that explode for 100% weapon damage as Fire each.',
-			rune: 'Increases the damage of the explosion at the impact location to 0% weapon damage as Fire.',
+			rune: 'Increases the damage of the explosion at the impact location to 290% weapon damage as Fire.',
 			effect: {
 				'cost-hatred': 50,
-				'weapon-damage': 200,
+				'weapon-damage': 290,
 			},
 		},
 		'cluster-arrow~b': {
