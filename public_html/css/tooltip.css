@@ -24,6 +24,7 @@
 }
 .d3-item {
   color: #FFFFFF;		
+	font-size: 14px;
 	font-family: Arial,Helvetica,sans-serif;
 	border: 1px solid #000000;
   box-shadow: 0 0 10px #000000;
@@ -73,7 +74,7 @@
 .d3-item .item ul.attrs{
 	list-style: none;
 	color: #7979D4;
-	margin: 15px 5px;
+	margin: 10px 5px;
 	padding: 0;
 }
 .d3-item .item ul {
@@ -85,6 +86,9 @@
 	background-repeat: no-repeat;
 	background-position: 0 5px;
 	overflow: hidden;
+}
+.d3-item .item ul.sockets {
+	margin: 0;
 }
 .d3-item .item ul.sockets > li {
 	color: #7979D4;
@@ -106,14 +110,14 @@
 	padding: 0 21px;
 }
 .setBonus {
-	margin: 20px 10px;
+	margin: 10px 10px 0;
 }
 .setBonus .bonusName {
 	font-weight: bold;
 	margin-bottom: 5px;
 }
 .setBonus ul.bonuses {
-	margin: 10px 0;
+	margin: 0;
 	padding: 0;
 	list-style: none;
 }
@@ -122,6 +126,6 @@
 }
 .setBonus ul.bonuses ul.amountBonus {
 	margin: 0 0px 0 20px;
-	padding: 5px;
+	padding: 0;
 	list-style: none;
 }
