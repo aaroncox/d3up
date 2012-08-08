@@ -188,10 +188,12 @@ var itemBuilder = {
 	bindNameInput: function() {
 		var selector = this.nameInput,
 				builder = this;
-		selector.bind('keyup', function() {
-			builder.item.name = $(this).val();
-			builder.updatePreview();
-		});		
+		if(selector) {
+			selector.bind('keyup', function() {
+				builder.item.name = $(this).val();
+				builder.updatePreview();
+			});					
+		}
 	},
 	// Set the Socket Count selector
 	setSocketSelect: function(element) {
@@ -201,10 +203,12 @@ var itemBuilder = {
 	bindSocketSelect: function() {
 		var selector = this.socketSelect,
 				builder = this;
-		selector.bind('change', function() {
-			builder.item.socketCount = $(this).val();
-			builder.updatePreview();
-		});		
+		if(selector) {
+			selector.bind('change', function() {
+				builder.item.socketCount = $(this).val();
+				builder.updatePreview();
+			});					
+		}
 	},
 	// Set the Quality selector
 	setQualitySelect: function(element) {
@@ -214,16 +218,18 @@ var itemBuilder = {
 	bindQualitySelect: function() {
 		var selector = this.qualitySelect,
 				builder = this;
-		selector.bind('change', function() {
-			builder.item.quality = $(this).val();
-			// Add the SetBonus selector if we're dealing with a set piece
-			if(builder.item.quality == 7) {
-				builder.addSetBonusSelect();
-			} else {
-				builder.removeSetBonusSelect();
-			}
-			builder.updatePreview();
-		});
+		if(selector) {
+			selector.bind('change', function() {
+				builder.item.quality = $(this).val();
+				// Add the SetBonus selector if we're dealing with a set piece
+				if(builder.item.quality == 7) {
+					builder.addSetBonusSelect();
+				} else {
+					builder.removeSetBonusSelect();
+				}
+				builder.updatePreview();
+			});			
+		}
 	},
 	removeSetBonusSelect: function() {
 		$("dt#setBonus-label").remove();
