@@ -243,6 +243,8 @@ class RecordController extends Epic_Controller_Action
 			if($record->_createdBy->createReference() == $profile->createReference()) {
 				if($confirm = $this->getRequest()->getParam("confirm")) {			
 					$this->view->status = D3Up_Tool_Crawler::getInstance()->crawl($record);
+					$record->crawlCount++;
+					$record->save();
 				}
 			} else {
 				throw new Exception("This isn't your profile!");
