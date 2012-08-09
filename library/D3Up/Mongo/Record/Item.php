@@ -35,7 +35,7 @@ class D3Up_Mongo_Record_Item extends Epic_Mongo_Document_Record
 	public function getSlotByType($type) {
 		$slots = array();
 		foreach(static::$slotTypeMap as $k => $v) {
-			if(array_search($type, $v)) {
+			if(in_array($type, $v)) {
 				$slots += $v;
 			}
 		}
