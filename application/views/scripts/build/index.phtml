@@ -75,6 +75,12 @@
 					<? if($build->actives): ?>
 						<? foreach($build->actives as $active): ?>
 							<? 
+								if($active == "undefined") {
+									?>
+									<img data-class="<?= $build->class ?>" src="/images/icons/unknown.png" class="skill-tip"/>
+									<?
+									continue;
+								}
 								$explode = explode("~", $active);
 								$skill = $explode[0];
 							?>
