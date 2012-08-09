@@ -64,7 +64,7 @@
 				<td class="icon"><img src="/images/<?= $build->class ?>.png"/></td>
 				<td class="stat">
 					<? if($build->votes): ?>
-						+<?= $this->prettyStat($build->votes) ?>
+						<? if($build->votes > 0): ?>+<? endif ?><?= $this->prettyStat($build->votes) ?>
 					<? else: ?>	
 						-
 					<? endif ?>
