@@ -165,6 +165,11 @@ class RecordController extends Epic_Controller_Action
 	}
 	public function getSimilarItems() {
 		$item = $this->getRecord();
+		$query = array(
+			'type' => array(
+				'$in' => Epic_Mongo::db('item')->getSlotByType($item->type)
+			)
+		);
 		$toCompare = json_decode($this->getRequest()->getParam('attrs'));
 		if(empty($toCompare)) {
 			$toCompare = array_keys($item->rating->export());
