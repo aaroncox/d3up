@@ -3142,6 +3142,7 @@ var activeSkills = {
 			effect: {
 				'cost-spirit': 10,
 				'cooldown': 15,
+				'plus-damage-conditional': 0.3
 			},
 		},
 		'blinding-flash~b': {

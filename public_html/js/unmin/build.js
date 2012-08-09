@@ -129,7 +129,10 @@ $(function() {
 				a: 'skills',
 				actives: activeActives,
 				passives: activePassives,
-				stats: stats,
+				stats: {
+					dps: stats.dps,
+					ehp: stats.ehp
+				},
 				success: function() {
 					$($("<div style='padding: 20px'/>").html("Saved!")).dialog({
 						modal: true,
@@ -480,7 +483,10 @@ $(function() {
 											a: 'equip',
 											slot: itemType,
 											newItem: gearSelect.val(),
-											stats: stats
+											stats: {
+												dps: stats.dps,
+												ehp: stats.ehp
+											}
 										}
 									});									
 								}, 0);
