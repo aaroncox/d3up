@@ -53,7 +53,8 @@ var buildCalculator = {
 			'plus-dodge': [], // Since Dodge is Multiplicative in it's percentage bonuses, we need to collect them
 			'plus-damage': 0,
 			'plus-attack-speed': 0,
-			'plus-damage-reduce': 0
+			'plus-damage-reduce': 0,
+			'plus-life': 0,
 		};
 	},
 	setClass: function(newClass) {
@@ -149,6 +150,8 @@ var buildCalculator = {
 			case "plus-crit-hit":
 				this.attrs['critical-hit'] += e;
 				break;
+			case "plus-life":
+			case "plus-life-regen":
 			case "plus-damage-reduce":
 			case "plus-resist-all":
 			case "plus-attack-speed":
@@ -338,7 +341,7 @@ var buildCalculator = {
 		// +% Life Addition
 		// Formula : Life + ( Life * ( Plus Life / 100 ) )
 		// ----------------------------------		
-		rendered.life += (rendered.life * (this.attrs['plus-life'] / 100));
+		rendered.life += (rendered.life * ((this.attrs['plus-life'] + this.bonuses['plus-life'] * 100) / 100));
 		// ----------------------------------
 		// Armor
 		// Formula: ( Armor + Strength ) * ( Bonus Armor Percentage )
