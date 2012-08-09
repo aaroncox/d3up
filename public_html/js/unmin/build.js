@@ -533,6 +533,9 @@ $(function() {
 			var target = containerSkills.find("li[data-id=\"" + k + "\"] ul.details").empty();
 			$.each(v, function(s,i) {
 				switch(s) {
+					case "3rd-hit":
+						target.append(statLabel("Average 3rd Hit", i, 'round'));
+						break;						
 					case "per-tick":
 						target.append(statLabel("DPS", i, 'round'));
 						break;

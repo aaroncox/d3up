@@ -55,6 +55,7 @@ var buildCalculator = {
 			'plus-attack-speed': 0,
 			'plus-damage-reduce': 0,
 			'plus-life': 0,
+			'3rd-hit-damage': false,
 		};
 	},
 	setClass: function(newClass) {
@@ -178,7 +179,10 @@ var buildCalculator = {
 						}, this);
 						break;
 					case "plus-damage-conditional":
-						this.applyEnabledSkill((e * 100), 'plus-damage');
+						this.applyEnabledSkill(e, 'plus-damage');
+						break;
+					case "damage-reduce-conditional":
+						this.applyEnabledSkill(e, 'plus-damage-reduce');
 						break;
 					default:
 						this.applyEnabledSkill(e,i)
@@ -194,6 +198,7 @@ var buildCalculator = {
 				// console.log(k,v);
 				_.each(v.effect, function(value, effect) {
 					switch(effect) {
+						case "damage-reduce-conditional":
 						case "plus-damage-conditional": 
 							// Ignore Here
 							break;
@@ -702,6 +707,7 @@ var buildCalculator = {
 		}
 		dps = Math.round(((dLow + dHigh) / 2 ) * mathR * mathC * 100)/100;
 		hit = Math.round(((dLow + dHigh) / 2 ) * mathC * 100)/100;
+		// Does this get a 3rd hit bonus? (Monks)
 		if(duration) {
 			// dps = Math.round(((dLow + dHigh) / 2 ) * mathC * 100)/100;
 			rendered['per-tick'] = Math.round(hit / duration * 100) / 100;
@@ -713,6 +719,14 @@ var buildCalculator = {
 				rendered['dps'] = dps;							
 			}
 			rendered['average-hit'] = hit;			
+			if(this.bonuses['3rd-hit-damage']) {
+				var d3Low = mathS * mathAl * (mathM + (this.bonuses['3rd-hit-damage'] / 100)) * mathE,
+						d3High = mathS * mathAh * (mathM + (this.bonuses['3rd-hit-damage'] / 100)) * mathE,
+						hit3 = Math.round(((d3Low + d3High) / 2 ) * mathC * 100)/100,
+						dmgCycle = (((dLow + dHigh) / 2) + ((dLow + dHigh) / 2) + ((d3Low + d3High) / 2)) / 3;
+				rendered['dps'] = Math.round(dmgCycle * mathR * mathC * 100)/100;
+ 				rendered['3rd-hit'] = hit3;
+			}
 			rendered['damage'] = Math.round(dLow * 100)/100 + " - " + Math.round(dHigh * 100)/100;;
 			rendered['critical-hit'] = Math.round(dLow * ((this.attrs['critical-hit-damage'] * 0.01)) * 10) / 10 + " - " + Math.round(dHigh * ((this.attrs['critical-hit-damage'] * 0.01)) * 10) / 10;
 		}
@@ -730,7 +744,11 @@ var buildCalculator = {
 				_.each(v.effect, function(e,i) {
 					// console.log(e,i);
 					switch(i) {
+						case "3rd-hit":
+							bonuses['3rd-hit-damage'] = e;
+							break;
 						case "plus-damage-conditional":
+						case "damage-reduce-conditional":
 						case "plus-crit-hit":
 						case "plus-attack-speed":
 						case "plus-damage":
@@ -796,6 +814,7 @@ var buildCalculator = {
 				_.each(v.effect, function(e,i) {
 					// console.log(e,i);
 					switch(i) {
+						case "damage-reduce-conditional":
 						case "plus-damage-conditional":
 							activate = true;
 							break;

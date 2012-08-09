@@ -80,7 +80,10 @@ var passives = {
 			}
 		},
 		'superstition': {
-			'desc': 'Reduces all non-Physical damage by <span class="skill-highlight">20%</span>. Whenever you take damage from a ranged or elemental attack, you have a chance to gain <span class="skill-highlight">3</span> Fury.'
+			'desc': 'Reduces all non-Physical damage by <span class="skill-highlight">20%</span>. Whenever you take damage from a ranged or elemental attack, you have a chance to gain <span class="skill-highlight">3</span> Fury.',
+			'effect': {
+				'damage-reduce-conditional': 20
+			}
 		},
 		'tough-as-nails': {
 			'desc': 'Increases Armor by <span class="skill-highlight">25%</span>.<br />Thorns damage dealt increased by <span class="skill-highlight">50%</span>.',
@@ -1078,6 +1081,7 @@ var activeSkills = {
 			effect: {
 				'cost-fury': 20,
 				'weapon-damage': 60,
+				'weapon-damage-for': 3,
 			},
 		},
 		'sprint~d': {
@@ -2981,7 +2985,8 @@ var activeSkills = {
 			rune: 'Teleport to the target and release an electric shockwave with every punch that hits all enemies within 6 yards of your primary target for 35% weapon damage as Lightning.',
 			effect: {
 				'generate-spirit': 6,
-				'weapon-damage': 145,
+				'weapon-damage': 110,
+				'3rd-hit': 35,
 			},
 		},
 		'fists-of-thunder~b': {
@@ -3089,6 +3094,7 @@ var activeSkills = {
 			effect: {
 				'generate-spirit': 6,
 				'weapon-damage': 110,
+				'plus-damage-conditional': 18
 			},
 		},
 		'deadly-reach~b': {
@@ -3106,7 +3112,8 @@ var activeSkills = {
 			rune: 'The third strike is replaced with an attack that will hit up to 6 nearby enemies within 15 yards for 170% weapon damage as Lightning.',
 			effect: {
 				'generate-spirit': 6,
-				'weapon-damage': 280,
+				'weapon-damage': 110,
+				'3rd-hit': 60,
 			},
 		},
 		'deadly-reach~d': {
@@ -3125,6 +3132,7 @@ var activeSkills = {
 			effect: {
 				'generate-spirit': 6,
 				'weapon-damage': 110,
+				'plus-armor': 50,
 			},
 		},
 		'blinding-flash': {
@@ -3142,7 +3150,7 @@ var activeSkills = {
 			effect: {
 				'cost-spirit': 10,
 				'cooldown': 15,
-				'plus-damage-conditional': 0.3
+				'plus-damage-conditional': 30
 			},
 		},
 		'blinding-flash~b': {
@@ -3394,6 +3402,7 @@ var activeSkills = {
 			effect: {
 				'generate-spirit': 6,
 				'weapon-damage': 110,
+				'plus-damage-conditional': 10,
 			},
 		},
 		'wave-of-light': {
@@ -4105,7 +4114,7 @@ var activeSkills = {
 			rune: 'Increases the strength of Mantra of Conviction so that enemies take 24% additional damage and 48% for the first 3 seconds.',
 			effect: {
 				'cost-spirit': 50,
-				'plus-damage': 12,
+				'plus-damage': 24,
 			},
 		},
 		'mantra-of-conviction~b': {
