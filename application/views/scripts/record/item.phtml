@@ -3,31 +3,19 @@
 	$this->headTitle($this->record->name); 
 ?>
 <style type="text/css" media="screen">
+	.blank-container {
+		width: 500px;
+	}
 	.single-item {
-		width: 430px;
 		margin: 20px auto;
+		width: 430px;
 	}
 </style>
-<div class="single-item">
-	<?= $this->displayItem($this->record) ?>
-	<? if($this->record->rating): ?>
-	<div style="background-color: #111; margin: 5px; padding: 5px" class='ui-widget ui-corner-all'>
-	<h3 style="margin: 0">Perfection Ratings</h3>
-	<table class="perfection-rating">
-		<tr>
-			<? foreach($this->record->rating as $key => $value): ?>
-				<? if($key == 'total') { continue; } ?>
-				<td><?= $this->itemStat($key, round($value, 1) . "%", $value)?></td>
-			<? endforeach ?>			
-			<td>
-				<?= $this->itemStat('total', $this->record->rating['total']."%", $this->record->rating['total'])  ?>
-			</td>
-		</tr>
-	</table>
+<div class="blank-container inline-flow">
+	<div class="single-item">
+		<?= $this->displayItem($this->record) ?>
 	</div>
-	<? endif ?>
-	<p style='text-align: center'>
-		Link: <input type='text' value='http://d3up.com<?= $this->url(array('record' => $this->record), $this->record->route, true) ?>'/>
+	<p style="text-align: center">
 		<? if($profile && $this->record->_createdBy && $profile->createReference() == $this->record->_createdBy->createReference()): ?>
 		<a href="/i/<?= $this->record->id ?>/edit" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only gear-change"><span class="ui-button-text">Edit</span></a>
 		<? endif; ?>
@@ -35,9 +23,58 @@
 		<a href="/i/<?= $this->record->id ?>/copy" class="has-tooltip ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only gear-change"><span class="ui-button-text" data-tooltip="Copy this item into 'My Items'">Make a Copy</span></a>
 		<? endif; ?>
 	</p>
-	<p>Text Version of the Item:
+	<? if($this->record->rating): ?>
+	<div style="background-color: #111; margin: 15px 5px; padding: 5px;" class='ui-widget ui-corner-all'>
+		<h3 class="table-header">Perfection Ratings</h3>
+		<table class="d3up-table">
+			<tr>
+				<? foreach($this->record->rating as $key => $value): ?>
+					<? if($key == 'total') { continue; } ?>
+					<td><?= $this->itemStat($key, round($value, 1) . "%", $value)?></td>
+				<? endforeach ?>			
+			</tr>
+		</table>
+	</div>
+	<? endif ?>
+</div>
+<div class="inline-flow" style="width: 446px">
+	<div class="item-tools ui-widget ui-widget-content ui-corner-all">
+		<ul>
+			<li><a href="#tab-similar">Similar</a></li>
+			<li><a href="#tab-share">Share this Item</a></li>
+		</ul>
+		<div id="tab-similar">
+			<h3 class="table-header" style='margin-bottom: 20px'>Search Attributes</h3>
+			<select data-placeholder="Which attributes?" id="similar-attributes" multiple="multiple" style="width: 390px">
+				<? foreach(D3Up_View_Helper_DisplayItem::getAttributeMap() as $key => $value): ?>
+					<option value="<?= $key ?>" <?= (in_array($key, array_keys($this->record->attrs->export()))) ? "selected='selected'" : "" ?>><?= str_replace('[v]', "", $value) ?></option>
+				<? endforeach?>
+			</select>
+			<h3 class="table-header"style='margin-top: 20px'>Search Results</h3>
+			<table id="similar-items" class="d3up-table">
+				<tbody>
+					<? if(count($this->similar) > 0): ?>
+						<? foreach($this->similar as $item): ?>
+						<tr class='item-row'>
+							<td><?= $this->itemLink($item) ?></td>
+						</tr>
+						<? endforeach ?>
+					<? else: ?>
+					<tr>
+						<td>No similar items found</td>
+					</tr>
+					<? endif ?>
+				</tbody>
+			</table>
+		</div>
+		<div id="tab-share">		
+			<p style='text-align: center'>
+				<h3 class='table-header'>Link</h3>
+				<input style="width: 400px" type='text' value='http://d3up.com<?= $this->url(array('record' => $this->record), $this->record->route, true) ?>'/>
+			</p>
+			<h3 class='table-header'>Text Version</h3>
 <? $p = new D3Up_View_Helper_DisplayItem() ?>
-<textarea style="text-align: left; width: 425px; height: 200px">
+<textarea style="text-align: left; width: 390px; height: 200px; font-size: 10px">
 <?= $this->record->name?> (<?= $p->_qualityMap[$this->record->quality] ?> <?= $p->prettyDisplay($this->record->type) ?>)
 <? if(isset($this->record->stats['dps'])): ?>
 <?= $this->record->stats['dps'] ?> dps
@@ -66,15 +103,42 @@
 <? endforeach ?>
 <? endif; ?>
 </textarea>
-	</p>
+		</div>
+	</div>
 </div>
+<script type="text/javascript" src="/js/skills.js"></script>
 <script type="text/javascript">
 	$(function() {
+		$(".item-tools").tabs();
 		var set = $(".setBonus");
 		if(set.length) {
 			var builder = Object.create(itemBuilder);
 			var data = builder.getBonusHtml(set.data('id'));
 			set.empty().append(data.name, data.list);			
 		}
+		$("#similar-attributes").chosen();
+		$("#similar-attributes").bind('change', function() {
+			selected = $(".d3-item").data('json');
+			$.ajax({
+				url: '/i/'+selected.id+'/get-similar?&attrs='+JSON.stringify($("#similar-attributes").val()),
+				type: 'json',
+				success: function(data) {
+					var target = $("#similar-items tbody").empty(),
+							json = JSON.parse(data);
+					$.each(json, function(k,v) {
+						var item = v.item,
+								link = $('<a class="quality-'+item.quality+'" href="/i/'+item.id+'">'+item.name+'</a>').attr("data-json", JSON.stringify(v.item)),
+								tr = $("<tr class='item-row'/>");
+						link.bindTooltip();
+						// console.log(item);
+						tr.append($("<td/>").append(link));
+						target.append(tr);
+					});
+					if(json.length == 0) {
+						target.html("<tr><td style='line-height: 1.5em'>No similar items have been found, try removing some of the attributes above to broaden the search.</td></tr>");
+					}
+				}
+			});
+		});
 	});
 </script>

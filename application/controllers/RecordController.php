@@ -150,11 +150,56 @@ class RecordController extends Epic_Controller_Action
 			// echo "not logged in";
 		}
 	}
+	public function getSimilarAction() {
+		$this->getSimilarItems();
+		$items = $this->view->similar;
+		$this->getResponse()->setHeader('Content-type', 'application/json');
+		$data = array();
+		$helper = new D3Up_View_Helper_PrettyStat();
+		foreach($items as $item) {
+			$data[$item->id] = array(
+				'item' => $item->cleanExport()
+			);
+		}
+		echo json_encode($data); exit;
+	}
+	public function getSimilarItems() {
+		$item = $this->getRecord();
+		$toCompare = json_decode($this->getRequest()->getParam('attrs'));
+		if(empty($toCompare)) {
+			$toCompare = array_keys($item->rating->export());
+			unset($toCompare['total']);
+		}
+		foreach($toCompare as $attr) {
+			$query['rating'] = array(
+				'$ne' => $item->rating->export()
+			);
+			if($item->rating[$attr]) {
+				$value = $item->rating[$attr];
+				$query['rating.'.$attr] = array(
+					'$gt' => ($value - 10),
+					'$lt' => ($value + 10),
+				);
+				
+				// var_dump($item->rating[$attr]);
+			}
+		}
+		// Get rid of the total
+		unset($query['rating.total']);
+		$query['id'] = array(
+			'$ne' => $item->id
+		);
+		$items = Epic_Mongo::db('item')->fetchAll($query, array(), 8);							
+		$this->view->similar = $items;
+	}
 	public function viewAction() {
 		$record = $this->getRecord();
 		if($record->_type == "build") {
 			$this->checkVote();
 			$record->viewCounter();
+		}
+		if($record->_type == 'item') {
+			$this->getSimilarItems();
 		}
 		// if($record->_type == "build") {
 			// Get all the comments and the comment form

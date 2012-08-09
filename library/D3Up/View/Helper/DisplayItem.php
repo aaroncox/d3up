@@ -334,11 +334,9 @@ class D3Up_View_Helper_DisplayItem extends Zend_View_Helper_Abstract
 					$value = $value->export();
 				}
 				if(is_array($value)) {
-					return str_replace("[v]", implode("-", $value), self::$_attrMap[$type]);
+					$value = implode("-", $value);
 				}
-				if(is_numeric($value)) {
-					return str_replace("[v]", $value, self::$_attrMap[$type]);
-				}
+				$value = "<span class='value'>". $value ."</span>";
 				return str_replace("[v]", $value, self::$_attrMap[$type]);
 			}
 			return self::$_attrMap[$type];				
@@ -449,7 +447,7 @@ class D3Up_View_Helper_DisplayItem extends Zend_View_Helper_Abstract
 	}
 	public function displayItem($item) {
 		$this->_item = $item;
-		return $this->view->htmlTag("div", array('class' => 'd3-item'),
+		return $this->view->htmlTag("div", array('class' => 'd3-item', 'data-json' => json_encode($item->cleanExport())),
 			$this->view->htmlTag("div", array('class' => 'top'), $this->_renderTop())."".
 			$this->view->htmlTag("div", array('class' => 'item'), $this->_renderItem())."".
 			$this->view->htmlTag("div", array('class' => 'bottom'), $this->_renderBottom())			
