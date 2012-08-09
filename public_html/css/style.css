@@ -127,7 +127,9 @@ a:active .ui-button-text, a:visited .ui-button-text {
 	margin-left: 20px;
 	width: 760px;
 }
-
+#header-content .table-header {
+	font-size: 14px;
+}
 .select2-result {
 	color: #222;
 }
