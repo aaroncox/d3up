@@ -621,6 +621,9 @@ var itemBuilder = {
 	getBonusHtml: function(setBonus) {
 		var bonuses = $("<ul class='bonuses'>"),
 				bonus = setBonuses[setBonus];
+		if(!bonus) {
+			return '';
+		}
 		if(bonus.effect) {
 			_.each(bonus.effect, function(v,k) {
 				if(k) {
