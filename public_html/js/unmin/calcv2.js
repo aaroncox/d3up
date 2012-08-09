@@ -686,8 +686,8 @@ var buildCalculator = {
 			};
 			var mathS = 1 + this.attrs[this.attrs.primary] * 0.01,
 					mathA = ((mhMinDamage + mhMaxDamage) / 2 + (ohMinDamage + ohMaxDamage) / 2 + bnMinDamage + bnMaxDamage) / 2,
-					mathAl = (mhMinDamage + ohMinDamage + bnMinDamage),
-					mathAh = (mhMaxDamage + ohMaxDamage + bnMaxDamage),
+					mathAl = (mhMinDamage + ohMinDamage + bnMinDamage + bnMaxDamage) / 4,
+					mathAh = (mhMaxDamage + ohMaxDamage + bnMaxDamage + bnMaxDamage) / 4,
 					mathM = (1 + this.bonuses['plus-damage']);
 					mathR = (rendered['dps-speed'].mh + rendered['dps-speed'].oh) / 2 * (1 + atkSpeedInc + 0.15 + this.bonuses['plus-attack-speed']),
 					mathC = 1 + (this.attrs['critical-hit'] * 0.01) * (this.attrs['critical-hit-damage'] * 0.01),
