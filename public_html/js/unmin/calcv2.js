@@ -728,7 +728,6 @@ var buildCalculator = {
  				rendered['3rd-hit'] = hit3;
 			}
 			rendered['damage'] = Math.round(dLow * 100)/100 + " - " + Math.round(dHigh * 100)/100;
-			console.log(this.attrs['critical-hit-damage'], this.attrs['critical-hit']);
 			rendered['critical-hit'] = Math.round(dLow * (1+ (this.attrs['critical-hit-damage'] * 0.01)) * 10) / 10 + " - " + Math.round(dHigh * (1 + (this.attrs['critical-hit-damage'] * 0.01)) * 10) / 10;
 		}
 		return rendered;
