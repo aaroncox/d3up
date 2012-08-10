@@ -266,7 +266,7 @@ var buildCalculator = {
 						case "switch":
 							if(value.against == 'isDuelWielding') {
 								_.each(value.cases, function(c, i) {
-									if(c.case == this.isDuelWielding) {
+									if(c.caseOf == this.isDuelWielding) {
 										_.each(c.effect, function(eff, e) {
 											switch(e) {
 												case "plus-dodge":
@@ -283,7 +283,7 @@ var buildCalculator = {
 								_.each(value.cases, function(c, i) {
 									var match = false;
 									// console.log(c,i);
-									_.each(c.case.split("|"), function(l, n) {
+									_.each(c.caseOf.split("|"), function(l, n) {
 										// console.log("now", value.against, value.lookup, this.gear[value.against][value.lookup], this.gear);
 										if(l == this.gear[value.against][value.lookup]) {
 											_.each(c.effect, function(eff, e) {

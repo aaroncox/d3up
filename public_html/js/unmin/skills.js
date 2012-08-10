@@ -31,25 +31,25 @@ var passives = {
 					'cases': [
 					// '2h-mace', '2h-axe', 'bow', 'diabo', 'crossbow', '2h-mighty', 'polearm', 'staff', '2h-sword', 'axe', 'ceremonial-knife', 'hand-crossbow', 'dagger', 'fist-weapon', 'mace', 'mighty-weapon', 'spear', 'sword', 'wand'
 						{
-							"case": "sword|dagger|2h-sword",
+							"caseOf": "sword|dagger|2h-sword",
 							'effect': {
 								'plus-damage': 0.15
 							}
 						},
 						{
-							"case": "mace|axe|2h-axe|2h-mace",
+							"caseOf": "mace|axe|2h-axe|2h-mace",
 							'effect': {
 								'critical-hit': 0.1
 							}
 						},
 						{
-							"case": "spear|polearm",
+							"caseOf": "spear|polearm",
 							'effect': {
 								'attack-speed': 0.1
 							}
 						},
 						{
-							"case": "mighty|2h-mighty",
+							"caseOf": "mighty|2h-mighty",
 							'effect': {
 								
 							}
@@ -149,13 +149,13 @@ var passives = {
 					'against': 'isDuelWielding',
 					'cases': [
 						{
-							"case": true,
+							"caseOf": true,
 							'effect': {
 								'plus-dodge': 0.15
 							}
 						},
 						{
-							"case": false,
+							"caseOf": false,
 							'effect': {
 								'plus-spirit-regen': 0.25
 							}
@@ -289,19 +289,19 @@ var passives = {
 					'against': 'mainhand',
 					'cases': [
 						{
-							"case": "bow",
+							"caseOf": "bow",
 							'effect': {
 								'plus-damage': 0.15
 							}
 						},
 						{
-							"case": "crossbow",
+							"caseOf": "crossbow",
 							'effect': {
 								'critical-hit-damage': 0.5
 							}
 						},
 						{
-							"case": "hand-crossbow",
+							"caseOf": "hand-crossbow",
 							'effect': {
 								'critical-hit': 0.1
 							}
