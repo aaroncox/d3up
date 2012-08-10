@@ -54,7 +54,7 @@ $(function() {
 			passiveDisplay = $("#passive-display"),	
 			activeActivesData = {},		
 			activePassivesData = {},
-			calc = new buildCalculator(),
+			calc = Object.create(buildCalculator),
 			activeActiveSkills = {},
 			activePassiveSkills = {},
 			enabledSkills = {},
