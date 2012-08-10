@@ -112,7 +112,7 @@
 		$(".item-tools").tabs();
 		var set = $(".setBonus");
 		if(set.length) {
-			var builder = Object.create(itemBuilder);
+			var builder = new itemBuilder();
 			var data = builder.getBonusHtml(set.data('id'));
 			set.empty().append(data.name, data.list);			
 		}

@@ -13,7 +13,7 @@
 <script type="text/javascript">
 $(function() {
 	// Establish the Builder
-	var builder = Object.create(itemBuilder);
+	var builder = new itemBuilder();
 	// Set the Name Field
 	builder.setNameInput($("#name"));
 	// Set the Quality Selector

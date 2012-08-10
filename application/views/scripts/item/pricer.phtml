@@ -72,7 +72,7 @@
 	$("#pricer-stats").tabs();
 	$("#simulate-attributes, #itemType").chosen();
 	var similar = $("#similar-items");
-	var builder = Object.create(itemBuilder);
+	var builder = new itemBuilder();
 	// Set the Type Selector
 	builder.setItemTypeSelect($("#itemType"));
 	// Set the Attribute Selector

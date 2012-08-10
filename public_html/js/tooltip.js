@@ -76,7 +76,7 @@ $(function() {
 		}
 		
 		if(item.set) {
-			var builder = Object.create(itemBuilder);
+			var builder = new itemBuilder();
 			var data = builder.getBonusHtml(item.set);
 			itemSetBonus.empty().append(data.name, data.list);
 			if($(this).data("set-count")) {
