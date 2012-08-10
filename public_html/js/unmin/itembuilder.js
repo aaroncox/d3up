@@ -438,7 +438,7 @@ var itemBuilder = {
 						idx = 1;
 					}
 					// Is this a weapon?
-					if(this.item.class == "weapon") {
+					if(this.item.itemClass == "weapon") {
 						idx = 2;
 					} 
 					option.val(k);
@@ -474,7 +474,7 @@ var itemBuilder = {
 			}
 		}, this);
 		// Add stats relevant to the Item's Class
-		switch(builder.item.class) {
+		switch(builder.item.itemClass) {
 			case "none":
 				builder.preview.statsPrimary.empty();
 				builder.preview.statsRange.empty();
