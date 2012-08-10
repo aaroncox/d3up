@@ -273,7 +273,7 @@ var itemBuilder = {
 			builder.item.typeName = $(this).find(":selected").text();
 			_.each(builder.itemClass, function(v,k) {
 				if(_.indexOf(v, $(this).val()) >= 0) {
-					builder.item.class = k;
+					builder.item.itemClass = k;
 					builder.initPreview();	// Not sure why... but I have to rebuild it
 					builder.updatePreview();				
 				}

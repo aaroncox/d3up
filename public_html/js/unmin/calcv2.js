@@ -1,5 +1,5 @@
 var buildCalculator = {
-	class: null,					// Hero Class
+	itemClass: null,					// Hero Class
 	gearSelector: null,		// Where is the gear on the page?
 	passiveSkills: [],		// What passives are active?
 	activeSkills: [],			// Which active skills do we use?
@@ -83,10 +83,10 @@ var buildCalculator = {
 				break;
 		}
 		this.attrs['vitality'] += 127; // Grant base vitality to all classes
-		this.class = newClass;
+		this.itemClass = newClass;
 	},
 	getClass: function() {
-		return this.class;
+		return this.itemClass;
 	},
 	setActives: function(actives) {
 		this.activeSkills = actives;
@@ -465,7 +465,7 @@ var buildCalculator = {
 		// Effective Health Calculations
 		// ----------------------------------
 		// Are we a Monk or Barbarian? 
-		if(this.class == "monk" || this.class == "barbarian") {
+		if(this.itemClass == "monk" || this.itemClass == "barbarian") {
 			// ----------------------------------
 			// Damage Taken Percent
 			// Formula: ( 1 - Percentage Resist All ) * ( 1 - Percentage Armor Reduction ) * (1 - Bonus Damage Reduction) * (1 - 30% Melee Damage Reduction )
