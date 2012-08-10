@@ -75,6 +75,7 @@
 							<ul class="sub_menu">
 							<? if($profile = Epic_Auth::getInstance()->getProfile()): ?>
 								<!-- <li><a href="/user"><?= $profile->username ?></a></li>	 -->
+								<li><a href="/user/edit">Edit Profile</a></li>
 								<li><a href="/user/change-password">Change Password</a></li>
 								<li><a href="/user/logout">Logout</a></li>
 							<? else: ?>

@@ -347,4 +347,9 @@ class UserController extends Epic_Controller_Action
 			$this->_handleForm($form);			
 		}
 	}
+	public function editAction() {
+		$user = Epic_Auth::getInstance()->getProfile();
+		$this->view->form = $form = new D3Up_Form_User_Profile(array('user' => $user));
+		$this->_handleForm($form);
+	}
 } // END class UserController extends Epic_Controller_Action

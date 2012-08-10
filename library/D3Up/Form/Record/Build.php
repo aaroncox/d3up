@@ -76,11 +76,11 @@ class D3Up_Form_Record_Build extends Epic_Form
 			'tabindex' => 15,
 		));
 		
-		$this->addElement("text", "profileUrl", array(
-			'label' => '(For Importing) Link to the Diablo 3 Profile this is based off of',
-			'description' => 'Example: http://us.battle.net/d3/en/profile/Jesta-1121/hero/1963090',
-			'tabindex' => 20,
-		));
+		// $this->addElement("text", "profileUrl", array(
+		// 	'label' => '(For Importing) Link to the Diablo 3 Profile this is based off of',
+		// 	'description' => 'Example: http://us.battle.net/d3/en/profile/Jesta-1121/hero/1963090',
+		// 	'tabindex' => 20,
+		// ));
 		
 		$this->addElement("checkbox", "private", array(
 			'label' => 'Private?',
@@ -106,7 +106,7 @@ class D3Up_Form_Record_Build extends Epic_Form
 			'name' => $build->name,
 			'description' => $build->description,
 			'private' => $build->private,
-			'profileUrl' => $build->profileUrl,
+			// 'profileUrl' => $build->profileUrl,
 		));
 		
 		if($this->isNewRecord()) {
@@ -131,7 +131,7 @@ class D3Up_Form_Record_Build extends Epic_Form
 		// Set the Quality of the Build
 		$build->class = $this->class->getValue();
 		// Set the Profile URL
-		$build->profileUrl = $this->profileUrl->getValue();
+		// $build->profileUrl = $this->profileUrl->getValue();
 		// Set privacy
 		$build->private = (bool) $this->private->getValue();
 		// Set the Description

@@ -103,4 +103,10 @@ class IndexController extends Epic_Controller_Action {
 		);
 		echo json_encode($gems); exit;
 	}
+	public function testApiAction() {
+		$record = Epic_Mongo::db('build')->fetchOne(array("id" => 2));
+		$this->view->status = D3Up_Tool_Crawler::getInstance()->crawl($record);
+		echo "done";
+		exit;
+	}
 }

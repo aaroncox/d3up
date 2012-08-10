@@ -291,8 +291,9 @@ class RecordController extends Epic_Controller_Action
 		if($profile = Epic_Auth::getInstance()->getProfile()) {		
 			$record = $this->getRecord();
 			if($record->_createdBy->createReference() == $profile->createReference()) {
-				if($confirm = $this->getRequest()->getParam("confirm")) {			
-					$this->view->status = D3Up_Tool_Crawler::getInstance()->crawl($record);
+				$this->view->characters = D3Up_Tool_Crawler::getInstance()->getCharacters($profile);
+				if($character = $this->getRequest()->getParam("character")) {			
+					$this->view->status = D3Up_Tool_Crawler::getInstance()->crawl($record, $profile, $character);
 					$record->crawlCount++;
 					$record->save();
 				}
