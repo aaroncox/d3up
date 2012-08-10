@@ -264,7 +264,7 @@ var buildCalculator = {
 							this.attrs['critical-hit'] = this.attrs['critical-hit'] + (value * 100);
 							break;
 						case "switch":
-							if(value.var == 'isDuelWielding') {
+							if(value.against == 'isDuelWielding') {
 								_.each(value.cases, function(c, i) {
 									if(c.case == this.isDuelWielding) {
 										_.each(c.effect, function(eff, e) {
@@ -277,15 +277,15 @@ var buildCalculator = {
 									} 
 								}, this);
 							}
-							// console.log(value.var);
-							if(typeof this.gear[value.var] != "undefined") {
+							// console.log(value.against);
+							if(typeof this.gear[value.against] != "undefined") {
 								// console.log(value.cases);
 								_.each(value.cases, function(c, i) {
 									var match = false;
 									// console.log(c,i);
 									_.each(c.case.split("|"), function(l, n) {
-										// console.log("now", value.var, value.lookup, this.gear[value.var][value.lookup], this.gear);
-										if(l == this.gear[value.var][value.lookup]) {
+										// console.log("now", value.against, value.lookup, this.gear[value.against][value.lookup], this.gear);
+										if(l == this.gear[value.against][value.lookup]) {
 											_.each(c.effect, function(eff, e) {
 												switch(e) {
 													case 'plus-damage':

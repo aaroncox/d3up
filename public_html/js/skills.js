@@ -27,7 +27,7 @@ var passives = {
 			'effect': {
 				'switch': {
 					'lookup': 'type',
-					'var': 'mainhand',
+					'against': 'mainhand',
 					'cases': [
 					// '2h-mace', '2h-axe', 'bow', 'diabo', 'crossbow', '2h-mighty', 'polearm', 'staff', '2h-sword', 'axe', 'ceremonial-knife', 'hand-crossbow', 'dagger', 'fist-weapon', 'mace', 'mighty-weapon', 'spear', 'sword', 'wand'
 						{
@@ -146,7 +146,7 @@ var passives = {
 			'desc': 'While dual-wielding, you gain a <span class="skill-highlight">15%</span> chance to dodge incoming attacks. While using a two-handed weapon, all Spirit generation is increased by <span class="skill-highlight">25%</span>.',
 			'effect': {
 				'switch': {
-					'var': 'isDuelWielding',
+					'against': 'isDuelWielding',
 					'cases': [
 						{
 							"case": true,
@@ -286,7 +286,7 @@ var passives = {
 			'effect': {
 				'switch': {
 					'lookup': 'type',
-					'var': 'mainhand',
+					'against': 'mainhand',
 					'cases': [
 						{
 							"case": "bow",
