@@ -686,8 +686,8 @@ var buildCalculator = {
 			};
 			var mathS = 1 + this.attrs[this.attrs.primary] * 0.01,
 					mathA = ((mhMinDamage + mhMaxDamage) / 2 + (ohMinDamage + ohMaxDamage) / 2 + bnMinDamage + bnMaxDamage) / 2,
-					mathAl = (mhMinDamage + ohMinDamage + bnMinDamage + bnMaxDamage) / 4,
-					mathAh = (mhMaxDamage + ohMaxDamage + bnMaxDamage + bnMaxDamage) / 4,
+					mathAl = ((mhMinDamage + bnMaxDamage) + (ohMinDamage + bnMinDamage)) / 4,
+					mathAh = ((mhMaxDamage + bnMaxDamage) + (ohMaxDamage + bnMaxDamage)) / 4,
 					mathM = (1 + this.bonuses['plus-damage']);
 					mathR = (rendered['dps-speed'].mh + rendered['dps-speed'].oh) / 2 * (1 + atkSpeedInc + 0.15 + this.bonuses['plus-attack-speed']),
 					mathC = 1 + (this.attrs['critical-hit'] * 0.01) * (this.attrs['critical-hit-damage'] * 0.01),
@@ -705,8 +705,8 @@ var buildCalculator = {
 					dLow = mathS * mathAl * mathM * mathE;
 					dHigh = mathS * mathAh * mathM * mathE;
 		}
-		dps = Math.round(((dLow + dHigh) / 2 ) * mathR * mathC * 100)/100;
-		hit = Math.round(((dLow + dHigh) / 2 ) * mathC * 100)/100;
+		dps = Math.round(((dLow + dHigh) / 2) * mathR * mathC * 100)/100;
+		hit = Math.round(((dLow + dHigh) / 2) * mathC * 100)/100;
 		// Does this get a 3rd hit bonus? (Monks)
 		if(duration) {
 			// dps = Math.round(((dLow + dHigh) / 2 ) * mathC * 100)/100;
@@ -727,8 +727,9 @@ var buildCalculator = {
 				rendered['dps'] = Math.round(dmgCycle * mathR * mathC * 100)/100;
  				rendered['3rd-hit'] = hit3;
 			}
-			rendered['damage'] = Math.round(dLow * 100)/100 + " - " + Math.round(dHigh * 100)/100;;
-			rendered['critical-hit'] = Math.round(dLow * ((this.attrs['critical-hit-damage'] * 0.01)) * 10) / 10 + " - " + Math.round(dHigh * ((this.attrs['critical-hit-damage'] * 0.01)) * 10) / 10;
+			rendered['damage'] = Math.round(dLow * 100)/100 + " - " + Math.round(dHigh * 100)/100;
+			console.log(this.attrs['critical-hit-damage'], this.attrs['critical-hit']);
+			rendered['critical-hit'] = Math.round(dLow * (1+ (this.attrs['critical-hit-damage'] * 0.01)) * 10) / 10 + " - " + Math.round(dHigh * (1 + (this.attrs['critical-hit-damage'] * 0.01)) * 10) / 10;
 		}
 		return rendered;
 	},
