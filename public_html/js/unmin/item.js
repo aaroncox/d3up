@@ -100,10 +100,10 @@ $("#itemType").bind("change", function() {
 		case "wizard-hat":
 			$("#base_dps-element, #base_damage_min-element, #base_damage_max-element, #base_speed-element, #base_dps-label, #base_damage_min-label, #base_damage_max-label, #base_speed-label, #base_block_chance-element, #base_block_chance-label, #base_block_amount_min-element, #base_block_amount_min-label, #base_block_amount_max-element, #base_block_amount_max-label").hide();
 			$("#base_armor-label, #base_armor-element").show();
-			var stats = $(".item-preview .stats"),
-					input = $("#base_armor"),
-					bigStat = stats.find(".big-stat"),
-					bigLabel = stats.find(".stat-helper");
+			stats = $(".item-preview .stats");
+			input = $("#base_armor");
+			bigStat = stats.find(".big-stat");
+			bigLabel = stats.find(".stat-helper");
 			$(".stats-extra-percent, .stats-extra-range").empty();
 			bigLabel.html("Armor");
 			input.keyup(function(event) {
@@ -129,15 +129,15 @@ $("#itemType").bind("change", function() {
 		case "spear":
 		case "sword":
 		case "wand":
-			var stats = $(".item-preview .stats"),
-					input1 = $("#base_dps"),
-					input2 = $("#base_damage_min"),
-					input3 = $("#base_damage_max"),
-					input4 = $("#base_speed"),
-					speedStat = $(".stats-extra-percent").html(""),
-					damageStat = $(".stats-extra-range").html(""),
-					bigStat = stats.find(".big-stat"),
-					bigLabel = stats.find(".stat-helper");
+			stats = $(".item-preview .stats");
+			input1 = $("#base_dps");
+			input2 = $("#base_damage_min");
+			input3 = $("#base_damage_max");
+			input4 = $("#base_speed");
+			speedStat = $(".stats-extra-percent").html("");
+			damageStat = $(".stats-extra-range").html("");
+			bigStat = stats.find(".big-stat");
+			bigLabel = stats.find(".stat-helper");
 			bigLabel.html("Damage per Second");
 			$("#base_armor-label, #base_armor-element, #base_block_chance-element, #base_block_chance-label, #base_block_amount_min-element, #base_block_amount_min-label, #base_block_amount_max-element, #base_block_amount_max-label").hide();
 			$("#base_dps-element, #base_damage_min-element, #base_damage_max-element, #base_speed-element, #base_dps-label, #base_damage_min-label, #base_damage_max-label, #base_speed-label").show();
@@ -199,7 +199,6 @@ $("#sockets").bind("change", function() {
 					case "pants":
 					case "mighty-belt":
 					case "shoulders":
-					default:
 						effect = v[3];
 						break;
 					case "2h-mace":
@@ -223,6 +222,9 @@ $("#sockets").bind("change", function() {
 					case "wand":
 						effect = v[2];							
 						break;
+					default:
+						effect = v[3];
+						break;					
 				}
 				select.append("<option value='" + k + "'>" + v[0] + " (" + effect + ")</option>");
 			});

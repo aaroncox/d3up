@@ -6,7 +6,7 @@ var passives = {
 		'pound-of-flesh': {
 			'desc': 'Increases the chance of finding a health globe by <span class="skill-highlight">25%</span> and you gain <span class="skill-highlight">100%</span> additional Life from health globes.',
 			'effect': {
-				'health-globes': 1,
+				'health-globes': 1
 			}
 		},
 		'ruthless': {
@@ -19,7 +19,7 @@ var passives = {
 		'nerves-of-steel': {
 			'desc': 'Your Armor is increased by <span class="skill-highlight">100%</span> of your Vitality.',
 			'effect': {
-				'vitality-to-armor': 1,
+				'vitality-to-armor': 1
 			}
 		},
 		'weapons-master': {
@@ -190,14 +190,14 @@ var passives = {
 		},
 		'near-death-experience': {
 			'desc': 'When receiving fatal damage, you are instead restored to <span class="skill-highlight">35%</span> of maximum Life and <span class="skill-highlight">35%</span> Spirit.'
-		},
+		}
 	},
 	'wizard': {
 		'blur': {
 			'desc': 'Decreases melee damage taken by <span class="skill-highlight">20%</span>.',
 			'effect': {
 				'melee-reduce': 0.20
-			},
+			}
 		},
 		'power-hungry': {
 			'desc': 'Gain <span class="skill-highlight">30</span> Arcane Power whenever you are healed by a health globe.'
@@ -330,7 +330,7 @@ var passives = {
 		},
 		'ballistics': {
 			'desc': 'Damage from rockets increased by <span class="skill-highlight">50%</span>. '
-		},
+		}
 	},
 	'witch-doctor': {
 		'circle-of-life': {
@@ -386,14 +386,10 @@ var passives = {
 		},
 		'tribal-rites': {
 			'desc': 'The cooldowns of your Fetish Army, Big Bad Voodoo, and Hex abilities are reduced by <span class="skill-highlight">25%</span>.'
-		},
+		}
 	}
-}
+};
 var activeSkills = {
-
-
-
-
 	'barbarian': {
 		'bash': {
 			name: 'Bash',
@@ -401,8 +397,8 @@ var activeSkills = {
 			effect: {
 				'chance-knockback': 20,
 				'generate-fury': 6,
-				'weapon-damage': 150,
-			},
+				'weapon-damage': 150
+			}
 		},
 		'bash~a': {
 			name: 'Bash - Onslaught',
@@ -410,8 +406,8 @@ var activeSkills = {
 			rune: 'Add 2 reverberations that cause 22.5% weapon damage per strike. Removes the chance for Knockback.',
 			effect: {
 				'generate-fury': 6,
-				'weapon-damage': 195,
-			},
+				'weapon-damage': 195
+			}
 		},
 		'bash~b': {
 			name: 'Bash - Punish',
@@ -423,11 +419,11 @@ var activeSkills = {
 				'stack': {
 					'plus-damage': {
 						'limit': 3,
-						'value': 6,
-					},
+						'value': 6
+					}
 				},
-				'weapon-damage': 150,
-			},
+				'weapon-damage': 150
+			}
 		},
 		'bash~c': {
 			name: 'Bash - Clobber',
@@ -436,8 +432,8 @@ var activeSkills = {
 			effect: {
 				'generate-fury': 6,
 				'chance-stun': 70,
-				'weapon-damage': 150,
-			},
+				'weapon-damage': 150
+			}
 		},
 		'bash~d': {
 			name: 'Bash - Instigation',
@@ -446,8 +442,8 @@ var activeSkills = {
 			effect: {
 				'chance-knockback': 20,
 				'generate-fury': 12,
-				'weapon-damage': 150,
-			},
+				'weapon-damage': 150
+			}
 		},
 		'bash~e': {
 			name: 'Bash - Pulverize',
@@ -456,8 +452,8 @@ var activeSkills = {
 			effect: {
 				'chance-knockback': 20,
 				'generate-fury': 6,
-				'weapon-damage': 188,
-			},
+				'weapon-damage': 188
+			}
 		},
 		'hammer-of-the-ancients': {
 			name: 'Hammer of the Ancients',
@@ -465,8 +461,8 @@ var activeSkills = {
 			effect: {
 				'cost-fury': 20,
 				'weapon-damage': 200,
-				'plus-critical-hit-this': 5,
-			},
+				'plus-critical-hit-this': 5
+			}
 		},
 		'hammer-of-the-ancients~a': {
 			name: 'Hammer of the Ancients - Smash',
@@ -475,8 +471,8 @@ var activeSkills = {
 			effect: {
 				'cost-fury': 20,
 				'plus-critical-hit-this': 5,
-				'weapon-damage': 270,
-			},
+				'weapon-damage': 270
+			}
 		},
 		'hammer-of-the-ancients~b': {
 			name: 'Hammer of the Ancients - Rolling Thunder',

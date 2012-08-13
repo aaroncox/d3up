@@ -302,8 +302,4 @@ var activeActives = [];
 	var isLoggedIn = false;
 	<? endif ?>
 </script>
-<?= $this->headJs()
-		->appendFile("/js/jquery.js")
-		->appendFile("/js/unmin/calcv2.js")
-		->appendFile("/js/unmin/build.js")
-?>
+<script type="text/javascript" src="/js/build.js?time=<?= time() ?>"></script>

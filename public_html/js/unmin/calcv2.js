@@ -43,7 +43,7 @@ var buildCalculator = {
 			'melee-reduce': 0,
 			'range-reduce': 0,
 			'elite-reduce': 0,
-			'resist-all': 0,
+			'resist-all': 0
 		};
 		this.gear = {};
 		this.values = {};
@@ -55,7 +55,7 @@ var buildCalculator = {
 			'plus-attack-speed': 0,
 			'plus-damage-reduce': 0,
 			'plus-life': 0,
-			'3rd-hit-damage': false,
+			'3rd-hit-damage': false
 		};
 	},
 	setClass: function(newClass) {
@@ -158,9 +158,9 @@ var buildCalculator = {
 			case "plus-attack-speed":
 			case "plus-damage":
 			case "plus-armor":
-				var value = e / 100;
+				var valueAdd = e / 100;
 				// console.log(i, value);
-				this.addBonus(i, value);
+				this.addBonus(i, valueAdd);
 				break;
 			default:
 			 	// console.log("Unhandled Active: " + e + " " + i);
@@ -185,7 +185,7 @@ var buildCalculator = {
 						this.applyEnabledSkill(e, 'plus-damage-reduce');
 						break;
 					default:
-						this.applyEnabledSkill(e,i)
+						this.applyEnabledSkill(e,i);
 						break;
 				}
 			}, this);
@@ -313,7 +313,7 @@ var buildCalculator = {
 													 	console.log("Unhandled Switch: " + e + " [" + eff + "]");
 														break;
 												}													
-											}, this)
+											}, this);
 										}
 									}, this);
 								}, this);
@@ -537,17 +537,18 @@ var buildCalculator = {
 			'pt-vitality': {'vitality': 1},
 			'pt-plus-life': {'plus-life': 1},
 			'pt-intelligence': {'intelligence': 1},
-			'pt-strength': {'strength': 1},
+			'pt-strength': {'strength': 1}
 		};
 		_.each(incs, function(v, k) {
+			var item = {};
 			switch(k) {
 				case "pt-armor":
-					var item = {
-						stats: v,
+					item = {
+						stats: v
 					};
 					break;
 				default:
-					var item = {
+					item = {
 						attrs: v
 					};
 					break;
@@ -559,7 +560,7 @@ var buildCalculator = {
 			rendered['ehp-' + k] = tEhp['ehp'] - ehp.ehp;				
 			// Re-add the Item to the gear set
 			this.removeItem('extra');
-		}, this)
+		}, this);
 		// Return rendered EHP Gear values
 		return rendered;
 	},
@@ -604,31 +605,32 @@ var buildCalculator = {
 		// 	// bnMaxDamage += elementalBonus;
 		// }
 		// Are we duel wielding?
+		var mathS, mathC, mathR, mathA, mathM;
 		if(this.isDuelWielding) {
 			rendered['dps-speed'] = {
 				// mh: this.attrs['speed'],
 				// oh: this.attrs['speed-oh'],
 				mh: Math.floor(this.attrs['speed'] * 1024) / 1024,
-				oh: Math.floor(this.attrs['speed-oh'] * 1024) / 1024,
+				oh: Math.floor(this.attrs['speed-oh'] * 1024) / 1024
 			};
 			// console.log(mhMinDamage, mhMaxDamage, ohMinDamage, ohMaxDamage, bnMinDamage, bnMaxDamage);
 			// console.log(this.attrs['speed'], this.attrs['speed-oh']);
 			// console.log(rendered['dps-speed'].mh, rendered['dps-speed'].oh);
-			var mathS = 1 + this.attrs[this.attrs.primary] * 0.01,
-					mathC = 1 + (this.attrs['critical-hit'] * 0.01) * (this.attrs['critical-hit-damage'] * 0.01),
-					mathR = (rendered['dps-speed'].mh + rendered['dps-speed'].oh) / 2 * (1 + atkSpeedInc + 0.15 + this.bonuses['plus-attack-speed']),
-					mathA = ((mhMinDamage + mhMaxDamage) / 2 + (ohMinDamage + ohMaxDamage) / 2 + bnMinDamage + bnMaxDamage) / 2,
-					mathM = (1 + this.bonuses['plus-damage']);
+			mathS = 1 + this.attrs[this.attrs.primary] * 0.01;
+			mathC = 1 + (this.attrs['critical-hit'] * 0.01) * (this.attrs['critical-hit-damage'] * 0.01);
+			mathR = (rendered['dps-speed'].mh + rendered['dps-speed'].oh) / 2 * (1 + atkSpeedInc + 0.15 + this.bonuses['plus-attack-speed']);
+			mathA = ((mhMinDamage + mhMaxDamage) / 2 + (ohMinDamage + ohMaxDamage) / 2 + bnMinDamage + bnMaxDamage) / 2;
+			mathM = (1 + this.bonuses['plus-damage']);
 			rendered['dps'] = mathS * mathC * mathR * mathA * mathM;			
 			rendered['dps-speed-display'] = Math.round(mathR * 100) / 100;
 			// console.log(mathS, mathC, mathR, mathA, mathM, rendered['dps'], "dw", rendered);
 		} else {
 			rendered['dps-speed'] = Math.floor(this.attrs['speed'] * 1024) / 1024;
-			var mathS = 1 + this.attrs[this.attrs.primary] * 0.01,
-					mathC = 1 + (this.attrs['critical-hit'] * 0.01) * (this.attrs['critical-hit-damage'] * 0.01),
-					mathR = rendered['dps-speed'] * (1 + atkSpeedInc + this.bonuses['plus-attack-speed']),
-					mathA = (mhMinDamage + mhMaxDamage) / 2 + (bnMinDamage + bnMaxDamage) / 2,
-					mathM = (1 + this.bonuses['plus-damage']);
+			mathS = 1 + this.attrs[this.attrs.primary] * 0.01;
+			mathC = 1 + (this.attrs['critical-hit'] * 0.01) * (this.attrs['critical-hit-damage'] * 0.01);
+			mathR = rendered['dps-speed'] * (1 + atkSpeedInc + this.bonuses['plus-attack-speed']);
+			mathA = (mhMinDamage + mhMaxDamage) / 2 + (bnMinDamage + bnMaxDamage) / 2;
+			mathM = (1 + this.bonuses['plus-damage']);
 			rendered['dps'] = mathS * mathC * mathR * mathA * mathM;		
 			// console.log(mhMinDamage, mhMaxDamage, bnMinDamage, bnMaxDamage);
 			// console.log(mathS, mathC, mathR, mathA, mathM, rendered['dps'], "1w");
@@ -682,28 +684,28 @@ var buildCalculator = {
 				// mh: this.attrs['speed'],
 				// oh: this.attrs['speed-oh'],
 				mh: Math.floor(this.attrs['speed'] * 1024) / 1024,
-				oh: Math.floor(this.attrs['speed-oh'] * 1024) / 1024,
+				oh: Math.floor(this.attrs['speed-oh'] * 1024) / 1024
 			};
-			var mathS = 1 + this.attrs[this.attrs.primary] * 0.01,
-					mathA = ((mhMinDamage + mhMaxDamage) / 2 + (ohMinDamage + ohMaxDamage) / 2 + bnMinDamage + bnMaxDamage) / 2,
-					mathAl = ((mhMinDamage + bnMaxDamage) + (ohMinDamage + bnMinDamage)) / 4,
-					mathAh = ((mhMaxDamage + bnMaxDamage) + (ohMaxDamage + bnMaxDamage)) / 4,
-					mathM = (1 + this.bonuses['plus-damage']);
-					mathR = (rendered['dps-speed'].mh + rendered['dps-speed'].oh) / 2 * (1 + atkSpeedInc + 0.15 + this.bonuses['plus-attack-speed']),
-					mathC = 1 + (this.attrs['critical-hit'] * 0.01) * (this.attrs['critical-hit-damage'] * 0.01),
-					dLow = mathS * mathAl * mathM * mathE;
-					dHigh = mathS * mathAh * mathM * mathE;
-					// console.log(mathS, mathAl, mathAh, mathM, dLow, dHigh, mathE);
+			mathS = 1 + this.attrs[this.attrs.primary] * 0.01;
+			mathA = ((mhMinDamage + mhMaxDamage) / 2 + (ohMinDamage + ohMaxDamage) / 2 + bnMinDamage + bnMaxDamage) / 2;
+			mathAl = ((mhMinDamage + bnMaxDamage) + (ohMinDamage + bnMinDamage)) / 4;
+			mathAh = ((mhMaxDamage + bnMaxDamage) + (ohMaxDamage + bnMaxDamage)) / 4;
+			mathM = (1 + this.bonuses['plus-damage']);
+			mathR = (rendered['dps-speed'].mh + rendered['dps-speed'].oh) / 2 * (1 + atkSpeedInc + 0.15 + this.bonuses['plus-attack-speed']);
+			mathC = 1 + (this.attrs['critical-hit'] * 0.01) * (this.attrs['critical-hit-damage'] * 0.01);
+			dLow = mathS * mathAl * mathM * mathE;
+			dHigh = mathS * mathAh * mathM * mathE;
+			// console.log(mathS, mathAl, mathAh, mathM, dLow, dHigh, mathE);
 		} else {
 			rendered['dps-speed'] = Math.floor(this.attrs['speed'] * 1024) / 1024;
-			var mathS = 1 + this.attrs[this.attrs.primary] * 0.01,
-					mathC = 1 + (this.attrs['critical-hit'] * 0.01) * (this.attrs['critical-hit-damage'] * 0.01),
-					mathR = rendered['dps-speed'] * (1 + atkSpeedInc + this.bonuses['plus-attack-speed']),
-					mathAl = (mhMinDamage + bnMinDamage),
-					mathAh = (mhMaxDamage + bnMaxDamage),
-					mathM = (1 + this.bonuses['plus-damage']);
-					dLow = mathS * mathAl * mathM * mathE;
-					dHigh = mathS * mathAh * mathM * mathE;
+			mathS = 1 + this.attrs[this.attrs.primary] * 0.01;
+			mathC = 1 + (this.attrs['critical-hit'] * 0.01) * (this.attrs['critical-hit-damage'] * 0.01);
+			mathR = rendered['dps-speed'] * (1 + atkSpeedInc + this.bonuses['plus-attack-speed']);
+			mathAl = (mhMinDamage + bnMinDamage);
+			mathAh = (mhMaxDamage + bnMaxDamage);
+			mathM = (1 + this.bonuses['plus-damage']);
+			dLow = mathS * mathAl * mathM * mathE;
+			dHigh = mathS * mathAh * mathM * mathE;
 		}
 		dps = Math.round(((dLow + dHigh) / 2) * mathR * mathC * 100)/100;
 		hit = Math.round(((dLow + dHigh) / 2) * mathC * 100)/100;
@@ -754,11 +756,7 @@ var buildCalculator = {
 						case "plus-damage":
 						case "plus-armor":
 						case "plus-resist-all":
-						case "stack":
 							activate = true;
-							break;
-						default:
-							// console.log("not supported ",e,i);
 							break;
 						case "plus-critical-hit-this":
 							bonuses["plus-critical-hit"] = (se.value / 100) * se.limit;
@@ -778,6 +776,10 @@ var buildCalculator = {
 						case "weapon-damage-for":
 							calcDot = e; // Pass in duration
 							break;
+						default:
+							// console.log("not supported ",e,i);
+							break;
+						
 					}
 				}, this);	
 			}
@@ -796,7 +798,7 @@ var buildCalculator = {
 				// Remove the Skills Bonuses
 				_.each(bonuses, function(val,b) {
 					this.removeBonus(b, val);
-				}, this)	
+				}, this);
 			}
 			// console.log(k, activate);
 			if(activate) {
@@ -913,21 +915,22 @@ var buildCalculator = {
 			'pt-critical-hit-damage': {'critical-hit-damage': 1},
 			'pt-min-damage': {'min-damage': 1},
 			'pt-max-damage': {'max-damage': 1},
-			'pt-attack-speed': {'attack-speed': 1},
+			'pt-attack-speed': {'attack-speed': 1}
 		};
 		_.each(incs, function(v, k) {
+			var item = {};
 			switch(k) {
 				case "pt-primary":
-					var item = { attrs: { } };
+					item = { attrs: { } };
 					item.attrs[this.attrs.primary] = 1;
 					break;
 				case "pt-armor":
-					var item = {
-						stats: v,
+					item = {
+						stats: v
 					};
 					break;
 				default:
-					var item = {
+					item = {
 						type: 'extra',
 						attrs: v
 					};
@@ -938,7 +941,7 @@ var buildCalculator = {
 			this.values['dps-' + k] = newDps['dps'] - this.values['dps'];				
 			// Re-add the Item to the gear set
 			this.removeItem('extra');
-		}, this)
+		}, this);
 		// Append Attributes into the values
 		this.values = jQuery.extend(this.attrs, this.values);
 		// Return the values
@@ -1359,4 +1362,4 @@ var buildCalculator = {
 		});
 		return diff;
 	}
-}
+};

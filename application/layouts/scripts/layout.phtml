@@ -4,26 +4,37 @@
 	<meta name="description" content="Calculate your Diablo 3 Characters DPS/EHP from your gear" />
 	<meta name="keywords" content="diablo 3, dps, ehp, gear, calculator, effective health pool, tool, compare" />
 
+	<link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.19/themes/dot-luv/jquery-ui.css" type="text/css" />
+	<script type="text/javascript" src="http://code.jquery.com/jquery-1.7.2.js"></script>
+	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.18/jquery-ui.js"></script>
 	<?= $this->headCss()
-			->appendStylesheet("/css/jquery.ui.css")
 			->appendStylesheet("/css/style.css")
 			->appendStylesheet("/css/chosen.css")
 			->appendStylesheet("/css/tooltip.css")
 			->appendStylesheet("/css/dropdown.css");
 	?>	
 	<?= $this->headJs()
-			->appendFile("/js/jquery.js")
-			->appendFile("/js/jquery-ui.js")
 			->appendFile("/js/underscore.js")
 			->appendFile("/js/chosen.jquery.js")
 			->appendFile("/js/site.js")
 			->appendFile("/js/jquery.diff.js")
 			->appendFile("/js/skills.js")
-			->appendFile("/js/unmin/itembuilder.js")
 			->appendFile("/js/tooltip.js")
+			->appendFile("/js/unmin/itembuilder.js")
 			->appendFile("/js/unmin/calcv2.js")
-			->appendFile("/js/unmin/build.js")
+			->appendFile("/js/unmin/browser.js")
 	?>
+	<!-- <script type="text/javascript" src="http://code.jquery.com/jquery-1.7.2.js"></script>
+	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.18/jquery-ui.js"></script>
+	<script type="text/javascript" src="/js/underscore.js"></script>
+	<script type="text/javascript" src="/js/chosen.jquery.js"></script>
+	<script type="text/javascript" src="/js/site.js"></script>
+	<script type="text/javascript" src="/js/jquery.diff.js"></script>
+
+	<script type="text/javascript" src="/js/skills.js"></script>
+	<script type="text/javascript" src="/js/itembuilder.js?v=3"></script>
+
+	<script type="text/javascript" src="/js/tooltip.js"></script> -->
 </head>
 <body>
 	<!--[if lt IE 9]>
@@ -89,7 +100,7 @@
 					</ul>
 				</div>
 				<div id="sys-message" class="ui-widget ui-widget-content ui-corner-all">
-					<b>System Message</b>: I'm currently performing some server maintenance, if you load a new page, it might have some problems. I'll update this message as soon as I'm done! As always, feel free to contact me with any questions or concerns you might have at <a href="mailto:aaron.cox@greymass.com">aaron.cox@greymass.com</a>.
+					<b>System Message</b>: Aug 10 - The skill based DPS calculations got an update, you'll probably notice the numbers are slightly lower. I'm working with the new D3 API, which means updates will be delayed for a bit until I'm done. As always, feel free to contact me with any questions or concerns you might have at <a href="mailto:aaron.cox@greymass.com">aaron.cox@greymass.com</a>.
 				</div>
 			</div>
 		</div>

@@ -1,5 +1,5 @@
-var tooltip = $(".d3up-tooltip");
 $.fn.bindTooltip = function() {
+	var tooltip = $(".d3up-tooltip");
 	if(!$(this).attr('data-json')) {
 		return false;
 	}
@@ -136,4 +136,6 @@ function checkTooltip() {
 		$(this).bindTooltip();
 	}
 }
-$("a").each(checkTooltip);
+$(function() {
+	$("a").each(checkTooltip);	
+})

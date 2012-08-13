@@ -92,6 +92,7 @@ activeSelect.bind('change', function() {
 			img.attr('data-tooltip', skill.desc);
 		}
 		activeDisplay.append($("<li/>").html(img));			
+		return false;
 	});
 });
 passiveSelect.bind('change', function() {
@@ -250,6 +251,7 @@ if(isOwner) {
 				});
 			}			
 		});
+		return false;
 	});		
 }
 function calc(target, passiveSkills) {
@@ -617,7 +619,7 @@ function calc(target, passiveSkills) {
 							mathCriticalHit = mathCriticalHit + (value * 100);
 							break;
 						case "switch":
-							if(typeof gearJSON[value.var] != "undefined") {
+							if(typeof gearJSON[value.against] != "undefined") {
 								$.each(value.cases, function(i, c) {
 									var match = false;
 									$.each(c.case.split("|"), function(n,l) {
