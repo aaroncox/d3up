@@ -924,3 +924,14 @@ tr.compared > td:first-child {
 #skill-chooser button {
 	margin-left: 120px;
 }
+#warning-browser {
+	text-align: center;
+	background-color: #F00;
+	color: #FFF;
+	font-size: 1.1em;
+	padding: 5px;
+}
+#warning-browser a {
+	color: #FFF;
+	text-decoration: underline;
+}
