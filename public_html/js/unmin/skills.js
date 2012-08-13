@@ -61,7 +61,7 @@ var passives = {
 		'berserker-rage': {
 			'desc': 'You inflict an additional <span class="skill-highlight">25%</span> damage while at maximum Fury.',
 			'effect': {
-				'plus-damage-conditional': 0.25
+				'plus-damage-conditional': 25
 			}
 		},
 		'inspiring-presence': {
@@ -225,7 +225,7 @@ var passives = {
 		'cold-blooded': {
 			'desc': 'Cold damage dealt to chilled and frozen targets is increased by <span class="skill-highlight">20%</span>.',
 			'effect': {
-				'plus-damage-conditional': 0.2
+				'plus-damage-conditional': 20
 			}
 		},
 		'conflaguration': {
@@ -266,7 +266,7 @@ var passives = {
 		'steady-aim': {
 			'desc': 'As long as there are no enemies within <span class="skill-highlight">10</span> yards, all damage is increased by <span class="skill-highlight">20%</span>.',
 			'effect': {
-				'plus-damage-conditional': 0.2
+				'plus-damage-conditional': 20
 			}
 		},
 		'cull-the-weak': {
