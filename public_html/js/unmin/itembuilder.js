@@ -9,7 +9,7 @@ var itemBuilder = {
 		stats: {},								// Storage for Stats
 		sockets: {},							// Storage for what's in the Sockets
 		socketCount: 0,						// Storage for the # of Sockets
-		setBonus: null,						// Storage for which set this item is part of
+		setBonus: null						// Storage for which set this item is part of
 	},
 	headerElements: [],					// Any additional elements to append to the header					
 	footerElements: [],					// Any additional elements to append to the footer
@@ -28,7 +28,7 @@ var itemBuilder = {
 		"none": ["amulet", "ring", "mojo", "source", "quiver"],
 		"armor": ["belt","boots","bracers","chest","cloak","gloves","helm","pants","mighty-belt","shoulders","spirit-stone","voodoo-mask","wizard-hat"],
 		"weapon": ["2h-mace","2h-axe","bow","diabo","crossbow","2h-mighty","polearm","staff","2h-sword","axe","ceremonial-knife","hand-crossbow","dagger","fist-weapon","mace","mighty-weapon","spear","sword","wand"],	
-		"shield": ["shield"],
+		"shield": ["shield"]
 	},
 	// Listing of Qualities
 	qualityMap: ['Unspecified', 'Inferior', 'Normal', 'Superior', 'Magic', 'Rare', 'Legendary', 'Set'],
@@ -353,9 +353,9 @@ var itemBuilder = {
 		var container = this.itemPreview;
 		this.preview.header = $("<div class='top'><p></p></div>");
 		this.preview.body = $("<div class='item'>");
-		this.preview.itemMeta = $("<p class='item-type'>"),
-		this.preview.itemQuality = $("<span class='quality'>"),
-		this.preview.itemType = $("<span class='type'>"),
+		this.preview.itemMeta = $("<p class='item-type'>");
+		this.preview.itemQuality = $("<span class='quality'>");
+		this.preview.itemType = $("<span class='type'>");
 		this.preview.statsPrimary = $("<p class='stats stats-primary'>");
 		this.preview.statsPrimaryValue = $("<span class='big-stat'>");
 		this.preview.statsPrimaryHelper = $("<span class='stat-helper'>");
@@ -400,12 +400,12 @@ var itemBuilder = {
 		this.preview.header.find("p").html(this.item.name);
 		// Update the Quality
 		if(this.item.quality) {
-			this.preview.header.removeClass("quality-1 quality-2 quality-3 quality-4 quality-5 quality-6 quality-7")
+			this.preview.header.removeClass("quality-1 quality-2 quality-3 quality-4 quality-5 quality-6 quality-7");
 			this.preview.header.addClass("quality-" + this.item.quality);
-			this.preview.itemMeta.removeClass("quality-1 quality-2 quality-3 quality-4 quality-5 quality-6 quality-7")
+			this.preview.itemMeta.removeClass("quality-1 quality-2 quality-3 quality-4 quality-5 quality-6 quality-7");
 			this.preview.itemMeta.addClass("quality-" + this.item.quality);
 			this.preview.itemQuality.html(builder.qualityMap[this.item.quality]);
-			this.preview.setBonus.removeClass("quality-1 quality-2 quality-3 quality-4 quality-5 quality-6 quality-7")
+			this.preview.setBonus.removeClass("quality-1 quality-2 quality-3 quality-4 quality-5 quality-6 quality-7");
 			this.preview.setBonus.addClass("quality-" + this.item.quality);
 		}
 		// Update the Type
@@ -539,29 +539,29 @@ var itemBuilder = {
 				break;
 			case "shield":
 				if(!builder.preview.statsPercent.find("input[name=stat_block-chance]").length) {
-					var armor = $("<input name='stat_armor' tabindex='50'>"),
-							min = $("<input name='stat_block-min' tabindex='50'>"),
-							max = $("<input name='stat_block-max' tabindex='50'>"),
-							chance = $("<input name='stat_block-chance' tabindex='50'>");
-					armor.keyup(function() {
+					var tarmor = $("<input name='stat_armor' tabindex='50'>"),
+							tmin = $("<input name='stat_block-min' tabindex='50'>"),
+							tmax = $("<input name='stat_block-max' tabindex='50'>"),
+							tchance = $("<input name='stat_block-chance' tabindex='50'>");
+					tarmor.keyup(function() {
 						builder.updateStat("armor", $(this).val());
 					});
-					min.keyup(function() {
+					tmin.keyup(function() {
 						builder.updateStat("block-min", $(this).val());
 					});
-					max.keyup(function() {
+					tmax.keyup(function() {
 						builder.updateStat("block-max", $(this).val());
 					});
-					chance.keyup(function() {
+					tchance.keyup(function() {
 						builder.updateStat("block-chance", $(this).val());
 					});
-					builder.preview.statsPrimaryValue.empty().append(armor);
+					builder.preview.statsPrimaryValue.empty().append(tarmor);
 					builder.preview.statsPrimaryHelper.html("Armor");
 					builder.preview.statsPrimary.empty().append(this.preview.statsPrimaryValue, this.preview.statsPrimaryHelper);
-					builder.preview.statsRangeValue.empty().append(min, "-", max);
+					builder.preview.statsRangeValue.empty().append(tmin, "-", tmax);
 					builder.preview.statsRangeHelper.html("Block Value");
 					builder.preview.statsRange.empty().append(this.preview.statsRangeValue, this.preview.statsRangeHelper);
-					builder.preview.statsPercentValue.empty().append(chance);
+					builder.preview.statsPercentValue.empty().append(tchance);
 					builder.preview.statsPercentHelper.html("Block Chance");
 					builder.preview.statsPercent.empty().append(this.preview.statsPercentValue, this.preview.statsPercentHelper);
 				}
@@ -630,7 +630,7 @@ var itemBuilder = {
 					var amountContainer = $("<div class='data-count'>"),
 							amountLabel = $("<p>").html("(" + k + ") Set:");
 							amountBonus = $("<ul class='amountBonus'>");
-					amountContainer.attr("data-count", k)
+					amountContainer.attr("data-count", k);
 					_.each(v, function(value, stat) {
 						var li = $("<li>"),
 								attr = this.skillText[stat];
@@ -643,8 +643,8 @@ var itemBuilder = {
 							li.html(attr);
 							amountBonus.append(li);							
 						}
-					}, this)
-					amountContainer.append(amountLabel,amountBonus)
+					}, this);
+					amountContainer.append(amountLabel,amountBonus);
 					bonuses.append(amountContainer);						
 				}
 			}, this);				
@@ -654,4 +654,4 @@ var itemBuilder = {
 			list: bonuses
 		};
 	}
-}
+};

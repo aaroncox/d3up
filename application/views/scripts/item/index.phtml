@@ -241,6 +241,7 @@
 		} ?>
 	</script>
 	<? endif ?>
-	<script type="text/javascript" src="/js/calc.js"></script>
-	<script type="text/javascript" src="/js/browser.js"></script>
+	<?= $this->headJs()
+			->appendFile("/js/unmin/browser.js")
+	?>
 <? endif ?>
