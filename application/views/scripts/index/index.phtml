@@ -16,8 +16,8 @@
 				<tr class="item-row">
 					<td class="icon"><img src="/images/<?= $build->class ?>.png"/></td>
 					<td class="name" nowrap="nowrap"><?= $this->mLink($build) ?></td>
-					<td class="stat"><?= $this->prettyStat($build->stats['dps']) ?></td>
-					<td class="stat"><?= $this->prettyStat($build->stats['ehp']) ?></td>
+					<td class="stat"><?= $this->prettyStat($build->stats['dps'], 0) ?></td>
+					<td class="stat"><?= $this->prettyStat($build->stats['ehp'], 0) ?></td>
 					<td class="skills">
 						<? if($build->actives): ?>
 							<? foreach($build->actives as $active): ?>
