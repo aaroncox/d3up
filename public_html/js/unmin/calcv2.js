@@ -1,4 +1,21 @@
-var buildCalculator = {
+(function( ) {
+var _slice = [].slice;
+
+function average() {
+	var index = 0,
+			sum = 0,
+			length = arguments.length;
+	for ( ; index < length; index++ ) {
+		sum += arguments[ index ] || 0;
+	}
+	return sum / length;
+}
+
+function BuildCalculator() {
+	
+}
+
+BuildCalculator.prototype = {
 	itemClass: null,					// Hero Class
 	gearSelector: null,		// Where is the gear on the page?
 	passiveSkills: [],		// What passives are active?
@@ -25,12 +42,12 @@ var buildCalculator = {
 		this.sets = {};
 		this.attrs = {
 			primary: null,
-			strength: 0,
-			dexterity: 0,
-			intelligence: 0,
-			vitality: 0,
+			'strength': 0,
+			'dexterity': 0,
+			'intelligence': 0,
+			'vitality': 0,
 			'plus-life': 0,
-			armor: 0,
+			'armor': 0,
 			'cold-resist': 0,
 			'lightning-resist': 0,
 			'fire-resist': 0,
@@ -192,29 +209,32 @@ var buildCalculator = {
 		}, this);
 	},
 	applyPassives: function() {
+		var effects = {
+			sharpshooter: function( value ) {
+				this.bonuses[ 'sharpshooter' ] = true;
+				// TODO
+				// mathDpsSpecialName = 'Sharpshooter';
+				// mathDpsSpecial = (((mathDamage.min + mathDamage.max) / 2 + mathDamageAdd) * this.attrs['speed']) * mathSpeedAdditive * (primaryAttr / 100 + 1) * 1 * ((100 / 100) * (mathCriticalHitDamage/100)+ 1);
+				// mathDpsSpecial = Math.round(mathDps * 100) / 100;
+			}
+		};
+
+		effects[ "plus-thorns" ] =
+		effects[ "plus-armor" ] =
+		effects[ "plus-resist-all" ] =
+		effects[ "plus-damage" ] = function( value, effect ) {
+			this.addBonus( effect, value );
+		};
+
 		_.each(this.passiveSkills, function(v,k) {
 			// if(passives[this.class][v] && typeof passives[this.class][v]['effect'] != "undefined") {
 			if(v.effect) {
 				// console.log(k,v);
 				_.each(v.effect, function(value, effect) {
+					if ( effects[ effect ] ) {
+						effects[ effect ].call( this, value, effect )
+					} else
 					switch(effect) {
-						case "damage-reduce-conditional":
-						case "plus-damage-conditional": 
-							// Ignore Here
-							break;
-						case "sharpshooter":
-							this.bonuses['sharpshooter'] = true;
-							// TODO
-							// mathDpsSpecialName = 'Sharpshooter';
-							// mathDpsSpecial = (((mathDamage.min + mathDamage.max) / 2 + mathDamageAdd) * this.attrs['speed']) * mathSpeedAdditive * (primaryAttr / 100 + 1) * 1 * ((100 / 100) * (mathCriticalHitDamage/100)+ 1);
-							// mathDpsSpecial = Math.round(mathDps * 100) / 100;
-							break;
-						case "plus-thorns":
-						case "plus-armor":
-						case "plus-resist-all":	
-						case "plus-damage": 
-							this.addBonus(effect, value);
-							break;
 						case "flatten-resists":
 							// this.attrs['resist-all'] = highest;
 							// console.log(this.attrs['resist-all'], highest, this.attrs['resist-all'] + highest);
@@ -324,7 +344,7 @@ var buildCalculator = {
 							break;
 					}
 				}, this);						
-			
+
 			}
 		}, this);
 	},
@@ -779,7 +799,7 @@ var buildCalculator = {
 						default:
 							// console.log("not supported ",e,i);
 							break;
-						
+
 					}
 				}, this);	
 			}
@@ -1363,3 +1383,7 @@ var buildCalculator = {
 		return diff;
 	}
 };
+
+window.BuildCalculator = BuildCalculator
+window.buildCalculator = BuildCalculator.prototype;
+})( );
