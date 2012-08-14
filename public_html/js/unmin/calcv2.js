@@ -1,4 +1,4 @@
-(function( ) {
+(function( d3up ) {
 var _slice = [].slice;
 
 function average() {
@@ -12,7 +12,7 @@ function average() {
 }
 
 function BuildCalculator() {
-	
+	this.init();
 }
 
 BuildCalculator.prototype = {
@@ -1384,6 +1384,5 @@ BuildCalculator.prototype = {
 	}
 };
 
-window.BuildCalculator = BuildCalculator
-window.buildCalculator = BuildCalculator.prototype;
-})( );
+d3up.BuildCalculator = BuildCalculator
+})( d3up );

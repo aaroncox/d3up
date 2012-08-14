@@ -54,12 +54,12 @@ $(function() {
 			passiveDisplay = $("#passive-display"),	
 			activeActivesData = {},		
 			activePassivesData = {},
-			calc = new BuildCalculator,
+			calc = new d3up.BuildCalculator,
 			activeActiveSkills = {},
 			activePassiveSkills = {},
 			enabledSkills = {},
 			enabledPassiveSkills = {};
-		
+			
 	// Setup Defaults and Reset
 	calc.init();
 	// Setup the Class for the Calculator
@@ -70,7 +70,7 @@ $(function() {
 	calc.setPassives(activePassiveSkills);
 	// Get the Calculated Stats
 	var stats = calc.run();
-	
+		
 	var activeSelects = [1,2,3,4,5,6],
 			passiveSelects = [1,2,3],
 			choosers = $("#skill-chooser");
@@ -1165,5 +1165,5 @@ $(function() {
 	}
 	upvote.bindSkilltip();
 	downvote.bindSkilltip();
-
+	
 });
