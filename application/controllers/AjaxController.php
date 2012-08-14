@@ -7,6 +7,9 @@
  **/
 class AjaxController extends Epic_Controller_Action
 {
+	public function testAction() {
+		
+	}
 	// 2012-08-14T17:53:16-05:00 INFO (6): -----------
 	// 2012-08-14T17:53:16-05:00 INFO (6): controller: ajax
 	// 2012-08-14T17:53:16-05:00 INFO (6): action: uploaditem
@@ -53,7 +56,7 @@ class AjaxController extends Epic_Controller_Action
 		$item->save();
 		echo json_encode(array(
 			'status' => 'success',
-			'link' => 'http://d3up.com/i/'.$item->id,
+			'link' => 'http://beta.d3up.com/i/'.$item->id,
 			'msg' => 'Test Message from D3Up!',
 		));
 		exit;
