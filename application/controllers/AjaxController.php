@@ -8,6 +8,6 @@
 class AjaxController extends Epic_Controller_Action
 {
 	public function uploaditemAction() {
-		var_dump($this->getRequest()->getParams()); exit;
+		echo "<pre>"; var_dump($this->getRequest()->getParams()); exit;
 	}
 } // END class AjaxController extends Epic_Controller_Action
