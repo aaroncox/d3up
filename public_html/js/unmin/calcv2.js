@@ -776,6 +776,7 @@ BuildCalculator.prototype = {
 						case "plus-damage":
 						case "plus-armor":
 						case "plus-resist-all":
+						case "plus-dodge":
 							activate = true;
 							break;
 						case "plus-critical-hit-this":
