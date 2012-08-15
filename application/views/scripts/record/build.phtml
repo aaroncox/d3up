@@ -24,11 +24,11 @@ var activeActives = [];
 <div class="controls">
 	<? if($profile->createReference() == $this->record->_createdBy->createReference()): ?>
 		<? if($this->record->profileUrl): ?>
-			<a href="/b/<?= $this->record->id ?>/crawl" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only gear-change"><span class="ui-button-text">Copy from Battle.net</span></a>			
+			<a href="/b/<?= $this->record->id ?>/crawl" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only"><span class="ui-button-text">Copy from Battle.net</span></a>			
 		<? endif ?>
-		<a href="/b/<?= $this->record->id ?>/edit" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only gear-change"><span class="ui-button-text">Edit</span></a>			
+		<a href="/b/<?= $this->record->id ?>/edit" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only"><span class="ui-button-text">Edit</span></a>			
 	<? else: ?>
-		<a href="/b/<?= $this->record->id ?>/copy" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only gear-change"><span class="ui-button-text">Copy this Build</span></a>
+		<a href="/b/<?= $this->record->id ?>/copy" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only"><span class="ui-button-text">Copy this Build</span></a>
 	<? endif; ?>
 </div>
 <? endif; ?>
@@ -277,6 +277,7 @@ var activeActives = [];
 <script type="text/javascript">
 	var bonusCounter = {};
 	$(".equipped a").each(function() {
+		console.log($(this).data("json"));
 		var json = $(this).data("json");
 		if(json.set) {
 			if(!bonusCounter[json.set]) {
