@@ -277,7 +277,6 @@ var activeActives = [];
 <script type="text/javascript">
 	var bonusCounter = {};
 	$(".equipped a").each(function() {
-		console.log($(this).data("json"));
 		var json = $(this).data("json");
 		if(json.set) {
 			if(!bonusCounter[json.set]) {
