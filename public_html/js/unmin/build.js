@@ -65,7 +65,12 @@ $(function() {
 	// Setup the Class for the Calculator
 	calc.setClass($("#character").data('class'));
 	// Pass in which gear we are calculating
-	calc.setGear(".equipped a");
+	$(".equipped a").each(function() {
+		var slot = $(this).parent().data("slot"),		// Get the slot this gear is in
+				data = $(this).data("json");						// Get the JSON for this gear
+		calc.setItem(slot, data);
+	});
+	
 	// Pass in the Passives we're using
 	calc.setPassives(activePassiveSkills);
 	// Get the Calculated Stats
@@ -309,7 +314,12 @@ $(function() {
 		calc.setEnabledSkills(enabledSkills);
 		calc.setPassives(activePassiveSkills);
 		calc.setClass($("#character").data('class'));
-		calc.setGear(".equipped a");
+			$(".equipped a").each(function() {
+		var slot = $(this).parent().data("slot"),		// Get the slot this gear is in
+				data = $(this).data("json");						// Get the JSON for this gear
+		calc.setItem(slot, data);
+	});
+
 		// console.log(activePassiveSkills);
 		stats = calc.run();
 		_.each(stats.skillData, function(v,k) {
@@ -451,7 +461,7 @@ $(function() {
 								var dialog = $(this);
 								if(gearSelect.val() != "") {
 									var itemLink = $("<a/>"),
-											itemSelected = gearSelect.find(":selected"),
+											itemSelected = gearSelect.selectedOption(),
 											itemData = $.parseJSON(itemSelected.attr("data-json"));
 									// Unequip offhand if we're equipping a 2h weapon
 									switch(itemData.type) {
@@ -681,8 +691,8 @@ $(function() {
 			compareTo = $("#compare-to");
 	// Bind the calcDiff function when compareTo is changed
 	compareTo.bind('change', function() {
-		var itemSlot = $("#compared-slot").find(":selected").val(),
-				newItem = $(this).find(":selected").data("json");
+		var itemSlot = $("#compared-slot").selectedOption().val(),
+				newItem = $(this).selectedOption().data("json");
 		calcDiff(stats, newItem, itemSlot);
 	});
 	// Change which slot we are comparing and ajax in the possibilities
@@ -817,7 +827,12 @@ $(function() {
 					// Setup the Class for the Calculator
 					calc.setClass($("#character").data('class'));
 					// Pass in which gear we are calculating
-					calc.setGear(".equipped a");
+						$(".equipped a").each(function() {
+		var slot = $(this).parent().data("slot"),		// Get the slot this gear is in
+				data = $(this).data("json");						// Get the JSON for this gear
+		calc.setItem(slot, data);
+	});
+
 					// Pass in the Passives we're using
 					calc.setPassives(activePassiveSkills);
 					// Remove Item in Slot
@@ -887,7 +902,12 @@ $(function() {
 							// Setup the Class for the Calculator
 							calc.setClass($("#character").data('class'));
 							// Pass in which gear we are calculating
-							calc.setGear(".equipped a");
+								$(".equipped a").each(function() {
+		var slot = $(this).parent().data("slot"),		// Get the slot this gear is in
+				data = $(this).data("json");						// Get the JSON for this gear
+		calc.setItem(slot, data);
+	});
+
 							// Pass in the Passives we're using
 							calc.setPassives(activePassiveSkills);
 							// Remove Item in Slot
@@ -925,7 +945,12 @@ $(function() {
 					// Setup the Class for the Calculator
 					calc.setClass($("#character").data('class'));
 					// Pass in which gear we are calculating
-					calc.setGear(".equipped a");
+						$(".equipped a").each(function() {
+		var slot = $(this).parent().data("slot"),		// Get the slot this gear is in
+				data = $(this).data("json");						// Get the JSON for this gear
+		calc.setItem(slot, data);
+	});
+
 					// Pass in the Passives we're using
 					calc.setPassives(activePassiveSkills);
 					// Remove Item in Slot
@@ -971,7 +996,12 @@ $(function() {
 							// Setup the Class for the Calculator
 							calc.setClass($("#character").data('class'));
 							// Pass in which gear we are calculating
-							calc.setGear(".equipped a");
+								$(".equipped a").each(function() {
+		var slot = $(this).parent().data("slot"),		// Get the slot this gear is in
+				data = $(this).data("json");						// Get the JSON for this gear
+		calc.setItem(slot, data);
+	});
+
 							// Pass in the Passives we're using
 							calc.setPassives(activePassiveSkills);
 							// Remove Item in Slot
@@ -1000,7 +1030,12 @@ $(function() {
 				// Setup the Class for the Calculator
 				calc.setClass($("#character").data('class'));
 				// Pass in which gear we are calculating
-				calc.setGear(".equipped a");
+					$(".equipped a").each(function() {
+		var slot = $(this).parent().data("slot"),		// Get the slot this gear is in
+				data = $(this).data("json");						// Get the JSON for this gear
+		calc.setItem(slot, data);
+	});
+
 				// Pass in the Passives we're using
 				calc.setPassives(activePassiveSkills);
 				// Remove Item in Slot
@@ -1023,7 +1058,12 @@ $(function() {
 		// Setup the Class for the Calculator
 		calc.setClass($("#character").data('class'));
 		// Pass in which gear we are calculating
-		calc.setGear(".equipped a");
+			$(".equipped a").each(function() {
+		var slot = $(this).parent().data("slot"),		// Get the slot this gear is in
+				data = $(this).data("json");						// Get the JSON for this gear
+		calc.setItem(slot, data);
+	});
+
 		// Pass in the Passives we're using
 		calc.setPassives(activePassiveSkills);
 		// Remove Item in Slot

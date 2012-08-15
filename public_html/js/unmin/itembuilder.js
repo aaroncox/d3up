@@ -270,7 +270,7 @@ var itemBuilder = {
 				builder = this;
 		selector.bind('change', function() {
 			builder.item.type = $(this).val();
-			builder.item.typeName = $(this).val(); //$(this).find(":selected").text();
+			builder.item.typeName = $(this).selectedOption();//.text();
 			_.each(builder.itemClass, function(v,k) {
 				if(_.indexOf(v, $(this).val()) >= 0) {
 					builder.item.itemClass = k;
@@ -410,7 +410,7 @@ var itemBuilder = {
 		}
 		// Update the Type
 		if(this.item.type) {
-			this.item.typeName = this.itemTypeSelect.val(); //find(":selected").text();
+			this.item.typeName = this.itemTypeSelect.selectedOption().text();
 			this.preview.itemType.html(this.item.typeName);
 		}
 		// No sockets? Empty the UL

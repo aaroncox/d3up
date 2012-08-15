@@ -1,5 +1,4 @@
 (function( d3up ) {
-var _slice = [].slice;
 
 function average() {
 	var index = 0,
@@ -16,32 +15,25 @@ function BuildCalculator() {
 }
 
 BuildCalculator.prototype = {
-	itemClass: null,					// Hero Class
-	gearSelector: null,		// Where is the gear on the page?
-	passiveSkills: [],		// What passives are active?
-	activeSkills: [],			// Which active skills do we use?
-	enabledSkills: [],			// Skills that are ACTIVE
-	// Storage
-	gear: {},
-	attrs: {},
-	stats: {},
-	sets: {},
-	bonuses: {},
-	values: {},
+	heroClass: null,				// Hero Class
+	gearSelector: null,			// Where is the gear on the page?
+	passiveSkills: [],			// What passives do we use?
+	activeSkills: [],				// What actives do we use?
+	enabledSkills: [],			// What actives/passives are conditional and enabled?
 	// Options
 	vsLevel: 60,
 	// Flags
 	isDuelWielding: false,	
+	// Reinitialize All Variables required for Math
 	init: function() {
-		// console.log("===== Clearing =====");
-		this.attrs = {
-			armor: 0,
+		this.stats = {
+			'armor': 0,
 			'block-chance': 0,
 			'speed': 0
 		};
 		this.sets = {};
 		this.attrs = {
-			primary: null,
+			'primary': null,
 			'strength': 0,
 			'dexterity': 0,
 			'intelligence': 0,
@@ -65,14 +57,14 @@ BuildCalculator.prototype = {
 		this.gear = {};
 		this.values = {};
 		this.bonuses = {
-			'plus-resist-all': 0,
 			'plus-armor': 0,
-			'plus-dodge': [], // Since Dodge is Multiplicative in it's percentage bonuses, we need to collect them
+			'plus-resist-all': 0,
 			'plus-damage': 0,
 			'plus-attack-speed': 0,
 			'plus-damage-reduce': 0,
 			'plus-life': 0,
-			'3rd-hit-damage': false
+			'plus-dodge': [], // Since Dodge is Multiplicative in it's percentage bonuses, we need to collect all values
+			'3rd-hit-damage': false // Keep disabled unless it's set
 		};
 	},
 	setClass: function(newClass) {
@@ -100,10 +92,10 @@ BuildCalculator.prototype = {
 				break;
 		}
 		this.attrs['vitality'] += 127; // Grant base vitality to all classes
-		this.itemClass = newClass;
+		this.heroClass = newClass;
 	},
 	getClass: function() {
-		return this.itemClass;
+		return this.heroClass;
 	},
 	setActives: function(actives) {
 		this.activeSkills = actives;
@@ -129,27 +121,14 @@ BuildCalculator.prototype = {
 	setVsLevel: function(level) {
 		this.vsLevel = level;
 	},
-	setGear: function(gearSelector) {
-		// Empty object to populate
-		var json = {};
-		// Set the selector incase we need to reference it
-		this.gearSelector = gearSelector;
-		// Foreach of the pieces of gear, add the JSON to the array
-		$(this.gearSelector).each(function() {
-			var slot = $(this).parent().data("slot"),		// Get the slot this gear is in
-					data = $(this).data("json");						// Get the JSON for this gear
-			json[slot] = data;
-		});
-		// Assign the JSON to this.gear
-		this.gear = json;
-		// Parse Item Information into this.attrs & this.attrs
-		_.each(this.gear, this.parseItem, this);
-	},
 	getItem: function(slot) {
 		return this.gear[slot];
 	},
 	setItem: function(slot, item) {
+		// Save the JSON in the proper slot
 		this.gear[slot] = item;
+		// Parse the stats into appropriate places
+		this.parseItem(item, slot);
 	},
 	getItemLink: function(item) {
 		if(item == null) {
@@ -485,7 +464,7 @@ BuildCalculator.prototype = {
 		// Effective Health Calculations
 		// ----------------------------------
 		// Are we a Monk or Barbarian? 
-		if(this.itemClass == "monk" || this.itemClass == "barbarian") {
+		if(this.heroClass == "monk" || this.heroClass == "barbarian") {
 			// ----------------------------------
 			// Damage Taken Percent
 			// Formula: ( 1 - Percentage Resist All ) * ( 1 - Percentage Armor Reduction ) * (1 - Bonus Damage Reduction) * (1 - 30% Melee Damage Reduction )
