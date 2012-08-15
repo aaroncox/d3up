@@ -1296,6 +1296,7 @@ BuildCalculator.prototype = {
 						}							
 						break;
 					case "block-amount":
+						this.isDuelWielding = false;
 						this.attrs[ak] = av['min'] + "-" + av['max'];
 						break;
 					default:
