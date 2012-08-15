@@ -341,9 +341,9 @@ $(function() {
 			activeDisplay.empty();			
 		}
 		_.each(skills, function(skill) {
-			if(skill != "undefined") {
-				var data = activeSkills[heroClass][skill],
-						li = $("<li class='skill-calc-row'>").attr("data-json", JSON.stringify(data.effect)).attr("data-id", skill).attr("id", "skill-" + skill),
+			if(skill != "undefined" && skill != "") {
+				var data = activeSkills[heroClass][skill];
+				var	li = $("<li class='skill-calc-row'>").attr("data-json", JSON.stringify(data.effect)).attr("data-id", skill).attr("id", "skill-" + skill),
 						cleaned = skill.split("~"),
 						icon = $("<img src='/images/icons/" + heroClass + "-" + cleaned[0] + ".png'>"),
 						h3 = $("<h3>").html(data.name),
