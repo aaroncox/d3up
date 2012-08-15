@@ -104,10 +104,13 @@ class RecordController extends Epic_Controller_Action
 				$new->setFromArray($export);			
 				foreach(Epic_Mongo::db('gearset')->getSlots() as $slot) {
 					$item = $record->equipment->$slot;
+					if(!$item->id) {
+						continue;
+					}
 					$newItem = Epic_Mongo::newDoc('item');
 					$exportItem = $item->export();
 					unset($exportItem['id'], $exportItem['_id'], $exportItem['_createdBy'], $exportItem['_original'], $exportItem['_type']);
-					if($exportItem['attrs']) {
+					if(isset($exportItem['attrs'])) {
 						$newItem->attrs->setFromArray($exportItem['attrs']);
 						unset($exportItem['attrs']);						
 					}
