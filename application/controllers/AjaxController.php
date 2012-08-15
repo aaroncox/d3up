@@ -46,6 +46,17 @@ class AjaxController extends Epic_Controller_Action
 		$item->name = $params['n'];
 		$item->quality = array_search($params['q'], $this->_qualityMap);
 		$item->type = $this->_typeMap[$params['t']];
+		if(isset($params['d'])) {
+			if(in_array($item->type, array('axe','ceremonial-knife','hand-crossbow','dagger','fist-weapon','mace','mighty-weapon','spear','sword','wand','2h-mace','2h-axe','bow','diabo','crossbow','2h-mighty','polearm','staff','2h-sword'))) {
+				$item->stats = array(
+					'dps' => $params['d'],
+				);
+			} else {
+				$item->stats = array(
+					'armor' => $params['d'],
+				);
+			}			
+		}
 		foreach(explode(", ", $params['a']) as $v) {
 			$parts = explode(" ", $v);
 			$name = array_search($parts[1], $this->_statMap);
