@@ -3676,12 +3676,8 @@ var activeSkills = {
 			effect: {
 				'cost-spirit': 50,
 				'cooldown': 30,
-				'stack': {
-					'weapon-damage': {
-						'limit': 7,
-						'value': 777,
-					},
-				},
+				'weapon-damage': 777,
+				'weapon-damage-for': 7
 			},
 		},
 		'seven-sided-strike~a': {
@@ -3691,12 +3687,8 @@ var activeSkills = {
 			effect: {
 				'cost-spirit': 50,
 				'cooldown': 30,
-				'stack': {
-					'weapon-damage-for': {
-						'limit': 7,
-						'value': 1008,
-					},
-				},
+				'weapon-damage': 1008,
+				'weapon-damage-for': 7
 			},
 		},
 		'seven-sided-strike~b': {
@@ -3706,12 +3698,8 @@ var activeSkills = {
 			effect: {
 				'cost-spirit': 50,
 				'cooldown': 30,
-				'stack': {
-					'weapon-damage': {
-						'limit': 7,
-						'value': 777,
-					},
-				},
+				'weapon-damage': 777,
+				'weapon-damage-for': 7
 			},
 		},
 		'seven-sided-strike~c': {
@@ -3722,12 +3710,8 @@ var activeSkills = {
 				'cost-spirit': 50,
 				'cooldown': 30,
 				'chance-stun': 25,
-				'stack': {
-					'weapon-damage': {
-						'limit': 7,
-						'value': 777,
-					},
-				},
+				'weapon-damage': 777,
+				'weapon-damage-for': 7
 			},
 		},
 		'seven-sided-strike~d': {
@@ -3737,12 +3721,8 @@ var activeSkills = {
 			effect: {
 				'cost-spirit': 50,
 				'cooldown': 30,
-				'stack': {
-					'weapon-damage': {
-						'limit': 7,
-						'value': 777,
-					},
-				},
+				'weapon-damage': 777,
+				'weapon-damage-for': 7
 			},
 		},
 		'seven-sided-strike~e': {
@@ -3752,12 +3732,8 @@ var activeSkills = {
 			effect: {
 				'cost-spirit': 50,
 				'cooldown': 30,
-				'stack': {
-					'weapon-damage': {
-						'limit': 7,
-						'value': 777,
-					},
-				},
+				'weapon-damage': 777,
+				'weapon-damage-for': 7
 			},
 		},
 		'mantra-of-evasion': {
