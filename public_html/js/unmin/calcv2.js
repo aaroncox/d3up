@@ -358,19 +358,25 @@ BuildCalculator.prototype = {
 		rendered.armorReduction = rendered.armor / (50 * this.vsLevel + rendered.armor);
 		// ----------------------------------
 		// Resist All
-		// Formula: ( Resist All + ( Intelligence / 10 ) ) * ( 1 + Bonus Resist All Percentage )
+		// Formula: ( Resist All + ( Intelligence / 10 ) )
 		// ----------------------------------
-		rendered['resist-all'] 				= (this.attrs['resist-all'] + (this.attrs['intelligence'] / 10)) * (1 + this.bonuses['plus-resist-all']);
+		rendered['resist-all'] 				= (this.attrs['resist-all'] + (this.attrs['intelligence'] / 10));
 		// ----------------------------------
 		// Individual Resists (Resist + Resist All)
-		// Formula: ( Resist All + Individual Resist )
+		// Formula: ( Resist All + Individual Resist )  * ( 1 + Bonus Resist All Percentage )
 		// ----------------------------------
-		rendered['resist-physical'] 	= (rendered['resist-all'] + this.attrs['physical-resist']);
-		rendered['resist-cold'] 			= (rendered['resist-all'] + this.attrs['cold-resist']);
-		rendered['resist-fire'] 			= (rendered['resist-all'] + this.attrs['fire-resist']);
-		rendered['resist-lightning'] 	= (rendered['resist-all'] + this.attrs['lightning-resist']);
-		rendered['resist-poison'] 		= (rendered['resist-all'] + this.attrs['poison-resist']);
-		rendered['resist-arcane'] 		= (rendered['resist-all'] + this.attrs['arcane-resist']);
+		rendered['resist-physical'] 	= (rendered['resist-all'] + this.attrs['physical-resist']) * (1 + this.bonuses['plus-resist-all']);
+		rendered['resist-cold'] 			= (rendered['resist-all'] + this.attrs['cold-resist']) * (1 + this.bonuses['plus-resist-all']);
+		rendered['resist-fire'] 			= (rendered['resist-all'] + this.attrs['fire-resist']) * (1 + this.bonuses['plus-resist-all']);
+		rendered['resist-lightning'] 	= (rendered['resist-all'] + this.attrs['lightning-resist']) * (1 + this.bonuses['plus-resist-all']);
+		rendered['resist-poison'] 		= (rendered['resist-all'] + this.attrs['poison-resist']) * (1 + this.bonuses['plus-resist-all']);
+		rendered['resist-arcane'] 		= (rendered['resist-all'] + this.attrs['arcane-resist']) * (1 + this.bonuses['plus-resist-all']);
+		// ----------------------------------
+		// Special Case: Monk Skill - One with Everything
+		// 
+		// Set all Resistances to the highest Resist
+		// ----------------------------------
+		rendered['resist-all'] 				= (rendered['resist-all']) * (1 + this.bonuses['plus-resist-all']);
 		// ----------------------------------
 		// Special Case: Monk Skill - One with Everything
 		// 
