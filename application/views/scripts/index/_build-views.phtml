@@ -1,0 +1,49 @@
+<table id="recent-builds" class="d3up-table">
+	<thead>
+		<tr>
+			<th></th>
+			<th>Views</th>
+			<th>Name</th>
+			<th>DPS</th>
+			<th>EHP</th>
+			<th>Skills</th>
+		</tr>
+	</thead>
+	<tbody>
+	<? foreach($this->builds as $build): ?>
+		<tr class="item-row">
+			<td class="icon"><img src="/images/<?= $build->class ?>.png"/></td>
+			<td class="stat"><?= $this->prettyStat($build->views) ?></td>			
+			<td class="name" nowrap="nowrap"><?= $this->mLink($build) ?></td>
+			<td class="stat"><?= $this->prettyStat($build->stats['dps'], 0) ?></td>
+			<td class="stat"><?= $this->prettyStat($build->stats['ehp'], 0) ?></td>
+			<td class="skills">
+				<? if($build->actives): ?>
+					<? foreach($build->actives as $active): ?>
+						<? 
+							if($active == "undefined") {
+								?>
+								<img data-class="<?= $build->class ?>" src="/images/icons/unknown.png" class="skill-tip"/>
+								<?
+								continue;
+							}
+							$explode = explode("~", $active);
+							$skill = $explode[0];
+						?>
+						<img data-class="<?= $build->class ?>" data-id="<?= $active ?>" src="/images/icons/<?= $build->class ?>-<?= $skill ?>.png" class="skill-tip"/>
+					<? endforeach ?>
+				<? endif ?>
+				<? if($build->passives): ?>
+					<? foreach($build->passives as $passive): ?>
+						<? 
+							$explode = explode("~", $passive);
+							$skill = $explode[0];
+						?>
+						<img data-class="<?= $build->class ?>" data-id="<?= $passive ?>" src="/images/icons/<?= $build->class ?>-<?= $skill ?>.png" class="skill-tip"/>
+					<? endforeach ?>
+				<? endif ?>
+			</td>
+		</tr>
+	<? endforeach; ?>
+	</tbody>
+</table>

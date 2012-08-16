@@ -79,7 +79,7 @@
 						<li><a>User <img src='/images/down-arrow.png' /></a>
 							<ul class="sub_menu">
 							<? if($profile = Epic_Auth::getInstance()->getProfile()): ?>
-								<!-- <li><a href="/user"><?= $profile->username ?></a></li>	 -->
+								<li><a href="/user/edit">Edit Profile</a></li>	
 								<li><a href="/user/change-password">Change Password</a></li>
 								<li><a href="/user/logout">Logout</a></li>
 							<? else: ?>
@@ -88,10 +88,11 @@
 							<? endif; ?>
 							</ul>
 						</li>
+						<li><a href="/faqs">Help</a></li>
 					</ul>
 				</div>
 				<div id="sys-message" class="ui-widget ui-widget-content ui-corner-all">
-					<b>System Message</b>: Aug 12 - Upgrades on the backend are done, hopefully page load time will have decreased as a result. If anything seems broken, contact me at <a href="mailto:aaron.cox@greymass.com">aaron.cox@greymass.com</a>.
+					<b>System Message</b>: Aug 15 - Few updates today, including the homepage's look and bunch of other cosmetic fixes. I've also temporarily disabled "Build Guides", they will return soon and much improved. If anything seems broken, contact me at <a href="mailto:aaron.cox@greymass.com">aaron.cox@greymass.com</a>.
 				</div>
 			</div>
 		</div>

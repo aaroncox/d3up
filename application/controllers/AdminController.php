@@ -81,4 +81,10 @@ class AdminController extends Epic_Controller_Action
 		}
 		echo "Resaved all items"; exit;
 	}
+	public function resaveUsersAction() {
+		foreach(Epic_Mongo::db('profile')->fetchAll() as $user) {
+			$user->save();
+		}
+		echo "Resaved all users"; exit;
+	}
 } // END class AdminController extends Epic_Controller_Action

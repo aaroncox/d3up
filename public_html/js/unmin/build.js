@@ -362,6 +362,7 @@ $(function() {
 					// console.log("effect ", data.effect);
 					var checkbox = $("<input type='checkbox' class='skill-activate' data-skill='" + skill + "'>");
 					checkbox.click(function() {
+						li.toggleClass("skill-activated");
 						recalc();
 					});
 					control.append("Activate ", checkbox).hide();					
@@ -392,6 +393,7 @@ $(function() {
 					// console.log("effect ", data.effect);
 					var checkbox = $("<input type='checkbox' class='passive-activate' data-skill='" + skill + "'>");
 					checkbox.click(function() {
+						li.toggleClass("skill-activated");
 						recalc();
 					});
 					control.append("Activate ", checkbox).hide();					

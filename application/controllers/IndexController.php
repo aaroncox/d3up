@@ -10,7 +10,7 @@ class IndexController extends Epic_Controller_Action {
 		$sort = array(
 			'_created' => -1,
 		);
-		$this->view->items = $items = Epic_Mongo::db('item')->fetchAll($query, $sort, 10);	
+		$this->view->recentItems = $items = Epic_Mongo::db('item')->fetchAll($query, $sort, 10);	
 		// $paginator = Zend_Paginator::factory($items);
 		// $paginator->setCurrentPageNumber($this->getRequest()->getParam('page', 1))->setItemCountPerPage(20);
 		// $this->view->items = $paginator;
@@ -20,17 +20,23 @@ class IndexController extends Epic_Controller_Action {
 		if($class = $this->getRequest()->getParam('build-class')) {
 			$this->view->buildClass = $query['class'] = $class;
 		}
-		$this->view->sales = $sales = Epic_Mongo::db('sale')->fetchAll(array('soldSuccess' => true), array('soldOn' => -1), 10);
+		$this->view->recentSales = $sales = Epic_Mongo::db('sale')->fetchAll(array('soldSuccess' => true), array('soldOn' => -1), 10);
 		$query = array(
 			'private' => array('$ne' => true),
 			'stats.dps' => array('$exists' => true),
 			'actives' => array('$exists' => true),
 			'passives' => array('$exists' => true),
+			'_original' => array('$exists' => false),
 		);
-		$this->view->builds = $builds = Epic_Mongo::db('build')->fetchAll($query, $sort, 10);	
+		$this->view->recentBuilds = Epic_Mongo::db('build')->fetchAll($query, $sort, 10);	
+		$this->view->viewsBuilds = Epic_Mongo::db('build')->fetchAll($query, array("views" => -1), 10);	
+		$this->view->votesBuilds = Epic_Mongo::db('build')->fetchAll($query, array("votes" => -1), 10);	
+		$query['guideIsPublished'] = true;
+		// $this->view->guideBuilds = Epic_Mongo::db('build')->fetchAll($query, array("votes" => -1), 10);	
 		$this->view->counts = array(
 			'builds' => count(Epic_Mongo::db("build")->fetchAll()),
 			'items' => count(Epic_Mongo::db("item")->fetchAll()),
+			'sales' => count(Epic_Mongo::db("sale")->fetchAll()),
 		);
 		if($this->_request->isXmlHttpRequest()) {
 			$this->_helper->layout->disableLayout();
@@ -41,6 +47,9 @@ class IndexController extends Epic_Controller_Action {
 	}
 	public function faqAction() {
 		$this->view->faq = $this->getRequest()->getParam('faq');
+	}
+	public function faqsAction() {
+		
 	}
 	public function gemsAction() {
 		$gems = array(

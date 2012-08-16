@@ -79,7 +79,12 @@ $.fn.bindTooltip = function() {
 		var data = builder.getBonusHtml(item.set);
 		itemSetBonus.empty().append(data.name, data.list);
 		if($(this).data("set-count")) {
-			data.list.find("div.data-count[data-count=" + $(this).data("set-count") +"]").addClass("quality-7");
+			var count = $(this).data("set-count");
+			data.list.find("div.data-count").each(function() {
+				if($(this).data("count") <= count) {
+					$(this).addClass("quality-7");					
+				}
+			})
 		}			
 		content.append(itemSetBonus);
 	}

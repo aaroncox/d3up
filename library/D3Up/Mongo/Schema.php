@@ -28,7 +28,7 @@ class D3Up_Mongo_Schema extends Epic_Mongo_Schema {
 			'update' => 'D3Up_Mongo_Post_Update',
 		),
 		'user' => array(
-			
+			'profile' => 'D3Up_Mongo_User_Profile'
 		)
 	);
 	

@@ -1,16 +1,15 @@
 <div class="home inline-flow">
-	<?= $this->render("./post/_breadcrumb.phtml") ?>
-
 	<? foreach($this->posts as $post): ?>
 		<?= $this->partial("./post/types/".$post->_type.".phtml", array('post' => $post)) ?>
+		<p style="padding: 0 10px; text-align: right"><a href="/update/<?= $post->id ?>#disqus_thread">Loading Comments</a></p>
 	<? endforeach; ?>
 
 	<?php echo $this->paginationControl($this->posts,
 	                                    'Elastic',
-	                                    'index/_pages.phtml'); ?>
+	                                    'post/_pages.phtml'); ?>
 </div>
 <div class="info inline-flow">
-	<?= $this->render("./post/_sidebar.phtml")?>
+	<?= $this->render("./index/_sidebar.phtml")?>
 </div>
 <script type="text/javascript">
 /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */

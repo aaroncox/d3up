@@ -62,15 +62,11 @@ var activeActives = [];
 <div id="character" class="inline-flow" data-class="<?= $this->record->class ?>" <? if($myBuild) { echo "data-owner='true'"; } ?>>
 	<ul>
 		<li><a href="#build-gear">Gear</a></li>
-			<li><a href="#build-skills">Skills</a></li>
+		<li><a href="#build-skills">Skills</a></li>
 		<? if($myBuild): ?>
 			<li><a href="#build-compare">Compare</a></li>
 			<li><a href="#item-simulate">Simulate Item</a></li>
 		<? endif ?>
-		<? if($this->record->guideIsPublished || $myBuild): ?>
-			<li><a href="#build-guide">Guide</a></li>
-		<? endif ?>
-		<!-- <li><a href="#">Comments</a></li> -->
 	</ul>
 	<div id="build-skills">
 		<a <?= (!$myBuild) ? "style='display: none'" : ""?>  class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only skill-change"><span class="ui-button-text">Change My Skills</span></a>
@@ -79,20 +75,6 @@ var activeActives = [];
 		<ul id='build-active-skills'></ul>
 		<ul id='build-passive-skills'></ul>
 	</div>
-	<? if($this->record->guide || $myBuild): ?>
-		<div id="build-guide">
-			<? if($myBuild): ?>
-				<p>You may build a guide to help explain this build using the textbox below. Guides may be created using <a href="http://en.wikipedia.org/wiki/Markdown#Syntax_examples">Markdown Syntax</a> and limited HTML tags similar to sites such as <a href="http://reddit.com">Reddit</a>.</p>
-				<p><strong>NOTE:</strong> The GUIDE tab on your build will not be publicly available until you check the "Publish" checkbox and hit save at the bottom of the form.</p>
-				<?= $this->guideForm ?>
-				<p>Shown below is how your guide appears:</p>
-				<hr/>
-			<? endif ?>
-			<? if($this->record->guide && $this->record->guideIsPublished): ?>
-				<?= $this->record->guide ?>
-			<? endif ?>
-		</div>
-	<? endif ?>
 	<? if($myBuild): ?>
 	<div id="item-simulate">
 		<p>Which item do you wish to simulate changes on?</p>
@@ -190,7 +172,7 @@ var activeActives = [];
 		</table>
 	</div>
 	<? if($this->comments): ?>
-	<div id="build-comments" style="display: none">
+	<div id="build-comments">
 		<?= $this->commentForm ?>
 		<hr/>
 		<? foreach($this->comments as $comment): ?>

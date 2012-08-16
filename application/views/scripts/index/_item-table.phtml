@@ -1,0 +1,73 @@
+	<table class="d3up-table">
+	<tbody>
+		<? foreach($this->items as $item): ?>
+		<tr class="item-row" id="item-<?= $item->id ?>">
+				<td class="name">
+					<div class="item-stat">
+						<span class="value">
+							<?= $this->itemLink($item) ?>
+						</span>
+					<? if($item->stats): ?>
+						<span class="stat">
+						<? if($item->stats->armor): ?>
+							<?= $item->stats->armor . " Armor"?>
+						<? endif; ?>
+						<? if($item->stats->dps): ?>
+							<?= $item->stats->dps." dps" ." @ ".$item->stats->speed." A/S" ?>
+						<? endif; ?>
+						</span>
+					<? endif; ?>
+				</td>
+				<?
+					if($item->stats) {
+						$stats = $item->stats->export();								
+					}
+					$attrs = $item->attrs->getAttributesArray($item->type);
+					$export = $item->cleanExport();
+					if(isset($export['socketAttrs'])) {
+						$socketAttrs = $export['socketAttrs'];
+					}
+					// Put whatever we're filtering in first 
+					if($this->sortAttrs) {
+						foreach($this->sortAttrs as $k => $v) {
+							switch($v) {
+								case "base_armor":
+									$val = $stats['armor'];
+									break;
+								case "base_dps":
+									$val = $stats['dps'];
+									break;
+								default:
+									$val = $attrs[$v];
+									break;
+							}
+							if(isset($socketAttrs[$k])) {
+								$val += $socketAttrs[$k];
+							}
+							unset($attrs[$v]);
+							echo "<td class='sorted'>".$this->itemStat(ucwords(str_replace("_", " ", $v)), $val)."</td>";							
+						}
+					}
+					$count = count($this->sortAttrs);
+				?>
+				<? foreach($attrs as $k => $v): ?>
+					<? 
+						$count++;
+						$val = $v;
+						if(isset($socketAttrs[$k])) {
+							$val += $socketAttrs[$k];
+						}
+					?>
+					<? if($count > 4) { continue; } ?>
+					<td><?= $this->itemStat($k, $val) ?></td>
+				<? endforeach ?>
+				<? if($count < 4): ?>
+					<? for($i = $count; $i < 4; $i++): ?>
+						<td>&nbsp;</td>
+					<? endfor ?>
+				<? endif ?>
+
+			</tr>
+		<? endforeach; ?>
+	</tbody>
+</table>

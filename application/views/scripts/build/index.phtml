@@ -1,40 +1,28 @@
 <?
 	$this->headTitle('Character Builds & Guides'); 
 ?>
-<div class="recent-builds">				
-	<h2 class="table-header">Character Builds</h2>
+<div class="recent-builds ui-widget ui-widget-content ui-corner-all">				
+	<div class="ui-tabs-nav ui-helper-reset ui-helper-clearfix ui-widget-header ui-corner-all">
+		<div style="float: right; margin: 8px">
+			<select id="classSelect" data-placeholder="Filter by Class">
+				<option value=""></option>
+				<option value="">All Classes</option>
+				<option value="barbarian">Barbarian</option>
+				<option value="demon-hunter">Demon Hunter</option>
+				<option value="monk">Monk</option>
+				<option value="witch-doctor">Witch Doctor</option>
+				<option value="wizard">Wizard</option>
+			</select>
+		</div>
+		<script type="text/javascript">
+			<? if($this->class): ?>
+				$("#classSelect option[value=<?= $this->class ?>]").attr("selected", "selected");
+			<? endif?>
+			$("#classSelect, #isGeared, #hasGuide").chosen({allow_single_deselect: true});
+		</script>
+		<h2 class="ui-table-header">Character Builds</h2>
+	</div>
 	<table id="all-builds" class="d3up-table">
-		<thead>
-			<tr>
-				<td colspan="10" class="sorting">
-					<div class="table-filters">
-						<select id="hasGuide" data-placeholder="Has Guide">
-							<option value=""></option>
-							<option value="true">Yes</option>
-							<option value="false">No</option>
-						</select> 
-						<select id="classSelect" data-placeholder="Filter by Class">
-							<option value=""></option>
-							<option value="">All Classes</option>
-							<option value="barbarian">Barbarian</option>
-							<option value="demon-hunter">Demon Hunter</option>
-							<option value="monk">Monk</option>
-							<option value="witch-doctor">Witch Doctor</option>
-							<option value="wizard">Wizard</option>
-						</select>
-					</div>
-					<script type="text/javascript">
-						<? if($this->class): ?>
-							$("#classSelect option[value=<?= $this->class ?>]").attr("selected", "selected");
-						<? endif?>
-						<? if($this->hasGuide): ?>
-							$("#hasGuide option[value=<?= ($this->hasGuide)?"true":"false" ?>]").attr("selected", "selected");
-						<? endif?>
-						$("#classSelect, #isGeared, #hasGuide").chosen({allow_single_deselect: true});
-					</script>
-				</td>
-			</tr>
-		</thead>
 		<tbody>
 			<tr>
 				<td colspan="10" class="build-paginator td-paginator">
@@ -56,7 +44,6 @@
 				<th>Skills</th>
 				<th><a href="?sort=dps<?= ($this->class) ? "&class=".$this->class : "" ?>">DPS</a></th>
 				<th><a href="?sort=ehp<?= ($this->class) ? "&class=".$this->class : "" ?>">EHP</a></th>
-				<th>Guide?</th>
 			</tr>
 		<? foreach($this->builds as $build): ?>
 			<tr class='build-row'>
@@ -98,7 +85,6 @@
 				</td>
 				<td class="stat"><?= $this->prettyStat($build->stats['dps']) ?></td>
 				<td class="stat"><?= $this->prettyStat($build->stats['ehp']) ?></td>
-				<td class="meta"><?= ($build->guideIsPublished)?"<span class='pos'>Yes</span>":"<span class='neg'>No</span>" ?></td>
 			</tr>
 		<? endforeach; ?>
 			<tr>
