@@ -309,7 +309,7 @@ BuildCalculator.prototype = {
 														this.attrs['critical-hit'] = this.attrs['critical-hit'] + (eff * 100);														
 														break;
 													default:
-													 	console.log("Unhandled Switch: " + e + " [" + eff + "]");
+													 	// console.log("Unhandled Switch: " + e + " [" + eff + "]");
 														break;
 												}													
 											}, this);
@@ -319,7 +319,7 @@ BuildCalculator.prototype = {
 							}
 							break;
 						default:
-							console.log("Unhandled Effect: " + effect + "[" + value + "]");
+							// console.log("Unhandled Effect: " + effect + "[" + value + "]");
 							break;
 					}
 				}, this);						
