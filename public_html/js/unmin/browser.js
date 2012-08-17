@@ -157,8 +157,8 @@ $(function() {
 	$("#itemType").bind('change', getResults);
 	$("#slotType").chosen({allow_single_deselect: true});
 	$("#slotType").bind('change', getResults);
-	$("#sellMethod").chosen({allow_single_deselect: true});
-	$("#sellMethod").bind('change', getResults);
+	// $("#sellMethod").chosen({allow_single_deselect: true});
+	// $("#sellMethod").bind('change', getResults);
 	var priceTimer = null;
 	$("#maxPrice").keyup(function(){
 	    clearTimeout(priceTimer);
