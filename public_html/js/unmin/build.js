@@ -904,7 +904,7 @@ $(function() {
 									simAgainstData.stats.damage.max = ($(this).val()) ? parseFloat($(this).val()) : 0;
 									break;
 								default:
-									console.log($(this));
+									// console.log($(this));
 									return false;
 									break;
 							}
@@ -937,7 +937,7 @@ $(function() {
 						statsRange.append(di1, "-", di2).append(" Damage");
 						break;
 					default: 
-						console.log(k,v);
+						// console.log(k,v);
 						break;
 				}
 				input.bind('keyup', function() {
