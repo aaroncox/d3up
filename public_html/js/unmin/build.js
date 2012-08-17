@@ -735,14 +735,25 @@ $(function() {
 	$("#simulation-stats").hide();
 	simSlot.bind('change', function() {
 		recalc();
+		simAttrs.val("");
 		prevStats = jQuery.extend({}, stats);
 		simAgainstData = false;
 		simItemType = $(this).val(); 
-		simAgainst = $("#equipped-" + simItemType + " a").clone();
-		simAgainstData = simAgainst.data('json');
-		simAgainst.bindTooltip();
-		simAgainstDisplay.find(".top p").empty().append(simAgainst);
-		simAttrs.val(null);
+		// simAgainst = false;
+		// simAgainst = $("#equipped-" + simItemType + " a").clone(true);
+		simAgainstData = $("#equipped-" + simItemType + " a").data('json');
+		$.each(simAgainstData.attrs, function(k,v) {
+			if(v == 0) {
+				delete simAgainstData.attrs[k];
+			}
+			var existing = $("#simulate-stats ul.attrs input[name=" + k + "]");
+			if(existing) {
+				existing.val(v);
+			}
+		});
+		// console.log($("#equipped-" + simItemType + " a").data('json'), simAgainstData, simItemType);
+		// simAgainst.bindTooltip();
+		// simAgainstDisplay.find(".top p").empty().append(simAgainst);
 		var statsValue = simAgainstDisplay.find(".stats-primary .big-stat").empty(),
 				statsValueHelper = simAgainstDisplay.find(".stats-primary .stat-helper").empty(),
 				statsPercent = simAgainstDisplay.find(".stats-extra-percent").empty(),
@@ -1019,7 +1030,7 @@ $(function() {
 						});
 						attr.addClass(v);
 						elements.append(attr);
-					}					
+					} 				
 				}
 			});			
 		}
