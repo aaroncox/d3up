@@ -158,6 +158,9 @@ class D3Up_Tool_MaxStat
 		if(!in_array($item->type, static::$_typeMap)) {
 			return false;
 		}
+		if(!$item->attrs) {
+			return false;
+		}
 		$idx = array_search($item->type, array_flip(static::$_typeMap));
 		$ratings = array();
 		if($item->attrs) {
