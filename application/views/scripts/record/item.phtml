@@ -91,7 +91,7 @@
 <? endif; ?>
 <? if($this->record->attrs): ?>
 <? foreach($this->record->attrs as $k => $v): ?>
-<?= $p->prettyDisplay($k, $v) ?> 
+<?= strip_tags($p->prettyDisplay($k, $v)) ?> 
 <? endforeach ?>
 <? endif; ?>
 <? if($this->record->sockets): ?>
