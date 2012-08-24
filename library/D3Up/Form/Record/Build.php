@@ -93,11 +93,11 @@ class D3Up_Form_Record_Build extends Epic_Form
 			'label' => 'What class is this build?',
 			'multiOptions' => array(
 				null => '',
-				'wizard' => 'Wizard',
 				'barbarian' => 'Barbarian',
-				'witch-doctor' => 'Witch Doctor',
-				'monk' => 'Monk',
 				'demon-hunter' => 'Demon Hunter',
+				'monk' => 'Monk',
+				'witch-doctor' => 'Witch Doctor',
+				'wizard' => 'Wizard',
 			),
 			'tabindex' => 30,
 		));

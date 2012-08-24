@@ -211,7 +211,7 @@ var activeActives = [];
 	</div>
 	<? endif; ?>
 </div>
-<div class="inline-flow" style="width: 396px">
+<div class="sidebar inline-flow" style="width: 396px">
 	<div class="calc-stats ui-widget ui-widget-content ui-corner-all">
 		<ul>
 			<li><a href="#tab-base">Stats</a></li>
@@ -283,5 +283,15 @@ var activeActives = [];
 	<? else: ?>
 	var isLoggedIn = false;
 	<? endif ?>
+	
+	// Sticky Statistics on the page
+	// var $window = $(window),
+	// 		$stickyEl = $('.sidebar');
+	// 
+	// var elTop = $stickyEl.offset().top;
+	// $window.scroll(function() {
+	// 	var windowTop = $window.scrollTop();
+	// 	$stickyEl.toggleClass('sticky', windowTop > elTop);
+	// });
 </script>
 <script type="text/javascript" src="/js/build.js?time=<?= time() ?>"></script>

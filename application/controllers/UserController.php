@@ -353,4 +353,18 @@ class UserController extends Epic_Controller_Action
 			$this->_handleForm($form);			
 		}
 	}
+	public function guidesAction() {
+		$this->view->profile = $profile = D3Up_Auth::getInstance()->getProfile();
+		if($profile) {
+			$query = array(
+				'author' => $profile->createReference(),
+			);
+			$guides = Epic_Mongo::db('guide')->fetchAll($query);
+			$paginator = Zend_Paginator::factory($guides);
+			$paginator->setCurrentPageNumber($this->getRequest()->getParam('page', 1))->setItemCountPerPage(15)->setPageRange(3);
+			$this->view->guides = $paginator;
+		} else {
+			$this->_redirect('/user/login');
+		}
+	}
 } // END class UserController extends Epic_Controller_Action

@@ -1,0 +1,46 @@
+<h2 class="table-header">My Guides</h2>
+
+<? if($this->guides->count()):?>
+<table id="all-guides" class="d3up-table">
+	<thead>
+		<tr>
+			<td colspan="10" class='sorting'>
+				<a href="/guide/create" style="padding: 5px 20px" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only">Create new Guide</a>
+			</td>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td colspan="10" class="build-paginator">
+				<?php echo $this->paginationControl($this->guides,
+				                                    'Elastic',
+				                                    'guide/_pages.phtml'); ?>
+			</td>
+		</tr>
+		<tr>
+			<th></th>
+			<th>Name</th>
+			<th>Class</th>
+		</tr>
+	<? foreach($this->guides as $guide): ?>
+		<tr class='build-row'>
+			<td class="icon"><img src="/images/<?= $guide->class ?>.png"/></td>
+			<td class="name"><?= $this->guideLink($guide) ?></td>
+			<td class="controls"><?= $this->guideLink($guide, array('action' => 'delete', 'text' => 'Delete')) ?></td>
+		</tr>
+	<? endforeach; ?>
+		<tr>
+			<td colspan="10" class="build-paginator">
+				<?php echo $this->paginationControl($this->guides,
+				                                    'Elastic',
+				                                    'guide/_pages.phtml'); ?>
+
+			</td>
+		</tr>
+	</tbody>
+</table>
+<? else: ?>
+<p>You don't have any guides yet!</p>
+<p>Click the "Create new Guide" button below to get started.</p>
+<a href="/guide/create" style="padding: 5px 20px" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only">Create new Guide</a>
+<? endif; ?>

@@ -623,16 +623,16 @@ var activeSkills = {
 		},
 		'rend': {
 			name: 'Rend',
-			desc: 'A sweeping strike causes all nearby enemies to Bleed for 700% weapon damage as Physical over 3 seconds.',
+			desc: 'A sweeping strike causes all nearby enemies to Bleed for 700% weapon damage as Physical over 5 seconds.',
 			effect: {
 				'cost-fury': 20,
 				'weapon-damage': 700,
-				'weapon-damage-for': 3,
+				'weapon-damage-for': 5,
 			},
 		},
 		'rend~a': {
 			name: 'Rend - Lacerate',
-			desc: 'A sweeping strike causes all nearby enemies to Bleed for 700% weapon damage as Physical over 3 seconds.',
+			desc: 'A sweeping strike causes all nearby enemies to Bleed for 700% weapon damage as Physical over 5 seconds.',
 			rune: 'Increase damage to 903% weapon damage as Physical over 5 seconds.',
 			effect: {
 				'cost-fury': 20,
@@ -642,18 +642,18 @@ var activeSkills = {
 		},
 		'rend~b': {
 			name: 'Rend - Ravage',
-			desc: 'A sweeping strike causes all nearby enemies to Bleed for 700% weapon damage as Physical over 3 seconds.',
+			desc: 'A sweeping strike causes all nearby enemies to Bleed for 700% weapon damage as Physical over 5 seconds.',
 			rune: 'Increase the range of Rend to hit all enemies within 17 yards.',
 			effect: {
 				'cost-fury': 20,
 				'weapon-damage': 700,
-				'weapon-damage-for': 3,
+				'weapon-damage-for': 5,
 			},
 		},
 		'rend~c': {
 			name: 'Rend - Mutilate',
-			desc: 'A sweeping strike causes all nearby enemies to Bleed for 700% weapon damage as Physical over 3 seconds.',
-			rune: 'Increase bleeding duration to 5 seconds.',
+			desc: 'A sweeping strike causes all nearby enemies to Bleed for 700% weapon damage as Physical over 5 seconds.',
+			rune: 'Increase bleeding duration to 7 seconds.',
 			effect: {
 				'cost-fury': 20,
 				'weapon-damage': 700,
@@ -662,7 +662,7 @@ var activeSkills = {
 		},
 		'rend~d': {
 			name: 'Rend - Blood Lust',
-			desc: 'A sweeping strike causes all nearby enemies to Bleed for 700% weapon damage as Physical over 3 seconds.',
+			desc: 'A sweeping strike causes all nearby enemies to Bleed for 700% weapon damage as Physical over 5 seconds.',
 			rune: 'Gain 9% of the damage done by Rend as Life.',
 			effect: {
 				'cost-fury': 20,
@@ -6952,6 +6952,11 @@ td['chance-immobilize'] = 'VVV% chance to Immobilize on Hit';
 td['chance-knockback'] = 'VVV% chance to Knockback on Hit';
 td['chance-slow'] = 'VVV% chance to Slow on Hit';
 td['chance-stun'] = 'VVV% chance to Stun on Hit';
+td['chance-whirlwind'] = 'Chance to occasionally Whirlwind furioulsy.';
+td['chance-ball-energy'] = 'Chance to hurt a ball of pure energy when attacking.';
+td['chance-skeleton'] = 'Summons a skeleton when attacked.';
+td['chance-reflect-projectiles'] = 'Chance to reflect projectiles when hit.';
+td['effect-poison-cloud'] = 'You are sourrounded by a deadly Posion Cloud.';
 td['plus-movement'] = '+VVV% Movement Speed';
 td['plus-pickup-radius'] = 'Increases Gold and Health pickup by VVV yards';
 td['plus-experience'] = 'Monster kills grant +VVV experience';
@@ -6996,6 +7001,7 @@ td['mk-deadly-reach'] = 'Increases Deadly Reach damage by VVV%';
 td['mk-exploding-palm'] = 'Increases Exploding Palm damage by VVV%';
 td['mk-fists-of-thunder'] = 'Increases Fist of Thunder damage by VVV%';
 td['mk-sweeping-wind'] = 'Increases Sweeping Wind damage by VVV%';
+td['mk-sweeping-wind-cost'] = 'Reduces resource cost of Sweeping Wind by VVV Spirit.';
 td['mk-way-of-the-hundred-fists'] = 'Increases Way of the Hundred Fists damage by VVV%';
 td['mk-lashing-tail-kick'] = 'Reduces resource cost of Lashing Tail Kick by VVV Spirit';
 td['mk-tempest-rush'] = 'Increases Critical Hit Chance of Tempest Rush by VVV%';
@@ -7014,6 +7020,7 @@ td['wd-wall-of-zombies'] = 'Reduces cooldown of Wall of Zombies by VVV Seconds';
 td['wd-zombie-charger'] = 'Reduces resource cost of Zombie Charger by VVV Mana';
 td['ap-on-crit'] = 'Critical Hits grant VVV Arcane Power';
 td['ap-max'] = '+VVV Maximum Arcane Power';
+td['ap-regen'] = 'Increases Arcane Power regeneration by VVV per second.';
 td['wz-arcane-torrent'] = 'Reduces resource cost of Arcane Torrent by VVV Arcane Power';
 td['wz-disintegrate'] = 'Reduces resource cost of Disintegrate by VVV Arcane Power';
 td['wz-electrocute'] = 'Increases Electrocute damage by VVV%';
@@ -7101,8 +7108,30 @@ var setBonuses = {
 			}
 		}
 	},
+	'cains-fate': {
+		name: 'Cain\'s Fate',
+		effect: {
+			2: {
+				'plus-attack-speed': 0.02
+			},
+			3: {
+				'plus-experience': 0.3
+			}
+		}
+	},
 	'aughilds-treasured': {
 		name: 'Aughild\'s Treasured',
+		effect: {
+			2: {
+				'melee-reduce': 0.02
+			},
+			3: {
+				'range-reduce': 0.02
+			}
+		}
+	},
+	'aughilds-victory': {
+		name: 'Aughild\'s Victory',
 		effect: {
 			2: {
 				'melee-reduce': 0.02
@@ -7121,8 +7150,17 @@ var setBonuses = {
 			}
 		}
 	},
+	'guardians-contingency': {
+		name: 'Guardian\'s Contingency',
+		effect: {
+			2: {
+				'vitality': 110,
+				'life-regen': 130,
+			}
+		}
+	},
 	'immortal-kings-will': {
-		name: 'Immortal Kings\' Will',
+		name: 'Immortal King\'s Will',
 		effect: {
 			2: {
 				'resist-all': 60
@@ -7133,6 +7171,22 @@ var setBonuses = {
 			5: {
 				'fury-max': 5,
 				'fury-spent-life': 5
+			}
+		}
+	},
+	'immortal-kings-legend': {
+		name: 'Immortal King\'s Legend',
+		effect: {
+			2: {
+				'resist-all': 60
+			},
+			3: {
+				'melee-reduce': 0.04
+			},
+			5: {
+				'fury-max': 5,
+				'fury-spent-life': 5,
+				'generate-fury': 2
 			}
 		}
 	},
@@ -7150,8 +7204,33 @@ var setBonuses = {
 			}
 		}
 	},
+	'natalyas-solace': {
+		name: 'Natalya\'s Solace',
+		effect: {
+			2: {
+				'critical-hit': 0.07,
+			},
+			3: {
+				'dexterity': 130,
+			},
+			4: {
+				'max-discipline': 20
+			}
+		}
+	},
 	'sages-wisdom': {
 		name: 'Sage\'s Wisdom',
+		effect: {
+			2: {
+				'strength': 35,
+				'dexterity': 35,
+				'intelligence': 35,
+				'vitality': 35,
+			}
+		}
+	},
+	'sages-plight': {
+		name: 'Sage\'s Plight',
 		effect: {
 			2: {
 				'strength': 35,
@@ -7175,6 +7254,21 @@ var setBonuses = {
 			}
 		}
 	},
+	'tal-rashas-sacrifice': {
+		name: 'Tal Rasha\'s Sacrifice',
+		effect: {
+			2: {
+				'plus-fire-damage': 0.03
+			},
+			3: {
+				'plus-lightning-damage': 0.03
+			},
+			4: {
+				'plus-cold-damage': 0.03,
+				'ap-regen': 2
+			}
+		}
+	},
 	'borns-aegis': {
 		name: 'Born\'s Aegis',
 		effect: {
@@ -7184,8 +7278,29 @@ var setBonuses = {
 			}
 		}
 	},
+	'borns-defiance': {
+		name: 'Born\'s Defiance',
+		effect: {
+			2: {
+				'plus-life': 0.02,
+				'plus-experience': 20
+			}
+		}
+	},
 	'ashearas-bindings': {
 		name: 'Asheara\'s Bindings',
+		effect: {
+			2: {
+				'resist-all': 30
+			},
+			3: {
+				'life-steal': 0.025,
+				'thorns': 300
+			}
+		}
+	},
+	'ashearas-uniform': {
+		name: 'Asheara\'s Uniform',
 		effect: {
 			2: {
 				'resist-all': 30
@@ -7210,6 +7325,21 @@ var setBonuses = {
 			}
 		}
 	},
+	'demons-skin': {
+		name: 'Demon\'s Skin',
+		effect: {
+			2: {
+				'thorns': 999
+			},
+			3: {
+				'chance-fear': 0.011
+			},
+			4: {
+				'demon-damage': 0.03,
+				'chance-reflect-projectiles': true
+			}
+		}
+	},
 	'blackthornes-regalia': {
 		name: 'Blackthorne\'s Regalia',
 		effect: {
@@ -7225,6 +7355,22 @@ var setBonuses = {
 			}
 		}
 	},
+	'blackthornes-armor': {
+		name: 'Blackthorne\'s ReArmorgalia',
+		effect: {
+			2: {
+				'vitality': 100
+			}, 
+			3: {
+				'elite-damage': 0.06
+			},
+			4: {
+				'plus-gold-find': 0.15,
+				'plus-magic-find': 0.15,
+				'elite-damage': 0.07
+			}
+		}
+	},
 	'innas-majesty': {
 		name: 'Inna\'s Majesty',
 		effect: {
@@ -7232,10 +7378,25 @@ var setBonuses = {
 				'dexterity': 130
 			},
 			3: {
-				'spirit-regen': 0.0033
+				'spirit-regen': 0.33
 			},
 			4: {
 				'spirit-spent-life': 10
+			}
+		}
+	},
+	'innas-grandeur': {
+		name: 'Inna\'s Grandeur',
+		effect: {
+			2: {
+				'dexterity': 130
+			},
+			3: {
+				'spirit-regen': 0.33
+			},
+			4: {
+				'spirit-spent-life': 10,
+				'mk-sweeping-wind-cost': 70
 			}
 		}
 	},
@@ -7253,8 +7414,34 @@ var setBonuses = {
 			}
 		}
 	},
+	'zunimassas-whispers': {
+		name: 'Zunimassa\'s Whispers',
+		effect: {
+			2: {
+				'intelligence': 130
+			},
+			3: {
+				'resist-all': 55
+			},
+			4: {
+				'mana-kill': 10,
+				'mana-regen': 20
+			}
+		}
+	},
 	'captain-crimsons-attire': {
 		name: 'Captain Crimson\'s Attire',
+		effect: {
+			2: {
+				'life-regen': 20
+			},
+			3: {
+				'resist-all': 20
+			}
+		}
+	},
+	'captain-crimsons-finery': {
+		name: 'Captain Crimson\'s Finery',
 		effect: {
 			2: {
 				'life-regen': 20
@@ -7273,6 +7460,15 @@ var setBonuses = {
 			}
 		}
 	},
+	'endless-path': {
+		name: 'Endless Path',
+		effect: {
+			2: {
+				'vitality': 100,
+				'critical-hit-damage': 0.5
+			}
+		}
+	},
 	'legacy-of-nighttime-whispers': {
 		name: 'Legacy of Nighttime Whispers',
 		effect: {
@@ -7282,12 +7478,124 @@ var setBonuses = {
 			}
 		}
 	},
+	'legacy-of-wicked-dreams': {
+		name: 'Legacy of Wicked Dreams',
+		effect: {
+			2: {
+				'plus-gold-find': 0.15,
+				'plus-magic-find': 0.15,
+				'chance-skeleton': true
+			}
+		}
+	},
 	'hallowed-armaments': {
 		name: 'Hallowed Armaments',
 		effect: {
 			2: {
 				'resist-all': 40,
 				'plus-attack-speed': 0.05
+			}
+		}
+	},
+	'hallowed-defenders': {
+		name: 'Hallowed Defenders',
+		effect: {
+			2: {
+				'resist-all': 40,
+				'plus-attack-speed': 0.05
+			}
+		}
+	},
+	'bul-kathoss-glory': {
+		name: 'Bul-Kathos\'s Glory',
+		effect: {
+			2: {
+				'strength': 130, 
+				'fury-max': 5,
+				'chance-whirlwind': true
+			}
+		}
+	},
+	'bul-kathoss-children': {
+		name: 'Bul-Kathos\'s Children',
+		effect: {
+			2: {
+				'strength': 100,
+				'fury-max': 5
+			}
+		}
+	},
+	'danettas-creed': {
+		name: 'Danetta\'s Creed',
+		effect: {
+			2: {
+				'dexterity': 130,
+				'elite-damage': 0.03
+			}
+		}
+	},
+	'danettas-oath': {
+		name: 'Danetta\'s Oath',
+		effect: {
+			2: {
+				'dexterity': 130,
+				'elite-damage': 0.03
+			}
+		}
+	},
+	'chantodos-legacy': {
+		name: 'Chantodo\'s Legacy',
+		effect: {
+			2: {
+				'resist-all': 60,
+				'life-regen': 245
+			}
+		}
+	},
+	'chantodos-return': {
+		name: 'Chantodo\'s Return',
+		effect: {
+			2: {
+				'intelligence': 130,
+				'elite-reduce': 0.07
+			}
+		}
+	},
+	'shenlongs-defense': {
+		name: 'Shenlong\'s Defense',
+		effect: {
+			2: {
+				'dexterity': 130,
+				'spirit-regen': 0.33
+			}
+		}
+	},
+	'shenlongs-noble-path': {
+		name: 'Shenlong\'s Noble Path',
+		effect: {
+			2: {
+				'dexterity': 130,
+				'spirit-regen': 0.33,
+				'chance-ball-energy': true
+			}
+		}
+	},
+	'manajumas-ritual': {
+		name: 'Manajuma\'s Ritual',
+		effect: {
+			2: {
+				'intelligence': 130,
+				'mana-kill': 5
+			}
+		}
+	},
+	'manajumas-ornaments': {
+		name: 'Manajuma\'s Ornaments',
+		effect: {
+			2: {
+				'intelligence': 130,
+				'mana-kill': 5,
+				'effect-poison-cloud': true
 			}
 		}
 	}
