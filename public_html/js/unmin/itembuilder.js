@@ -714,7 +714,6 @@ var itemBuilder = {
 					_.each(v, function(value, stat) {
 						var li = $("<li>"),
 								attr = this.skillText[stat];
-						console.log(attr, stat);
 						if(attr) {
 							if(value <= 1) {
 								attr = attr.replace(/VVV/, Math.round(value * 100 * 100) / 100);									
