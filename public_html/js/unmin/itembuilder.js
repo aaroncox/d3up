@@ -107,6 +107,7 @@ var itemBuilder = {
 		'plus-movement': '+VVV% Movement Speed',
 		'plus-pickup-radius': 'Increases Gold and Health pickup by VVV yards',
 		'plus-experience': 'Monster kills grant +VVV experience',
+		'plus-experience-percent': 'Increased Experience Rewarded per Kill by VVV%',
 		'plus-gold-find': '+VVV% Extra Gold from Monsters',
 		'plus-magic-find': 'VVV% Better Chance of finding Magic Items',
 		'health-globes': 'Health Globes grant +VVV Life',
@@ -492,7 +493,7 @@ var itemBuilder = {
 		if(this.item.setBonus) {
 			this.preview.setBonus.empty();
 			var bonusData = this.getBonusHtml(this.item.setBonus);
-			console.log(bonusData.list);
+			// console.log(bonusData.list);
 			this.preview.setBonus.append(
 				bonusData.name,
 				bonusData.list
@@ -541,7 +542,6 @@ var itemBuilder = {
 					if(v == 0) {
 						container.find("input").val("0-0").addClass("minmax");
 					} else {
-						// console.log(v);
 						container.find("input").val(v.min + "-" + v.max).addClass("minmax");
 					}
 				}
@@ -714,6 +714,7 @@ var itemBuilder = {
 					_.each(v, function(value, stat) {
 						var li = $("<li>"),
 								attr = this.skillText[stat];
+						console.log(attr, stat);
 						if(attr) {
 							if(value <= 1) {
 								attr = attr.replace(/VVV/, Math.round(value * 100 * 100) / 100);									
