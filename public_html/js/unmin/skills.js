@@ -7116,6 +7116,7 @@ var setBonuses = {
 				'plus-attack-speed': 0.02
 			},
 			3: {
+				'plus-magic-find': 0.1,
 				'plus-experience-percent': 0.3
 			}
 		}
