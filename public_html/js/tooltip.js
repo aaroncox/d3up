@@ -80,11 +80,13 @@ $.fn.bindTooltip = function() {
 		itemSetBonus.empty().append(data.name, data.list);
 		if($(this).data("set-count")) {
 			var count = $(this).data("set-count");
-			data.list.find("div.data-count").each(function() {
-				if($(this).data("count") <= count) {
-					$(this).addClass("quality-7");					
-				}
-			})
+			if(data.list) {
+				data.list.find("div.data-count").each(function() {
+					if($(this).data("count") <= count) {
+						$(this).addClass("quality-7");					
+					}
+				});				
+			}
 		}			
 		content.append(itemSetBonus);
 	}
