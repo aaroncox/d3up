@@ -70,9 +70,6 @@ class AdminController extends Epic_Controller_Action
 		echo "Done"; exit;
 	}
 	public function resaveItemsAction() {
-		$query = array(
-			'rating' => array('$exists' => false)
-		);
 		foreach(Epic_Mongo::db('item')->fetchAll($query) as $item) {
 			$item->save();
 		}
