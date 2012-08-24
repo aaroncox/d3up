@@ -66,6 +66,14 @@ class D3Up_Form_Record_Sale extends Epic_Form
 			'filters' => array('StripTags'),
 		));
 		
+		$this->addElement("select", "soldSuccess", array(
+			'label' => 'Did this item sell?',
+			'multiOptions' => array(
+				false => "Didn't sell",
+				true => "Sold"
+			)
+		));
+		
 		$this->addElement("text", "soldFor", array(
 			'label' => 'How much did it sell for?',
 			'description' => 'The amount you received on your Auction House "Completed" tab.',
@@ -74,11 +82,12 @@ class D3Up_Form_Record_Sale extends Epic_Form
 			),
 			'filters' => array('StripTags'),
 		));
-		
+
 		$this->setDefaults(array(
 			'bid' => $sale->bid,
 			'buyout' => $sale->buyout,
 			'soldFor' => $sale->soldFor,
+			'soldSuccess' => $sale->soldSuccess,
 			'method' => $sale->method,
 		));
 		
@@ -97,6 +106,7 @@ class D3Up_Form_Record_Sale extends Epic_Form
 		$sale->buyout = (int) $this->buyout->getValue();
 		$sale->method = $this->method->getValue();
 		$sale->soldFor = $this->soldFor->getValue();
+		$sale->soldSuccess = $this->soldSuccess->getValue();
 		// var_dump($sale); exit;
 		// Return the Sale
 		return $sale->save();
