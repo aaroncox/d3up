@@ -6960,6 +6960,7 @@ td['effect-poison-cloud'] = 'You are sourrounded by a deadly Posion Cloud.';
 td['plus-movement'] = '+VVV% Movement Speed';
 td['plus-pickup-radius'] = 'Increases Gold and Health pickup by VVV yards';
 td['plus-experience'] = 'Monster kills grant +VVV experience';
+td['plus-experience-percent'] = 'Increased Experience Rewarded per Kill by VVV%';
 td['plus-gold-find'] = '+VVV% Extra Gold from Monsters';
 td['plus-magic-find'] = 'VVV% Better Chance of finding Magic Items';
 td['health-globes'] = 'Health Globes grant +VVV Life';
@@ -7115,7 +7116,7 @@ var setBonuses = {
 				'plus-attack-speed': 0.02
 			},
 			3: {
-				'plus-experience': 0.3
+				'plus-experience-percent': 0.3
 			}
 		}
 	},
