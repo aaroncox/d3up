@@ -3782,6 +3782,7 @@ var activeSkills = {
 			effect: {
 				'cost-spirit': 50,
 				'plus-dodge': 15,
+				'plus-armor': 20,
 			},
 		},
 		'mantra-of-evasion~d': {
