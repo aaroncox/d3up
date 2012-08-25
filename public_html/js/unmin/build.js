@@ -64,6 +64,7 @@ $(function() {
 	calc.init();
 	// Setup the Class for the Calculator
 	calc.setClass($("#character").data('class'));
+	calc.setParagonLevel($("#paragon-level").text());
 	// Pass in which gear we are calculating
 	$(".equipped a").each(function() {
 		var slot = $(this).parent().data("slot"),		// Get the slot this gear is in
@@ -313,6 +314,7 @@ $(function() {
 		calc.setActives(activeActiveSkills);
 		calc.setEnabledSkills(enabledSkills);
 		calc.setPassives(activePassiveSkills);
+		calc.setParagonLevel($("#paragon-level").text());
 		calc.setClass($("#character").data('class'));
 			$(".equipped a").each(function() {
 		var slot = $(this).parent().data("slot"),		// Get the slot this gear is in
@@ -839,6 +841,7 @@ $(function() {
 					calc.init();
 					// Setup the Class for the Calculator
 					calc.setClass($("#character").data('class'));
+					calc.setParagonLevel($("#paragon-level").text());
 					// Pass in which gear we are calculating
 						$(".equipped a").each(function() {
 		var slot = $(this).parent().data("slot"),		// Get the slot this gear is in
@@ -914,6 +917,7 @@ $(function() {
 							calc.init();
 							// Setup the Class for the Calculator
 							calc.setClass($("#character").data('class'));
+							calc.setParagonLevel($("#paragon-level").text());
 							// Pass in which gear we are calculating
 								$(".equipped a").each(function() {
 		var slot = $(this).parent().data("slot"),		// Get the slot this gear is in
@@ -957,6 +961,7 @@ $(function() {
 					calc.init();
 					// Setup the Class for the Calculator
 					calc.setClass($("#character").data('class'));
+					calc.setParagonLevel($("#paragon-level").text());
 					// Pass in which gear we are calculating
 						$(".equipped a").each(function() {
 		var slot = $(this).parent().data("slot"),		// Get the slot this gear is in
@@ -1008,6 +1013,7 @@ $(function() {
 							calc.init();
 							// Setup the Class for the Calculator
 							calc.setClass($("#character").data('class'));
+							calc.setParagonLevel($("#paragon-level").text());
 							// Pass in which gear we are calculating
 								$(".equipped a").each(function() {
 		var slot = $(this).parent().data("slot"),		// Get the slot this gear is in
@@ -1042,6 +1048,7 @@ $(function() {
 				calc.init();
 				// Setup the Class for the Calculator
 				calc.setClass($("#character").data('class'));
+				calc.setParagonLevel($("#paragon-level").text());
 				// Pass in which gear we are calculating
 					$(".equipped a").each(function() {
 		var slot = $(this).parent().data("slot"),		// Get the slot this gear is in
@@ -1070,6 +1077,7 @@ $(function() {
 		calc.init();
 		// Setup the Class for the Calculator
 		calc.setClass($("#character").data('class'));
+		calc.setParagonLevel($("#paragon-level").text());
 		// Pass in which gear we are calculating
 			$(".equipped a").each(function() {
 		var slot = $(this).parent().data("slot"),		// Get the slot this gear is in

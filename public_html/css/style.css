@@ -730,9 +730,16 @@ tr.compared > td:first-child {
 .table-header {
 	margin: 0;
 	text-transform: uppercase;
-	color: #666;
+	color: #757575;
 	letter-spacing: 0.2em;
 	font-size: 20px;
+	margin-left: 20px;
+}
+.table-sub-header {
+	margin: 0;
+	letter-spacing: 0.1em;
+	font-size: 14px;
+	color: #565656;
 	margin-left: 20px;
 }
 .d3up-table td.sorting {

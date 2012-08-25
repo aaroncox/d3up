@@ -22,6 +22,8 @@ BuildCalculator.prototype = {
 	enabledSkills: [],			// What actives/passives are conditional and enabled?
 	// Options
 	vsLevel: 60,
+	level: 0,
+	paragon: 0,
 	// Flags
 	isDuelWielding: false,	
 	// Reinitialize All Variables required for Math
@@ -52,7 +54,9 @@ BuildCalculator.prototype = {
 			'melee-reduce': 0,
 			'range-reduce': 0,
 			'elite-reduce': 0,
-			'resist-all': 0
+			'resist-all': 0,
+			'plus-gold-find': 0,
+			'plus-magic-find': 0,
 		};
 		this.gear = {};
 		this.values = {};
@@ -76,12 +80,22 @@ BuildCalculator.prototype = {
 				this.attrs['strength'] += 67;
 				this.attrs['dexterity'] += 67;
 				this.attrs['intelligence'] += 187;
+				if(this.paragon) {
+					this.attrs['strength'] += 1 * this.paragon;
+					this.attrs['dexterity'] += 1 * this.paragon;
+					this.attrs['intelligence'] += 3 * this.paragon;
+				}
 				break;
 			case "barbarian":
 				this.attrs['primary'] = 'strength';
 				this.attrs['strength'] += 187;
 				this.attrs['dexterity'] += 67;
 				this.attrs['intelligence'] += 67;
+				if(this.paragon) {
+					this.attrs['strength'] += 3 * this.paragon;
+					this.attrs['dexterity'] += 1 * this.paragon;
+					this.attrs['intelligence'] += 1 * this.paragon;
+				}
 				break;
 			case "demon-hunter":
 			case "monk":
@@ -89,9 +103,19 @@ BuildCalculator.prototype = {
 				this.attrs['strength'] += 67;
 				this.attrs['dexterity'] += 187;
 				this.attrs['intelligence'] += 67;
+				if(this.paragon) {
+					this.attrs['strength'] += 1 * this.paragon;
+					this.attrs['dexterity'] += 3 * this.paragon;
+					this.attrs['intelligence'] += 1 * this.paragon;
+				}
 				break;
 		}
 		this.attrs['vitality'] += 127; // Grant base vitality to all classes
+		if(this.paragon) {
+			this.attrs['plus-magic-find'] += 3 * this.paragon;
+			this.attrs['plus-gold-find'] += 3 * this.paragon;
+			this.attrs['vitality'] += 2 * this.paragon;
+		}
 		this.heroClass = newClass;
 	},
 	getClass: function() {
@@ -120,6 +144,9 @@ BuildCalculator.prototype = {
 	},
 	setVsLevel: function(level) {
 		this.vsLevel = level;
+	},
+	setParagonLevel: function(level) {
+		this.paragon = level;
 	},
 	getItem: function(slot) {
 		return this.gear[slot];

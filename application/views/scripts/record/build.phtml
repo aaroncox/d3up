@@ -34,8 +34,14 @@ var activeActives = [];
 <? endif; ?>
 
 <h2 class="table-header">
-	<?= $this->record->name ?> (<?= ucwords(str_replace("-", " ", $this->record->class)) ?>)
+	<?= $this->record->name ?> 
 </h2>
+<h3 class="table-sub-header">
+	<?= ucwords(str_replace("-", " ", $this->record->class)) ?>
+	-
+	Level <span id="character-level"><?= $this->record->level ?: 60 ?></span>,
+	Paragon Level <span id="paragon-level"><?= $this->record->paragon ?: 0 ?></span>
+</h3>
 
 <div id="skill-display" class="build-header ui-widget ui-corner-all" >
 	<div id="ratings-display">
@@ -294,4 +300,4 @@ var activeActives = [];
 	// 	$stickyEl.toggleClass('sticky', windowTop > elTop);
 	// });
 </script>
-<script type="text/javascript" src="/js/build.js?time=<?= time() ?>"></script>
+<script type="text/javascript" src="/js/unmin/build.js?time=<?= time() ?>"></script>
