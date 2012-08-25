@@ -62,7 +62,7 @@ class D3Up_Tool_MaxStat
 		),
 		array(
 			'types' => 'shield',
-			'values' => array(178, 178, 178, 178, 234, 0, 0, 0, 0, 18, 20, 24, 0, 0, 0, 0, 8.5, 0, 15, 0, 0, 397, 9, 6, 6, 7, 2544, 14, 80, 60, 60, 60, 60, 60, 60, 16),
+			'values' => array(350, 350, 350, 350, 234, 0, 0, 0, 0, 18, 20, 24, 0, 0, 0, 0, 8.5, 0, 15, 0, 0, 397, 9, 6, 6, 7, 2544, 14, 80, 60, 60, 60, 60, 60, 60, 16),
 		),
 		array(
 			'types' => 'spirit-stone',
@@ -118,7 +118,7 @@ class D3Up_Tool_MaxStat
 		),
 		array(
 			'types' => 'ring',
-			'values' => array(178, 178, 178, 178, 234, 985, 328, 0, 0, 18, 20, 222, 0, 0, 0, 0, 4.5, 35, 9, 27, 27, 240, 0, 0, 0, 0, 979, 14, 70, 50, 50, 50, 50, 50, 50, 9),
+			'values' => array(178, 178, 178, 178, 234, 985, 328, 0, 0, 18, 20, 222, 0, 0, 0, 0, 4.5, 34, 9, 27, 27, 240, 0, 0, 0, 0, 979, 14, 70, 50, 50, 50, 50, 50, 50, 9),
 		),
 		array(
 			'types' => 'shoulders',
@@ -156,6 +156,9 @@ class D3Up_Tool_MaxStat
 	public static function calc($item) {
 
 		if(!in_array($item->type, static::$_typeMap)) {
+			return false;
+		}
+		if(!$item->attrs) {
 			return false;
 		}
 		$idx = array_search($item->type, array_flip(static::$_typeMap));

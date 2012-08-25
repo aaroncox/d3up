@@ -9,7 +9,7 @@
  * @package undocumented class
  **/
 class D3Up_Mongo_Schema extends Epic_Mongo_Schema {
-	protected $_version = 6;
+	protected $_version = 7;
   	protected $_tag = 'd3up';
 	protected $_classMap = array(
 		'record' => array(
@@ -26,9 +26,10 @@ class D3Up_Mongo_Schema extends Epic_Mongo_Schema {
 		'post' => array(
 			'comment' => 'D3Up_Mongo_Record_Build_Comment',
 			'update' => 'D3Up_Mongo_Post_Update',
+			'guide' => 'D3Up_Mongo_Post_Guide',
 		),
 		'user' => array(
-			
+			'profile' => 'D3Up_Mongo_User_Profile'
 		)
 	);
 	
@@ -79,6 +80,8 @@ class D3Up_Mongo_Schema extends Epic_Mongo_Schema {
 				$db->execute('db.records.update({type: "chest"}, {$set: {type: "chest"}}, false, true)');
 			case 5:
 				$db->execute('db.createCollection("views", {capped:true, size:100000})');
+			case 6:
+				$db->execute('db.records.ensureIndex({_type: 1, _created: 1})');
 				// $db->execute('db.users.insert({id: 1, name: "admin", username: "admin", password: "'.md5('admin').'", _access: "admin", _type: "user"})');
 				// $db->execute('db.sequences.insert({"id" : "user", "sequence" : 1 })');
 			// case 0:

@@ -1,0 +1,23 @@
+<table class="d3up-table">
+<tbody>
+	<? foreach($this->items as $sale): ?>
+		<tr class="item-row" id="sale-<?= $sale->id ?>">
+			<td class="data"><?= $this->timeAgo($sale->soldOn) ?></td>
+			<td class='name'><?= $this->itemLink($sale->item) ?></td>
+			<td class="data">
+				<? if($sale->soldSuccess): ?>
+					<span class='pos'>Sold</span> 
+				<? else: ?>
+					<span class='neg'>Not Sold</span>
+				<? endif ?>
+			</td>
+			<td class='data'>
+				<?= $this->regionDisplay($sale->region) ?>
+			</td>
+			<td class="data"> 
+				<?= $this->priceDisplay($sale, 'soldFor') ?>
+			</td>					
+		</tr>
+		<? endforeach ?>
+	</tbody>
+</table>

@@ -34,7 +34,7 @@ class PostController extends Epic_Controller_Action
 		$sort = array("_created" => -1);
 		$posts = Epic_Mongo::db($type)->fetchAll($query, $sort);
 		$paginator = Zend_Paginator::factory($posts);
-		$paginator->setCurrentPageNumber($this->getRequest()->getParam('page', 1))->setItemCountPerPage(20);
+		$paginator->setCurrentPageNumber($this->getRequest()->getParam('page', 1))->setItemCountPerPage(5);
 		$this->view->posts = $paginator;
 	}
 	public function viewAction() {

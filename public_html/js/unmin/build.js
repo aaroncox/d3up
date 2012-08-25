@@ -54,7 +54,7 @@ $(function() {
 			passiveDisplay = $("#passive-display"),	
 			activeActivesData = {},		
 			activePassivesData = {},
-			calc = Object.create(buildCalculator),
+			calc = new d3up.BuildCalculator,
 			activeActiveSkills = {},
 			activePassiveSkills = {},
 			enabledSkills = {},
@@ -64,14 +64,19 @@ $(function() {
 	calc.init();
 	// Setup the Class for the Calculator
 	calc.setClass($("#character").data('class'));
+	calc.setParagonLevel($("#paragon-level").text());
 	// Pass in which gear we are calculating
-	calc.setGear(".equipped a");
+	$(".equipped a").each(function() {
+		var slot = $(this).parent().data("slot"),		// Get the slot this gear is in
+				data = $(this).data("json");						// Get the JSON for this gear
+		calc.setItem(slot, data);
+	});
+	
 	// Pass in the Passives we're using
 	calc.setPassives(activePassiveSkills);
 	// Get the Calculated Stats
 	var stats = calc.run();
-	
-	
+		
 	var activeSelects = [1,2,3,4,5,6],
 			passiveSelects = [1,2,3],
 			choosers = $("#skill-chooser");
@@ -309,8 +314,14 @@ $(function() {
 		calc.setActives(activeActiveSkills);
 		calc.setEnabledSkills(enabledSkills);
 		calc.setPassives(activePassiveSkills);
+		calc.setParagonLevel($("#paragon-level").text());
 		calc.setClass($("#character").data('class'));
-		calc.setGear(".equipped a");
+			$(".equipped a").each(function() {
+		var slot = $(this).parent().data("slot"),		// Get the slot this gear is in
+				data = $(this).data("json");						// Get the JSON for this gear
+		calc.setItem(slot, data);
+	});
+
 		// console.log(activePassiveSkills);
 		stats = calc.run();
 		_.each(stats.skillData, function(v,k) {
@@ -332,9 +343,9 @@ $(function() {
 			activeDisplay.empty();			
 		}
 		_.each(skills, function(skill) {
-			if(skill != "undefined") {
-				var data = activeSkills[heroClass][skill],
-						li = $("<li class='skill-calc-row'>").attr("data-json", JSON.stringify(data.effect)).attr("data-id", skill).attr("id", "skill-" + skill),
+			if(skill != "undefined" && skill != "") {
+				var data = activeSkills[heroClass][skill];
+				var	li = $("<li class='skill-calc-row'>").attr("data-json", JSON.stringify(data.effect)).attr("data-id", skill).attr("id", "skill-" + skill),
 						cleaned = skill.split("~"),
 						icon = $("<img src='/images/icons/" + heroClass + "-" + cleaned[0] + ".png'>"),
 						h3 = $("<h3>").html(data.name),
@@ -346,13 +357,14 @@ $(function() {
 				icon.attr('data-name', data.name);
 				if(data.rune) {
 					icon.attr('data-tooltip', data.desc.replace(/  /, "<br/><br/>") + "<br/><br/>" + data.rune);
-					var rune = $("<p>").html("<span class='stat-helper'>Rune Bonus</span>: " + data.rune);
+					rune = $("<p>").html("<span class='stat-helper'>Rune Bonus</span>: " + data.rune);
 				}
 				icon.bindSkilltip();
 				if(data.effect) {
 					// console.log("effect ", data.effect);
 					var checkbox = $("<input type='checkbox' class='skill-activate' data-skill='" + skill + "'>");
 					checkbox.click(function() {
+						li.toggleClass("skill-activated");
 						recalc();
 					});
 					control.append("Activate ", checkbox).hide();					
@@ -377,12 +389,13 @@ $(function() {
 						desc = $("<p>").append(data.desc),
 						control = $("<div class='control'></div>");
 				icon.attr('data-tooltip', data.desc);
-				icon.attr('data-name', v.replace(/\-/g," ").capitalize())
+				icon.attr('data-name', v.replace(/\-/g," ").capitalize());
 				icon.bindSkilltip();
 				// if(data.effect) {
 					// console.log("effect ", data.effect);
 					var checkbox = $("<input type='checkbox' class='passive-activate' data-skill='" + skill + "'>");
 					checkbox.click(function() {
+						li.toggleClass("skill-activated");
 						recalc();
 					});
 					control.append("Activate ", checkbox).hide();					
@@ -452,7 +465,7 @@ $(function() {
 								var dialog = $(this);
 								if(gearSelect.val() != "") {
 									var itemLink = $("<a/>"),
-											itemSelected = gearSelect.find(":selected"),
+											itemSelected = gearSelect.selectedOption(),
 											itemData = $.parseJSON(itemSelected.attr("data-json"));
 									// Unequip offhand if we're equipping a 2h weapon
 									switch(itemData.type) {
@@ -498,6 +511,7 @@ $(function() {
 					});
 				}			
 			});
+			return false;
 		});		
 	}
 	function displayStats() {
@@ -613,12 +627,12 @@ $(function() {
 		tabDPSGains.append(statLabel("+1% Attack Speed", stats['dps-pt-attack-speed'], 'round'));
 		tabEHPGains.empty();
 		tabEHPGains.append($("<li class='header'/>").html("EHP Gained per Stat"));
-		tabEHPGains.append(statLabel("+1 Armor", stats['ehp-pt-armor'], 'round'))
-		tabEHPGains.append(statLabel("+1 Strength", stats['ehp-pt-strength'], 'round'))
-		tabEHPGains.append(statLabel("+1 Intelligence", stats['ehp-pt-intelligence'], 'round'))
-		tabEHPGains.append(statLabel("+1 Vitality", stats['ehp-pt-vitality'], 'round'))
-		tabEHPGains.append(statLabel("+1 Resist All", stats['ehp-pt-resist-all'], 'round'))
-		tabEHPGains.append(statLabel("+1% Life", stats['ehp-pt-plus-life'], 'round'))
+		tabEHPGains.append(statLabel("+1 Armor", stats['ehp-pt-armor'], 'round'));
+		tabEHPGains.append(statLabel("+1 Strength", stats['ehp-pt-strength'], 'round'));
+		tabEHPGains.append(statLabel("+1 Intelligence", stats['ehp-pt-intelligence'], 'round'));
+		tabEHPGains.append(statLabel("+1 Vitality", stats['ehp-pt-vitality'], 'round'));
+		tabEHPGains.append(statLabel("+1 Resist All", stats['ehp-pt-resist-all'], 'round'));
+		tabEHPGains.append(statLabel("+1% Life", stats['ehp-pt-plus-life'], 'round'));
 		// Life Stastics Display
 		tabLife.empty();
 		tabLife.append(statLabel("Maximum Life", stats.life, 'round'));
@@ -681,8 +695,8 @@ $(function() {
 			compareTo = $("#compare-to");
 	// Bind the calcDiff function when compareTo is changed
 	compareTo.bind('change', function() {
-		var itemSlot = $("#compared-slot").find(":selected").val(),
-				newItem = $(this).find(":selected").data("json");
+		var itemSlot = $("#compared-slot").selectedOption().val(),
+				newItem = $(this).selectedOption().data("json");
 		calcDiff(stats, newItem, itemSlot);
 	});
 	// Change which slot we are comparing and ajax in the possibilities
@@ -723,14 +737,25 @@ $(function() {
 	$("#simulation-stats").hide();
 	simSlot.bind('change', function() {
 		recalc();
+		simAttrs.val("");
 		prevStats = jQuery.extend({}, stats);
 		simAgainstData = false;
-		simItemType = $(this).val(), 
-		simAgainst = $("#equipped-" + simItemType + " a").clone();
-		simAgainstData = simAgainst.data('json');
-		simAgainst.bindTooltip();
-		simAgainstDisplay.find(".top p").empty().append(simAgainst);
-		simAttrs.val(null);
+		simItemType = $(this).val(); 
+		// simAgainst = false;
+		// simAgainst = $("#equipped-" + simItemType + " a").clone(true);
+		simAgainstData = $("#equipped-" + simItemType + " a").data('json');
+		$.each(simAgainstData.attrs, function(k,v) {
+			if(v == 0) {
+				delete simAgainstData.attrs[k];
+			}
+			var existing = $("#simulate-stats ul.attrs input[name=" + k + "]");
+			if(existing) {
+				existing.val(v);
+			}
+		});
+		// console.log($("#equipped-" + simItemType + " a").data('json'), simAgainstData, simItemType);
+		// simAgainst.bindTooltip();
+		// simAgainstDisplay.find(".top p").empty().append(simAgainst);
 		var statsValue = simAgainstDisplay.find(".stats-primary .big-stat").empty(),
 				statsValueHelper = simAgainstDisplay.find(".stats-primary .stat-helper").empty(),
 				statsPercent = simAgainstDisplay.find(".stats-extra-percent").empty(),
@@ -754,20 +779,6 @@ $(function() {
 							effectNum = 1;
 							effect = v[1];						
 							break;
-						case "shield":
-						case "belt":
-						case "boots":
-						case "bracers":
-						case "chest":
-						case "cloak":
-						case "gloves":
-						case "pants":
-						case "mighty-belt":
-						case "shoulders":
-						default:
-							effectNum = 3;
-							effect = v[3];
-							break;
 						case "2h-mace":
 						case "2h-axe":
 						case "bow":
@@ -789,6 +800,23 @@ $(function() {
 						case "wand":
 							effectNum = 2;
 							effect = v[2];							
+							break;
+						case "shield":
+						case "belt":
+						case "boots":
+						case "bracers":
+						case "chest":
+						case "cloak":
+						case "gloves":
+						case "pants":
+						case "mighty-belt":
+						case "shoulders":
+							effectNum = 3;
+							effect = v[3];
+							break;						
+						default:
+							effectNum = 3;
+							effect = v[3];
 							break;
 					}
 					var option = $("<option value='" + k + "'>" + v[0] + " (" + effect + ")</option>");
@@ -813,8 +841,14 @@ $(function() {
 					calc.init();
 					// Setup the Class for the Calculator
 					calc.setClass($("#character").data('class'));
+					calc.setParagonLevel($("#paragon-level").text());
 					// Pass in which gear we are calculating
-					calc.setGear(".equipped a");
+						$(".equipped a").each(function() {
+		var slot = $(this).parent().data("slot"),		// Get the slot this gear is in
+				data = $(this).data("json");						// Get the JSON for this gear
+		calc.setItem(slot, data);
+	});
+
 					// Pass in the Passives we're using
 					calc.setPassives(activePassiveSkills);
 					// Remove Item in Slot
@@ -860,10 +894,10 @@ $(function() {
 						statsPercent.html(input).append(" Attack Speed");
 						break;
 					case "damage":
-						var i1 = $("<input name='" + k + "-min' type='text'/>"),
-								i2 = $("<input name='" + k + "-max' type='text'/>");
-						i1.val(v.min);
-						i2.val(v.max);
+						var di1 = $("<input name='" + k + "-min' type='text'/>"),
+								di2 = $("<input name='" + k + "-max' type='text'/>");
+						di1.val(v.min);
+						di2.val(v.max);
 						function reSim() {
 							switch($(this).attr("name")) {
 								case "damage-min":
@@ -873,7 +907,7 @@ $(function() {
 									simAgainstData.stats.damage.max = ($(this).val()) ? parseFloat($(this).val()) : 0;
 									break;
 								default:
-									console.log($(this));
+									// console.log($(this));
 									return false;
 									break;
 							}
@@ -883,8 +917,14 @@ $(function() {
 							calc.init();
 							// Setup the Class for the Calculator
 							calc.setClass($("#character").data('class'));
+							calc.setParagonLevel($("#paragon-level").text());
 							// Pass in which gear we are calculating
-							calc.setGear(".equipped a");
+								$(".equipped a").each(function() {
+		var slot = $(this).parent().data("slot"),		// Get the slot this gear is in
+				data = $(this).data("json");						// Get the JSON for this gear
+		calc.setItem(slot, data);
+	});
+
 							// Pass in the Passives we're using
 							calc.setPassives(activePassiveSkills);
 							// Remove Item in Slot
@@ -894,13 +934,14 @@ $(function() {
 							stats = calc.run();
 							calcDiff(prevStats, simAgainstData, simItemType, true);
 							displayStats();
+							return false;
 						}
-						i1.bind('keyup', reSim);
-						i2.bind('keyup', reSim);
-						statsRange.append(i1, "-", i2).append(" Damage");
+						di1.bind('keyup', reSim);
+						di2.bind('keyup', reSim);
+						statsRange.append(di1, "-", di2).append(" Damage");
 						break;
 					default: 
-						console.log(k,v);
+						// console.log(k,v);
 						break;
 				}
 				input.bind('keyup', function() {
@@ -920,8 +961,14 @@ $(function() {
 					calc.init();
 					// Setup the Class for the Calculator
 					calc.setClass($("#character").data('class'));
+					calc.setParagonLevel($("#paragon-level").text());
 					// Pass in which gear we are calculating
-					calc.setGear(".equipped a");
+						$(".equipped a").each(function() {
+		var slot = $(this).parent().data("slot"),		// Get the slot this gear is in
+				data = $(this).data("json");						// Get the JSON for this gear
+		calc.setItem(slot, data);
+	});
+
 					// Pass in the Passives we're using
 					calc.setPassives(activePassiveSkills);
 					// Remove Item in Slot
@@ -966,8 +1013,14 @@ $(function() {
 							calc.init();
 							// Setup the Class for the Calculator
 							calc.setClass($("#character").data('class'));
+							calc.setParagonLevel($("#paragon-level").text());
 							// Pass in which gear we are calculating
-							calc.setGear(".equipped a");
+								$(".equipped a").each(function() {
+		var slot = $(this).parent().data("slot"),		// Get the slot this gear is in
+				data = $(this).data("json");						// Get the JSON for this gear
+		calc.setItem(slot, data);
+	});
+
 							// Pass in the Passives we're using
 							calc.setPassives(activePassiveSkills);
 							// Remove Item in Slot
@@ -983,7 +1036,7 @@ $(function() {
 						});
 						attr.addClass(v);
 						elements.append(attr);
-					}					
+					} 				
 				}
 			});			
 		}
@@ -995,8 +1048,14 @@ $(function() {
 				calc.init();
 				// Setup the Class for the Calculator
 				calc.setClass($("#character").data('class'));
+				calc.setParagonLevel($("#paragon-level").text());
 				// Pass in which gear we are calculating
-				calc.setGear(".equipped a");
+					$(".equipped a").each(function() {
+		var slot = $(this).parent().data("slot"),		// Get the slot this gear is in
+				data = $(this).data("json");						// Get the JSON for this gear
+		calc.setItem(slot, data);
+	});
+
 				// Pass in the Passives we're using
 				calc.setPassives(activePassiveSkills);
 				// Remove Item in Slot
@@ -1018,8 +1077,14 @@ $(function() {
 		calc.init();
 		// Setup the Class for the Calculator
 		calc.setClass($("#character").data('class'));
+		calc.setParagonLevel($("#paragon-level").text());
 		// Pass in which gear we are calculating
-		calc.setGear(".equipped a");
+			$(".equipped a").each(function() {
+		var slot = $(this).parent().data("slot"),		// Get the slot this gear is in
+				data = $(this).data("json");						// Get the JSON for this gear
+		calc.setItem(slot, data);
+	});
+
 		// Pass in the Passives we're using
 		calc.setPassives(activePassiveSkills);
 		// Remove Item in Slot
@@ -1053,7 +1118,7 @@ $(function() {
 		if(!hideHelpers) {
 			var h4 = $("<h4>Comparision Results</h4>").css({margin: 0}),
 					oldLabel = $("<p/>").append("Old Item: ", calc.getItemLink(oldItem)),
-					newLabel = $("<p/>").append("New Item: ", calc.getItemLink(newItem))
+					newLabel = $("<p/>").append("New Item: ", calc.getItemLink(newItem));
 			if(oldItemOH) {
 				oldLabel.append(" + Offhand: ", calc.getItemLink(oldItemOH));
 			}			
@@ -1064,7 +1129,7 @@ $(function() {
 		if(notices.length > 0) {
 			$.each(notices, function(k,v) {
 				$("#compare-notes").append(v);
-			})
+			});
 		}
 		var table = $("<table/>");
 				header = $("<tr/>").append("<th>Stat</th><th>Diff</th><th>Old</th><th>New</th>");
@@ -1156,7 +1221,7 @@ $(function() {
 				upvote.addClass('ui-state-disabled');
 				downvote.toggleClass('ui-state-disabled');
 			}
-			$("#vote-count").html(parseInt($("#vote-count").text()) + change).attr("data-count", change);
+			$("#vote-count").html(parseInt($("#vote-count").text(), 10) + change).attr("data-count", change);
 		}		
 	}
 	upvote.bindSkilltip();

@@ -1,36 +1,47 @@
-var buildCalculator = {
-	class: null,					// Hero Class
-	gearSelector: null,		// Where is the gear on the page?
-	passiveSkills: [],		// What passives are active?
-	activeSkills: [],			// Which active skills do we use?
-	enabledSkills: [],			// Skills that are ACTIVE
-	// Storage
-	gear: {},
-	attrs: {},
-	stats: {},
-	sets: {},
-	bonuses: {},
-	values: {},
+(function( d3up ) {
+
+function average() {
+	var index = 0,
+			sum = 0,
+			length = arguments.length;
+	for ( ; index < length; index++ ) {
+		sum += arguments[ index ] || 0;
+	}
+	return sum / length;
+}
+
+function BuildCalculator() {
+	this.init();
+}
+
+BuildCalculator.prototype = {
+	heroClass: null,				// Hero Class
+	gearSelector: null,			// Where is the gear on the page?
+	passiveSkills: [],			// What passives do we use?
+	activeSkills: [],				// What actives do we use?
+	enabledSkills: [],			// What actives/passives are conditional and enabled?
 	// Options
 	vsLevel: 60,
+	level: 0,
+	paragon: 0,
 	// Flags
 	isDuelWielding: false,	
+	// Reinitialize All Variables required for Math
 	init: function() {
-		// console.log("===== Clearing =====");
-		this.attrs = {
-			armor: 0,
+		this.stats = {
+			'armor': 0,
 			'block-chance': 0,
 			'speed': 0
 		};
 		this.sets = {};
 		this.attrs = {
-			primary: null,
-			strength: 0,
-			dexterity: 0,
-			intelligence: 0,
-			vitality: 0,
+			'primary': null,
+			'strength': 0,
+			'dexterity': 0,
+			'intelligence': 0,
+			'vitality': 0,
 			'plus-life': 0,
-			armor: 0,
+			'armor': 0,
 			'cold-resist': 0,
 			'lightning-resist': 0,
 			'fire-resist': 0,
@@ -44,18 +55,20 @@ var buildCalculator = {
 			'range-reduce': 0,
 			'elite-reduce': 0,
 			'resist-all': 0,
+			'plus-gold-find': 0,
+			'plus-magic-find': 0,
 		};
 		this.gear = {};
 		this.values = {};
 		this.bonuses = {
-			'plus-resist-all': 0,
 			'plus-armor': 0,
-			'plus-dodge': [], // Since Dodge is Multiplicative in it's percentage bonuses, we need to collect them
+			'plus-resist-all': 0,
 			'plus-damage': 0,
 			'plus-attack-speed': 0,
 			'plus-damage-reduce': 0,
 			'plus-life': 0,
-			'3rd-hit-damage': false,
+			'plus-dodge': [], // Since Dodge is Multiplicative in it's percentage bonuses, we need to collect all values
+			'3rd-hit-damage': false // Keep disabled unless it's set
 		};
 	},
 	setClass: function(newClass) {
@@ -67,12 +80,22 @@ var buildCalculator = {
 				this.attrs['strength'] += 67;
 				this.attrs['dexterity'] += 67;
 				this.attrs['intelligence'] += 187;
+				if(this.paragon) {
+					this.attrs['strength'] += 1 * this.paragon;
+					this.attrs['dexterity'] += 1 * this.paragon;
+					this.attrs['intelligence'] += 3 * this.paragon;
+				}
 				break;
 			case "barbarian":
 				this.attrs['primary'] = 'strength';
 				this.attrs['strength'] += 187;
 				this.attrs['dexterity'] += 67;
 				this.attrs['intelligence'] += 67;
+				if(this.paragon) {
+					this.attrs['strength'] += 3 * this.paragon;
+					this.attrs['dexterity'] += 1 * this.paragon;
+					this.attrs['intelligence'] += 1 * this.paragon;
+				}
 				break;
 			case "demon-hunter":
 			case "monk":
@@ -80,13 +103,23 @@ var buildCalculator = {
 				this.attrs['strength'] += 67;
 				this.attrs['dexterity'] += 187;
 				this.attrs['intelligence'] += 67;
+				if(this.paragon) {
+					this.attrs['strength'] += 1 * this.paragon;
+					this.attrs['dexterity'] += 3 * this.paragon;
+					this.attrs['intelligence'] += 1 * this.paragon;
+				}
 				break;
 		}
 		this.attrs['vitality'] += 127; // Grant base vitality to all classes
-		this.class = newClass;
+		if(this.paragon) {
+			this.attrs['plus-magic-find'] += 3 * this.paragon;
+			this.attrs['plus-gold-find'] += 3 * this.paragon;
+			this.attrs['vitality'] += 2 * this.paragon;
+		}
+		this.heroClass = newClass;
 	},
 	getClass: function() {
-		return this.class;
+		return this.heroClass;
 	},
 	setActives: function(actives) {
 		this.activeSkills = actives;
@@ -112,27 +145,17 @@ var buildCalculator = {
 	setVsLevel: function(level) {
 		this.vsLevel = level;
 	},
-	setGear: function(gearSelector) {
-		// Empty object to populate
-		var json = {};
-		// Set the selector incase we need to reference it
-		this.gearSelector = gearSelector;
-		// Foreach of the pieces of gear, add the JSON to the array
-		$(this.gearSelector).each(function() {
-			var slot = $(this).parent().data("slot"),		// Get the slot this gear is in
-					data = $(this).data("json");						// Get the JSON for this gear
-			json[slot] = data;
-		});
-		// Assign the JSON to this.gear
-		this.gear = json;
-		// Parse Item Information into this.attrs & this.attrs
-		_.each(this.gear, this.parseItem, this);
+	setParagonLevel: function(level) {
+		this.paragon = level;
 	},
 	getItem: function(slot) {
 		return this.gear[slot];
 	},
 	setItem: function(slot, item) {
+		// Save the JSON in the proper slot
 		this.gear[slot] = item;
+		// Parse the stats into appropriate places
+		this.parseItem(item, slot);
 	},
 	getItemLink: function(item) {
 		if(item == null) {
@@ -158,9 +181,9 @@ var buildCalculator = {
 			case "plus-attack-speed":
 			case "plus-damage":
 			case "plus-armor":
-				var value = e / 100;
+				var valueAdd = e / 100;
 				// console.log(i, value);
-				this.addBonus(i, value);
+				this.addBonus(i, valueAdd);
 				break;
 			default:
 			 	// console.log("Unhandled Active: " + e + " " + i);
@@ -170,12 +193,21 @@ var buildCalculator = {
 	applyEnabledSkills: function() {
 		// console.log(this.activeSkills);
 		_.each(this.enabledSkills, function(v,k) {
-			// console.log(v,k);
 			_.each(v.effect, function(e,i) {
 				switch(i) {
 					case "stack":
 						_.each(e, function(se, si) {
 							this.applyEnabledSkill(se.limit * se.value, si);
+						}, this);
+						break;
+					case "spirit-combo-strike":
+						_.each(this.activeSkills, function(s, i){
+							var aSkill = activeSkills['monk'][i],
+									total = 0;
+							if(aSkill.effect && aSkill.effect['generate-spirit']) {
+								total += 8;
+							}
+							this.applyEnabledSkill(total, 'plus-damage');
 						}, this);
 						break;
 					case "plus-damage-conditional":
@@ -185,36 +217,39 @@ var buildCalculator = {
 						this.applyEnabledSkill(e, 'plus-damage-reduce');
 						break;
 					default:
-						this.applyEnabledSkill(e,i)
+						this.applyEnabledSkill(e,i);
 						break;
 				}
 			}, this);
 		}, this);
 	},
 	applyPassives: function() {
+		var effects = {
+			sharpshooter: function( value ) {
+				this.bonuses[ 'sharpshooter' ] = true;
+				// TODO
+				// mathDpsSpecialName = 'Sharpshooter';
+				// mathDpsSpecial = (((mathDamage.min + mathDamage.max) / 2 + mathDamageAdd) * this.attrs['speed']) * mathSpeedAdditive * (primaryAttr / 100 + 1) * 1 * ((100 / 100) * (mathCriticalHitDamage/100)+ 1);
+				// mathDpsSpecial = Math.round(mathDps * 100) / 100;
+			}
+		};
+
+		effects[ "plus-thorns" ] =
+		effects[ "plus-armor" ] =
+		effects[ "plus-resist-all" ] =
+		effects[ "plus-damage" ] = function( value, effect ) {
+			this.addBonus( effect, value );
+		};
+
 		_.each(this.passiveSkills, function(v,k) {
 			// if(passives[this.class][v] && typeof passives[this.class][v]['effect'] != "undefined") {
 			if(v.effect) {
 				// console.log(k,v);
 				_.each(v.effect, function(value, effect) {
+					if ( effects[ effect ] ) {
+						effects[ effect ].call( this, value, effect )
+					} else
 					switch(effect) {
-						case "damage-reduce-conditional":
-						case "plus-damage-conditional": 
-							// Ignore Here
-							break;
-						case "sharpshooter":
-							this.bonuses['sharpshooter'] = true;
-							// TODO
-							// mathDpsSpecialName = 'Sharpshooter';
-							// mathDpsSpecial = (((mathDamage.min + mathDamage.max) / 2 + mathDamageAdd) * this.attrs['speed']) * mathSpeedAdditive * (primaryAttr / 100 + 1) * 1 * ((100 / 100) * (mathCriticalHitDamage/100)+ 1);
-							// mathDpsSpecial = Math.round(mathDps * 100) / 100;
-							break;
-						case "plus-thorns":
-						case "plus-armor":
-						case "plus-resist-all":	
-						case "plus-damage": 
-							this.addBonus(effect, value);
-							break;
 						case "flatten-resists":
 							// this.attrs['resist-all'] = highest;
 							// console.log(this.attrs['resist-all'], highest, this.attrs['resist-all'] + highest);
@@ -264,9 +299,9 @@ var buildCalculator = {
 							this.attrs['critical-hit'] = this.attrs['critical-hit'] + (value * 100);
 							break;
 						case "switch":
-							if(value.var == 'isDuelWielding') {
+							if(value.against == 'isDuelWielding') {
 								_.each(value.cases, function(c, i) {
-									if(c.case == this.isDuelWielding) {
+									if(c.caseOf == this.isDuelWielding) {
 										_.each(c.effect, function(eff, e) {
 											switch(e) {
 												case "plus-dodge":
@@ -277,15 +312,15 @@ var buildCalculator = {
 									} 
 								}, this);
 							}
-							// console.log(value.var);
-							if(typeof this.gear[value.var] != "undefined") {
+							// console.log(value.against);
+							if(typeof this.gear[value.against] != "undefined") {
 								// console.log(value.cases);
 								_.each(value.cases, function(c, i) {
 									var match = false;
 									// console.log(c,i);
-									_.each(c.case.split("|"), function(l, n) {
-										// console.log("now", value.var, value.lookup, this.gear[value.var][value.lookup], this.gear);
-										if(l == this.gear[value.var][value.lookup]) {
+									_.each(c.caseOf.split("|"), function(l, n) {
+										// console.log("now", value.against, value.lookup, this.gear[value.against][value.lookup], this.gear);
+										if(l == this.gear[value.against][value.lookup]) {
 											_.each(c.effect, function(eff, e) {
 												switch(e) {
 													case 'plus-damage':
@@ -310,21 +345,21 @@ var buildCalculator = {
 														this.attrs['critical-hit'] = this.attrs['critical-hit'] + (eff * 100);														
 														break;
 													default:
-													 	console.log("Unhandled Switch: " + e + " [" + eff + "]");
+													 	// console.log("Unhandled Switch: " + e + " [" + eff + "]");
 														break;
 												}													
-											}, this)
+											}, this);
 										}
 									}, this);
 								}, this);
 							}
 							break;
 						default:
-							console.log("Unhandled Effect: " + effect + "[" + value + "]");
+							// console.log("Unhandled Effect: " + effect + "[" + value + "]");
 							break;
 					}
 				}, this);						
-			
+
 			}
 		}, this);
 	},
@@ -359,19 +394,25 @@ var buildCalculator = {
 		rendered.armorReduction = rendered.armor / (50 * this.vsLevel + rendered.armor);
 		// ----------------------------------
 		// Resist All
-		// Formula: ( Resist All + ( Intelligence / 10 ) ) * ( 1 + Bonus Resist All Percentage )
+		// Formula: ( Resist All + ( Intelligence / 10 ) )
 		// ----------------------------------
-		rendered['resist-all'] 				= (this.attrs['resist-all'] + (this.attrs['intelligence'] / 10)) * (1 + this.bonuses['plus-resist-all']);
+		rendered['resist-all'] 				= (this.attrs['resist-all'] + (this.attrs['intelligence'] / 10));
 		// ----------------------------------
 		// Individual Resists (Resist + Resist All)
-		// Formula: ( Resist All + Individual Resist )
+		// Formula: ( Resist All + Individual Resist )  * ( 1 + Bonus Resist All Percentage )
 		// ----------------------------------
-		rendered['resist-physical'] 	= (rendered['resist-all'] + this.attrs['physical-resist']);
-		rendered['resist-cold'] 			= (rendered['resist-all'] + this.attrs['cold-resist']);
-		rendered['resist-fire'] 			= (rendered['resist-all'] + this.attrs['fire-resist']);
-		rendered['resist-lightning'] 	= (rendered['resist-all'] + this.attrs['lightning-resist']);
-		rendered['resist-poison'] 		= (rendered['resist-all'] + this.attrs['poison-resist']);
-		rendered['resist-arcane'] 		= (rendered['resist-all'] + this.attrs['arcane-resist']);
+		rendered['resist-physical'] 	= (rendered['resist-all'] + this.attrs['physical-resist']) * (1 + this.bonuses['plus-resist-all']);
+		rendered['resist-cold'] 			= (rendered['resist-all'] + this.attrs['cold-resist']) * (1 + this.bonuses['plus-resist-all']);
+		rendered['resist-fire'] 			= (rendered['resist-all'] + this.attrs['fire-resist']) * (1 + this.bonuses['plus-resist-all']);
+		rendered['resist-lightning'] 	= (rendered['resist-all'] + this.attrs['lightning-resist']) * (1 + this.bonuses['plus-resist-all']);
+		rendered['resist-poison'] 		= (rendered['resist-all'] + this.attrs['poison-resist']) * (1 + this.bonuses['plus-resist-all']);
+		rendered['resist-arcane'] 		= (rendered['resist-all'] + this.attrs['arcane-resist']) * (1 + this.bonuses['plus-resist-all']);
+		// ----------------------------------
+		// Special Case: Monk Skill - One with Everything
+		// 
+		// Set all Resistances to the highest Resist
+		// ----------------------------------
+		rendered['resist-all'] 				= (rendered['resist-all']) * (1 + this.bonuses['plus-resist-all']);
 		// ----------------------------------
 		// Special Case: Monk Skill - One with Everything
 		// 
@@ -465,7 +506,7 @@ var buildCalculator = {
 		// Effective Health Calculations
 		// ----------------------------------
 		// Are we a Monk or Barbarian? 
-		if(this.class == "monk" || this.class == "barbarian") {
+		if(this.heroClass == "monk" || this.heroClass == "barbarian") {
 			// ----------------------------------
 			// Damage Taken Percent
 			// Formula: ( 1 - Percentage Resist All ) * ( 1 - Percentage Armor Reduction ) * (1 - Bonus Damage Reduction) * (1 - 30% Melee Damage Reduction )
@@ -537,17 +578,18 @@ var buildCalculator = {
 			'pt-vitality': {'vitality': 1},
 			'pt-plus-life': {'plus-life': 1},
 			'pt-intelligence': {'intelligence': 1},
-			'pt-strength': {'strength': 1},
+			'pt-strength': {'strength': 1}
 		};
 		_.each(incs, function(v, k) {
+			var item = {};
 			switch(k) {
 				case "pt-armor":
-					var item = {
-						stats: v,
+					item = {
+						stats: v
 					};
 					break;
 				default:
-					var item = {
+					item = {
 						attrs: v
 					};
 					break;
@@ -559,7 +601,7 @@ var buildCalculator = {
 			rendered['ehp-' + k] = tEhp['ehp'] - ehp.ehp;				
 			// Re-add the Item to the gear set
 			this.removeItem('extra');
-		}, this)
+		}, this);
 		// Return rendered EHP Gear values
 		return rendered;
 	},
@@ -604,31 +646,32 @@ var buildCalculator = {
 		// 	// bnMaxDamage += elementalBonus;
 		// }
 		// Are we duel wielding?
+		var mathS, mathC, mathR, mathA, mathM;
 		if(this.isDuelWielding) {
 			rendered['dps-speed'] = {
 				// mh: this.attrs['speed'],
 				// oh: this.attrs['speed-oh'],
 				mh: Math.floor(this.attrs['speed'] * 1024) / 1024,
-				oh: Math.floor(this.attrs['speed-oh'] * 1024) / 1024,
+				oh: Math.floor(this.attrs['speed-oh'] * 1024) / 1024
 			};
 			// console.log(mhMinDamage, mhMaxDamage, ohMinDamage, ohMaxDamage, bnMinDamage, bnMaxDamage);
 			// console.log(this.attrs['speed'], this.attrs['speed-oh']);
 			// console.log(rendered['dps-speed'].mh, rendered['dps-speed'].oh);
-			var mathS = 1 + this.attrs[this.attrs.primary] * 0.01,
-					mathC = 1 + (this.attrs['critical-hit'] * 0.01) * (this.attrs['critical-hit-damage'] * 0.01),
-					mathR = (rendered['dps-speed'].mh + rendered['dps-speed'].oh) / 2 * (1 + atkSpeedInc + 0.15 + this.bonuses['plus-attack-speed']),
-					mathA = ((mhMinDamage + mhMaxDamage) / 2 + (ohMinDamage + ohMaxDamage) / 2 + bnMinDamage + bnMaxDamage) / 2,
-					mathM = (1 + this.bonuses['plus-damage']);
+			mathS = 1 + this.attrs[this.attrs.primary] * 0.01;
+			mathC = 1 + (this.attrs['critical-hit'] * 0.01) * (this.attrs['critical-hit-damage'] * 0.01);
+			mathR = (rendered['dps-speed'].mh + rendered['dps-speed'].oh) / 2 * (1 + atkSpeedInc + 0.15 + this.bonuses['plus-attack-speed']);
+			mathA = ((mhMinDamage + mhMaxDamage) / 2 + (ohMinDamage + ohMaxDamage) / 2 + bnMinDamage + bnMaxDamage) / 2;
+			mathM = (1 + this.bonuses['plus-damage']);
 			rendered['dps'] = mathS * mathC * mathR * mathA * mathM;			
 			rendered['dps-speed-display'] = Math.round(mathR * 100) / 100;
 			// console.log(mathS, mathC, mathR, mathA, mathM, rendered['dps'], "dw", rendered);
 		} else {
 			rendered['dps-speed'] = Math.floor(this.attrs['speed'] * 1024) / 1024;
-			var mathS = 1 + this.attrs[this.attrs.primary] * 0.01,
-					mathC = 1 + (this.attrs['critical-hit'] * 0.01) * (this.attrs['critical-hit-damage'] * 0.01),
-					mathR = rendered['dps-speed'] * (1 + atkSpeedInc + this.bonuses['plus-attack-speed']),
-					mathA = (mhMinDamage + mhMaxDamage) / 2 + (bnMinDamage + bnMaxDamage) / 2,
-					mathM = (1 + this.bonuses['plus-damage']);
+			mathS = 1 + this.attrs[this.attrs.primary] * 0.01;
+			mathC = 1 + (this.attrs['critical-hit'] * 0.01) * (this.attrs['critical-hit-damage'] * 0.01);
+			mathR = rendered['dps-speed'] * (1 + atkSpeedInc + this.bonuses['plus-attack-speed']);
+			mathA = (mhMinDamage + mhMaxDamage) / 2 + (bnMinDamage + bnMaxDamage) / 2;
+			mathM = (1 + this.bonuses['plus-damage']);
 			rendered['dps'] = mathS * mathC * mathR * mathA * mathM;		
 			// console.log(mhMinDamage, mhMaxDamage, bnMinDamage, bnMaxDamage);
 			// console.log(mathS, mathC, mathR, mathA, mathM, rendered['dps'], "1w");
@@ -682,28 +725,28 @@ var buildCalculator = {
 				// mh: this.attrs['speed'],
 				// oh: this.attrs['speed-oh'],
 				mh: Math.floor(this.attrs['speed'] * 1024) / 1024,
-				oh: Math.floor(this.attrs['speed-oh'] * 1024) / 1024,
+				oh: Math.floor(this.attrs['speed-oh'] * 1024) / 1024
 			};
-			var mathS = 1 + this.attrs[this.attrs.primary] * 0.01,
-					mathA = ((mhMinDamage + mhMaxDamage) / 2 + (ohMinDamage + ohMaxDamage) / 2 + bnMinDamage + bnMaxDamage) / 2,
-					mathAl = ((mhMinDamage + bnMaxDamage) + (ohMinDamage + bnMinDamage)) / 4,
-					mathAh = ((mhMaxDamage + bnMaxDamage) + (ohMaxDamage + bnMaxDamage)) / 4,
-					mathM = (1 + this.bonuses['plus-damage']);
-					mathR = (rendered['dps-speed'].mh + rendered['dps-speed'].oh) / 2 * (1 + atkSpeedInc + 0.15 + this.bonuses['plus-attack-speed']),
-					mathC = 1 + (this.attrs['critical-hit'] * 0.01) * (this.attrs['critical-hit-damage'] * 0.01),
-					dLow = mathS * mathAl * mathM * mathE;
-					dHigh = mathS * mathAh * mathM * mathE;
-					// console.log(mathS, mathAl, mathAh, mathM, dLow, dHigh, mathE);
+			mathS = 1 + this.attrs[this.attrs.primary] * 0.01;
+			mathA = ((mhMinDamage + mhMaxDamage) / 2 + (ohMinDamage + ohMaxDamage) / 2 + bnMinDamage + bnMaxDamage) / 2;
+			mathAl = ((mhMinDamage + bnMaxDamage) + (ohMinDamage + bnMinDamage)) / 4;
+			mathAh = ((mhMaxDamage + bnMaxDamage) + (ohMaxDamage + bnMaxDamage)) / 4;
+			mathM = (1 + this.bonuses['plus-damage']);
+			mathR = (rendered['dps-speed'].mh + rendered['dps-speed'].oh) / 2 * (1 + atkSpeedInc + 0.15 + this.bonuses['plus-attack-speed']);
+			mathC = 1 + (this.attrs['critical-hit'] * 0.01) * (this.attrs['critical-hit-damage'] * 0.01);
+			dLow = mathS * mathAl * mathM * mathE;
+			dHigh = mathS * mathAh * mathM * mathE;
+			// console.log(mathS, mathAl, mathAh, mathM, dLow, dHigh, mathE);
 		} else {
 			rendered['dps-speed'] = Math.floor(this.attrs['speed'] * 1024) / 1024;
-			var mathS = 1 + this.attrs[this.attrs.primary] * 0.01,
-					mathC = 1 + (this.attrs['critical-hit'] * 0.01) * (this.attrs['critical-hit-damage'] * 0.01),
-					mathR = rendered['dps-speed'] * (1 + atkSpeedInc + this.bonuses['plus-attack-speed']),
-					mathAl = (mhMinDamage + bnMinDamage),
-					mathAh = (mhMaxDamage + bnMaxDamage),
-					mathM = (1 + this.bonuses['plus-damage']);
-					dLow = mathS * mathAl * mathM * mathE;
-					dHigh = mathS * mathAh * mathM * mathE;
+			mathS = 1 + this.attrs[this.attrs.primary] * 0.01;
+			mathC = 1 + (this.attrs['critical-hit'] * 0.01) * (this.attrs['critical-hit-damage'] * 0.01);
+			mathR = rendered['dps-speed'] * (1 + atkSpeedInc + this.bonuses['plus-attack-speed']);
+			mathAl = (mhMinDamage + bnMinDamage);
+			mathAh = (mhMaxDamage + bnMaxDamage);
+			mathM = (1 + this.bonuses['plus-damage']);
+			dLow = mathS * mathAl * mathM * mathE;
+			dHigh = mathS * mathAh * mathM * mathE;
 		}
 		dps = Math.round(((dLow + dHigh) / 2) * mathR * mathC * 100)/100;
 		hit = Math.round(((dLow + dHigh) / 2) * mathC * 100)/100;
@@ -742,23 +785,18 @@ var buildCalculator = {
 					// console.log(k,v);
 			if(v && v.effect) {
 				_.each(v.effect, function(e,i) {
-					// console.log(e,i);
 					switch(i) {
 						case "3rd-hit":
 							bonuses['3rd-hit-damage'] = e;
 							break;
-						case "plus-damage-conditional":
 						case "damage-reduce-conditional":
 						case "plus-crit-hit":
 						case "plus-attack-speed":
 						case "plus-damage":
 						case "plus-armor":
 						case "plus-resist-all":
-						case "stack":
+						case "plus-dodge":
 							activate = true;
-							break;
-						default:
-							// console.log("not supported ",e,i);
 							break;
 						case "plus-critical-hit-this":
 							bonuses["plus-critical-hit"] = (se.value / 100) * se.limit;
@@ -778,6 +816,10 @@ var buildCalculator = {
 						case "weapon-damage-for":
 							calcDot = e; // Pass in duration
 							break;
+						default:
+							// console.log("not supported ",e,i);
+							break;
+
 					}
 				}, this);	
 			}
@@ -796,7 +838,7 @@ var buildCalculator = {
 				// Remove the Skills Bonuses
 				_.each(bonuses, function(val,b) {
 					this.removeBonus(b, val);
-				}, this)	
+				}, this);
 			}
 			// console.log(k, activate);
 			if(activate) {
@@ -814,6 +856,7 @@ var buildCalculator = {
 				_.each(v.effect, function(e,i) {
 					// console.log(e,i);
 					switch(i) {
+						case "spirit-combo-strike":
 						case "damage-reduce-conditional":
 						case "plus-damage-conditional":
 							activate = true;
@@ -913,21 +956,22 @@ var buildCalculator = {
 			'pt-critical-hit-damage': {'critical-hit-damage': 1},
 			'pt-min-damage': {'min-damage': 1},
 			'pt-max-damage': {'max-damage': 1},
-			'pt-attack-speed': {'attack-speed': 1},
+			'pt-attack-speed': {'attack-speed': 1}
 		};
 		_.each(incs, function(v, k) {
+			var item = {};
 			switch(k) {
 				case "pt-primary":
-					var item = { attrs: { } };
+					item = { attrs: { } };
 					item.attrs[this.attrs.primary] = 1;
 					break;
 				case "pt-armor":
-					var item = {
-						stats: v,
+					item = {
+						stats: v
 					};
 					break;
 				default:
-					var item = {
+					item = {
 						type: 'extra',
 						attrs: v
 					};
@@ -938,7 +982,7 @@ var buildCalculator = {
 			this.values['dps-' + k] = newDps['dps'] - this.values['dps'];				
 			// Re-add the Item to the gear set
 			this.removeItem('extra');
-		}, this)
+		}, this);
 		// Append Attributes into the values
 		this.values = jQuery.extend(this.attrs, this.values);
 		// Return the values
@@ -1259,6 +1303,19 @@ var buildCalculator = {
 		}
 		if(json.socketAttrs) {
 			_.each(json.socketAttrs, function(av, ak) {
+				if(ak == "damage") {
+					values = av.split("-");
+					if(typeof(this.attrs['max-damage']) != "undefined") {
+						this.attrs['max-damage'] += parseFloat(values[1]);
+					} else {
+						this.attrs['max-damage'] = parseFloat(values[1]);
+					}
+					if(typeof(this.attrs['min-damage']) != "undefined") {
+						this.attrs['min-damage'] += parseFloat(values[0]);
+					} else {
+						this.attrs['min-damage'] = parseFloat(values[0]);
+					}
+				}
 				if(typeof(this.attrs[ak]) != "undefined") {
 					this.attrs[ak] += parseFloat(av);
 				} else {
@@ -1293,6 +1350,7 @@ var buildCalculator = {
 						}							
 						break;
 					case "block-amount":
+						this.isDuelWielding = false;
 						this.attrs[ak] = av['min'] + "-" + av['max'];
 						break;
 					default:
@@ -1359,4 +1417,7 @@ var buildCalculator = {
 		});
 		return diff;
 	}
-}
+};
+
+d3up.BuildCalculator = BuildCalculator
+})( d3up );

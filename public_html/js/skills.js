@@ -27,29 +27,29 @@ var passives = {
 			'effect': {
 				'switch': {
 					'lookup': 'type',
-					'var': 'mainhand',
+					'against': 'mainhand',
 					'cases': [
 					// '2h-mace', '2h-axe', 'bow', 'diabo', 'crossbow', '2h-mighty', 'polearm', 'staff', '2h-sword', 'axe', 'ceremonial-knife', 'hand-crossbow', 'dagger', 'fist-weapon', 'mace', 'mighty-weapon', 'spear', 'sword', 'wand'
 						{
-							"case": "sword|dagger|2h-sword",
+							"caseOf": "sword|dagger|2h-sword",
 							'effect': {
 								'plus-damage': 0.15
 							}
 						},
 						{
-							"case": "mace|axe|2h-axe|2h-mace",
+							"caseOf": "mace|axe|2h-axe|2h-mace",
 							'effect': {
 								'critical-hit': 0.1
 							}
 						},
 						{
-							"case": "spear|polearm",
+							"caseOf": "spear|polearm",
 							'effect': {
 								'attack-speed': 0.1
 							}
 						},
 						{
-							"case": "mighty|2h-mighty",
+							"caseOf": "mighty|2h-mighty",
 							'effect': {
 								
 							}
@@ -61,7 +61,7 @@ var passives = {
 		'berserker-rage': {
 			'desc': 'You inflict an additional <span class="skill-highlight">25%</span> damage while at maximum Fury.',
 			'effect': {
-				'plus-damage-conditional': 0.25
+				'plus-damage-conditional': 25
 			}
 		},
 		'inspiring-presence': {
@@ -146,16 +146,16 @@ var passives = {
 			'desc': 'While dual-wielding, you gain a <span class="skill-highlight">15%</span> chance to dodge incoming attacks. While using a two-handed weapon, all Spirit generation is increased by <span class="skill-highlight">25%</span>.',
 			'effect': {
 				'switch': {
-					'var': 'isDuelWielding',
+					'against': 'isDuelWielding',
 					'cases': [
 						{
-							"case": true,
+							"caseOf": true,
 							'effect': {
 								'plus-dodge': 0.15
 							}
 						},
 						{
-							"case": false,
+							"caseOf": false,
 							'effect': {
 								'plus-spirit-regen': 0.25
 							}
@@ -186,7 +186,10 @@ var passives = {
 			}
 		},
 		'combination-strike': {
-			'desc': 'Each different Spirit Generator ability you use increases your damage by <span class="skill-highlight">8%</span> for <span class="skill-highlight">3</span> seconds.'
+			'desc': 'Each different Spirit Generator ability you use increases your damage by <span class="skill-highlight">8%</span> for <span class="skill-highlight">3</span> seconds.',
+			'effect': {
+				'spirit-combo-strike': 1
+			}
 		},
 		'near-death-experience': {
 			'desc': 'When receiving fatal damage, you are instead restored to <span class="skill-highlight">35%</span> of maximum Life and <span class="skill-highlight">35%</span> Spirit.'
@@ -223,9 +226,9 @@ var passives = {
 			'desc': 'Whenever you suffer more than <span class="skill-highlight">15%</span> of your Life in a single hit, the cooldowns on Mirror Image and Teleport are automatically reset.'
 		},
 		'cold-blooded': {
-			'desc': 'Cold damage dealt to chilled and frozen targets is increased by <span class="skill-highlight">20%</span>.',
+			'desc': 'All damage dealt to chilled and frozen targets is increased by <span class="skill-highlight">20%</span>.',
 			'effect': {
-				'plus-damage-conditional': 0.2
+				'plus-damage-conditional': 20
 			}
 		},
 		'conflaguration': {
@@ -266,7 +269,7 @@ var passives = {
 		'steady-aim': {
 			'desc': 'As long as there are no enemies within <span class="skill-highlight">10</span> yards, all damage is increased by <span class="skill-highlight">20%</span>.',
 			'effect': {
-				'plus-damage-conditional': 0.2
+				'plus-damage-conditional': 20
 			}
 		},
 		'cull-the-weak': {
@@ -286,22 +289,22 @@ var passives = {
 			'effect': {
 				'switch': {
 					'lookup': 'type',
-					'var': 'mainhand',
+					'against': 'mainhand',
 					'cases': [
 						{
-							"case": "bow",
+							"caseOf": "bow",
 							'effect': {
 								'plus-damage': 0.15
 							}
 						},
 						{
-							"case": "crossbow",
+							"caseOf": "crossbow",
 							'effect': {
 								'critical-hit-damage': 0.5
 							}
 						},
 						{
-							"case": "hand-crossbow",
+							"caseOf": "hand-crossbow",
 							'effect': {
 								'critical-hit': 0.1
 							}
@@ -390,185 +393,181 @@ var passives = {
 	}
 }
 var activeSkills = {
-
-
-
-
 	'barbarian': {
 		'bash': {
 			name: 'Bash',
-			desc: 'Brutally smash an enemy for 150% weapon damage with a 20% chance to Knockback.',
+			desc: 'Brutally smash an enemy for 165% weapon damage with a 20% chance to Knockback.',
 			effect: {
 				'chance-knockback': 20,
-				'generate-fury': 6,
-				'weapon-damage': 150,
+				'generate-fury': 8,
+				'weapon-damage': 165,
 			},
 		},
 		'bash~a': {
 			name: 'Bash - Onslaught',
-			desc: 'Brutally smash an enemy for 150% weapon damage with a 20% chance to Knockback.',
-			rune: 'Add 2 reverberations that cause 22.5% weapon damage per strike. Removes the chance for Knockback.',
+			desc: 'Brutally smash an enemy for 165% weapon damage with a 20% chance to Knockback.',
+			rune: 'Add 2 reverberations that cause 25% weapon damage per strike. Removes the chance for Knockback.',
 			effect: {
-				'generate-fury': 6,
-				'weapon-damage': 195,
+				'generate-fury': 8,
+				'weapon-damage': 215,
 			},
 		},
 		'bash~b': {
 			name: 'Bash - Punish',
-			desc: 'Brutally smash an enemy for 150% weapon damage with a 20% chance to Knockback.',
+			desc: 'Brutally smash an enemy for 165% weapon damage with a 20% chance to Knockback.',
 			rune: 'Increases the damage of your skills by 6% for 5 seconds after using Bash. This effect stacks up to 3 times.',
 			effect: {
 				'chance-knockback': 20,
-				'generate-fury': 6,
+				'generate-fury': 8,
 				'stack': {
 					'plus-damage': {
 						'limit': 3,
-						'value': 6,
+						'value': 8,
 					},
 				},
-				'weapon-damage': 150,
+				'weapon-damage': 165,
 			},
 		},
 		'bash~c': {
 			name: 'Bash - Clobber',
-			desc: 'Brutally smash an enemy for 150% weapon damage with a 20% chance to Knockback.',
+			desc: 'Brutally smash an enemy for 165% weapon damage with a 20% chance to Knockback.',
 			rune: 'Instead of Knockback, each hit has a 35% chance to Stun the target for 1.5 seconds.',
 			effect: {
-				'generate-fury': 6,
+				'generate-fury': 8,
 				'chance-stun': 70,
-				'weapon-damage': 150,
+				'weapon-damage': 165,
 			},
 		},
 		'bash~d': {
 			name: 'Bash - Instigation',
-			desc: 'Brutally smash an enemy for 150% weapon damage with a 20% chance to Knockback.',
+			desc: 'Brutally smash an enemy for 165% weapon damage with a 20% chance to Knockback.',
 			rune: 'Generate 6 additional Fury per attack.',
 			effect: {
 				'chance-knockback': 20,
 				'generate-fury': 12,
-				'weapon-damage': 150,
+				'weapon-damage': 165,
 			},
 		},
 		'bash~e': {
 			name: 'Bash - Pulverize',
-			desc: 'Brutally smash an enemy for 150% weapon damage with a 20% chance to Knockback.',
+			desc: 'Brutally smash an enemy for 165% weapon damage with a 20% chance to Knockback.',
 			rune: 'Cause a shockwave that inflicts 38% weapon damage to enemies in a 26 yard line behind the targeted enemy.',
 			effect: {
 				'chance-knockback': 20,
-				'generate-fury': 6,
-				'weapon-damage': 188,
+				'generate-fury': 8,
+				'weapon-damage': 203,
 			},
 		},
 		'hammer-of-the-ancients': {
 			name: 'Hammer of the Ancients',
-			desc: 'Call forth a massive hammer to smash enemies directly in front of you for 200% weapon damage. Hammer of the Ancients has a 5% increased Critical Hit Chance.',
+			desc: 'Call forth a massive hammer to smash enemies directly in front of you for 325% weapon damage. Hammer of the Ancients has a 5% increased Critical Hit Chance.',
 			effect: {
 				'cost-fury': 20,
-				'weapon-damage': 200,
+				'weapon-damage': 325,
 				'plus-critical-hit-this': 5,
 			},
 		},
 		'hammer-of-the-ancients~a': {
 			name: 'Hammer of the Ancients - Smash',
-			desc: 'Call forth a massive hammer to smash enemies directly in front of you for 200% weapon damage. Hammer of the Ancients has a 5% increased Critical Hit Chance.',
+			desc: 'Call forth a massive hammer to smash enemies directly in front of you for 325% weapon damage. Hammer of the Ancients has a 5% increased Critical Hit Chance.',
 			rune: 'Strike a smaller area for 270% weapon damage.',
 			effect: {
 				'cost-fury': 20,
 				'plus-critical-hit-this': 5,
-				'weapon-damage': 270,
+				'weapon-damage': 406,
 			},
 		},
 		'hammer-of-the-ancients~b': {
 			name: 'Hammer of the Ancients - Rolling Thunder',
-			desc: 'Call forth a massive hammer to smash enemies directly in front of you for 200% weapon damage. Hammer of the Ancients has a 5% increased Critical Hit Chance.',
+			desc: 'Call forth a massive hammer to smash enemies directly in front of you for 325% weapon damage. Hammer of the Ancients has a 5% increased Critical Hit Chance.',
 			rune: 'Create a shockwave that deals 155% weapon damage to all enemies within 22 yards in front of you.',
 			effect: {
 				'cost-fury': 20,
 				'plus-critical-hit-this': 5,
-				'weapon-damage': 155,
+				'weapon-damage': 275,
 			},
 		},
 		'hammer-of-the-ancients~c': {
 			name: 'Hammer of the Ancients - The Devil\'s Anvil',
-			desc: 'Call forth a massive hammer to smash enemies directly in front of you for 200% weapon damage. Hammer of the Ancients has a 5% increased Critical Hit Chance.',
+			desc: 'Call forth a massive hammer to smash enemies directly in front of you for 325% weapon damage. Hammer of the Ancients has a 5% increased Critical Hit Chance.',
 			rune: 'Create a tremor at the point of impact for 2 seconds that slows the movement speed of enemies by 60%0.',
 			effect: {
 				'cost-fury': 20,
-				'weapon-damage': 200,
+				'weapon-damage': 325,
 				'plus-critical-hit-this': 5,
 			},
 		},
 		'hammer-of-the-ancients~d': {
 			name: 'Hammer of the Ancients - Birthright',
-			desc: 'Call forth a massive hammer to smash enemies directly in front of you for 200% weapon damage. Hammer of the Ancients has a 5% increased Critical Hit Chance.',
+			desc: 'Call forth a massive hammer to smash enemies directly in front of you for 325% weapon damage. Hammer of the Ancients has a 5% increased Critical Hit Chance.',
 			rune: 'Critical Hits have a 10% chance to cause enemies to drop treasure or health globes.',
 			effect: {
 				'cost-fury': 20,
-				'weapon-damage': 200,
+				'weapon-damage': 325,
 				'plus-critical-hit-this': 5,
 			},
 		},
 		'hammer-of-the-ancients~e': {
 			name: 'Hammer of the Ancients - Thunderstrike',
-			desc: 'Call forth a massive hammer to smash enemies directly in front of you for 200% weapon damage. Hammer of the Ancients has a 5% increased Critical Hit Chance.',
+			desc: 'Call forth a massive hammer to smash enemies directly in front of you for 325% weapon damage. Hammer of the Ancients has a 5% increased Critical Hit Chance.',
 			rune: 'Whenever you kill an enemy with Hammer of the Ancients every other enemy within 10 yards is stunned for 3 seconds.',
 			effect: {
 				'cost-fury': 20,
-				'weapon-damage': 200,
+				'weapon-damage': 325,
 				'plus-critical-hit-this': 5,
 			},
 		},
 		'cleave': {
 			name: 'Cleave',
-			desc: 'Swing your weapon in a wide arc to deal 120% weapon damage to all enemies caught in the swing.',
+			desc: 'Swing your weapon in a wide arc to deal 140% weapon damage to all enemies caught in the swing.',
 			effect: {
 				'generate-fury': 5,
-				'weapon-damage': 120,
+				'weapon-damage': 140,
 			},
 		},
 		'cleave~a': {
 			name: 'Cleave - Broad Sweep',
-			desc: 'Swing your weapon in a wide arc to deal 120% weapon damage to all enemies caught in the swing.',
-			rune: 'Increase damage to 156% weapon damage.',
+			desc: 'Swing your weapon in a wide arc to deal 140% weapon damage to all enemies caught in the swing.',
+			rune: 'Increase damage to 175% weapon damage.',
 			effect: {
 				'generate-fury': 5,
-				'weapon-damage': 156,
+				'weapon-damage': 175,
 			},
 		},
 		'cleave~b': {
 			name: 'Cleave - Gathering Storm',
-			desc: 'Swing your weapon in a wide arc to deal 120% weapon damage to all enemies caught in the swing.',
+			desc: 'Swing your weapon in a wide arc to deal 140% weapon damage to all enemies caught in the swing.',
 			rune: 'Enemies cleaved have their movement speed reduced by 80% for 1 second.',
 			effect: {
 				'generate-fury': 5,
-				'weapon-damage': 120,
+				'weapon-damage': 140,
 			},
 		},
 		'cleave~c': {
 			name: 'Cleave - Scattering Blast',
-			desc: 'Swing your weapon in a wide arc to deal 120% weapon damage to all enemies caught in the swing.',
+			desc: 'Swing your weapon in a wide arc to deal 140% weapon damage to all enemies caught in the swing.',
 			rune: 'On Critical Hits, knock enemies back 9 yards and inflict 60% weapon damage to enemies where they land.',
 			effect: {
 				'generate-fury': 5,
-				'weapon-damage': 120,
+				'weapon-damage': 140,
 			},
 		},
 		'cleave~d': {
 			name: 'Cleave - Reaping Swing',
-			desc: 'Swing your weapon in a wide arc to deal 120% weapon damage to all enemies caught in the swing.',
+			desc: 'Swing your weapon in a wide arc to deal 140% weapon damage to all enemies caught in the swing.',
 			rune: 'Generate 3 additional Fury per enemy hit.',
 			effect: {
 				'generate-fury': 8,
-				'weapon-damage': 120,
+				'weapon-damage': 140,
 			},
 		},
 		'cleave~e': {
 			name: 'Cleave - Rupture',
-			desc: 'Swing your weapon in a wide arc to deal 120% weapon damage to all enemies caught in the swing.',
+			desc: 'Swing your weapon in a wide arc to deal 140% weapon damage to all enemies caught in the swing.',
 			rune: 'Enemies slain by Cleave explode, causing 85% weapon damage to all other enemies within 8 yards.',
 			effect: {
 				'generate-fury': 5,
-				'weapon-damage': 120,
+				'weapon-damage': 140,
 			},
 		},
 		'ground-stomp': {
@@ -627,56 +626,62 @@ var activeSkills = {
 		},
 		'rend': {
 			name: 'Rend',
-			desc: 'A sweeping strike causes all nearby enemies to Bleed for 210% weapon damage as Physical over 3 seconds.',
+			desc: 'A sweeping strike causes all nearby enemies to Bleed for 700% weapon damage as Physical over 5 seconds.',
 			effect: {
 				'cost-fury': 20,
-				'weapon-damage': 210,
+				'weapon-damage': 700,
+				'weapon-damage-for': 5,
 			},
 		},
 		'rend~a': {
 			name: 'Rend - Lacerate',
-			desc: 'A sweeping strike causes all nearby enemies to Bleed for 210% weapon damage as Physical over 3 seconds.',
-			rune: 'Increase damage to 270.9% weapon damage as Physical over 3 seconds.',
+			desc: 'A sweeping strike causes all nearby enemies to Bleed for 700% weapon damage as Physical over 5 seconds.',
+			rune: 'Increase damage to 903% weapon damage as Physical over 5 seconds.',
 			effect: {
 				'cost-fury': 20,
-				'weapon-damage': 270.9,
+				'weapon-damage': 903,
+				'weapon-damage-for': 5,
 			},
 		},
 		'rend~b': {
 			name: 'Rend - Ravage',
-			desc: 'A sweeping strike causes all nearby enemies to Bleed for 210% weapon damage as Physical over 3 seconds.',
+			desc: 'A sweeping strike causes all nearby enemies to Bleed for 700% weapon damage as Physical over 5 seconds.',
 			rune: 'Increase the range of Rend to hit all enemies within 17 yards.',
 			effect: {
 				'cost-fury': 20,
-				'weapon-damage': 210,
+				'weapon-damage': 700,
+				'weapon-damage-for': 5,
 			},
 		},
 		'rend~c': {
 			name: 'Rend - Mutilate',
-			desc: 'A sweeping strike causes all nearby enemies to Bleed for 210% weapon damage as Physical over 3 seconds.',
-			rune: 'Increase bleeding duration to 5 seconds.',
+			desc: 'A sweeping strike causes all nearby enemies to Bleed for 700% weapon damage as Physical over 5 seconds.',
+			rune: 'Increase bleeding duration to 7 seconds.',
 			effect: {
 				'cost-fury': 20,
-				'weapon-damage': 210,
+				'weapon-damage': 700,
+				'weapon-damage-for': 5,				
 			},
 		},
 		'rend~d': {
 			name: 'Rend - Blood Lust',
-			desc: 'A sweeping strike causes all nearby enemies to Bleed for 210% weapon damage as Physical over 3 seconds.',
+			desc: 'A sweeping strike causes all nearby enemies to Bleed for 700% weapon damage as Physical over 5 seconds.',
 			rune: 'Gain 9% of the damage done by Rend as Life.',
 			effect: {
 				'cost-fury': 20,
-				'weapon-damage': 210,
+				'weapon-damage': 700,
+				'weapon-damage-for': 5,				
 				'life-steal': 9,
 			},
 		},
 		'rend~e': {
 			name: 'Rend - Bloodbath',
-			desc: 'A sweeping strike causes all nearby enemies to Bleed for 210% weapon damage as Physical over 3 seconds.',
-			rune: 'Enemies killed while bleeding cause all enemies within 10 yards to begin bleeding for 60% weapon damage as Physical over 3 seconds.',
+			desc: 'A sweeping strike causes all nearby enemies to Bleed for 700% weapon damage as Physical over 3 seconds.',
+			rune: 'Enemies killed while bleeding cause all enemies within 10 yards to begin bleeding for 100% weapon damage as Physical over 5 seconds.',
 			effect: {
 				'cost-fury': 20,
-				'weapon-damage': 270,
+				'weapon-damage': 700,
+				'weapon-damage-for': 5,				
 			},
 		},
 		'leap': {
@@ -895,56 +900,56 @@ var activeSkills = {
 		},
 		'seismic-slam': {
 			name: 'Seismic Slam',
-			desc: 'Slam the ground and cause a wave of destruction that deals 155% weapon damage and Knockback to targets in a 45 yard arc.',
+			desc: 'Slam the ground and cause a wave of destruction that deals 240% weapon damage and Knockback to targets in a 45 yard arc.',
 			effect: {
 				'cost-fury': 30,
-				'weapon-damage': 310,
+				'weapon-damage': 240,
 			},
 		},
 		'seismic-slam~a': {
 			name: 'Seismic Slam - Shattered Ground',
-			desc: 'Slam the ground and cause a wave of destruction that deals 155% weapon damage and Knockback to targets in a 45 yard arc.',
-			rune: 'Increase damage to 202% weapon damage and increases Knockback distance by 100%.',
+			desc: 'Slam the ground and cause a wave of destruction that deals 240% weapon damage and Knockback to targets in a 45 yard arc.',
+			rune: 'Increase damage to 288% weapon damage and increases Knockback distance by 100%.',
 			effect: {
 				'cost-fury': 30,
-				'weapon-damage': 202,
+				'weapon-damage': 288,
 			},
 		},
 		'seismic-slam~b': {
 			name: 'Seismic Slam - Rumble',
-			desc: 'Slam the ground and cause a wave of destruction that deals 155% weapon damage and Knockback to targets in a 45 yard arc.',
+			desc: 'Slam the ground and cause a wave of destruction that deals 240% weapon damage and Knockback to targets in a 45 yard arc.',
 			rune: 'The ground continues to shudder after the intitial strike, damaging enemies in the area for 30% weapon damage.',
 			effect: {
 				'cost-fury': 30,
-				'weapon-damage': 340,
+				'weapon-damage': 240,
 			},
 		},
 		'seismic-slam~c': {
 			name: 'Seismic Slam - Stagger',
-			desc: 'Slam the ground and cause a wave of destruction that deals 155% weapon damage and Knockback to targets in a 45 yard arc.',
+			desc: 'Slam the ground and cause a wave of destruction that deals 240% weapon damage and Knockback to targets in a 45 yard arc.',
 			rune: 'Add a 70% chance of stunning enemies for 1.5 seconds.',
 			effect: {
 				'cost-fury': 30,
 				'chance-stun': 70,
-				'weapon-damage': 310,
+				'weapon-damage': 240,
 			},
 		},
 		'seismic-slam~d': {
 			name: 'Seismic Slam - Strength from Earth',
-			desc: 'Slam the ground and cause a wave of destruction that deals 155% weapon damage and Knockback to targets in a 45 yard arc.',
+			desc: 'Slam the ground and cause a wave of destruction that deals 240% weapon damage and Knockback to targets in a 45 yard arc.',
 			rune: 'Reduce Fury cost to 15 Fury.',
 			effect: {
-				'weapon-damage': 310,
+				'weapon-damage': 240,
 				'cost-fury': 15,
 			},
 		},
 		'seismic-slam~e': {
 			name: 'Seismic Slam - Cracking Rift',
-			desc: 'Slam the ground and cause a wave of destruction that deals 155% weapon damage and Knockback to targets in a 45 yard arc.',
-			rune: 'Focus the seismic shockwaves along a narrow path to inflict 255% weapon damage to targets along a 42 yard path.',
+			desc: 'Slam the ground and cause a wave of destruction that deals 240% weapon damage and Knockback to targets in a 45 yard arc.',
+			rune: 'Focus the seismic shockwaves along a narrow path to inflict 340% weapon damage to targets along a 42 yard path.',
 			effect: {
 				'cost-fury': 30,
-				'weapon-damage': 255,
+				'weapon-damage': 340,
 			},
 		},
 		'revenge': {
@@ -998,52 +1003,52 @@ var activeSkills = {
 		},
 		'weapon-throw': {
 			name: 'Weapon Throw',
-			desc: 'Hurl a throwing weapon at an enemy for 100% weapon damage and Slow the movement of the enemy by 60% for 2 seconds.',
-			effect: {
-				'cost-fury': 10,
-				'weapon-damage': 100,
-			},
-		},
-		'weapon-throw~a': {
-			name: 'Weapon Throw - Mighty Throw',
-			desc: 'Hurl a throwing weapon at an enemy for 100% weapon damage and Slow the movement of the enemy by 60% for 2 seconds.',
-			rune: 'Increase thrown weapon damage to 130% weapon damage.',
+			desc: 'Hurl a throwing weapon at an enemy for 130% weapon damage and Slow the movement of the enemy by 60% for 2 seconds.',
 			effect: {
 				'cost-fury': 10,
 				'weapon-damage': 130,
 			},
 		},
+		'weapon-throw~a': {
+			name: 'Weapon Throw - Mighty Throw',
+			desc: 'Hurl a throwing weapon at an enemy for 130% weapon damage and Slow the movement of the enemy by 60% for 2 seconds.',
+			rune: 'Increase thrown weapon damage to 169% weapon damage.',
+			effect: {
+				'cost-fury': 10,
+				'weapon-damage': 169,
+			},
+		},
 		'weapon-throw~b': {
 			name: 'Weapon Throw - Ricochet',
-			desc: 'Hurl a throwing weapon at an enemy for 100% weapon damage and Slow the movement of the enemy by 60% for 2 seconds.',
+			desc: 'Hurl a throwing weapon at an enemy for 130% weapon damage and Slow the movement of the enemy by 60% for 2 seconds.',
 			rune: 'Cause the weapon to ricochet and hit up to 3 targets within 20 yards of each other.',
 			effect: {
 				'cost-fury': 10,
-				'weapon-damage': 100,
+				'weapon-damage': 130,
 			},
 		},
 		'weapon-throw~c': {
 			name: 'Weapon Throw - Throwing Hammer',
-			desc: 'Hurl a throwing weapon at an enemy for 100% weapon damage and Slow the movement of the enemy by 60% for 2 seconds.',
+			desc: 'Hurl a throwing weapon at an enemy for 130% weapon damage and Slow the movement of the enemy by 60% for 2 seconds.',
 			rune: 'Hurl a hammer with a 50% chance to Stun the target for 1.5 seconds.',
 			effect: {
 				'cost-fury': 10,
 				'chance-stun': 50,
-				'weapon-damage': 100,
+				'weapon-damage': 130,
 			},
 		},
 		'weapon-throw~d': {
 			name: 'Weapon Throw - Dread Bomb',
-			desc: 'Hurl a throwing weapon at an enemy for 100% weapon damage and Slow the movement of the enemy by 60% for 2 seconds.',
+			desc: 'Hurl a throwing weapon at an enemy for 130% weapon damage and Slow the movement of the enemy by 60% for 2 seconds.',
 			rune: 'Expend all remaining Fury to throw a corpse which inflicts an additional 3% weapon damage for each point of Fury expended to all enemies within 12 yards of the target.',
 			effect: {
 				'cost-fury': 10,
-				'weapon-damage': 100,
+				'weapon-damage': 130,
 			},
 		},
 		'weapon-throw~e': {
 			name: 'Weapon Throw - Stupefy',
-			desc: 'Hurl a throwing weapon at an enemy for 100% weapon damage and Slow the movement of the enemy by 60% for 2 seconds.',
+			desc: 'Hurl a throwing weapon at an enemy for 130% weapon damage and Slow the movement of the enemy by 60% for 2 seconds.',
 			rune: 'Aim for the head, gaining a 20% chance of causing your target to be Confused and attack other enemies for 6 seconds.',
 			effect: {
 				'cost-fury': 10,
@@ -1226,56 +1231,55 @@ var activeSkills = {
 		},
 		'whirlwind': {
 			name: 'Whirlwind',
-			desc: 'Deliver multiple attacks to everything in your path for 110% weapon damage.',
+			desc: 'Deliver multiple attacks to everything in your path for 145% weapon damage.',
 			effect: {
 				'cost-fury': 16,
-				'weapon-damage': 110,
+				'weapon-damage': 145,
 			},
 		},
 		'whirlwind~a': {
 			name: 'Whirlwind - Volcanic Eruption',
-			desc: 'Deliver multiple attacks to everything in your path for 110% weapon damage.',
-			rune: 'Turns Whirlwind into a torrent of magma that inflicts 0% weapon damage as Fire.',
+			desc: 'Deliver multiple attacks to everything in your path for 145% weapon damage.',
+			rune: 'Turns Whirlwind into a torrent of magma that inflicts 188% weapon damage as Fire.',
 			effect: {
 				'cost-fury': 16,
-				'weapon-damage': 110,
+				'weapon-damage': 188,
 			},
 		},
 		'whirlwind~b': {
 			name: 'Whirlwind - Dust Devils',
-			desc: 'Deliver multiple attacks to everything in your path for 110% weapon damage.',
+			desc: 'Deliver multiple attacks to everything in your path for 145% weapon damage.',
 			rune: 'Generate harsh tornadoes that inflict 40% weapon damage to enemies in their path.',
 			effect: {
 				'cost-fury': 16,
-				'weapon-damage': 110,
+				'weapon-damage': 145,
 			},
 		},
 		'whirlwind~c': {
 			name: 'Whirlwind - Hurricane',
-			desc: 'Deliver multiple attacks to everything in your path for 110% weapon damage.',
+			desc: 'Deliver multiple attacks to everything in your path for 145% weapon damage.',
 			rune: 'Allows you to move at your movement speed while using Whirlwind.',
 			effect: {
 				'cost-fury': 16,
-				'weapon-damage': 110,
+				'weapon-damage': 145,
 			},
 		},
 		'whirlwind~d': {
 			name: 'Whirlwind - Wind Shear',
-			desc: 'Deliver multiple attacks to everything in your path for 110% weapon damage.',
+			desc: 'Deliver multiple attacks to everything in your path for 145% weapon damage.',
 			rune: 'Gain 1 Fury for every enemy struck.',
 			effect: {
 				'cost-fury': 16,
-				'generate-fury': 1,
-				'weapon-damage': 110,
+				'weapon-damage': 145,
 			},
 		},
 		'whirlwind~e': {
 			name: 'Whirlwind - Blood Funnel',
-			desc: 'Deliver multiple attacks to everything in your path for 110% weapon damage.',
+			desc: 'Deliver multiple attacks to everything in your path for 145% weapon damage.',
 			rune: 'Critical Hits restore 1% of your maximum Life.',
 			effect: {
 				'cost-fury': 16,
-				'weapon-damage': 110,
+				'weapon-damage': 145,
 			},
 		},
 		'furious-charge': {
@@ -1558,7 +1562,7 @@ var activeSkills = {
 		'overpower~e': {
 			name: 'Overpower - Crushing Advance',
 			desc: 'Deal 165% weapon damage to all targets within 9 yards. Landing a Critical Hit has a chance to lower the cooldown by 1 second.',
-			rune: 'Redirect 30% of incoming melee and ranged damage for 4 seconds after Overpower is activated.',
+			rune: 'Redirect 35% of incoming melee and ranged damage for 4 seconds after Overpower is activated.',
 			effect: {
 				'cooldown': 15,
 				'weapon-damage': 165,
@@ -1763,62 +1767,63 @@ var activeSkills = {
 		},
 		'impale': {
 			name: 'Impale',
-			desc: 'Impale a target for 250% weapon damage.',
+			desc: 'Impale a target for 265% weapon damage.',
 			effect: {
 				'cost-hatred': 25,
-				'weapon-damage': 250,
+				'weapon-damage': 265,
 			},
 		},
 		'impale~a': {
 			name: 'Impale - Overpenetration',
-			desc: 'Impale a target for 250% weapon damage.',
+			desc: 'Impale a target for 265% weapon damage.',
 			rune: 'The knife will pierce through all enemies in a straight line.',
 			effect: {
 				'cost-hatred': 25,
-				'weapon-damage': 250,
+				'weapon-damage': 265,
 			},
 		},
 		'impale~b': {
 			name: 'Impale - Impact',
-			desc: 'Impale a target for 250% weapon damage.',
+			desc: 'Impale a target for 265% weapon damage.',
 			rune: 'Impale causes Knockback and has a 65% chance to Stun enemies for 1.5 seconds.',
 			effect: {
 				'cost-hatred': 25,
 				'chance-stun': 65,
-				'weapon-damage': 250,
+				'weapon-damage': 265,
 			},
 		},
 		'impale~c': {
 			name: 'Impale - Chemical Burn',
-			desc: 'Impale a target for 250% weapon damage.',
+			desc: 'Impale a target for 265% weapon damage.',
 			rune: 'Your target will also Bleed for 125% weapon damage as Physical over 2 seconds.',
 			effect: {
 				'cost-hatred': 25,
-				'weapon-damage': 375,
+				'weapon-damage': 390,
+				'weapon-damage-for': 2
 			},
 		},
 		'impale~d': {
 			name: 'Impale - Awareness',
-			desc: 'Impale a target for 250% weapon damage.',
+			desc: 'Impale a target for 265% weapon damage.',
 			rune: 'After the initial throw, release multiple blades centered on you, dealing 75% weapon damage to all enemies within 10 yards.',
 			effect: {
 				'cost-hatred': 25,
-				'weapon-damage': 325,
+				'weapon-damage': 340,
 			},
 		},
 		'impale~e': {
 			name: 'Impale - Grievous Wounds',
-			desc: 'Impale a target for 250% weapon damage.',
+			desc: 'Impale a target for 265% weapon damage.',
 			rune: 'Critical Hits cause 100% additional damage.',
 			effect: {
 				'cost-hatred': 25,
-				'weapon-damage': 250,
+				'weapon-damage': 265,
 				'plus-crit-hit-damage': 100,
 			},
 		},
 		'entangling-shot': {
 			name: 'Entangling Shot',
-			desc: 'Imbue an arrow with shadow energy that deals 75% weapon damage and entangles up to 2 enemies, slowing their movement by 60% for 2 seconds.',
+			desc: 'Imbue an arrow with shadow energy that deals 90% weapon damage and entangles up to 2 enemies, slowing their movement by 60% for 2 seconds.',
 			effect: {
 				'generate-hatred': 3,
 				'weapon-damage': 75,
@@ -1826,7 +1831,7 @@ var activeSkills = {
 		},
 		'entangling-shot~a': {
 			name: 'Entangling Shot - Heavy Burden',
-			desc: 'Imbue an arrow with shadow energy that deals 75% weapon damage and entangles up to 2 enemies, slowing their movement by 60% for 2 seconds.',
+			desc: 'Imbue an arrow with shadow energy that deals 90% weapon damage and entangles up to 2 enemies, slowing their movement by 60% for 2 seconds.',
 			rune: 'Increase the movement slow duration to 4 seconds.',
 			effect: {
 				'generate-hatred': 3,
@@ -1835,7 +1840,7 @@ var activeSkills = {
 		},
 		'entangling-shot~b': {
 			name: 'Entangling Shot - Chain Gang',
-			desc: 'Imbue an arrow with shadow energy that deals 75% weapon damage and entangles up to 2 enemies, slowing their movement by 60% for 2 seconds.',
+			desc: 'Imbue an arrow with shadow energy that deals 90% weapon damage and entangles up to 2 enemies, slowing their movement by 60% for 2 seconds.',
 			rune: 'Hit up to 4 targets.',
 			effect: {
 				'generate-hatred': 3,
@@ -1844,16 +1849,17 @@ var activeSkills = {
 		},
 		'entangling-shot~c': {
 			name: 'Entangling Shot - Shock Collar',
-			desc: 'Imbue an arrow with shadow energy that deals 75% weapon damage and entangles up to 2 enemies, slowing their movement by 60% for 2 seconds.',
-			rune: 'Strike targets with electrified chains that do an additional 17.5% weapon damage per second as Lightning for 2 seconds.',
+			desc: 'Imbue an arrow with shadow energy that deals 90% weapon damage and entangles up to 2 enemies, slowing their movement by 60% for 2 seconds.',
+			rune: 'Strike targets with electrified chains that do an additional 35% weapon damage per second as Lightning for 2 seconds.',
 			effect: {
 				'generate-hatred': 3,
-				'weapon-damage': 92.5,
+				'weapon-damage': 160,
+				'weapon-damage-for': 2
 			},
 		},
 		'entangling-shot~d': {
 			name: 'Entangling Shot - Justice is Served',
-			desc: 'Imbue an arrow with shadow energy that deals 75% weapon damage and entangles up to 2 enemies, slowing their movement by 60% for 2 seconds.',
+			desc: 'Imbue an arrow with shadow energy that deals 90% weapon damage and entangles up to 2 enemies, slowing their movement by 60% for 2 seconds.',
 			rune: 'Increase the Hatred generated to 6 per shot.',
 			effect: {
 				'weapon-damage': 75,
@@ -1862,7 +1868,7 @@ var activeSkills = {
 		},
 		'entangling-shot~e': {
 			name: 'Entangling Shot - Bounty Hunter',
-			desc: 'Imbue an arrow with shadow energy that deals 75% weapon damage and entangles up to 2 enemies, slowing their movement by 60% for 2 seconds.',
+			desc: 'Imbue an arrow with shadow energy that deals 90% weapon damage and entangles up to 2 enemies, slowing their movement by 60% for 2 seconds.',
 			rune: 'Gain 6% of the damage dealt as Life.',
 			effect: {
 				'generate-hatred': 3,
@@ -1921,37 +1927,37 @@ var activeSkills = {
 		},
 		'rapid-fire': {
 			name: 'Rapid Fire',
-			desc: 'initially, and an additional 10 Hatred while channeling  Rapidly fire for 228% weapon damage as Physical.',
-			effect: {
-				'cost-hatred': 20,
-				'weapon-damage': 228,
-			},
-		},
-		'rapid-fire~a': {
-			name: 'Rapid Fire - Bombardment',
-			desc: 'initially, and an additional 10 Hatred while channeling  Rapidly fire for 228% weapon damage as Physical.',
-			rune: 'Rapidly fire grenades that explode for 276% weapon damage as Fire to all enemies within a 4 yard radius.',
+			desc: 'Rapidly fire for 276% weapon damage as Physical.',
 			effect: {
 				'cost-hatred': 20,
 				'weapon-damage': 276,
 			},
 		},
+		'rapid-fire~a': {
+			name: 'Rapid Fire - Bombardment',
+			desc: 'Rapidly fire for 276% weapon damage as Physical.',
+			rune: 'Rapidly fire grenades that explode for 345% weapon damage as Fire to all enemies within a 4 yard radius.',
+			effect: {
+				'cost-hatred': 20,
+				'weapon-damage': 345,
+			},
+		},
 		'rapid-fire~b': {
 			name: 'Rapid Fire - High Velocity',
-			desc: 'initially, and an additional 10 Hatred while channeling  Rapidly fire for 228% weapon damage as Physical.',
+			desc: 'Rapidly fire for 276% weapon damage as Physical.',
 			rune: 'Fire poison arrows that have a 40% chance to pierce through enemies.',
 			effect: {
 				'cost-hatred': 20,
-				'weapon-damage': 228,
+				'weapon-damage': 276,
 			},
 		},
 		'rapid-fire~c': {
 			name: 'Rapid Fire - Fire Support',
-			desc: 'initially, and an additional 10 Hatred while channeling  Rapidly fire for 228% weapon damage as Physical.',
+			desc: 'Rapidly fire for 276% weapon damage as Physical.',
 			rune: 'While channeling Rapid Fire, launch 3 homing rockets every second. Each rocket deals 35% weapon damage as Physical to nearby targets.',
 			effect: {
 				'cost-hatred': 20,
-				'weapon-damage': 228,
+				'weapon-damage': 276,
 				'stack': {
 					'weapon-damage': {
 						'limit': 3,
@@ -1962,20 +1968,20 @@ var activeSkills = {
 		},
 		'rapid-fire~d': {
 			name: 'Rapid Fire - Withering Fire',
-			desc: 'initially, and an additional 10 Hatred while channeling  Rapidly fire for 228% weapon damage as Physical.',
+			desc: 'Rapidly fire for 276% weapon damage as Physical.',
 			rune: 'Reduces the initial Hatred cost to 5, and ignites your arrows, causing them to deal Fire damage.',
 			effect: {
-				'weapon-damage': 228,
+				'weapon-damage': 276,
 				'cost-hatred': 5,
 			},
 		},
 		'rapid-fire~e': {
 			name: 'Rapid Fire - Web Shot',
-			desc: 'initially, and an additional 10 Hatred while channeling  Rapidly fire for 228% weapon damage as Physical.',
+			desc: 'Rapidly fire for 276% weapon damage as Physical.',
 			rune: 'Slows the movement of affected targets by 80% for 1 second.',
 			effect: {
 				'cost-hatred': 20,
-				'weapon-damage': 228,
+				'weapon-damage': 276,
 			},
 		},
 		'smoke-screen': {
@@ -1988,10 +1994,11 @@ var activeSkills = {
 		'smoke-screen~a': {
 			name: 'Smoke Screen - Choking Gas',
 			desc: 'Vanish behind a wall of smoke, becoming momentarily invisible for 1 second.',
-			rune: 'Leave behind a cloud of gas that deals 70% weapon damage per second as Physical to enemies in the area for 5 seconds.',
+			rune: 'Leave behind a cloud of gas that deals 700% weapon damage per second as Physical to enemies in the area for 5 seconds.',
 			effect: {
 				'cost-discipline': 14,
-				'weapon-damage': 70,
+				'weapon-damage': 700,
+				'weapon-damage-for': 5
 			},
 		},
 		'smoke-screen~b': {
@@ -2037,10 +2044,11 @@ var activeSkills = {
 		'vault~a': {
 			name: 'Vault - Trail of Cinders',
 			desc: 'Tumble acrobatically 35 yards.',
-			rune: 'Ignite with fire dealing 100% weapon damage as Fire to everything along your path.',
+			rune: 'Leave a trail of fire in your wake that inflicts 1500% weapon damage as Fire over 3 seconds.',
 			effect: {
 				'cost-discipline': 8,
-				'weapon-damage': 100,
+				'weapon-damage': 1500,
+				'weapon-damage-for': 3
 			},
 		},
 		'vault~b': {
@@ -2077,114 +2085,114 @@ var activeSkills = {
 		},
 		'bola-shot': {
 			name: 'Bola Shot',
-			desc: 'Shoot out an explosive bola that wraps itself around its target. After 1 second, the bola explodes dealing 130% weapon damage as Fire to the target and an additional 110% weapon damage as Fire to all other targets within 7 yards.',
+			desc: 'Shoot out an explosive bola that wraps itself around its target. After 1 second, the bola explodes dealing 160% weapon damage as Fire to the target and an additional 110% weapon damage as Fire to all other targets within 7 yards.',
 			effect: {
 				'generate-hatred': 3,
-				'weapon-damage': 130,
+				'weapon-damage': 160,
 			},
 		},
 		'bola-shot~a': {
 			name: 'Bola Shot - Volatile Explosives',
-			desc: 'Shoot out an explosive bola that wraps itself around its target. After 1 second, the bola explodes dealing 130% weapon damage as Fire to the target and an additional 110% weapon damage as Fire to all other targets within 7 yards.',
+			desc: 'Shoot out an explosive bola that wraps itself around its target. After 1 second, the bola explodes dealing 160% weapon damage as Fire to the target and an additional 110% weapon damage as Fire to all other targets within 7 yards.',
 			rune: 'Increase the explosion radius to 14 yards.',
 			effect: {
 				'generate-hatred': 3,
-				'weapon-damage': 130,
+				'weapon-damage': 160,
 			},
 		},
 		'bola-shot~b': {
 			name: 'Bola Shot - Acid Strike',
-			desc: 'Shoot out an explosive bola that wraps itself around its target. After 1 second, the bola explodes dealing 130% weapon damage as Fire to the target and an additional 110% weapon damage as Fire to all other targets within 7 yards.',
-			rune: 'Shoot 3 bolas that each deal 130% weapon damage as Poison. The bolas no longer explode for area damage to nearby targets.',
+			desc: 'Shoot out an explosive bola that wraps itself around its target. After 1 second, the bola explodes dealing 160% weapon damage as Fire to the target and an additional 110% weapon damage as Fire to all other targets within 7 yards.',
+			rune: 'Shoot 3 bolas that each deal 160% weapon damage as Poison. The bolas no longer explode for area damage to nearby targets.',
 			effect: {
 				'generate-hatred': 3,
-				'weapon-damage': 130,
+				'weapon-damage': 160,
 			},
 		},
 		'bola-shot~c': {
 			name: 'Bola Shot - Thunder Ball',
-			desc: 'Shoot out an explosive bola that wraps itself around its target. After 1 second, the bola explodes dealing 130% weapon damage as Fire to the target and an additional 110% weapon damage as Fire to all other targets within 7 yards.',
-			rune: 'When the bola explodes, it deals 130% weapon damage as Lightning and has a 35% chance to Stun the primary target for 1.5 seconds.',
+			desc: 'Shoot out an explosive bola that wraps itself around its target. After 1 second, the bola explodes dealing 160% weapon damage as Fire to the target and an additional 110% weapon damage as Fire to all other targets within 7 yards.',
+			rune: 'When the bola explodes, it deals 160% weapon damage as Lightning and has a 35% chance to Stun the primary target for 1.5 seconds.',
 			effect: {
 				'generate-hatred': 3,
 				'chance-stun': 35,
-				'weapon-damage': 130,
+				'weapon-damage': 160,
 			},
 		},
 		'bola-shot~d': {
 			name: 'Bola Shot - Bitter Pill',
-			desc: 'Shoot out an explosive bola that wraps itself around its target. After 1 second, the bola explodes dealing 130% weapon damage as Fire to the target and an additional 110% weapon damage as Fire to all other targets within 7 yards.',
+			desc: 'Shoot out an explosive bola that wraps itself around its target. After 1 second, the bola explodes dealing 160% weapon damage as Fire to the target and an additional 110% weapon damage as Fire to all other targets within 7 yards.',
 			rune: 'When the bola explodes, you have a 15% chance to gain 2 Discipline.',
 			effect: {
 				'generate-hatred': 3,
-				'weapon-damage': 130,
+				'weapon-damage': 160,
 			},
 		},
 		'bola-shot~e': {
 			name: 'Bola Shot - Imminent Doom',
-			desc: 'Shoot out an explosive bola that wraps itself around its target. After 1 second, the bola explodes dealing 130% weapon damage as Fire to the target and an additional 110% weapon damage as Fire to all other targets within 7 yards.',
-			rune: 'Augment the bola to deal 182% weapon damage as Arcane to the target and 154% weapon damage as Arcane to all other targets within 7 yards, but increases the explosion delay to 2 seconds.',
+			desc: 'Shoot out an explosive bola that wraps itself around its target. After 1 second, the bola explodes dealing 160% weapon damage as Fire to the target and an additional 110% weapon damage as Fire to all other targets within 7 yards.',
+			rune: 'Augment the bola to deal 216% weapon damage as Arcane to the target and 154% weapon damage as Arcane to all other targets within 7 yards, but increases the explosion delay to 2 seconds.',
 			effect: {
 				'generate-hatred': 3,
-				'weapon-damage': 182,
+				'weapon-damage': 216,
 			},
 		},
 		'chakram': {
 			name: 'Chakram',
-			desc: 'Fire a swirling Chakram that does 150% weapon damage as Physical to enemies along its path.',
+			desc: 'Fire a swirling Chakram that does 170% weapon damage as Physical to enemies along its path.',
 			effect: {
 				'cost-hatred': 10,
-				'weapon-damage': 150,
+				'weapon-damage': 170,
 			},
 		},
 		'chakram~a': {
 			name: 'Chakram - Twin Chakrams',
-			desc: 'Fire a swirling Chakram that does 150% weapon damage as Physical to enemies along its path.',
-			rune: 'A second Chakram mirrors the first.  Each Chakram deals 101% weapon damage as Physical.',
+			desc: 'Fire a swirling Chakram that does 170% weapon damage as Physical to enemies along its path.',
+			rune: 'A second Chakram mirrors the first.  Each Chakram deals 114% weapon damage as Physical.',
 			effect: {
 				'cost-hatred': 10,
 				'stack': {
 					'weapon-damage': {
 						'limit': 2,
-						'value': 101,
+						'value': 114,
 					},
 				},
 			},
 		},
 		'chakram~b': {
 			name: 'Chakram - Boomerang',
-			desc: 'Fire a swirling Chakram that does 150% weapon damage as Physical to enemies along its path.',
-			rune: 'The Chakram path turns into a loop, dealing 188% weapon damage as Lightning to enemies along the path.',
+			desc: 'Fire a swirling Chakram that does 170% weapon damage as Physical to enemies along its path.',
+			rune: 'The Chakram path turns into a loop, dealing 230% weapon damage as Lightning to enemies along the path.',
 			effect: {
 				'cost-hatred': 10,
-				'weapon-damage': 188,
+				'weapon-damage': 230,
 			},
 		},
 		'chakram~c': {
 			name: 'Chakram - Serpentine',
-			desc: 'Fire a swirling Chakram that does 150% weapon damage as Physical to enemies along its path.',
-			rune: 'The Chakram follows a slow curve, dealing 203% weapon damage as Poison to enemies along the path.',
+			desc: 'Fire a swirling Chakram that does 170% weapon damage as Physical to enemies along its path.',
+			rune: 'The Chakram follows a slow curve, dealing 230% weapon damage as Poison to enemies along the path.',
 			effect: {
 				'cost-hatred': 10,
-				'weapon-damage': 203,
+				'weapon-damage': 230,
 			},
 		},
 		'chakram~d': {
 			name: 'Chakram - Razor Disk',
-			desc: 'Fire a swirling Chakram that does 150% weapon damage as Physical to enemies along its path.',
-			rune: 'The Chakram spirals out from the targeted location dealing 165% weapon damage as Arcane to enemies along the path.',
+			desc: 'Fire a swirling Chakram that does 170% weapon damage as Physical to enemies along its path.',
+			rune: 'The Chakram spirals out from the targeted location dealing 187% weapon damage as Arcane to enemies along the path.',
 			effect: {
 				'cost-hatred': 10,
-				'weapon-damage': 165,
+				'weapon-damage': 187,
 			},
 		},
 		'chakram~e': {
 			name: 'Chakram - Shuriken Cloud',
-			desc: 'Fire a swirling Chakram that does 150% weapon damage as Physical to enemies along its path.',
-			rune: 'Surround yourself with spinning Chakrams for 120 seconds, dealing 30% weapon damage per second as Physical to nearby enemies.',
+			desc: 'Fire a swirling Chakram that does 170% weapon damage as Physical to enemies along its path.',
+			rune: 'Surround yourself with spinning Chakrams for 120 seconds, dealing 34% weapon damage per second as Physical to nearby enemies.',
 			effect: {
 				'cost-hatred': 10,
-				'weapon-damage': 30,
+				'weapon-damage': 34,
 			},
 		},
 		'preparation': {
@@ -2236,61 +2244,61 @@ var activeSkills = {
 		},
 		'evasive-fire': {
 			name: 'Evasive Fire',
-			desc: 'if you backflip  Shoot for 125% weapon damage. If an enemy is in front of you at close range, you will also backflip away 15 yards.',
+			desc: 'Shoot for 130% weapon damage. If an enemy is in front of you at close range, you will also backflip away 15 yards.',
 			effect: {
 				'cost-discipline': 4,
 				'generate-hatred': 4,
-				'weapon-damage': 125,
+				'weapon-damage': 130,
 			},
 		},
 		'evasive-fire~a': {
 			name: 'Evasive Fire - Shrapnel',
-			desc: 'if you backflip  Shoot for 125% weapon damage. If an enemy is in front of you at close range, you will also backflip away 15 yards.',
+			desc: 'Shoot for 130% weapon damage. If an enemy is in front of you at close range, you will also backflip away 15 yards.',
 			rune: 'Shoot exploding bolts that also deal 30% weapon damage as Fire to all enemies within 6 yards of the primary target.',
 			effect: {
 				'cost-discipline': 4,
 				'generate-hatred': 4,
-				'weapon-damage': 155,
+				'weapon-damage': 160,
 			},
 		},
 		'evasive-fire~b': {
 			name: 'Evasive Fire - Covering Fire',
-			desc: 'if you backflip  Shoot for 125% weapon damage. If an enemy is in front of you at close range, you will also backflip away 15 yards.',
-			rune: 'Shoot a spread of bolts that hit up to 3 targets for 125% weapon damage each.',
+			desc: 'Shoot for 130% weapon damage. If an enemy is in front of you at close range, you will also backflip away 15 yards.',
+			rune: 'Shoot a spread of bolts that hit up to 3 targets for 130% weapon damage each.',
 			effect: {
 				'cost-discipline': 4,
 				'generate-hatred': 4,
-				'weapon-damage': 125,
+				'weapon-damage': 130,
 			},
 		},
 		'evasive-fire~c': {
 			name: 'Evasive Fire - Parting Gift',
-			desc: 'if you backflip  Shoot for 125% weapon damage. If an enemy is in front of you at close range, you will also backflip away 15 yards.',
+			desc: 'Shoot for 130% weapon damage. If an enemy is in front of you at close range, you will also backflip away 15 yards.',
 			rune: 'Whenever a backflip is triggered, leave a poison bomb behind that explodes for 45% weapon damage as Poison in a 12 yard radius after 1.2 seconds. Turns Evasive Fire into Poison damage.',
 			effect: {
 				'cost-discipline': 4,
 				'generate-hatred': 4,
-				'weapon-damage': 170,
+				'weapon-damage': 130,
 			},
 		},
 		'evasive-fire~d': {
 			name: 'Evasive Fire - Surge',
-			desc: 'if you backflip  Shoot for 125% weapon damage. If an enemy is in front of you at close range, you will also backflip away 15 yards.',
+			desc: 'Shoot for 130% weapon damage. If an enemy is in front of you at close range, you will also backflip away 15 yards.',
 			rune: 'Reduces the cost of the backflip to 2 Discipline. Turns Evasive Fire into Lightning damage.',
 			effect: {
 				'cost-discipline': 4,
 				'generate-hatred': 4,
-				'weapon-damage': 125,
+				'weapon-damage': 130,
 			},
 		},
 		'evasive-fire~e': {
 			name: 'Evasive Fire - Displace',
-			desc: 'if you backflip  Shoot for 125% weapon damage. If an enemy is in front of you at close range, you will also backflip away 15 yards.',
+			desc: 'Shoot for 130% weapon damage. If an enemy is in front of you at close range, you will also backflip away 15 yards.',
 			rune: 'Increase the distance of the backflip to 30 yards.',
 			effect: {
 				'cost-discipline': 4,
 				'generate-hatred': 4,
-				'weapon-damage': 125,
+				'weapon-damage': 130,
 			},
 		},
 		'grenades': {
@@ -2569,28 +2577,28 @@ var activeSkills = {
 		},
 		'strafe': {
 			name: 'Strafe',
-			desc: 'Shoot at random nearby enemies for 120% weapon damage while moving at 65% of normal movement speed.',
+			desc: 'Shoot at random nearby enemies for 156% weapon damage while moving at 65% of normal movement speed.',
 			effect: {
 				'cost-hatred': 15,
-				'weapon-damage': 120,
+				'weapon-damage': 156,
 			},
 		},
 		'strafe~a': {
 			name: 'Strafe - Demolition',
-			desc: 'Shoot at random nearby enemies for 120% weapon damage while moving at 65% of normal movement speed.',
-			rune: 'Throw out bouncy grenades that explode for 144% weapon damage to targets within 9 yards.',
+			desc: 'Shoot at random nearby enemies for 156% weapon damage while moving at 65% of normal movement speed.',
+			rune: 'Throw out bouncy grenades that explode for 187% weapon damage to targets within 9 yards.',
 			effect: {
 				'cost-hatred': 15,
-				'weapon-damage': 144,
+				'weapon-damage': 187,
 			},
 		},
 		'strafe~b': {
 			name: 'Strafe - Equilibrium',
-			desc: 'Shoot at random nearby enemies for 120% weapon damage while moving at 65% of normal movement speed.',
+			desc: 'Shoot at random nearby enemies for 156% weapon damage while moving at 65% of normal movement speed.',
 			rune: 'Increases your attack speed by 20% when using Strafe.',
 			effect: {
 				'cost-hatred': 15,
-				'weapon-damage': 120,
+				'weapon-damage': 156,
 				'stack': {
 					'plus-attack-speed-this': {
 						'limit': 5,
@@ -2601,29 +2609,29 @@ var activeSkills = {
 		},
 		'strafe~c': {
 			name: 'Strafe - Rocket Storm',
-			desc: 'Shoot at random nearby enemies for 120% weapon damage while moving at 65% of normal movement speed.',
+			desc: 'Shoot at random nearby enemies for 156% weapon damage while moving at 65% of normal movement speed.',
 			rune: 'In addition to regular firing, fire off homing rockets for 60% weapon damage as Fire.',
 			effect: {
 				'cost-hatred': 15,
-				'weapon-damage': 180,
+				'weapon-damage': 216,
 			},
 		},
 		'strafe~d': {
 			name: 'Strafe - Drifting Shadow',
-			desc: 'Shoot at random nearby enemies for 120% weapon damage while moving at 65% of normal movement speed.',
+			desc: 'Shoot at random nearby enemies for 156% weapon damage while moving at 65% of normal movement speed.',
 			rune: 'Movement speed increased to 100% of normal running speed while strafing.',
 			effect: {
 				'cost-hatred': 15,
-				'weapon-damage': 120,
+				'weapon-damage': 156,
 			},
 		},
 		'strafe~e': {
 			name: 'Strafe - Stinging Steel',
-			desc: 'Shoot at random nearby enemies for 120% weapon damage while moving at 65% of normal movement speed.',
+			desc: 'Shoot at random nearby enemies for 156% weapon damage while moving at 65% of normal movement speed.',
 			rune: 'Throw out knives rather than arrows that do an extra 100% damage on successful Critical Hits.',
 			effect: {
 				'cost-hatred': 15,
-				'weapon-damage': 120,
+				'weapon-damage': 156,
 				'plus-crit-hit-damage': 100,
 			},
 		},
@@ -2735,20 +2743,20 @@ var activeSkills = {
 				'plus-damage': 12,
 			},
 		},
-		'multishot-77649': {
+		'multishot': {
 			name: 'Multishot',
 			desc: 'Fire a massive volley of arrows dealing 165% weapon damage to all enemies in the area.',
 			effect: {
-				'cost-hatred': 40,
+				'cost-hatred': 30,
 				'weapon-damage': 165,
 			},
 		},
-		'multishot-77649~a': {
+		'multishot~a': {
 			name: 'Multishot - Full Broadside',
 			desc: 'Fire a massive volley of arrows dealing 165% weapon damage to all enemies in the area.',
 			rune: 'Increase the damage of Multishot to 215% weapon damage.',
 			effect: {
-				'cost-hatred': 40,
+				'cost-hatred': 30,
 				'weapon-damage': 215,
 			},
 		},
@@ -2757,111 +2765,111 @@ var activeSkills = {
 			desc: 'Fire a massive volley of arrows dealing 165% weapon damage to all enemies in the area.',
 			rune: 'Every time you fire, generate a shock pulse that damages nearby enemies for 65% weapon damage as Arcane.',
 			effect: {
-				'cost-hatred': 40,
+				'cost-hatred': 30,
 				'weapon-damage': 230,
 			},
 		},
-		'multishot-77649~c': {
+		'multishot~c': {
 			name: 'Multishot - Arsenal',
 			desc: 'Fire a massive volley of arrows dealing 165% weapon damage to all enemies in the area.',
 			rune: 'Every use also fires 3 rockets at nearby enemies that deal 60% weapon damage as Fire each.',
 			effect: {
-				'cost-hatred': 40,
+				'cost-hatred': 30,
 				'weapon-damage': 225,
 			},
 		},
-		'multishot-77649~d': {
+		'multishot~d': {
 			name: 'Multishot - Fire at Will',
 			desc: 'Fire a massive volley of arrows dealing 165% weapon damage to all enemies in the area.',
 			rune: 'Cost reduced to 20 Hatred. Deals 165% weapon damage as Lightning.',
 			effect: {
-				'cost-hatred': 40,
+				'cost-hatred': 15,
 				'weapon-damage': 165,
 			},
 		},
-		'multishot-77649~e': {
+		'multishot~e': {
 			name: 'Multishot - Suppression Fire',
 			desc: 'Fire a massive volley of arrows dealing 165% weapon damage to all enemies in the area.',
 			rune: 'Every enemy hit grants 1 Discipline.',
 			effect: {
-				'cost-hatred': 40,
+				'cost-hatred': 30,
 				'weapon-damage': 165,
 			},
 		},
 		'sentry': {
 			name: 'Sentry',
-			desc: 'Drop a turret on the ground. The turret begins firing at nearby enemies for 20%  weapon damage. Lasts 30 seconds.',
+			desc: 'Drop a turret on the ground. The turret begins firing at nearby enemies for 55%  weapon damage. Lasts 30 seconds.',
 			effect: {
 				'cost-discipline': 10,
-				'weapon-damage': 20,
+				'weapon-damage': 55,
 			},
 		},
 		'sentry~a': {
 			name: 'Sentry - Chain of Torment',
-			desc: 'Drop a turret on the ground. The turret begins firing at nearby enemies for 20%  weapon damage. Lasts 30 seconds.',
-			rune: 'Create a tether between you and the Sentry that does 40% weapon damage every second to every enemy it touches.',
+			desc: 'Drop a turret on the ground. The turret begins firing at nearby enemies for 55% weapon damage. Lasts 30 seconds.',
+			rune: 'Create a tether between you and the Sentry that does 80% weapon damage every second to every enemy it touches.',
 			effect: {
 				'cost-discipline': 10,
-				'weapon-damage': 20,
+				'weapon-damage': 55,
 			},
 		},
 		'sentry~b': {
 			name: 'Sentry - Vigilant Watcher',
-			desc: 'Drop a turret on the ground. The turret begins firing at nearby enemies for 20%  weapon damage. Lasts 30 seconds.',
+			desc: 'Drop a turret on the ground. The turret begins firing at nearby enemies for 55% weapon damage. Lasts 30 seconds.',
 			rune: 'Increases duration of the turret to 40 seconds.',
 			effect: {
 				'cost-discipline': 10,
-				'weapon-damage': 20,
+				'weapon-damage': 55,
 			},
 		},
 		'sentry~c': {
 			name: 'Sentry - Spitfire Turret',
-			desc: 'Drop a turret on the ground. The turret begins firing at nearby enemies for 20%  weapon damage. Lasts 30 seconds.',
+			desc: 'Drop a turret on the ground. The turret begins firing at nearby enemies for 55% weapon damage. Lasts 30 seconds.',
 			rune: 'The turret will also fire homing rockets aimed at random nearby targets for 8% weapon damage as Fire.',
 			effect: {
 				'cost-discipline': 10,
-				'weapon-damage': 28,
+				'weapon-damage': 63,
 			},
 		},
 		'sentry~d': {
 			name: 'Sentry - Aid Station',
-			desc: 'Drop a turret on the ground. The turret begins firing at nearby enemies for 20%  weapon damage. Lasts 30 seconds.',
+			desc: 'Drop a turret on the ground. The turret begins firing at nearby enemies for 55% weapon damage. Lasts 30 seconds.',
 			rune: 'Heals nearby allies for 1% of their maximum Life per second.',
 			effect: {
 				'cost-discipline': 10,
-				'weapon-damage': 20,
+				'weapon-damage': 55,
 			},
 		},
 		'sentry~e': {
 			name: 'Sentry - Guardian Turret',
-			desc: 'Drop a turret on the ground. The turret begins firing at nearby enemies for 20%  weapon damage. Lasts 30 seconds.',
+			desc: 'Drop a turret on the ground. The turret begins firing at nearby enemies for 55% weapon damage. Lasts 30 seconds.',
 			rune: 'The turret also creates a shield that reduces damage taken by allies by 15%.',
 			effect: {
 				'cost-discipline': 10,
 				'plus-damage-reduce': 15,
-				'weapon-damage': 20,
+				'weapon-damage': 55,
 			},
 		},
 		'cluster-arrow': {
 			name: 'Cluster Arrow',
-			desc: 'Fire a cluster arrow that explodes for 200% weapon damage as Fire into a series of additional miniature bombs that explode for 100% weapon damage as Fire each.',
+			desc: 'Fire a cluster arrow that explodes for 225% weapon damage as Fire into a series of additional miniature bombs that explode for 100% weapon damage as Fire each.',
 			effect: {
 				'cost-hatred': 50,
-				'weapon-damage': 200,
+				'weapon-damage': 225,
 			},
 		},
 		'cluster-arrow~a': {
 			name: 'Cluster Arrow - Loaded for Bear',
-			desc: 'Fire a cluster arrow that explodes for 200% weapon damage as Fire into a series of additional miniature bombs that explode for 100% weapon damage as Fire each.',
-			rune: 'Increases the damage of the explosion at the impact location to 290% weapon damage as Fire.',
+			desc: 'Fire a cluster arrow that explodes for 225% weapon damage as Fire into a series of additional miniature bombs that explode for 100% weapon damage as Fire each.',
+			rune: 'Increases the damage of the explosion at the impact location to 304% weapon damage as Fire.',
 			effect: {
 				'cost-hatred': 50,
-				'weapon-damage': 290,
+				'weapon-damage': 304,
 			},
 		},
 		'cluster-arrow~b': {
 			name: 'Cluster Arrow - Shooting Stars',
-			desc: 'Fire a cluster arrow that explodes for 200% weapon damage as Fire into a series of additional miniature bombs that explode for 100% weapon damage as Fire each.',
+			desc: 'Fire a cluster arrow that explodes for 225% weapon damage as Fire into a series of additional miniature bombs that explode for 100% weapon damage as Fire each.',
 			rune: 'Instead of releasing grenades, shoots up to 3 rockets at nearby enemies dealing 175% weapon damage as Physical each.',
 			effect: {
 				'cost-hatred': 50,
@@ -2870,7 +2878,7 @@ var activeSkills = {
 		},
 		'cluster-arrow~c': {
 			name: 'Cluster Arrow - Cluster Bombs',
-			desc: 'Fire a cluster arrow that explodes for 200% weapon damage as Fire into a series of additional miniature bombs that explode for 100% weapon damage as Fire each.',
+			desc: 'Fire a cluster arrow that explodes for 225% weapon damage as Fire into a series of additional miniature bombs that explode for 100% weapon damage as Fire each.',
 			rune: 'Launch the cluster through the air, dropping bombs in a straight line that each explode for 230% weapon damage as Fire.',
 			effect: {
 				'cost-hatred': 50,
@@ -2879,17 +2887,17 @@ var activeSkills = {
 		},
 		'cluster-arrow~d': {
 			name: 'Cluster Arrow - Maelstrom',
-			desc: 'Fire a cluster arrow that explodes for 200% weapon damage as Fire into a series of additional miniature bombs that explode for 100% weapon damage as Fire each.',
-			rune: 'Instead of releasing grenades, the cluster releases shadow energy that deals 145% weapon damage as Physical to nearby enemies. You will gain 4% of the damage done as Life.',
+			desc: 'Fire a cluster arrow that explodes for 225% weapon damage as Fire into a series of additional miniature bombs that explode for 100% weapon damage as Fire each.',
+			rune: 'Instead of releasing grenades, the cluster releases shadow energy that deals 165% weapon damage as Physical to nearby enemies. You will gain 4% of the damage done as Life.',
 			effect: {
 				'cost-hatred': 50,
 				'life-steal': 4,
-				'weapon-damage': 145,
+				'weapon-damage': 165,
 			},
 		},
 		'cluster-arrow~e': {
 			name: 'Cluster Arrow - Dazzling Arrow',
-			desc: 'Fire a cluster arrow that explodes for 200% weapon damage as Fire into a series of additional miniature bombs that explode for 100% weapon damage as Fire each.',
+			desc: 'Fire a cluster arrow that explodes for 225% weapon damage as Fire into a series of additional miniature bombs that explode for 100% weapon damage as Fire each.',
 			rune: 'Enemies hit by grenades have a 55% chance to be stunned for 2 seconds and changes the damage to Physical.',
 			effect: {
 				'cost-hatred': 50,
@@ -2899,65 +2907,64 @@ var activeSkills = {
 		},
 		'rain-of-vengeance': {
 			name: 'Rain of Vengeance',
-			desc: 'Fire a massive volley of arrows around you. Arrows fall from the sky dealing 74.75% weapon damage for 5 seconds to all enemies in the area.',
+			desc: 'Fire a massive volley of arrows around you. Arrows fall from the sky dealing 715% weapon damage for 5 seconds to all enemies in the area.',
 			effect: {
 				'cooldown': 30,
-				'weapon-damage': 74.75,
+				'weapon-damage': 715,
 				'weapon-damage-for': 5,
 			},
 		},
 		'rain-of-vengeance~a': {
 			name: 'Rain of Vengeance - Beastly Bombs',
-			desc: 'Fire a massive volley of arrows around you. Arrows fall from the sky dealing 74.75% weapon damage for 5 seconds to all enemies in the area.',
-			rune: 'Summon 20 Shadow Beasts to drop bombs on enemies, dealing 125% weapon damage each.',
+			desc: 'Fire a massive volley of arrows around you. Arrows fall from the sky dealing 715% weapon damage for 5 seconds to all enemies in the area.',
+			rune: 'Summon 20 Shadow Beasts to drop bombs on enemies, dealing 245% weapon damage each.',
 			effect: {
 				'cooldown': 30,
-				'weapon-damage': 74.75,
 				'stack': {
 					'weapon-damage': {
 						'limit': 20,
-						'value': 125,
+						'value': 245,
 					},
 				},
 			},
 		},
 		'rain-of-vengeance~b': {
 			name: 'Rain of Vengeance - Dark Cloud',
-			desc: 'Fire a massive volley of arrows around you. Arrows fall from the sky dealing 74.75% weapon damage for 5 seconds to all enemies in the area.',
-			rune: 'Launch a massive volley of guided arrows that rain down on enemies for 35% weapon damage for 12 seconds.',
+			desc: 'Fire a massive volley of arrows around you. Arrows fall from the sky dealing 715% weapon damage for 5 seconds to all enemies in the area.',
+			rune: 'Launch a massive volley of guided arrows that rain down on enemies for 792% weapon damage for 12 seconds.',
 			effect: {
 				'cooldown': 30,
-				'weapon-damage': 35,
+				'weapon-damage': 792,
 				'weapon-damage-for': 12,
 			},
 		},
 		'rain-of-vengeance~c': {
 			name: 'Rain of Vengeance - Anathema',
-			desc: 'Fire a massive volley of arrows around you. Arrows fall from the sky dealing 74.75% weapon damage for 5 seconds to all enemies in the area.',
-			rune: 'Summon a Shadow Beast that drops grenades from the sky for 10 seconds dealing 115% weapon damage.',
+			desc: 'Fire a massive volley of arrows around you. Arrows fall from the sky dealing 715% weapon damage for 5 seconds to all enemies in the area.',
+			rune: 'Summon a Shadow Beast that drops grenades from the sky for 10 seconds dealing 3300% weapon damage.',
 			effect: {
 				'cooldown': 30,
-				'weapon-damage': 115,
-				'weapon-damage-for': 10,
+				'weapon-damage': 3300,
+				'weapon-damage-for': 15,
 			},
 		},
 		'rain-of-vengeance~d': {
 			name: 'Rain of Vengeance - Flying Strike',
-			desc: 'Fire a massive volley of arrows around you. Arrows fall from the sky dealing 74.75% weapon damage for 5 seconds to all enemies in the area.',
-			rune: 'A group of 8 Shadow Beasts plummet from the sky at a targeted location dealing 60% weapon damage each and stunning enemies for 2 seconds.',
+			desc: 'Fire a massive volley of arrows around you. Arrows fall from the sky dealing 715% weapon damage for 5 seconds to all enemies in the area.',
+			rune: 'A group of 8 Shadow Beasts plummet from the sky at a targeted location dealing 100% weapon damage each and stunning enemies for 2 seconds.',
 			effect: {
 				'cooldown': 30,
 				'stack': {
 					'weapon-damage': {
 						'limit': 8,
-						'value': 60,
+						'value': 100,
 					},
 				},
 			},
 		},
 		'rain-of-vengeance~e': {
 			name: 'Rain of Vengeance - Stampede',
-			desc: 'Fire a massive volley of arrows around you. Arrows fall from the sky dealing 74.75% weapon damage for 5 seconds to all enemies in the area.',
+			desc: 'Fire a massive volley of arrows around you. Arrows fall from the sky dealing 715% weapon damage for 5 seconds to all enemies in the area.',
 			rune: 'Summon a wave of 10 Shadow Beasts to tear across the ground, knocking back enemies and dealing 75% weapon damage each.',
 			effect: {
 				'cooldown': 30,
@@ -3027,56 +3034,56 @@ var activeSkills = {
 		},
 		'lashing-tail-kick': {
 			name: 'Lashing Tail Kick',
-			desc: 'Unleash a deadly roundhouse kick that knocks enemies back and deals 200% weapon damage.',
+			desc: 'Unleash a deadly roundhouse kick that knocks enemies back and deals 235% weapon damage.',
 			effect: {
 				'cost-spirit': 30,
-				'weapon-damage': 200,
+				'weapon-damage': 235,
 			},
 		},
 		'lashing-tail-kick~a': {
 			name: 'Lashing Tail Kick - Vulture Claw Kick',
-			desc: 'Unleash a deadly roundhouse kick that knocks enemies back and deals 200% weapon damage.',
-			rune: 'Release a torrent of fire that burns nearby enemies for 220% weapon damage as Fire and causes Knockback.',
+			desc: 'Unleash a deadly roundhouse kick that knocks enemies back and deals 235% weapon damage.',
+			rune: 'Release a torrent of fire that burns nearby enemies for 258% weapon damage as Fire and causes Knockback.',
 			effect: {
 				'cost-spirit': 30,
-				'weapon-damage': 420,
+				'weapon-damage': 258,
 			},
 		},
 		'lashing-tail-kick~b': {
 			name: 'Lashing Tail Kick - Spinning Flame Kick',
-			desc: 'Unleash a deadly roundhouse kick that knocks enemies back and deals 200% weapon damage.',
-			rune: 'Hurl a column of fire that burns through enemies, causing 240% weapon damage as Fire to each enemy it strikes.',
+			desc: 'Unleash a deadly roundhouse kick that knocks enemies back and deals 235% weapon damage.',
+			rune: 'Hurl a column of fire that burns through enemies, causing 294% weapon damage as Fire to each enemy it strikes.',
 			effect: {
 				'cost-spirit': 30,
-				'weapon-damage': 200,
+				'weapon-damage': 294,
 			},
 		},
 		'lashing-tail-kick~c': {
 			name: 'Lashing Tail Kick - Hand of Ytar',
-			desc: 'Unleash a deadly roundhouse kick that knocks enemies back and deals 200% weapon damage.',
+			desc: 'Unleash a deadly roundhouse kick that knocks enemies back and deals 235% weapon damage.',
 			rune: 'Attack enemies at long range, slowing the movement speed of affected targets by 80% for 2 seconds.',
 			effect: {
 				'cost-spirit': 30,
-				'weapon-damage': 200,
+				'weapon-damage': 235,
 			},
 		},
 		'lashing-tail-kick~d': {
 			name: 'Lashing Tail Kick - Sweeping Armada',
-			desc: 'Unleash a deadly roundhouse kick that knocks enemies back and deals 200% weapon damage.',
+			desc: 'Unleash a deadly roundhouse kick that knocks enemies back and deals 235% weapon damage.',
 			rune: 'Increases Knockback distance by 150% and slows the movement speed of struck enemies by 60% for 2 seconds.',
 			effect: {
 				'cost-spirit': 30,
-				'weapon-damage': 200,
+				'weapon-damage': 235,
 			},
 		},
 		'lashing-tail-kick~e': {
 			name: 'Lashing Tail Kick - Scorpion Sting',
-			desc: 'Unleash a deadly roundhouse kick that knocks enemies back and deals 200% weapon damage.',
+			desc: 'Unleash a deadly roundhouse kick that knocks enemies back and deals 235% weapon damage.',
 			rune: 'Enemies have a 50% chance to be stunned for 1.5 seconds instead of being knocked back.',
 			effect: {
 				'cost-spirit': 30,
 				'chance-stun': 50,
-				'weapon-damage': 200,
+				'weapon-damage': 235,
 			},
 		},
 		'deadly-reach': {
@@ -3191,55 +3198,55 @@ var activeSkills = {
 		},
 		'tempest-rush': {
 			name: 'Tempest Rush',
-			desc: 'Charge directly through your enemies, knocking them back and hobbling them, slowing their movement by 60% for 2 seconds. Also deals 50% weapon damage while running.',
+			desc: 'Charge directly through your enemies, knocking them back and hobbling them, slowing their movement by 60% for 2 seconds. Also deals 85% weapon damage while running.',
 			effect: {
 				'cost-spirit': 15,
-				'weapon-damage': 50,
+				'weapon-damage': 85,
 			},
 		},
 		'tempest-rush~a': {
 			name: 'Tempest Rush - Bluster',
-			desc: 'Charge directly through your enemies, knocking them back and hobbling them, slowing their movement by 60% for 2 seconds. Also deals 50% weapon damage while running.',
+			desc: 'Charge directly through your enemies, knocking them back and hobbling them, slowing their movement by 60% for 2 seconds. Also deals 85% weapon damage while running.',
 			rune: 'Enemies knocked back have their damage reduced by 20% for the duration of the effect.',
 			effect: {
 				'cost-spirit': 15,
-				'weapon-damage': 50,
+				'weapon-damage': 85,
 			},
 		},
 		'tempest-rush~b': {
 			name: 'Tempest Rush - Tailwind',
-			desc: 'Charge directly through your enemies, knocking them back and hobbling them, slowing their movement by 60% for 2 seconds. Also deals 50% weapon damage while running.',
+			desc: 'Charge directly through your enemies, knocking them back and hobbling them, slowing their movement by 60% for 2 seconds. Also deals 85% weapon damage while running.',
 			rune: 'Increases the movement speed of Tempest Rush by 25%.',
 			effect: {
 				'cost-spirit': 15,
-				'weapon-damage': 50,
+				'weapon-damage': 85,
 			},
 		},
 		'tempest-rush~c': {
 			name: 'Tempest Rush - Slipstream',
-			desc: 'Charge directly through your enemies, knocking them back and hobbling them, slowing their movement by 60% for 2 seconds. Also deals 50% weapon damage while running.',
+			desc: 'Charge directly through your enemies, knocking them back and hobbling them, slowing their movement by 60% for 2 seconds. Also deals 85% weapon damage while running.',
 			rune: 'Reduces damage taken while running by 25%.',
 			effect: {
 				'cost-spirit': 15,
-				'weapon-damage': 50,
+				'weapon-damage': 85,
 			},
 		},
 		'tempest-rush~d': {
 			name: 'Tempest Rush - Northern Breeze',
-			desc: 'Charge directly through your enemies, knocking them back and hobbling them, slowing their movement by 60% for 2 seconds. Also deals 50% weapon damage while running.',
+			desc: 'Charge directly through your enemies, knocking them back and hobbling them, slowing their movement by 60% for 2 seconds. Also deals 85% weapon damage while running.',
 			rune: 'Reduces the channeling cost of Tempest Rush to 8 Spirit.',
 			effect: {
 				'cost-spirit': 15,
-				'weapon-damage': 50,
+				'weapon-damage': 85,
 			},
 		},
 		'tempest-rush~e': {
 			name: 'Tempest Rush - Flurry',
-			desc: 'Charge directly through your enemies, knocking them back and hobbling them, slowing their movement by 60% for 2 seconds. Also deals 50% weapon damage while running.',
+			desc: 'Charge directly through your enemies, knocking them back and hobbling them, slowing their movement by 60% for 2 seconds. Also deals 85% weapon damage while running.',
 			rune: 'Increases the potency of the hobbling effect, slowing enemy movement by 80%.',
 			effect: {
 				'cost-spirit': 15,
-				'weapon-damage': 50,
+				'weapon-damage': 85,
 			},
 		},
 		'breath-of-heaven': {
@@ -3299,63 +3306,63 @@ var activeSkills = {
 		},
 		'dashing-strike': {
 			name: 'Dashing Strike',
-			desc: 'Quickly dash at the targeted enemy or location, striking for 100% weapon damage and rooting the target for 1 second.',
+			desc: 'Quickly dash at the targeted enemy or location, striking for 160% weapon damage and rooting the target for 1 second.',
 			effect: {
 				'cost-spirit': 25,
-				'weapon-damage': 100,
+				'weapon-damage': 160,
 			},
 		},
 		'dashing-strike~a': {
 			name: 'Dashing Strike - Soaring Skull',
-			desc: 'Quickly dash at the targeted enemy or location, striking for 100% weapon damage and rooting the target for 1 second.',
+			desc: 'Quickly dash at the targeted enemy or location, striking for 160% weapon damage and rooting the target for 1 second.',
 			rune: 'Launch yourself through the air and slow all enemies along your path by 60% for 2 seconds.',
 			effect: {
 				'cost-spirit': 25,
-				'weapon-damage': 100,
+				'weapon-damage': 160,
 			},
 		},
 		'dashing-strike~b': {
 			name: 'Dashing Strike - Way of the Falling Star',
-			desc: 'Quickly dash at the targeted enemy or location, striking for 100% weapon damage and rooting the target for 1 second.',
+			desc: 'Quickly dash at the targeted enemy or location, striking for 160% weapon damage and rooting the target for 1 second.',
 			rune: 'After striking an enemy, your movement speed is increased 25% for 3 seconds.',
 			effect: {
 				'cost-spirit': 25,
-				'weapon-damage': 100,
+				'weapon-damage': 160,
 			},
 		},
 		'dashing-strike~c': {
 			name: 'Dashing Strike - Blinding Speed',
-			desc: 'Quickly dash at the targeted enemy or location, striking for 100% weapon damage and rooting the target for 1 second.',
+			desc: 'Quickly dash at the targeted enemy or location, striking for 160% weapon damage and rooting the target for 1 second.',
 			rune: 'Receive a 20% increased chance to Dodge for 3 seconds.',
 			effect: {
 				'cost-spirit': 25,
-				'weapon-damage': 100,
+				'weapon-damage': 160,
 			},
 		},
 		'dashing-strike~d': {
 			name: 'Dashing Strike - Quicksilver',
-			desc: 'Quickly dash at the targeted enemy or location, striking for 100% weapon damage and rooting the target for 1 second.',
+			desc: 'Quickly dash at the targeted enemy or location, striking for 160% weapon damage and rooting the target for 1 second.',
 			rune: 'Reduces the cost of Dashing Strike to 10 Spirit.',
 			effect: {
 				'cost-spirit': 25,
-				'weapon-damage': 100,
+				'weapon-damage': 160,
 			},
 		},
 		'dashing-strike~e': {
 			name: 'Dashing Strike - Flying Side Kick',
-			desc: 'Quickly dash at the targeted enemy or location, striking for 100% weapon damage and rooting the target for 1 second.',
+			desc: 'Quickly dash at the targeted enemy or location, striking for 160% weapon damage and rooting the target for 1 second.',
 			rune: 'Perform a flying kick that has a 60% chance to Stun your target for 1.5 seconds.',
 			effect: {
 				'cost-spirit': 25,
 				'chance-stun': 60,
-				'weapon-damage': 100,
+				'weapon-damage': 160,
 			},
 		},
 		'crippling-wave': {
 			name: 'Crippling Wave',
 			desc: 'Unleash a series of large sweeping attacks that cause 110% weapon damage to all enemies in front of you. Every third hit damages all enemies around you and dazes them, slowing their movement speed by 30% and attack speed by 20% for 3 seconds.',
 			effect: {
-				'generate-spirit': 6,
+				'generate-spirit': 7,
 				'weapon-damage': 110,
 			},
 		},
@@ -3364,7 +3371,7 @@ var activeSkills = {
 			desc: 'Unleash a series of large sweeping attacks that cause 110% weapon damage to all enemies in front of you. Every third hit damages all enemies around you and dazes them, slowing their movement speed by 30% and attack speed by 20% for 3 seconds.',
 			rune: 'Increase damage to 143% weapon damage.',
 			effect: {
-				'generate-spirit': 6,
+				'generate-spirit': 7,
 				'weapon-damage': 143,
 			},
 		},
@@ -3373,7 +3380,7 @@ var activeSkills = {
 			desc: 'Unleash a series of large sweeping attacks that cause 110% weapon damage to all enemies in front of you. Every third hit damages all enemies around you and dazes them, slowing their movement speed by 30% and attack speed by 20% for 3 seconds.',
 			rune: 'The range of Crippling Wave\'s third strike is increased to 17 yards and the effect of the movement speed reduction is increased to 60%.',
 			effect: {
-				'generate-spirit': 6,
+				'generate-spirit': 7,
 				'weapon-damage': 110,
 			},
 		},
@@ -3382,7 +3389,7 @@ var activeSkills = {
 			desc: 'Unleash a series of large sweeping attacks that cause 110% weapon damage to all enemies in front of you. Every third hit damages all enemies around you and dazes them, slowing their movement speed by 30% and attack speed by 20% for 3 seconds.',
 			rune: 'Enemies hit by Crippling Wave inflict 20% less damage for 3 seconds.',
 			effect: {
-				'generate-spirit': 6,
+				'generate-spirit': 7,
 				'weapon-damage': 110,
 			},
 		},
@@ -3391,7 +3398,7 @@ var activeSkills = {
 			desc: 'Unleash a series of large sweeping attacks that cause 110% weapon damage to all enemies in front of you. Every third hit damages all enemies around you and dazes them, slowing their movement speed by 30% and attack speed by 20% for 3 seconds.',
 			rune: 'Critical Hits generate an additional 5 Spirit.',
 			effect: {
-				'generate-spirit': 6,
+				'generate-spirit': 7,
 				'weapon-damage': 110,
 			},
 		},
@@ -3400,115 +3407,122 @@ var activeSkills = {
 			desc: 'Unleash a series of large sweeping attacks that cause 110% weapon damage to all enemies in front of you. Every third hit damages all enemies around you and dazes them, slowing their movement speed by 30% and attack speed by 20% for 3 seconds.',
 			rune: 'Enemies hit by Crippling Wave take 10% additional damage from all attacks for 3 seconds.',
 			effect: {
-				'generate-spirit': 6,
+				'generate-spirit': 7,
 				'weapon-damage': 110,
 				'plus-damage-conditional': 10,
 			},
 		},
 		'wave-of-light': {
 			name: 'Wave of Light',
-			desc: 'Focuses a wave of light that crushes enemies for 215% weapon damage as Holy, followed by an additional 45% weapon damage as Holy to all enemies in a line.',
+			desc: 'Focuses a wave of light that crushes enemies for 390% weapon damage as Holy, followed by an additional 45% weapon damage as Holy to all enemies in a line.',
 			effect: {
 				'cost-spirit': 75,
-				'weapon-damage': 215,
+				'weapon-damage': 390,
 			},
 		},
 		'wave-of-light~a': {
 			name: 'Wave of Light - Wall of Light',
-			desc: 'Focuses a wave of light that crushes enemies for 215% weapon damage as Holy, followed by an additional 45% weapon damage as Holy to all enemies in a line.',
-			rune: 'Increases damage of the initial strike to 0% weapon damage as Holy.',
+			desc: 'Focuses a wave of light that crushes enemies for 390% weapon damage as Holy, followed by an additional 45% weapon damage as Holy to all enemies in a line.',
+			rune: 'Increases damage of the initial strike to 566% weapon damage as Holy.',
 			effect: {
 				'cost-spirit': 75,
-				'weapon-damage': 215,
+				'weapon-damage': 566,
 			},
 		},
 		'wave-of-light~b': {
 			name: 'Wave of Light - Explosive Light',
-			desc: 'Focuses a wave of light that crushes enemies for 215% weapon damage as Holy, followed by an additional 45% weapon damage as Holy to all enemies in a line.',
-			rune: 'Release bursts of energy that deal 285% weapon damage as Holy to nearby enemies.',
+			desc: 'Focuses a wave of light that crushes enemies for 390% weapon damage as Holy, followed by an additional 45% weapon damage as Holy to all enemies in a line.',
+			rune: 'Release bursts of energy that deal 430% weapon damage as Holy to nearby enemies.',
 			effect: {
 				'cost-spirit': 75,
-				'weapon-damage': 285,
+				'weapon-damage': 430,
 			},
 		},
 		'wave-of-light~c': {
 			name: 'Wave of Light - Pillar of the Ancients',
-			desc: 'Focuses a wave of light that crushes enemies for 215% weapon damage as Holy, followed by an additional 45% weapon damage as Holy to all enemies in a line.',
-			rune: 'Summon an ancient pillar that deals 210% weapon damage followed by an additional 210% weapon damage after 2 seconds.',
+			desc: 'Focuses a wave of light that crushes enemies for 390% weapon damage as Holy, followed by an additional 45% weapon damage as Holy to all enemies in a line.',
+			rune: 'Summon an ancient pillar that deals 280% weapon damage followed by an additional 280% weapon damage after 2 seconds.',
 			effect: {
 				'cost-spirit': 75,
-				'weapon-damage': 425,
+				'weapon-damage': 560,
+				'weapon-damage-for': 2
 			},
 		},
 		'wave-of-light~d': {
 			name: 'Wave of Light - Empowered Wave',
-			desc: 'Focuses a wave of light that crushes enemies for 215% weapon damage as Holy, followed by an additional 45% weapon damage as Holy to all enemies in a line.',
+			desc: 'Focuses a wave of light that crushes enemies for 390% weapon damage as Holy, followed by an additional 45% weapon damage as Holy to all enemies in a line.',
 			rune: 'Reduces the cost of Wave of Light to 40 Spirit.',
 			effect: {
 				'cost-spirit': 75,
-				'weapon-damage': 215,
+				'weapon-damage': 390,
 			},
 		},
 		'wave-of-light~e': {
 			name: 'Wave of Light - Blinding Light',
-			desc: 'Focuses a wave of light that crushes enemies for 215% weapon damage as Holy, followed by an additional 45% weapon damage as Holy to all enemies in a line.',
+			desc: 'Focuses a wave of light that crushes enemies for 390% weapon damage as Holy, followed by an additional 45% weapon damage as Holy to all enemies in a line.',
 			rune: 'Critical Hits Stun enemies for 3 seconds.',
 			effect: {
 				'cost-spirit': 75,
-				'weapon-damage': 215,
+				'weapon-damage': 390,
 			},
 		},
 		'exploding-palm': {
 			name: 'Exploding Palm',
-			desc: 'Cause a target to Bleed for 220% weapon damage as Physical over 3 seconds. If the target dies while bleeding, it explodes and deals 30% of the target\'s maximum Life as Physical damage to all nearby enemies.',
+			desc: 'Cause a target to Bleed for 745% weapon damage as Physical over 9 seconds. If the target dies while bleeding, it explodes and deals 30% of the target\'s maximum Life as Physical damage to all nearby enemies.',
 			effect: {
 				'cost-spirit': 40,
-				'weapon-damage': 220,
+				'weapon-damage': 745,
+				'weapon-damage-for': 9
 			},
 		},
 		'exploding-palm~a': {
 			name: 'Exploding Palm - Impending Doom',
-			desc: 'Cause a target to Bleed for 220% weapon damage as Physical over 3 seconds. If the target dies while bleeding, it explodes and deals 30% of the target\'s maximum Life as Physical damage to all nearby enemies.',
-			rune: 'Increases the duration of the Bleed effect to deal 220% weapon damage as Physical over 6 seconds.',
+			desc: 'Cause a target to Bleed for 745% weapon damage as Physical over 9 seconds. If the target dies while bleeding, it explodes and deals 30% of the target\'s maximum Life as Physical damage to all nearby enemies.',
+			rune: 'Increases the duration of the Bleed effect to deal 745% weapon damage as Physical over 15 seconds.',
 			effect: {
 				'cost-spirit': 40,
-				'weapon-damage': 440,
+				'weapon-damage': 745,
+				'weapon-damage-for': 15
 			},
 		},
 		'exploding-palm~b': {
 			name: 'Exploding Palm - Creeping Demise',
-			desc: 'Cause a target to Bleed for 220% weapon damage as Physical over 3 seconds. If the target dies while bleeding, it explodes and deals 30% of the target\'s maximum Life as Physical damage to all nearby enemies.',
+			desc: 'Cause a target to Bleed for 745% weapon damage as Physical over 9 seconds. If the target dies while bleeding, it explodes and deals 30% of the target\'s maximum Life as Physical damage to all nearby enemies.',
 			rune: 'Also reduces your target\'s movement speed by 80%.',
 			effect: {
 				'cost-spirit': 40,
-				'weapon-damage': 220,
+				'weapon-damage': 745,
+				'weapon-damage-for': 9
 			},
 		},
 		'exploding-palm~c': {
 			name: 'Exploding Palm - The Flesh is Weak',
-			desc: 'Cause a target to Bleed for 220% weapon damage as Physical over 3 seconds. If the target dies while bleeding, it explodes and deals 30% of the target\'s maximum Life as Physical damage to all nearby enemies.',
+			desc: 'Cause a target to Bleed for 745% weapon damage as Physical over 9 seconds. If the target dies while bleeding, it explodes and deals 30% of the target\'s maximum Life as Physical damage to all nearby enemies.',
 			rune: 'Also causes the target to take 12% additional damage for 3 seconds.',
 			effect: {
 				'cost-spirit': 40,
-				'weapon-damage': 220,
+				'weapon-damage': 745,
+				'weapon-damage-for': 9
 			},
 		},
 		'exploding-palm~d': {
 			name: 'Exploding Palm - Strong Spirit',
-			desc: 'Cause a target to Bleed for 220% weapon damage as Physical over 3 seconds. If the target dies while bleeding, it explodes and deals 30% of the target\'s maximum Life as Physical damage to all nearby enemies.',
+			desc: 'Cause a target to Bleed for 745% weapon damage as Physical over 9 seconds. If the target dies while bleeding, it explodes and deals 30% of the target\'s maximum Life as Physical damage to all nearby enemies.',
 			rune: 'If the target explodes after bleeding, gain 5 Spirit for each enemy caught in the blast.',
 			effect: {
 				'cost-spirit': 40,
-				'weapon-damage': 220,
+				'weapon-damage': 745,
+				'weapon-damage-for': 9
 			},
 		},
 		'exploding-palm~e': {
 			name: 'Exploding Palm - Essence Burn',
-			desc: 'Cause a target to Bleed for 220% weapon damage as Physical over 3 seconds. If the target dies while bleeding, it explodes and deals 30% of the target\'s maximum Life as Physical damage to all nearby enemies.',
+			desc: 'Cause a target to Bleed for 745% weapon damage as Physical over 9 seconds. If the target dies while bleeding, it explodes and deals 30% of the target\'s maximum Life as Physical damage to all nearby enemies.',
 			rune: 'Instead of bleeding, the target will burn for 250% weapon damage as Fire over 3 seconds. If the target dies while burning, it explodes causing all nearby enemies to burn for 60% weapon damage as Fire over 3 seconds. This effect can happen multiple times.',
 			effect: {
 				'cost-spirit': 40,
-				'weapon-damage': 470,
+				'weapon-damage': 250,
+				'weapon-damage-for': 3
 			},
 		},
 		'cyclone-strike': {
@@ -3568,17 +3582,18 @@ var activeSkills = {
 			name: 'Way of the Hundred Fists',
 			desc: 'Unleash a rapid series of punches that strikes enemies for 140% weapon damage.',
 			effect: {
-				'generate-spirit': 6,
+				'generate-spirit': 8,
 				'weapon-damage': 140,
 			},
 		},
 		'way-of-the-hundred-fists~a': {
 			name: 'Way of the Hundred Fists - Fists of Fury',
 			desc: 'Unleash a rapid series of punches that strikes enemies for 140% weapon damage.',
-			rune: 'Affected targets will take an additional 10% weapon damage per second as Holy for 5 seconds. Also adds a short dash to the first strike.',
+			rune: 'Affected targets will take an additional 100% weapon damage per second as Holy for 5 seconds. Also adds a short dash to the first strike.',
 			effect: {
-				'generate-spirit': 6,
-				'weapon-damage': 140,
+				'generate-spirit': 8,
+				'weapon-damage': 240,
+				'weapon-damage-for': 5
 			},
 		},
 		'way-of-the-hundred-fists~b': {
@@ -3586,7 +3601,7 @@ var activeSkills = {
 			desc: 'Unleash a rapid series of punches that strikes enemies for 140% weapon damage.',
 			rune: 'Increases the number of hits in the second strike from 7 to 10.',
 			effect: {
-				'generate-spirit': 6,
+				'generate-spirit': 8,
 				'weapon-damage': 140,
 			},
 		},
@@ -3595,7 +3610,7 @@ var activeSkills = {
 			desc: 'Unleash a rapid series of punches that strikes enemies for 140% weapon damage.',
 			rune: 'Critical Hits increase your attack speed and movement speed by 5% for 5 seconds. This effect can stack up to 3 times.',
 			effect: {
-				'generate-spirit': 6,
+				'generate-spirit': 8,
 				'weapon-damage': 140,
 			},
 		},
@@ -3604,7 +3619,7 @@ var activeSkills = {
 			desc: 'Unleash a rapid series of punches that strikes enemies for 140% weapon damage.',
 			rune: 'Every activation of the skill has a 15% chance to generate 15 additional Spirit.',
 			effect: {
-				'generate-spirit': 6,
+				'generate-spirit': 8,
 				'weapon-damage': 140,
 			},
 		},
@@ -3613,7 +3628,7 @@ var activeSkills = {
 			desc: 'Unleash a rapid series of punches that strikes enemies for 140% weapon damage.',
 			rune: 'The third strike generates a wave of wind that deals 250% weapon damage as Physical to enemies directly ahead of you.',
 			effect: {
-				'generate-spirit': 6,
+				'generate-spirit': 8,
 				'weapon-damage': 390,
 			},
 		},
@@ -3672,92 +3687,68 @@ var activeSkills = {
 		},
 		'seven-sided-strike': {
 			name: 'Seven-Sided Strike',
-			desc: 'Dash rapidly between nearby enemies, dealing 777% weapon damage over 7 hits.',
+			desc: 'Dash rapidly between nearby enemies, dealing 1777% weapon damage over 7 hits.',
 			effect: {
 				'cost-spirit': 50,
 				'cooldown': 30,
-				'stack': {
-					'weapon-damage': {
-						'limit': 7,
-						'value': 777,
-					},
-				},
+				'weapon-damage': 1777,
+				'weapon-damage-for': 7
 			},
 		},
 		'seven-sided-strike~a': {
 			name: 'Seven-Sided Strike - Sudden Assault',
-			desc: 'Dash rapidly between nearby enemies, dealing 777% weapon damage over 7 hits.',
+			desc: 'Dash rapidly between nearby enemies, dealing 1777% weapon damage over 7 hits.',
 			rune: 'Teleport to the target, increasing damage done to 1008% weapon damage over 7 strikes.',
 			effect: {
 				'cost-spirit': 50,
 				'cooldown': 30,
-				'stack': {
-					'weapon-damage-for': {
-						'limit': 7,
-						'value': 1008,
-					},
-				},
+				'weapon-damage': 2309,
+				'weapon-damage-for': 7
 			},
 		},
 		'seven-sided-strike~b': {
 			name: 'Seven-Sided Strike - Several-Sided Strike',
-			desc: 'Dash rapidly between nearby enemies, dealing 777% weapon damage over 7 hits.',
+			desc: 'Dash rapidly between nearby enemies, dealing 1777% weapon damage over 7 hits.',
 			rune: 'Increases the number of strikes to 9.',
 			effect: {
 				'cost-spirit': 50,
 				'cooldown': 30,
-				'stack': {
-					'weapon-damage': {
-						'limit': 7,
-						'value': 777,
-					},
-				},
+				'weapon-damage': 1777,
+				'weapon-damage-for': 9
 			},
 		},
 		'seven-sided-strike~c': {
 			name: 'Seven-Sided Strike - Pandemonium',
-			desc: 'Dash rapidly between nearby enemies, dealing 777% weapon damage over 7 hits.',
+			desc: 'Dash rapidly between nearby enemies, dealing 1777% weapon damage over 7 hits.',
 			rune: 'Enemies hit by Seven-Sided Strike have a 25% chance to be stunned for 7 seconds by each hit.',
 			effect: {
 				'cost-spirit': 50,
 				'cooldown': 30,
 				'chance-stun': 25,
-				'stack': {
-					'weapon-damage': {
-						'limit': 7,
-						'value': 777,
-					},
-				},
+				'weapon-damage': 1777,
+				'weapon-damage-for': 7
 			},
 		},
 		'seven-sided-strike~d': {
 			name: 'Seven-Sided Strike - Sustained Attack',
-			desc: 'Dash rapidly between nearby enemies, dealing 777% weapon damage over 7 hits.',
+			desc: 'Dash rapidly between nearby enemies, dealing 1777% weapon damage over 7 hits.',
 			rune: 'Reduces the cooldown of Seven-Sided Strike to 23 seconds.',
 			effect: {
 				'cost-spirit': 50,
 				'cooldown': 30,
-				'stack': {
-					'weapon-damage': {
-						'limit': 7,
-						'value': 777,
-					},
-				},
+				'weapon-damage': 1777,
+				'weapon-damage-for': 7
 			},
 		},
 		'seven-sided-strike~e': {
 			name: 'Seven-Sided Strike - Fulminating Onslaught',
-			desc: 'Dash rapidly between nearby enemies, dealing 777% weapon damage over 7 hits.',
-			rune: 'Each strike explodes, dealing 111% weapon damage as Holy in a 7 yard radius around the target.',
+			desc: 'Dash rapidly between nearby enemies, dealing 1777% weapon damage over 7 hits.',
+			rune: 'Each strike explodes, dealing 254% weapon damage as Holy in a 7 yard radius around the target.',
 			effect: {
 				'cost-spirit': 50,
 				'cooldown': 30,
-				'stack': {
-					'weapon-damage': {
-						'limit': 7,
-						'value': 777,
-					},
-				},
+				'weapon-damage': 1777,
+				'weapon-damage-for': 7
 			},
 		},
 		'mantra-of-evasion': {
@@ -3794,6 +3785,7 @@ var activeSkills = {
 			effect: {
 				'cost-spirit': 50,
 				'plus-dodge': 15,
+				'plus-armor': 20,
 			},
 		},
 		'mantra-of-evasion~d': {
@@ -3887,7 +3879,7 @@ var activeSkills = {
 		'sweeping-wind~e': {
 			name: 'Sweeping Wind - Master of Wind',
 			desc: 'Surround yourself in a vortex that continuously deals 15% weapon damage to all enemies within 10 yards. The vortex lasts 6 seconds and is refreshed each time you strike an enemy with a melee attack. Landing a Critical Hit has a chance to increase the vortex effect up to 2 times for a total of 45% weapon damage to nearby enemies.',
-			rune: 'Increases the duration of the vortex to 10 seconds.',
+			rune: 'Increases the duration of the vortex to 20 seconds.',
 			effect: {
 				'cost-spirit': 75,
 				'stack': {
@@ -4167,11 +4159,10 @@ var activeSkills = {
 		'poison-dart~a': {
 			name: 'Poison Dart - Flaming Dart',
 			desc: 'Shoot a deadly Poison Dart that deals 100% weapon damage as Poison and an additional 40% weapon damage as Poison over 2 seconds.',
-			rune: 'Ignite the dart so that it deals 160% weapon damage as Fire at once.',
+			rune: 'Ignite the dart so that it deals 180% weapon damage as Fire at once.',
 			effect: {
 				'cost-mana': 9.8,
-				'weapon-damage-for': 2,
-				'weapon-damage': 160,
+				'weapon-damage': 180,
 			},
 		},
 		'poison-dart~b': {
@@ -4217,66 +4208,66 @@ var activeSkills = {
 		},
 		'grasp-of-the-dead': {
 			name: 'Grasp of the Dead',
-			desc: 'Ghoulish hands reach out from the ground, slowing enemy movement by 60% and dealing 20% weapon damage as Physical for 8 seconds.',
+			desc: 'Ghoulish hands reach out from the ground, slowing enemy movement by 60% and dealing 320% weapon damage as Physical for 8 seconds.',
 			effect: {
 				'cost-mana': 122.5,
 				'cooldown': 8,
-				'weapon-damage': 20,
+				'weapon-damage': 320,
 				'weapon-damage-for': 8,
 			},
 		},
 		'grasp-of-the-dead~a': {
 			name: 'Grasp of the Dead - Groping Eels',
-			desc: 'Ghoulish hands reach out from the ground, slowing enemy movement by 60% and dealing 20% weapon damage as Physical for 8 seconds.',
+			desc: 'Ghoulish hands reach out from the ground, slowing enemy movement by 60% and dealing 320% weapon damage as Physical for 8 seconds.',
 			rune: 'Increases the damage done to 26% weapon damage as Physical.',
 			effect: {
 				'cost-mana': 122.5,
 				'cooldown': 8,
-				'weapon-damage': 26,
+				'weapon-damage': 320,
 				'weapon-damage-for': 8,
 			},
 		},
 		'grasp-of-the-dead~b': {
 			name: 'Grasp of the Dead - Rain of Corpses',
-			desc: 'Ghoulish hands reach out from the ground, slowing enemy movement by 60% and dealing 20% weapon damage as Physical for 8 seconds.',
+			desc: 'Ghoulish hands reach out from the ground, slowing enemy movement by 60% and dealing 320% weapon damage as Physical for 8 seconds.',
 			rune: 'Corpses fall from the sky, dealing 80% weapon damage as Physical over 8 seconds to nearby enemies.',
 			effect: {
 				'cost-mana': 122.5,
 				'cooldown': 8,
-				'weapon-damage': 20,
+				'weapon-damage': 320,
 				'weapon-damage-for': 8,
 			},
 		},
 		'grasp-of-the-dead~c': {
 			name: 'Grasp of the Dead - Unbreakable Grasp',
-			desc: 'Ghoulish hands reach out from the ground, slowing enemy movement by 60% and dealing 20% weapon damage as Physical for 8 seconds.',
+			desc: 'Ghoulish hands reach out from the ground, slowing enemy movement by 60% and dealing 320% weapon damage as Physical for 8 seconds.',
 			rune: 'Increases the Slow amount to 80%.',
 			effect: {
 				'cost-mana': 122.5,
 				'cooldown': 8,
-				'weapon-damage': 20,
+				'weapon-damage': 320,
 				'weapon-damage-for': 8,
 			},
 		},
 		'grasp-of-the-dead~d': {
 			name: 'Grasp of the Dead - Desperate Grasp',
-			desc: 'Ghoulish hands reach out from the ground, slowing enemy movement by 60% and dealing 20% weapon damage as Physical for 8 seconds.',
+			desc: 'Ghoulish hands reach out from the ground, slowing enemy movement by 60% and dealing 320% weapon damage as Physical for 8 seconds.',
 			rune: 'Reduces the cooldown of Grasp of the Dead to 6 seconds.',
 			effect: {
 				'cost-mana': 122.5,
 				'cooldown': 8,
-				'weapon-damage': 20,
+				'weapon-damage': 320,
 				'weapon-damage-for': 8,
 			},
 		},
 		'grasp-of-the-dead~e': {
 			name: 'Grasp of the Dead - Death Is Life',
-			desc: 'Ghoulish hands reach out from the ground, slowing enemy movement by 60% and dealing 20% weapon damage as Physical for 8 seconds.',
+			desc: 'Ghoulish hands reach out from the ground, slowing enemy movement by 60% and dealing 320% weapon damage as Physical for 8 seconds.',
 			rune: 'Enemies who die while in the area of Grasp of the Dead have a 5% chance to produce a health globe.',
 			effect: {
 				'cost-mana': 122.5,
 				'cooldown': 8,
-				'weapon-damage': 20,
+				'weapon-damage': 320,
 				'weapon-damage-for': 8,
 			},
 		},
@@ -4310,15 +4301,11 @@ var activeSkills = {
 		'corpse-spiders~b': {
 			name: 'Corpse Spiders - Spider Queen',
 			desc: 'Throw a jar with 4 spiders that attack nearby enemies for 16% weapon damage as Physical before dying.',
-			rune: 'Summon a spider queen that births spiderlings, dealing 16% weapon damage as Poison to enemies in the area. Lasts 15 seconds.  You may only have one spider queen summoned at a time.',
+			rune: 'Summon a spider queen that births spiderlings, dealing 630% weapon damage as Poison over 15 seconds. You may only have one spider queen summoned at a time.',
 			effect: {
 				'cost-mana': 4.9,
-				'stack': {
-					'weapon-damage': {
-						'limit': 4,
-						'value': 16,
-					},
-				},
+				'weapon-damage': 630,
+				'weapon-damage-for': 15
 			},
 		},
 		'corpse-spiders~c': {
@@ -4425,15 +4412,15 @@ var activeSkills = {
 		},
 		'firebats': {
 			name: 'Firebats',
-			desc: 'Call forth a swarm of fiery bats to burn enemies in front of you for 150% weapon damage as Fire.',
+			desc: 'Call forth a swarm of fiery bats to burn enemies in front of you for 180% weapon damage as Fire.',
 			effect: {
 				'cost-mana': 122.5,
-				'weapon-damage': 150,
+				'weapon-damage': 180,
 			},
 		},
 		'firebats~a': {
 			name: 'Firebats - Dire Bats',
-			desc: 'Call forth a swarm of fiery bats to burn enemies in front of you for 150% weapon damage as Fire.',
+			desc: 'Call forth a swarm of fiery bats to burn enemies in front of you for 180% weapon damage as Fire.',
 			rune: 'Summon fewer but larger bats that travel up to 40 yards and hit for 220% weapon damage as Fire.',
 			effect: {
 				'cost-mana': 122.5,
@@ -4442,25 +4429,25 @@ var activeSkills = {
 		},
 		'firebats~b': {
 			name: 'Firebats - Hungry Bats',
-			desc: 'Call forth a swarm of fiery bats to burn enemies in front of you for 150% weapon damage as Fire.',
-			rune: 'Rapidly summon bats that seek out nearby enemies for 280% weapon damage as Fire.',
+			desc: 'Call forth a swarm of fiery bats to burn enemies in front of you for 180% weapon damage as Fire.',
+			rune: 'Rapidly summon bats that seek out nearby enemies for 350% weapon damage as Fire.',
 			effect: {
 				'cost-mana': 122.5,
-				'weapon-damage': 280,
+				'weapon-damage': 350,
 			},
 		},
 		'firebats~c': {
 			name: 'Firebats - Plague Bats',
-			desc: 'Call forth a swarm of fiery bats to burn enemies in front of you for 150% weapon damage as Fire.',
-			rune: 'Diseased bats fly towards the enemy and infect them. Damage is slow at first, but can increase over time to a maximum of 225% weapon damage as Poison.',
+			desc: 'Call forth a swarm of fiery bats to burn enemies in front of you for 180% weapon damage as Fire.',
+			rune: 'Diseased bats fly towards the enemy and infect them. Damage is slow at first, but can increase over time to a maximum of 270% weapon damage as Poison.',
 			effect: {
 				'cost-mana': 122.5,
-				'weapon-damage': 225,
+				'weapon-damage': 270,
 			},
 		},
 		'firebats~d': {
 			name: 'Firebats - Vampire Bats',
-			desc: 'Call forth a swarm of fiery bats to burn enemies in front of you for 150% weapon damage as Fire.',
+			desc: 'Call forth a swarm of fiery bats to burn enemies in front of you for 180% weapon damage as Fire.',
 			rune: 'Gain 3% of damage done by the bats as Life.',
 			effect: {
 				'cost-mana': 122.5,
@@ -4469,8 +4456,8 @@ var activeSkills = {
 		},
 		'firebats~e': {
 			name: 'Firebats - Cloud of Bats',
-			desc: 'Call forth a swarm of fiery bats to burn enemies in front of you for 150% weapon damage as Fire.',
-			rune: 'Call forth a swirl of bats that damage nearby enemies for 195% weapon damage as Fire. The damage of the bats increases by 10% every second, up to a maximum of 50%.',
+			desc: 'Call forth a swarm of fiery bats to burn enemies in front of you for 180% weapon damage as Fire.',
+			rune: 'Call forth a swirl of bats that damage nearby enemies for 195% weapon damage as Fire. The damage of the bats increases by 20% every second, up to a maximum of 100%.',
 			effect: {
 				'cost-mana': 122.5,
 				'weapon-damage': 345,
@@ -4481,7 +4468,7 @@ var activeSkills = {
 			desc: 'Don a spectral mask that horrifies all enemies within 12 yards, causing them to run in Fear for 4 seconds.',
 			effect: {
 				'cost-mana': 36.75,
-				'cooldown': 20,
+				'cooldown': 16,
 			},
 		},
 		'horrify~a': {
@@ -4490,7 +4477,7 @@ var activeSkills = {
 			rune: 'Gain 100% additional Armor for 8 seconds after casting Horrify.',
 			effect: {
 				'cost-mana': 36.75,
-				'cooldown': 20,
+				'cooldown': 16,
 			},
 		},
 		'horrify~b': {
@@ -4499,7 +4486,7 @@ var activeSkills = {
 			rune: 'Increases the radius of Horrify to 24 yards.',
 			effect: {
 				'cost-mana': 36.75,
-				'cooldown': 20,
+				'cooldown': 16,
 			},
 		},
 		'horrify~c': {
@@ -4508,7 +4495,7 @@ var activeSkills = {
 			rune: 'Increases the duration horrified enemies run in Fear to 6 seconds.',
 			effect: {
 				'cost-mana': 36.75,
-				'cooldown': 20,
+				'cooldown': 16,
 			},
 		},
 		'horrify~d': {
@@ -4517,7 +4504,7 @@ var activeSkills = {
 			rune: 'Gain 26.95 Mana for every horrified enemy.',
 			effect: {
 				'cost-mana': 36.75,
-				'cooldown': 20,
+				'cooldown': 16,
 			},
 		},
 		'horrify~e': {
@@ -4526,7 +4513,7 @@ var activeSkills = {
 			rune: 'Increases movement speed by 20% for 4 seconds after casting Horrify.',
 			effect: {
 				'cost-mana': 36.75,
-				'cooldown': 20,
+				'cooldown': 16,
 			},
 		},
 		'soul-harvest': {
@@ -4558,7 +4545,7 @@ var activeSkills = {
 		'soul-harvest~c': {
 			name: 'Soul Harvest - Languish',
 			desc: 'Feed on the life force of up to 5 enemies within 16 yards. Gain 10 Intelligence for each affected enemy. This effect lasts 30 seconds.',
-			rune: 'Reduces the movement speed of harvested enemies by 60% for 3 seconds.',
+			rune: 'Reduces the movement speed of harvested enemies by 80% for 3 seconds.',
 			effect: {
 				'cost-mana': 58.8,
 				'cooldown': 15,
@@ -4576,17 +4563,18 @@ var activeSkills = {
 		'soul-harvest~e': {
 			name: 'Soul Harvest - Vengeful Spirit',
 			desc: 'Feed on the life force of up to 5 enemies within 16 yards. Gain 10 Intelligence for each affected enemy. This effect lasts 30 seconds.',
-			rune: 'Harvested enemies also take 70% weapon damage as Physical.',
+			rune: 'Harvested enemies also take 230% weapon damage as Physical.',
 			effect: {
 				'cost-mana': 58.8,
 				'cooldown': 15,
+				'weapon-damage': 230,
 			},
 		},
 		'plague-of-toads': {
 			name: 'Plague of Toads',
 			desc: 'Release a handful of toads that deal 130% weapon damage as Poison to enemies they come in contact with.',
 			effect: {
-				'cost-mana': 34.3,
+				'cost-mana': 12,
 				'weapon-damage': 130,
 			},
 		},
@@ -4595,7 +4583,7 @@ var activeSkills = {
 			desc: 'Release a handful of toads that deal 130% weapon damage as Poison to enemies they come in contact with.',
 			rune: 'Mutate to fire bullfrogs that explode for 169% weapon damage as Fire.',
 			effect: {
-				'cost-mana': 34.3,
+				'cost-mana': 12,
 				'weapon-damage': 169,
 			},
 		},
@@ -4604,7 +4592,7 @@ var activeSkills = {
 			desc: 'Release a handful of toads that deal 130% weapon damage as Poison to enemies they come in contact with.',
 			rune: 'Cause toads to rain from the sky that deal 130% weapon damage as Poison to enemies in the area over 2 seconds.',
 			effect: {
-				'cost-mana': 34.3,
+				'cost-mana': 12,
 				'weapon-damage': 130,
 				'weapon-damage-for': 2,
 			},
@@ -4614,7 +4602,7 @@ var activeSkills = {
 			desc: 'Release a handful of toads that deal 130% weapon damage as Poison to enemies they come in contact with.',
 			rune: 'Summon a giant toad that swallows enemies whole for up to 5 seconds, digesting for 0% of your weapon damage per second as Physical. Adds a 5 second cooldown to Plague of Toads.',
 			effect: {
-				'cost-mana': 34.3,
+				'cost-mana': 12,
 				'weapon-damage': 130,
 			},
 		},
@@ -4623,7 +4611,7 @@ var activeSkills = {
 			desc: 'Release a handful of toads that deal 130% weapon damage as Poison to enemies they come in contact with.',
 			rune: 'Removes the Mana cost of Plague of Toads.',
 			effect: {
-				'cost-mana': 34.3,
+				'cost-mana': 12,
 				'weapon-damage': 130,
 			},
 		},
@@ -4632,7 +4620,7 @@ var activeSkills = {
 			desc: 'Release a handful of toads that deal 130% weapon damage as Poison to enemies they come in contact with.',
 			rune: 'Mutate to yellow frogs that deal 130% weapon damage as Poison and have a 15% chance to Confuse affected enemies for 4 seconds.',
 			effect: {
-				'cost-mana': 34.3,
+				'cost-mana': 12,
 				'weapon-damage': 130,
 			},
 		},
@@ -4762,19 +4750,19 @@ var activeSkills = {
 		'zombie-charger~b': {
 			name: 'Zombie Charger - Wave of Zombies',
 			desc: 'Call forth a reckless, suicidal zombie that deals 205% weapon damage as Poison to all enemies in its path before decomposing.',
-			rune: 'Summon 3 Zombie Chargers that each deal 72% weapon damage as Poison.',
+			rune: 'Summon 3 Zombie Chargers that each deal 115% weapon damage as Poison.',
 			effect: {
 				'cost-mana': 139.65,
-				'weapon-damage': 216,
+				'weapon-damage': 115,
 			},
 		},
 		'zombie-charger~c': {
 			name: 'Zombie Charger - Leperous Zombie',
 			desc: 'Call forth a reckless, suicidal zombie that deals 205% weapon damage as Poison to all enemies in its path before decomposing.',
-			rune: 'The Zombie Charger leaves behind a cloud of noxious vapors that deals 25% weapon damage as Poison to enemies caught in it.',
+			rune: 'The Zombie Charger leaves behind a cloud of noxious vapors that deals 240% weapon damage as Poison to enemies caught in it.',
 			effect: {
 				'cost-mana': 139.65,
-				'weapon-damage': 230,
+				'weapon-damage': 205,
 			},
 		},
 		'zombie-charger~d': {
@@ -4783,7 +4771,7 @@ var activeSkills = {
 			rune: 'If the Zombie Charger kills any enemies, it will reanimate and charge nearby enemies for 205% weapon damage as Poison. This effect can repeat up to 2 times.',
 			effect: {
 				'cost-mana': 139.65,
-				'weapon-damage': 410,
+				'weapon-damage': 205,
 			},
 		},
 		'zombie-charger~e': {
@@ -4806,11 +4794,12 @@ var activeSkills = {
 		'spirit-walk~a': {
 			name: 'Spirit Walk - Severance',
 			desc: 'Leave your physical body and enter the spirit realm for 2 seconds. While in the spirit realm, your movement is unhindered.  Your link to the spirit realm will end if your physical body sustains 50% of your maximum Life in damage.',
-			rune: 'Damage enemies you walk through in spirit form for 100% weapon damage as Physical.',
+			rune: 'Damage enemies you walk through in spirit form for 450% weapon damage over 2 seconds.',
 			effect: {
 				'cost-mana': 49,
 				'cooldown': 15,
-				'weapon-damage': 100,
+				'weapon-damage': 450,
+				'weapon-damage-for': 2
 			},
 		},
 		'spirit-walk~b': {
@@ -4825,11 +4814,11 @@ var activeSkills = {
 		'spirit-walk~c': {
 			name: 'Spirit Walk - Umbral Shock',
 			desc: 'Leave your physical body and enter the spirit realm for 2 seconds. While in the spirit realm, your movement is unhindered.  Your link to the spirit realm will end if your physical body sustains 50% of your maximum Life in damage.',
-			rune: 'When Spirit Walk ends, your physical body erupts for 85% weapon damage as Fire to all enemies within 10 yards.',
+			rune: 'When Spirit Walk ends, your physical body erupts for 310% weapon damage as Fire to all enemies within 10 yards.',
 			effect: {
 				'cost-mana': 49,
 				'cooldown': 15,
-				'weapon-damage': 85,
+				'weapon-damage': 310,
 			},
 		},
 		'spirit-walk~d': {
@@ -4852,43 +4841,44 @@ var activeSkills = {
 		},
 		'spirit-barrage': {
 			name: 'Spirit Barrage',
-			desc: 'Bombard a target with a spirit blast that deals 190% weapon damage as Physical.',
+			desc: 'Bombard a target with a spirit blast that deals 230% weapon damage as Physical.',
 			effect: {
 				'cost-mana': 107.8,
-				'weapon-damage': 190,
+				'weapon-damage': 230,
 			},
 		},
 		'spirit-barrage~a': {
 			name: 'Spirit Barrage - Phlebotomize',
-			desc: 'Bombard a target with a spirit blast that deals 190% weapon damage as Physical.',
+			desc: 'Bombard a target with a spirit blast that deals 230% weapon damage as Physical.',
 			rune: 'Regain 3% of damage dealt with Spirit Barrage as Life.',
 			effect: {
 				'cost-mana': 107.8,
-				'weapon-damage': 190,
+				'weapon-damage': 230,
 			},
 		},
 		'spirit-barrage~b': {
 			name: 'Spirit Barrage - Well of Souls',
-			desc: 'Bombard a target with a spirit blast that deals 190% weapon damage as Physical.',
-			rune: 'An additional 3.3333333333333 spirits seek out other targets and deal 30% weapon damage as Physical.',
+			desc: 'Bombard a target with a spirit blast that deals 230% weapon damage as Physical.',
+			rune: 'An additional 3 spirits seek out other targets and deal 65% weapon damage as Physical.',
 			effect: {
 				'cost-mana': 107.8,
-				'weapon-damage': 220,
+				'weapon-damage': 230,
 			},
 		},
 		'spirit-barrage~c': {
 			name: 'Spirit Barrage - Phantasm',
-			desc: 'Bombard a target with a spirit blast that deals 190% weapon damage as Physical.',
-			rune: 'Summon a spectre for 5 seconds that deals 45% weapon damage as Physical to all enemies within 10 yards.',
+			desc: 'Bombard a target with a spirit blast that deals 230% weapon damage as Physical.',
+			rune: 'Summon a spectre that deals 225% weapon damage as Physical over 5 seconds to all enemies within 10 yards.',
 			effect: {
 				'cost-mana': 107.8,
-				'weapon-damage': 235,
+				'weapon-damage': 225,
+				'weapon-damage-for': 5
 			},
 		},
 		'spirit-barrage~d': {
 			name: 'Spirit Barrage - The Spirit Is Willing',
-			desc: 'Bombard a target with a spirit blast that deals 190% weapon damage as Physical.',
-			rune: 'Gain 44.1 Mana every time Spirit Barrage hits.',
+			desc: 'Bombard a target with a spirit blast that deals 230% weapon damage as Physical.',
+			rune: 'Gain 44 Mana every time Spirit Barrage hits.',
 			effect: {
 				'cost-mana': 107.8,
 				'weapon-damage': 190,
@@ -4896,70 +4886,71 @@ var activeSkills = {
 		},
 		'spirit-barrage~e': {
 			name: 'Spirit Barrage - Manitou',
-			desc: 'Bombard a target with a spirit blast that deals 190% weapon damage as Physical.',
-			rune: 'Summon a spectre for 20 seconds that hovers over you, unleashing spirit bolts at nearby enemies for 28% weapon damage as Physical.',
+			desc: 'Bombard a target with a spirit blast that deals 230% weapon damage as Physical.',
+			rune: 'Summon a spectre that hovers over you, unleashing spirit bolts at nearby enemies for 1667% weapon damage as Physical over 20 seconds.',
 			effect: {
 				'cost-mana': 107.8,
-				'weapon-damage': 218,
+				'weapon-damage': 1667,
+				'weapon-damage-for': 20
 			},
 		},
 		'gargantuan': {
 			name: 'Gargantuan',
-			desc: 'Summon a Gargantuan zombie to fight for you. The Gargantuan attacks for 25% of your weapon damage as Physical.',
+			desc: 'Summon a Gargantuan zombie to fight for you. The Gargantuan attacks for 100% of your weapon damage as Physical.',
 			effect: {
 				'cost-mana': 147,
 				'cooldown': 60,
-				'weapon-damage': 25,
+				'weapon-damage': 100,
 			},
 		},
 		'gargantuan~a': {
 			name: 'Gargantuan - Restless Giant',
-			desc: 'Summon a Gargantuan zombie to fight for you. The Gargantuan attacks for 25% of your weapon damage as Physical.',
+			desc: 'Summon a Gargantuan zombie to fight for you. The Gargantuan attacks for 100% of your weapon damage as Physical.',
 			rune: 'When the Gargantuan encounters an elite enemy or is near 5 enemies, it enrages for 15 seconds gaining:   20% movement speed   35% attack speed   200% Physical damage  This effect cannot occur more than once every 120 seconds. Elite enemies include champions, rares, bosses, and other players.',
 			effect: {
 				'cost-mana': 147,
 				'cooldown': 60,
-				'weapon-damage': 25,
+				'weapon-damage': 100,
 			},
 		},
 		'gargantuan~b': {
 			name: 'Gargantuan - Humongoid',
-			desc: 'Summon a Gargantuan zombie to fight for you. The Gargantuan attacks for 25% of your weapon damage as Physical.',
-			rune: 'The Gargantuan gains the Cleave ability, allowing its attacks to hit multiple targets for 33% of your weapon damage as Physical.',
+			desc: 'Summon a Gargantuan zombie to fight for you. The Gargantuan attacks for 100% of your weapon damage as Physical.',
+			rune: 'The Gargantuan gains the Cleave ability, allowing its attacks to hit multiple targets for 130% of your weapon damage as Physical.',
 			effect: {
 				'cost-mana': 147,
 				'cooldown': 60,
-				'weapon-damage': 33,
+				'weapon-damage': 130,
 			},
 		},
 		'gargantuan~c': {
 			name: 'Gargantuan - Big Stinker',
-			desc: 'Summon a Gargantuan zombie to fight for you. The Gargantuan attacks for 25% of your weapon damage as Physical.',
+			desc: 'Summon a Gargantuan zombie to fight for you. The Gargantuan attacks for 100% of your weapon damage as Physical.',
 			rune: 'The Gargantuan is surrounded by a poison cloud that deals 15% weapon damage as Poison per second to nearby enemies.',
 			effect: {
 				'cost-mana': 147,
 				'cooldown': 60,
-				'weapon-damage': 40,
+				'weapon-damage': 100,
 			},
 		},
 		'gargantuan~d': {
 			name: 'Gargantuan - Wrathful Protector',
-			desc: 'Summon a Gargantuan zombie to fight for you. The Gargantuan attacks for 25% of your weapon damage as Physical.',
+			desc: 'Summon a Gargantuan zombie to fight for you. The Gargantuan attacks for 100% of your weapon damage as Physical.',
 			rune: 'Summon a more powerful Gargantuan that only lasts for 15 seconds. The Gargantuan\'s fists burn with fire, dealing 55% of your weapon damage as Fire and knocking enemies back.',
 			effect: {
 				'cost-mana': 147,
 				'cooldown': 60,
-				'weapon-damage': 55,
+				'weapon-damage': 110,
 			},
 		},
 		'gargantuan~e': {
 			name: 'Gargantuan - Bruiser',
-			desc: 'Summon a Gargantuan zombie to fight for you. The Gargantuan attacks for 25% of your weapon damage as Physical.',
+			desc: 'Summon a Gargantuan zombie to fight for you. The Gargantuan attacks for 100% of your weapon damage as Physical.',
 			rune: 'The Gargantuan gains the ability to periodically slam enemies, dealing 100% of your weapon damage as Physical and stunning them for 3 seconds.',
 			effect: {
 				'cost-mana': 147,
 				'cooldown': 60,
-				'weapon-damage': 25,
+				'weapon-damage': 100,
 			},
 		},
 		'locust-swarm': {
@@ -5023,56 +5014,56 @@ var activeSkills = {
 		},
 		'firebomb': {
 			name: 'Firebomb',
-			desc: 'Lob an explosive skull that deals 85% weapon damage as Fire to all enemies within 8 yards.',
+			desc: 'Lob an explosive skull that deals 110% weapon damage as Fire to all enemies within 8 yards.',
 			effect: {
 				'cost-mana': 9.8,
-				'weapon-damage': 85,
+				'weapon-damage': 110,
 			},
 		},
 		'firebomb~a': {
 			name: 'Firebomb - Ghost Bomb',
-			desc: 'Lob an explosive skull that deals 85% weapon damage as Fire to all enemies within 8 yards.',
+			desc: 'Lob an explosive skull that deals 110% weapon damage as Fire to all enemies within 8 yards.',
 			rune: 'In addition to the base explosion, the skull creates a larger blast that deals an additional 20% weapon damage as Fire to all enemies within 28 yards.',
 			effect: {
 				'cost-mana': 9.8,
-				'weapon-damage': 105,
+				'weapon-damage': 130,
 			},
 		},
 		'firebomb~b': {
 			name: 'Firebomb - Roll the Bones',
-			desc: 'Lob an explosive skull that deals 85% weapon damage as Fire to all enemies within 8 yards.',
+			desc: 'Lob an explosive skull that deals 110% weapon damage as Fire to all enemies within 8 yards.',
 			rune: 'Allows the skull to bounce up to 2 times.',
 			effect: {
 				'cost-mana': 9.8,
-				'weapon-damage': 85,
+				'weapon-damage': 110,
 			},
 		},
 		'firebomb~c': {
 			name: 'Firebomb - Fire Pit',
-			desc: 'Lob an explosive skull that deals 85% weapon damage as Fire to all enemies within 8 yards.',
-			rune: 'The explosion creates a pool of fire that deals 8% weapon damage per second as Fire for 3 seconds.',
+			desc: 'Lob an explosive skull that deals 110% weapon damage as Fire to all enemies within 8 yards.',
+			rune: 'The explosion creates a pool of fire that deals 36% weapon damage per second as Fire for 3 seconds.',
 			effect: {
 				'cost-mana': 9.8,
-				'weapon-damage': 93,
+				'weapon-damage': 110,
 			},
 		},
 		'firebomb~d': {
 			name: 'Firebomb - Pyrogeist',
-			desc: 'Lob an explosive skull that deals 85% weapon damage as Fire to all enemies within 8 yards.',
-			rune: 'Create a column of flame that spews fire at the closest enemy for 140% weapon damage as Fire over 3 seconds.',
+			desc: 'Lob an explosive skull that deals 110% weapon damage as Fire to all enemies within 8 yards.',
+			rune: 'Create a column of flame that spews fire at the closest enemy for 640% weapon damage as Fire over 6 seconds.',
 			effect: {
 				'cost-mana': 9.8,
-				'weapon-damage': 140,
-				'weapon-damage-for': 3,
+				'weapon-damage': 640,
+				'weapon-damage-for': 6,
 			},
 		},
 		'firebomb~e': {
 			name: 'Firebomb - Flash Fire',
-			desc: 'Lob an explosive skull that deals 85% weapon damage as Fire to all enemies within 8 yards.',
+			desc: 'Lob an explosive skull that deals 110% weapon damage as Fire to all enemies within 8 yards.',
 			rune: 'Rather than exploding for area damage, each Firebomb can bounce to up to 6 additional targets. Damage is reduced by 15% per bounce.',
 			effect: {
 				'cost-mana': 9.8,
-				'weapon-damage': 85,
+				'weapon-damage': 110,
 			},
 		},
 		'hex': {
@@ -5132,59 +5123,59 @@ var activeSkills = {
 		},
 		'acid-cloud': {
 			name: 'Acid Cloud',
-			desc: 'Cause acid to rain down, dealing an initial 100% weapon damage as Poison, followed by 75% weapon damage as Poison over 3 seconds to enemies who remain in the area.',
+			desc: 'Cause acid to rain down, dealing an initial 115% weapon damage as Poison, followed by 150% weapon damage as Poison over 3 seconds to enemies who remain in the area.',
 			effect: {
 				'cost-mana': 171.5,
-				'weapon-damage': 100,
+				'weapon-damage': 265,
 				'weapon-damage-for': 3,
 			},
 		},
 		'acid-cloud~a': {
 			name: 'Acid Cloud - Corpse Bomb',
-			desc: 'Cause acid to rain down, dealing an initial 100% weapon damage as Poison, followed by 75% weapon damage as Poison over 3 seconds to enemies who remain in the area.',
-			rune: 'Raise a corpse from the ground that explodes for 200% weapon damage as Poison to enemies in the area.',
+			desc: 'Cause acid to rain down, dealing an initial 115% weapon damage as Poison, followed by 150% weapon damage as Poison over 3 seconds to enemies who remain in the area.',
+			rune: 'Raise a corpse from the ground that explodes for 230% weapon damage as Poison to enemies in the area.',
 			effect: {
 				'cost-mana': 171.5,
-				'weapon-damage': 200,
+				'weapon-damage': 230,
 			},
 		},
 		'acid-cloud~b': {
 			name: 'Acid Cloud - Acid Rain',
-			desc: 'Cause acid to rain down, dealing an initial 100% weapon damage as Poison, followed by 75% weapon damage as Poison over 3 seconds to enemies who remain in the area.',
+			desc: 'Cause acid to rain down, dealing an initial 115% weapon damage as Poison, followed by 150% weapon damage as Poison over 3 seconds to enemies who remain in the area.',
 			rune: 'Increases the initial area of effect of Acid Cloud to 24 yards.',
 			effect: {
 				'cost-mana': 171.5,
-				'weapon-damage': 100,
+				'weapon-damage': 265,
 				'weapon-damage-for': 3,
 			},
 		},
 		'acid-cloud~c': {
 			name: 'Acid Cloud - Lob Blob Bomb',
-			desc: 'Cause acid to rain down, dealing an initial 100% weapon damage as Poison, followed by 75% weapon damage as Poison over 3 seconds to enemies who remain in the area.',
-			rune: 'The acid on the ground forms into a slime that irradiates nearby enemies for 25% weapon damage as Poison. The slime dissipates after 5 seconds.',
+			desc: 'Cause acid to rain down, dealing an initial 115% weapon damage as Poison, followed by 150% weapon damage as Poison over 3 seconds to enemies who remain in the area.',
+			rune: 'The acid on the ground forms into a slime that irradiates nearby enemies for 50% weapon damage as Poison. The slime dissipates after 5 seconds.',
 			effect: {
 				'cost-mana': 171.5,
-				'weapon-damage': 125,
-				'weapon-damage-for': 3,
+				'weapon-damage': 200,
+				'weapon-damage-for': 5,
 			},
 		},
 		'acid-cloud~d': {
 			name: 'Acid Cloud - Slow Burn',
-			desc: 'Cause acid to rain down, dealing an initial 100% weapon damage as Poison, followed by 75% weapon damage as Poison over 3 seconds to enemies who remain in the area.',
-			rune: 'Increases the duration of the acid pools left behind to 6 seconds.',
+			desc: 'Cause acid to rain down, dealing an initial 115% weapon damage as Poison, followed by 150% weapon damage as Poison over 3 seconds to enemies who remain in the area.',
+			rune: 'Increases the duration of the acid pools left behind to deal 300% weapon damage as Poison over 6 seconds.',
 			effect: {
 				'cost-mana': 171.5,
-				'weapon-damage': 100,
-				'weapon-damage-for': 3,
+				'weapon-damage': 415,
+				'weapon-damage-for': 6,
 			},
 		},
 		'acid-cloud~e': {
 			name: 'Acid Cloud - Kiss of Death',
-			desc: 'Cause acid to rain down, dealing an initial 100% weapon damage as Poison, followed by 75% weapon damage as Poison over 3 seconds to enemies who remain in the area.',
-			rune: 'Spit a cloud of acid that inflicts 110% weapon damage as Poison, followed by 84% weapon damage as Poison to enemies who remain in the area.',
+			desc: 'Cause acid to rain down, dealing an initial 115% weapon damage as Poison, followed by 150% weapon damage as Poison over 3 seconds to enemies who remain in the area.',
+			rune: 'Spit a cloud of acid that inflicts 126% weapon damage as Poison, followed by 165% weapon damage as Poison to enemies who remain in the area.',
 			effect: {
 				'cost-mana': 171.5,
-				'weapon-damage': 100,
+				'weapon-damage': 291,
 				'weapon-damage-for': 3,
 			},
 		},
@@ -5297,66 +5288,66 @@ var activeSkills = {
 		},
 		'wall-of-zombies': {
 			name: 'Wall of Zombies',
-			desc: 'Raise a line of zombies from the ground that attacks nearby enemies for 80% weapon damage as Physical for 5 seconds.',
+			desc: 'Raise a line of zombies from the ground that attacks nearby enemies for 800% weapon damage as Physical over 5 seconds.',
 			effect: {
 				'cost-mana': 102.9,
 				'cooldown': 25,
-				'weapon-damage': 80,
+				'weapon-damage': 800,
 				'weapon-damage-for': 5,
 			},
 		},
 		'wall-of-zombies~a': {
 			name: 'Wall of Zombies - Creepers',
-			desc: 'Raise a line of zombies from the ground that attacks nearby enemies for 80% weapon damage as Physical for 5 seconds.',
+			desc: 'Raise a line of zombies from the ground that attacks nearby enemies for 800% weapon damage as Physical over 5 seconds.',
 			rune: 'Up to 3.3333333333333 zombies will emerge from the ground and attack nearby enemies for 25% of your weapon damage as Physical per attack.',
 			effect: {
 				'cost-mana': 102.9,
 				'cooldown': 25,
-				'weapon-damage': 80,
+				'weapon-damage': 800,
 				'weapon-damage-for': 5,
 			},
 		},
 		'wall-of-zombies~b': {
 			name: 'Wall of Zombies - Barricade',
-			desc: 'Raise a line of zombies from the ground that attacks nearby enemies for 80% weapon damage as Physical for 5 seconds.',
-			rune: 'Increases the width of the Wall of Zombies. The zombies will attack for 80% weapon damage as Physical.',
+			desc: 'Raise a line of zombies from the ground that attacks nearby enemies for 800% weapon damage as Physical over 5 seconds.',
+			rune: 'Increases the width of the Wall of Zombies.',
 			effect: {
 				'cost-mana': 102.9,
 				'cooldown': 25,
-				'weapon-damage': 160,
+				'weapon-damage': 800,
 				'weapon-damage-for': 5,
 			},
 		},
 		'wall-of-zombies~c': {
 			name: 'Wall of Zombies - Dead Rush',
-			desc: 'Raise a line of zombies from the ground that attacks nearby enemies for 80% weapon damage as Physical for 5 seconds.',
+			desc: 'Raise a line of zombies from the ground that attacks nearby enemies for 800% weapon damage as Physical over 5 seconds.',
 			rune: 'Zombies crawl out of the ground and run in all directions, dealing 445% weapon damage as Physical to nearby enemies.',
 			effect: {
 				'cost-mana': 102.9,
 				'cooldown': 25,
-				'weapon-damage': 80,
+				'weapon-damage': 800,
 				'weapon-damage-for': 5,
 			},
 		},
 		'wall-of-zombies~d': {
 			name: 'Wall of Zombies - Unrelenting Grip',
-			desc: 'Raise a line of zombies from the ground that attacks nearby enemies for 80% weapon damage as Physical for 5 seconds.',
+			desc: 'Raise a line of zombies from the ground that attacks nearby enemies for 800% weapon damage as Physical over 5 seconds.',
 			rune: 'Your Wall of Zombies will Slow the movement of enemies by 60% for 5 seconds.',
 			effect: {
 				'cost-mana': 102.9,
 				'cooldown': 25,
-				'weapon-damage': 80,
+				'weapon-damage': 800,
 				'weapon-damage-for': 5,
 			},
 		},
 		'wall-of-zombies~e': {
 			name: 'Wall of Zombies - Pile On',
-			desc: 'Raise a line of zombies from the ground that attacks nearby enemies for 80% weapon damage as Physical for 5 seconds.',
+			desc: 'Raise a line of zombies from the ground that attacks nearby enemies for 800% weapon damage as Physical over 5 seconds.',
 			rune: 'Summon a tower of zombies that falls over, dealing 765% weapon damage as Physical to any enemies it hits and knocks them back.',
 			effect: {
 				'cost-mana': 102.9,
 				'cooldown': 25,
-				'weapon-damage': 80,
+				'weapon-damage': 800,
 				'weapon-damage-for': 5,
 			},
 		},
@@ -5525,9 +5516,9 @@ var activeSkills = {
 		'shock-pulse~a': {
 			name: 'Shock Pulse - Fire Bolts',
 			desc: 'Release a medium range pulse of 3 unpredictable charges of electricity that deal 105% weapon damage as Lightning.',
-			rune: 'Cast bolts of fire that each deal 137% weapon damage as Fire.',
+			rune: 'Cast bolts of fire that each deal 152% weapon damage as Fire.',
 			effect: {
-				'weapon-damage': 137,
+				'weapon-damage': 152,
 			},
 		},
 		'shock-pulse~b': {
@@ -5549,7 +5540,7 @@ var activeSkills = {
 		'shock-pulse~d': {
 			name: 'Shock Pulse - Lightning Affinity',
 			desc: 'Release a medium range pulse of 3 unpredictable charges of electricity that deal 105% weapon damage as Lightning.',
-			rune: 'Every target hit by a pulse restores 2 Arcane Power.',
+			rune: 'Every target hit by a pulse restores 3 Arcane Power.',
 			effect: {
 				'weapon-damage': 105,
 			},
@@ -5676,7 +5667,7 @@ var activeSkills = {
 		'diamond-skin~a': {
 			name: 'Diamond Skin - Mirror Skin',
 			desc: 'Transform your skin to diamond for 6 seconds, absorbing up to 10853.4 damage from incoming attacks.',
-			rune: 'Reflects 50% of damage absorbed back at the attacker.',
+			rune: 'Reflects 100% of damage absorbed back at the attacker.',
 			effect: {
 				'cooldown': 15,
 			},
@@ -5684,7 +5675,7 @@ var activeSkills = {
 		'diamond-skin~b': {
 			name: 'Diamond Skin - Enduring Skin',
 			desc: 'Transform your skin to diamond for 6 seconds, absorbing up to 10853.4 damage from incoming attacks.',
-			rune: 'Increases the duration of Diamond Skin to 8 seconds.',
+			rune: 'Increases the duration of Diamond Skin to 9 seconds.',
 			effect: {
 				'cooldown': 15,
 			},
@@ -5708,7 +5699,7 @@ var activeSkills = {
 		'diamond-skin~e': {
 			name: 'Diamond Skin - Diamond Shards',
 			desc: 'Transform your skin to diamond for 6 seconds, absorbing up to 10853.4 damage from incoming attacks.',
-			rune: 'When Diamond Skin wears off, diamond shards explode in all directions dealing 155% weapon damage as Physical to nearby enemies.',
+			rune: 'When Diamond Skin wears off, diamond shards explode in all directions dealing 210% weapon damage as Physical to nearby enemies.',
 			effect: {
 				'cooldown': 15,
 				'weapon-damage': 155,
@@ -5807,7 +5798,7 @@ var activeSkills = {
 		'spectral-blade~d': {
 			name: 'Spectral Blade - Siphoning Blade',
 			desc: 'Summon a spectral blade that strikes all enemies in your path for 135% weapon damage.',
-			rune: 'Every enemy hit grants 1 Arcane Power.',
+			rune: 'Every enemy hit grants 3 Arcane Power.',
 			effect: {
 				'weapon-damage': 135,
 			},
@@ -5822,54 +5813,54 @@ var activeSkills = {
 		},
 		'arcane-torrent': {
 			name: 'Arcane Torrent',
-			desc: 'Hurl a barrage of arcane projectiles that deal 175% weapon damage as Arcane to all enemies near the impact location.',
+			desc: 'Hurl a barrage of arcane projectiles that deal 210% weapon damage as Arcane to all enemies near the impact location.',
 			effect: {
-				'cost-arcane-power': 20,
-				'weapon-damage': 175,
+				'cost-arcane-power': 16,
+				'weapon-damage': 210,
 			},
 		},
 		'arcane-torrent~a': {
 			name: 'Arcane Torrent - Disruption',
-			desc: 'Hurl a barrage of arcane projectiles that deal 175% weapon damage as Arcane to all enemies near the impact location.',
+			desc: 'Hurl a barrage of arcane projectiles that deal 210% weapon damage as Arcane to all enemies near the impact location.',
 			rune: 'Targets hit by Arcane Torrent become disrupted for 6 seconds, causing them to take 15% additional damage from any attacks that deal Arcane damage.',
 			effect: {
-				'cost-arcane-power': 20,
-				'weapon-damage': 175,
+				'cost-arcane-power': 16,
+				'weapon-damage': 210,
 			},
 		},
 		'arcane-torrent~b': {
 			name: 'Arcane Torrent - Cascade',
-			desc: 'Hurl a barrage of arcane projectiles that deal 175% weapon damage as Arcane to all enemies near the impact location.',
-			rune: 'Enemies killed by Arcane Torrent have a 100% chance to fire a new missile at a nearby enemy dealing 175% weapon damage as Arcane.',
+			desc: 'Hurl a barrage of arcane projectiles that deal 210% weapon damage as Arcane to all enemies near the impact location.',
+			rune: 'Enemies killed by Arcane Torrent have a 100% chance to fire a new missile at a nearby enemy dealing 210% weapon damage as Arcane.',
 			effect: {
-				'cost-arcane-power': 20,
-				'weapon-damage': 175,
+				'cost-arcane-power': 16,
+				'weapon-damage': 210,
 			},
 		},
 		'arcane-torrent~c': {
 			name: 'Arcane Torrent - Arcane Mines',
-			desc: 'Hurl a barrage of arcane projectiles that deal 175% weapon damage as Arcane to all enemies near the impact location.',
-			rune: 'Instead of firing projectiles, lay Arcane mines that arm after 2 seconds. These mines explode when an enemy approaches, dealing 150% weapon damage as Arcane. Enemies caught in the explosion have their movement and attack speeds reduced by 30% for 3 seconds.',
+			desc: 'Hurl a barrage of arcane projectiles that deal 210% weapon damage as Arcane to all enemies near the impact location.',
+			rune: 'Instead of firing projectiles, lay Arcane mines that arm after 2 seconds. These mines explode when an enemy approaches, dealing 180% weapon damage as Arcane. Enemies caught in the explosion have their movement and attack speeds reduced by 30% for 3 seconds.',
 			effect: {
-				'cost-arcane-power': 20,
-				'weapon-damage': 150,
+				'cost-arcane-power': 16,
+				'weapon-damage': 180,
 			},
 		},
 		'arcane-torrent~d': {
 			name: 'Arcane Torrent - Power Stone',
-			desc: 'Hurl a barrage of arcane projectiles that deal 175% weapon damage as Arcane to all enemies near the impact location.',
+			desc: 'Hurl a barrage of arcane projectiles that deal 210% weapon damage as Arcane to all enemies near the impact location.',
 			rune: 'Every missile hit has a 2% chance to leave behind a Power Stone that grants Arcane Power when picked up.',
 			effect: {
-				'cost-arcane-power': 20,
-				'weapon-damage': 175,
+				'cost-arcane-power': 16,
+				'weapon-damage': 210,
 			},
 		},
 		'arcane-torrent~e': {
 			name: 'Arcane Torrent - Death Blossom',
-			desc: 'Hurl a barrage of arcane projectiles that deal 175% weapon damage as Arcane to all enemies near the impact location.',
+			desc: 'Hurl a barrage of arcane projectiles that deal 210% weapon damage as Arcane to all enemies near the impact location.',
 			rune: 'Unleash a torrent of power beyond your control. You no longer direct where the projectiles go, but their damage is increased to 670% weapon damage as Arcane.',
 			effect: {
-				'cost-arcane-power': 20,
+				'cost-arcane-power': 16,
 				'weapon-damage': 670,
 			},
 		},
@@ -5942,10 +5933,10 @@ var activeSkills = {
 		'ice-armor~a': {
 			name: 'Ice Armor - Jagged Ice',
 			desc: 'Surround yourself in a barrier of ice. Melee attackers are either Chilled or Frozen for 2 seconds. Lasts 120 seconds.  This is an Armor spell. Only one Armor spell can be active at a time.',
-			rune: 'Melee attackers also take 100% weapon damage as Cold.',
+			rune: 'Melee attackers also take 130% weapon damage as Cold.',
 			effect: {
 				'cost-arcane-power': 25,
-				'weapon-damage': 100,
+				'weapon-damage': 130,
 			},
 		},
 		'ice-armor~b': {
@@ -5969,13 +5960,13 @@ var activeSkills = {
 		'ice-armor~d': {
 			name: 'Ice Armor - Crystallize',
 			desc: 'Surround yourself in a barrier of ice. Melee attackers are either Chilled or Frozen for 2 seconds. Lasts 120 seconds.  This is an Armor spell. Only one Armor spell can be active at a time.',
-			rune: 'Whenever you are struck by a melee attack, your Armor is increased by 15% for 30 seconds. This effect can stack up to 3 times.',
+			rune: 'Whenever you are struck by a melee attack, your Armor is increased by 30% for 30 seconds. This effect can stack up to 3 times.',
 			effect: {
 				'cost-arcane-power': 25,
 				'stack': {
 					'plus-armor': {
 						'limit': 3,
-						'value': 15,
+						'value': 30,
 					},
 				},
 			},
@@ -5990,49 +5981,49 @@ var activeSkills = {
 		},
 		'electrocute': {
 			name: 'Electrocute',
-			desc: 'Lightning arcs from your fingertips, dealing 80% weapon damage as Lightning. The lightning can jump, hitting up to 2 additional enemies.',
+			desc: 'Lightning arcs from your fingertips, dealing 90% weapon damage as Lightning. The lightning can jump, hitting up to 2 additional enemies.',
 			effect: {
-				'weapon-damage': 80,
+				'weapon-damage': 90,
 			},
 		},
 		'electrocute~a': {
 			name: 'Electrocute - Lightning Blast',
-			desc: 'Lightning arcs from your fingertips, dealing 80% weapon damage as Lightning. The lightning can jump, hitting up to 2 additional enemies.',
-			rune: 'Create streaks of lightning that pierce through targets, hitting all enemies for 80% weapon damage as Lightning.',
+			desc: 'Lightning arcs from your fingertips, dealing 90% weapon damage as Lightning. The lightning can jump, hitting up to 2 additional enemies.',
+			rune: 'Create streaks of lightning that pierce through targets, hitting all enemies for 86% weapon damage as Lightning.',
 			effect: {
-				'weapon-damage': 80,
+				'weapon-damage': 86,
 			},
 		},
 		'electrocute~b': {
 			name: 'Electrocute - Chain Lightning',
-			desc: 'Lightning arcs from your fingertips, dealing 80% weapon damage as Lightning. The lightning can jump, hitting up to 2 additional enemies.',
+			desc: 'Lightning arcs from your fingertips, dealing 90% weapon damage as Lightning. The lightning can jump, hitting up to 2 additional enemies.',
 			rune: 'Increases the maximum number of enemies that can be electrocuted to 6.',
 			effect: {
-				'weapon-damage': 80,
+				'weapon-damage': 90,
 			},
 		},
 		'electrocute~c': {
 			name: 'Electrocute - Arc Lightning',
-			desc: 'Lightning arcs from your fingertips, dealing 80% weapon damage as Lightning. The lightning can jump, hitting up to 2 additional enemies.',
-			rune: 'Blast a cone of lightning that causes 80% weapon damage as Lightning to all affected targets.',
+			desc: 'Lightning arcs from your fingertips, dealing 90% weapon damage as Lightning. The lightning can jump, hitting up to 2 additional enemies.',
+			rune: 'Blast a cone of lightning that causes 115% weapon damage as Lightning to all affected targets.',
 			effect: {
-				'weapon-damage': 80,
+				'weapon-damage': 115,
 			},
 		},
 		'electrocute~d': {
 			name: 'Electrocute - Surge of Power',
-			desc: 'Lightning arcs from your fingertips, dealing 80% weapon damage as Lightning. The lightning can jump, hitting up to 2 additional enemies.',
+			desc: 'Lightning arcs from your fingertips, dealing 90% weapon damage as Lightning. The lightning can jump, hitting up to 2 additional enemies.',
 			rune: 'Gain 1 Arcane Power for every enemy hit by Electrocute.',
 			effect: {
-				'weapon-damage': 80,
+				'weapon-damage': 90,
 			},
 		},
 		'electrocute~e': {
 			name: 'Electrocute - Forked Lightning',
-			desc: 'Lightning arcs from your fingertips, dealing 80% weapon damage as Lightning. The lightning can jump, hitting up to 2 additional enemies.',
-			rune: 'Critical Hits release 4 charged bolts in random directions, dealing 46% weapon damage as Lightning to any targets hit.',
+			desc: 'Lightning arcs from your fingertips, dealing 90% weapon damage as Lightning. The lightning can jump, hitting up to 2 additional enemies.',
+			rune: 'Critical Hits release 4 charged bolts in random directions, dealing 55% weapon damage as Lightning to any targets hit.',
 			effect: {
-				'weapon-damage': 80,
+				'weapon-damage': 90,
 			},
 		},
 		'slow-time': {
@@ -6169,11 +6160,11 @@ var activeSkills = {
 		'explosive-blast~c': {
 			name: 'Explosive Blast - Time Bomb',
 			desc: 'Gather an infusion of energy around you that explodes after 1.5 seconds, causing 225% weapon damage as Physical to all enemies within 12 yards.',
-			rune: 'Explosive Blast detonates from the point it was originally cast after 2.5 seconds for 293% weapon damage as Physical.',
+			rune: 'Explosive Blast detonates from the point it was originally cast after 2.5 seconds for 315% weapon damage as Physical.',
 			effect: {
 				'cost-arcane-power': 20,
 				'cooldown': 6,
-				'weapon-damage': 293,
+				'weapon-damage': 315,
 			},
 		},
 		'explosive-blast~d': {
@@ -6267,19 +6258,19 @@ var activeSkills = {
 		'hydra~a': {
 			name: 'Hydra - Frost Hydra',
 			desc: 'Summon a multi-headed Hydra for 15 seconds that attacks enemies with bolts of fire dealing 28% weapon damage as Fire. You may only have one Hydra active at a time.',
-			rune: 'Summon a Frost Hydra that breathes a short range cone of frost, causing 31% weapon damage as Cold to all enemies in the cone.',
+			rune: 'Summon a Frost Hydra that breathes a short range cone of frost, causing 36% weapon damage as Cold to all enemies in the cone.',
 			effect: {
 				'cost-arcane-power': 15,
-				'weapon-damage': 31,
+				'weapon-damage': 36,
 			},
 		},
 		'hydra~b': {
 			name: 'Hydra - Lightning Hydra',
 			desc: 'Summon a multi-headed Hydra for 15 seconds that attacks enemies with bolts of fire dealing 28% weapon damage as Fire. You may only have one Hydra active at a time.',
-			rune: 'Summon a Lightning Hydra that electrocutes enemies for 34% weapon damage as Lightning.',
+			rune: 'Summon a Lightning Hydra that electrocutes enemies for 64% weapon damage as Lightning.',
 			effect: {
 				'cost-arcane-power': 15,
-				'weapon-damage': 34,
+				'weapon-damage': 64,
 			},
 		},
 		'hydra~c': {
@@ -6294,19 +6285,19 @@ var activeSkills = {
 		'hydra~d': {
 			name: 'Hydra - Mammoth Hydra',
 			desc: 'Summon a multi-headed Hydra for 15 seconds that attacks enemies with bolts of fire dealing 28% weapon damage as Fire. You may only have one Hydra active at a time.',
-			rune: 'Summon a Mammoth Hydra that breathes a river of flame at nearby enemies, dealing 22% weapon damage per second as Fire to enemies caught on the burning ground.',
+			rune: 'Summon a Mammoth Hydra that breathes a river of flame at nearby enemies, dealing 67% weapon damage per second as Fire to enemies caught on the burning ground.',
 			effect: {
 				'cost-arcane-power': 15,
-				'weapon-damage': 22,
+				'weapon-damage': 67,
 			},
 		},
 		'hydra~e': {
 			name: 'Hydra - Arcane Hydra',
 			desc: 'Summon a multi-headed Hydra for 15 seconds that attacks enemies with bolts of fire dealing 28% weapon damage as Fire. You may only have one Hydra active at a time.',
-			rune: 'Summon an Arcane Hydra that spits Arcane Orbs, which explode on impact, causing 28% weapon damage as Arcane to enemies near the explosion.',
+			rune: 'Summon an Arcane Hydra that spits Arcane Orbs, which explode on impact, causing 60% weapon damage as Arcane to enemies near the explosion.',
 			effect: {
 				'cost-arcane-power': 15,
-				'weapon-damage': 28,
+				'weapon-damage': 60,
 			},
 		},
 		'disintegrate': {
@@ -6427,11 +6418,11 @@ var activeSkills = {
 		'teleport~a': {
 			name: 'Teleport - Calamity',
 			desc: 'Teleport through the ether to the selected location up to 35 yards away.',
-			rune: 'Casts a low power Wave of Force upon arrival, dealing 75% weapon damage as Physical to all nearby enemies.',
+			rune: 'Casts a low power Wave of Force upon arrival, dealing 265% weapon damage as Physical to all nearby enemies.',
 			effect: {
 				'cost-arcane-power': 15,
 				'cooldown': 16,
-				'weapon-damage': 75,
+				'weapon-damage': 265,
 			},
 		},
 		'teleport~b': {
@@ -6520,7 +6511,7 @@ var activeSkills = {
 		},
 		'meteor': {
 			name: 'Meteor',
-			desc: 'Summon an immense Meteor that plummets from the sky, causing 200% weapon damage as Fire to all enemies it crashes into. The ground it hits is scorched with molten fire that deals 60% weapon damage as Fire over 3 seconds.',
+			desc: 'Summon an immense Meteor that plummets from the sky, causing 260% weapon damage as Fire to all enemies it crashes into. The ground it hits is scorched with molten fire that deals 60% weapon damage as Fire over 3 seconds.',
 			effect: {
 				'cost-arcane-power': 60,
 				'weapon-damage': 260,
@@ -6528,34 +6519,34 @@ var activeSkills = {
 		},
 		'meteor~a': {
 			name: 'Meteor - Molten Impact',
-			desc: 'Summon an immense Meteor that plummets from the sky, causing 200% weapon damage as Fire to all enemies it crashes into. The ground it hits is scorched with molten fire that deals 60% weapon damage as Fire over 3 seconds.',
+			desc: 'Summon an immense Meteor that plummets from the sky, causing 260% weapon damage as Fire to all enemies it crashes into. The ground it hits is scorched with molten fire that deals 60% weapon damage as Fire over 3 seconds.',
 			rune: 'Increases the damage of the Meteor impact to 260% weapon damage as Fire and the molten fire to 78% weapon damage as Fire over 3 seconds.',
 			effect: {
 				'cost-arcane-power': 60,
-				'weapon-damage': 260,
+				'weapon-damage': 390,
 			},
 		},
 		'meteor~b': {
 			name: 'Meteor - Meteor Shower',
-			desc: 'Summon an immense Meteor that plummets from the sky, causing 200% weapon damage as Fire to all enemies it crashes into. The ground it hits is scorched with molten fire that deals 60% weapon damage as Fire over 3 seconds.',
-			rune: 'Unleash a volley of 7 smaller Meteors that each strike for 80% weapon damage as Fire.',
+			desc: 'Summon an immense Meteor that plummets from the sky, causing 260% weapon damage as Fire to all enemies it crashes into. The ground it hits is scorched with molten fire that deals 60% weapon damage as Fire over 3 seconds.',
+			rune: 'Unleash a volley of 7 smaller Meteors that each strike for 104% weapon damage as Fire.',
 			effect: {
 				'cost-arcane-power': 60,
-				'weapon-damage': 560,
+				'weapon-damage': 728,
 			},
 		},
 		'meteor~c': {
 			name: 'Meteor - Comet',
-			desc: 'Summon an immense Meteor that plummets from the sky, causing 200% weapon damage as Fire to all enemies it crashes into. The ground it hits is scorched with molten fire that deals 60% weapon damage as Fire over 3 seconds.',
-			rune: 'Transforms the Meteor to ice that deals 240% weapon damage as Cold. The impact site is covered in a freezing mist that deals 72% weapon damage as Cold and Slows enemy movement by 60% over 3 seconds.',
+			desc: 'Summon an immense Meteor that plummets from the sky, causing 260% weapon damage as Fire to all enemies it crashes into. The ground it hits is scorched with molten fire that deals 60% weapon damage as Fire over 3 seconds.',
+			rune: 'Transforms the Meteor to ice that deals 312% weapon damage as Cold. The impact site is covered in a freezing mist that deals 72% weapon damage as Cold and Slows enemy movement by 60% over 3 seconds.',
 			effect: {
 				'cost-arcane-power': 60,
-				'weapon-damage': 240,
+				'weapon-damage': 312,
 			},
 		},
 		'meteor~d': {
 			name: 'Meteor - Star Pact',
-			desc: 'Summon an immense Meteor that plummets from the sky, causing 200% weapon damage as Fire to all enemies it crashes into. The ground it hits is scorched with molten fire that deals 60% weapon damage as Fire over 3 seconds.',
+			desc: 'Summon an immense Meteor that plummets from the sky, causing 260% weapon damage as Fire to all enemies it crashes into. The ground it hits is scorched with molten fire that deals 60% weapon damage as Fire over 3 seconds.',
 			rune: 'Reduces the casting cost of Meteor to 35 Arcane Power and the damage type to Arcane.',
 			effect: {
 				'cost-arcane-power': 60,
@@ -6564,7 +6555,7 @@ var activeSkills = {
 		},
 		'meteor~e': {
 			name: 'Meteor - Liquefy',
-			desc: 'Summon an immense Meteor that plummets from the sky, causing 200% weapon damage as Fire to all enemies it crashes into. The ground it hits is scorched with molten fire that deals 60% weapon damage as Fire over 3 seconds.',
+			desc: 'Summon an immense Meteor that plummets from the sky, causing 260% weapon damage as Fire to all enemies it crashes into. The ground it hits is scorched with molten fire that deals 60% weapon damage as Fire over 3 seconds.',
 			rune: 'If the initial impact of the Meteor causes a Critical Hit, the molten fire duration is increased to 8 seconds.',
 			effect: {
 				'cost-arcane-power': 60,
@@ -6742,7 +6733,7 @@ var activeSkills = {
 		'archon~e': {
 			name: 'Archon - Arcane Destruction',
 			desc: 'Transform into a being of pure Arcane energy for 15 seconds. While in Archon form, your normal abilities are replaced by powerful Archon abilities, and your Armor and resistances are increased by 40%. Every enemy killed while in Archon form adds 1 second to the duration of Archon.',
-			rune: 'An explosion erupts around you when you transform, causing 450% weapon damage as Arcane to all enemies within 15 yards.',
+			rune: 'An explosion erupts around you when you transform, causing 1600% weapon damage as Arcane to all enemies within 15 yards.',
 			effect: {
 				'cost-arcane-power': 25,
 				'cooldown': 120,
@@ -6965,9 +6956,15 @@ td['chance-immobilize'] = 'VVV% chance to Immobilize on Hit';
 td['chance-knockback'] = 'VVV% chance to Knockback on Hit';
 td['chance-slow'] = 'VVV% chance to Slow on Hit';
 td['chance-stun'] = 'VVV% chance to Stun on Hit';
+td['chance-whirlwind'] = 'Chance to occasionally Whirlwind furioulsy.';
+td['chance-ball-energy'] = 'Chance to hurt a ball of pure energy when attacking.';
+td['chance-skeleton'] = 'Summons a skeleton when attacked.';
+td['chance-reflect-projectiles'] = 'Chance to reflect projectiles when hit.';
+td['effect-poison-cloud'] = 'You are sourrounded by a deadly Posion Cloud.';
 td['plus-movement'] = '+VVV% Movement Speed';
 td['plus-pickup-radius'] = 'Increases Gold and Health pickup by VVV yards';
 td['plus-experience'] = 'Monster kills grant +VVV experience';
+td['plus-experience-percent'] = 'Increased Experience Rewarded per Kill by VVV%';
 td['plus-gold-find'] = '+VVV% Extra Gold from Monsters';
 td['plus-magic-find'] = 'VVV% Better Chance of finding Magic Items';
 td['health-globes'] = 'Health Globes grant +VVV Life';
@@ -7009,6 +7006,7 @@ td['mk-deadly-reach'] = 'Increases Deadly Reach damage by VVV%';
 td['mk-exploding-palm'] = 'Increases Exploding Palm damage by VVV%';
 td['mk-fists-of-thunder'] = 'Increases Fist of Thunder damage by VVV%';
 td['mk-sweeping-wind'] = 'Increases Sweeping Wind damage by VVV%';
+td['mk-sweeping-wind-cost'] = 'Reduces resource cost of Sweeping Wind by VVV Spirit.';
 td['mk-way-of-the-hundred-fists'] = 'Increases Way of the Hundred Fists damage by VVV%';
 td['mk-lashing-tail-kick'] = 'Reduces resource cost of Lashing Tail Kick by VVV Spirit';
 td['mk-tempest-rush'] = 'Increases Critical Hit Chance of Tempest Rush by VVV%';
@@ -7027,6 +7025,7 @@ td['wd-wall-of-zombies'] = 'Reduces cooldown of Wall of Zombies by VVV Seconds';
 td['wd-zombie-charger'] = 'Reduces resource cost of Zombie Charger by VVV Mana';
 td['ap-on-crit'] = 'Critical Hits grant VVV Arcane Power';
 td['ap-max'] = '+VVV Maximum Arcane Power';
+td['ap-regen'] = 'Increases Arcane Power regeneration by VVV per second.';
 td['wz-arcane-torrent'] = 'Reduces resource cost of Arcane Torrent by VVV Arcane Power';
 td['wz-disintegrate'] = 'Reduces resource cost of Disintegrate by VVV Arcane Power';
 td['wz-electrocute'] = 'Increases Electrocute damage by VVV%';
@@ -7114,8 +7113,31 @@ var setBonuses = {
 			}
 		}
 	},
+	'cains-fate': {
+		name: 'Cain\'s Fate',
+		effect: {
+			2: {
+				'plus-attack-speed': 0.02
+			},
+			3: {
+				'plus-magic-find': 0.1,
+				'plus-experience-percent': 0.3
+			}
+		}
+	},
 	'aughilds-treasured': {
 		name: 'Aughild\'s Treasured',
+		effect: {
+			2: {
+				'melee-reduce': 0.02
+			},
+			3: {
+				'range-reduce': 0.02
+			}
+		}
+	},
+	'aughilds-victory': {
+		name: 'Aughild\'s Victory',
 		effect: {
 			2: {
 				'melee-reduce': 0.02
@@ -7134,8 +7156,17 @@ var setBonuses = {
 			}
 		}
 	},
+	'guardians-contingency': {
+		name: 'Guardian\'s Contingency',
+		effect: {
+			2: {
+				'vitality': 110,
+				'life-regen': 130,
+			}
+		}
+	},
 	'immortal-kings-will': {
-		name: 'Immortal Kings\' Will',
+		name: 'Immortal King\'s Will',
 		effect: {
 			2: {
 				'resist-all': 60
@@ -7146,6 +7177,22 @@ var setBonuses = {
 			5: {
 				'fury-max': 5,
 				'fury-spent-life': 5
+			}
+		}
+	},
+	'immortal-kings-legend': {
+		name: 'Immortal King\'s Legend',
+		effect: {
+			2: {
+				'resist-all': 60
+			},
+			3: {
+				'melee-reduce': 0.04
+			},
+			5: {
+				'fury-max': 5,
+				'fury-spent-life': 5,
+				'generate-fury': 2
 			}
 		}
 	},
@@ -7163,8 +7210,33 @@ var setBonuses = {
 			}
 		}
 	},
+	'natalyas-solace': {
+		name: 'Natalya\'s Solace',
+		effect: {
+			2: {
+				'critical-hit': 0.07,
+			},
+			3: {
+				'dexterity': 130,
+			},
+			4: {
+				'max-discipline': 20
+			}
+		}
+	},
 	'sages-wisdom': {
 		name: 'Sage\'s Wisdom',
+		effect: {
+			2: {
+				'strength': 35,
+				'dexterity': 35,
+				'intelligence': 35,
+				'vitality': 35,
+			}
+		}
+	},
+	'sages-plight': {
+		name: 'Sage\'s Plight',
 		effect: {
 			2: {
 				'strength': 35,
@@ -7188,6 +7260,21 @@ var setBonuses = {
 			}
 		}
 	},
+	'tal-rashas-sacrifice': {
+		name: 'Tal Rasha\'s Sacrifice',
+		effect: {
+			2: {
+				'plus-fire-damage': 0.03
+			},
+			3: {
+				'plus-lightning-damage': 0.03
+			},
+			4: {
+				'plus-cold-damage': 0.03,
+				'ap-regen': 2
+			}
+		}
+	},
 	'borns-aegis': {
 		name: 'Born\'s Aegis',
 		effect: {
@@ -7197,8 +7284,29 @@ var setBonuses = {
 			}
 		}
 	},
+	'borns-defiance': {
+		name: 'Born\'s Defiance',
+		effect: {
+			2: {
+				'plus-life': 0.02,
+				'plus-experience': 20
+			}
+		}
+	},
 	'ashearas-bindings': {
 		name: 'Asheara\'s Bindings',
+		effect: {
+			2: {
+				'resist-all': 30
+			},
+			3: {
+				'life-steal': 0.025,
+				'thorns': 300
+			}
+		}
+	},
+	'ashearas-uniform': {
+		name: 'Asheara\'s Uniform',
 		effect: {
 			2: {
 				'resist-all': 30
@@ -7223,6 +7331,21 @@ var setBonuses = {
 			}
 		}
 	},
+	'demons-skin': {
+		name: 'Demon\'s Skin',
+		effect: {
+			2: {
+				'thorns': 999
+			},
+			3: {
+				'chance-fear': 0.011
+			},
+			4: {
+				'demon-damage': 0.03,
+				'chance-reflect-projectiles': true
+			}
+		}
+	},
 	'blackthornes-regalia': {
 		name: 'Blackthorne\'s Regalia',
 		effect: {
@@ -7238,6 +7361,22 @@ var setBonuses = {
 			}
 		}
 	},
+	'blackthornes-armor': {
+		name: 'Blackthorne\'s ReArmorgalia',
+		effect: {
+			2: {
+				'vitality': 100
+			}, 
+			3: {
+				'elite-damage': 0.06
+			},
+			4: {
+				'plus-gold-find': 0.15,
+				'plus-magic-find': 0.15,
+				'elite-damage': 0.07
+			}
+		}
+	},
 	'innas-majesty': {
 		name: 'Inna\'s Majesty',
 		effect: {
@@ -7245,10 +7384,25 @@ var setBonuses = {
 				'dexterity': 130
 			},
 			3: {
-				'spirit-regen': 0.0033
+				'spirit-regen': 0.33
 			},
 			4: {
 				'spirit-spent-life': 10
+			}
+		}
+	},
+	'innas-grandeur': {
+		name: 'Inna\'s Grandeur',
+		effect: {
+			2: {
+				'dexterity': 130
+			},
+			3: {
+				'spirit-regen': 0.33
+			},
+			4: {
+				'spirit-spent-life': 10,
+				'mk-sweeping-wind-cost': 70
 			}
 		}
 	},
@@ -7266,8 +7420,34 @@ var setBonuses = {
 			}
 		}
 	},
+	'zunimassas-whispers': {
+		name: 'Zunimassa\'s Whispers',
+		effect: {
+			2: {
+				'intelligence': 130
+			},
+			3: {
+				'resist-all': 55
+			},
+			4: {
+				'mana-kill': 10,
+				'mana-regen': 20
+			}
+		}
+	},
 	'captain-crimsons-attire': {
 		name: 'Captain Crimson\'s Attire',
+		effect: {
+			2: {
+				'life-regen': 20
+			},
+			3: {
+				'resist-all': 20
+			}
+		}
+	},
+	'captain-crimsons-finery': {
+		name: 'Captain Crimson\'s Finery',
 		effect: {
 			2: {
 				'life-regen': 20
@@ -7286,6 +7466,15 @@ var setBonuses = {
 			}
 		}
 	},
+	'endless-path': {
+		name: 'Endless Path',
+		effect: {
+			2: {
+				'vitality': 100,
+				'critical-hit-damage': 0.5
+			}
+		}
+	},
 	'legacy-of-nighttime-whispers': {
 		name: 'Legacy of Nighttime Whispers',
 		effect: {
@@ -7295,12 +7484,124 @@ var setBonuses = {
 			}
 		}
 	},
+	'legacy-of-wicked-dreams': {
+		name: 'Legacy of Wicked Dreams',
+		effect: {
+			2: {
+				'plus-gold-find': 0.15,
+				'plus-magic-find': 0.15,
+				'chance-skeleton': true
+			}
+		}
+	},
 	'hallowed-armaments': {
 		name: 'Hallowed Armaments',
 		effect: {
 			2: {
 				'resist-all': 40,
 				'plus-attack-speed': 0.05
+			}
+		}
+	},
+	'hallowed-defenders': {
+		name: 'Hallowed Defenders',
+		effect: {
+			2: {
+				'resist-all': 40,
+				'plus-attack-speed': 0.05
+			}
+		}
+	},
+	'bul-kathoss-glory': {
+		name: 'Bul-Kathos\'s Glory',
+		effect: {
+			2: {
+				'strength': 130, 
+				'fury-max': 5,
+				'chance-whirlwind': true
+			}
+		}
+	},
+	'bul-kathoss-children': {
+		name: 'Bul-Kathos\'s Children',
+		effect: {
+			2: {
+				'strength': 100,
+				'fury-max': 5
+			}
+		}
+	},
+	'danettas-creed': {
+		name: 'Danetta\'s Creed',
+		effect: {
+			2: {
+				'dexterity': 130,
+				'elite-damage': 0.03
+			}
+		}
+	},
+	'danettas-oath': {
+		name: 'Danetta\'s Oath',
+		effect: {
+			2: {
+				'dexterity': 130,
+				'elite-damage': 0.03
+			}
+		}
+	},
+	'chantodos-legacy': {
+		name: 'Chantodo\'s Legacy',
+		effect: {
+			2: {
+				'resist-all': 60,
+				'life-regen': 245
+			}
+		}
+	},
+	'chantodos-return': {
+		name: 'Chantodo\'s Return',
+		effect: {
+			2: {
+				'intelligence': 130,
+				'elite-reduce': 0.07
+			}
+		}
+	},
+	'shenlongs-defense': {
+		name: 'Shenlong\'s Defense',
+		effect: {
+			2: {
+				'dexterity': 130,
+				'spirit-regen': 0.33
+			}
+		}
+	},
+	'shenlongs-noble-path': {
+		name: 'Shenlong\'s Noble Path',
+		effect: {
+			2: {
+				'dexterity': 130,
+				'spirit-regen': 0.33,
+				'chance-ball-energy': true
+			}
+		}
+	},
+	'manajumas-ritual': {
+		name: 'Manajuma\'s Ritual',
+		effect: {
+			2: {
+				'intelligence': 130,
+				'mana-kill': 5
+			}
+		}
+	},
+	'manajumas-ornaments': {
+		name: 'Manajuma\'s Ornaments',
+		effect: {
+			2: {
+				'intelligence': 130,
+				'mana-kill': 5,
+				'effect-poison-cloud': true
 			}
 		}
 	}

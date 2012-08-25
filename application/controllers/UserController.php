@@ -7,6 +7,12 @@
  **/
 class UserController extends Epic_Controller_Action
 {
+	public function editAction() {
+		$profile = D3Up_Auth::getInstance()->getProfile();
+		$form = $this->view->form = $profile->getEditForm();
+		$this->_handleForm($form);
+		// var_dump($profile); exit;
+	}
 	public function indexAction() {
 		
 	}
@@ -21,18 +27,18 @@ class UserController extends Epic_Controller_Action
 		} else {
 			$this->_handleForm($form);			
 		}
-		if(Epic_Auth::getInstance()->getProfile()) {
+		if(D3Up_Auth::getInstance()->getProfile()) {
 			$this->_redirect("/");
 		}
 	}
 	public function logoutAction() {
-		Epic_Auth::getInstance()->clearIdentity();
+		D3Up_Auth::getInstance()->clearIdentity();
 		$this->_redirect("/");
 	}
 	public function registerAction() {
 		$form = $this->view->form = new D3Up_Auth_Form_Register();
 		$this->_handleForm($form);		
-		if(Epic_Auth::getInstance()->getProfile()) {
+		if(D3Up_Auth::getInstance()->getProfile()) {
 			$this->_redirect("/");
 		}
 	}
@@ -40,7 +46,7 @@ class UserController extends Epic_Controller_Action
 		
 	}
 	public function buildsAction() {
-		$profile = Epic_Auth::getInstance()->getProfile();
+		$profile = D3Up_Auth::getInstance()->getProfile();
 		if($profile) {
 			$builds = Epic_Mongo::db('build')->fetchAll(array('_createdBy' => $profile->createReference()));			
 			$paginator = Zend_Paginator::factory($builds);
@@ -51,7 +57,7 @@ class UserController extends Epic_Controller_Action
 		}
 	}
 	public function itemsAction() {
-		$profile = Epic_Auth::getInstance()->getProfile();
+		$profile = D3Up_Auth::getInstance()->getProfile();
 		if($profile) {
 			$query = array(
 				"_createdBy" => $profile->createReference(),
@@ -110,7 +116,7 @@ class UserController extends Epic_Controller_Action
 		}
 	}
 	public function shopAction() {
-		$this->view->profile = $profile = Epic_Auth::getInstance()->getProfile();
+		$this->view->profile = $profile = D3Up_Auth::getInstance()->getProfile();
 		if($profile) {
 			$profile->_lastSeen = time();
 			$profile->save();
@@ -284,7 +290,7 @@ class UserController extends Epic_Controller_Action
 	}
 	public function reportsAction() {
 		// phpinfo(); exit;
-		$this->view->profile = $profile = Epic_Auth::getInstance()->getProfile();
+		$this->view->profile = $profile = D3Up_Auth::getInstance()->getProfile();
 		$query = array(
 			'seller' => $profile->createReference(),
 			'soldFor' => array('$exists' => true),
@@ -323,7 +329,7 @@ class UserController extends Epic_Controller_Action
 		}
 	}
 	public function changePasswordAction() {
-		$user = Epic_Auth::getInstance()->getProfile();
+		$user = D3Up_Auth::getInstance()->getProfile();
 		$form = $this->view->form = new Epic_Auth_Form_ChangePassword(array('user' => $user));
 		$id = $this->getRequest()->getParam('id');
 		$hash = $this->getRequest()->getParam('key');
@@ -347,9 +353,18 @@ class UserController extends Epic_Controller_Action
 			$this->_handleForm($form);			
 		}
 	}
-	public function editAction() {
-		$user = Epic_Auth::getInstance()->getProfile();
-		$this->view->form = $form = new D3Up_Form_User_Profile(array('user' => $user));
-		$this->_handleForm($form);
+	public function guidesAction() {
+		$this->view->profile = $profile = D3Up_Auth::getInstance()->getProfile();
+		if($profile) {
+			$query = array(
+				'author' => $profile->createReference(),
+			);
+			$guides = Epic_Mongo::db('guide')->fetchAll($query);
+			$paginator = Zend_Paginator::factory($guides);
+			$paginator->setCurrentPageNumber($this->getRequest()->getParam('page', 1))->setItemCountPerPage(15)->setPageRange(3);
+			$this->view->guides = $paginator;
+		} else {
+			$this->_redirect('/user/login');
+		}
 	}
 } // END class UserController extends Epic_Controller_Action

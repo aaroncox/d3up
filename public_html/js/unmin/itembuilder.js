@@ -9,7 +9,7 @@ var itemBuilder = {
 		stats: {},								// Storage for Stats
 		sockets: {},							// Storage for what's in the Sockets
 		socketCount: 0,						// Storage for the # of Sockets
-		setBonus: null,						// Storage for which set this item is part of
+		setBonus: null						// Storage for which set this item is part of
 	},
 	headerElements: [],					// Any additional elements to append to the header					
 	footerElements: [],					// Any additional elements to append to the footer
@@ -28,7 +28,7 @@ var itemBuilder = {
 		"none": ["amulet", "ring", "mojo", "source", "quiver"],
 		"armor": ["belt","boots","bracers","chest","cloak","gloves","helm","pants","mighty-belt","shoulders","spirit-stone","voodoo-mask","wizard-hat"],
 		"weapon": ["2h-mace","2h-axe","bow","diabo","crossbow","2h-mighty","polearm","staff","2h-sword","axe","ceremonial-knife","hand-crossbow","dagger","fist-weapon","mace","mighty-weapon","spear","sword","wand"],	
-		"shield": ["shield"],
+		"shield": ["shield"]
 	},
 	// Listing of Qualities
 	qualityMap: ['Unspecified', 'Inferior', 'Normal', 'Superior', 'Magic', 'Rare', 'Legendary', 'Set'],
@@ -98,10 +98,16 @@ var itemBuilder = {
 		'chance-knockback': 'VVV% chance to Knockback on Hit',
 		'chance-slow': 'VVV% chance to Slow on Hit',
 		'chance-stun': 'VVV% chance to Stun on Hit',
+		'chance-whirlwind': 'Chance to occasionally Whirlwind furioulsy.',
+		'chance-ball-energy': 'Chance to hurt a ball of pure energy when attacking.',
+		'chance-skeleton': 'Summons a skeleton when attacked.',
+		'chance-reflect-projectiles': 'Chance to reflect projectiles when hit.',
+		'effect-poison-cloud': 'You are sourrounded by a deadly Posion Cloud.',
 		// Misc
 		'plus-movement': '+VVV% Movement Speed',
 		'plus-pickup-radius': 'Increases Gold and Health pickup by VVV yards',
 		'plus-experience': 'Monster kills grant +VVV experience',
+		'plus-experience-percent': 'Increased Experience Rewarded per Kill by VVV%',
 		'plus-gold-find': '+VVV% Extra Gold from Monsters',
 		'plus-magic-find': 'VVV% Better Chance of finding Magic Items',
 		'health-globes': 'Health Globes grant +VVV Life',
@@ -145,6 +151,7 @@ var itemBuilder = {
 		'mk-exploding-palm': 'Increases Exploding Palm damage by VVV%',
 		'mk-fists-of-thunder': 'Increases Fist of Thunder damage by VVV%',
 		'mk-sweeping-wind': 'Increases Sweeping Wind damage by VVV%',
+		'mk-sweeping-wind-cost': 'Reduces resource cost of Sweeping Wind by VVV Spirit.',
 		'mk-way-of-the-hundred-fists': 'Increases Way of the Hundred Fists damage by VVV%',
 		'mk-lashing-tail-kick': 'Reduces resource cost of Lashing Tail Kick by VVV Spirit',
 		'mk-tempest-rush': 'Increases Critical Hit Chance of Tempest Rush by VVV%',
@@ -166,6 +173,7 @@ var itemBuilder = {
 		// Wizard
 		'ap-on-crit': 'Critical Hits grant VVV Arcane Power',
 		'ap-max': '+VVV Maximum Arcane Power',
+		'ap-regen': 'Increases Arcane Power regeneration by VVV per second.',
 		'wz-arcane-torrent': 'Reduces resource cost of Arcane Torrent by VVV Arcane Power',
 		'wz-disintegrate': 'Reduces resource cost of Disintegrate by VVV Arcane Power',
 		'wz-electrocute': 'Increases Electrocute damage by VVV%',
@@ -178,7 +186,63 @@ var itemBuilder = {
 		'wz-blizzard': 'Increases duration of Blizzard by VVV Seconds',
 		'wz-meteor': 'Reduces resource cost of Meteor by VVV Arcane Power',
 		'wz-shock-pulse': 'Increases Shock Pulse damage by VVV%',
-		'wz-spectral-blade': 'Increases Spectral Blade damage by VVV%'
+		'wz-spectral-blade': 'Increases Spectral Blade damage by VVV%',
+		// Legendaries
+		'pig-sticker': 'Squeal!',
+		'leg-blood-magic-blade': 'Blood oozes from you.',
+		'leg-wizardspike': '20% chance to hurl a frozen orb when attacking.',
+		'leg-the-gidbinn': 'Chance to summon a Fetish when attacking.',
+		'leg-last-breath': 'Slain enemies rest in pieces.',
+		'leg-skycutter': 'Chance to summon angelic assistance when attacking.',
+		'leg-sever': 'Slain enemies rest in pieces.',
+		'leg-azurewrath': 'This weapon will forcefully repel undead enemies.',
+		'leg-scourge': '20% chance to explode with demonic fury when attacking.',
+		'leg-maximus': 'Chance to summon a Demonic Slave when attacking.',
+		'leg-genzaniku': 'Chance to summon a ghostly Fallen Champion when attacking.',
+		'leg-the-butchers-sickle': '20% chance to drag enemies to you when attacking.',
+		'leg-the-burning-axe-of-sankis': 'Chance to fight through the pain when enemies hit you.',
+		'leg-sky-splitter': '10% chance to Smite enemies when you hit them.',
+		'leg-butchers-carver': 'The Butcher still inhabits his carver.',
+		'leg-fire-brand': '25% chance to cast a fireball when attacking.',
+		'leg-odyn-son': '20% chance to Chain Lightning enemies when you hit them.',
+		'leg-earthshatter': '20% chance to cause the ground to shudder when attacking.',
+		'leg-boneshatter': 'Slain enemies rest in pieces.',
+		'leg-cataclysm': '25% chance to sunder the ground your enemies walk on when you attack.',
+		'leg-schaeferss-hammer': '25% chance to be protected by Lightning when you are hit.',
+		'leg-vigilance': 'Chance to cast Inner Sanctuary when you are hit.',
+		'leg-the-ravens-wing': 'Ravens flock to your side.',
+		'leg-cluckeye': '25% chance to cluck when attacking.',
+		'leg-demon-machine': '35% chance to shoot explosive bolts when attacking.',
+		'leg-buriza-do-kyanon': '40% chance for ranged projectiles to pierce enemies.',
+		'leg-pus-spitter': '25% chance to lob an acid blob when attacking.',
+		'leg-hellrack': 'Chance to root enemies to the ground when you hit them.',
+		'leg-calamity': '20% chance to target enemies with Marked for Death when you hit them.',
+		'leg-fjord-cutter': '20% chance to be surrounded by a Chilling Aura when attacking.',
+		'leg-the-paddle': 'Slap!',
+		'leg-flying-dragon': 'Chance to double your attack speed when attacking.',
+		'leg-maloths-focus': 'Enemies occasionally flee at the sight of this staff.',
+		'leg-the-tormentor': 'Chance to charm enemies when you hit them.',
+		'leg-sloraks-madness': 'This wand finds your death humorous.',
+		'leg-wall-of-bone': '20% chance to be protected by a shield of bones when you are hit.',
+		'leg-lidless-wall': 'You have a chance to be shielded when hit by enemies.',
+		'leg-andariels-visage': '20% chance to cast a Poison Nova when you are hit.',
+		'leg-fire-walkers': 'Burn the ground you walk on.',
+		'leg-goldskin': 'Chance for enemies to drop gold when you hit them.',
+		'leg-pox-faulds': 'These pants occasionally make you stink.',
+		'leg-death-watch-mantle': '15% chance to explode with knives when hit by enemies.',
+		'leg-the-grin-reaper': 'Chance to summon horrific Mimics when attacking.',
+		'leg-storm-crow': '20% chance to cast a fiery ball when attacking.',
+		'leg-thunder-gods-vigor': '25% chance to cause Shock Pulse to erupt from your enemies when you hit them.',
+		'leg-moonlight-ward': '25% chance to be surrounded by balls of Arcane Power when attacking.',
+		'leg-puzzle-ring': 'This ring sometimes calls forth a Treasure Goblin when you are hit.',
+		'leg-bul-kathoss-wedding-band': 'You drain life from enemies around you.',
+		'leg-band-of-hollow-whispers': 'This ring occasionally haunts nearby enemies.',
+		'leg-bul-kathoss-warrior-blood': 'You occasionally Whirlwind furiously.',
+		'leg-shenlongs-relentless-assault': 'Chance to hurl a ball of pure energy when attacking.',
+		'leg-manajumas-gory-fetch': 'You are surrounded by a deadly Poison Cloud.',
+		'leg-litany-of-the-undaunted': 'This ring sometimes summons a Skeleton when you attack.',
+		'leg-demons-flight': 'Chance to reflect projectiles when you are hit by enemies.',
+		'leg-the-murlocket': 'Call forth a creature from the depths.',
 	},
 	// Set the Name input 
 	setNameInput: function(element) {
@@ -244,7 +308,13 @@ var itemBuilder = {
 				select = $("<select id='setBonus' name='setBonus'>");
 		dt.html("Which set is this a part of?");
 		select.append("<option value=''>Select a Set</option>");
-		_.each(setBonuses, function(v,k) {
+		var keys = Object.keys(setBonuses),
+		    i, len = keys.length;
+		keys.sort();
+		for (i = 0; i < len; i++)
+		{
+			k = keys[i];
+			v = setBonuses[k];
 			var option = $("<option>");
 			option.val(k);
 			option.html(v.name);
@@ -252,7 +322,7 @@ var itemBuilder = {
 				option.attr("selected", "selected");
 			}
 			select.append(option);
-		}, this);
+		}
 		select.bind('change', function() {
 			builder.item.setBonus = $(this).val();
 			builder.updatePreview();
@@ -270,10 +340,10 @@ var itemBuilder = {
 				builder = this;
 		selector.bind('change', function() {
 			builder.item.type = $(this).val();
-			builder.item.typeName = $(this).find(":selected").text();
+			builder.item.typeName = $(this).selectedOption();//.text();
 			_.each(builder.itemClass, function(v,k) {
 				if(_.indexOf(v, $(this).val()) >= 0) {
-					builder.item.class = k;
+					builder.item.itemClass = k;
 					builder.initPreview();	// Not sure why... but I have to rebuild it
 					builder.updatePreview();				
 				}
@@ -318,6 +388,9 @@ var itemBuilder = {
 	},
 	// Update the Value of a Stat
 	updateStat: function(name, value) {
+		if(!this.item.stats) {
+			this.item.stats = {};
+		}
 		this.item.stats[name] = parseFloat(value);
 	},
 	// Remove a specific stat by name
@@ -330,6 +403,9 @@ var itemBuilder = {
 	},
 	// Add an Attribute to this.item.attrs
 	addAttribute: function(name) {
+		if(!this.item.attrs) {
+			this.item.attrs = {};
+		}
 		if(!this.item.attrs[name]) {
 			this.item.attrs[name] = 0;
 		}
@@ -353,9 +429,9 @@ var itemBuilder = {
 		var container = this.itemPreview;
 		this.preview.header = $("<div class='top'><p></p></div>");
 		this.preview.body = $("<div class='item'>");
-		this.preview.itemMeta = $("<p class='item-type'>"),
-		this.preview.itemQuality = $("<span class='quality'>"),
-		this.preview.itemType = $("<span class='type'>"),
+		this.preview.itemMeta = $("<p class='item-type'>");
+		this.preview.itemQuality = $("<span class='quality'>");
+		this.preview.itemType = $("<span class='type'>");
 		this.preview.statsPrimary = $("<p class='stats stats-primary'>");
 		this.preview.statsPrimaryValue = $("<span class='big-stat'>");
 		this.preview.statsPrimaryHelper = $("<span class='stat-helper'>");
@@ -400,17 +476,17 @@ var itemBuilder = {
 		this.preview.header.find("p").html(this.item.name);
 		// Update the Quality
 		if(this.item.quality) {
-			this.preview.header.removeClass("quality-1 quality-2 quality-3 quality-4 quality-5 quality-6 quality-7")
+			this.preview.header.removeClass("quality-1 quality-2 quality-3 quality-4 quality-5 quality-6 quality-7");
 			this.preview.header.addClass("quality-" + this.item.quality);
-			this.preview.itemMeta.removeClass("quality-1 quality-2 quality-3 quality-4 quality-5 quality-6 quality-7")
+			this.preview.itemMeta.removeClass("quality-1 quality-2 quality-3 quality-4 quality-5 quality-6 quality-7");
 			this.preview.itemMeta.addClass("quality-" + this.item.quality);
 			this.preview.itemQuality.html(builder.qualityMap[this.item.quality]);
-			this.preview.setBonus.removeClass("quality-1 quality-2 quality-3 quality-4 quality-5 quality-6 quality-7")
+			this.preview.setBonus.removeClass("quality-1 quality-2 quality-3 quality-4 quality-5 quality-6 quality-7");
 			this.preview.setBonus.addClass("quality-" + this.item.quality);
 		}
 		// Update the Type
 		if(this.item.type) {
-			this.item.typeName = this.itemTypeSelect.find(":selected").text();
+			this.item.typeName = this.itemTypeSelect.selectedOption().text();
 			this.preview.itemType.html(this.item.typeName);
 		}
 		// No sockets? Empty the UL
@@ -420,6 +496,7 @@ var itemBuilder = {
 		if(this.item.setBonus) {
 			this.preview.setBonus.empty();
 			var bonusData = this.getBonusHtml(this.item.setBonus);
+			// console.log(bonusData.list);
 			this.preview.setBonus.append(
 				bonusData.name,
 				bonusData.list
@@ -438,7 +515,7 @@ var itemBuilder = {
 						idx = 1;
 					}
 					// Is this a weapon?
-					if(this.item.class == "weapon") {
+					if(this.item.itemClass == "weapon") {
 						idx = 2;
 					} 
 					option.val(k);
@@ -453,17 +530,21 @@ var itemBuilder = {
 		}
 		// Update the Attributes if nessicary
 		_.each(this.item.attrs, function(v, k) {
-			if(!this.preview.attrs.find("input[name=" + k + "]").length) {
+			if(!this.preview.attrs.find("#input-" + k).length) {
 				var container = $("<span>"),
 						input = "<input type='text' value='" + v + "' name='" + k + "' tabindex='100'>", 
+						hidden = "<input type='hidden' value='true' name='" + k + "' tabindex='100'>",
 						helper = builder.skillText[k];
-				helper = helper.replace(/VVV/, input);					
+				if(helper.search("VVV") >= 0) {
+					helper = helper.replace(/VVV/, input);										
+				} else {
+					helper = helper + hidden;
+				}
 				container.append(helper);
 				if(_.indexOf(['minmax-damage', 'arcane-damage', 'cold-damage', 'fire-damage', 'holy-damage', 'lightning-damage', 'poison-damage'], k) >= 0) {
 					if(v == 0) {
 						container.find("input").val("0-0").addClass("minmax");
 					} else {
-						// console.log(v);
 						container.find("input").val(v.min + "-" + v.max).addClass("minmax");
 					}
 				}
@@ -474,7 +555,7 @@ var itemBuilder = {
 			}
 		}, this);
 		// Add stats relevant to the Item's Class
-		switch(builder.item.class) {
+		switch(builder.item.itemClass) {
 			case "none":
 				builder.preview.statsPrimary.empty();
 				builder.preview.statsRange.empty();
@@ -483,7 +564,7 @@ var itemBuilder = {
 			case "armor":
 				if(!builder.preview.statsPrimary.find("input[name=stat_armor]").length || builder.preview.statsPercent.find("input[name=block-chance]").length) {
 					var armor = $("<input name='stat_armor' tabindex='50'>");
-					if(builder.item.stats.armor) {
+					if(builder.item.stats && builder.item.stats.armor) {
 						armor.val(builder.item.stats.armor);
 					}
 					armor.keyup(function() {
@@ -539,29 +620,29 @@ var itemBuilder = {
 				break;
 			case "shield":
 				if(!builder.preview.statsPercent.find("input[name=stat_block-chance]").length) {
-					var armor = $("<input name='stat_armor' tabindex='50'>"),
-							min = $("<input name='stat_block-min' tabindex='50'>"),
-							max = $("<input name='stat_block-max' tabindex='50'>"),
-							chance = $("<input name='stat_block-chance' tabindex='50'>");
-					armor.keyup(function() {
+					var tarmor = $("<input name='stat_armor' tabindex='50'>"),
+							tmin = $("<input name='stat_block-min' tabindex='50'>"),
+							tmax = $("<input name='stat_block-max' tabindex='50'>"),
+							tchance = $("<input name='stat_block-chance' tabindex='50'>");
+					tarmor.keyup(function() {
 						builder.updateStat("armor", $(this).val());
 					});
-					min.keyup(function() {
+					tmin.keyup(function() {
 						builder.updateStat("block-min", $(this).val());
 					});
-					max.keyup(function() {
+					tmax.keyup(function() {
 						builder.updateStat("block-max", $(this).val());
 					});
-					chance.keyup(function() {
+					tchance.keyup(function() {
 						builder.updateStat("block-chance", $(this).val());
 					});
-					builder.preview.statsPrimaryValue.empty().append(armor);
+					builder.preview.statsPrimaryValue.empty().append(tarmor);
 					builder.preview.statsPrimaryHelper.html("Armor");
 					builder.preview.statsPrimary.empty().append(this.preview.statsPrimaryValue, this.preview.statsPrimaryHelper);
-					builder.preview.statsRangeValue.empty().append(min, "-", max);
+					builder.preview.statsRangeValue.empty().append(tmin, "-", tmax);
 					builder.preview.statsRangeHelper.html("Block Value");
 					builder.preview.statsRange.empty().append(this.preview.statsRangeValue, this.preview.statsRangeHelper);
-					builder.preview.statsPercentValue.empty().append(chance);
+					builder.preview.statsPercentValue.empty().append(tchance);
 					builder.preview.statsPercentHelper.html("Block Chance");
 					builder.preview.statsPercent.empty().append(this.preview.statsPercentValue, this.preview.statsPercentHelper);
 				}
@@ -570,11 +651,13 @@ var itemBuilder = {
 		// Look through the attribute values to see if we need to remove any (deselected)
 		this.preview.attrs.find("li").each(function() {
 			// Check to see if we're in the attributes
-			var nameCheck = $(this).find("input").attr("name").replace("-max", "").replace("-min", "");
-			// console.log(builder.attrsSelected, nameCheck);
+			var nameCheck = $(this).find("input").attr("name");
+			if(!nameCheck) {
+				nameCheck = $(this).attr("id").replace("input-", "");
+			}
 			if(_.indexOf(builder.attrsSelected, nameCheck) < 0) {
 				$(this).remove();
-			}
+			}				
 		});
 	},
 	// Create the Item Preview
@@ -630,7 +713,7 @@ var itemBuilder = {
 					var amountContainer = $("<div class='data-count'>"),
 							amountLabel = $("<p>").html("(" + k + ") Set:");
 							amountBonus = $("<ul class='amountBonus'>");
-					amountContainer.attr("data-count", k)
+					amountContainer.attr("data-count", k);
 					_.each(v, function(value, stat) {
 						var li = $("<li>"),
 								attr = this.skillText[stat];
@@ -643,8 +726,8 @@ var itemBuilder = {
 							li.html(attr);
 							amountBonus.append(li);							
 						}
-					}, this)
-					amountContainer.append(amountLabel,amountBonus)
+					}, this);
+					amountContainer.append(amountLabel,amountBonus);
 					bonuses.append(amountContainer);						
 				}
 			}, this);				
@@ -654,4 +737,4 @@ var itemBuilder = {
 			list: bonuses
 		};
 	}
-}
+};

@@ -1,5 +1,4 @@
 <div class="home inline-flow">
-	<?= $this->render("./post/_breadcrumb.phtml") ?>
 	<?= $this->render("./post/types/".$this->post->_type.".phtml") ?>
 	<div id="disqus_thread" class="ui-widget ui-widget-content ui-corner-all" style="margin-top: 20px; padding: 10px"></div>
 	<script type="text/javascript">
@@ -18,5 +17,5 @@
 </div>
 <div class="info inline-flow">
 	<?= $this->render("./post/_updates.phtml")?>
-	<?= $this->render("./post/_sidebar.phtml")?>
+	<?= $this->render("./index/_sidebar.phtml")?>
 </div>

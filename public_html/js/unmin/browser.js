@@ -20,7 +20,7 @@ $(function() {
 				// Get this build's skills
 				var passiveSkills = $("#build-" + selectedBuild + " .build-passives").data('json'), 
 						buildContainer = $("#build-" + selectedBuild),
-						buildItemsContainer = $("#build-" + selectedBuild + " .build-items");
+						buildItemsContainer = $("#build-" + selectedBuild + " .build-items"),
 						buildItems = $("#build-" + selectedBuild + " .build-items a"),
 						heroClass = buildContainer.data('class');
 				// Get this build's stats (into global 'stats' variable)
@@ -113,11 +113,11 @@ $(function() {
 						// diff['mod'].sort();
 						// Display
 						if(Object.keys(diff['mod']).length > 0) {
-							var header = $("<tr/>");
+							var theader = $("<tr/>");
 							$.each(diff['mod'], function(k,v) {
-								header.append($("<th/>").html(k));
+								theader.append($("<th/>").html(k));
 							});
-							table.append(header);
+							table.append(theader);
 							var row = $("<tr/>");								
 							$.each(diff['mod'], function(k,v) {
 								var diffVal = Math.round((changed[k] - current[k]) * 100) / 100;
@@ -145,19 +145,20 @@ $(function() {
 							$("#item-"+itemId).after(newRow[k]);
 							$("#item-"+itemId).addClass('compared-against');
 						} 		
-
+					return false;
 				});
 			}
+			return false;
 		}).css({cursor: 'pointer'});			
-	}
+	};
 	$(".compareThis").bindCompareThis();		
 	$("#buildSelect").chosen({allow_single_deselect: true});
 	$("#itemType").chosen({allow_single_deselect: true});
 	$("#itemType").bind('change', getResults);
 	$("#slotType").chosen({allow_single_deselect: true});
 	$("#slotType").bind('change', getResults);
-	$("#sellMethod").chosen({allow_single_deselect: true});
-	$("#sellMethod").bind('change', getResults);
+	// $("#sellMethod").chosen({allow_single_deselect: true});
+	// $("#sellMethod").bind('change', getResults);
 	var priceTimer = null;
 	$("#maxPrice").keyup(function(){
 	    clearTimeout(priceTimer);
@@ -181,7 +182,7 @@ $(function() {
 					$("#item-pagination a").bind('click', bindPagination);
 					$("#buildSelect").trigger('change');
 					$(".compareThis").bindCompareThis();									
-				}, 0)
+				}, 0);
 			},
 			error: function() {
 				// console.log("error");
@@ -240,9 +241,9 @@ $(function() {
 						$("a[data-json]").each(function() {
 							$(this).bindTooltip();							
 						});
-					}, 0)
+					}, 0);
 				}
 			});
-		}, 0)
+		}, 0);
 	}		
 });

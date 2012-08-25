@@ -76,11 +76,25 @@ class D3Up_Form_Record_Build extends Epic_Form
 			'tabindex' => 15,
 		));
 		
-		// $this->addElement("text", "profileUrl", array(
-		// 	'label' => '(For Importing) Link to the Diablo 3 Profile this is based off of',
-		// 	'description' => 'Example: http://us.battle.net/d3/en/profile/Jesta-1121/hero/1963090',
-		// 	'tabindex' => 20,
-		// ));
+		$this->addElement("text", "level", array(
+			'label' => 'Character Level',
+			'validators' => array(
+				new Zend_Validate_Between(array('min' => 0, 'max' => 60))
+			),
+		));
+
+		$this->addElement("text", "paragon", array(
+			'label' => 'Paragon Level',
+			'validators' => array(
+				new Zend_Validate_Between(array('min' => 0, 'max' => 100))
+			)
+		));
+		
+		$this->addElement("text", "profileUrl", array(
+			'label' => '(For Importing) Link to the Diablo 3 Profile this is based off of',
+			'description' => 'Example: http://us.battle.net/d3/en/profile/Jesta-1121/hero/1963090',
+			'tabindex' => 20,
+		));
 		
 		$this->addElement("checkbox", "private", array(
 			'label' => 'Private?',
@@ -93,11 +107,11 @@ class D3Up_Form_Record_Build extends Epic_Form
 			'label' => 'What class is this build?',
 			'multiOptions' => array(
 				null => '',
-				'wizard' => 'Wizard',
 				'barbarian' => 'Barbarian',
-				'witch-doctor' => 'Witch Doctor',
-				'monk' => 'Monk',
 				'demon-hunter' => 'Demon Hunter',
+				'monk' => 'Monk',
+				'witch-doctor' => 'Witch Doctor',
+				'wizard' => 'Wizard',
 			),
 			'tabindex' => 30,
 		));
@@ -106,7 +120,9 @@ class D3Up_Form_Record_Build extends Epic_Form
 			'name' => $build->name,
 			'description' => $build->description,
 			'private' => $build->private,
-			// 'profileUrl' => $build->profileUrl,
+			'level' => $build->level ?: 60,
+			'paragon' => $build->paragon,
+			'profileUrl' => $build->profileUrl,
 		));
 		
 		if($this->isNewRecord()) {
@@ -128,8 +144,12 @@ class D3Up_Form_Record_Build extends Epic_Form
 			// Set a default GearSet
 			$build->equipment = new D3Up_Mongo_Record_GearSet();
 		}
-		// Set the Quality of the Build
+		// Set the Class of the Build
 		$build->class = $this->class->getValue();
+		// Set the Level
+		$build->level = (int) $this->level->getValue();
+		// Set the Paragon Level
+		$build->paragon = (int) $this->paragon->getValue();
 		// Set the Profile URL
 		// $build->profileUrl = $this->profileUrl->getValue();
 		// Set privacy

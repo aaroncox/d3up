@@ -1,0 +1,28 @@
+Guide Title
+Author / Date
+Statistics / Voting
+
+(Tabbed Interface: Guide / Comments)
+
+Guide
+---
+
+- Abilities: Which (6) abilities does this build use.
+- Passives: Which (3) passives does this build use.
+- Stats to Focus on: A list of stats that you should ensure you are looking for while building this character.
+- Table of Contents: Auto-generated based on the "sections" that the guide creator adds to the guide.
+
+Sections
+---
+
+- Updates: An area for the creator to provide the update status of the guide.
+- Pros & Cons: 2 lists, one for the author to provide the pro's and con's of the build and it's playstyle.
+- Ability Explanation & Usage: Each skill selected will provide a textarea for the author to explain when and how to use this skill.
+- Passive Explanation & Alternatives: Each passive skill selected will provide a textarea for the author to explain why this passive should be used (and list possible alternatives) 
+- Stats to Focus on Explanation: Describe how each stat benefits this build, any minimum values you should aim for, and any other relevant information.
+- Conclusion: Any closing notes!
+
+
+Comments
+---
+Comment interface with some nifty markup

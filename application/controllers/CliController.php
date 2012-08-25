@@ -5,14 +5,8 @@
  * @package default
  * @author Aaron Cox
  **/
-class AdminController extends Epic_Controller_Action
+class CliController extends Epic_Controller_Action
 {
-	public function preDispatch() {
-		$profile = Epic_Auth::getInstance()->getProfile();
-		if(!$profile || $profile->id != 2) {
-			throw new Exception("Access Denied");
-		}
-	}
 	public function updateGearCountsAction() {
 		foreach(Epic_Mongo::db('build')->fetchAll() as $build) {
 			$build->equipmentCount = count($build->equipment);
@@ -70,15 +64,32 @@ class AdminController extends Epic_Controller_Action
 		echo "Done"; exit;
 	}
 	public function resaveItemsAction() {
-		$query = array(
-			'rating' => array('$exists' => false)
-		);
-		foreach(Epic_Mongo::db('item')->fetchAll($query) as $item) {
+		$start = microtime(true);
+		$i = 0;
+		$items = Epic_Mongo::db('item')->fetchAll();
+		$sales = Epic_Mongo::db('sale')->fetchAll();
+		$adapter = new Zend_ProgressBar_Adapter_Console();
+		$bar = new Zend_ProgressBar($adapter, 0, count($items) + count($sales));
+		foreach($items as $item) {
+			$i++;
+			$bar->update($i);		
 			$item->save();
 		}
-		foreach(Epic_Mongo::db('sale')->fetchAll($query) as $sale) {
+		foreach($sales as $sale) {
+			$i++;
+			$bar->update($i);		
 			$sale->item->save();
 		}
-		echo "Resaved all items"; exit;
+		$end = microtime(true);
+		$diff = $end - $start;
+		var_dump($start, $end, $diff." sec");
+		
+		echo "Resaved ".count($items)." items and ".count($sales)." sales items"; exit;
+	}
+	public function resaveUsersAction() {
+		foreach(Epic_Mongo::db('profile')->fetchAll() as $user) {
+			$user->save();
+		}
+		echo "Resaved all users"; exit;
 	}
 } // END class AdminController extends Epic_Controller_Action

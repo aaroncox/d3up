@@ -78,7 +78,9 @@
 <?= $this->record->name?> (<?= $p->_qualityMap[$this->record->quality] ?> <?= $p->prettyDisplay($this->record->type) ?>)
 <? if(isset($this->record->stats['dps'])): ?>
 <?= $this->record->stats['dps'] ?> dps
+<? if($this->record->stats['damage']): ?>
 <?= implode("-", $this->record->stats['damage']->export()) ?> damage
+<? endif; ?>
 <?= $this->record->stats['speed'] ?> attack speed
 <? elseif(isset($this->record->stats['armor'])): ?>
 <?= $this->record->stats['armor']?> Armor
@@ -89,7 +91,7 @@
 <? endif; ?>
 <? if($this->record->attrs): ?>
 <? foreach($this->record->attrs as $k => $v): ?>
-<?= $p->prettyDisplay($k, $v) ?> 
+<?= strip_tags($p->prettyDisplay($k, $v)) ?> 
 <? endforeach ?>
 <? endif; ?>
 <? if($this->record->sockets): ?>
@@ -106,7 +108,6 @@
 		</div>
 	</div>
 </div>
-<script type="text/javascript" src="/js/skills.js"></script>
 <script type="text/javascript">
 	$(function() {
 		$(".item-tools").tabs();

@@ -1,6 +1,5 @@
 <div class='ui-widget ui-widget-content ui-corner-all'>
 	<h3>Site Updates</h3>
-	<p>Patch notes, updates, news...</p>
 	<? $posts = Epic_Mongo::db('update')->fetchAll(array(), array("_created" => -1), 5)?>
 	<ul style="padding: 10px 0; margin: 0; list-style: none">
 		<? foreach($posts as $p): ?>

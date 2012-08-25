@@ -38,7 +38,7 @@ class D3Up_Auth_Form_Register extends Epic_Auth_Form_Register
 	public function process($data) {
 		$this->password2->setRequired(true)->setValidators(array(new Epic_Auth_Validator_IdenticalValidator($data['password1'])));
 		if($this->isValid($data)) {
-			$user = Epic_Mongo::newDoc('user');
+			$user = Epic_Mongo::newDoc('profile');
 			$user->username = strtolower($this->username->getValue());
 			$user->password = md5($this->password1->getValue());
 			$user->email = $this->email->getValue();

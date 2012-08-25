@@ -27,29 +27,29 @@ var passives = {
 			'effect': {
 				'switch': {
 					'lookup': 'type',
-					'var': 'mainhand',
+					'against': 'mainhand',
 					'cases': [
 					// '2h-mace', '2h-axe', 'bow', 'diabo', 'crossbow', '2h-mighty', 'polearm', 'staff', '2h-sword', 'axe', 'ceremonial-knife', 'hand-crossbow', 'dagger', 'fist-weapon', 'mace', 'mighty-weapon', 'spear', 'sword', 'wand'
 						{
-							"case": "sword|dagger|2h-sword",
+							"caseOf": "sword|dagger|2h-sword",
 							'effect': {
 								'plus-damage': 0.15
 							}
 						},
 						{
-							"case": "mace|axe|2h-axe|2h-mace",
+							"caseOf": "mace|axe|2h-axe|2h-mace",
 							'effect': {
 								'critical-hit': 0.1
 							}
 						},
 						{
-							"case": "spear|polearm",
+							"caseOf": "spear|polearm",
 							'effect': {
 								'attack-speed': 0.1
 							}
 						},
 						{
-							"case": "mighty|2h-mighty",
+							"caseOf": "mighty|2h-mighty",
 							'effect': {
 								
 							}
@@ -61,7 +61,7 @@ var passives = {
 		'berserker-rage': {
 			'desc': 'You inflict an additional <span class="skill-highlight">25%</span> damage while at maximum Fury.',
 			'effect': {
-				'plus-damage-conditional': 0.25
+				'plus-damage-conditional': 25
 			}
 		},
 		'inspiring-presence': {
@@ -146,16 +146,16 @@ var passives = {
 			'desc': 'While dual-wielding, you gain a <span class="skill-highlight">15%</span> chance to dodge incoming attacks. While using a two-handed weapon, all Spirit generation is increased by <span class="skill-highlight">25%</span>.',
 			'effect': {
 				'switch': {
-					'var': 'isDuelWielding',
+					'against': 'isDuelWielding',
 					'cases': [
 						{
-							"case": true,
+							"caseOf": true,
 							'effect': {
 								'plus-dodge': 0.15
 							}
 						},
 						{
-							"case": false,
+							"caseOf": false,
 							'effect': {
 								'plus-spirit-regen': 0.25
 							}
@@ -225,7 +225,7 @@ var passives = {
 		'cold-blooded': {
 			'desc': 'Cold damage dealt to chilled and frozen targets is increased by <span class="skill-highlight">20%</span>.',
 			'effect': {
-				'plus-damage-conditional': 0.2
+				'plus-damage-conditional': 20
 			}
 		},
 		'conflaguration': {
@@ -266,7 +266,7 @@ var passives = {
 		'steady-aim': {
 			'desc': 'As long as there are no enemies within <span class="skill-highlight">10</span> yards, all damage is increased by <span class="skill-highlight">20%</span>.',
 			'effect': {
-				'plus-damage-conditional': 0.2
+				'plus-damage-conditional': 20
 			}
 		},
 		'cull-the-weak': {
@@ -286,22 +286,22 @@ var passives = {
 			'effect': {
 				'switch': {
 					'lookup': 'type',
-					'var': 'mainhand',
+					'against': 'mainhand',
 					'cases': [
 						{
-							"case": "bow",
+							"caseOf": "bow",
 							'effect': {
 								'plus-damage': 0.15
 							}
 						},
 						{
-							"case": "crossbow",
+							"caseOf": "crossbow",
 							'effect': {
 								'critical-hit-damage': 0.5
 							}
 						},
 						{
-							"case": "hand-crossbow",
+							"caseOf": "hand-crossbow",
 							'effect': {
 								'critical-hit': 0.1
 							}
@@ -390,10 +390,6 @@ var passives = {
 	}
 }
 var activeSkills = {
-
-
-
-
 	'barbarian': {
 		'bash': {
 			name: 'Bash',
@@ -3676,12 +3672,8 @@ var activeSkills = {
 			effect: {
 				'cost-spirit': 50,
 				'cooldown': 30,
-				'stack': {
-					'weapon-damage': {
-						'limit': 7,
-						'value': 777,
-					},
-				},
+				'weapon-damage': 777,
+				'weapon-damage-for': 7
 			},
 		},
 		'seven-sided-strike~a': {
@@ -3691,12 +3683,8 @@ var activeSkills = {
 			effect: {
 				'cost-spirit': 50,
 				'cooldown': 30,
-				'stack': {
-					'weapon-damage-for': {
-						'limit': 7,
-						'value': 1008,
-					},
-				},
+				'weapon-damage': 1008,
+				'weapon-damage-for': 7
 			},
 		},
 		'seven-sided-strike~b': {
@@ -3706,12 +3694,8 @@ var activeSkills = {
 			effect: {
 				'cost-spirit': 50,
 				'cooldown': 30,
-				'stack': {
-					'weapon-damage': {
-						'limit': 7,
-						'value': 777,
-					},
-				},
+				'weapon-damage': 777,
+				'weapon-damage-for': 7
 			},
 		},
 		'seven-sided-strike~c': {
@@ -3722,12 +3706,8 @@ var activeSkills = {
 				'cost-spirit': 50,
 				'cooldown': 30,
 				'chance-stun': 25,
-				'stack': {
-					'weapon-damage': {
-						'limit': 7,
-						'value': 777,
-					},
-				},
+				'weapon-damage': 777,
+				'weapon-damage-for': 7
 			},
 		},
 		'seven-sided-strike~d': {
@@ -3737,12 +3717,8 @@ var activeSkills = {
 			effect: {
 				'cost-spirit': 50,
 				'cooldown': 30,
-				'stack': {
-					'weapon-damage': {
-						'limit': 7,
-						'value': 777,
-					},
-				},
+				'weapon-damage': 777,
+				'weapon-damage-for': 7
 			},
 		},
 		'seven-sided-strike~e': {
@@ -3752,12 +3728,8 @@ var activeSkills = {
 			effect: {
 				'cost-spirit': 50,
 				'cooldown': 30,
-				'stack': {
-					'weapon-damage': {
-						'limit': 7,
-						'value': 777,
-					},
-				},
+				'weapon-damage': 777,
+				'weapon-damage-for': 7
 			},
 		},
 		'mantra-of-evasion': {

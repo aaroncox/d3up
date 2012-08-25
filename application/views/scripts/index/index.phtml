@@ -1,177 +1,56 @@
 <div class="home inline-flow">
-	<div class="recent-builds">
-		<h2 class="table-header">Recently Completed Builds</h2>
-		<table id="recent-builds" class="d3up-table">
-			<thead>
-				<tr>
-					<th></th>
-					<th>Name</th>
-					<th>DPS</th>
-					<th>EHP</th>
-					<th>Skills</th>
-				</tr>
-			</thead>
-			<tbody>
-			<? foreach($this->builds as $build): ?>
-				<tr class="item-row">
-					<td class="icon"><img src="/images/<?= $build->class ?>.png"/></td>
-					<td class="name" nowrap="nowrap"><?= $this->mLink($build) ?></td>
-					<td class="stat"><?= $this->prettyStat($build->stats['dps']) ?></td>
-					<td class="stat"><?= $this->prettyStat($build->stats['ehp']) ?></td>
-					<td class="skills">
-						<? if($build->actives): ?>
-							<? foreach($build->actives as $active): ?>
-								<? 
-									if($active == "undefined") {
-										?>
-										<img data-class="<?= $build->class ?>" src="/images/icons/unknown.png" class="skill-tip"/>
-										<?
-										continue;
-									}
-									$explode = explode("~", $active);
-									$skill = $explode[0];
-								?>
-								<img data-class="<?= $build->class ?>" data-id="<?= $active ?>" src="/images/icons/<?= $build->class ?>-<?= $skill ?>.png" class="skill-tip"/>
-							<? endforeach ?>
-						<? endif ?>
-						<? if($build->passives): ?>
-							<? foreach($build->passives as $passive): ?>
-								<? 
-									$explode = explode("~", $passive);
-									$skill = $explode[0];
-								?>
-								<img data-class="<?= $build->class ?>" data-id="<?= $passive ?>" src="/images/icons/<?= $build->class ?>-<?= $skill ?>.png" class="skill-tip"/>
-							<? endforeach ?>
-						<? endif ?>
-					</td>
-				</tr>
-			<? endforeach; ?>
-			</tbody>
-		</table>
+	<div class="homepage-widget recent-builds">
+		<ul>
+			<li><h2 class="ui-table-header">Find Character Builds</h2></li>
+			<!-- <li><a href="#build-guides">Guides</a></li> -->
+			<li><a href="#build-recent">Recent</a></li>
+			<li><a href="#build-views">Views</a></li>
+			<li><a href="#build-votes">Votes</a></li>
+		</ul>
+		<div id="build-views">
+			<h3 class="table-header">Most Viewed Character Builds</h3>
+			<?= $this->partial("./index/_build-views.phtml", array('builds' => $this->viewsBuilds))?>
+		</div>
+		<div id="build-votes">
+			<h3 class="table-header">Highest Voted Character Builds</h3>
+			<?= $this->partial("./index/_build-votes.phtml", array('builds' => $this->votesBuilds))?>
+		</div>
+		<div id="build-recent">
+			<h3 class="table-header">Recently created Builds</h3>
+			<?= $this->partial("./index/_build-table.phtml", array('builds' => $this->recentBuilds))?>
+		</div>
+		<h4>Looking for more? Check out the <a href="/build/">Character Builds</a> page.</h4>
 	</div>
-	<div class="recent-items">
-		<h2 class='table-header'>Recently Sold Items</h2>
-		<table class="d3up-table">
-		<tbody>
-			<? foreach($this->sales as $sale): ?>
-				<tr class="item-row" id="sale-<?= $sale->id ?>">
-					<td class="data"><?= $this->timeAgo($sale->soldOn) ?></td>
-					<td class='name'><?= $this->itemLink($sale->item) ?></td>
-					<td class="data">
-						<? if($sale->soldSuccess): ?>
-							<span class='pos'>Sold</span> 
-						<? else: ?>
-							<span class='neg'>Not Sold</span>
-						<? endif ?>
-					</td>
-					<td class='data'>
-						<?= $this->regionDisplay($sale->region) ?>
-					</td>
-					<td class="data"> 
-						<?= $this->priceDisplay($sale, 'soldFor') ?>
-					</td>					
-				</tr>
-				<? endforeach ?>
-			</tbody>
-		</table>
+	<div class="homepage-widget recent-items">
+		<ul>
+			<li><h2 class="ui-table-header">Find Items</h2></li>
+			<li><a href="#item-recent">Recently Created</a></li>
+			<li><a href="#item-sales">Recent Sales</a></li>
+		</ul>
+		<div id="item-recent">
+			<h3 class="table-header">Recently Created Items</h3>
+			<?= $this->partial("./index/_item-table.phtml", array('items' => $this->recentItems))?>
+		</div>
+		<div id="item-sales">
+			<h3 class="table-header">Recently Sold Items</h3>
+			<?= $this->partial("./index/_item-sales.phtml", array('items' => $this->recentSales))?>
+		</div>
+		<h4>Looking for more? Check out the <a href="/items/">Item Search</a> page.</h4>
 	</div>
-	<div class="recent-items">
-		<h2 class='table-header'>Recently Created Items</h2>
-		<table class="d3up-table">
-		<tbody>
-			<? foreach($this->items as $item): ?>
-			<tr class="item-row" id="item-<?= $item->id ?>">
-					<td class="name">
-						<div class="item-stat">
-							<span class="value">
-								<?= $this->itemLink($item) ?>
-							</span>
-						<? if($item->stats): ?>
-							<span class="stat">
-							<? if($item->stats->armor): ?>
-								<?= $item->stats->armor . " Armor"?>
-							<? endif; ?>
-							<? if($item->stats->dps): ?>
-								<?= $item->stats->dps." dps" ." @ ".$item->stats->speed." A/S" ?>
-							<? endif; ?>
-							</span>
-						<? endif; ?>
-					</td>
-					<?
-						if($item->stats) {
-							$stats = $item->stats->export();								
-						}
-						$attrs = $item->attrs->getAttributesArray($item->type);
-						$export = $item->cleanExport();
-						if(isset($export['socketAttrs'])) {
-							$socketAttrs = $export['socketAttrs'];
-						}
-						// Put whatever we're filtering in first 
-						if($this->sortAttrs) {
-							foreach($this->sortAttrs as $k => $v) {
-								switch($v) {
-									case "base_armor":
-										$val = $stats['armor'];
-										break;
-									case "base_dps":
-										$val = $stats['dps'];
-										break;
-									default:
-										$val = $attrs[$v];
-										break;
-								}
-								if(isset($socketAttrs[$k])) {
-									$val += $socketAttrs[$k];
-								}
-								unset($attrs[$v]);
-								echo "<td class='sorted'>".$this->itemStat(ucwords(str_replace("_", " ", $v)), $val)."</td>";							
-							}
-						}
-						$count = count($this->sortAttrs);
-					?>
-					<? foreach($attrs as $k => $v): ?>
-						<? 
-							$count++;
-							$val = $v;
-							if(isset($socketAttrs[$k])) {
-								$val += $socketAttrs[$k];
-							}
-						?>
-						<? if($count > 4) { continue; } ?>
-						<td><?= $this->itemStat($k, $val) ?></td>
-					<? endforeach ?>
-					<? if($count < 4): ?>
-						<? for($i = $count; $i < 4; $i++): ?>
-							<td>&nbsp;</td>
-						<? endfor ?>
-					<? endif ?>
-
-				</tr>
-			<? endforeach; ?>
-		</tbody>
-	</table>
-	</div>
+	<script type="text/javascript">
+		$(".recent-builds, .recent-items").tabs();
+	</script>
 </div>
 <div class="info inline-flow">
 	<?= $this->render("./post/_updates.phtml")?>
+	<?= $this->render("./index/_sidebar.phtml")?>
 	<div class='ui-widget ui-widget-content ui-corner-all'>
-		<h3>What is D3Up?</h3>
-		<p>D3Up is designed as a tool to help you find information about Items, a place to create varies Character Builds, and compare your items to determine which stats will change.</p>
-	</div>
-	<div class='ui-widget ui-widget-content ui-corner-all'>
-		<h3>What can I do here?</h3>
+		<h3>Statistics</h3>
 		<ul>
-			<li><a href="/item/create">Create Items</a> to share with others or add to your builds.</li>
-			<li>Create <a href="/build/create">Character Builds</a>, complete with gear, skills and detailed statistics!</li>
-			<li>Compare the items in your build to other items you've created.</li>
+			<li><?= $this->prettyStat($this->counts['items'], 1) ?> <a href="/items">Items</a></li>
+			<li><?= $this->prettyStat($this->counts['builds'], 1) ?> <a href="/build/">Character Builds</a></li>
+			<li><?= $this->prettyStat($this->counts['sales'], 1) ?> <a href="/item/sales-history">Sales</a></li>
 		</ul>
-	</div>
-	<div class='ui-widget ui-widget-content ui-corner-all'>
-	<h3>Stats</h3>
-	<ul>
-		<li><?= $this->counts['items']?> items</li>
-		<li><?= $this->counts['builds']?> Character Builds</li>
-	</ul>
 	</div>
 </div>
 <script type="text/javascript">

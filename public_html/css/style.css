@@ -119,7 +119,6 @@ a:active .ui-button-text, a:visited .ui-button-text {
 	margin: 0 auto;
 }
 #header {
-	height: 200px;
 }
 #header-content {
 	text-align: center;
@@ -252,25 +251,36 @@ ul#simulate-stats input,
 	background: #bbb;
 }
 .home {
-	margin: 0 10px;
-	width: 610px;
-}
-.home h2 {
-	margin: 5px 10px;
+	margin: 0 5px 0 0;
+	width: 645px;
 }
 .recent-items {
 	padding: 2px;
 }
 .info {
 	width: 300px;
-	margin: 0 10px;
+	margin: 0;
 }
 .info .ui-widget {
+	background: #171717;
+	border: 2px solid #333;
 	padding: 0 10px;
 	margin-bottom: 10px;
 }
+.info .ui-widget p {
+	margin: 4px 0 12px;
+	font-size: 13px;
+	line-height: 1.8em;
+}
+.info .ui-widget ul {
+	padding-left: 20px;
+}
+.info .ui-widget a {
+	color: #B18135;	
+}
 .info .ui-widget h3 {
-	color: #70B1D5;
+	margin: 10px 0 5px;
+	color: #B18135;
 }
 .d3up-table {
 	width: 100%;
@@ -305,6 +315,7 @@ ul#simulate-stats input,
 	white-space: nowrap;
 	overflow: hidden;
 }
+.d3up-table td.stat,
 .d3up-table td.data {
 	text-align: center;
 }
@@ -321,6 +332,7 @@ ul#simulate-stats input,
 	background: #191919;
 	font-size: 0.8em;
 	border-top: 1px solid #111;
+	text-align: center;
 }
 .build-paginator, 
 .more-builds {
@@ -350,8 +362,19 @@ div.filters {
 .breadcrumb {
 	margin: 10px;
 }
+.faq-content h2 {
+	margin: 12px 0;
+	color: #B18135;
+}
+.d3up-post h2,
+.faq-content h3 {
+	color: #70B1D5;
+}
+.faq-content,
 .d3up-post {
-	margin-top: 10px;
+	font-family: 'Arial';
+	letter-spacing: 0.1em;
+	line-height: 1.75em;
 }
 .d3up-post h3 {
 	margin: 15px 20px 35px;
@@ -359,7 +382,7 @@ div.filters {
 .d3up-post div.meta {
 	color: #aaa;
 	float: right;
-	margin: 20px 10px;
+	margin: 12px 10px;
 }
 .d3up-post .post-body {
 	padding: 0 20px;
@@ -399,6 +422,11 @@ dd:has(:focus) .chzn-container {
 }
 .equipment-table td.primary {
 	width: auto;
+}
+.sidebar.sticky {
+	position: fixed;
+	top: 0;
+	margin-left: 5px;
 }
 .calc-stats ul {
 	list-style: none;
@@ -702,9 +730,16 @@ tr.compared > td:first-child {
 .table-header {
 	margin: 0;
 	text-transform: uppercase;
-	color: #666;
+	color: #757575;
 	letter-spacing: 0.2em;
 	font-size: 20px;
+	margin-left: 20px;
+}
+.table-sub-header {
+	margin: 0;
+	letter-spacing: 0.1em;
+	font-size: 14px;
+	color: #565656;
 	margin-left: 20px;
 }
 .d3up-table td.sorting {
@@ -870,6 +905,10 @@ tr.compared > td:first-child {
 	list-style: none;
 }
 .skill-calc-row {
+	border: 1px solid #222;
+	border-radius: 4px;
+	background: #171717;
+	padding: 4px;
 	clear: both;
 	min-height: 72px;
 	font-size: 14px;
@@ -880,7 +919,7 @@ tr.compared > td:first-child {
 	margin-right: 10px;
 }
 .skill-calc-row h3 {
-	font-size: 1.3em;
+	font-size: 1.4em;
 	color: #70B1D5;
 	margin: 0;
 }
@@ -891,17 +930,34 @@ tr.compared > td:first-child {
 .skill-calc-row p:first-child {
 	margin-bottom: 10px;
 }
+.skill-calc-row.skill-activated {
+	border: 1px solid #70B1D5;
+}
 .skill-calc-row .control {
+	margin: 5px;
 	color: #777;
 	font-weight: bold;
 	float: right;
 }
+.skill-calc-row .effects:first-child {
+	margin-top: 5px;
+	font-weight: bold;
+}
+.skill-calc-row .effects h4 {
+	color: #777;
+	margin: 5px 0 0;
+	border-bottom: 1px solid #777;
+}
+.skill-calc-row .effects,
 .skill-calc-row .details {
 	list-style: none;
 	padding: 0;
 	color: #fff;
 	margin: 0 0 5px 74px;
 	font-size: 1.2em;
+}
+.skill-calc-row .effects {
+	margin: 0 0 5px 94px;	
 }
 .skill-calc-row .stat-dps {
 	margin: 0;
@@ -923,4 +979,39 @@ tr.compared > td:first-child {
 }
 #skill-chooser button {
 	margin-left: 120px;
+}
+#warning-browser {
+	text-align: center;
+	background-color: #F00;
+	color: #FFF;
+	font-size: 1.1em;
+	padding: 5px;
+}
+#warning-browser a {
+	color: #FFF;
+	text-decoration: underline;
+}
+.homepage-widget {
+	margin-bottom: 15px;
+}
+.homepage-widget.ui-tabs .ui-tabs-nav li {
+	float: right;
+	text-shadow: 2px 2px #000;
+}
+.homepage-widget.ui-tabs .ui-tabs-nav li:first-child {
+	float: left;
+}
+.ui-table-header {
+	margin: 0;
+	margin-left: 10px;
+	text-shadow: 2px 2px #000;
+	font-size: 22px;
+	line-height: 36px;
+}
+.homepage-widget.ui-tabs .ui-tabs-panel {
+	padding: 15px 0;
+}
+.homepage-widget > h4 {
+	text-align: center;
+	margin: 0;
 }
