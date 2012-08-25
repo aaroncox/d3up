@@ -388,6 +388,9 @@ var itemBuilder = {
 	},
 	// Update the Value of a Stat
 	updateStat: function(name, value) {
+		if(!this.item.stats) {
+			this.item.stats = {};
+		}
 		this.item.stats[name] = parseFloat(value);
 	},
 	// Remove a specific stat by name
@@ -561,7 +564,7 @@ var itemBuilder = {
 			case "armor":
 				if(!builder.preview.statsPrimary.find("input[name=stat_armor]").length || builder.preview.statsPercent.find("input[name=block-chance]").length) {
 					var armor = $("<input name='stat_armor' tabindex='50'>");
-					if(builder.item.stats.armor) {
+					if(builder.item.stats && builder.item.stats.armor) {
 						armor.val(builder.item.stats.armor);
 					}
 					armor.keyup(function() {
