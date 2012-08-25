@@ -186,7 +186,10 @@ var passives = {
 			}
 		},
 		'combination-strike': {
-			'desc': 'Each different Spirit Generator ability you use increases your damage by <span class="skill-highlight">8%</span> for <span class="skill-highlight">3</span> seconds.'
+			'desc': 'Each different Spirit Generator ability you use increases your damage by <span class="skill-highlight">8%</span> for <span class="skill-highlight">3</span> seconds.',
+			'effect': {
+				'spirit-combo-strike': 1
+			}
 		},
 		'near-death-experience': {
 			'desc': 'When receiving fatal damage, you are instead restored to <span class="skill-highlight">35%</span> of maximum Life and <span class="skill-highlight">35%</span> Spirit.'

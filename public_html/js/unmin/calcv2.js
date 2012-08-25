@@ -193,12 +193,21 @@ BuildCalculator.prototype = {
 	applyEnabledSkills: function() {
 		// console.log(this.activeSkills);
 		_.each(this.enabledSkills, function(v,k) {
-			// console.log(v,k);
 			_.each(v.effect, function(e,i) {
 				switch(i) {
 					case "stack":
 						_.each(e, function(se, si) {
 							this.applyEnabledSkill(se.limit * se.value, si);
+						}, this);
+						break;
+					case "spirit-combo-strike":
+						_.each(this.activeSkills, function(s, i){
+							var aSkill = activeSkills['monk'][i],
+									total = 0;
+							if(aSkill.effect && aSkill.effect['generate-spirit']) {
+								total += 8;
+							}
+							this.applyEnabledSkill(total, 'plus-damage');
 						}, this);
 						break;
 					case "plus-damage-conditional":
@@ -776,12 +785,10 @@ BuildCalculator.prototype = {
 					// console.log(k,v);
 			if(v && v.effect) {
 				_.each(v.effect, function(e,i) {
-					// console.log(e,i);
 					switch(i) {
 						case "3rd-hit":
 							bonuses['3rd-hit-damage'] = e;
 							break;
-						case "plus-damage-conditional":
 						case "damage-reduce-conditional":
 						case "plus-crit-hit":
 						case "plus-attack-speed":
@@ -849,6 +856,7 @@ BuildCalculator.prototype = {
 				_.each(v.effect, function(e,i) {
 					// console.log(e,i);
 					switch(i) {
+						case "spirit-combo-strike":
 						case "damage-reduce-conditional":
 						case "plus-damage-conditional":
 							activate = true;
