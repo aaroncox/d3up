@@ -2,14 +2,12 @@
 <? if($this->status): ?>
 	<div class="ui-widget ui-corner-all ui-widget-content ui-helper-clearfix" style="padding: 0 20px">
 		<h3>Crawl Results</h3>
-		<p>We've crawled your Diablo 3 Profile, using the following URL:</p>
-		<p><a href="<?= $this->record->profileUrl ?>"><?= $this->record->profileUrl ?></a></p>
 		<p>All character stats are based on level 60 characters currently, so if you import a character that is not level 60, the calculator will be slightly off.</p>
-		<p>This process is EXTREMELY experimental still, please report any bugs using the feedback tab on the side or you can email me directly at <a href="mailto:aaron.cox@greymass.com">aaron.cox@greymass.com</a>. Please include a link to your D3Up build and what isn't working correctly so I can check it out from there!</p>
+		<p>Paragon Levels are also not automatically imported! To change your paragon level, please hit "Edit" on the top of your build page and enter it in the appropriate field.</p>
+		<p>This process is still somewhat buggy, please report anything that seems wrong using the feedback tab on the side or you can email me directly at <a href="mailto:aaron.cox@greymass.com">aaron.cox@greymass.com</a>. Please include a link to your D3Up build and what isn't working correctly so I can check it out from there!</p>
 		<p>
 			<a href="/b/<?= $this->record->id ?>" class='ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only' style="padding: 5px; width: 450px">Goto my Build</a>
 		</p>
-		
 		<table class='d3up-table'>
 			<tr>
 				<th>Slot</th>
