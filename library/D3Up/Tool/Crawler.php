@@ -68,6 +68,7 @@ class D3Up_Tool_Crawler
 		'helm' => 'helm',
 		'pants' => 'pants',
 		'legs' => 'pants',
+		'belt_barbarian' => 'mighty-belt',
 		'mightybelt' => 'mighty-belt',
 		'ring' => 'ring',
 		'shoulders' => 'shoulders',
