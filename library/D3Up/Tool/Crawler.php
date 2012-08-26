@@ -23,17 +23,21 @@ class D3Up_Tool_Crawler
 	}
 
 	static public $dataUrl = 'http://us.battle.net/api/d3/data/item/';
-	static public $profileUrl = 'http://us.battle.net/api/d3/profile/';
+	static public $profileUrl = array(
+		1 => 'http://us.battle.net/api/d3/profile/',
+		2 => 'http://eu.battle.net/api/d3/profile/',
+		3 => 'http://kr.battle.net/api/d3/profile/',
+	);
 
 	static public function get($url) {
 		$config = array(
-			'adapter' => 'Zend_Http_Client_Adapter_Proxy',
-			'timeout' => '15',
-			'useragent' => '',
-			'proxy_host' => '192.168.1.7',
-			'proxy_port' => '8888',
-			'proxy_user' => '',
-			'proxy_pass' => '',
+			// 'adapter' => 'Zend_Http_Client_Adapter_Proxy',
+			// 'timeout' => '15',
+			// 'useragent' => '',
+			// 'proxy_host' => '192.168.1.7',
+			// 'proxy_port' => '8888',
+			// 'proxy_user' => '',
+			// 'proxy_pass' => '',
 			'encoding'      => 'UTF-8'
 		);
 		$client = new Zend_Http_Client($url, $config);
@@ -58,10 +62,12 @@ class D3Up_Tool_Crawler
 		'boots' => 'boots',
 		'bracers' => 'bracers',
 		'chestarmor' => 'chest',
+		'genericchestarmor' => 'chest',
 		'cloak' => 'cloak',
 		'gloves' => 'gloves',
 		'helm' => 'helm',
 		'pants' => 'pants',
+		'legs' => 'pants',
 		'mightybelt' => 'mighty-belt',
 		'ring' => 'ring',
 		'shoulders' => 'shoulders',
@@ -84,11 +90,13 @@ class D3Up_Tool_Crawler
 		'fistweapon' => 'fist-weapon',
 		'mace' => 'mace',
 		'mightyweapon' => 'mighty-weapon',
+		'mightyweapon1h' => 'mighty-weapon',
 		'spear' => 'spear',
 		'sword' => 'sword', 
 		'wand' => 'wand',
 		'mojo' => 'mojo',
 		'source' => 'source',
+		'orb' => 'source',
 		'quiver' => 'quiver',
 		'shield' => 'shield',
 	);
@@ -98,17 +106,17 @@ class D3Up_Tool_Crawler
 		'belt' => 'Belt',
 		'boots' => 'Boots',
 		'bracers' => 'Bracers',
-		'chest' => 'Chest Armor',
+		'chest' => 'ChestArmor',
 		'cloak' => 'Cloak',
 		'gloves' => 'Gloves',
 		'helm' => 'Helm',
 		'pants' => 'Pants',
-		'mighty-belt' => 'Mighty Belt',
+		'mighty-belt' => 'MightyBelt',
 		'ring' => 'Ring',
 		'shoulders' => 'Shoulders',
-		'spirit-stone' => 'Spirit Stone',
-		'voodoo-mask' => 'Voodoo Mask',
-		'wizard-hat' => 'Wizard Hat',
+		'spirit-stone' => 'SpiritStone',
+		'voodoo-mask' => 'VoodooMask',
+		'wizard-hat' => 'WizardHat',
 		'2h-mace' => 'Two-Handed Mace',
 		'2h-axe' => 'Two-Handed Axe',
 		'bow' => 'Bow',
@@ -120,11 +128,11 @@ class D3Up_Tool_Crawler
 		'2h-sword' => 'Two-Handed Sword',
 		'axe' => 'Axe',
 		'ceremonial-knife' => 'Ceremonial Knife',
-		'hand-crossbow' => 'Hand Crossbow',
+		'hand-crossbow' => 'HandCrossbow',
 		'dagger' => 'Dagger',
-		'fist-weapon' => 'Fist Weapon',
+		'fist-weapon' => 'FistWeapon',
 		'mace' => 'Mace',
-		'mighty-weapon' => 'Mighty Weapon',
+		'mighty-weapon' => 'MightyWeapon',
 		'spear' => 'Spear',
 		'sword' => 'Sword',
 		'wand' => 'Wand',
@@ -353,9 +361,16 @@ class D3Up_Tool_Crawler
 		
 	}     
 	
-	static public function crawl($build, $who, $character) {
-		// var_dump($build->export(), $user->export(), $character); exit;
-		$url = self::$profileUrl . strtolower(str_replace("#", "-", $who->battletag)) . "/hero/" . $character;
+	static public function crawl($build, $user, $character) {
+		$character = (int) $character;
+		$results = explode("/", $build->profileUrl);
+		if(!$user->battletag) {
+			throw new Exception("You must have a battletag setup in your user profile to use the import feature.");
+		}
+		if(!$character || !is_int($character)) {
+			throw new Exception("You've reached this page in error, please use the copy button on your build page.");
+		}
+		$url = self::$profileUrl[$user->region] . str_replace("#", "-", $user->battletag) . "/hero/" . $character;
 		$profile = static::get($url);
 		$status = array();
 		$skills = array();
@@ -374,28 +389,66 @@ class D3Up_Tool_Crawler
 			$passives[] = $skill['skill']['slug'];			
 		}
 		foreach ($profile['items'] as $slot => $gear) {
+			// if($slot != "feet") {
+			// 	continue;
+			// }
 			// Explode the Tooltip Params
 			$parts = explode("/", $gear['tooltipParams']);
 			// Build the URL
 			$itemUrl = static::$dataUrl . $parts[1];
 			// Get the JSON
 			$data = static::get($itemUrl);
+			// Get the Type
+			$dirtyType = str_replace("generic", "", strtolower($data['type']['id']));
+			if(!isset(static::$_dirtyTypes[$dirtyType])) {
+				throw new Exception("Type Unrecognized [" . $dirtyType . "]. Please email me at <a href='mailto:aaron.cox@greymass.com'>aaron.cox@greymass.com</a> and let me know about this error message!");
+			}
+			$type = static::$_dirtyTypes[$dirtyType];
 			// Start the Query 
 			$query = array(
 				'name' => $data['name'],
-				'_createdBy' => $who->createReference(),
+				'type' => $type,
+				'_createdBy' => $user->createReference(),
 			);
 			// Do the Attributes on the Item
 			$attrsArray = array();
 			$socketsArray = array();
 			$gearSet = null;
 			// -------------------- FIX THIS
-			// if(isset($data['set']) && isset($data['set']['slug']))
-			// $setName = $data->find(".d3-item-properties .item-itemset-name", 0);
-			// if($setName) {
-			// 	$filter = new Epic_Filter_Slug();
-			// 	$gearSet = $filter->filter(html_entity_decode($setName->plaintext, ENT_QUOTES));
-			// }
+			if(isset($data['set']) && isset($data['set']['slug'])) {
+				$query['set'] = $gearSet = $data['set']['slug'];				
+			}
+			$gems = $data['gems'];
+			foreach($gems as $gem) {
+				if(isset($gem['item']['name'])) {
+					$key = strtolower(str_replace(" ", "_",$gem['item']['name']));
+					$actual = static::$_gemMap[$key];
+					$socketsArray[] = $key;
+				}
+			}
+			// var_dump($socketsArray); exit;
+			// Do the Stats on the item
+			$statsArray = array();
+			// Does this item have armor?
+			if(isset($data['armor'])) {
+				$statsArray['armor'] = (float) $data['armor']['min'];
+			}
+			if(isset($data['dps'])) {
+				$statsArray['dps'] = (float) $data['dps']['min'];					
+			}
+			if(isset($data['minDamage']) && isset($data['maxDamage'])) {
+				$statsArray['damage'] = array(
+					'min' => (float) $data['minDamage']['min'],
+					'max' => (float) $data['maxDamage']['min'],
+				);					
+			}
+			if(isset($data['attacksPerSecond'])) {
+				$statsArray['speed'] = (float) $data['attacksPerSecond']['min'];		
+			}
+			if(isset($data['attacksPerSecond'])) {
+				$statsArray['speed'] = (float) $data['attacksPerSecond']['min'];		
+			}
+			// Do the attributes from the item
 			$attrs = $data['attributes'];
 			foreach($attrs as $attr) {
 				foreach(static::$_attrMap as $stat => $regex) {
@@ -406,12 +459,16 @@ class D3Up_Tool_Crawler
 					// var_dump($text, $regex);
 					if(preg_match($regex, $text, $matches)) {
 						if(count($matches) > 3) {
-							// var_dump($matches);
 							$attrsArray[$stat] = array(
 								'min' => (float) $matches[1],
 								'max' => (float) $matches[3],
 							);
-							// var_dump($attrsArray);
+							if(isset($statsArray['damage']) && isset($statsArray['damage']['min'])) {
+								$statsArray['damage']['min'] += $matches[1];
+							}
+							if(isset($statsArray['damage']) && isset($statsArray['damage']['max'])) {
+								$statsArray['damage']['max'] += $matches[3];
+							}
 						} else {
 							$attrsArray[$stat] = (float) $matches[1];																					
 						}
@@ -423,16 +480,19 @@ class D3Up_Tool_Crawler
 			$slot = static::$_slotMap[$slot];
 			// Add Attributes to the Item and Query
 			$query['attrs'] = $attrsArray;
+			$query['stats'] = $statsArray;
 			if($gearSet) {
 				$query['set'] = $gearSet;
 			}
+			$query['sockets'] = $socketsArray;
 			// Look to see if this item exists!
 			$found = Epic_Mongo::db('item')->fetchOne($query);
 			// Did we find this item already?
-			// if(!$found) {
+			if(!$found) {
 				// If we didn't, lets make it!
 				$new = Epic_Mongo::newDoc('item');
 				$new->name = html_entity_decode($data['name']);
+				$new->type = $type;
 				// Determine the Type and Quality
 				$new->quality = array_search($data['displayColor'], self::$_qualityMap);
 				$parts = explode("_", $data['icon']);
@@ -441,34 +501,12 @@ class D3Up_Tool_Crawler
 				if($gearSet) {
 					$new->set = $gearSet;
 				}
-				// Do the Stats on the item
-				$statsArray = array();
-				// Does this item have armor?
-				if(isset($data['armor'])) {
-					$statsArray['armor'] = (float) $data['armor']['min'];
-				}
-				if(isset($data['dps'])) {
-					$statsArray['dps'] = (float) $data['dps']['min'];					
-				}
-				if(isset($data['minDamage']) && isset($data['maxDamage'])) {
-					$statsArray['damage'] = array(
-						'min' => (float) $data['minDamage']['min'],
-						'max' => (float) $data['maxDamage']['min'],
-					);					
-				}
-				if(isset($data['attacksPerSecond'])) {
-					$statsArray['speed'] = (float) $data['attacksPerSecond']['min'];		
-				}
-				if(isset($data['attacksPerSecond'])) {
-					$statsArray['speed'] = (float) $data['attacksPerSecond']['min'];		
-				}
 				$new->stats = $statsArray;
 				$new->sockets = $socketsArray;
 				$new->attrs->setFromArray($attrsArray);
 				$new->_created = time();
-				$new->_createdBy = $who;
-				var_dump($new->export());
-				// $new->save();
+				$new->_createdBy = $user;
+				$new->save();
 				$status[$slot] = array(
 					'result' => 'new',
 					'slot' => $slot,
@@ -476,20 +514,18 @@ class D3Up_Tool_Crawler
 				);
 				// Save it on the build
 				$build->equipment[$slot] = $new;
-			// } else {
-			// 	$build->equipment[$slot] = $found;				
-			// 	$status[$slot] = array(
-			// 		'result' => 'existed',
-			// 		'slot' => $slot,
-			// 		'item' => $found,
-			// 	);
-			// }
+			} else {
+				$build->equipment[$slot] = $found;				
+				$status[$slot] = array(
+					'result' => 'existed',
+					'slot' => $slot,
+					'item' => $found,
+				);
+			}
 		}
 		$build->actives = $skills;
 		$build->passives = $passives;
-		var_dump($build->export());
-		exit;
-		// $build->save();
+		$build->save();
 		return $status;
 	}
 	
@@ -497,8 +533,15 @@ class D3Up_Tool_Crawler
 		if(!$user->battletag) {
 			return false;
 		}
-		$url = self::$profileUrl . strtolower(str_replace("#", "-", $user->battletag)) . "/";
+		$url = self::$profileUrl[$user->region] . strtolower(str_replace("#", "-", $user->battletag)) . "/";
 		$data = self::get($url);
 		return $data['heroes'];
+	}
+	
+	public function getCharacterUrl($character, $user) {
+		if(!$user->battletag) {
+			return false;
+		}
+		return $url = self::$profileUrl[$user->region] . strtolower(str_replace("#", "-", $user->battletag)) . "/hero/" . $character;		
 	}
 } // END class D3Up_Tool_Crawler

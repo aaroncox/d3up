@@ -37,7 +37,8 @@
 		<h2 style="color: #00C800">Battle.net Character Copy</h2>
 		<p>You've chosen to import a character from the Diablo 3 Armory into this build:</p>
 		<h2>Build #<?= $this->record->id ?> - <?= $this->mLink($this->record) ?></h2>
-		<p>Please select which character's gear and skills we should import from below.</p>
+		<p><strong>PLEASE NOTE</strong>, none of your items will be deleted, but they will un-equipped and the proper gear from your Diablo 3 Armory profile will be equipped to your build. It will also change the skills on your build to match the armory.</p>
+		<p>Please select which character's gear and skills we should import into <?= $this->mLink($this->record)?>.</p>
 		<table id="all-builds" class="d3up-table">
 			<thead>
 				<th></th>
@@ -62,7 +63,7 @@
 						<? endif ?>
 					</td>
 					<td>
-						<a href="?character=<?= $character['id'] ?>">Copy this Character</a>
+						<a href="?character=<?= $character['id'] ?>" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only"><span class="ui-button-text">Copy this Character</span></a>
 					</td>
 				</tr>
 				<? endforeach ?>

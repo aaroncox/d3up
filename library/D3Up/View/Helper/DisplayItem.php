@@ -230,7 +230,7 @@ class D3Up_View_Helper_DisplayItem extends Zend_View_Helper_Abstract
 		}
 		if($k == 'dps') {
 			return $this->view->htmlTag("p", array('class' => 'stats stats-dps'), 
-				$this->view->htmlTag("span", array('class' => 'big-stat'), $v)."".
+				$this->view->htmlTag("span", array('class' => 'big-stat'), round($v, 1))."".
 				$this->view->htmlTag("span", array('class' => 'stat-helper'), $this->prettyDisplay($k))
 			);						
 		}
@@ -242,7 +242,7 @@ class D3Up_View_Helper_DisplayItem extends Zend_View_Helper_Abstract
 		}
 		if($k == 'speed') {
 			return $this->view->htmlTag("p", array('class' => 'stats stats-speed'),
-				$this->view->htmlTag("span", array(), number_format($v, 2))." ".
+				$this->view->htmlTag("span", array(), number_format(round($v,2), 2))." ".
 				$this->view->htmlTag("span", array('class' => 'stat-helper'), 'Attacks per Second')
 			);			
 		}

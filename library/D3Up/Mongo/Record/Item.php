@@ -57,6 +57,15 @@ class D3Up_Mongo_Record_Item extends Epic_Mongo_Document_Record
 		unset($export['_id'], $export['_created'], $export['_createdBy']);
 		// Build some 'friendly' names
 		$helper = new D3Up_View_Helper_DisplayItem();
+		// Round down a few numbers
+		if(isset($export['stats'])) {
+			if(isset($export['stats']['speed'])) {
+				$export['stats']['speed'] = round($export['stats']['speed'], 2);
+			}
+			if(isset($export['stats']['dps'])) {
+				$export['stats']['dps'] = round($export['stats']['dps'], 2);
+			}
+		}
 		// Build the 'friendly' gems display
 		$sockets = array();
 		if(isset($export['sockets'])) {

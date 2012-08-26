@@ -43,7 +43,7 @@ var activeActives = [];
 	Paragon Level <span id="paragon-level"><?= $this->record->paragon ?: 0 ?></span>
 </h3>
 
-<div id="skill-display" class="build-header ui-widget ui-corner-all" >
+<div id="skill-display" class="build-header ui-widget ui-corner-all ui-helper-clearfix" >
 	<div id="ratings-display">
 		<div class='item-stat inline-flow'>
 			<span class='value'><?= $this->prettyStat($this->record->views) ?></span>

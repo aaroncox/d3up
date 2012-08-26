@@ -345,6 +345,9 @@ $(function() {
 		_.each(skills, function(skill) {
 			if(skill != "undefined" && skill != "") {
 				var data = activeSkills[heroClass][skill];
+				if(!data || !data['effect']) {
+					return;
+				}
 				var	li = $("<li class='skill-calc-row'>").attr("data-json", JSON.stringify(data.effect)).attr("data-id", skill).attr("id", "skill-" + skill),
 						cleaned = skill.split("~"),
 						icon = $("<img src='/images/icons/" + heroClass + "-" + cleaned[0] + ".png'>"),
@@ -380,8 +383,11 @@ $(function() {
 		_.each(passiveSkills, function(v) {
 			var skill = v;
 			if(skill != "undefined" && skill != "") {
-				var data = passives[heroClass][skill],
-						li = $("<li class='skill-calc-row'>").attr("data-id", skill).attr("id", "skill-" + skill),
+				var data = passives[heroClass][skill];
+				if(!data) {
+					return;
+				}
+				var	li = $("<li class='skill-calc-row'>").attr("data-id", skill).attr("id", "skill-" + skill),
 						cleaned = skill.split("~"),
 						icon = $("<img src='/images/icons/" + heroClass + "-" + cleaned[0] + ".png'>"),
 						h3 = $("<h3>").html(v.replace(/\-/g, " ").capitalize()),

@@ -663,7 +663,7 @@ BuildCalculator.prototype = {
 			mathA = ((mhMinDamage + mhMaxDamage) / 2 + (ohMinDamage + ohMaxDamage) / 2 + bnMinDamage + bnMaxDamage) / 2;
 			mathM = (1 + this.bonuses['plus-damage']);
 			rendered['dps'] = mathS * mathC * mathR * mathA * mathM;			
-			rendered['dps-speed-display'] = Math.round(mathR * 100) / 100;
+			rendered['dps-speed-display'] = Math.round(rendered['dps-speed'].mh * (1 + 0.15 + atkSpeedInc + this.bonuses['plus-attack-speed']) * 100) / 100;
 			// console.log(mathS, mathC, mathR, mathA, mathM, rendered['dps'], "dw", rendered);
 		} else {
 			rendered['dps-speed'] = Math.floor(this.attrs['speed'] * 1024) / 1024;
