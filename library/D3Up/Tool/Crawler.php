@@ -73,6 +73,7 @@ class D3Up_Tool_Crawler
 		'ring' => 'ring',
 		'shoulders' => 'shoulders',
 		'spiritstone' => 'spirit-stone',
+		'spiritstone_monk' => 'spirit-stone',
 		'voodoomask' => 'voodoo-mask',
 		'wizardhat' => 'wizard-hat',
 		'2hmace' => '2h-mace',
