@@ -78,6 +78,7 @@ class D3Up_Tool_Crawler
 		'wizardhat' => 'wizard-hat',
 		'2hmace' => '2h-mace',
 		'2haxe' => '2h-axe',
+		'axe2h' => '2h-axe',
 		'bow' => 'bow',
 		'diabo' => 'diabo',
 		'crossbow' => 'crossbow',
