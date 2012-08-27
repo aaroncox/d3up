@@ -1242,5 +1242,32 @@ $(function() {
 	}
 	upvote.bindSkilltip();
 	downvote.bindSkilltip();
-	
+	// Manual Save button
+	var saveStatsButton = $(".saveStats");
+	saveStatsButton.attr("data-name", "Manual Stats Save");
+	saveStatsButton.attr("data-tooltip", "Manually save the stats from the right (stats) panel of your build to the database.<br/><br/>This happens automatically on a skill change or item change, but if for some reason you're stats aren't updating, hit this.");
+	saveStatsButton.bindSkilltip();
+	saveStatsButton.click(function() {
+		$.ajax({
+			data: {
+				a: 'skills',
+				actives: activeActives,
+				passives: activePassives,
+				stats: {
+					dps: stats.dps,
+					ehp: stats.ehp
+				},
+				success: function() {
+					$($("<div style='padding: 20px'/>").html("Saved!")).dialog({
+						modal: true,
+						buttons: {
+							Ok: function() {
+								$( this ).dialog( "close" );
+							}
+						}
+					});
+				}
+			}
+		});
+	});
 });
