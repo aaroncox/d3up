@@ -88,7 +88,7 @@ class D3Up_Tool_Crawler
 		'polearm' => 'polearm',
 		'staff' => 'staff',
 		'2hsword' => '2h-sword',
-		'sword2h' => '2h-sword'
+		'sword2h' => '2h-sword',
 		'axe' => 'axe',
 		'ceremonial-knife' => 'ceremonial-knife',
 		'ceremonialdagger' => 'ceremonial-knife',
