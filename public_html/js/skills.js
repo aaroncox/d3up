@@ -6934,6 +6934,7 @@ td['critical-hit-damage'] = 'Critical Hit Damage increased by VVV%';
 td['plus-damage'] = '+VVV% Damage';
 td['min-damage'] = '+VVV Minimum Damage';
 td['max-damage'] = '+VVV Maximum Damage';
+td['minmax-damage'] = '+VVV Damage (Min/Max)';
 td['arcane-damage'] = '+VVV Arcane Damage';
 td['cold-damage'] = '+VVV Cold Damage';
 td['fire-damage'] = '+VVV Fire Damage';

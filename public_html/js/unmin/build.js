@@ -1006,15 +1006,25 @@ $(function() {
 				if(v != "") {
 					var exists = elements.find("." + v);
 					if(td[v] && !exists.length) {
-						var val = (simAgainstData.attrs[v]) ? simAgainstData.attrs[v] : 0,
-								attr = $("<li></li>"),
+						var val = (simAgainstData.attrs[v]) ? simAgainstData.attrs[v] : 0;
+						// Hacky solution for minmax... will be better in new version
+						if(typeof(val) == 'object') {
+							val = val.min + "-" + val.max;
+						}
+						var	attr = $("<li></li>"),
 								label = td[v],
 								input = "<input type='text' name='" + v + "' value='" + val + "' tabindex='100'/>";
 						label = label.replace("VVV", input);
 						attr.append(label);
 						attr.find("input").bind("keyup", function() {
 							// Set the Simulated Data Attribute Value
-							simAgainstData.attrs[$(this).attr("name")] = ($(this).val()) ? $(this).val() : 0;
+							if(_.indexOf(['minmax-damage', 'arcane-damage', 'cold-damage', 'fire-damage', 'holy-damage', 'lightning-damage', 'poison-damage'], v) >= 0) {
+								var parts = $(this).val().split("-");
+								simAgainstData.attrs[$(this).attr("name")].min = parts[0];
+								simAgainstData.attrs[$(this).attr("name")].max = parts[1];
+							} else {
+								simAgainstData.attrs[$(this).attr("name")] = ($(this).val()) ? $(this).val() : 0;								
+							}
 							// Init the Calc
 							calc.init();
 							// Setup the Class for the Calculator

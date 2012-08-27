@@ -69,10 +69,10 @@ var activeActives = [];
 	<ul>
 		<li><a href="#build-gear">Gear</a></li>
 		<li><a href="#build-skills">Skills</a></li>
-		<? if($myBuild): ?>
-			<li><a href="#build-compare">Compare</a></li>
-			<li><a href="#item-simulate">Simulate Item</a></li>
+		<? if($profile): ?>
+		<li><a href="#build-compare">Compare</a></li>
 		<? endif ?>
+		<li><a href="#item-simulate">Simulate Item</a></li>
 	</ul>
 	<div id="build-skills">
 		<a <?= (!$myBuild) ? "style='display: none'" : ""?>  class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only skill-change"><span class="ui-button-text">Change My Skills</span></a>
@@ -81,7 +81,6 @@ var activeActives = [];
 		<ul id='build-active-skills'></ul>
 		<ul id='build-passive-skills'></ul>
 	</div>
-	<? if($myBuild): ?>
 	<div id="item-simulate">
 		<p>Which item do you wish to simulate changes on?</p>
 		<p><select id="simulate-slot">
@@ -92,7 +91,7 @@ var activeActives = [];
 		</select></p>
 		<p><span id="simulate-against"></span></p>
 		<div id="simulation-stats">
-			<p>Loaded below are the stats currently on the item, feel free to adjust them to see the changes live in your build as well as a table of differences that's automatically generated below.</p>
+			<p>Loaded below are the stats currently on the item, feel free to adjust them to see the changes live in this build as well as a table of differences that's automatically generated below.</p>
 			<p>Attributes</p>
 			<select id="simulate-attributes" data-placeholder="Select Attributes for Item" multiple="multiple" style="width: 510px">
 				<?= $this->render("./item/_itemAttributeOptions.phtml") ?>
@@ -113,17 +112,16 @@ var activeActives = [];
 					</ul>
 				</div>
 				<div class="bottom"> 
-					<? if($profile = Epic_Auth::getInstance()->getProfile()): ?>
-						Created by: <?= $profile->username ?>
-					<? endif; ?>
+					&nbsp;
 				</div>
 			</div>
 			<div class="compare-diff"></div>
 			<p>Please note: When working with a weapon, the +% Damage, +Elemental Damage, +% Speed and other attributes don't matter. The only things that matter are the Min/Max damage and Attacks per Second (Obviously Primary Stats, Crit, etc all still matter).</p>
 		</div>
 	</div>
+	<? if($profile): ?>
 	<div id="build-compare">
-		<p>This compare tool will compare what you are <b>currently wearing</b> to an item you select from the database.</p>
+		<p>This compare tool will compare what this build is <b>currently wearing</b> to an item you have in the database.</p>
 		<p>Please select the <i>slot</i> of the item you wish to compare first, then select the item from your items from the drop down.</p>
 		<p>Which item slot should we compare?</p>
 		<select id="compared-slot">
@@ -143,7 +141,7 @@ var activeActives = [];
 		<div class="compare-diff"></div>
 		<p><b>Note</b>: Currently the item HAS to be created by you before you are able to compare them.</p>
 	</div>
-	<? endif; ?>
+	<? endif ?>
 	<div id="build-gear">
 		<? if($myBuild): ?>
 		<p>Adding gear to your build will dynamically update the statistics displayed in the statistics panel.</p>

@@ -67,6 +67,7 @@ var itemBuilder = {
 		'plus-damage': '+VVV% Damage',
 		'min-damage': '+VVV Minimum Damage',
 		'max-damage': '+VVV Maximum Damage',
+		'minmax-damage': '+VVV Damage (Min/Max)',
 		'life-steal': 'VVV% of Damage Dealt is Converted to Life (Steal)',
 		'life-kill': '+VVV Life after each Kill',
 		'life-hit': 'Each hit adds +VVV Life',		

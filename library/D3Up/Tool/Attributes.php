@@ -38,7 +38,7 @@ class D3Up_Tool_Attributes
 		'plus-damage' => '+[v]% Damage',
 		'min-damage' => '+[v] Minimum Damage',
 		'max-damage' => '+[v] Maximum Damage',
-		'minmax-damage' => '+[v] Damage',
+		'minmax-damage' => '+[v] Damage (Min/Max)',
 		// Elemental Damage
 		'plus-arcane-damage' => '+[v]% to Arcane Damage',
 		'plus-cold-damage' => '+[v]% to Cold Damage',
