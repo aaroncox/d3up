@@ -93,6 +93,7 @@ class D3Up_Tool_Crawler
 		'ceremonial-knife' => 'ceremonial-knife',
 		'ceremonialdagger' => 'ceremonial-knife',
 		'handcrossbow' => 'hand-crossbow',
+		'handxbow' => 'hand-crossbow',
 		'dagger' => 'dagger',
 		'fistweapon' => 'fist-weapon',
 		'mace' => 'mace',
