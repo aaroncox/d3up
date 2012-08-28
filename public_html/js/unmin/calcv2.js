@@ -789,6 +789,7 @@ BuildCalculator.prototype = {
 						case "3rd-hit":
 							bonuses['3rd-hit-damage'] = e;
 							break;
+						case "plus-damage-conditional":
 						case "damage-reduce-conditional":
 						case "plus-crit-hit":
 						case "plus-attack-speed":
