@@ -881,7 +881,6 @@ BuildCalculator.prototype = {
 	applySetBonuses: function() {
 		_.each(this.sets, function(v,k) {
 			if(v > 1) {
-				console.log(k);
 				if(setBonuses[k]) {
 					_.each(setBonuses[k].effect, function(list, amount) {
 						if(k >= amount) {
