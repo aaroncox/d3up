@@ -881,20 +881,23 @@ BuildCalculator.prototype = {
 	applySetBonuses: function() {
 		_.each(this.sets, function(v,k) {
 			if(v > 1) {
-				_.each(setBonuses[k].effect, function(list, amount) {
-					if(k >= amount) {
-						_.each(list, function(value, stat) {
-							if(value < 1) {
-								value = value * 100;
-							}
-							if(typeof(this.attrs[stat]) != "undefined") {
-								this.attrs[stat] += parseFloat(value);
-							} else {
-								this.attrs[stat] = parseFloat(value);
-							}
-						}, this);
-					}
-				}, this);
+				console.log(k);
+				if(setBonuses[k]) {
+					_.each(setBonuses[k].effect, function(list, amount) {
+						if(k >= amount) {
+							_.each(list, function(value, stat) {
+								if(value < 1) {
+									value = value * 100;
+								}
+								if(typeof(this.attrs[stat]) != "undefined") {
+									this.attrs[stat] += parseFloat(value);
+								} else {
+									this.attrs[stat] = parseFloat(value);
+								}
+							}, this);
+						}
+					}, this);					
+				}
 			}
 		}, this);
 	},
