@@ -82,6 +82,7 @@ class D3Up_Tool_Crawler
 		'axe2h' => '2h-axe',
 		'bow' => 'bow',
 		'diabo' => 'diabo',
+		'combatstaff' => 'diabo',
 		'crossbow' => 'crossbow',
 		'2hmighty' => '2h-mighty',
 		'mighty2h' => '2h-mighty',
