@@ -56,7 +56,7 @@ class GuideController extends Epic_Controller_Action
 							$cleaned = $filter->filter($section['content']);
 							$sec['content'] = $cleaned;
 						}
-						$sectionsArray[$idx] = $sec;
+						$sectionsArray[] = $sec;
 					}
 					$guide->sections = $sectionsArray;
 				}
