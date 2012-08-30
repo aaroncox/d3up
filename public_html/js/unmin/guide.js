@@ -84,27 +84,68 @@ $(function() {
 			// Append them to the Wrapper
 			section.prepend(controls);
 		},
+		toggleHidden: function(section) {
+			var id = section.data("section"); 
+			this.saveStatusChange(false);
+			switch(section.attr('class')) {
+				case "section":
+					if(this.data[id]) {
+						if(this.data[id].hidden == true) {
+							this.data[id].hidden = false;																				
+						} else {
+							this.data[id].hidden = true;													
+						}
+					}
+					break;
+				default:
+					break;
+			}
+			
+		},
+		toggleContent: function(section) {
+			var content = section.find(".section-content");
+			if(content.is(":visible")) {
+				content.hide();
+			} else {
+				content.show();
+			}
+		},
 		addControls: function(section) {
 			var $this = this,
 					id = section.data("section"),
+					hidden = section.data("hidden"),
 					controls = $("<div class='section-control'>"),
 					btnEdit = $("<a class='button btnEdit'>Edit</a>"),
+					toggleHidden = $("<label for='tglHidden'>Hidden?</label><input type='checkbox' name='tglHidden' class='tglHidden'>"),
 					btnDelete = $("<a class='button btnDelete'>Delete</a>"),
 					btnTop = $("<a class='button btnTop'>Top</a>"),
+					minWrap = $("<div class='wrap-button ui-state-default ui-corner-all'>"),
+					minBtn = $("<span class='ui-icon ui-icon-minusthick'></span>"),
 					title = section.find("h3.section-title"),
 					body = section.find("div.section-content");
 			btnTop.bind('click', function() {
 				scrollTo(0,0);
 			});
+			if(hidden) {
+				toggleHidden.attr("checked", "checked");
+			}
+			toggleHidden.bind('click', function() {
+				$this.toggleHidden(section);
+			});
+			minBtn.bind('click', function() {
+				$(this).toggleClass('ui-icon-minusthick ui-icon-plusthick');
+				$this.toggleContent(section);
+			})
 			if(this.isOwner) {
 				// Add the Buttons to the Section
 				this.bindEdit(btnEdit, section);
 				this.bindDelete(btnDelete, section);
 				// Append the Controls
-				controls.append(btnEdit, btnDelete);
+				controls.append(toggleHidden, btnEdit, btnDelete);
 			}
 			controls.append(btnTop);
 			// Append them to the Wrapper
+			section.prepend(minWrap.append(minBtn));
 			section.prepend(controls);
 		},
 		bindDone: function(btn, section) {
@@ -206,6 +247,7 @@ $(function() {
 					bodyStyle: "background: #111; padding: 0 10px;",
 					docType: '<!DOCTYPE HTML>',
 					updateTextArea: function(html) {
+						console.log(html);
 						html = html.replace(/\u00a0/g, " ").trim();
 						body.html(html);
 						bodyEdit.html(html);
@@ -291,9 +333,19 @@ $(function() {
 						$this.addSection();
 					});
 				}
+				if(this.btnMinAll) {
+					this.btnMinAll.bind('click', function() {
+						if($(".section-content").is(":visible")) {
+							$(".section-content").hide();							
+						} else {
+							$(".section-content").show();							
+						}
+					});
+				}
 				if(this.btnSaveGuide) {
 					this.btnSaveGuide.bind('click', function() {
 						$(".btnDone").trigger('click');
+						console.log($this.skills, $this.passives);
 						$.ajax({
 						  type: 'POST',
 						  data: {
@@ -314,10 +366,12 @@ $(function() {
 			this.sections.find(".section").each(function() {
 				var id = $(this).data("section"),
 						title = $(this).find(".section-title").text(),
-						content = $(this).find(".section-content").html();
+						content = $(this).find(".section-content").html(),
+						hidden = $(this).data("hidden");
 				$this.data[id] = {
 					title: title,
-					content: content
+					content: content,
+					hidden: hidden
 				};
 				$this.addControls($(this));
 			});
@@ -412,7 +466,7 @@ $(function() {
 				if(skill.rune) {
 					icon.attr('data-tooltip', skill.desc.replace(/  /, "<br/><br/>") + "<br/><br/>" + skill.rune);
 				}
-				skillInfo.append(icon, title);
+				skillInfo.append(title.prepend(icon));
 				icon.bindSkilltip();
 				li.prepend(skillInfo, content);
 			} else {
@@ -440,7 +494,7 @@ $(function() {
 				this.addPassiveControls(skillInfo);
 				icon.attr('data-tooltip', skill.desc);
 				icon.attr('data-name', skillName.replace(/-/g, " ").capitalize());
-				skillInfo.append(icon, title);
+				skillInfo.append(title.prepend(icon));
 				icon.bindSkilltip();
 				li.prepend(skillInfo, content);				
 			} else {
@@ -466,13 +520,13 @@ $(function() {
 				if(content.text().length == 0) {
 					content.hide();
 				}
-				$this.addPassiveControls(skillInfo);
+				$this.addSkillControls(skillInfo);
 				icon.attr('data-tooltip', skill.desc);
 				icon.attr('data-name', skill.name);
 				if(skill.rune) {
 					icon.attr('data-tooltip', skill.desc.replace(/  /, "<br/><br/>") + "<br/><br/>" + skill.rune);
 				}
-				skillInfo.append(icon, title);
+				skillInfo.append(title.prepend(icon));
 				icon.bindSkilltip();
 				$(this).prepend(skillInfo, content);
 			});
@@ -505,7 +559,7 @@ $(function() {
 				if(skill.rune) {
 					icon.attr('data-tooltip', skill.desc.replace(/  /, "<br/><br/>") + "<br/><br/>" + skill.rune);
 				}
-				skillInfo.append(icon, title);
+				skillInfo.append(title.prepend(icon));
 				icon.bindSkilltip();
 				$(this).prepend(skillInfo, content);
 			});
@@ -564,6 +618,7 @@ $(function() {
 				// Setup jQuery Elements
 				this.btnNewSection = this.toolbar.find(".createSection");
 				this.btnSaveGuide = this.toolbar.find(".saveGuide");
+				this.btnMinAll = this.toolbar.find("#minAll");
 				// Bind Sortable on Sections
 				this.sectionSortable();
 				// Add Skill Choosers

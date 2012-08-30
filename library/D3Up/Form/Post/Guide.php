@@ -46,7 +46,20 @@ class D3Up_Form_Post_Guide extends Epic_Form
 			'required' => true,
 			'label' => 'Guide Title',
 			'description' => 'A descriptive title of what this guide is (ie: "Inferno WW Barb")',
+			'validators' => array(
+				array('StringLength', false, array(2, 80)),
+			),
 			'value' => $guide->title,
+		));
+		
+		$this->addElement("text", "description", array(
+			'required' => false,
+			'label' => 'Guide Description',
+			'description' => 'A quick description of what this guide hopes to accomplish (up to 100 characters).',
+			'validators' => array(
+				array('StringLength', false, array(0, 100)),
+			),
+			'value' => $guide->description,			
 		));
 		
 		$this->addElement("select", "topic", array(
@@ -84,6 +97,7 @@ class D3Up_Form_Post_Guide extends Epic_Form
 	public function save() {
 		$guide = $this->getGuide();
 		$guide->title = $this->title->getValue();
+		$guide->description = $this->description->getValue();
 		$guide->topic = $this->topic->getValue();
 		$guide->class = $this->class->getValue();
 		if($guide->isNewDocument()) {

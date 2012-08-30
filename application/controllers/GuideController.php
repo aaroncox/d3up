@@ -11,6 +11,35 @@ class GuideController extends Epic_Controller_Action
 		return $this->view->guide = $this->getRequest()->getParam('post');
 	}
 	public function indexAction() {
+		$featured = 1;
+		$query = array(
+			// 'published' => true,
+			'id' => array('$ne' => $featured),
+		);
+		$fQuery = array(
+			'id' => $featured
+		);
+		$sort = array(
+			'votes' => -1,
+			'views' => -1
+		);
+		if($filterClass = $this->view->filterClass = $this->getRequest()->getParam('class')) {
+			$query['class'] = $filterClass;
+		}
+		if($filterType = $this->view->filterType = $this->getRequest()->getParam('type')) {
+			$query['topic'] = $filterType;
+		}
+		
+		$this->view->featured = $featured = Epic_Mongo::db('guide')->fetchOne($fQuery);
+		
+		$guides = Epic_Mongo::db('guide')->fetchAll($query, $sort);
+		$paginator = Zend_Paginator::factory($guides);
+		$paginator->setCurrentPageNumber($this->getRequest()->getParam('page', 1))->setItemCountPerPage(15)->setPageRange(3);
+		$this->view->guides = $paginator;
+		
+		if($this->_request->isXmlHttpRequest()) {
+			$this->_helper->layout->disableLayout();
+		}
 		
 	}
 	public function checkVote() {
@@ -55,6 +84,11 @@ class GuideController extends Epic_Controller_Action
 						if($section['content'] != "null") {
 							$cleaned = strip_tags($section['content'], '<p><a><img><div><li><ul><ol><br/><br><pre><span><strong><em><bold><blockquote>');
 							$sec['content'] = $cleaned;
+						}
+						if($section['hidden'] == "true") {
+							$sec['hidden'] = true;
+						} else {
+							$sec['hidden'] = null;
 						}
 						$sectionsArray[] = $sec;
 					}
@@ -131,5 +165,21 @@ class GuideController extends Epic_Controller_Action
 		} else {
 			$this->_redirect('/user/login');
 		}
+	}
+	public function publishAction() {
+		$guide = $this->getGuide();
+		if($confirm = $this->getRequest()->getParam("confirm")) {
+			$guide->published = true;
+			$guide->save();
+			$this->_redirect("/guide/".$guide->id."/".$guide->slug);
+		}
+	}
+	public function unpublishAction() {
+		$guide = $this->getGuide();
+		if($confirm = $this->getRequest()->getParam("confirm")) {
+			$guide->published = false;
+			$guide->save();
+			$this->_redirect("/guide/".$guide->id."/".$guide->slug);
+		}		
 	}
 } // END class GuideController extends Epic_Controller_Action

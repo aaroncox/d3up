@@ -10,30 +10,43 @@
 <? if($isOwner): ?>
 <div id="toolbar">
 	<div id="guide-owner">
-		<h2>Guide Owner Tools (Status: <span id="save-status" class="true">Saved</span>)</h2>
+		<div class="controls" style="text-align: right; padding: 5px">
+			<p>
+				Status: <span id="save-status" class="true">Saved</span><br/>Published: <span id="publish-status" class="<?= ($this->guide->published) ? 'true' : 'false' ?>"><?= ($this->guide->published) ? 'Yes' : 'No' ?></span>
+			</p>
+		</div>
+		<h2>Guide Owner Tools</h2>
 		<div class="control">
-			<a style="padding: 5px 20px" class="createSection ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" role="button">Add Section to Guide</a>
-			<a href="/guide/<?= $this->guide->id ?>/<?= $this->guide->slug ?>/edit" style="padding: 5px 20px; color: #fff" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" role="button">Edit Title</a>
-			<a style="padding: 5px 20px" class="saveGuide ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" role="button">Save</a>
-			<a href="/guide/<?= $this->guide->id ?>/<?= $this->guide->slug ?>/" style="padding: 5px 20px; color: #fff" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" role="button">Cancel</a>
+			<a class="createSection ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" role="button">Create Section</a>
+			<? if($this->guide->published): ?>
+				<a href="/guide/<?= $this->guide->id ?>/<?= $this->guide->slug ?>/unpublish" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" role="button">Unpublish</a>
+			<? else: ?>
+				<a href="/guide/<?= $this->guide->id ?>/<?= $this->guide->slug ?>/publish" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" role="button">Publish</a>
+			<? endif ?>
+			<a href="/guide/<?= $this->guide->id ?>/<?= $this->guide->slug ?>/edit" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" role="button">Edit Title</a>
+			<a class="saveGuide ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" role="button">Save</a>
+			<a href="/guide/<?= $this->guide->id ?>/<?= $this->guide->slug ?>/" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" role="button">Cancel</a>
+		</div>
+		<div class="sub-control">
+			<a href="#" id="minAll">Minimize All Sections</a>
 		</div>
 	</div>
 </div>
 <form method="post" id="guide-form">
 <? endif ?>
 	<div id="guide" <?= ($isOwner) ? "data-owner='true'" : "" ?> data-class="<?= $this->guide->class ?: 'all' ?>">
-		<div class="title">
+		<div class="title-block">
 			<div id="ratings-display">
 				<div class='item-stat inline-flow'>
 					<span class='value'><?= $this->prettyStat($this->guide->views) ?></span>
 					<span class='stat'>Views</span>
 				</div>
-				<img id="button-upvote" src="/images/upvote.png" class="ui-state-disabled ui-corner-all" data-name="Build Voting	" data-tooltip="In order to record your vote, we require to to be logged in. Please login or create an account!">
+				<img id="button-upvote" src="/images/upvote.png" class="ui-state-disabled ui-corner-all" data-name="Guide Voting	" data-tooltip="In order to record your vote, we require to to be logged in. Please login or create an account!">
 				<div class='item-stat inline-flow'>
 					<span class='value' id="vote-count" data-count="<?= $this->guide->votes ?: 0 ?>"><?= $this->guide->votes ?: 0 ?></span>
 					<span class='stat'>Votes</span>
 				</div>
-				<img id="button-downvote" src="/images/downvote.png" class="ui-state-disabled ui-corner-all" data-name="Build Voting	" data-tooltip="In order to record your vote, we require to to be logged in. Please login or create an account!">
+				<img id="button-downvote" src="/images/downvote.png" class="ui-state-disabled ui-corner-all" data-name="Guide Voting	" data-tooltip="In order to record your vote, we require to to be logged in. Please login or create an account!">
 			</div>
 			<h1><?= $this->guide->title ?></h1>
 			<h2>
@@ -111,12 +124,14 @@
 		<div class="content">
 			<? if($this->guide->sections): ?>
 				<? foreach($this->guide->sections as $key => $section): ?>
-				<div id="section-<?= $key ?>" class="section" data-section="<?= $key ?>">
-					<h3 class="section-title"><?= $section->title ?></h3>
-					<div class="section-content">
-						<?= $section->content ?>
+					<? if(!$section->hidden || $isOwner): ?>
+					<div id="section-<?= $key ?>" class="section" data-section="<?= $key ?>" data-hidden="<?= $section->hidden ?>">
+						<h3 class="section-title"><?= $section->title ?></h3>
+						<div class="section-content">
+							<?= $section->content ?>
+						</div>
 					</div>
-				</div>
+					<? endif ?>
 				<? endforeach ?>
 			<? endif ?>
 		</div>

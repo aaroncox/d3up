@@ -168,7 +168,7 @@ $(function() {
 	});
 	$("#sortAttributes").chosen({allow_single_deselect: true});
 	$("#sortAttributes").bind('change', getResults);
-	$("#item-pagination a").bind('click', bindPagination);
+	$(".td-paginator #item-pagination a").bind('click', bindPagination);
 	function bindPagination() {
 		var link = $(this).prop("href");
 		$("#recent-items tbody").addClass("ui-state-disabled");

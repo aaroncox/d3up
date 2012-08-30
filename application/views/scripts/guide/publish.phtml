@@ -1,0 +1,24 @@
+<div id="guide">
+	<div class="title-block">
+		<h1>Publishing your Guide</h1>
+		<h2>
+			<?= $this->mLink($this->guide) ?>
+		</h2>
+		<h5>
+			By <span class='author'><?= $this->guide->author->username ?></span>
+			on <span class='date'><?= date('F j, Y', $this->guide->_created) ?></span>
+			<? if($this->guide->_updated): ?>
+			 <br/>Last Updated: <span class='date'><?= date('F j, Y', $this->guide->_updated) ?></span>
+			<? endif ?>
+		</h5>
+	</div>
+	<div class="section">
+		<h3>Are you sure you want to publish this guide?</h3>
+		<div class="section-content">
+			<p>Publishing the guide will make it available as users browse D3Up.com. It marks the guide itself as public and will cause it to show up on the homepage, in the guides section and on any other pages where guides are displayed.</p>
+			<p>You do <strong>not</strong> need to publish your guide in order to share it with others, other users can still access your guide if you send them a link.</p>
+			<p>You should publish your guide when you feel it is ready for public consumption.</p>
+			<a href="?confirm=true" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" style="padding: 10px">Yes, publish my guide.</a>
+		</div>
+	</div>
+</div>

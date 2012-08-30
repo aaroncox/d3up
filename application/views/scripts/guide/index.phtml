@@ -1,0 +1,94 @@
+<div id="guides">
+	<div class='featured title-block' data-class="<?= $this->featured->class ?: 'all' ?>">
+		<h5>Featured Guide</h5>
+		<h2><?= $this->guideLink($this->featured) ?></h2>
+		<h3><?= $this->featured->description ?></h3>
+		<div class="section-preview">
+			<strong>Sections:</strong>
+			<?= $this->sectionPreview($this->featured, 6) ?>
+		</div>
+	</div>
+	<div class="guide-filters">
+		<select id="guide-filter-type" class='guide-filter' data-placeholder="Filter by Type">
+			<option <?= ($this->filterType == '') ? 'selected="selected"' : '' ?> value="">All Topics</option>			
+			<option <?= ($this->filterType == 'general') ? 'selected="selected"' : '' ?> value="general">General Guide</option>
+			<option <?= ($this->filterType == 'class') ? 'selected="selected"' : '' ?> value="class">Class Guide</option>
+			<option <?= ($this->filterType == 'farming') ? 'selected="selected"' : '' ?> value="farming">Farming Guide</option>
+			<option <?= ($this->filterType == 'leveling') ? 'selected="selected"' : '' ?> value="leveling">Leveling Guide</option>
+			<option <?= ($this->filterType == 'pvp') ? 'selected="selected"' : '' ?> value="pvp">PVP Guide</option>
+		</select>	
+		<select id="guide-filter-class" class='guide-filter' data-placeholder="Filter by Class">
+			<option <?= ($this->filterClass == '') ? 'selected="selected"' : '' ?> value="">All Classes</option>
+			<option <?= ($this->filterClass == 'barbarian') ? 'selected="selected"' : '' ?> value="barbarian">Barbarian</option>
+			<option <?= ($this->filterClass == 'demon-hunter') ? 'selected="selected"' : '' ?> value="demon-hunter">Demon Hunter</option>
+			<option <?= ($this->filterClass == 'monk') ? 'selected="selected"' : '' ?> value="monk">Monk</option>
+			<option <?= ($this->filterClass == 'witch-doctor') ? 'selected="selected"' : '' ?> value="witch-doctor">Witch Doctor</option>
+			<option <?= ($this->filterClass == 'wizard') ? 'selected="selected"' : '' ?> value="wizard">Wizard</option>
+		</select>	
+	</div>
+	<div class='guide-pages'>
+		<?php echo $this->paginationControl($this->guides,
+	                                    'Elastic',
+	                                    'guide/_pages.phtml')?>
+  </div>
+	<? if(count($this->guides)): ?>
+	<table class='d3up-table'>		
+		<thead>
+			<tr>
+				<th>Score</th>
+				<th>Name</th>
+				<th>Type</th>
+				<th>Class</th>
+				<th>Views</th>
+			</tr>
+		</thead>
+		<tbody>
+			<? foreach($this->guides as $guide): ?>
+			<tr class='guide'>
+				<td class='stat'><?= $this->prettyStat($guide->votes) ?></td>
+				<td class='guide'>
+					<p><?= $this->guideLink($guide) ?></p>
+					<p><?= $guide->description ?></p>
+				</td>
+				<td class='data'><?= ucwords(str_replace('-', " ", $guide->class)) ?></td>
+				<td class='data'><?= $this->guideTopic($guide->topic) ?></td>
+				<td class='data'><?= count($guide->views) ?></td>
+			</tr>
+			<? endforeach ?>
+		</tbody>
+	</table>
+	<? else: ?>
+	<h2 style="margin: 50px">No guides were found that match your search criteria.</h2>
+	<? endif ?>
+</div>
+<script type="text/javascript">
+	$(function() {
+		var guidePages = $(".guide-pages"),
+				guideFilters = $(".guide-filter"),
+				guides = $("#guides");
+		
+		guidePages.find("a").bind('click', function() {
+			updateSelections($(this).data("page"));
+			return false;
+		});
+		guideFilters.bind('change', function() {
+			updateSelections(1);
+		});
+		
+		function updateSelections(page) {
+			var selectTypes = $("#guide-filter-type").find(":selected").val(),
+					selectClass = $("#guide-filter-class").find(":selected").val();
+			$.ajax({
+				data: {
+					class: selectClass,
+					type: selectTypes,
+					page: page
+				},
+				success: function(data) {
+					var newGuides = $(data);
+					guides.replaceWith(newGuides);
+				}
+			});
+		}
+	});
+</script>

@@ -1,5 +1,5 @@
 <?php if ($this->pageCount > 1): ?>
-<div id="item-pagination" style="text-align: right">
+<div id="guide-pagination">
 	<!-- Previous page link -->
 	<?php if (isset($this->previous)): ?>
 		<a href="?page=<?= $this->previous ?>">&lsaquo;</a>
@@ -8,7 +8,7 @@
 	<!-- Numbered page links -->
 	<?php foreach ($this->pagesInRange as $page): ?>
 		<?php if ($page != $this->current): ?>
-			<a href="?page=<?= $page ?>"><?php echo $page; ?></a>
+			<a href="?page=<?= $page ?>" data-page="<?= $page ?>"><?php echo $page; ?></a>
 		<?php else: ?>
 			<span><?php echo $page; ?></span>
 		<?php endif; ?>
@@ -16,10 +16,10 @@
 
 	<!-- Next page link -->
 	<?php if (isset($this->next)): ?>
-		<a href="?page=<?= $this->next ?>">&rsaquo;</a>
+		<a data-page="<?= $page ?>" href="?page=<?= $this->next ?>">&rsaquo;</a>
 	<?php endif; ?>
 	<?php if (isset($this->last) && $this->last != $this->next && $this->last != $this->current): ?>
-		<a href="?page=<?= $this->last ?>">&raquo;</a>
+		<a data-page="<?= $page ?>" href="?page=<?= $this->last ?>">&raquo;</a>
 	<?php endif; ?>
 </div>
 <?php endif; ?>

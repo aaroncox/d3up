@@ -20,7 +20,7 @@ var activeActives = [];
 <? endif; ?>
 </script>
 <div id="build">
-	<div class="build-header title" data-class="<?= $this->record->class ?>">
+	<div class="build-header title-block" data-class="<?= $this->record->class ?>">
 		<? if($profile && $this->record->_createdBy): ?>
 		<div class="controls">
 			<? if($profile->createReference() == $this->record->_createdBy->createReference()): ?>
