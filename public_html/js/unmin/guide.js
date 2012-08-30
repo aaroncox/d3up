@@ -153,6 +153,7 @@ $(function() {
 			btn.bind('click', function() {
 				section.find(".editing").remove();
 				section.find(".section-control").remove();
+				section.find(".wrap-button").remove();
 				section.find("h3.section-title").show();
 				section.find("div.section-content").show();				
 				$this.addControls(section);
@@ -191,12 +192,14 @@ $(function() {
 						title = section.find("h3.section-title"),
 						body = section.find("div.section-content"),
 						controls = section.find(".section-control"),
+						minBtn = section.find(".wrap-button"),
 						tocEntry = $this.toc.find("li[data-section=" + id + "] a"),
 						btnDone = $("<a class='btnDone button' style='margin: 10px'>Done Editing</a>").button(),
 						editWrap = $("<div class='editing'>"),
 						titleEdit = $("<input class='titleEdit' style='width: 75%' type='text'\">").attr("value", title.text()),
 						bodyEdit = $("<textarea class='bodyEdit' style='width: 100%; height: 500px'>").html(body.html().trim());
 				controls.empty().append(btnDone);
+				minBtn.remove();
 				// Bind the new Editors
 				titleEdit.bind("keyup", function() {
 					title.html($(this).val().replace(/(<([^>]+)>)/ig,""));
@@ -205,7 +208,7 @@ $(function() {
 					$this.saveStatusChange(false);
 				});
 				$this.bindDone(btnDone, section);
-				editWrap.append($("<h3>").append(titleEdit), bodyEdit);
+				editWrap.append($("<h3 class='ui-helper-clearfix' style='margin: 0; padding: 10px 0 0'>").append(titleEdit), bodyEdit);
 				// Append them to the Section
 				section.append(editWrap);
 				bodyEdit.cleditor({
