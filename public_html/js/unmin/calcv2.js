@@ -1356,6 +1356,20 @@ BuildCalculator.prototype = {
 						this.isDuelWielding = false;
 						this.attrs[ak] = av['min'] + "-" + av['max'];
 						break;
+					case "armor":
+						switch(json.type) {
+							case "ring":
+							case "amulet":				
+								break;
+							default:
+								if(this.attrs[ak]) {
+									this.attrs[ak] += parseFloat(av);
+								} else {
+									this.attrs[ak] = parseFloat(av);
+								}
+								break;
+						}
+						break;
 					default:
 						if(this.attrs[ak]) {
 							this.attrs[ak] += parseFloat(av);
