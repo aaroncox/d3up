@@ -678,8 +678,8 @@ $(function() {
 		dpsGear.append(statLabel("Ring 1 DPS", stats['dps-ring1'], 'round'));			
 		dpsGear.append(statLabel("Ring 2 DPS", stats['dps-ring2'], 'round'));			
 		dpsGear.append(statLabel("Boots DPS", stats['dps-boots'], 'round'));	
-		// dpsGear.append(statLabel("Main Hand DPS", stats['dps-mainhand'], 'round'));			
-		// dpsGear.append(statLabel("Off Hand DPS", stats['dps-offhand'], 'round'));			
+		dpsGear.append(statLabel("Main Hand DPS", stats['dps-mainhand'], 'round'));			
+		dpsGear.append(statLabel("Off Hand DPS", stats['dps-offhand'], 'round'));			
 		$("#stats-dps-gear").html(dpsGear);	
 	}
 	// Run stats display
