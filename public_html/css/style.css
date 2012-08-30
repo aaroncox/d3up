@@ -1099,6 +1099,9 @@ div.title-block h5 {
 	padding: 20px 20px 0;
 	background: rgba(0, 0, 0, 0.5); 
 }
+.featured.title-block > h3 {
+	padding: 20px;
+}
 #build div.title-block h3 {
 	padding: 0 20px 0;	
 }

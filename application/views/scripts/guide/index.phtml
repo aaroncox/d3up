@@ -1,6 +1,6 @@
 <div id="guides">
 	<div class='featured title-block' data-class="<?= $this->featured->class ?: 'all' ?>">
-		<h5>Featured Guide</h5>
+		<h5 style='color: #B18135'>Featured Guide</h5>
 		<h2><?= $this->guideLink($this->featured) ?></h2>
 		<h3><?= $this->featured->description ?></h3>
 		<div class="section-preview">
@@ -52,7 +52,7 @@
 				</td>
 				<td class='data'><?= ucwords(str_replace('-', " ", $guide->class)) ?></td>
 				<td class='data'><?= $this->guideTopic($guide->topic) ?></td>
-				<td class='data'><?= count($guide->views) ?></td>
+				<td class='data'><?= $guide->views ?></td>
 			</tr>
 			<? endforeach ?>
 		</tbody>
