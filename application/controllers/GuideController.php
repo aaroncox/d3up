@@ -105,6 +105,13 @@ class GuideController extends Epic_Controller_Action
 	}
 	public function editAction() {
 		$guide = $this->getGuide();
+		$profile = Epic_Auth::getInstance()->getProfile();
+		if(!$profile) {
+			throw new Exception("You aren't logged in!");
+		}
+		if($profile->id != $guide->author->id) {
+			throw new Exception("This isn't your guide to edit.");
+		}
 		$this->view->form = $form = $guide->getEditForm();
 		if($this->getRequest()->isPost()) {
 			if($guide = $form->process($this->getRequest()->getParams())) {
@@ -113,11 +120,16 @@ class GuideController extends Epic_Controller_Action
 		}		
 	}
 	public function createAction() {
-		$this->view->form = $form = new D3Up_Form_Post_Guide();
-		if($this->getRequest()->isPost()) {
-			if($guide = $form->process($this->getRequest()->getParams())) {
-				$this->_redirect("/guide/".$guide->id."/".$guide->slug);
+		$profile = Epic_Auth::getInstance()->getProfile();
+		if($profile) {			
+			$this->view->form = $form = new D3Up_Form_Post_Guide();
+			if($this->getRequest()->isPost()) {
+				if($guide = $form->process($this->getRequest()->getParams())) {
+					$this->_redirect("/guide/".$guide->id."/".$guide->slug);
+				}
 			}
+		} else {
+			$this->_redirect('/user/login');
 		}
 	}
 } // END class GuideController extends Epic_Controller_Action
