@@ -151,7 +151,7 @@ $(function() {
 						body = section.find("div.section-content"),
 						controls = section.find(".section-control"),
 						tocEntry = $this.toc.find("li[data-section=" + id + "] a"),
-						btnDone = $("<a class='btnDone button' style='margin: 10px'>Done Editing / Save</a>").button(),
+						btnDone = $("<a class='btnDone button' style='margin: 10px'>Done Editing</a>").button(),
 						editWrap = $("<div class='editing'>"),
 						titleEdit = $("<input class='titleEdit' style='width: 75%' type='text'\">").attr("value", title.text()),
 						bodyEdit = $("<textarea class='bodyEdit' style='width: 100%; height: 500px'>").html(body.html());
