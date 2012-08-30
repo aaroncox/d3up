@@ -53,7 +53,7 @@ class GuideController extends Epic_Controller_Action
 							$sec['title'] = strip_tags($cleaned);
 						}
 						if($section['content'] != "null") {
-							$cleaned = $filter->filter($section['content']);
+							$cleaned = strip_tags($section['content'], '<p><a><img><div><li><ul><ol><br/><br><pre><span><strong><em><bold><blockquote>');
 							$sec['content'] = $cleaned;
 						}
 						$sectionsArray[] = $sec;
@@ -74,7 +74,7 @@ class GuideController extends Epic_Controller_Action
 							$skillArray['skill'] = $skill['skill'];
 						}
 						if($skill['content'] != "null") {
-							$cleaned = $filter->filter($skill['content']);
+							$cleaned = strip_tags($skill['content'], '<p><a><img><div><li><ul><ol><br/><br><pre><span><strong><em><bold><blockquote>');
 							$skillArray['content'] = $cleaned;							
 						}
 						$skillsSet[$idx] = $skillArray;
@@ -92,7 +92,7 @@ class GuideController extends Epic_Controller_Action
 							$skillArray['skill'] = $skill['skill'];
 						}
 						if($skill['content'] != "null") {
-							$cleaned = $filter->filter($skill['content']);
+							$cleaned = strip_tags($skill['content'], '<p><a><img><div><li><ul><ol><br/><br><pre><span><strong><em><bold><blockquote>');
 							$skillArray['content'] = $cleaned;							
 						}
 						$passivesSet[$idx] = $skillArray;

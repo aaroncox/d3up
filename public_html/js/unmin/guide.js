@@ -154,7 +154,7 @@ $(function() {
 						btnDone = $("<a class='btnDone button' style='margin: 10px'>Done Editing</a>").button(),
 						editWrap = $("<div class='editing'>"),
 						titleEdit = $("<input class='titleEdit' style='width: 75%' type='text'\">").attr("value", title.text()),
-						bodyEdit = $("<textarea class='bodyEdit' style='width: 100%; height: 500px'>").html(body.html());
+						bodyEdit = $("<textarea class='bodyEdit' style='width: 100%; height: 500px'>").html(body.html().trim());
 				controls.empty().append(btnDone);
 				// Bind the new Editors
 				titleEdit.bind("keyup", function() {
@@ -172,10 +172,11 @@ $(function() {
 					height: '510px',
 					docCSSFile: '/css/style.css',
 					bodyStyle: "background: #111; padding: 0 10px;",
+					docType: '<!DOCTYPE HTML>',
 					updateTextArea: function(html) {
-						console.log(html);
-						
+						html = html.replace(/\u00a0/g, " ").trim();
 						body.html(html);
+						bodyEdit.html(html);
 						$this.data[id].content = html;
 						$this.saveStatusChange(false);
 					}
@@ -193,7 +194,7 @@ $(function() {
 						controls = section.find(".section-control"),
 						btnDone = $("<a class='btnDone button'>Done Editing</a>"),
 						editWrap = $("<div class='editing'>"),
-						bodyEdit = $("<textarea class='bodyEdit' style='width: 100%; height: 300px'>").html(body.html());
+						bodyEdit = $("<textarea class='bodyEdit' style='width: 100%; height: 300px'>").html(body.html().trim());
 				controls.empty().append(btnDone);
 				$this.bindSkillDone(btnDone, section);
 				editWrap.append(bodyEdit);
@@ -203,8 +204,11 @@ $(function() {
 					width: '100%',
 					docCSSFile: '/css/style.css',
 					bodyStyle: "background: #111; padding: 0 10px;",
+					docType: '<!DOCTYPE HTML>',
 					updateTextArea: function(html) {
+						html = html.replace(/\u00a0/g, " ").trim();
 						body.html(html);
+						bodyEdit.html(html);
 						$this.skills[id].content = html;
 						$this.saveStatusChange(false);
 					}
@@ -221,7 +225,7 @@ $(function() {
 						controls = section.find(".section-control"),
 						btnDone = $("<a class='btnDone button'>Done Editing</a>"),
 						editWrap = $("<div class='editing'>"),
-						bodyEdit = $("<textarea class='bodyEdit' style='width: 100%; height: 300px'>").html(body.html());
+						bodyEdit = $("<textarea class='bodyEdit' style='width: 100%; height: 300px'>").html(body.html().trim());
 				controls.empty().append(btnDone);
 				$this.bindPassiveDone(btnDone, section);
 				editWrap.append(bodyEdit);
@@ -231,8 +235,11 @@ $(function() {
 					width: '100%',
 					docCSSFile: '/css/style.css',
 					bodyStyle: "background: #111; padding: 0 10px;",
+					docType: '<!DOCTYPE HTML>',
 					updateTextArea: function(html) {
+						html = html.replace(/\u00a0/g, " ").trim();
 						body.html(html);
+						bodyEdit.html(html);
 						$this.passives[id].content = html;
 						$this.saveStatusChange(false);
 					}
