@@ -82,6 +82,7 @@ class GuideController extends Epic_Controller_Action
 					$guide->skills = $skillsSet;
 				}
 				if($passives = $this->getRequest()->getParam('passives')) {
+					$passivesSet = array();
 					foreach($passives as $idx => $skill) {
 						$skillArray = array(
 							'skill' => null,
@@ -94,8 +95,9 @@ class GuideController extends Epic_Controller_Action
 							$cleaned = $filter->filter($skill['content']);
 							$skillArray['content'] = $cleaned;							
 						}
-						$guide->passives[$idx] = $skillArray;
+						$passivesSet[$idx] = $skillArray;
 					}					
+					$guide->passives = $passivesSet;
 				}
 				$guide->save();
 			}			
