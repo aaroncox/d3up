@@ -14,7 +14,7 @@ class GuideController extends Epic_Controller_Action
 		
 	}
 	public function checkVote() {
-		if($profile = Epic_Auth::getInstance()->getProfile()) {
+		if($profile = D3Up_Auth::getInstance()->getProfile()) {
 			$record = $this->getGuide();
 			$this->view->alreadyVoted = Epic_Mongo::db('vote')->check($record, $profile);
 			if($vote = $this->getRequest()->getParam('vote')) {
@@ -105,7 +105,7 @@ class GuideController extends Epic_Controller_Action
 	}
 	public function editAction() {
 		$guide = $this->getGuide();
-		$profile = Epic_Auth::getInstance()->getProfile();
+		$profile = D3Up_Auth::getInstance()->getProfile();
 		if(!$profile) {
 			throw new Exception("You aren't logged in!");
 		}
@@ -120,7 +120,7 @@ class GuideController extends Epic_Controller_Action
 		}		
 	}
 	public function createAction() {
-		$profile = Epic_Auth::getInstance()->getProfile();
+		$profile = D3Up_Auth::getInstance()->getProfile();
 		if($profile) {			
 			$this->view->form = $form = new D3Up_Form_Post_Guide();
 			if($this->getRequest()->isPost()) {
