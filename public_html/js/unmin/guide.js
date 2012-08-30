@@ -153,7 +153,7 @@ $(function() {
 						tocEntry = $this.toc.find("li[data-section=" + id + "] a"),
 						btnDone = $("<a class='btnDone button' style='margin: 10px'>Done Editing / Save</a>").button(),
 						editWrap = $("<div class='editing'>"),
-						titleEdit = $("<input class='titleEdit' style='width: 75%' type='text' value='" + title.text() + "'>"),
+						titleEdit = $("<input class='titleEdit' style='width: 75%' type='text' value='" + escape(title.text()) + "'>"),
 						bodyEdit = $("<textarea class='bodyEdit' style='width: 100%; height: 500px'>").html(body.html());
 				controls.empty().append(btnDone);
 				// Bind the new Editors
