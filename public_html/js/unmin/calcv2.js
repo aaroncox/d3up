@@ -567,7 +567,7 @@ BuildCalculator.prototype = {
 			var tDefenses = this.calcDefenses(),
 					tEhp = this.calcEffectiveHealth(tDefenses);
 			// Calculate the Difference in EHP without the item
-			rendered['ehp-' + i] = tEhp['ehp'] - ehp.ehp;				
+			rendered['ehp-' + i] = ehp.ehp - tEhp['ehp'];				
 			// Re-add the Item to the gear set
 			this.parseItem(g, i);
 		}, this);
