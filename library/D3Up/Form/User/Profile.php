@@ -68,6 +68,17 @@ class D3Up_Form_User_Profile extends Epic_Form
 		$this->addElement("text", "battletag", array(
 			'label' => 'Battle.net BattleTag',
 			'description' => '(Optional) Enter your BattleTag (YourName#1111) to make communicating with other users easier.',
+			'validators' => array(
+				'regex' => array(
+					'validator' => 'regex',
+					'options' => array(
+						'pattern' => '/^[^ ]+#\d+$/',
+						'messages' => array(
+							'regexNotMatch' => 'Invalid BattleTag Format (ex: "username#1234")'
+						)					
+					)
+				)
+			),
 			'value' => $profile->battletag,
 		));
 		

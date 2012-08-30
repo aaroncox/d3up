@@ -55,6 +55,7 @@ class D3Up_Form_Post_Guide extends Epic_Form
 			'multiOptions' => array(
 				null => 'Select a Topic',
 				'general' => 'General Guide',
+				'class' => 'Class Guide',
 				'farming' => 'Farming Guide',
 				'leveling' => 'Leveling Guide',
 				'pvp' => 'PVP Guide',

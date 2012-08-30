@@ -92,6 +92,12 @@ td { vertical-align: top; }
   h2, h3 { page-break-after: avoid; }
 }
 
+* {
+	-webkit-box-sizing: border-box;
+	   -moz-box-sizing: border-box;
+	        box-sizing: border-box;	
+}
+
 .inline-flow {
   display: -moz-inline-stack;
   display: inline-block;
@@ -105,7 +111,6 @@ td { vertical-align: top; }
 body {
 	color: #ECECEC;
 	background-color: #222;
-	font-family: 'Droid Sans', sans-serif;
 }
 a, a:visited, a:hover, a:active, a:hover .ui-button-text {
 	color: #70B1D5;
@@ -168,19 +173,21 @@ ul#simulate-stats input,
 	padding: 10px;
 }
 #skill-display {
-	background: #111;
+	padding: 0px 30px;
+	background: rgb(0,0,0);
+	background: rgba(0,0,0,0.8);
 }
 #skill-display h3 {
 	margin: 0;
 	padding: 10px 0 0 10px;
-	color: #70B1D5;
+	font-weight: normal;
 /*	float: left;*/
 }
 #ratings-display {
 	float: right;
 }
 #ratings-display .item-stat {
-	padding: 3px 10px;
+	padding: 0 10px;
 }
 #sys-message {
 	text-align: center;
@@ -206,7 +213,7 @@ ul#simulate-stats input,
 #active-display,
 #passive-display {
 	list-style: none;
-	padding: 0 15px;
+	padding: 0 5px;
 	margin: 5px 0 0;
 	display: inline-block;
 }
@@ -474,12 +481,14 @@ dd:has(:focus) .chzn-container {
 	margin: 0 0 10px;
 }
 .build-header {
-	margin: 5px 0;
-	padding: 5px 20px;
+	border: 1px solid #333;
+	text-shadow: 1px 2px 2px #000;
+	margin-bottom: 5px;
+	padding-bottom: 0;
 }
 .build-header h2 {
 	color: #7FCDFF;
-	margin: 5px 0;
+	margin: 5px 15px;
 }
 .build-header .controls {
 	float: right;
@@ -1014,4 +1023,223 @@ tr.compared > td:first-child {
 .homepage-widget > h4 {
 	text-align: center;
 	margin: 0;
+}
+#guide div.title {
+	position: relative;
+	background-image: url('/images/bgs/default.jpeg');
+}
+.build-header[data-class=barbarian],
+#guide[data-class=barbarian] div.title {
+	background-image: url('/images/bgs/barbarian.jpeg');
+}
+.build-header[data-class=demon-hunter],
+#guide[data-class=demon-hunter] div.title {
+	background-image: url('/images/bgs/demon-hunter.jpeg');
+}
+.build-header[data-class=witch-doctor],
+#guide[data-class=witch-doctor] div.title {
+	background-image: url('/images/bgs/witch-doctor.jpeg');
+}
+.build-header[data-class=monk],
+#guide[data-class=monk] div.title {
+	background-image: url('/images/bgs/monk.jpeg');
+}
+.build-header[data-class=wizard],
+#guide[data-class=wizard] div.title {
+	background-image: url('/images/bgs/wizard.jpeg');
+}
+#build div.title,
+#guide div.title {
+	border: 1px solid #333;
+	text-shadow: 1px 2px 2px #000;
+}
+#build div.title h1,
+#build div.title h2,
+#build div.title > h3,
+#build div.title h5,
+#guide div.title h1,
+#guide div.title h2,
+#guide div.title h5 {
+	margin: 0;
+	padding: 20px 20px 0;
+	background: rgba(0, 0, 0, 0.5); 
+}
+#build div.title h3 {
+	padding: 0 20px 0;	
+}
+#build div.title h5,
+#build div.title h2,
+#guide div.title h5,
+#guide div.title h2 {
+	padding-top: 10px;
+}
+#build div.title h5 {
+	padding-top: 0;
+	padding-bottom: 20px;
+}
+#build div.title h2
+#guide div.title h2 {
+	color: #ececec;
+	font-size: 1.2em;
+}
+#guide div.title h5 {
+	font-size: 1.1em;
+	color: #999;
+	font-weight: normal;
+	padding-bottom: 20px;
+}
+#build #skill-display h3 {
+	margin: 0;
+	padding: 10px 5px 0;
+}
+#toolbar {
+	border: 1px solid #333;
+	background: #111;
+	text-align: center;
+	width: 960px;
+	padding-bottom: 5px;
+}
+#toolbar h2 {
+	margin: 0;
+}
+#toolbar.sticky {
+	text-align: center;
+	position: fixed;
+	top: 0;		
+	z-index: 9999;
+}
+#save-status {
+	color: #0f0;
+}
+#save-status.unsaved {
+	color: #f00;
+}
+.ui-button {
+	border: 1px solid #000;
+	-webkit-touch-callout: none;
+	-webkit-user-select: none;
+	-khtml-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+}
+#guide {
+	border: 2px solid #000;
+	font: 14px Arial;
+	line-height: 1.5em;
+}
+.section {
+	background-color: #171614;
+	border: 1px solid #333;
+	margin: 5px 2px;
+}
+.section .section-content  {
+	padding: 25px;
+}
+.content > .section:first-child {
+	border-top: 0;
+}
+.section h3 {
+	cursor: move;
+	font-size: 1.5em;
+	margin: 0;
+	padding: 15px 15px;
+	color: #B18135;
+	background-color: #111;
+	border-bottom: 1px solid #333;
+}
+.section .editing textarea {
+	margin: 0px
+}
+.section-control {
+	margin: 5px;
+	float: right;
+}
+.section-control .button {
+	margin: 5px;
+	cursor: pointer;
+}
+#guide div.title h5 .author,
+#guide div.title h5 .date {
+	color: #A8DAFF;
+}
+#guide div.toc.section {
+}
+#guide div.toc.section h3 {
+	margin: 0;
+	padding: 10px;
+}
+#guide div.toc.section ul#toc {
+	font-size: 1.1em;
+	margin: 0px;
+	padding: 25px;
+	list-style: none;
+	font-size: 1.25em;
+	line-height: 1.8em;
+/*	background: rgb(0,0,0);*/
+/*	background: rgba(0,0,0,0.7);*/
+}
+
+#guide div.toc.section ul#toc li:before {
+	content: "\00BB \0020";
+}
+#guide div.toc.section ul#toc li {
+
+}	
+#guide div.toc.section ul#toc li a {
+	margin-left: 5px;
+	color: #ececec;
+}
+#guide div.passives.section ul.selectedPassives,
+#guide div.skills.section ul.selectedSkills {
+	margin: 0;
+	padding: 0;
+	background-color: #111;
+	list-style: none;
+}
+#guide div.passives.section ul.selectedPassives li,
+#guide div.skills.section ul.selectedSkills li {
+	margin: 0;
+	padding: 5px 35px;
+	border-top: 1px solid #333;
+	clear: both;
+}
+#guide div.passives.section ul.selectedPassives li h3,
+#guide div.skills.section ul.selectedSkills li h3 {
+	border: 0;
+	line-height: 35px;
+	margin-left: 80px;
+	cursor: text;
+}
+#guide div.passives.section ul.selectedPassives li img,
+#guide div.skills.section ul.selectedSkills li img{
+	float: left;
+}
+#guide #ratings-display {
+	position: absolute;
+	bottom: 0;
+	right: 0;
+	background: #000;
+	background: rgba(0,0,0,0.7);
+	padding: 5px 5px 5px 10px;
+	border-radius: 5px;
+	font-size: 16px;
+}
+#guide .skill-content {
+	margin: 20px 0;
+}
+#guide .skill-picker {
+	margin: 20px 30px;
+}
+#guide .skill-picker select {
+	margin-left: 10px;
+}
+#guide .skill-block h3 {
+	color: #ececec;
+}
+
+.section img {
+	max-width: 890px;
+	border: 1px solid #333;
+	margin: 5px 5px 20px;
 }

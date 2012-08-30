@@ -8,6 +8,7 @@
 class D3Up_View_Helper_GuideTopic extends Zend_View_Helper_Abstract
 {
 	protected $_topics = array(
+		'class' => 'Class Guide',
 		'general' => 'General Guide',
 		'farming' => 'Farming Guide',
 		'leveling' => 'Leveling Guide',

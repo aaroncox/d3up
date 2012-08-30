@@ -13,11 +13,92 @@ class GuideController extends Epic_Controller_Action
 	public function indexAction() {
 		
 	}
+	public function checkVote() {
+		if($profile = Epic_Auth::getInstance()->getProfile()) {
+			$record = $this->getGuide();
+			$this->view->alreadyVoted = Epic_Mongo::db('vote')->check($record, $profile);
+			if($vote = $this->getRequest()->getParam('vote')) {
+				if($vote == "up" || $vote == "down") {
+					Epic_Mongo::db('vote')->vote($record, $profile, $vote);
+					if($this->_request->isXmlHttpRequest()) {
+						exit;
+					}
+				}
+			}
+		} else {
+			// echo "not logged in";
+		}
+	}
 	public function viewAction() {
-		$this->getGuide();
-		$this->view->profile = D3Up_Auth::getInstance()->getProfile();
-		if($this->getRequest()->isPost()) {
-			var_dump($this->getRequest()->getParams()); exit;
+		$guide = $this->getGuide();
+		// var_dump($guide->sections); exit;
+		$guide->viewCounter();
+		$profile = $this->view->profile = D3Up_Auth::getInstance()->getProfile();
+		if($profile) {
+			$this->checkVote();
+			$this->view->alreadyVoted = Epic_Mongo::db('vote')->check($guide, $profile);
+		}
+		if($profile && $guide->author->id === $profile->id) {
+			if($this->getRequest()->isPost()) {
+				$filter = new Epic_Filter_HtmlPurifier();
+				if($sections = $this->getRequest()->getParam('sections')) {
+					$sectionsArray = array();
+					foreach($sections as $idx => $section) {
+						$sec = array(
+							'title' => null,
+							'content' => null,
+						);
+						if($section['title'] != "null" && $section['title'] != "") {
+							$cleaned = html_entity_decode(urldecode($section['title']));
+							$sec['title'] = strip_tags($cleaned);
+						}
+						if($section['content'] != "null") {
+							$cleaned = $filter->filter($section['content']);
+							$sec['content'] = $cleaned;
+						}
+						$sectionsArray[$idx] = $sec;
+					}
+					$guide->sections = $sectionsArray;
+				}
+				if(!$guide->skills) {
+					$guide->skills = array();
+				}	
+				if($skills = $this->getRequest()->getParam('skills')) {
+					$skillsSet = array();
+					foreach($skills as $idx => $skill) {
+						$skillArray = array(
+							'skill' => null,
+							'content' => null,
+						);
+						if($skill['skill'] != "null" && $skill['skill'] != "") {
+							$skillArray['skill'] = $skill['skill'];
+						}
+						if($skill['content'] != "null") {
+							$cleaned = $filter->filter($skill['content']);
+							$skillArray['content'] = $cleaned;							
+						}
+						$skillsSet[$idx] = $skillArray;
+					}
+					$guide->skills = $skillsSet;
+				}
+				if($passives = $this->getRequest()->getParam('passives')) {
+					foreach($passives as $idx => $skill) {
+						$skillArray = array(
+							'skill' => null,
+							'content' => null,
+						);
+						if($skill['skill'] != "null" && $skill['skill'] != "") {
+							$skillArray['skill'] = $skill['skill'];
+						}
+						if($skill['content'] != "null") {
+							$cleaned = $filter->filter($skill['content']);
+							$skillArray['content'] = $cleaned;							
+						}
+						$guide->passives[$idx] = $skillArray;
+					}					
+				}
+				$guide->save();
+			}			
 		}
 	}
 	public function editAction() {

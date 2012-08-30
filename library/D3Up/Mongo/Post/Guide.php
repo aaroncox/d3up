@@ -23,4 +23,12 @@ class D3Up_Mongo_Post_Guide extends Epic_Mongo_Document_Post
 		$this->slug = $filter->filter($this->title);
 		return parent::save();
 	}
+	
+	public function viewCounter() {
+		if(Epic_Mongo::db('view')->track($this, $_SERVER)) {
+			$this->views++;
+			$this->save();
+		}
+	}
+	
 }

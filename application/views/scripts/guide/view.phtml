@@ -1,77 +1,40 @@
+<link rel="stylesheet" href="/css/jquery.cleditor.css" type="text/css" />
 <?
-	$isOwner = ($this->guide->author->id === $this->profile->id);
+	$profile = Epic_Auth::getInstance()->getProfile();
+	$isOwner = ($this->profile && $this->guide->author->id === $this->profile->id);
+	$this->headTitle($this->guide->title); 
+	if($this->guide->class) {
+		$this->headTitle(ucwords(str_replace("-", " ", $this->guide->class)) . " Guide"); 		
+	}
 ?>
-	
-<style type="text/css" media="screen">
-	#toolbar {
-		border: 1px solid #333;
-		background: #111;
-		text-align: center;
-		width: 960px;
-		padding-bottom: 5px;
-	}
-	#toolbar h2 {
-		margin: 0;
-	}
-	#toolbar.sticky {
-		text-align: center;
-		position: fixed;
-		top: 0;		
-	}
-	.ui-button {
-		border: 1px solid #000;
-		-webkit-touch-callout: none;
-		-webkit-user-select: none;
-		-khtml-user-select: none;
-		-moz-user-select: none;
-		-ms-user-select: none;
-		user-select: none;
-	}
-	#guide .content {
-		border: 2px solid #000;
-		font: normal 14px/1.3 Arial, sans-serif;
-		line-height: 1.8em;
-	}
-	.section {
-		border-top: 2px solid #000;
-		padding: 0 20px 20px;
-		background-image: -ms-linear-gradient(bottom, #111111 0%, #111111 70%, #333333 100%);
-		background-image: -moz-linear-gradient(bottom, #111111 0%, #111111 70%, #333333 100%);
-		background-image: -o-linear-gradient(bottom, #111111 0%, #111111 70%, #333333 100%);
-		background-image: -webkit-gradient(linear, left bottom, left top, color-stop(0, #111111), color-stop(0.7, #111111), color-stop(1, #333333));
-		background-image: -webkit-linear-gradient(bottom, #111111 0%, #111111 70%, #333333 100%);
-		background-image: linear-gradient(to top, #111111 0%, #111111 70%, #333333 100%);
-	}
-	.section:first-child {
-		border-top: 2px solid #333;
-	}
-	.section h3 {
-		font-size: 1.5em;
-		margin: 15px 0;
-		padding: 0 15px;
-		color: #B18135;
-	}
-	.section-control {
-		margin: 5px;
-		float: right;
-	}
-</style>
 <? if($isOwner): ?>
 <div id="toolbar">
 	<div id="guide-owner">
-		<h2>Guide Owner Tools</h2>
+		<h2>Guide Owner Tools (Status: <span id="save-status" class="true">Saved</span>)</h2>
 		<div class="control">
 			<a style="padding: 5px 20px" class="createSection ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" role="button">Add Section to Guide</a>
-			<a style="padding: 5px 20px" class="saveGuide ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" role="button">Save Sections</a>
 			<a href="/guide/<?= $this->guide->id ?>/<?= $this->guide->slug ?>/edit" style="padding: 5px 20px; color: #fff" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" role="button">Edit Title</a>
+			<a style="padding: 5px 20px" class="saveGuide ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" role="button">Save</a>
+			<a href="/guide/<?= $this->guide->id ?>/<?= $this->guide->slug ?>/" style="padding: 5px 20px; color: #fff" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" role="button">Cancel</a>
 		</div>
 	</div>
 </div>
 <form method="post" id="guide-form">
 <? endif ?>
-	<div id="guide" <?= ($isOwner) ? "data-owner='true'" : "" ?>>
+	<div id="guide" <?= ($isOwner) ? "data-owner='true'" : "" ?> data-class="<?= $this->guide->class ?: 'all' ?>">
 		<div class="title">
-			<img src="/images/<?= $this->guide->class ?>.png"/>		
+			<div id="ratings-display">
+				<div class='item-stat inline-flow'>
+					<span class='value'><?= $this->prettyStat($this->guide->views) ?></span>
+					<span class='stat'>Views</span>
+				</div>
+				<img id="button-upvote" src="/images/upvote.png" class="ui-state-disabled ui-corner-all" data-name="Build Voting	" data-tooltip="In order to record your vote, we require to to be logged in. Please login or create an account!">
+				<div class='item-stat inline-flow'>
+					<span class='value' id="vote-count" data-count="<?= $this->guide->votes ?: 0 ?>"><?= $this->guide->votes ?: 0 ?></span>
+					<span class='stat'>Votes</span>
+				</div>
+				<img id="button-downvote" src="/images/downvote.png" class="ui-state-disabled ui-corner-all" data-name="Build Voting	" data-tooltip="In order to record your vote, we require to to be logged in. Please login or create an account!">
+			</div>
 			<h1><?= $this->guide->title ?></h1>
 			<h2>
 				<? if($this->guide->class): ?>
@@ -80,25 +43,76 @@
 				<?= $this->guideTopic($this->guide->topic) ?>
 			</h2>
 			<h5>
-				By: <?= $this->guide->author->username ?>
-				on <?= date('F j, Y', $this->guide->_created) ?>
+				By <span class='author'><?= $this->guide->author->username ?></span>
+				on <span class='date'><?= date('F j, Y', $this->guide->_created) ?></span>
 				<? if($this->guide->_updated): ?>
-				 (Updated: <?= date('F j, Y', $this->guide->_updated) ?>)
+				 <br/>Last Updated: <span class='date'><?= date('F j, Y', $this->guide->_updated) ?></span>
 				<? endif ?>
 			</h5>
 		</div>
-		<ul class="contents <?= $this->guide->class ?>">
-			<? if($this->guide->sections): ?>
-				<? foreach($this->guide->sections as $key => $section): ?>
-					<li><a href="#<?= $key ?>"><?= $section->title ?></a></li>
-				<? endforeach ?>
-			<? endif ?>
-		</ul>
+		<div class="toc section">
+			<h3>Contents of this Guide</h3>
+			<ul id="toc" class="contents <?= $this->guide->class ?>">
+				<? if($this->guide->class && $this->guide->skills): ?>
+					<li><a href="#section-skills">Skills</a></li>
+				<? endif ?>
+				<? if($this->guide->class && $this->guide->passives): ?>
+					<li><a href="#section-passives">Passives</a></li>
+				<? endif ?>
+				<? if($this->guide->sections): ?>
+					<? foreach($this->guide->sections as $key => $section): ?>
+						<li data-section="<?= $key ?>"><a href="#section-<?= $key ?>"><?= $section->title ?></a></li>
+					<? endforeach ?>
+				<? else: ?>
+					<li>This guide has no content yet!</li>
+				<? endif ?>
+			</ul>
+		</div>
+		<? if($this->guide->class && ($this->guide->skills || $isOwner)): ?>
+		<div id="section-skills" class="skills section">
+			<h3 class="section-header">Active Skills</h3>
+			<ul class="selectedSkills">
+				<? for($i = 1; $i <= 6; $i++): ?>
+					<? $doc = $this->guide->skills[$i]; ?>
+					<? if($doc->skill == null && $isOwner): ?>
+						<li data-id="<?= $i ?>">
+							<h5>Skill #<?= $i ?> is not set.</h5>
+							<div class="skill-content" style="display: none"></div>
+						</li>
+					<? elseif($doc->skill): ?>
+						<li data-id="<?= $i ?>" data-skill="<?= $doc->skill ?>">
+							<div class='skill-content'><?= $doc->content ?></div>
+						</li>
+					<? endif ?>
+				<? endfor ?>
+			</ul>
+		</div>
+		<? endif ?>
+		<? if($this->guide->class && ($this->guide->passives || $isOwner)): ?>
+		<div id="section-passives" class="passives section">
+			<h3 class="section-header">Passive Skills</h3>
+			<ul class="selectedPassives">
+				<? for($i = 1; $i <= 3; $i++): ?>
+					<? $doc = $this->guide->passives[$i]; ?>
+					<? if($doc->skill == null && $isOwner): ?>
+						<li data-id="<?= $i ?>">
+							<h5>Passive #<?= $i ?> is not set.</h5>
+							<div class="skill-content" style="display: none"></div>
+						</li>
+					<? elseif($doc->skill): ?>
+						<li data-id="<?= $i ?>" data-skill="<?= $doc->skill ?>">
+							<div class='skill-content'><?= $doc->content ?></div>
+						</li>
+					<? endif ?>
+				<? endfor ?>
+			</ul>
+		</div>
+		<? endif ?>
 		<div class="content">
 			<? if($this->guide->sections): ?>
 				<? foreach($this->guide->sections as $key => $section): ?>
-				<div class="section">
-					<h3 class="section-header"><?= $section->title ?></h3>
+				<div id="section-<?= $key ?>" class="section" data-section="<?= $key ?>">
+					<h3 class="section-title"><?= $section->title ?></h3>
 					<div class="section-content">
 						<?= $section->content ?>
 					</div>
@@ -109,5 +123,25 @@
 	</div>
 	<? if($isOwner): ?>
 </form>
-<script type="text/javascript" src="/js/guide.js"></script>
 <? endif ?>
+<script>
+if(!window.d3up) {
+	window.d3up = {};
+}
+
+<? if($profile): ?>
+window.d3up['isLoggedIn'] = true;
+<? else: ?>
+window.d3up['isLoggedIn'] = false;
+<? endif ?>
+
+<? if($this->alreadyVoted): ?>
+window.d3up['voted'] = '<?= $this->alreadyVoted ?>';
+<? else: ?>
+window.d3up['voted'] = false;
+<? endif ?>
+
+</script>
+
+<script type="text/javascript" src="/js/jquery.cleditor.js"></script>
+<script type="text/javascript" src="/js/unmin/guide.js"></script>
