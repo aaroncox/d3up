@@ -1139,7 +1139,7 @@ tr.compared > td:first-child {
 .content > .section:first-child {
 	border-top: 0;
 }
-.section h3 {
+.section > h3 {
 	cursor: move;
 	font-size: 1.5em;
 	margin: 0;
