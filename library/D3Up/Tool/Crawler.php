@@ -439,7 +439,7 @@ class D3Up_Tool_Crawler
 			// Do the Stats on the item
 			$statsArray = array();
 			// Does this item have armor?
-			if(isset($data['armor'])) {
+			if(isset($data['armor']) && $type != "ring" && $type != "amulet") {
 				$statsArray['armor'] = (float) $data['armor']['min'];
 			}
 			if(isset($data['dps'])) {
