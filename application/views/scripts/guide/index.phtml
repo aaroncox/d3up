@@ -26,7 +26,8 @@
 			<option <?= ($this->filterClass == 'wizard') ? 'selected="selected"' : '' ?> value="wizard">Wizard</option>
 		</select>	
 	</div>
-	<div class='guide-pages'>
+	<div class='guide-pages ui-helper-clearfix'>
+		&nbsp;
 		<?php echo $this->paginationControl($this->guides,
 	                                    'Elastic',
 	                                    'guide/_pages.phtml')?>
@@ -58,7 +59,9 @@
 		</tbody>
 	</table>
 	<? else: ?>
-	<h2 style="margin: 50px">No guides were found that match your search criteria.</h2>
+	<div class='no-guides'>
+		<h2>No guides were found that matched your search criteria!</h2>
+		<p>Feel like creating one? Either <a href="/guide/1/making-diablo-3-guides-on-d3up-com">learn more about creating guides</a> or <a href="/guide/create">create one today</a>!</p>
 	<? endif ?>
 </div>
 <script type="text/javascript">

@@ -1351,3 +1351,9 @@ div.toc.section {
 	background: rgba(0,0,0,0.7);
 	padding: 10px 20px;
 }
+.no-guides {
+	border: 1px solid #333;
+	background: #000;
+	background: rgba(0,0,0,0.7);
+	padding: 50px;
+}

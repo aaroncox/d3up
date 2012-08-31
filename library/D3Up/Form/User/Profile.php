@@ -72,7 +72,7 @@ class D3Up_Form_User_Profile extends Epic_Form
 				'regex' => array(
 					'validator' => 'regex',
 					'options' => array(
-						'pattern' => '/^[^ ]+#\d+$/',
+						'pattern' => '/^[^ ]+#+\d+$/u',
 						'messages' => array(
 							'regexNotMatch' => 'Invalid BattleTag Format (ex: "username#1234")'
 						)					

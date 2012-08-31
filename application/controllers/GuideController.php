@@ -13,7 +13,7 @@ class GuideController extends Epic_Controller_Action
 	public function indexAction() {
 		$featured = 1;
 		$query = array(
-			// 'published' => true,
+			'published' => true,
 			'id' => array('$ne' => $featured),
 		);
 		$fQuery = array(
