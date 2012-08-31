@@ -24,7 +24,7 @@
 		</tr>
 	<? foreach($this->guides as $guide): ?>
 		<tr class='build-row'>
-			<td class="icon"><img src="/images/<?= $guide->class ?>.png"/></td>
+			<td class="icon"><img src="/images/<?= ($guide->class) ? $guide->class : 'default-icon' ?>.png"/></td>
 			<td class="name"><?= $this->guideLink($guide) ?></td>
 			<td class="controls"><?= $this->guideLink($guide, array('action' => 'delete', 'text' => 'Delete')) ?></td>
 		</tr>
