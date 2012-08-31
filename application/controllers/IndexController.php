@@ -31,9 +31,17 @@ class IndexController extends Epic_Controller_Action {
 		$this->view->recentBuilds = Epic_Mongo::db('build')->fetchAll($query, $sort, 10);	
 		$this->view->viewsBuilds = Epic_Mongo::db('build')->fetchAll($query, array("views" => -1), 10);	
 		$this->view->votesBuilds = Epic_Mongo::db('build')->fetchAll($query, array("votes" => -1), 10);	
-		$query['guideIsPublished'] = true;
+
+		$query = array(
+			'published' => true
+		);
+		$this->view->recentGuides = Epic_Mongo::db('guide')->fetchAll($query, $sort, 10);	
+		$this->view->viewsGuides = Epic_Mongo::db('guide')->fetchAll($query, array("views" => -1), 10);	
+		$this->view->votesGuides = Epic_Mongo::db('guide')->fetchAll($query, array("votes" => -1), 10);	
+
 		// $this->view->guideBuilds = Epic_Mongo::db('build')->fetchAll($query, array("votes" => -1), 10);	
 		$this->view->counts = array(
+			'guides' => count(Epic_Mongo::db("guide")->fetchAll(array('published' => true))),
 			'builds' => count(Epic_Mongo::db("build")->fetchAll()),
 			'items' => count(Epic_Mongo::db("item")->fetchAll()),
 			'sales' => count(Epic_Mongo::db("sale")->fetchAll()),

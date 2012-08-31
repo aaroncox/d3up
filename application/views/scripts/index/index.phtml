@@ -1,6 +1,28 @@
 <div class="home inline-flow">
 	<div class="homepage-widget recent-builds">
 		<ul>
+			<li><h2 class="ui-table-header">Find Diablo 3 Guides</h2></li>
+			<!-- <li><a href="#build-guides">Guides</a></li> -->
+			<li><a href="#guide-recent">Recent</a></li>
+			<li><a href="#guide-views">Views</a></li>
+			<li><a href="#guide-votes">Votes</a></li>
+		</ul>
+		<div id="guide-views">
+			<h3 class="table-header">Most Viewed Guides</h3>
+			<?= $this->partial("./index/_guide-table.phtml", array('guides' => $this->viewsGuides))?>
+		</div>
+		<div id="guide-votes">
+			<h3 class="table-header">Highest Voted Guides</h3>
+			<?= $this->partial("./index/_guide-table.phtml", array('guides' => $this->votesGuides))?>
+		</div>
+		<div id="guide-recent">
+			<h3 class="table-header">Recently created Guides</h3>
+			<?= $this->partial("./index/_guide-table.phtml", array('guides' => $this->recentGuides))?>
+		</div>
+		<h4>Looking for more guides? Check out the <a href="/guide/">Guides</a> page.</h4>
+	</div>
+	<div class="homepage-widget recent-builds">
+		<ul>
 			<li><h2 class="ui-table-header">Find Character Builds</h2></li>
 			<!-- <li><a href="#build-guides">Guides</a></li> -->
 			<li><a href="#build-recent">Recent</a></li>
@@ -47,6 +69,7 @@
 	<div class='ui-widget ui-widget-content ui-corner-all'>
 		<h3>Statistics</h3>
 		<ul>
+			<li><?= $this->prettyStat($this->counts['guides'], 1) ?> <a href="/guide">Guides</a></li>
 			<li><?= $this->prettyStat($this->counts['items'], 1) ?> <a href="/items">Items</a></li>
 			<li><?= $this->prettyStat($this->counts['builds'], 1) ?> <a href="/build/">Character Builds</a></li>
 			<li><?= $this->prettyStat($this->counts['sales'], 1) ?> <a href="/item/sales-history">Sales</a></li>

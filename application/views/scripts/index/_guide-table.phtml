@@ -1,0 +1,23 @@
+<table class='d3up-table'>		
+	<thead>
+		<tr>
+			<th>&nbsp;</th>
+			<th>Score</th>
+			<th>Name</th>
+			<th>Views</th>
+		</tr>
+	</thead>
+	<tbody>
+		<? foreach($this->guides as $guide): ?>
+		<tr class='guide'>
+			<td class="icon"><? if($guide->class): ?><img src="/images/<?= $guide->class ?>.png"/><? endif ?></td>
+			<td class='stat'><?= $this->prettyStat($guide->votes) ?></td>
+			<td class='guide'>
+				<p><?= $this->guideLink($guide) ?></p>
+				<p><?= $guide->description ?></p>
+			</td>
+			<td class='data'><?= $guide->views ?></td>
+		</tr>
+		<? endforeach ?>
+	</tbody>
+</table>
