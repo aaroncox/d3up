@@ -82,7 +82,7 @@ class GuideController extends Epic_Controller_Action
 							$sec['title'] = strip_tags($cleaned);
 						}
 						if($section['content'] != "null") {
-							$cleaned = strip_tags($section['content'], '<p><a><img><div><li><i><b><font><h1><h2><h3><h4><h5><h6><h7><ul><ol><br/><br><pre><span><strong><em><bold><blockquote>');
+							$cleaned = strip_tags($section['content'], '<p><a><img><div><li><i><b><sub><strike><sup><u><font><h1><h2><h3><h4><h5><h6><h7><ul><ol><br/><br><pre><span><strong><em><bold><blockquote>');
 							$sec['content'] = $cleaned;
 						}
 						if($section['hidden'] == "true") {
@@ -108,7 +108,7 @@ class GuideController extends Epic_Controller_Action
 							$skillArray['skill'] = $skill['skill'];
 						}
 						if($skill['content'] != "null") {
-							$cleaned = strip_tags($skill['content'], '<p><a><img><div><li><i><b><font><h1><h2><h3><h4><h5><h6><h7><ul><ol><br/><br><pre><span><strong><em><bold><blockquote>');
+							$cleaned = strip_tags($skill['content'], '<p><a><img><div><li><i><b><sub><strike><sup><u><font><h1><h2><h3><h4><h5><h6><h7><ul><ol><br/><br><pre><span><strong><em><bold><blockquote>');
 							$skillArray['content'] = $cleaned;							
 						}
 						$skillsSet[$idx] = $skillArray;
@@ -126,7 +126,7 @@ class GuideController extends Epic_Controller_Action
 							$skillArray['skill'] = $skill['skill'];
 						}
 						if($skill['content'] != "null") {
-							$cleaned = strip_tags($skill['content'], '<p><a><img><div><li><i><b><font><h1><h2><h3><h4><h5><h6><h7><ul><ol><br/><br><pre><span><strong><em><bold><blockquote>');
+							$cleaned = strip_tags($skill['content'], '<p><a><img><div><li><i><b><sub><strike><sup><u><font><h1><h2><h3><h4><h5><h6><h7><ul><ol><br/><br><pre><span><strong><em><bold><blockquote>');
 							$skillArray['content'] = $cleaned;							
 						}
 						$passivesSet[$idx] = $skillArray;
