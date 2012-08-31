@@ -10,7 +10,7 @@
 	<tbody>
 		<? foreach($this->guides as $guide): ?>
 		<tr class='guide'>
-			<td class="icon"><? if($guide->class): ?><img src="/images/<?= $guide->class ?>.png"/><? endif ?></td>
+			<td class="icon"><img src="/images/<?= ($guide->class) ? $guide->class : 'default-icon' ?>.png"/></td>
 			<td class='stat'><?= $this->prettyStat($guide->votes) ?></td>
 			<td class='guide'>
 				<p><?= $this->guideLink($guide) ?></p>
