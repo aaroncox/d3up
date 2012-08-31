@@ -85,7 +85,7 @@ $(function() {
 			section.prepend(controls);
 		},
 		toggleHidden: function(section) {
-			var id = section.data("section"); 
+			var id = section.attr("data-section"); 
 			this.saveStatusChange(false);
 			switch(section.attr('class')) {
 				case "section":
@@ -112,7 +112,7 @@ $(function() {
 		},
 		addControls: function(section) {
 			var $this = this,
-					id = section.data("section"),
+					id = section.attr("data-section"),
 					hidden = section.data("hidden"),
 					controls = $("<div class='section-control'>"),
 					btnEdit = $("<a class='button btnEdit'>Edit</a>"),
@@ -144,6 +144,9 @@ $(function() {
 				controls.append(toggleHidden, btnEdit, btnDelete);
 			}
 			controls.append(btnTop);
+			// Remove any existing controls
+			section.find(".section-control").remove();
+			section.find(".wrap-button").remove();
 			// Append them to the Wrapper
 			section.prepend(minWrap.append(minBtn));
 			section.prepend(controls);
@@ -188,7 +191,7 @@ $(function() {
 		bindEdit: function(btn, section) {
 			var $this = this;
 			btn.bind('click', function() {
-				var	id = section.data("section"),
+				var	id = section.attr("data-section"),
 						title = section.find("h3.section-title"),
 						body = section.find("div.section-content"),
 						controls = section.find(".section-control"),
@@ -303,8 +306,8 @@ $(function() {
 						Confirm: function() {
 							section.remove();
 							$this.saveStatusChange(false);
-							$this.toc.find("li[data-section=" + section.data("section") + "]").remove();
-							$this.data.splice(section.data("section"), 1);
+							$this.toc.find("li[data-section=" + section.attr("data-section") + "]").remove();
+							$this.data.splice(section.attr("data-section"), 1);
 							$( this ).dialog("close");
 						},
 						Cancel: function() {
@@ -366,8 +369,8 @@ $(function() {
 		},
 		getSections: function() {
 			var $this = this;
-			this.sections.find(".section").each(function() {
-				var id = $(this).data("section"),
+			$(".section[data-section]").each(function() {
+				var id = $(this).attr("data-section"),
 						title = $(this).find(".section-title").text(),
 						content = $(this).find(".section-content").html(),
 						hidden = $(this).data("hidden");
@@ -597,6 +600,10 @@ $(function() {
 					// Remove Extra Data
 					$(this).removeAttr("data-newindex");
 					$(this).removeAttr("data-oldindex");
+					// Rebuild the Data on this Object
+					setTimeout(function() { 
+						$this.getSections();
+					}, 0);
 					// Set the Status to Unsaved
 					$this.saveStatusChange(false);
 				}
