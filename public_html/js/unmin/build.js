@@ -34,6 +34,14 @@ $(function() {
 		}
 		return data;
 	}
+	$("#item-sim-tab").click(function() {
+		$(".skill-activate").each(function() {
+			if($(this).is(":checked")) {
+				$(this).trigger('click');
+				recalc();
+			}
+		});
+	});
 	var tabOffense = $("#stats-offense"),
 			tabDefense = $("#stats-defense"),
 			tabBase = $("#stats-base"),
