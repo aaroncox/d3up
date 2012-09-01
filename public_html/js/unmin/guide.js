@@ -553,7 +553,7 @@ $(function() {
 				$(this).empty();
 				$this.passives[skillId] = {
 					skill: skillName,
-					content: $(this).html(),
+					content: content.html(),
 				};
 				if(content.text().length == 0) {
 					content.hide();
