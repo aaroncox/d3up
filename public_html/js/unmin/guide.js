@@ -351,7 +351,6 @@ $(function() {
 				if(this.btnSaveGuide) {
 					this.btnSaveGuide.bind('click', function() {
 						$(".btnDone").trigger('click');
-						console.log($this.skills, $this.passives);
 						$.ajax({
 						  type: 'POST',
 						  data: {
@@ -521,7 +520,7 @@ $(function() {
 				$(this).empty();
 				$this.skills[skillId] = {
 					skill: skillName,
-					content: $(this).html(),
+					content: content.html(),
 				};
 				if(content.text().length == 0) {
 					content.hide();
