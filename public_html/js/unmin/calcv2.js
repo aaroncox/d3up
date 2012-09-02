@@ -800,7 +800,7 @@ BuildCalculator.prototype = {
 							activate = true;
 							break;
 						case "plus-critical-hit-this":
-							bonuses["plus-critical-hit"] = (se.value / 100) * se.limit;
+							bonuses["plus-critical-hit"] = e;
 							break;
 						case "stack":
 							_.each(e, function(se, si) {
