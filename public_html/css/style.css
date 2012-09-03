@@ -1397,10 +1397,20 @@ div.toc.section {
 .content-page .form dd input {
 	width: 300px;
 }
+.content-page .social,
 .content-page .form-buttons {
 	clear: both;
 	background: #111;
 	border: 1px solid #333;
 	padding: 15px 30px;
 	text-align: center;
+}
+.content-page .social {
+	padding: 5px;
+	line-height: 0.9em;
+}
+#social-share {
+	position: absolute;
+	top: 5px;
+	right: 5px;
 }

@@ -34,8 +34,11 @@
 </div>
 <form method="post" id="guide-form">
 <? endif ?>
-	<div id="guide" <?= ($isOwner) ? "data-owner='true'" : "" ?> data-class="<?= $this->guide->class ?: 'all' ?>">
+	<div id="guide" class="content-page" <?= ($isOwner) ? "data-owner='true'" : "" ?> data-class="<?= $this->guide->class ?: 'all' ?>">
 		<div class="title-block">
+			<div id="social-share">
+				<script type="text/javascript" src="http://www.reddit.com/static/button/button3.js"></script>
+			</div>
 			<div id="ratings-display">
 				<div class='item-stat inline-flow'>
 					<span class='value'><?= $this->prettyStat($this->guide->views) ?></span>
