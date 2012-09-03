@@ -1,42 +1,47 @@
-<h2 class="table-header">Battle.net Profile Crawler</h2>
-<? if($this->status): ?>
-	<div class="ui-widget ui-corner-all ui-widget-content ui-helper-clearfix" style="padding: 0 20px">
-		<h3>Crawl Results</h3>
-		<p>All character stats are based on level 60 characters currently, so if you import a character that is not level 60, the calculator will be slightly off.</p>
-		<p>Paragon Levels are also not automatically imported! To change your paragon level, please hit "Edit" on the top of your build page and enter it in the appropriate field.</p>
-		<p>This process is still somewhat buggy, please report anything that seems wrong using the feedback tab on the side or you can email me directly at <a href="mailto:aaron.cox@greymass.com">aaron.cox@greymass.com</a>. Please include a link to your D3Up build and what isn't working correctly so I can check it out from there!</p>
-		<p>
-			<a href="/b/<?= $this->record->id ?>" class='ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only' style="padding: 5px; width: 450px">Goto my Build</a>
-		</p>
-		<table class='d3up-table'>
-			<tr>
-				<th>Slot</th>
-				<th>Item Name</th>
-				<th>Results</th>
-			</tr>
-		<? foreach($this->status as $status): ?>
-			<tr>
-				<td><?= $status['slot'] ?></td>
-				<td><?= $this->itemLink($status['item']) ?></td>
-				<td>
-					<? if($status['result'] == "new"): ?>
-						Created New Item
-					<? endif ?>
-					<? if($status['result'] == 'existed'): ?>
-						Already Existed, Equipped
-					<? endif ?>
-				</td>
-			</tr>
-		<? endforeach ?>
-		</table>
+<div id="build-create" class='content-page'>
+	<div class='featured title-block' data-class="<?= $this->featured->class ?: 'all' ?>">
+		<h5 style='color: #B18135'>Copy from Battle.net Character Profile</h5>
+		<h2><a href="/build/create">D3Up.com Armory Copy</a></h2>
+	<? if($this->status): ?>
+			<div class='section-preview'>
+				<p>You've copied the following gear into this build: <?= $this->mLink($this->record)?></p>
+			</div>
+		</div>
+		<div class="page">
+			<table class='d3up-table'>
+				<tr>
+					<th>Slot</th>
+					<th>Item Name</th>
+					<th>Results</th>
+				</tr>
+			<? foreach($this->status as $status): ?>
+				<tr>
+					<td><?= $status['slot'] ?></td>
+					<td><?= $this->itemLink($status['item']) ?></td>
+					<td>
+						<? if($status['result'] == "new"): ?>
+							Created New Item
+						<? endif ?>
+						<? if($status['result'] == 'existed'): ?>
+							Already Existed, Equipped
+						<? endif ?>
+					</td>
+				</tr>
+			<? endforeach ?>
+			</table>
+			<p style="text-align: center">
+				<a href="/b/<?= $this->record->id ?>" class='ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only' style="padding: 5px; width: 450px">Goto my Build</a>
+			</p>
+		</div>
 	</div>
 <? else: ?>
-	<div class="ui-widget ui-corner-all ui-widget-content ui-helper-clearfix" style="padding: 20px">
-		<h2 style="color: #00C800">Battle.net Character Copy</h2>
-		<p>You've chosen to import a character from the Diablo 3 Armory into this build:</p>
-		<h2>Build #<?= $this->record->id ?> - <?= $this->mLink($this->record) ?></h2>
-		<p><strong>PLEASE NOTE</strong>, none of your items will be deleted, but they will un-equipped and the proper gear from your Diablo 3 Armory profile will be equipped to your build. It will also change the skills on your build to match the armory.</p>
-		<p>Please select which character's gear and skills we should import into <?= $this->mLink($this->record)?>.</p>
+		<div class='section-preview'>
+			<p>You've chosen to copy one of your Diablo 3 character's into this build on D3Up.com</p>
+			<p><?= $this->mLink($this->record)?></p>
+			<p>This process will change the build above's gear, skills and other information to be like what is currently shown on the armory. Please note, Paragon levels are currently not imported, you'll have to adjust that yourself on the <?= $this->mLink($this->record, array('text' => 'Build Edit', 'action' => 'edit'))?> page.</p>
+		</div>
+	</div>
+	<div class='page'>
 		<table id="all-builds" class="d3up-table">
 			<thead>
 				<th></th>
@@ -61,7 +66,7 @@
 						<? endif ?>
 					</td>
 					<td>
-						<a href="?character=<?= $character['id'] ?>" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only"><span class="ui-button-text">Copy this Character</span></a>
+						<a href="?character=<?= $character['id'] ?>" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only"><span class="ui-button-text">Copy into Build</span></a>
 					</td>
 				</tr>
 				<? endforeach ?>
@@ -69,3 +74,4 @@
 		</table>
 	</div>
 <? endif ?>
+</div>

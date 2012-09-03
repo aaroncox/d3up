@@ -52,21 +52,37 @@ class BuildController extends Epic_Controller_Action
 		}
 	}
 	public function createAction() {
-		$profile = Epic_Auth::getInstance()->getProfile();
-		if($profile) {		
-			// Create a new hero
-			$build = Epic_Mongo::newDoc('build');
-			// Get Form for hero
-			$form = $this->view->form = $build->getEditForm();
-			if($this->getRequest()->isPost()) {
-				$result = $form->process($this->getRequest()->getParams());
-				if($result) {
-					$i = Epic_Mongo::db('build')->find($result['upserted']);
-					$this->_redirect("/b/".$i->id);				
+		$this->view->profile = $profile = Epic_Auth::getInstance()->getProfile();
+		if($profile) {
+			$this->view->characters = D3Up_Tool_Crawler::getInstance()->getCharacters($profile);
+		}
+		if(!$this->getRequest()->getParam('character-id') && $region = $this->getRequest()->getParam('region') && $tag = $this->getRequest()->getParam('battletag')) {
+			echo json_encode(D3Up_Tool_Crawler::getCharactersByTag($tag, $region)); exit;
+		}
+		// Create a new Build
+		$build = Epic_Mongo::newDoc('build');
+		$form = $this->view->form = $build->getEditForm();
+		$login = $this->view->login = new Epic_Auth_Form_Login();		
+		$this->_handleForm($login);
+		if($this->getRequest()->isPost()) {
+			$result = $form->process($this->getRequest()->getParams());
+			if($result) {
+				$build = Epic_Mongo::db('build')->find($result['upserted']);
+				$character = $this->getRequest()->getParam('character-id');
+				$battletag = $this->getRequest()->getParam('battletag');
+				$region = $this->getRequest()->getParam('region');
+				if($profile && $character) {
+					D3Up_Tool_Crawler::getInstance()->crawl($build, $profile, $character);										
 				}
+				if($battletag && $region && $character) {
+					$fakeProfile = Epic_Mongo::newDoc('profile');
+					$fakeProfile->region = $region;
+					$fakeProfile->battletag = $battletag;
+					D3Up_Tool_Crawler::getInstance()->crawl($build, $fakeProfile, $character);					
+				}
+				// var_dump($result, $this->getRequest()->getParams()); exit;
+				$this->_redirect("/b/".$build->id);				
 			}
-		} else {
-			$this->_redirect("/user/builds");
 		}
 	}
 	public function editAction() {

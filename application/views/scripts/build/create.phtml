@@ -1,7 +1,136 @@
 <?
 	$this->headTitle("Create a Diablo 3 Character Build"); 
 ?>
-<div class="create-form ui-widget ui-widget-content ui-corner-all">
-	<h2>Create a Diablo 3 Character Build</h2>
-	<?= $this->form ?>
+<div id="build-create" class='content-page'>
+	<div class='featured title-block' data-class="<?= $this->featured->class ?: 'all' ?>">
+		<h5 style='color: #B18135'>Create a Build</h5>
+		<h2><a href="/build/create">Create / Import a Diablo 3 Character Build</a></h2>
+		<div class='section-preview'>
+			<p>By creating or importing a character build into D3Up.com's Build Calculator, you'll gain access to all of our DPS, EHP and Item Comparison tools. Follow the instructions below or for more information check out the <a href="http://d3up.com/guide/12/creating-your-build-on-d3up-com">Creating your Build on D3Up.com</a> guide.</p>
+		</div>
+	</div>
+	<form method="post">
+		<div class='form ui-helper-clearfix'>
+			<? if(!$this->profile): ?>
+				<p><strong style='color: #f00'>Warning for non-registered users</strong></p>
+				<p>Since you are not logged in, we will import your build into an anonymous build. You will not be able to edit the name or skills on the build, but you will be able to use the Calculators and Item Simulators. Please bookmark or save the link to your build for future reference!</p>
+				<p>If you'd like to edit and change this build in the future, please <a href="/user/login">login</a> or <a href="/user/register">create an account</a> first.</p>
+			<? endif ?>
+			
+			<div class='import'>
+			<? if($this->profile): ?>
+				<h4>Import from Battle.net</h4>
+				<? if($this->profile->battletag && $this->profile->region): ?>
+					<p>If you wish to create a build from one of your characters, please enter it's information below.</p>
+					<div>
+						<select name='character-id' id="import-characters">
+							<option value=''>Select a Character...</option>
+							<? foreach($this->characters as $k => $v): ?>
+								<option data-class="<?= $v['class'] ?>" value='<?= $v['id'] ?>'>[<?= $v['level'] ?>] <?= $v['name']?> - <?= ucwords(str_replace("-", " ", $v['class'])) ?>
+							<? endforeach ?>
+						</select>
+					</div>
+					<p>After selecting your character, make sure to fill out the rest of the form on the left!</p>
+				<? else : ?>
+					<p>You need to specify your Battle.net BattleTag and which region you play in before we can import your characters.</p>
+					<p>Head on over and <a href="/user/edit">edit your profile</a> to fill out this information!</p>
+				<? endif ?>
+			<? else: ?>
+				<div id="import-from">
+					<h4>Import from Battle.net</h4>
+					<p>If you'd like to automatically import a character, fill out the information below to find your character!</p>
+					<dt>Region</dt>
+					<dd>
+						<select name='region' id='region'>
+							<option value='1'>The Americas</option>
+							<option value='2'>Europe</option>
+							<option value='3'>Asia</option>
+						</select>
+					</dd>
+					<dt>Battle Tag</dt>
+					<dd><input name='battletag' type='text' id="battle-tag"></dd>
+					<div style="text-align: center; padding: 10px">
+						<button id="search-battle-tag">Find my Characters</button>
+					</div>
+				</div>
+				<div id="import-character">
+					<h4>Characters</h4>
+					<p>Please select which character to import into this build.</p>
+					<div>
+						<select name='character-id' id="import-characters">
+							<option value="">Loading ...</option>
+						</select>
+					</div>
+					<p>After choosing the character, make sure to fill out the information on the right and click submit!</p>
+					<div style="text-align: center; padding: 10px">
+						<button id="repeat-search">Back to Search</button>
+					</div>
+				</div>
+			<? endif ?>
+			</div>
+			<h3 style="margin: 0 0 20px"><a href="#">Build Information</a></h3>
+			<?= $this->form->name ?>
+			<?= $this->form->class ?>
+			<?= $this->form->paragon ?>
+		</div>
+		<div class='form-buttons'>
+			<?= $this->form->save ?>
+		</div>
+	</form>
 </div>
+<script type="text/javascript">
+	$(function(){ 
+		var charList = $("#import-characters"),
+				battletag = $("#battle-tag"),
+				region = $("#region"),
+				search = $("#search-battle-tag").button(),
+				importer = $("#import-from"),
+				characters = $("#import-character"),
+				research = $("#repeat-search").button().
+				classElement = $("#class-element select");
+		characters.hide();
+		research.click(function() {
+			characters.hide();
+			importer.show();
+			return false;
+		});
+		search.click(function() {
+			characters.show();
+			importer.hide();
+			$.ajax({
+				method: 'GET',
+				dataType: 'json',
+				data: {
+					battletag: battletag.val(),
+					region: region.val(),
+				},
+				success: function(data) {
+					if(data == null) {
+						charList.empty().append("<option value=''>Error: No Characters found!</option>");
+					} else {
+						charList.empty().append("<option value=''>Select a Character...</option>");
+						$.each(data, function(k,v) {
+							var option = $("<option>");
+							option.val(v.id);
+							option.attr("data-class", v.class);
+							option.html("[" + v.level + "] " + v.name + " - " + v.class.replace(/-/g, ' ').capitalize());
+							charList.append(option);
+						});
+					}
+				},
+				error: function(jqXHR, textStatus, errorThrown) {
+					charList.empty().append("<option value=''>Error: No Characters found!</option>");
+				}
+			});
+			return false;
+		});
+		charList.bind('change', function() {
+			var cls = $(this).find(":selected").attr("data-class"), 
+					clsPick = $("#class-element select").find("option[value=" + cls + "]");
+			$("#class-element select").find("option").each(function() {
+				$(this).removeAttr("selected");
+			})
+			clsPick.attr("selected", "selected");
+		});
+	});
+</script>

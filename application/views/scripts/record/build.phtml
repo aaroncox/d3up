@@ -19,7 +19,7 @@ var activeActives = <?= json_encode($this->record->actives->export()); ?>;
 var activeActives = [];
 <? endif; ?>
 </script>
-<div id="build">
+<div id="build" class="content-page">
 	<div class="build-header title-block" data-class="<?= $this->record->class ?>">
 		<? if($profile && $this->record->_createdBy): ?>
 		<div class="controls">

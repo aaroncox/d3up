@@ -1181,6 +1181,7 @@ div.title-block h2 {
 	border: 1px solid #333;
 	margin: 5px 2px;
 }
+#build-create,
 #guides {
 	border: 1px solid #111;
 	padding: 2px;
@@ -1356,4 +1357,50 @@ div.toc.section {
 	background: #000;
 	background: rgba(0,0,0,0.7);
 	padding: 50px;
+}
+.content-page .page,
+.content-page .import,
+.content-page .form,
+.content-page .warning {
+	margin: 2px 0;
+	background: #111;
+	padding: 5px 15px;
+	border: 1px solid #333;
+}
+.content-page .import {
+	float: right;
+	width: 350px;
+	background: #171614;
+}
+.content-page .import h4 {
+	color: #B18135;
+	font-size: 1.2em;
+	margin: 0;
+	text-align: center;
+}
+.content-page .import .ui-button {
+}
+.content-page .warning {
+	color: #FA4545;
+}
+.content-page .form {
+	padding: 20px 50px;
+}
+.content-page .form dt {
+	width: 200px;
+	font-size: 15px;
+}
+.content-page .form dd {
+	margin: 10px;
+	border: 0;
+}
+.content-page .form dd input {
+	width: 300px;
+}
+.content-page .form-buttons {
+	clear: both;
+	background: #111;
+	border: 1px solid #333;
+	padding: 15px 30px;
+	text-align: center;
 }

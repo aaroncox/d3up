@@ -538,6 +538,12 @@ class D3Up_Tool_Crawler
 		return $status;
 	}
 	
+	public function getCharactersByTag($tag, $region) {
+		$url = self::$profileUrl[$region] . strtolower(str_replace("#", "-", $tag)) . "/";
+		$data = self::get($url);
+		return $data['heroes'];		
+	}
+	
 	public function getCharacters($user) {
 		if(!$user->battletag) {
 			return false;

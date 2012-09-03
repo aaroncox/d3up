@@ -65,17 +65,7 @@ class D3Up_Form_Record_Build extends Epic_Form
 			'filters' => array('StripTags'),
 			'tabindex' => 10,
 		));
-		
-		$this->addElement("textarea", "description", array(
-			'label' => 'Description of this build',
-			'validators' => array(
-				array('StringLength', false, array(5, 5000)),
-			),
-			'rows' => 5,
-			'filters' => array('StripTags'),			
-			'tabindex' => 15,
-		));
-		
+
 		$this->addElement("text", "level", array(
 			'label' => 'Character Level',
 			'validators' => array(
@@ -123,7 +113,7 @@ class D3Up_Form_Record_Build extends Epic_Form
 			$this->setButtons(array("save" => "Create Build"));					
 		} else {
 			$this->class->setValue($build->class);
-			$this->setButtons(array("save" => "Save"));		
+			$this->setButtons(array("save" => "Create Build"));		
 		}
 
 	}
@@ -148,8 +138,6 @@ class D3Up_Form_Record_Build extends Epic_Form
 		// $build->profileUrl = $this->profileUrl->getValue();
 		// Set privacy
 		$build->private = (bool) $this->private->getValue();
-		// Set the Description
-		$build->description = $this->description->getValue();
 		// Do we have a user creating this? If so, add it.
 		if($profile = Epic_Auth::getInstance()->getProfile()) {
 			$build->_createdBy = $profile;
