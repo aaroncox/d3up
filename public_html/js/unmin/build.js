@@ -136,30 +136,32 @@ $(function() {
 			displaySkills();
 		});
 	});
-	var saveButton = $("<button>").html("Save Skills");
-	saveButton.click(function() {
-		$.ajax({
-			data: {
-				a: 'skills',
-				actives: activeActives,
-				passives: activePassives,
-				stats: {
-					dps: stats.dps,
-					ehp: stats.ehp
-				},
-				success: function() {
-					$($("<div style='padding: 20px'/>").html("Saved!")).dialog({
-						modal: true,
-						buttons: {
-							Ok: function() {
-								$( this ).dialog( "close" );
+	if(isOwner) {
+		var saveButton = $("<button>").html("Save Skills");
+		saveButton.click(function() {
+			$.ajax({
+				data: {
+					a: 'skills',
+					actives: activeActives,
+					passives: activePassives,
+					stats: {
+						dps: stats.dps,
+						ehp: stats.ehp
+					},
+					success: function() {
+						$($("<div style='padding: 20px'/>").html("Saved!")).dialog({
+							modal: true,
+							buttons: {
+								Ok: function() {
+									$( this ).dialog( "close" );
+								}
 							}
-						}
-					});
+						});
+					}
 				}
-			}
-		});
-	});
+			});
+		});	
+	}
 	choosers.hide();
 	choosers.append(saveButton);
 	$(".skill-change").click(function() {
