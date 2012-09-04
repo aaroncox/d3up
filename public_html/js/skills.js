@@ -4090,6 +4090,7 @@ var activeSkills = {
 			rune: 'Mantra of Healing also increases resistances to all damage types by 20%.',
 			effect: {
 				'cost-spirit': 50,
+				'plus-resist-all': 20
 			},
 		},
 		'mantra-of-conviction': {
@@ -6947,6 +6948,12 @@ td['plus-fire-damage'] = '+VVV% Fire Damage';
 td['plus-holy-damage'] = '+VVV% Holy Damage';
 td['plus-lightning-damage'] = '+VVV% Lightning Damage';
 td['plus-poison-damage'] = '+VVV% Poison Damage';
+td['plus-arcane-damage-skills'] = 'Arcane skills deal VVV% more damage';
+td['plus-cold-damage-skills'] = 'Cold skills deal VVV% more damage';
+td['plus-fire-damage-skills'] = 'Fire skills deal VVV% more damage';
+td['plus-holy-damage-skills'] = 'Holy skills deal VVV% more damage';
+td['plus-lightning-damage-skills'] = 'Lightning skills deal VVV% more damage';
+td['plus-poison-damage-skills'] = 'Poison skills deal VVV% more damage';
 td['elite-damage'] = 'Increases Damage against Elites by VVV%';
 td['chance-bleed'] = 'VVV% chance to inflict Bleed for VVV damage over 5 seconds';
 td['chance-blind'] = 'VVV% chance to Blind on Hit';
