@@ -1,1 +1,16 @@
-<?= $this->render("./build/create.phtml") ?>
+<?
+	$this->headTitle("Create a Diablo 3 Character Build"); 
+?>
+<div id="build-create" class='content-page'>
+	<div class='featured title-block' data-class="<?= $this->featured->class ?: 'all' ?>">
+		<h5 style='color: #B18135'>Edit Build Information</h5>
+		<h2><a href="/build/edit">Build Edit</a></h2>
+		<div class='section-preview'>
+		</div>
+	</div>
+	<form method="post">
+		<div class='form ui-helper-clearfix'>
+			<?= $this->form ?>
+		</div>
+	</form>
+</div>
