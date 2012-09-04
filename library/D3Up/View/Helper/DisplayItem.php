@@ -220,7 +220,7 @@ class D3Up_View_Helper_DisplayItem extends Zend_View_Helper_Abstract
 			return $this->view->htmlTag("p", array('class' => 'stats stats-block-chance'),
 				"+".$this->view->htmlTag("span", array(), $v)."% ".
 				$this->view->htmlTag("span", array('class' => 'stat-helper'), ' Chance to Block')
-			);				
+			)."";				
 		}
 		if($k == 'block-amount') {
 			return $this->view->htmlTag("p", array('class' => 'stats stats-block-amount'),

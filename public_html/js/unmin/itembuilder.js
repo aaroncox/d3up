@@ -86,6 +86,13 @@ var itemBuilder = {
 		'plus-holy-damage': 'Adds +VVV% to Holy Damage',
 		'plus-lightning-damage': 'Adds +VVV% to Lightning Damage',
 		'plus-poison-damage': 'Adds +VVV% to Poison Damage',
+		// Skill Bonuses
+		'plus-arcane-damage-skills': 'Arcane skills deal VVV% more damage',
+		'plus-cold-damage-skills': 'Cold skills deal VVV% more damage',
+		'plus-fire-damage-skills': 'Fire skills deal VVV% more damage',
+		'plus-holy-damage-skills': 'Holy skills deal VVV% more damage',
+		'plus-lightning-damage-skills': 'Lightning skills deal VVV% more damage',
+		'plus-poison-damage-skills': 'Poison skills deal VVV% more damage',
 		// Percent Increases
 		'elite-damage': 'Increases Damage against Elites by VVV%',
 		'demon-damage': '+VVV% Damage to Demons',
@@ -637,6 +644,18 @@ var itemBuilder = {
 					tchance.keyup(function() {
 						builder.updateStat("block-chance", $(this).val());
 					});
+					if(builder.item.stats && builder.item.stats.armor) {
+						tarmor.val(builder.item.stats.armor);
+					}
+					if(builder.item.stats['block-amount'] && builder.item.stats['block-amount']['min']) {
+						tmin.val(builder.item.stats['block-amount']['min']);
+					}
+					if(builder.item.stats['block-amount'] && builder.item.stats['block-amount']['max']) {
+						tmax.val(builder.item.stats['block-amount']['max']);
+					}
+					if(builder.item.stats && builder.item.stats['block-chance']) {
+						tchance.val(builder.item.stats['block-chance']);
+					}
 					builder.preview.statsPrimaryValue.empty().append(tarmor);
 					builder.preview.statsPrimaryHelper.html("Armor");
 					builder.preview.statsPrimary.empty().append(this.preview.statsPrimaryValue, this.preview.statsPrimaryHelper);

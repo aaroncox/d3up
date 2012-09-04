@@ -614,6 +614,8 @@ BuildCalculator.prototype = {
 				ohMaxDamage = 0,
 				bnMinDamage = 0,
 				bnMaxDamage = 0,
+				bnEleDamage = 0,
+				bnElePercent = 0,
 				bnAvgDamage = 0; 
 
 		if(this.attrs['damage']) {
@@ -635,16 +637,22 @@ BuildCalculator.prototype = {
 			atkSpeedInc = this.attrs['attack-speed-incs'];
 		}
 		bnAvgDamage = (bnMinDamage + bnMaxDamage) / 2;
-		// Attempt to calculate +% Elemental damage values
-		// if(this.attrs['plus-damage']) {
-		// 	var elementalBonus = (bnMinDamage + mhMinDamage) * (this.attrs['plus-damage'] / 100);
-		// 	mhMinDamage += elementalBonus;
-		// 	// mhMaxDamage += elementalBonus;
-		// 	ohMinDamage += elementalBonus;
-		// 	// ohMaxDamage += elementalBonus;
-		// 	bnMinDamage += elementalBonus;
-		// 	// bnMaxDamage += elementalBonus;
-		// }
+		// Elemental Damage Bonuses
+		_.each(['plus-fire-damage', 'plus-arcane-damage', 'plus-poison-damage', 'plus-cold-damage', 'plus-lightning-damage', 'plus-holy-damage'], function(v,k) {
+			if(_.has(this.attrs, v)) {
+				// console.log(this.attrs[v]);
+				bnElePercent += this.attrs[v];
+			}
+		}, this);
+		// Determine Bonus Damage from Elemental Damage Bonuses
+		if(bnElePercent > 0 && this.attrs.mhRealDamage) {
+			if(this.isDuelWielding) {
+				bnEleDamage += ((this.attrs.mhRealDamage.min + bnMinDamage) + (this.attrs.ohRealDamage.min + bnMinDamage)) / 2;
+			} else {
+				bnEleDamage += (this.attrs.mhRealDamage.min + bnMinDamage) * (bnElePercent / 100);
+			}
+		}
+		// console.log(bnElePercent, bnEleDamage);
 		// Are we duel wielding?
 		var mathS, mathC, mathR, mathA, mathM;
 		if(this.isDuelWielding) {
@@ -660,7 +668,7 @@ BuildCalculator.prototype = {
 			mathS = 1 + this.attrs[this.attrs.primary] * 0.01;
 			mathC = 1 + (this.attrs['critical-hit'] * 0.01) * (this.attrs['critical-hit-damage'] * 0.01);
 			mathR = (rendered['dps-speed'].mh + rendered['dps-speed'].oh) / 2 * (1 + atkSpeedInc + 0.15 + this.bonuses['plus-attack-speed']);
-			mathA = ((mhMinDamage + mhMaxDamage) / 2 + (ohMinDamage + ohMaxDamage) / 2 + bnMinDamage + bnMaxDamage) / 2;
+			mathA = ((mhMinDamage + mhMaxDamage) / 2 + (ohMinDamage + ohMaxDamage) / 2 + bnMinDamage + bnMaxDamage + bnEleDamage) / 2;
 			mathM = (1 + this.bonuses['plus-damage']);
 			rendered['dps'] = mathS * mathC * mathR * mathA * mathM;			
 			rendered['dps-speed-display'] = Math.round(rendered['dps-speed'].mh * (1 + 0.15 + atkSpeedInc + this.bonuses['plus-attack-speed']) * 100) / 100;
@@ -670,7 +678,7 @@ BuildCalculator.prototype = {
 			mathS = 1 + this.attrs[this.attrs.primary] * 0.01;
 			mathC = 1 + (this.attrs['critical-hit'] * 0.01) * (this.attrs['critical-hit-damage'] * 0.01);
 			mathR = rendered['dps-speed'] * (1 + atkSpeedInc + this.bonuses['plus-attack-speed']);
-			mathA = (mhMinDamage + mhMaxDamage) / 2 + (bnMinDamage + bnMaxDamage) / 2;
+			mathA = ((mhMinDamage + mhMaxDamage) / 2 + (bnMinDamage + bnMaxDamage) / 2) + bnEleDamage;
 			mathM = (1 + this.bonuses['plus-damage']);
 			rendered['dps'] = mathS * mathC * mathR * mathA * mathM;		
 			// console.log(mhMinDamage, mhMaxDamage, bnMinDamage, bnMaxDamage);
@@ -695,6 +703,8 @@ BuildCalculator.prototype = {
 				bnMinDamage = 0,
 				bnMaxDamage = 0,
 				bnAvgDamage = 0,
+				bnEleDamage = 0,
+				bnElePercent = 0,
 				mathE = skill.effect['weapon-damage'],
 				hasCooldown = (skill.effect['cooldown']) ? true : false; 
 		if(this.attrs['damage']) {
@@ -719,6 +729,21 @@ BuildCalculator.prototype = {
 		bnAvgDamage = (bnMinDamage + bnMaxDamage) / 2;
 		// Convert mathE to a percentage
 		mathE = mathE / 100;
+		// Elemental Damage Bonuses
+		_.each(['plus-fire-damage', 'plus-arcane-damage', 'plus-poison-damage', 'plus-cold-damage', 'plus-lightning-damage', 'plus-holy-damage'], function(v,k) {
+			if(_.has(this.attrs, v)) {
+				bnElePercent += this.attrs[v];
+			}
+		}, this);
+		// Determine Bonus Damage from Elemental Damage Bonuses
+		if(bnElePercent > 0) {
+			if(this.isDuelWielding) {
+				bnEleDamage += ((this.attrs.mhRealDamage.min + bnMinDamage) + (this.attrs.ohRealDamage.min + bnMinDamage)) / 2 * 2;
+			} else {
+				bnEleDamage += (this.attrs.mhRealDamage.min + bnMinDamage) * 2;
+			}
+		}
+		// console.log(this.attrs.mhRealDamage.min, bnMinDamage, bnEleDamage);
 		// Are we duel wielding?
 		if(this.isDuelWielding) {
 			rendered['dps-speed'] = {
@@ -729,8 +754,8 @@ BuildCalculator.prototype = {
 			};
 			mathS = 1 + this.attrs[this.attrs.primary] * 0.01;
 			mathA = ((mhMinDamage + mhMaxDamage) / 2 + (ohMinDamage + ohMaxDamage) / 2 + bnMinDamage + bnMaxDamage) / 2;
-			mathAl = ((mhMinDamage + bnMinDamage) + (ohMinDamage + bnMinDamage)) / 2;
-			mathAh = ((mhMaxDamage + bnMaxDamage) + (ohMaxDamage + bnMaxDamage)) / 2;
+			mathAl = ((mhMinDamage + bnMinDamage + bnEleDamage) + (ohMinDamage + bnMinDamage + bnEleDamage)) / 2;
+			mathAh = ((mhMaxDamage + bnMaxDamage + bnEleDamage) + (ohMaxDamage + bnMaxDamage + bnEleDamage)) / 2;
 			mathM = (1 + this.bonuses['plus-damage']);
 			mathR = (rendered['dps-speed'].mh + rendered['dps-speed'].oh) / 2 * (1 + atkSpeedInc + 0.15 + this.bonuses['plus-attack-speed']);
 			mathC = 1 + (this.attrs['critical-hit'] * 0.01) * (this.attrs['critical-hit-damage'] * 0.01);
@@ -742,8 +767,8 @@ BuildCalculator.prototype = {
 			mathS = 1 + this.attrs[this.attrs.primary] * 0.01;
 			mathC = 1 + (this.attrs['critical-hit'] * 0.01) * (this.attrs['critical-hit-damage'] * 0.01);
 			mathR = rendered['dps-speed'] * (1 + atkSpeedInc + this.bonuses['plus-attack-speed']);
-			mathAl = (mhMinDamage + bnMinDamage);
-			mathAh = (mhMaxDamage + bnMaxDamage);
+			mathAl = (mhMinDamage + bnMinDamage + bnEleDamage);
+			mathAh = (mhMaxDamage + bnMaxDamage + bnEleDamage);
 			mathM = (1 + this.bonuses['plus-damage']);
 			dLow = mathS * mathAl * mathM * mathE;
 			dHigh = mathS * mathAh * mathM * mathE;
@@ -1129,6 +1154,12 @@ BuildCalculator.prototype = {
 							this.attrs['speed-oh'] = 0;
 						}
 						break;
+					case "arcane-damage":
+					case "fire-damage":
+					case "lightning-damage":
+					case "poison-damage":
+					case "cold-damage":
+					case "holy-damage":
 					case "damage":
 						if(slot == "mainhand") {
 							this.attrs[ak] = {
@@ -1167,12 +1198,95 @@ BuildCalculator.prototype = {
 			}
 			this.sets[json.set]++;
 		}
+		if(json.stats) {
+			_.each(json.stats, function(av, ak) {
+				switch(ak) {
+					case "speed":
+						if(slot == "mainhand") {
+							this.attrs[ak] = parseFloat(av);
+						}
+						if(slot == "offhand") {
+							this.isDuelWielding = true;
+							this.attrs['speed-oh'] = parseFloat(av);
+						}
+						break;
+					case "damage":
+						if(slot == "mainhand") {
+							this.attrs[ak] = {
+								min: av['min'],
+								max: av['max']
+							};
+							this.attrs['mhRealDamage'] = {
+								min: av['min'],
+								max: av['max']
+							};
+						}							
+						if(slot == "offhand") {
+							this.attrs['damage-oh'] = {
+								min: av['min'],
+								max: av['max']
+							};
+							this.attrs['ohRealDamage'] = {
+								min: av['min'],
+								max: av['max']
+							};
+						}							
+						break;
+					case "block-amount":
+						this.isDuelWielding = false;
+						this.attrs[ak] = av['min'] + "-" + av['max'];
+						break;
+					case "armor":
+						switch(json.type) {
+							case "ring":
+							case "amulet":				
+								break;
+							default:
+								if(this.attrs[ak]) {
+									this.attrs[ak] += parseFloat(av);
+								} else {
+									this.attrs[ak] = parseFloat(av);
+								}
+								break;
+						}
+						break;
+					default:
+						if(this.attrs[ak]) {
+							this.attrs[ak] += parseFloat(av);
+						} else {
+							this.attrs[ak] = parseFloat(av);
+						}					
+						break;
+				}
+			}, this);					
+		}
 		if(json.attrs) {
 			_.each(json.attrs, function(av, ak) {
 				if(typeof(av) != 'object' && isNaN(parseFloat(av))) {
 					av = 0;
 				}
 				switch(ak) {
+					case "arcane-damage":
+					case "fire-damage":
+					case "lightning-damage":
+					case "poison-damage":
+					case "cold-damage":
+					case "holy-damage":
+						this.attrs[ak] = av;
+						if(this.attrs['damage']) {
+							if(slot == "mainhand") {
+								this.attrs['mhRealDamage'] = {
+									min: this.attrs['damage']['min'] - av.min,
+									max: this.attrs['damage']['max'] - av.max,
+								};
+							} else {
+								this.stats['ohRealDamage'] = {
+									min: this.attrs['damage']['min'] - av.min,
+									max: this.attrs['damage']['max'] - av.max,
+								};								
+							}
+						}
+						break;
 					case "armor":
 						if(json.type == 'ring' || json.type == 'amulet') {
 							if(this.attrs[ak]) {
@@ -1325,60 +1439,6 @@ BuildCalculator.prototype = {
 					this.attrs[ak] = parseFloat(av);
 				}
 			}, this);
-		}
-		if(json.stats) {
-			_.each(json.stats, function(av, ak) {
-				switch(ak) {
-					case "speed":
-						if(slot == "mainhand") {
-							this.attrs[ak] = parseFloat(av);
-						}
-						if(slot == "offhand") {
-							this.isDuelWielding = true;
-							this.attrs['speed-oh'] = parseFloat(av);
-						}
-						break;
-					case "damage":
-						if(slot == "mainhand") {
-							this.attrs[ak] = {
-								min: av['min'],
-								max: av['max']
-							};
-						}							
-						if(slot == "offhand") {
-							this.attrs['damage-oh'] = {
-								min: av['min'],
-								max: av['max']
-							};
-						}							
-						break;
-					case "block-amount":
-						this.isDuelWielding = false;
-						this.attrs[ak] = av['min'] + "-" + av['max'];
-						break;
-					case "armor":
-						switch(json.type) {
-							case "ring":
-							case "amulet":				
-								break;
-							default:
-								if(this.attrs[ak]) {
-									this.attrs[ak] += parseFloat(av);
-								} else {
-									this.attrs[ak] = parseFloat(av);
-								}
-								break;
-						}
-						break;
-					default:
-						if(this.attrs[ak]) {
-							this.attrs[ak] += parseFloat(av);
-						} else {
-							this.attrs[ak] = parseFloat(av);
-						}					
-						break;
-				}
-			}, this);					
 		}
 	},
 	diff: function(s1, s2) {
