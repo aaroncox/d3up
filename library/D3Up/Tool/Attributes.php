@@ -38,15 +38,15 @@ class D3Up_Tool_Attributes
 		'plus-damage' => '+[v]% Damage',
 		'min-damage' => '+[v] Minimum Damage',
 		'max-damage' => '+[v] Maximum Damage',
-		'minmax-damage' => '+[v] Damage (Min/Max)',
-		// Elemental Damage
+		'minmax-damage' => '+[v] Damage (Min-Max)',
+		// Elemental Damage Percents
 		'plus-arcane-damage' => '+[v]% to Arcane Damage',
 		'plus-cold-damage' => '+[v]% to Cold Damage',
 		'plus-fire-damage' => '+[v]% to Fire Damage',
 		'plus-holy-damage' => '+[v]% to Holy Damage',
 		'plus-lightning-damage' => '+[v]% to Lightning Damage',
 		'plus-poison-damage' => '+[v]% to Poison Damage',
-		
+		// Elemental Damage Additions
 		'arcane-damage' => '+[v] Arcane Damage',
 		'cold-damage' => '+[v] Cold Damage',
 		'fire-damage' => '+[v] Fire Damage',
@@ -54,6 +54,13 @@ class D3Up_Tool_Attributes
 		'lightning-damage' => '+[v] Lightning Damage',
 		'poison-damage' => '+[v] Poison Damage',
 		'elite-damage' => 'Increases Damage against Elites by [v]%',
+		// Elemental Skill Bonuses
+		'plus-arcane-damage-skills' => 'Arcane skills deal [v]% more damage',
+		'plus-cold-damage-skills' => 'Cold skills deal [v]% more damage',
+		'plus-fire-damage-skills' => 'Fire skills deal [v]% more damage',
+		'plus-holy-damage-skills' => 'Holy skills deal [v]% more damage',
+		'plus-lightning-damage-skills' => 'Lightning skills deal [v]% more damage',
+		'plus-poison-damage-skills' => 'Poison skills deal [v]% more damage',
 		// Procs
 		'chance-bleed' => '[v]% chance to inflict Bleed for [v] damage over 5 seconds',
 		'chance-blind' => '[v]% chance to Blind on Hit',
