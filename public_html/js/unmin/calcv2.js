@@ -908,7 +908,7 @@ BuildCalculator.prototype = {
 			if(v > 1) {
 				if(setBonuses[k]) {
 					_.each(setBonuses[k].effect, function(list, amount) {
-						if(k >= amount) {
+						if(v >= amount) {
 							_.each(list, function(value, stat) {
 								if(value < 1) {
 									value = value * 100;
