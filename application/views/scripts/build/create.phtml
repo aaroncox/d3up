@@ -9,14 +9,15 @@
 			<p>By creating or importing a character build into D3Up.com's Build Calculator, you'll gain access to all of our DPS, EHP and Item Comparison tools. Follow the instructions below or for more information check out the <a href="http://d3up.com/guide/12/creating-your-build-on-d3up-com">Creating your Build on D3Up.com</a> guide.</p>
 		</div>
 	</div>
+	<? if(!$this->profile): ?>
+	<div class='form'>
+		<p><strong style='color: #f00'>Warning for non-registered users</strong></p>
+		<p>Since you are not logged in, we will import your build into an anonymous build. You will not be able to edit the name or skills on the build, but you will be able to use the Calculators and Item Simulators. Please bookmark or save the link to your build for future reference!</p>
+		<p>If you'd like to edit and change this build in the future, please <a href="/user/login">login</a> or <a href="/user/register">create an account</a> first.</p>
+	</div>
+	<? endif ?>
 	<form method="post">
 		<div class='form ui-helper-clearfix'>
-			<? if(!$this->profile): ?>
-				<p><strong style='color: #f00'>Warning for non-registered users</strong></p>
-				<p>Since you are not logged in, we will import your build into an anonymous build. You will not be able to edit the name or skills on the build, but you will be able to use the Calculators and Item Simulators. Please bookmark or save the link to your build for future reference!</p>
-				<p>If you'd like to edit and change this build in the future, please <a href="/user/login">login</a> or <a href="/user/register">create an account</a> first.</p>
-			<? endif ?>
-			
 			<div class='import'>
 			<? if($this->profile): ?>
 				<h4>Import from Battle.net</h4>
@@ -32,8 +33,12 @@
 					</div>
 					<p>After selecting your character, make sure to fill out the rest of the form on the left!</p>
 				<? else : ?>
-					<p>You need to specify your Battle.net BattleTag and which region you play in before we can import your characters.</p>
-					<p>Head on over and <a href="/user/edit">edit your profile</a> to fill out this information!</p>
+					<p>You need to specify the following information before we can import characters:</p>
+					<ul>
+						<li>Your Battle.net BattleTag</li>
+						<li>Which region you play in</li>
+					</ul>
+					<p>Head on over and <a href="/user/edit">edit your profile</a> to fill out this information if you wish to import your characters!</p>
 				<? endif ?>
 			<? else: ?>
 				<div id="import-from">

@@ -53,6 +53,7 @@ $(function() {
 			tabEHPGear = $("#stats-ehp-gear"),
 			tabDPSGear = $("#stats-dps-gear"),
 			selectVs = $("#vsLevel"), 
+			selectParagon = $("#paragonLevel"),
 			heroClass = $("#character").data('class'),
 			isOwner = $("#character").data("owner"),
 			skillDisplay = $("#skill-display"),
@@ -297,6 +298,11 @@ $(function() {
 	// passiveSelect.trigger('change');
 	selectVs.bind('change', function() {
 		calc.setVsLevel($(this).val());
+		recalc();
+	});
+	selectParagon.bind('change', function() {
+		$("#paragon-level").html($(this).val());
+		calc.setParagonLevel($(this).val());
 		recalc();
 	});
 	function recalc() {

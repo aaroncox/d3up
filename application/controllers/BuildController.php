@@ -53,7 +53,7 @@ class BuildController extends Epic_Controller_Action
 	}
 	public function createAction() {
 		$this->view->profile = $profile = Epic_Auth::getInstance()->getProfile();
-		if($profile) {
+		if($profile && $profile->region) {
 			$this->view->characters = D3Up_Tool_Crawler::getInstance()->getCharacters($profile);
 		}
 		if(!$this->getRequest()->getParam('character-id') && $region = $this->getRequest()->getParam('region') && $tag = $this->getRequest()->getParam('battletag')) {
@@ -73,12 +73,22 @@ class BuildController extends Epic_Controller_Action
 				$region = $this->getRequest()->getParam('region');
 				if($profile && $character) {
 					D3Up_Tool_Crawler::getInstance()->crawl($build, $profile, $character);										
+					$build->_characterId = $character;
+					$build->_characterBt = $profile->battletag;
+					$build->_characterRg = $profile->region;
+					$build->_lastCrawl = time();
+					$build->save();
 				}
 				if($battletag && $region && $character) {
 					$fakeProfile = Epic_Mongo::newDoc('profile');
 					$fakeProfile->region = $region;
 					$fakeProfile->battletag = $battletag;
 					D3Up_Tool_Crawler::getInstance()->crawl($build, $fakeProfile, $character);					
+					$build->_characterId = $character;
+					$build->_characterBt = $battletag;
+					$build->_characterRg = $region;
+					$build->_lastCrawl = time();
+					$build->save();
 				}
 				// var_dump($result, $this->getRequest()->getParams()); exit;
 				$this->_redirect("/b/".$build->id);				

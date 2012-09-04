@@ -21,6 +21,11 @@ var activeActives = [];
 </script>
 <div id="build" class="content-page">
 	<div class="build-header title-block" data-class="<?= $this->record->class ?>">
+		<? if(!$this->record->_createdBy->id && $this->record->_characterId && $this->record->_characterBt): ?>
+			<div class="controls">
+				<a href="/b/<?= $this->record->id ?>/resync" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only"><span class="ui-button-text">Sync w/Battle.net</span></a>			
+			</div>
+		<? endif ?>
 		<? if($profile && $this->record->_createdBy): ?>
 		<div class="controls">
 			<? if($profile->createReference() == $this->record->_createdBy->createReference()): ?>
@@ -42,6 +47,9 @@ var activeActives = [];
 		</h3>
 		<h5>
 			<?= ucwords(str_replace("-", " ", $this->record->class)) ?> Build
+			<? if($this->record->_lastCrawl): ?>
+				(Last Sync w/ Battle.net: <?= date('F j, Y', $this->record->_lastCrawl) ?>)
+			<? endif ?>
 		</h5>
 		<div id="skill-display" class="ui-widget ui-corner-all ui-helper-clearfix" >
 			<div id="ratings-display">
@@ -231,6 +239,12 @@ var activeActives = [];
 					<option value="61">Stats vs Level 61 Monster</option>
 					<option value="62">Stats vs Level 62 Monster</option>
 					<option value="63">Stats vs Level 63 Monster</option>
+				</select>
+				<select id="paragonLevel">
+					<option value="">Paragon Level</option>
+					<? for($i = 1; $i <= 100; $i++): ?>
+						<option value="<?= $i ?>" <?= ($this->record->paragon == $i) ? "selected='selected'" : "" ?>>Paragon Lvl <?= $i ?></option>
+					<? endfor ?>
 				</select>
 			</div>
 			<div id="tab-base">
