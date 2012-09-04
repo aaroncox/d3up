@@ -189,6 +189,12 @@ class D3Up_Tool_Crawler
 		'plus-holy-damage' => '+[v] Holy Damage',
 		'plus-lightning-damage' => '+[v] Lightning Damage',
 		'plus-poison-damage' => '+[v] Poison Damage',
+		'plus-arcane-damage~2' => 'Adds [v]% to Arcane Damage',
+		'plus-cold-damage~2' => 'Adds [v]% to Cold Damage',
+		'plus-fire-damage~2' => 'Adds [v]% to Fire Damage',
+		'plus-holy-damage~2' => 'Adds [v]% to Holy Damage',
+		'plus-lightning-damage~2' => 'Adds [v]% to Lightning Damage',
+		'plus-poison-damage~2' => 'Adds [v]% to Poison Damage',
 		'elite-damage' => 'Increases Damage against Elites by [v]%',
 		// Ranges
 		'minmax-damage' => '+[v]-[v] Damage',
@@ -398,7 +404,7 @@ class D3Up_Tool_Crawler
 			$passives[] = $skill['skill']['slug'];			
 		}
 		foreach ($profile['items'] as $slot => $gear) {
-			// if($slot != "feet") {
+			// if($slot != "offHand") {
 			// 	continue;
 			// }
 			// Explode the Tooltip Params
@@ -457,6 +463,15 @@ class D3Up_Tool_Crawler
 			if(isset($data['attacksPerSecond'])) {
 				$statsArray['speed'] = (float) $data['attacksPerSecond']['min'];		
 			}
+			if(isset($data['blockChance'])) {
+				$statsArray['block-chance'] = $data['blockChance']['min'] * 100;
+			}
+			if(isset($data['attributesRaw']) && isset($data['attributesRaw']['Block_Amount_Item_Min']) && isset($data['attributesRaw']['Block_Amount_Item_Delta'])) {
+				$statsArray['block-amount'] = array(
+					'min' => $data['attributesRaw']['Block_Amount_Item_Min']['min'],
+					'max' => $data['attributesRaw']['Block_Amount_Item_Min']['min'] + $data['attributesRaw']['Block_Amount_Item_Delta']['min'],
+				);
+			}
 			// Do the attributes from the item
 			$attrs = $data['attributes'];
 			foreach($attrs as $attr) {
@@ -486,7 +501,7 @@ class D3Up_Tool_Crawler
 				}
 			}
 			// What slot is it in?
-			$slot = static::$_slotMap[$slot];
+			$slot = static::$_slotMap[$slot];			
 			// Add Attributes to the Item and Query
 			$query['attrs'] = $attrsArray;
 			$query['stats'] = $statsArray;
@@ -515,6 +530,7 @@ class D3Up_Tool_Crawler
 				$new->attrs->setFromArray($attrsArray);
 				$new->_created = time();
 				$new->_createdBy = $user;
+				// var_dump($new->export()); exit;
 				$new->save();
 				$status[$slot] = array(
 					'result' => 'new',
