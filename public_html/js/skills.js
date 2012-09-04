@@ -7188,7 +7188,7 @@ var setBonuses = {
 			}
 		}
 	},
-	'immortal-king': {
+	'immortal-kings-legend': {
 		name: 'Immortal King\'s Legend',
 		effect: {
 			2: {
