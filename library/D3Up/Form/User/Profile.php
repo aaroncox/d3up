@@ -54,7 +54,6 @@ class D3Up_Form_User_Profile extends Epic_Form
 		));
 		
 		$this->addElement("select", "region", array(
-			'required' => true,
 			'label' => 'Which region do you play in?',
 			'description' => 'In order to sell goods, we need to know which region you play in.',
 			'multiOptions' => array(
