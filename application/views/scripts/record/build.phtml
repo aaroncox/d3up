@@ -39,7 +39,7 @@ var activeActives = [];
 		</div>
 		<? endif; ?>
 		<h2>
-			<?= $this->record->name ?> 
+			<?= $this->mLink($this->record) ?> 
 		</h2>
 		<h3>
 			Level <span id="character-level"><?= $this->record->level ?: 60 ?></span>,
