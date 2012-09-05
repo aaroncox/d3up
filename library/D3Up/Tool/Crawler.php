@@ -86,6 +86,7 @@ class D3Up_Tool_Crawler
 		'crossbow' => 'crossbow',
 		'2hmighty' => '2h-mighty',
 		'mighty2h' => '2h-mighty',
+		'mightyweapon2h' => '2h-mighty',
 		'polearm' => 'polearm',
 		'staff' => 'staff',
 		'2hsword' => '2h-sword',
