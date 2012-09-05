@@ -1359,7 +1359,6 @@ div.toc.section {
 	padding: 50px;
 }
 .content-page .page,
-.content-page .import,
 .content-page .form,
 .content-page .warning {
 	margin: 2px 0;
@@ -1369,8 +1368,7 @@ div.toc.section {
 }
 .content-page .import {
 	float: right;
-	width: 350px;
-	background: #171614;
+	width: 400px;
 }
 .content-page .import h4 {
 	color: #B18135;

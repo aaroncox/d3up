@@ -19,59 +19,69 @@
 	<form method="post">
 		<div class='form ui-helper-clearfix'>
 			<div class='import'>
-			<? if($this->profile): ?>
 				<h4>Import from Battle.net</h4>
-				<? if($this->profile->battletag && $this->profile->region): ?>
-					<p>If you wish to create a build from one of your characters, please enter it's information below.</p>
-					<div>
-						<select name='character-id' id="import-characters">
-							<option value=''>Select a Character...</option>
-							<? foreach($this->characters as $k => $v): ?>
-								<option data-class="<?= $v['class'] ?>" value='<?= $v['id'] ?>'>[<?= $v['level'] ?>] <?= $v['name']?> - <?= ucwords(str_replace("-", " ", $v['class'])) ?>
-							<? endforeach ?>
-						</select>
-					</div>
-					<p>After selecting your character, make sure to fill out the rest of the form on the left!</p>
-				<? else : ?>
-					<p>You need to specify the following information before we can import characters:</p>
+				<div id="import-tabs">
 					<ul>
-						<li>Your Battle.net BattleTag</li>
-						<li>Which region you play in</li>
+						<? if($this->profile && $this->profile->battletag && $this->profile->region): ?>
+							<li><a href="#import-characters">My Characters</a></li>
+						<? endif ?>
+						<li><a href="#import-others">Manual Import</a></li>
 					</ul>
-					<p>Head on over and <a href="/user/edit">edit your profile</a> to fill out this information if you wish to import your characters!</p>
-				<? endif ?>
-			<? else: ?>
-				<div id="import-from">
-					<h4>Import from Battle.net</h4>
-					<p>If you'd like to automatically import a character, fill out the information below to find your character!</p>
-					<dt>Region</dt>
-					<dd>
-						<select name='region' id='region'>
-							<option value='1'>The Americas</option>
-							<option value='2'>Europe</option>
-							<option value='3'>Asia</option>
-						</select>
-					</dd>
-					<dt>Battle Tag</dt>
-					<dd><input name='battletag' type='text' id="battle-tag"></dd>
-					<div style="text-align: center; padding: 10px">
-						<button id="search-battle-tag">Find my Characters</button>
+					<? if($this->profile ): ?>
+					<div id="import-characters">
+						<? if($this->profile->battletag && $this->profile->region): ?>
+							<p>If you wish to create a build from one of your characters, please enter it's information below.</p>
+							<div>
+								<select name='character-id' id="characters">
+									<option value=''>Select a Character...</option>
+									<? foreach($this->characters as $k => $v): ?>
+										<option data-name="<?= $v['name'] ?>" data-class="<?= $v['class'] ?>" value='<?= $v['id'] ?>'>[<?= $v['level'] ?>] <?= $v['name']?> - <?= ucwords(str_replace("-", " ", $v['class'])) ?>
+									<? endforeach ?>
+								</select>
+							</div>
+							<p>After selecting your character, make sure to fill out the rest of the form on the left!</p>
+						<? else : ?>
+							<p>You need to specify the following information before we can import characters:</p>
+							<ul>
+								<li>Your Battle.net BattleTag</li>
+								<li>Which region you play in</li>
+							</ul>
+							<p>Head on over and <a href="/user/edit">edit your profile</a> to fill out this information if you wish to import your characters!</p>
+						<? endif ?>
+					</div>
+					<? endif ?>
+					<div id="import-others">
+						<div id="import-find">
+							<p>If you'd like to automatically import a character, fill out the information below to find your character!</p>
+							<dt>Region</dt>
+							<dd>
+								<select name='region' id='region'>
+									<option value='1'>The Americas</option>
+									<option value='2'>Europe</option>
+									<option value='3'>Asia</option>
+								</select>
+							</dd>
+							<dt>Battle Tag</dt>
+							<dd><input name='battletag' type='text' id="battle-tag"></dd>
+							<div style="text-align: center; padding: 10px">
+								<button id="search-battle-tag">Find my Characters</button>
+							</div>
+						</div>
+						<div id="import-character">
+							<h4>Characters</h4>
+							<p>Please select which character to import into this build.</p>
+							<div>
+								<select name='character-id-manual' id="manual-characters">
+									<option value="">Loading ...</option>
+								</select>
+							</div>
+							<p>After choosing the character, make sure to fill out the information on the right and click submit!</p>
+							<div style="text-align: center; padding: 10px">
+								<button id="repeat-search">Back to Search</button>
+							</div>
+						</div>
 					</div>
 				</div>
-				<div id="import-character">
-					<h4>Characters</h4>
-					<p>Please select which character to import into this build.</p>
-					<div>
-						<select name='character-id' id="import-characters">
-							<option value="">Loading ...</option>
-						</select>
-					</div>
-					<p>After choosing the character, make sure to fill out the information on the right and click submit!</p>
-					<div style="text-align: center; padding: 10px">
-						<button id="repeat-search">Back to Search</button>
-					</div>
-				</div>
-			<? endif ?>
 			</div>
 			<h3 style="margin: 0 0 20px"><a href="#">Build Information</a></h3>
 			<?= $this->form->name ?>
@@ -85,14 +95,24 @@
 </div>
 <script type="text/javascript">
 	$(function(){ 
-		var charList = $("#import-characters"),
+		$("#import-tabs").tabs();
+		var charList = $("#characters"),
+				charListManual = $("#manual-characters"),
 				battletag = $("#battle-tag"),
 				region = $("#region"),
 				search = $("#search-battle-tag").button(),
-				importer = $("#import-from"),
+				importer = $("#import-find"),
 				characters = $("#import-character"),
 				research = $("#repeat-search").button(),
 				classElement = $("#class-element select");
+		$("#import-tabs > ul li a").click(function() {
+			charList.find("option").each(function() {
+				$(this).removeAttr("selected");
+			});
+			charListManual.find("option").each(function() {
+				$(this).removeAttr("selected");
+			});
+		});
 		characters.hide();
 		research.click(function() {
 			characters.hide();
@@ -111,30 +131,43 @@
 				},
 				success: function(data) {
 					if(data == null) {
-						charList.empty().append("<option value=''>Error: No Characters found!</option>");
+						charListManual.empty().append("<option value=''>Error: No Characters found!</option>");
 					} else {
-						charList.empty().append("<option value=''>Select a Character...</option>");
+						charListManual.empty().append("<option value=''>Select a Character...</option>");
 						$.each(data, function(k,v) {
 							var option = $("<option>");
 							option.val(v.id);
 							option.attr("data-class", v.class);
+							option.attr("data-name", v.name);
 							option.html("[" + v.level + "] " + v.name + " - " + v.class.replace(/-/g, ' ').capitalize());
-							charList.append(option);
+							charListManual.append(option);
 						});
 					}
 				},
 				error: function(jqXHR, textStatus, errorThrown) {
-					charList.empty().append("<option value=''>Error: No Characters found!</option>");
+					charListManual.empty().append("<option value=''>Error: No Characters found!</option>");
 				}
 			});
 			return false;
 		});
-		charList.bind('change', function() {
-			var cls = $(this).find(":selected").attr("data-class"), 
+		charListManual.bind('change', function() {
+			var name = $(this).find(":selected").attr("data-name"),
+					cls = $(this).find(":selected").attr("data-class"), 
 					clsPick = $("#class-element select").find("option[value=" + cls + "]");
 			$("#class-element select").find("option").each(function() {
 				$(this).removeAttr("selected");
 			})
+			$("#name-element input").attr("value", name);
+			clsPick.attr("selected", "selected");
+		});
+		charList.bind('change', function() {
+			var name = $(this).find(":selected").attr("data-name"),
+					cls = $(this).find(":selected").attr("data-class"), 
+					clsPick = $("#class-element select").find("option[value=" + cls + "]");
+			$("#class-element select").find("option").each(function() {
+				$(this).removeAttr("selected");
+			})
+			$("#name-element input").attr("value", name);
 			clsPick.attr("selected", "selected");
 		});
 	});

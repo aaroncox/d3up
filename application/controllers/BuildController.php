@@ -56,7 +56,7 @@ class BuildController extends Epic_Controller_Action
 		if($profile && $profile->region) {
 			$this->view->characters = D3Up_Tool_Crawler::getInstance()->getCharacters($profile);
 		}
-		if(!$this->getRequest()->getParam('character-id') && $region = $this->getRequest()->getParam('region') && $tag = $this->getRequest()->getParam('battletag')) {
+		if(!$this->getRequest()->getParam('character-id') && !$this->getRequest()->getParam('character-id-manual') && $region = $this->getRequest()->getParam('region') && $tag = $this->getRequest()->getParam('battletag')) {
 			echo json_encode(D3Up_Tool_Crawler::getCharactersByTag($tag, $region)); exit;
 		}
 		// Create a new Build
@@ -68,29 +68,25 @@ class BuildController extends Epic_Controller_Action
 			$result = $form->process($this->getRequest()->getParams());
 			if($result) {
 				$build = Epic_Mongo::db('build')->find($result['upserted']);
-				$character = $this->getRequest()->getParam('character-id');
 				$battletag = $this->getRequest()->getParam('battletag');
 				$region = $this->getRequest()->getParam('region');
-				if($profile && $character) {
-					D3Up_Tool_Crawler::getInstance()->crawl($build, $profile, $character);										
-					$build->_characterId = $character;
-					$build->_characterBt = $profile->battletag;
-					$build->_characterRg = $profile->region;
-					$build->_lastCrawl = time();
-					$build->save();
-				}
-				if($battletag && $region && $character) {
+				$character = $this->getRequest()->getParam('character-id', null);
+				if($character == "") {
+					$character = $this->getRequest()->getParam('character-id-manual', null);
 					$fakeProfile = Epic_Mongo::newDoc('profile');
 					$fakeProfile->region = $region;
 					$fakeProfile->battletag = $battletag;
 					D3Up_Tool_Crawler::getInstance()->crawl($build, $fakeProfile, $character);					
-					$build->_characterId = $character;
-					$build->_characterBt = $battletag;
-					$build->_characterRg = $region;
-					$build->_lastCrawl = time();
-					$build->save();
+					$build->_characterBt = $fakeProfile->battletag;
+					$build->_characterRg = $fakeProfile->region;
+				} else {
+					D3Up_Tool_Crawler::getInstance()->crawl($build, $profile, $character);															
+					$build->_characterBt = $profile->battletag;
+					$build->_characterRg = $profile->region;
 				}
-				// var_dump($result, $this->getRequest()->getParams()); exit;
+				$build->_characterId = $character;
+				$build->_lastCrawl = time();
+				$build->save();
 				$this->_redirect("/b/".$build->id);				
 			}
 		}
