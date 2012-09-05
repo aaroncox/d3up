@@ -273,7 +273,10 @@ var passives = {
 			}
 		},
 		'cull-the-weak': {
-			'desc': 'Damage against slowed enemies increased by <span class="skill-highlight">15%</span>.'
+			'desc': 'Damage against slowed enemies increased by <span class="skill-highlight">15%</span>.',
+			'effect': {
+				'plus-damage-conditional': 15
+			}
 		},
 		'night-stalker': {
 			'desc': 'Critical Hits have a chance to restore <span class="skill-highlight">1</span> Discipline.'
