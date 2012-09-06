@@ -72,7 +72,6 @@ var itemBuilder = {
 		'life-kill': '+VVV Life after each Kill',
 		'life-hit': 'Each hit adds +VVV Life',		
 		// Weapon Flat damage ranges
-		'minmax-damage': '+VVV Damage',
 		'arcane-damage': '+VVV Arcane Damage',
 		'cold-damage': '+VVV Cold Damage',
 		'fire-damage': '+VVV Fire Damage',
