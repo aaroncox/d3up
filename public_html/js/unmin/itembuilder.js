@@ -119,7 +119,7 @@ var itemBuilder = {
 		'plus-magic-find': 'VVV% Better Chance of finding Magic Items',
 		'health-globes': 'Health Globes grant +VVV Life',
 		'level-reduce': 'Level Requirement reduced by VVV',
-		'indestructable': 'Ignores durability loss',
+		'indestructible': 'Ignores durability loss',
 		// Barbarian
 		'fury-max': '+VVV Maximum Fury',
 		'fury-spent-life': 'Gain VVV Life per Fury Spent',
@@ -542,6 +542,7 @@ var itemBuilder = {
 						input = "<input type='text' value='" + v + "' name='" + k + "' tabindex='100'>", 
 						hidden = "<input type='hidden' value='true' name='" + k + "' tabindex='100'>",
 						helper = builder.skillText[k];
+						console.log(builder.skillText[k], k);
 				if(helper.search("VVV") >= 0) {
 					helper = helper.replace(/VVV/, input);										
 				} else {
