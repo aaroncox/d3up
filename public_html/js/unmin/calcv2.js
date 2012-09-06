@@ -1448,6 +1448,7 @@ BuildCalculator.prototype = {
 					'plus-movement': '+Movement', 
 					'plus-magic-find': '+Magic Find', 
 					'plus-gold-find': '+Gold Find', 
+					'resist-all': 'Resist All',
 					'thorns': 'Thorns', 
 					'life-hit': 'Life/Hit', 
 					'ap-on-crit': 'AP/Crit', 
