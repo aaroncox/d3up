@@ -84,7 +84,7 @@
 <?= $this->record->stats['speed'] ?> attack speed
 <? elseif(isset($this->record->stats['armor'])): ?>
 <?= $this->record->stats['armor']?> Armor
-<? if(isset($this->record->stats['block-chance'])):?>
+<? if(isset($this->record->stats['block-chance']) && $this->record->type == 'shield'):?>
 +<?= $this->record->stats['block-chance']?>% Block Chance
 <?= implode("-", $this->record->stats['block-amount']->export()) ?> Block Amount
 <? endif?>
