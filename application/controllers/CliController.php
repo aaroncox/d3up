@@ -92,4 +92,56 @@ class CliController extends Epic_Controller_Action
 		}
 		echo "Resaved all users"; exit;
 	}
+	public function convertGuidesAction() {
+		$i = 0;
+		$guides = Epic_Mongo::db('guide')->fetchAll();
+		$adapter = new Zend_ProgressBar_Adapter_Console();
+		$bar = new Zend_ProgressBar($adapter, 0, count($guides));
+		foreach($guides as $guide) {
+			$i++;
+			foreach($guide->sections as $idx => $section) {
+				if(!$section->type) {
+					$guide->sections[$idx]->type = 'generic';					
+				}
+			}
+			if($guide->passives) {
+				$passives = $guide->passives;
+				$section = new D3Up_Mongo_Post_Guide_Section();
+				$idx = 0;
+				foreach($passives as $skill) {
+					// var_dump($section->skills); exit;
+					$new = $section->skills->new();
+					$new->setFromArray($skill->export());
+					$section->skills[$idx] = $new;
+					$idx++;
+				}
+				$section->title = 'Passives';
+				$section->type = 'passives';
+				$guide->sections->addDocument($section);
+				unset($guide->passives);
+				// var_dump($section); exit;
+			}
+			if($guide->skills) {
+				$skills = $guide->skills;
+				$section = new D3Up_Mongo_Post_Guide_Section();
+				$idx = 0;
+				foreach($skills as $skill) {
+					// var_dump($section->skills); exit;
+					$new = $section->skills->new();
+					$new->setFromArray($skill->export());
+					$section->skills[$idx] = $new;
+					$idx++;
+				}
+
+				$section->title = 'Skills';
+				$section->type = 'skills';
+				$guide->sections->addDocument($section);
+				unset($guide->skills);
+			}
+			$bar->update($i);	
+			// var_dump($guide->sections->export()); exit;
+			$guide->save();
+		}
+		echo "Converted ".count($guides)." guides"; exit;
+	}
 } // END class AdminController extends Epic_Controller_Action

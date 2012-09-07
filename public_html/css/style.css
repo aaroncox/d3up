@@ -1191,6 +1191,9 @@ div.title-block h2 {
 .section .section-content  {
 	padding: 25px;
 }
+.section .youtube-video {
+	padding: 23px;
+}
 .content > .section:first-child {
 	border-top: 0;
 }
@@ -1206,6 +1209,7 @@ div.title-block h2 {
 .section .editing textarea {
 	margin: 0px
 }
+.skill-control,
 .section-control {
 	margin: 5px;
 	float: right;
@@ -1278,11 +1282,9 @@ div.toc.section {
 	margin-left: 5px;
 	color: #ececec;
 }
-#guide div.passives.section ul.selectedPassives,
-#guide div.skills.section ul.selectedSkills {
+#guide div.section ul.skill-data {
 	margin: 0;
 	padding: 0;
-	background-color: #111;
 	list-style: none;
 }
 #guide div.passives.section ul.selectedPassives li,
@@ -1313,8 +1315,27 @@ div.toc.section {
 	background: #000;
 	border: 3px solid #333;
 }
-#guide .skill-picker {
+#guide .admin-ui {
 	margin: 20px 30px;
+	border: 2px solid #333;
+}
+#guide .admin-ui h3,
+#guide .admin-ui p,
+#guide .admin-ui > div {
+	margin: 0;
+	padding: 10px;
+	background: #111;	
+}
+#guide .admin-ui input {
+	width: 600px;
+}
+#guide .skill-picker p {
+	border-bottom: 1px solid #333;
+}
+#guide .skill-picker .skill-block {
+	margin: 0;
+	padding: 10px;
+	background: rgba(0,0,0,0.8);
 }
 #guide .skill-picker select {
 	margin-left: 10px;

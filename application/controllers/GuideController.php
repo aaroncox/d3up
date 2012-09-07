@@ -68,72 +68,12 @@ class GuideController extends Epic_Controller_Action
 			$this->view->alreadyVoted = Epic_Mongo::db('vote')->check($guide, $profile);
 		}
 		if($profile && $guide->author->id === $profile->id) {
-			if($this->getRequest()->isPost()) {
-				$filter = new Epic_Filter_HtmlPurifier();
+			if($this->getRequest()->getParam("sections")) {
 				if($sections = $this->getRequest()->getParam('sections')) {
-					$sectionsArray = array();
-					foreach($sections as $idx => $section) {
-						$sec = array(
-							'title' => null,
-							'content' => null,
-						);
-						if($section['title'] != "null" && $section['title'] != "") {
-							$cleaned = html_entity_decode(urldecode($section['title']));
-							$sec['title'] = strip_tags($cleaned);
-						}
-						if($section['content'] != "null") {
-							$cleaned = strip_tags($section['content'], '<p><a><img><div><li><i><b><sub><strike><sup><u><font><h1><h2><h3><h4><h5><h6><h7><ul><ol><br/><br><pre><span><strong><em><bold><blockquote>');
-							$sec['content'] = $cleaned;
-						}
-						if($section['hidden'] == "true") {
-							$sec['hidden'] = true;
-						} else {
-							$sec['hidden'] = null;
-						}
-						$sectionsArray[] = $sec;
-					}
-					$guide->sections = $sectionsArray;
+					$guide->setSections($sections);
 				}
-				if(!$guide->skills) {
-					$guide->skills = array();
-				}	
-				if($skills = $this->getRequest()->getParam('skills')) {
-					$skillsSet = array();
-					foreach($skills as $idx => $skill) {
-						$skillArray = array(
-							'skill' => null,
-							'content' => null,
-						);
-						if($skill['skill'] != "null" && $skill['skill'] != "") {
-							$skillArray['skill'] = $skill['skill'];
-						}
-						if($skill['content'] != "null") {
-							$cleaned = strip_tags($skill['content'], '<p><a><img><div><li><i><b><sub><strike><sup><u><font><h1><h2><h3><h4><h5><h6><h7><ul><ol><br/><br><pre><span><strong><em><bold><blockquote>');
-							$skillArray['content'] = $cleaned;							
-						}
-						$skillsSet[$idx] = $skillArray;
-					}
-					$guide->skills = $skillsSet;
-				}
-				if($passives = $this->getRequest()->getParam('passives')) {
-					$passivesSet = array();
-					foreach($passives as $idx => $skill) {
-						$skillArray = array(
-							'skill' => null,
-							'content' => null,
-						);
-						if($skill['skill'] != "null" && $skill['skill'] != "") {
-							$skillArray['skill'] = $skill['skill'];
-						}
-						if($skill['content'] != "null") {
-							$cleaned = strip_tags($skill['content'], '<p><a><img><div><li><i><b><sub><strike><sup><u><font><h1><h2><h3><h4><h5><h6><h7><ul><ol><br/><br><pre><span><strong><em><bold><blockquote>');
-							$skillArray['content'] = $cleaned;							
-						}
-						$passivesSet[$idx] = $skillArray;
-					}					
-					$guide->passives = $passivesSet;
-				}
-				$guide->save();
+				echo json_encode($guide->save());
+				exit;
 			}			
 		}
 	}

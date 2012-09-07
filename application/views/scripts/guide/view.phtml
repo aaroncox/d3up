@@ -69,12 +69,6 @@
 		<div class="toc section">
 			<h3>Contents of this Guide</h3>
 			<ul id="toc" class="contents <?= $this->guide->class ?>">
-				<? if($this->guide->class && $this->guide->skills): ?>
-					<li><a href="#section-skills">Skills</a></li>
-				<? endif ?>
-				<? if($this->guide->class && $this->guide->passives): ?>
-					<li><a href="#section-passives">Passives</a></li>
-				<? endif ?>
 				<? if($this->guide->sections): ?>
 					<? foreach($this->guide->sections as $key => $section): ?>
 						<li data-section="<?= $key ?>"><a href="#section-<?= $key ?>"><?= $section->title ?></a></li>
@@ -84,55 +78,12 @@
 				<? endif ?>
 			</ul>
 		</div>
-		<? if($this->guide->class && ($this->guide->skills || $isOwner)): ?>
-		<div id="section-skills" class="skills section">
-			<h3 class="section-header">Active Skills</h3>
-			<ul class="selectedSkills">
-				<? for($i = 1; $i <= 6; $i++): ?>
-					<? $doc = $this->guide->skills[$i]; ?>
-					<? if($doc->skill == null && $isOwner): ?>
-						<li data-id="<?= $i ?>">
-							<h5>Skill #<?= $i ?> is not set.</h5>
-							<div class="skill-content" style="display: none"></div>
-						</li>
-					<? elseif($doc->skill): ?>
-						<li data-id="<?= $i ?>" data-skill="<?= $doc->skill ?>">
-							<div class='skill-content'><?= $doc->content ?></div>
-						</li>
-					<? endif ?>
-				<? endfor ?>
-			</ul>
-		</div>
-		<? endif ?>
-		<? if($this->guide->class && ($this->guide->passives || $isOwner)): ?>
-		<div id="section-passives" class="passives section">
-			<h3 class="section-header">Passive Skills</h3>
-			<ul class="selectedPassives">
-				<? for($i = 1; $i <= 3; $i++): ?>
-					<? $doc = $this->guide->passives[$i]; ?>
-					<? if($doc->skill == null && $isOwner): ?>
-						<li data-id="<?= $i ?>">
-							<h5>Passive #<?= $i ?> is not set.</h5>
-							<div class="skill-content" style="display: none"></div>
-						</li>
-					<? elseif($doc->skill): ?>
-						<li data-id="<?= $i ?>" data-skill="<?= $doc->skill ?>">
-							<div class='skill-content'><?= $doc->content ?></div>
-						</li>
-					<? endif ?>
-				<? endfor ?>
-			</ul>
-		</div>
-		<? endif ?>
 		<div class="content">
 			<? if($this->guide->sections): ?>
 				<? foreach($this->guide->sections as $key => $section): ?>
 					<? if(!$section->hidden || $isOwner): ?>
-					<div id="section-<?= $key ?>" class="section" data-section="<?= $key ?>" data-hidden="<?= $section->hidden ?>">
-						<h3 class="section-title"><?= $section->title ?></h3>
-						<div class="section-content">
-							<?= $section->content ?>
-						</div>
+					<div id="section-<?= $key ?>" class="section" data-section="<?= $key ?>" data-section-type="<?= $section->type ?: 'generic' ?>" data-hidden="<?= $section->hidden ?>">
+						<?= $this->partial("./guide/sections/".$section->type .".phtml", array('section' => $section)) ?>
 					</div>
 					<? endif ?>
 				<? endforeach ?>

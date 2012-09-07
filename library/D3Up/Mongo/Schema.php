@@ -27,6 +27,8 @@ class D3Up_Mongo_Schema extends Epic_Mongo_Schema {
 			'comment' => 'D3Up_Mongo_Record_Build_Comment',
 			'update' => 'D3Up_Mongo_Post_Update',
 			'guide' => 'D3Up_Mongo_Post_Guide',
+			'section' => 'D3Up_Mongo_Post_Guide_Section',
+			'revision' => 'D3Up_Mongo_Post_Guide_Revision',
 		),
 		'user' => array(
 			'profile' => 'D3Up_Mongo_User_Profile'
