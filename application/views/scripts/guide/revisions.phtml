@@ -1,0 +1,21 @@
+<? foreach($this->revision as $r) {
+	$rev = $r;
+} ?>
+<div id="toolbar">
+	<div id="guide-owner">
+		<h2>Revision History Tool</h2>
+		<p>This tool allows you to restore a previous version of your guide incase something gets messed up. Use the numbers below to scroll through the history of your guide.</p>
+		Revision from: <?= date("Y-m-d H:i:s", $rev->_timestamp) ?>
+		<div style="text-align: center; padding: 5px">
+			<a href="/guide/<?= $this->guide->id ?>/<?= $this->guide->slug ?>/">Back to Guide</a>	
+			&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+			<a href="/guide/<?= $this->guide->id ?>/<?= $this->guide->slug ?>/restore/version/<?= $r->id ?>">Restore This Version</a>
+		</div>
+		<div class="control">
+			<?php echo $this->paginationControl($this->revision,
+			                                    'Elastic',
+			                                    'guide/_revision-pages.phtml'); ?>
+		</div>
+	</div>
+</div>
+<?= $this->partial("./guide/view.phtml", array('guide' => $rev)) ?>

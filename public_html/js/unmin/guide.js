@@ -219,6 +219,11 @@ $(function() {
 							section.remove();
 							$this.saveStatusChange(false);
 							$this.toc.find("li[data-section=" + section.attr("data-section") + "]").remove();
+							var newIdx = 0;
+							$("#guide .content .section").each(function() {
+								$(this).attr("data-section", newIdx);
+								newIdx++;
+							});
 							$this.data.splice(section.attr("data-section"), 1);
 							$( this ).dialog("close");
 						},
@@ -405,6 +410,7 @@ $(function() {
 				if(this.btnSaveGuide) {
 					this.btnSaveGuide.bind('click', function() {
 						$(".btnDone").trigger('click');
+						// console.log($this.data);
 						$.ajax({
 						  type: 'POST',
 						  data: {

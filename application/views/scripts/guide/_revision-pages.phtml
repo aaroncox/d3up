@@ -1,0 +1,24 @@
+<?php if ($this->pageCount > 1): ?>
+
+	<!-- Previous page link -->
+	<?php if (isset($this->previous)): ?>
+		<a href="?page=<?= $this->previous ?>">&lsaquo;</a>
+	<?php endif; ?>
+
+	<!-- Numbered page links -->
+	<?php foreach ($this->pagesInRange as $page): ?>
+		<?php if ($page != $this->current): ?>
+			<a href="?page=<?= $page ?>">Rev #<?php echo ($this->pageCount - $page + 1);  ?></a>,
+		<?php else: ?>
+			<span>Rev #<?php echo ($this->pageCount - $page + 1);  ?></span>,
+		<?php endif; ?>
+	<?php endforeach; ?>
+
+	<!-- Next page link -->
+	<?php if (isset($this->next)): ?>
+		<a href="?page=<?= $this->next ?>">&rsaquo;</a>
+	<?php endif; ?>
+	<?php if (isset($this->last) && $this->last != $this->next && $this->last != $this->current): ?>
+		<a href="?page=<?= $this->last ?>">&raquo;</a>
+	<?php endif; ?>
+<?php endif; ?>

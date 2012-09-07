@@ -67,7 +67,7 @@ class GuideController extends Epic_Controller_Action
 			$this->checkVote();
 			$this->view->alreadyVoted = Epic_Mongo::db('vote')->check($guide, $profile);
 		}
-		if($profile && $guide->author->id === $profile->id) {
+		// if($profile && $guide->author->id === $profile->id) {
 			if($this->getRequest()->getParam("sections")) {
 				if($sections = $this->getRequest()->getParam('sections')) {
 					$guide->setSections($sections);
@@ -75,7 +75,7 @@ class GuideController extends Epic_Controller_Action
 				echo json_encode($guide->save());
 				exit;
 			}			
-		}
+		// }
 	}
 	public function editAction() {
 		$guide = $this->getGuide();
@@ -121,5 +121,48 @@ class GuideController extends Epic_Controller_Action
 			$guide->save();
 			$this->_redirect("/guide/".$guide->id."/".$guide->slug);
 		}		
+	}
+	
+	public function revisionsAction() {
+		$guide = $this->getGuide();
+		$query = array(
+			'_originalId' => $guide->id,
+		);
+		$sort = array(
+			'_timestamp' => -1
+		);
+		$profile = $this->view->profile = D3Up_Auth::getInstance()->getProfile();
+		if(!$profile) {
+			throw new Exception("You must be logged in to view revisions.");
+		}
+		if($guide->author->id !== $profile->id) {
+			throw new Exception("You are not the owner of this guide.");
+		}
+		$this->view->revisions = $revisions = Epic_Mongo::db('revision')->fetchAll($query, $sort);
+		$paginator = Zend_Paginator::factory($revisions);
+		$paginator->setCurrentPageNumber($this->getRequest()->getParam('page', 1))->setItemCountPerPage(1)->setPageRange(3);
+		$this->view->revision = $paginator;
+	}
+	
+	public function restoreAction() {
+		$guide = $this->getGuide();
+		$profile = $this->view->profile = D3Up_Auth::getInstance()->getProfile();
+		if(!$profile) {
+			throw new Exception("You must be logged in to view revisions.");
+		}
+		if($guide->author->id !== $profile->id) {
+			throw new Exception("You are not the owner of this guide.");
+		}
+		$query = array(
+			'id' => (int) $this->getRequest()->getParam("version"),
+		);
+		$sort = array(
+			'_timestamp' => -1
+		);
+		$revision = Epic_Mongo::db('revision')->fetchOne($query, $sort);
+		$guide->sections = $revision->sections;
+		$guide->save();
+		$guide->saveRevision();
+		$this->_redirect("/guide/".$guide->id."/".$guide->slug);
 	}
 } // END class GuideController extends Epic_Controller_Action

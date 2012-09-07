@@ -11,6 +11,9 @@ class D3Up_Mongo_Post_Guide_Revision extends D3Up_Mongo_Post_Guide {
 	
 	protected $_requirements = array(
 		'original' => array('Document:D3Up_Mongo_Post_Guide', 'AsReference'),
+		'author' => array('Document:D3Up_Mongo_User_Profile', 'AsReference'),
+		'sections' => array('DocumentSet:D3Up_Mongo_Post_Guide_Sections'),
+		'sections.$' => array('Document:D3Up_Mongo_Post_Guide_Section'),
 	);
 	
 	public function makeRevision($document) {
@@ -28,6 +31,8 @@ class D3Up_Mongo_Post_Guide_Revision extends D3Up_Mongo_Post_Guide {
 		foreach($fields as $field) {
 			$this->$field = $document->$field;
 		}
-		// $this->save();
+		$this->_originalId = $document->id;
+		$this->_timestamp = time();
+		$this->save();
 	}
 }

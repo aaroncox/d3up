@@ -40,7 +40,6 @@ class D3Up_Mongo_Post_Guide extends Epic_Mongo_Document_Post
 	
 	public function setSections($sections) {
 		// Save a Revision of the Guide
-		$this->saveRevision();
 		$this->sections = new D3Up_Mongo_Post_Guide_Sections;
 		// var_dump($sections); exit;
 		$count = 0;
@@ -80,13 +79,14 @@ class D3Up_Mongo_Post_Guide extends Epic_Mongo_Document_Post
 			}
 			// Append the new Doc into the Sections
 			$this->sections[$count] = $doc;
-			var_dump($doc->export());
+			// var_dump($doc->export());
 			$count++;
 		}
-		var_dump($this->export());
+		// var_dump($this->export());
 		$this->save();
+		$this->saveRevision();
 		// var_dump($this->export()); 
-		exit;
+		// exit;
 		// var_dump($sections); exit;
 	}
 	
