@@ -340,7 +340,7 @@ var passives = {
 	},
 	'witch-doctor': {
 		'circle-of-life': {
-			'desc': 'Whenever an enemy dies within <span class="skill-highlight">12</span> yards, there is a <span class="skill-highlight">5%</span> chance that a Zombie Dog will automatically emerge. The range of this effect is increased by items that increase your gold pickup radius.'
+			'desc': 'Whenever an enemy dies within <span class="skill-highlight">12</span> yards, there is a <span class="skill-highlight">30%</span> chance that a Zombie Dog will automatically emerge. The range of this effect is increased by items that increase your gold pickup radius.'
 		},
 		'jungle-fortitude': {
 			'desc': 'Reduces all damage taken by you and your pets by <span class="skill-highlight">20%</span>.',
@@ -376,22 +376,22 @@ var passives = {
 			'desc': 'Whenever you cast a physical realm spell, you have a <span class="skill-highlight">3%</span> chance to summon a dagger-wielding Fetish to fight by your side for <span class="skill-highlight">60</span> seconds.'
 		},
 		'spirit-vessel': {
-			'desc': 'Reduces the cooldown of your Horrify, Spirit Walk, and Soul Harvest spells by <span class="skill-highlight">2</span> seconds. In addition, the next time you receive fatal damage, you automatically enter the spirit realm for <span class="skill-highlight">3</span> seconds and heal to <span class="skill-highlight">10%</span> of your maximum Life. This effect cannot occur more than once every <span class="skill-highlight">90</span> seconds.'
+			'desc': 'Reduces the cooldown of your Horrify, Spirit Walk, and Soul Harvest spells by <span class="skill-highlight">2</span> seconds. In addition, the next time you receive fatal damage, you automatically enter the spirit realm for <span class="skill-highlight">2</span> seconds and heal to <span class="skill-highlight">15%</span> of your maximum Life. This effect cannot occur more than once every <span class="skill-highlight">90</span> seconds.'
 		},
 		'rush-of-essence': {
-			'desc': 'Spirit spells return <span class="skill-highlight">30%</span> of their Mana cost over <span class="skill-highlight">10</span> seconds.'
+			'desc': 'Spirit spells return <span class="skill-highlight">49</span> of their Mana cost over <span class="skill-highlight">10</span> seconds.'
 		},
 		'vision-quest': {
-			'desc': 'Any time you have <span class="skill-highlight">4</span> or more skills on cooldown, your Mana regeneration is increased by <span class="skill-highlight">300%</span>.'
+			'desc': 'When you deal damage with Corpse Spiders, Firebomb, Plague of Toads or Poison Dart, your Mana regeneration is increased by <span class="skill-highlight">30%</span> for <span class="skill-highlight">5</span> seconds..'
 		},
 		'fierce-loyalty': {
 			'desc': 'All your pets get <span class="skill-highlight">100%</span> of the benefit of your Thorns and Life regeneration items.'
 		},
 		'grave-injustice': {
-			'desc': 'Whenever an enemy dies within <span class="skill-highlight">8</span> yards, regain <span class="skill-highlight">1%</span> of your maximum Life and Mana and the cooldown on all of your abilities is reduced by <span class="skill-highlight">1</span> second. This range is extended by items that increase your gold pickup radius.'
+			'desc': 'Whenever an enemy dies within <span class="skill-highlight">8</span> yards, regain <span class="skill-highlight">2%</span> of your maximum Life and Mana and the cooldown on all of your abilities is reduced by <span class="skill-highlight">1</span> second. This range is extended by items that increase your gold pickup radius.'
 		},
 		'tribal-rites': {
-			'desc': 'The cooldowns of your Fetish Army, Big Bad Voodoo, and Hex abilities are reduced by <span class="skill-highlight">25%</span>.'
+			'desc': 'The cooldowns of your Fetish Army, Big Bad Voodoo, Hex, Gargantuan, Summon Zombie Dogs and Mass Confusion abilities are reduced by <span class="skill-highlight">25%</span>.'
 		},
 	}
 }
@@ -4524,6 +4524,7 @@ var activeSkills = {
 			name: 'Soul Harvest',
 			desc: 'Feed on the life force of up to 5 enemies within 16 yards. Gain 10 Intelligence for each affected enemy. This effect lasts 30 seconds.',
 			effect: {
+				'plus-intelligence-conditional': 50,
 				'cost-mana': 58.8,
 				'cooldown': 15,
 			},
@@ -4533,6 +4534,7 @@ var activeSkills = {
 			desc: 'Feed on the life force of up to 5 enemies within 16 yards. Gain 10 Intelligence for each affected enemy. This effect lasts 30 seconds.',
 			rune: 'Gain 2170.68 Life for every enemy harvested.',
 			effect: {
+				'plus-intelligence-conditional': 50,
 				'cost-mana': 58.8,
 				'cooldown': 15,
 			},
@@ -4542,6 +4544,7 @@ var activeSkills = {
 			desc: 'Feed on the life force of up to 5 enemies within 16 yards. Gain 10 Intelligence for each affected enemy. This effect lasts 30 seconds.',
 			rune: 'Increase the duration of Soul Harvest\'s effect to 60 seconds.',
 			effect: {
+				'plus-intelligence-conditional': 50,
 				'cost-mana': 58.8,
 				'cooldown': 15,
 			},
@@ -4551,6 +4554,7 @@ var activeSkills = {
 			desc: 'Feed on the life force of up to 5 enemies within 16 yards. Gain 10 Intelligence for each affected enemy. This effect lasts 30 seconds.',
 			rune: 'Reduces the movement speed of harvested enemies by 80% for 3 seconds.',
 			effect: {
+				'plus-intelligence-conditional': 50,
 				'cost-mana': 58.8,
 				'cooldown': 15,
 			},
@@ -4560,6 +4564,7 @@ var activeSkills = {
 			desc: 'Feed on the life force of up to 5 enemies within 16 yards. Gain 10 Intelligence for each affected enemy. This effect lasts 30 seconds.',
 			rune: 'Gain 39.2 Mana for every enemy harvested.',
 			effect: {
+				'plus-intelligence-conditional': 50,
 				'cost-mana': 58.8,
 				'cooldown': 15,
 			},
@@ -4569,6 +4574,7 @@ var activeSkills = {
 			desc: 'Feed on the life force of up to 5 enemies within 16 yards. Gain 10 Intelligence for each affected enemy. This effect lasts 30 seconds.',
 			rune: 'Harvested enemies also take 230% weapon damage as Physical.',
 			effect: {
+				'plus-intelligence-conditional': 50,
 				'cost-mana': 58.8,
 				'cooldown': 15,
 				'weapon-damage': 230,

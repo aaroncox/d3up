@@ -174,6 +174,9 @@ BuildCalculator.prototype = {
 			case "plus-crit-hit":
 				this.attrs['critical-hit'] += e;
 				break;
+			case "plus-intelligence-conditional":
+				this.attrs['intelligence'] += e;
+				break;
 			case "plus-life":
 			case "plus-life-regen":
 			case "plus-damage-reduce":
@@ -814,6 +817,7 @@ BuildCalculator.prototype = {
 						case "3rd-hit":
 							bonuses['3rd-hit-damage'] = e;
 							break;
+						case "plus-intelligence-conditional":
 						case "plus-damage-conditional":
 						case "damage-reduce-conditional":
 						case "plus-crit-hit":
