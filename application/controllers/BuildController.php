@@ -56,8 +56,10 @@ class BuildController extends Epic_Controller_Action
 		if($profile && $profile->region) {
 			$this->view->characters = D3Up_Tool_Crawler::getInstance()->getCharacters($profile);
 		}
-		if(!$this->getRequest()->getParam('character-id') && !$this->getRequest()->getParam('character-id-manual') && $region = $this->getRequest()->getParam('region') && $tag = $this->getRequest()->getParam('battletag')) {
-			echo json_encode(D3Up_Tool_Crawler::getCharactersByTag($tag, $region)); exit;
+		if(!$this->getRequest()->getParam('character-id') && !$this->getRequest()->getParam('character-id-manual') && $this->getRequest()->getParam('region') && $this->getRequest()->getParam('battletag')) {
+			$tag = $this->getRequest()->getParam('battletag');
+			$region = $this->getRequest()->getParam('region');
+			echo json_encode(D3Up_Tool_Crawler::getCharactersByTag($tag, (int) $region)); exit;
 		}
 		// Create a new Build
 		$build = Epic_Mongo::newDoc('build');
