@@ -226,7 +226,7 @@ BuildCalculator.prototype = {
 			}, this);
 		}, this);
 	},
-	applyPassives: function() {
+	applyPassives: function(reverse) {
 		var effects = {
 			sharpshooter: function( value ) {
 				this.bonuses[ 'sharpshooter' ] = true;
@@ -249,6 +249,10 @@ BuildCalculator.prototype = {
 			if(v.effect) {
 				// console.log(k,v);
 				_.each(v.effect, function(value, effect) {
+					// If reverse is true, reverse the stat gains to undo passive bonuses.
+					if(reverse == true) {
+						value = -value;
+					}
 					if ( effects[ effect ] ) {
 						effects[ effect ].call( this, value, effect )
 					} else
@@ -562,10 +566,12 @@ BuildCalculator.prototype = {
 		var rendered = {};	// Storage for Rendered Statistics
 		// Loop through each piece of gear
 		_.each(this.gear, function(g, i) {
+			this.applyPassives(true); // Reverses Passive Gains
 			// Store the Item to for restoration
 			var item = i;
 			// Unset the Item from the stats and gear set
 			this.removeItem(i);
+			this.applyPassives(); // Re-apply the Passive Gains without the Item
 			// Do the EHP calculations without that item
 			var tDefenses = this.calcDefenses(),
 					tEhp = this.calcEffectiveHealth(tDefenses);
