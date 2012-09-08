@@ -236,7 +236,7 @@ BuildCalculator.prototype = {
 				// mathDpsSpecial = Math.round(mathDps * 100) / 100;
 			}
 		};
-
+		console.log(reverse);
 		effects[ "plus-thorns" ] =
 		effects[ "plus-armor" ] =
 		effects[ "plus-resist-all" ] =
@@ -250,7 +250,7 @@ BuildCalculator.prototype = {
 				// console.log(k,v);
 				_.each(v.effect, function(value, effect) {
 					// If reverse is true, reverse the stat gains to undo passive bonuses.
-					if(reverse == true) {
+					if(reverse == true && effect != "switch") {
 						value = -value;
 					}
 					if ( effects[ effect ] ) {
@@ -312,6 +312,9 @@ BuildCalculator.prototype = {
 										_.each(c.effect, function(eff, e) {
 											switch(e) {
 												case "plus-dodge":
+													if(reverse == true) {
+														eff = -eff;
+													}
 													this.bonuses['plus-dodge'].push(eff);
 													break;
 											}
@@ -329,6 +332,11 @@ BuildCalculator.prototype = {
 										// console.log("now", value.against, value.lookup, this.gear[value.against][value.lookup], this.gear);
 										if(l == this.gear[value.against][value.lookup]) {
 											_.each(c.effect, function(eff, e) {
+												if(reverse == true) {
+													eff = -eff;
+													console.log("r");
+												}
+												console.log(eff);
 												switch(e) {
 													case 'plus-damage':
 														if(this.bonuses['plus-damage']) {
@@ -350,6 +358,7 @@ BuildCalculator.prototype = {
 														break;
 													case "critical-hit":
 														this.attrs['critical-hit'] = this.attrs['critical-hit'] + (eff * 100);														
+														console.log("up ch" , this.attrs['critical-hit'], eff);
 														break;
 													default:
 													 	// console.log("Unhandled Switch: " + e + " [" + eff + "]");
@@ -566,11 +575,13 @@ BuildCalculator.prototype = {
 		var rendered = {};	// Storage for Rendered Statistics
 		// Loop through each piece of gear
 		_.each(this.gear, function(g, i) {
+			// console.log("remove passives");
 			this.applyPassives(true); // Reverses Passive Gains
 			// Store the Item to for restoration
 			var item = i;
 			// Unset the Item from the stats and gear set
 			this.removeItem(i);
+			// console.log("add passives");
 			this.applyPassives(); // Re-apply the Passive Gains without the Item
 			// Do the EHP calculations without that item
 			var tDefenses = this.calcDefenses(),
@@ -578,7 +589,9 @@ BuildCalculator.prototype = {
 			// Calculate the Difference in EHP without the item
 			rendered['ehp-' + i] = ehp.ehp - tEhp['ehp'];				
 			// Re-add the Item to the gear set
+			this.applyPassives(true); // Reverses Passive Gains
 			this.parseItem(g, i);
+			this.applyPassives(); // Readd Normal Passive Gains
 		}, this);
 		// Calculate EHP per Stat
 		var incs = {
