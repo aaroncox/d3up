@@ -236,7 +236,7 @@ BuildCalculator.prototype = {
 				// mathDpsSpecial = Math.round(mathDps * 100) / 100;
 			}
 		};
-		console.log(reverse);
+		// console.log(reverse);
 		effects[ "plus-thorns" ] =
 		effects[ "plus-armor" ] =
 		effects[ "plus-resist-all" ] =
@@ -334,9 +334,7 @@ BuildCalculator.prototype = {
 											_.each(c.effect, function(eff, e) {
 												if(reverse == true) {
 													eff = -eff;
-													console.log("r");
 												}
-												console.log(eff);
 												switch(e) {
 													case 'plus-damage':
 														if(this.bonuses['plus-damage']) {
@@ -358,7 +356,7 @@ BuildCalculator.prototype = {
 														break;
 													case "critical-hit":
 														this.attrs['critical-hit'] = this.attrs['critical-hit'] + (eff * 100);														
-														console.log("up ch" , this.attrs['critical-hit'], eff);
+														// console.log("up ch" , this.attrs['critical-hit'], eff);
 														break;
 													default:
 													 	// console.log("Unhandled Switch: " + e + " [" + eff + "]");
