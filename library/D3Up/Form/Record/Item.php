@@ -120,7 +120,7 @@ class D3Up_Form_Record_Item extends Epic_Form
 				'2h-mace' => 'Two-Handed Mace',
 				'2h-axe' => 'Two-Handed Axe',
 				'bow' => 'Bow',
-				'diabo' => 'Diabo',
+				'daibo' => 'Daibo',
 				'crossbow' => 'Crossbow',
 				'2h-mighty' => 'Two-Handed Mighty Weapon',
 				'polearm' => 'Polearm',
@@ -266,7 +266,7 @@ class D3Up_Form_Record_Item extends Epic_Form
 			case "2h-mace":
 			case "2h-axe":
 			case "bow":
-			case "diabo":
+			case "daibo":
 			case "crossbow":
 			case "2h-mighty":
 			case "polearm":

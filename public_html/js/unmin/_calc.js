@@ -159,7 +159,7 @@ if(isOwner) {
 			switch(mh.type) {
 				case '2h-mace': 
 				case '2h-axe': 
-				case 'diabo': 
+				case 'daibo': 
 				case '2h-mighty': 
 				case 'polearm': 
 				case 'staff': 
@@ -222,7 +222,7 @@ if(isOwner) {
 										switch(itemData.type) {
 											case '2h-mace': 
 											case '2h-axe': 
-											case 'diabo': 
+											case 'daibo': 
 											case '2h-mighty': 
 											case 'polearm': 
 											case 'staff': 
@@ -1068,7 +1068,7 @@ function calcDiff(currentStats, upgradeItem) {
 	switch(upgradeItem.type) {
 		case '2h-mace': 
 		case '2h-axe': 
-		case 'diabo': 
+		case 'daibo': 
 		case '2h-mighty': 
 		case 'polearm': 
 		case 'staff': 

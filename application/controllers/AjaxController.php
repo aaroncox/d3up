@@ -5,7 +5,7 @@
  * @package default
  * @author Aaron Cox
  **/
-class AjaxController extends Epic_Controller_Action
+class AjaxController extends D3Up_Controller_Action
 {
 	public function testAction() {
 		
@@ -47,7 +47,7 @@ class AjaxController extends Epic_Controller_Action
 		$item->quality = array_search($params['q'], $this->_qualityMap);
 		$item->type = $this->_typeMap[$params['t']];
 		if(isset($params['d'])) {
-			if(in_array($item->type, array('axe','ceremonial-knife','hand-crossbow','dagger','fist-weapon','mace','mighty-weapon','spear','sword','wand','2h-mace','2h-axe','bow','diabo','crossbow','2h-mighty','polearm','staff','2h-sword'))) {
+			if(in_array($item->type, array('axe','ceremonial-knife','hand-crossbow','dagger','fist-weapon','mace','mighty-weapon','spear','sword','wand','2h-mace','2h-axe','bow','daibo','crossbow','2h-mighty','polearm','staff','2h-sword'))) {
 				$item->stats = array(
 					'dps' => $params['d'],
 				);
@@ -97,7 +97,7 @@ class AjaxController extends Epic_Controller_Action
 		'Wand' => 'wand',
 		'Two-Handed Axe' => '2h-axe', 
 		'Bow' => 'bow', 
-		'Daibo' => 'diabo', 
+		'Daibo' => 'daibo', 
 		'Crossbow' => 'crossbow', 
 		'Two-Handed Mace' => '2h-mace', 
 		'Two-Handed Mighty Weapon' => '2h-mighty', 

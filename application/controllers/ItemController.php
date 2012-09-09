@@ -5,7 +5,7 @@
  * @package default
  * @author Aaron Cox
  **/
-class ItemController extends Epic_Controller_Action
+class ItemController extends D3Up_Controller_Action
 {
 	public function indexAction() {
 		$query = array();

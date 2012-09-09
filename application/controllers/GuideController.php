@@ -5,7 +5,7 @@
  * @package default
  * @author Aaron Cox
  **/
-class GuideController extends Epic_Controller_Action
+class GuideController extends D3Up_Controller_Action
 {
 	public function getGuide() {
 		return $this->view->guide = $this->getRequest()->getParam('post');

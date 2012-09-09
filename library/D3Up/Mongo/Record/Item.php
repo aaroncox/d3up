@@ -28,7 +28,7 @@ class D3Up_Mongo_Record_Item extends Epic_Mongo_Document_Record
 		'ring2' => array('ring'),
 		'shoulders' => array('shoulders'),
 		'helm' => array('helm', 'spirit-stone', 'wizard-hat', 'voodoo-mask'),
-		'mainhand' => array('2h-mace', '2h-axe', 'bow', 'diabo', 'crossbow', '2h-mighty', 'polearm', 'staff', '2h-sword', 'wand', 'ceremonial-knife', 'axe', 'dagger', 'hand-crossbow', 'fist-weapon', 'mace', 'mighty-weapon', 'spear', 'sword'),
+		'mainhand' => array('2h-mace', '2h-axe', 'bow', 'daibo', 'crossbow', '2h-mighty', 'polearm', 'staff', '2h-sword', 'wand', 'ceremonial-knife', 'axe', 'dagger', 'hand-crossbow', 'fist-weapon', 'mace', 'mighty-weapon', 'spear', 'sword'),
 		'offhand' => array('axe', 'dagger', 'hand-crossbow', 'fist-weapon', 'mace', 'mighty-weapon', 'spear', 'sword', 'mojo', 'source', 'quiver', 'shield'),
 	);
 	

@@ -5,7 +5,7 @@
  * @package default
  * @author Aaron Cox
  **/
-class RecordController extends Epic_Controller_Action
+class RecordController extends D3Up_Controller_Action
 {
 	public function getRecord() {
 		return $this->view->record = $this->getRequest()->getParam('record');
@@ -247,7 +247,7 @@ class RecordController extends Epic_Controller_Action
 								switch($record->equipment['mainhand']->type) {
 									case '2h-mace': 
 									case '2h-axe': 
-									case 'diabo': 
+									case 'daibo': 
 									case '2h-mighty': 
 									case 'polearm': 
 									case 'staff': 
@@ -256,7 +256,7 @@ class RecordController extends Epic_Controller_Action
 										break;
 								}								
 							}
-							if(in_array($item->type, array('2h-mace', '2h-axe', 'diabo', 'crossbow', '2h-mighty', 'polearm', 'staff', '2h-sword'))) {								
+							if(in_array($item->type, array('2h-mace', '2h-axe', 'daibo', 'crossbow', '2h-mighty', 'polearm', 'staff', '2h-sword'))) {								
 								$record->equipment['offhand'] = null;
 							}
 							$record->equipment[$slot] = $item;

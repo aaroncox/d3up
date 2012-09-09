@@ -108,9 +108,13 @@ td { vertical-align: top; }
   _height: auto;
 }
 
+.header-logo img {
+	height: 120px;
+}
+
 body {
 	color: #ECECEC;
-	background-color: #222;
+	background-color: #111;
 }
 a, a:visited, a:hover, a:active, a:hover .ui-button-text {
 	color: #70B1D5;
@@ -120,16 +124,20 @@ a:active .ui-button-text, a:visited .ui-button-text {
 	color: #fff;
 }
 #wrapper {
+	background: #222;
 	width: 960px;
 	margin: 0 auto;
+	padding: 0;
+	border: 2px solid #333;
+	border-top: 0;
+	border-bottom: 0;
 }
 #header {
 }
 #header-content {
+	margin-top: 5px;
 	text-align: center;
-	margin-top: 30px;
-	margin-left: 20px;
-	width: 760px;
+	width: 790px;
 }
 #header-content .table-header {
 	font-size: 14px;
@@ -193,11 +201,13 @@ ul#simulate-stats input,
 	padding: 0 10px;
 }
 #sys-message {
+	height: 90px;
+	width: 728px;
 	text-align: center;
 	font-size: 14px;
-	padding: 5px;
+	padding: 15px;
+	margin: 2px auto;
 /*	border-bottom: 1px solid #777;*/
-	margin-bottom: 10px;
 }
 #base_dps-label, #base_dps-element,
 #base_damage_min-label, #base_damage_min-element,
@@ -261,7 +271,7 @@ ul#simulate-stats input,
 	background: #bbb;
 }
 .home {
-	margin: 0 5px 0 0;
+	margin: 0 2px;
 	width: 645px;
 }
 .recent-items {
@@ -294,9 +304,9 @@ ul#simulate-stats input,
 }
 .d3up-table {
 	width: 100%;
-}
-.d3up-table  {
-	border: 2px solid #111;
+	background: #171614;
+	border: 1px solid #333;
+	border-collapse: separate;
 }
 .d3up-table tbody tr.build-row:nth-child(2n),
 .d3up-table tbody tr.item-row:nth-child(2n) {
@@ -378,7 +388,8 @@ div.filters {
 }
 #footer {
 	color: #aaa;
-	margin: 50px 0 ;
+	margin: 50px 0 0;
+	padding-bottom: 25px;
 	font-size: 0.9em;
 	text-align: center;
 }
@@ -509,7 +520,7 @@ dd:has(:focus) .chzn-container {
 }
 .guide-pages, 
 .guide-filters {
-	margin: 5px 15px;
+	margin: 2px 15px;
 }
 .guide-filters {
 	text-align: right;
@@ -1416,6 +1427,7 @@ div.toc.section {
 .content-page .form dd input {
 	width: 300px;
 }
+.footer-content,
 .content-page .social,
 .content-page .form-buttons {
 	clear: both;
@@ -1432,4 +1444,49 @@ div.toc.section {
 	position: absolute;
 	top: 5px;
 	right: 5px;
+}
+/* Dark Button CSS */
+#megamenu li form input[type=submit],
+.button {
+	font-size: 14px;
+	outline: 0;
+	padding: 5px 12px;
+	display: block;
+	text-align: center;
+	font-weight: bold;
+	text-shadow: 1px 1px #1f272b;
+	border: 1px solid #1c252b;
+	border-radius: 3px;
+	-moz-border-radius: 3px;
+	-webkit-border-radius: 3px;
+	background: #232B30; /* old browsers */
+	background: -moz-linear-gradient(top, #3D4850 3%, #313d45 4%, #232B30 100%); /* firefox */
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(3%,#3D4850), color-stop(4%,#313d45), color-stop(100%,#232B30)); /* webkit */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#3D4850', endColorstr='#232B30',GradientType=0 ); /* ie */
+	box-shadow: 1px 1px 1px rgba(0,0,0,0.2); /* CSS3 */
+	-moz-box-shadow: 1px 1px 1px rgba(0,0,0,0.2); /* Firefox */
+	-webkit-box-shadow: 1px 1px 1px rgba(0,0,0,0.2); /* Safari, Chrome */
+	text-shadow: 1px 1px #111;
+	font-weight: normal;
+}
+.button:hover {
+	color: #fff;
+	background: #4C5A64; /* old browsers */
+	background: -moz-linear-gradient(top, #4C5A64 3%, #404F5A 4%, #2E3940 100%); /* firefox */
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(3%,#4C5A64), color-stop(4%,#404F5A), color-stop(100%,#2E3940)); /* webkit */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#4C5A64', endColorstr='#2E3940',GradientType=0 ); /* ie */
+}
+.button:active {
+	background-position: 0 top;
+	position: relative;
+	top: 1px;
+	color: #fff;
+	padding: 6px 12px 4px;
+	background: #20282D; /* old browsers */
+	background: -moz-linear-gradient(top, #20282D 3%, #252E34 51%, #222A30 100%); /* firefox */
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(3%,#20282D), color-stop(51%,#252E34), color-stop(100%,#222A30)); /* webkit */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#20282D', endColorstr='#222A30',GradientType=0 ); /* ie */
+	-moz-box-shadow: 1px 1px 1px rgba(255,255,255,0.1); /* Firefox */
+	-webkit-box-shadow: 1px 1px 1px rgba(255,255,255,0.1); /* Safari, Chrome */
+	box-shadow: 1px 1px 1px rgba(255,255,255,0.1); /* CSS3 */
 }

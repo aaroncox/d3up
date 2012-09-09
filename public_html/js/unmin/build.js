@@ -440,7 +440,7 @@ $(function() {
 					switch(mh.type) {
 						case '2h-mace': 
 						case '2h-axe': 
-						case 'diabo': 
+						case 'daibo': 
 						case '2h-mighty': 
 						case 'polearm': 
 						case 'staff': 
@@ -493,7 +493,7 @@ $(function() {
 									switch(itemData.type) {
 										case '2h-mace': 
 										case '2h-axe': 
-										case 'diabo': 
+										case 'daibo': 
 										case '2h-mighty': 
 										case 'polearm': 
 										case 'staff': 
@@ -804,7 +804,7 @@ $(function() {
 						case "2h-mace":
 						case "2h-axe":
 						case "bow":
-						case "diabo":
+						case "daibo":
 						case "crossbow":
 						case "2h-mighty":
 						case "polearm":
@@ -1125,7 +1125,7 @@ $(function() {
 		switch(newItem.type) {
 			case '2h-mace': 
 			case '2h-axe': 
-			case 'diabo': 
+			case 'daibo': 
 			case '2h-mighty': 
 			case 'polearm': 
 			case 'staff': 

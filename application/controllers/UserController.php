@@ -5,7 +5,7 @@
  * @package default
  * @author Aaron Cox
  **/
-class UserController extends Epic_Controller_Action
+class UserController extends D3Up_Controller_Action
 {
 	public function editAction() {
 		$profile = D3Up_Auth::getInstance()->getProfile();
