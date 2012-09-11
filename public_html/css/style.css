@@ -174,7 +174,6 @@ ul#simulate-stats input,
 	width: 45px;
 }
 .controls {
-	text-align: center;
 	float: right;
 }
 .sub-control {
@@ -1061,9 +1060,16 @@ tr.compared > td:first-child {
 .ui-table-header {
 	margin: 0;
 	margin-left: 10px;
-	text-shadow: 2px 2px #000;
+/*	text-shadow: 2px 2px #000;*/
 	font-size: 22px;
-	line-height: 36px;
+	line-height: 32px;
+}
+.controls.chosen {
+	padding: 4px 5px;
+}
+.controls.chosen select {
+	text-align: left;
+	width: 150px;
 }
 .homepage-widget.ui-tabs .ui-tabs-panel {
 	padding: 15px 0;
@@ -1192,13 +1198,21 @@ div.title-block h2 {
 	border: 1px solid #333;
 	margin: 5px 2px;
 }
+.content-sidebar,
+.content-page,
 #build-create,
 #guides {
 	border: 1px solid #111;
 	padding: 2px;
 	background-color: #222;
 } 
-
+.content-page.with-sidebar {
+	width: 600px;
+}
+.content-sidebar {
+	float: right;
+	width: 350px;
+}
 .section .section-content  {
 	padding: 25px;
 }
@@ -1235,7 +1249,6 @@ div.title-block h2 {
 }
 .section-control .button {
 	margin: 5px;
-	cursor: pointer;
 }
 #guide div.title-block h5 .author,
 #guide div.title-block h5 .date {
@@ -1448,6 +1461,7 @@ div.toc.section {
 /* Dark Button CSS */
 #megamenu li form input[type=submit],
 .button {
+	cursor: pointer;
 	font-size: 14px;
 	outline: 0;
 	padding: 5px 12px;
@@ -1468,6 +1482,13 @@ div.toc.section {
 	-webkit-box-shadow: 1px 1px 1px rgba(0,0,0,0.2); /* Safari, Chrome */
 	text-shadow: 1px 1px #111;
 	font-weight: normal;
+	-webkit-touch-callout: none;
+	-webkit-user-select: none;
+	-khtml-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+	outline: none;
 }
 .button:hover {
 	color: #fff;
@@ -1489,4 +1510,15 @@ div.toc.section {
 	-moz-box-shadow: 1px 1px 1px rgba(255,255,255,0.1); /* Firefox */
 	-webkit-box-shadow: 1px 1px 1px rgba(255,255,255,0.1); /* Safari, Chrome */
 	box-shadow: 1px 1px 1px rgba(255,255,255,0.1); /* CSS3 */
+}
+.filter-table {
+	width: 100%;
+}
+.filter-table td:first-child {
+	text-align: right;
+	width: 180px;
+	padding-right: 10px;
+}
+.filter-table td select {
+	width: 99%;
 }

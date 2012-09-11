@@ -1,9 +1,12 @@
 <?
 	$this->headTitle('Character Builds & Guides'); 
 ?>
-<div class="recent-builds ui-widget ui-widget-content ui-corner-all">				
-	<div class="ui-tabs-nav ui-helper-reset ui-helper-clearfix ui-widget-header ui-corner-all">
-		<div style="float: right; margin: 8px">
+<div class="recent-builds content-page">				
+	<div class="page">
+		<div class="controls">
+			<a class="button" id="advSearch">Advanced Search</a>
+		</div>
+		<div class="controls chosen">
 			<select id="classSelect" data-placeholder="Filter by Class">
 				<option value=""></option>
 				<option value="">All Classes</option>
@@ -18,9 +21,21 @@
 			<? if($this->class): ?>
 				$("#classSelect option[value=<?= $this->class ?>]").attr("selected", "selected");
 			<? endif?>
-			$("#classSelect, #isGeared, #hasGuide").chosen({allow_single_deselect: true});
+			$("#classSelect").chosen({allow_single_deselect: true});
 		</script>
 		<h2 class="ui-table-header">Character Builds</h2>
+		<div class="form" id="advSearchPanel">
+			<table class="filter-table">
+				<tr>
+					<td>Builds using Skills:</td>
+					<td><select id="advSkillSearch" multiple="multiple" data-placeholder="Select Skills"></select></td>
+				</tr>
+				<tr>
+					<td>Builds using Passives:</td>
+					<td><select id="advPassiveSearch" multiple="multiple" data-placeholder="Select Passives"></select></td>
+				</tr>
+			</table>
+		</div>
 	</div>
 	<table id="all-builds" class="d3up-table">
 		<tbody>
@@ -32,17 +47,31 @@
 																							array(
 																								'class' => $this->class,
 																								'sortBy' => $this->sortBy,
+																								'selectedActives' => $this->selectedActives,
+																								'selectedPassives' => $this->selectedPassives,
 																							)); ?>
 				</td>
 			</tr>
 			<tr>
+				<?
+					$params = "";
+					if($this->class) {
+						$params .= "&class=".$this->class;
+					}
+					if($this->selectedActives) {
+						$params .= "&skills=".$this->selectedActives;
+					}
+					if($this->selectedPassives) {
+						$params .= "&passives=".$this->selectedPassives;
+					}
+				?>
 				<th></th>
-				<th><a href="?sort=votes<?= ($this->class) ? "&class=".$this->class : "" ?>">Votes</a></th>
-				<th><a href="?sort=views<?= ($this->class) ? "&class=".$this->class : "" ?>">Views</a></th>
-				<th><a href="?sort=name<?= ($this->class) ? "&class=".$this->class : "" ?>">Name</a></th>
+				<th><a href="?sort=votes<?= $params ?>">Votes</a></th>
+				<th><a href="?sort=views<?= $params ?>">Views</a></th>
+				<th><a href="?sort=name<?= $params ?>">Name</a></th>
 				<th>Skills</th>
-				<th><a href="?sort=dps<?= ($this->class) ? "&class=".$this->class : "" ?>">DPS</a></th>
-				<th><a href="?sort=ehp<?= ($this->class) ? "&class=".$this->class : "" ?>">EHP</a></th>
+				<th><a href="?sort=dps<?= $params ?>">DPS</a></th>
+				<th><a href="?sort=ehp<?= $params ?>">EHP</a></th>
 			</tr>
 		<? foreach($this->builds as $build): ?>
 			<tr class='build-row'>
@@ -95,14 +124,84 @@
 																							array(
 																								'class' => $this->class,
 																								'sortBy' => $this->sortBy,
+																								'selectedActives' => $this->selectedActives,
+																								'selectedPassives' => $this->selectedPassives,
 																							)); ?>
 				</td>
 			</tr>
 		</tbody>
 	</table>
 </div>
+<? if(!$this->noScript): ?>
 <script type="text/javascript">
 	$(function() {
+		var advSearch = $("#advSearch"),
+				advSearchPanel = $("#advSearchPanel"),
+				advSkillSearch = $("#advSkillSearch"),
+				advPassiveSearch = $("#advPassiveSearch"),
+				classSelect = $("#classSelect");
+		advSearch.click(function() {
+			if(advSearchPanel.is(":visible")) {
+				advSearchPanel.hide();
+			} else {
+				advSearchPanel.show();
+			}
+		});
+		$.each(activeSkills, function(heroClass, data) {
+			$.each(data, function(k,v) {
+				var option = $("<option>");
+				option.html(v.name);
+				option.attr("value", k);
+				advSkillSearch.append(option);
+			});
+		});
+		$.each(passives, function(heroClass, data) {
+			$.each(data, function(k,v) {
+				var option = $("<option>");
+				option.html(k.replace(/-/g, " ").capitalize());
+				option.attr("value", k);
+				advPassiveSearch.append(option);
+			});
+		});
+		<? foreach(explode("|", $this->selectedActives) as $active): ?>
+			advSkillSearch.find("option[value='<?= $active ?>']").attr("selected", "selected");
+		<? endforeach ?>
+		<? foreach(explode("|", $this->selectedPassives) as $passive): ?>
+			advPassiveSearch.find("option[value=<?= $passive ?>]").attr("selected", "selected");
+		<? endforeach ?>
+		advSkillSearch.chosen();
+		advPassiveSearch.chosen();
+		<? if(empty($this->selectedPassives) && empty($this->selectedActives)): ?>
+		advSearchPanel.hide();
+		<? endif ?>
+		$(".build-paginator a").bind('click', setupPaginator);
+		advSkillSearch.bind('change', searchBuilds);
+		advPassiveSearch.bind('change', searchBuilds);
+		classSelect.bind('change', searchBuilds);
+		function searchBuilds() {
+			var skills = advSkillSearch.val(),
+					passives = advPassiveSearch.val(), 
+					heroClass = classSelect.val();
+			if(skills && skills.length) {
+				skills = skills.join("|");
+			}
+			if(passives && passives.length) {
+				passives = passives.join("|");
+			}
+			$.ajax({
+				data: {
+					skills: skills,
+					passives: passives,
+					class: heroClass,
+				},
+				success: function(data) {
+					var content = $(data);
+					$("#all-builds").replaceWith(content.find("#all-builds"));
+					$(".build-paginator a").bind('click', setupPaginator);
+					$("td.skills img").each(bindAllSkilltips);
+				}
+			});
+		}
 		$("td.skills img").each(function() {
 			if($(this).data("id") && $(this).data("id") != "undefined") {
 				var skill = activeSkills[$(this).attr("data-class")][$(this).attr("data-id")];
@@ -121,5 +220,40 @@
 				}				
 			}
 		});
+		function setupPaginator() {
+			var resultsTable = $(".recent-builds table#all-builds tbody"),
+					link = $(this).prop("href");
+			resultsTable.addClass("ui-state-disabled");
+			$.ajax({
+				url: link,
+				type: 'html',
+				success: function(data) {
+					var results = $("<div/>").append(data);
+					resultsTable.replaceWith(results.find(".recent-builds table#all-builds tbody"));
+					$(".build-paginator a").bind('click', setupPaginator);
+					$("td.skills img").each(bindAllSkilltips);
+				}
+			});
+			return false;
+		};
+		function bindAllSkilltips() {
+			var skill = activeSkills[$(this).attr("data-class")][$(this).attr("data-id")];
+			if(!skill) {
+				skill = passives[$(this).attr("data-class")][$(this).attr("data-id")];
+				if(skill != "undefined" && $(this).attr("data-id").length) {
+					skill.name = $(this).attr("data-id").replace(/\-/g," ").capitalize();				
+				}
+			}
+			if(skill) {
+				var tooltip = skill.desc;
+				if(skill.rune) {
+					tooltip = tooltip + "<br/><br/>" + skill.rune;
+				}
+				$(this).attr("data-name", skill.name);
+				$(this).attr("data-tooltip", tooltip);
+				$(this).bindSkilltip();				
+			}
+		}
 	});
 </script>
+<? endif ?>

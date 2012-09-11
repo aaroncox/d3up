@@ -3,6 +3,7 @@
 		border: 1px solid #111;
 		background: #222;		
 		padding: 2px;
+		margin: 0 0 5px; 
 	}
 	.menu-wrap {
 		border: 1px solid #333;
@@ -13,21 +14,14 @@
 		box-sizing: content-box;
 	}
 
-	#megamenu li:hover {
-
-	}
-
 	#megamenu > li a,
 	#megamenu > li span {
 		cursor: pointer;
 	}
 
-	#megamenu li .drop {
+	#megamenu li h5 a.drop {
 		padding-right:21px;
-		background:url("/images/down-arrow.png") no-repeat right 10px;
-	}
-	#megamenu li:hover .drop {
-		background:url("/images/down-arrow.png") no-repeat right 10px;
+		background:url("/images/down-arrow.png") no-repeat center right;
 	}
 
 	.dropdown_1column, 
@@ -40,7 +34,7 @@
 		position:absolute;
 		left:-999em;
 		text-align:left;
-		padding:10px 5px 10px 5px;
+		padding:15px;
 		border:1px solid #333;
 		border-top: 0;
 		background:#111;
@@ -161,7 +155,7 @@
 		float: left;
 		text-align: center;
 		position: relative;
-		padding: 5px 0 5px 35px;
+		padding: 5px 0 5px 40px;
 	}
 	#megamenu li:first-child {
 /*		padding: 5px 25px 5px 50px;*/
@@ -196,6 +190,9 @@
 		background-position: middle left;	
 		cursor: pointer;		
 		overflow: hidden;
+	}
+	#megamenu li ul.dropdown_links li:hover {
+		background-color: #333;
 	}
 	#megamenu li ul.dropdown_links li a {
 		height: 42px;
@@ -269,9 +266,6 @@
 				<h5><a href="/guide" class="drop">Guides</a></h5>
 				<span><a href="/guide" class="drop">Diablo 3 Guides</a></span>
 	      <div class="dropdown_3columns">
-					<div class="col_3">
-						<h2 style="border: 0; margin-bottom: 0">Diablo 3 Guides</h2>
-					</div>
 					<div class="col_2">
 						<h3>Class Guides</h3>
 						<ul class="dropdown_links">
@@ -307,9 +301,6 @@
 				<h5><a href="/build" class="drop">Builds</a></h5>
 				<span><a href="/build" class="drop">Class Builds</a></span>
 				<div class="dropdown_3columns">
-					<div class="col_3">
-						<h2 style="border: 0; margin-bottom: 0">Diablo 3 Character Builds</h2>
-					</div>
 					<div class="col_2">
 						<h3>By Class</h3>
 						<ul class="dropdown_links">
@@ -329,7 +320,13 @@
 						</ul>   
 					</div>
 					<div class="col_3">
-						<p>Builds are snapshot's of other player's characters that have been loaded into the D3Up.com Build Calculator. Feel free to browse through all the builds or use the build search tools to find specific builds!</p>
+						<h3>Want to create your own build?</h3>
+						<div class="col_1" style="margin: 0 5px 0 0">
+							<a class="button" href="/build/create">Create a Build</a>
+						</div>
+						<div class="col_2" style="margin: 0 5px 0 0">
+							<p>Use D3Up.com's Build Creator to create a build from scratch or import your character directly from Battle.net!</p>
+						</div>
 					</div>
 	      </div>
 			</li>

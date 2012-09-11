@@ -6,49 +6,51 @@ class IndexController extends D3Up_Controller_Action {
   public function indexAction()
   {
 		$query = array(
+			'published' => true
 		);
 		$sort = array(
 			'_created' => -1,
 		);
-		$this->view->recentItems = $items = Epic_Mongo::db('item')->fetchAll($query, $sort, 10);	
-		// $paginator = Zend_Paginator::factory($items);
-		// $paginator->setCurrentPageNumber($this->getRequest()->getParam('page', 1))->setItemCountPerPage(20);
-		// $this->view->items = $paginator;
-		$query['equipmentCount'] = array(
-			'$gt' => 10
-		);
-		if($class = $this->getRequest()->getParam('build-class')) {
-			$this->view->buildClass = $query['class'] = $class;
-		}
-		$this->view->recentSales = $sales = Epic_Mongo::db('sale')->fetchAll(array('soldSuccess' => true), array('soldOn' => -1), 10);
-		$query = array(
-			'private' => array('$ne' => true),
-			'stats.dps' => array('$exists' => true),
-			'actives' => array('$exists' => true),
-			'passives' => array('$exists' => true),
-			'_original' => array('$exists' => false),
-		);
-		$this->view->recentBuilds = Epic_Mongo::db('build')->fetchAll($query, $sort, 10);	
-		$this->view->viewsBuilds = Epic_Mongo::db('build')->fetchAll($query, array("views" => -1), 10);	
-		$this->view->votesBuilds = Epic_Mongo::db('build')->fetchAll($query, array("votes" => -1), 10);	
-
-		$query = array(
-			'published' => true
-		);
 		$this->view->recentGuides = Epic_Mongo::db('guide')->fetchAll($query, $sort, 10);	
-		$this->view->viewsGuides = Epic_Mongo::db('guide')->fetchAll($query, array("views" => -1), 10);	
-		$this->view->votesGuides = Epic_Mongo::db('guide')->fetchAll($query, array("votes" => -1), 10);	
 
-		// $this->view->guideBuilds = Epic_Mongo::db('build')->fetchAll($query, array("votes" => -1), 10);	
-		$this->view->counts = array(
-			'guides' => count(Epic_Mongo::db("guide")->fetchAll(array('published' => true))),
-			'builds' => count(Epic_Mongo::db("build")->fetchAll()),
-			'items' => count(Epic_Mongo::db("item")->fetchAll()),
-			'sales' => count(Epic_Mongo::db("sale")->fetchAll()),
-		);
-		if($this->_request->isXmlHttpRequest()) {
-			$this->_helper->layout->disableLayout();
-		}
+		// $query = array(
+		// );
+		
+		// $this->view->recentItems = $items = Epic_Mongo::db('item')->fetchAll($query, $sort, 10);	
+		// // $paginator = Zend_Paginator::factory($items);
+		// // $paginator->setCurrentPageNumber($this->getRequest()->getParam('page', 1))->setItemCountPerPage(20);
+		// // $this->view->items = $paginator;
+		// $query['equipmentCount'] = array(
+		// 	'$gt' => 10
+		// );
+		// if($class = $this->getRequest()->getParam('build-class')) {
+		// 	$this->view->buildClass = $query['class'] = $class;
+		// }
+		// $this->view->recentSales = $sales = Epic_Mongo::db('sale')->fetchAll(array('soldSuccess' => true), array('soldOn' => -1), 10);
+		// $query = array(
+		// 	'private' => array('$ne' => true),
+		// 	'stats.dps' => array('$exists' => true),
+		// 	'actives' => array('$exists' => true),
+		// 	'passives' => array('$exists' => true),
+		// 	'_original' => array('$exists' => false),
+		// );
+		// $this->view->recentBuilds = Epic_Mongo::db('build')->fetchAll($query, $sort, 10);	
+		// $this->view->viewsBuilds = Epic_Mongo::db('build')->fetchAll($query, array("views" => -1), 10);	
+		// $this->view->votesBuilds = Epic_Mongo::db('build')->fetchAll($query, array("votes" => -1), 10);	
+
+		// $this->view->viewsGuides = Epic_Mongo::db('guide')->fetchAll($query, array("views" => -1), 10);	
+		// $this->view->votesGuides = Epic_Mongo::db('guide')->fetchAll($query, array("votes" => -1), 10);	
+
+		// // $this->view->guideBuilds = Epic_Mongo::db('build')->fetchAll($query, array("votes" => -1), 10);	
+		// $this->view->counts = array(
+		// 	'guides' => count(Epic_Mongo::db("guide")->fetchAll(array('published' => true))),
+		// 	'builds' => count(Epic_Mongo::db("build")->fetchAll()),
+		// 	'items' => count(Epic_Mongo::db("item")->fetchAll()),
+		// 	'sales' => count(Epic_Mongo::db("sale")->fetchAll()),
+		// );
+		// if($this->_request->isXmlHttpRequest()) {
+		// 	$this->_helper->layout->disableLayout();
+		// }
 	}
 	public function ripAction() {
 		$this->_helper->layout->disableLayout();		
