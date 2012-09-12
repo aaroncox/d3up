@@ -62,6 +62,7 @@ var itemBuilder = {
 		// Offense
 		'attack-speed': 'Attack speed increased by VVV%',
 		'plus-attack-speed': 'Attack speed increased by VVV%',
+		'plus-aps': '+VVV Attacks per Second',
 		'critical-hit': 'Critical Hit Chance increased by VVV%',
 		'critical-hit-damage': 'Critical Hit Damage increased by VVV%',
 		'plus-damage': '+VVV% Damage',
@@ -538,6 +539,7 @@ var itemBuilder = {
 		// Update the Attributes if nessicary
 		_.each(this.item.attrs, function(v, k) {
 			if(!this.preview.attrs.find("#input-" + k).length) {
+        console.log(builder.skillText);
 				var container = $("<span>"),
 						input = "<input type='text' value='" + v + "' name='" + k + "' tabindex='100'>", 
 						hidden = "<input type='hidden' value='true' name='" + k + "' tabindex='100'>",
