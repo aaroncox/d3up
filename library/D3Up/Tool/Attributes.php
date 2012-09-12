@@ -32,6 +32,7 @@ class D3Up_Tool_Attributes
 		'thorns' => 'Melee attackers take [v] damage per hit',
 		// Offensive Stats
 		'attack-speed' => 'Attack speed increased by [v]%',
+		'plus-aps' => '+[v] Attacks per Second',
 		'critical-hit' => 'Critical Hit Chance increased by [v]%',
 		'critical-hit-damage' => 'Critical Hit Damage increased by [v]%',
 		'plus-damage' => '+[v]% Damage',

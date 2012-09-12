@@ -495,7 +495,11 @@ class D3Up_Tool_Crawler
 								$statsArray['damage']['max'] += $matches[3];
 							}
 						} else {
-							$attrsArray[$stat] = (float) $matches[1];																					
+  					  if(!isset($matches[1])) {
+                $attrsArray[$stat] = true;
+  					  } else {
+  							$attrsArray[$stat] = (float) $matches[1];																					  					    
+  					  }
 						}
 						break;
 					}

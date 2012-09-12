@@ -683,14 +683,21 @@ BuildCalculator.prototype = {
 		}
 		// console.log(this.attrs.mhRealDamage.min, bnMinDamage, bnElePercent, bnEleDamage);
 		// Are we duel wielding?
+    // console.log(this.attrs);		
 		var mathS, mathC, mathR, mathA, mathM;
 		if(this.isDuelWielding) {
-			rendered['dps-speed'] = {
-				// mh: this.attrs['speed'],
-				// oh: this.attrs['speed-oh'],
-				mh: Math.floor(this.attrs['speed'] * 1024) / 1024,
-				oh: Math.floor(this.attrs['speed-oh'] * 1024) / 1024
-			};
+		  if(this.attrs['plus-aps']) {
+  			rendered['dps-speed'] = {
+  				mh: Math.floor((this.attrs['speed'] + this.attrs['plus-aps']) * 1024) / 1024,
+  				oh: Math.floor((this.attrs['speed-oh'] + this.attrs['plus-aps']) * 1024) / 1024
+  			};
+      } else {
+  			rendered['dps-speed'] = {
+  				mh: Math.floor(this.attrs['speed'] * 1024) / 1024,
+  				oh: Math.floor(this.attrs['speed-oh'] * 1024) / 1024
+  			};
+      }
+			
 			// console.log(mhMinDamage, mhMaxDamage, ohMinDamage, ohMaxDamage, bnMinDamage, bnMaxDamage);
 			// console.log(this.attrs['speed'], this.attrs['speed-oh']);
 			// console.log(rendered['dps-speed'].mh, rendered['dps-speed'].oh);
@@ -703,7 +710,11 @@ BuildCalculator.prototype = {
 			rendered['dps-speed-display'] = Math.round(rendered['dps-speed'].mh * (1 + 0.15 + atkSpeedInc + this.bonuses['plus-attack-speed']) * 100) / 100 + " MH / " + Math.round(rendered['dps-speed'].oh * (1 + 0.15 + atkSpeedInc + this.bonuses['plus-attack-speed'])  * 100) / 100 + " OH";
 			// console.log(mathS, mathC, mathR, mathA, mathM, rendered['dps'], "dw", rendered);
 		} else {
-			rendered['dps-speed'] = Math.floor(this.attrs['speed'] * 1024) / 1024;
+			if(this.attrs['plus-aps']) {
+        rendered['dps-speed'] = Math.floor((this.attrs['speed'] + this.attrs['plus-aps']) * 1024) / 1024;
+      } else {
+  			rendered['dps-speed'] = Math.floor(this.attrs['speed'] * 1024) / 1024;        
+      }
 			mathS = 1 + this.attrs[this.attrs.primary] * 0.01;
 			mathC = 1 + (this.attrs['critical-hit'] * 0.01) * (this.attrs['critical-hit-damage'] * 0.01);
 			mathR = rendered['dps-speed'] * (1 + atkSpeedInc + this.bonuses['plus-attack-speed']);
@@ -968,11 +979,18 @@ BuildCalculator.prototype = {
 								if(value < 1) {
 									value = value * 100;
 								}
-								if(typeof(this.attrs[stat]) != "undefined") {
-									this.attrs[stat] += parseFloat(value);
-								} else {
-									this.attrs[stat] = parseFloat(value);
-								}
+                if(_.indexOf(['melee-reduce', 'range-reduce', 'elite-reduce'], stat) >= 0) {
+                  if(typeof(this.attrs[stat + "-incs"]) == "undefined") {
+                    this.attrs[stat + "-incs"] = [];
+  								}
+  								this.attrs[stat + "-incs"].push(value);
+                } else {                  
+  								if(typeof(this.attrs[stat]) != "undefined") {
+  									this.attrs[stat] += parseFloat(value);
+  								} else {
+  									this.attrs[stat] = parseFloat(value);
+  								}
+                }
 							}, this);
 						}
 					}, this);					
