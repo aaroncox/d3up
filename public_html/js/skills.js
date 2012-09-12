@@ -82,7 +82,7 @@ var passives = {
 		'superstition': {
 			'desc': 'Reduces all non-Physical damage by <span class="skill-highlight">20%</span>. Whenever you take damage from a ranged or elemental attack, you have a chance to gain <span class="skill-highlight">3</span> Fury.',
 			'effect': {
-				'damage-reduce-conditional': 20
+				'non-physical-conditional': 20
 			}
 		},
 		'tough-as-nails': {
@@ -634,7 +634,9 @@ var activeSkills = {
 				'cost-fury': 20,
 				'weapon-damage': 700,
 				'weapon-damage-for': 5,
-			},
+				'weapon-damage-static': true,
+				'weapon-damage-mh': true,
+ 			},
 		},
 		'rend~a': {
 			name: 'Rend - Lacerate',
@@ -644,6 +646,8 @@ var activeSkills = {
 				'cost-fury': 20,
 				'weapon-damage': 903,
 				'weapon-damage-for': 5,
+				'weapon-damage-static': true,
+				'weapon-damage-mh': true,
 			},
 		},
 		'rend~b': {
@@ -654,6 +658,8 @@ var activeSkills = {
 				'cost-fury': 20,
 				'weapon-damage': 700,
 				'weapon-damage-for': 5,
+				'weapon-damage-static': true,
+				'weapon-damage-mh': true,
 			},
 		},
 		'rend~c': {
@@ -664,6 +670,8 @@ var activeSkills = {
 				'cost-fury': 20,
 				'weapon-damage': 700,
 				'weapon-damage-for': 5,				
+				'weapon-damage-static': true,
+				'weapon-damage-mh': true,
 			},
 		},
 		'rend~d': {
@@ -675,6 +683,8 @@ var activeSkills = {
 				'weapon-damage': 700,
 				'weapon-damage-for': 5,				
 				'life-steal': 9,
+				'weapon-damage-static': true,
+				'weapon-damage-mh': true,
 			},
 		},
 		'rend~e': {
@@ -685,6 +695,8 @@ var activeSkills = {
 				'cost-fury': 20,
 				'weapon-damage': 700,
 				'weapon-damage-for': 5,				
+				'weapon-damage-static': true,
+				'weapon-damage-mh': true,
 			},
 		},
 		'leap': {

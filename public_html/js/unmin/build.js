@@ -565,10 +565,21 @@ $(function() {
 		var containerSkills = $("#build-active-skills");
 		// console.log(stats.skillData);
 		$.each(stats.skillData, function(k,v) {
-			// console.log(k);
 			var target = containerSkills.find("li[data-id=\"" + k + "\"] ul.details").empty();
 			$.each(v, function(s,i) {
 				switch(s) {
+				  case "per-tick-norm":
+  					target.append(statLabel("Per Tick", i, 'round'));
+				    break;
+				  case "per-tick-crit":
+  					target.append(statLabel("Critical Per Tick", i, 'round'));
+				    break;
+				  case "total-damage-norm":
+  					target.append(statLabel("Total Damage", i, 'round'));
+				    break;
+				  case "total-damage-crit":
+  					target.append(statLabel("Critical Total Damage", i, 'round'));
+				    break;
 					case "3rd-hit":
 						target.append(statLabel("Average 3rd Hit", i, 'round'));
 						break;						

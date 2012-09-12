@@ -391,7 +391,7 @@ class D3Up_Tool_Crawler
 		$status = array();
 		$skills = array();
 		$passives = array();
-		// var_dump($profile); exit;
+    // echo "<pre>"; var_dump($profile); exit;
 		foreach($profile['skills']['active'] as $idx => $skill) {
 			$current = $skill['skill']['slug'];
 			if(isset($skill['rune'])) {
@@ -549,6 +549,7 @@ class D3Up_Tool_Crawler
 				);
 			}
 		}
+		$build->paragon = (int) $profile['paragonLevel'];
 		$build->actives = $skills;
 		$build->passives = $passives;
 		$build->save();

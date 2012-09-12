@@ -68,7 +68,8 @@ BuildCalculator.prototype = {
 			'plus-damage-reduce': 0,
 			'plus-life': 0,
 			'plus-dodge': [], // Since Dodge is Multiplicative in it's percentage bonuses, we need to collect all values
-			'3rd-hit-damage': false // Keep disabled unless it's set
+			'3rd-hit-damage': false, // Keep disabled unless it's set
+			'percent-non-physical' : 0, // Percentage to reduce non-physical damage (ie superstition)
 		};
 	},
 	setClass: function(newClass) {
@@ -177,6 +178,7 @@ BuildCalculator.prototype = {
 			case "plus-intelligence-conditional":
 				this.attrs['intelligence'] += e;
 				break;
+			case "percent-non-physical":
 			case "plus-life":
 			case "plus-life-regen":
 			case "plus-damage-reduce":
@@ -215,6 +217,9 @@ BuildCalculator.prototype = {
 						break;
 					case "plus-damage-conditional":
 						this.applyEnabledSkill(e, 'plus-damage');
+						break;
+					case "non-physical-conditional":
+						this.applyEnabledSkill(e, 'percent-non-physical');
 						break;
 					case "damage-reduce-conditional":
 						this.applyEnabledSkill(e, 'plus-damage-reduce');
@@ -531,11 +536,11 @@ BuildCalculator.prototype = {
 			// Formula: ( Life / ( 1 - Percentage Armor Reduction ) * ( 1 - Percentage Individual Resist ) * (1 - 30% Melee Damage Reduction ) )
 			// ----------------------------------
 			rendered['ehp-physical'] 	= defenses.life / ( ( 1 - defenses.armorReduction ) * ( 1 - defenses['percent-resist-physical']	) * (1 - 0.3) );
-			rendered['ehp-cold'] 			= defenses.life / ( ( 1 - defenses.armorReduction ) * ( 1 - defenses['percent-resist-cold'] 			) * (1 - 0.3) );
-			rendered['ehp-fire'] 			= defenses.life / ( ( 1 - defenses.armorReduction ) * ( 1 - defenses['percent-resist-fire'] 			) * (1 - 0.3) );
-			rendered['ehp-lightning']	= defenses.life / ( ( 1 - defenses.armorReduction ) * ( 1 - defenses['percent-resist-lightning'] )	* (1 - 0.3) );
-			rendered['ehp-poison'] 		= defenses.life / ( ( 1 - defenses.armorReduction ) * ( 1 - defenses['percent-resist-poison']		) * (1 - 0.3) );
-			rendered['ehp-arcane'] 		= defenses.life / ( ( 1 - defenses.armorReduction ) * ( 1 - defenses['percent-resist-arcane']		) * (1 - 0.3) );
+			rendered['ehp-cold'] 			= defenses.life / ( ( 1 - defenses.armorReduction ) * ( 1 - defenses['percent-resist-cold'] 		) * (1 - this.bonuses['percent-non-physical']) * (1 - 0.3) );
+			rendered['ehp-fire'] 			= defenses.life / ( ( 1 - defenses.armorReduction ) * ( 1 - defenses['percent-resist-fire'] 		) * (1 - this.bonuses['percent-non-physical']) * (1 - 0.3) );
+			rendered['ehp-lightning']	= defenses.life / ( ( 1 - defenses.armorReduction ) * ( 1 - defenses['percent-resist-lightning'])	* (1 - this.bonuses['percent-non-physical']) * (1 - 0.3) );
+			rendered['ehp-poison'] 		= defenses.life / ( ( 1 - defenses.armorReduction ) * ( 1 - defenses['percent-resist-poison']		) * (1 - this.bonuses['percent-non-physical']) * (1 - 0.3) );
+			rendered['ehp-arcane'] 		= defenses.life / ( ( 1 - defenses.armorReduction ) * ( 1 - defenses['percent-resist-arcane']		) * (1 - this.bonuses['percent-non-physical']) * (1 - 0.3) );
 		} else {
 			// ----------------------------------
 			// Damage Taken Percent
@@ -701,8 +706,8 @@ BuildCalculator.prototype = {
 			mathA = ((mhMinDamage + mhMaxDamage) / 2 + (bnMinDamage + bnMaxDamage) / 2) + bnEleDamage;
 			mathM = (1 + this.bonuses['plus-damage']);
 			rendered['dps'] = mathS * mathC * mathR * mathA * mathM;		
-			// console.log(mhMinDamage, mhMaxDamage, bnMinDamage, bnMaxDamage);
-			// console.log(mathS, mathC, mathR, mathA, mathM, rendered['dps'], "1w");
+      // console.log(mhMinDamage, mhMaxDamage, bnMinDamage, bnMaxDamage);
+      // console.log(mathS, mathC, mathR, mathA, mathM, rendered['dps'], "1w");
 			// rendered['dps'] = (((mhMinDamage + mhMaxDamage) / 2 + bnAvgDamage) * rendered['dps-speed']) * (1 + atkSpeedInc) * (this.attrs[this.attrs.primary] / 100 + 1) * 1 * ((this.attrs['critical-hit'] / 100) * (this.attrs['critical-hit-damage']/100) + 1);
 			rendered['dps-speed-display'] = Math.round(mathR * 100) / 100;
 		}
@@ -713,7 +718,12 @@ BuildCalculator.prototype = {
 		// }
 		return rendered;
 	},
-	calcSAME: function(skill, duration) {
+	calcSAME: function(options) {
+	  var skill = options.skill, 
+	      duration = options.duration, 
+	      mhOnly = options.mhOnly, 
+	      isStatic = options.isStatic;
+	  
 		var rendered = {}, // Storage for Rendered Statistics
 				atkSpeedInc = 0,
 				mhMinDamage = 0,
@@ -765,7 +775,8 @@ BuildCalculator.prototype = {
 		}
 		// console.log(this.attrs.mhRealDamage.min, bnMinDamage, bnEleDamage);
 		// Are we duel wielding?
-		if(this.isDuelWielding) {
+    // console.log(mhOnly);
+		if(this.isDuelWielding && !mhOnly) {
 			rendered['dps-speed'] = {
 				// mh: this.attrs['speed'],
 				// oh: this.attrs['speed-oh'],
@@ -792,21 +803,32 @@ BuildCalculator.prototype = {
 			mathM = (1 + this.bonuses['plus-damage']);
 			dLow = mathS * mathAl * mathM * mathE;
 			dHigh = mathS * mathAh * mathM * mathE;
+			mhAvg = mathS * ((mathAl + mathAh) / 4) * mathM * mathE;
 		}
 		dps = Math.round(((dLow + dHigh) / 2) * mathR * mathC * 100)/100;
 		hit = Math.round(((dLow + dHigh) / 2) * mathC * 100)/100;
-		// Does this get a 3rd hit bonus? (Monks)
 		if(duration) {
-			// dps = Math.round(((dLow + dHigh) / 2 ) * mathC * 100)/100;
-			rendered['per-tick'] = Math.round(hit / duration * 100) / 100;
-			rendered['total-damage'] = rendered['per-tick'] * duration;
-			rendered['damage-tick'] = Math.round(dLow / duration * 100)/100 + " - " + Math.round(dHigh / duration * 100)/100;
-			rendered['critical-hit-tick'] = Math.round(dLow / duration * (1 + (this.attrs['critical-hit-damage'] * 0.01)) * 10) / 10 + " - " + Math.round(dHigh / duration * (1 + (this.attrs['critical-hit-damage'] * 0.01)) * 10) / 10;
+		  if(isStatic) {
+		    var tNorm = Math.round(mhAvg * 100) / 100,
+		        tCrit = Math.round(mhAvg * (this.attrs['critical-hit-damage'] * 0.01 + 1) * 100) / 100; 
+        rendered['per-tick-norm'] = Math.round(tNorm / duration * 100) / 100; 
+        rendered['total-damage-norm'] = tNorm * 2;
+        rendered['per-tick-crit'] = Math.round(tCrit / duration * 100) / 100; 
+        rendered['total-damage-crit'] = tCrit * 2; 
+        // console.log(rendered, mhAvg);
+		  } else {
+  			// dps = Math.round(((dLow + dHigh) / 2 ) * mathC * 100)/100;
+  			rendered['per-tick'] = Math.round(hit / duration * 100) / 100;
+  			rendered['total-damage'] = rendered['per-tick'] * duration;
+  			rendered['damage-tick'] = Math.round(dLow / duration * 100)/100 + " - " + Math.round(dHigh / duration * 100)/100;
+  			rendered['critical-hit-tick'] = Math.round(dLow / duration * (1 + (this.attrs['critical-hit-damage'] * 0.01)) * 10) / 10 + " - " + Math.round(dHigh / duration * (1 + (this.attrs['critical-hit-damage'] * 0.01)) * 10) / 10;		    
+		  }
 		} else {
 			if(!hasCooldown) {
 				rendered['dps'] = dps;							
 			}
 			rendered['average-hit'] = hit;			
+  		// Does this get a 3rd hit bonus? (Monks)
 			if(this.bonuses['3rd-hit-damage']) {
 				var d3Low = mathS * mathAl * (mathM + (this.bonuses['3rd-hit-damage'] / 100)) * mathE,
 						d3High = mathS * mathAh * (mathM + (this.bonuses['3rd-hit-damage'] / 100)) * mathE,
@@ -818,14 +840,18 @@ BuildCalculator.prototype = {
 			rendered['damage'] = Math.round(dLow * 100)/100 + " - " + Math.round(dHigh * 100)/100;
 			rendered['critical-hit'] = Math.round(dLow * (1+ (this.attrs['critical-hit-damage'] * 0.01)) * 10) / 10 + " - " + Math.round(dHigh * (1 + (this.attrs['critical-hit-damage'] * 0.01)) * 10) / 10;
 		}
-		return rendered;
+    // console.log(rendered);
+    return rendered;
 	},
 	calcSkills: function() {
 		var rendered = {};
 		_.each(this.activeSkills, function(v,k) {
-			var calcDot = false,
+			var options = {},
+			    calcDot = false,
 					calcSame = false,
+					calcStatic = false,
 					activate = false,
+					calcMhOnly = false,
 					bonuses = {};
 					// console.log(k,v);
 			if(v && v.effect) {
@@ -836,6 +862,7 @@ BuildCalculator.prototype = {
 							break;
 						case "plus-intelligence-conditional":
 						case "plus-damage-conditional":
+						case "non-physical-conditional":
 						case "damage-reduce-conditional":
 						case "plus-crit-hit":
 						case "plus-attack-speed":
@@ -858,11 +885,17 @@ BuildCalculator.prototype = {
 							}, this);
 							break;
 						case "weapon-damage":
-							calcSame = v; // Pass in the whole skill
+							options.skill = v; // Pass in the whole skill
 							break;
 						case "weapon-damage-for":
-							calcDot = e; // Pass in duration
+							options.duration = e; // Pass in duration
 							break;
+						case "weapon-damage-mh":
+						  options.mhOnly = true;
+						  break;
+						case "weapon-damage-static":
+              options.isStatic = true;
+						  break;
 						default:
 							// console.log("not supported ",e,i);
 							break;
@@ -870,18 +903,14 @@ BuildCalculator.prototype = {
 					}
 				}, this);	
 			}
-			if(calcSame) {
+			if(options.skill) {
 				// Add the Skills Bonuses
 				_.each(bonuses, function(val,b) {
 					this.addBonus(b, val);
 				}, this);
-				if(calcDot) {
-					// This is a dot, pass in the duration
-					rendered[k] = this.calcSAME(calcSame, calcDot);					
-				} else {
-					// Calculate the SAME Damage with these bonuses
-					rendered[k] = this.calcSAME(calcSame);					
-				}
+				
+			  rendered[k] = this.calcSAME(options);					
+
 				// Remove the Skills Bonuses
 				_.each(bonuses, function(val,b) {
 					this.removeBonus(b, val);
@@ -905,6 +934,7 @@ BuildCalculator.prototype = {
 					switch(i) {
 						case "spirit-combo-strike":
 						case "damage-reduce-conditional":
+						case "non-physical-conditional":
 						case "plus-damage-conditional":
 							activate = true;
 							break;
@@ -1161,7 +1191,23 @@ BuildCalculator.prototype = {
 		}
 		if(json.socketAttrs) {
 			_.each(json.socketAttrs, function(av, ak) {
-				this.attrs[ak] -= parseFloat(av);
+				if(ak == "damage") {
+					values = av.split("-");
+					if(typeof(this.attrs['max-damage']) != "undefined") {
+						this.attrs['max-damage'] -= parseFloat(values[1]);
+					} else {
+						this.attrs['max-damage'] = parseFloat(values[1]);
+					}
+					if(typeof(this.attrs['min-damage']) != "undefined") {
+						this.attrs['min-damage'] -= parseFloat(values[0]);
+					} else {
+						this.attrs['min-damage'] = parseFloat(values[0]);
+					}
+				} else if(typeof(this.attrs[ak]) != "undefined") {
+					this.attrs[ak] -= parseFloat(av);
+				} else {
+					this.attrs[ak] = parseFloat(av);
+				}			
 			}, this);
 		}
 		if(json.stats) {
@@ -1453,8 +1499,7 @@ BuildCalculator.prototype = {
 					} else {
 						this.attrs['min-damage'] = parseFloat(values[0]);
 					}
-				}
-				if(typeof(this.attrs[ak]) != "undefined") {
+				} else if(typeof(this.attrs[ak]) != "undefined") {
 					this.attrs[ak] += parseFloat(av);
 				} else {
 					this.attrs[ak] = parseFloat(av);
