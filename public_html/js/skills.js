@@ -82,7 +82,7 @@ var passives = {
 		'superstition': {
 			'desc': 'Reduces all non-Physical damage by <span class="skill-highlight">20%</span>. Whenever you take damage from a ranged or elemental attack, you have a chance to gain <span class="skill-highlight">3</span> Fury.',
 			'effect': {
-				'damage-reduce-conditional': 20
+				'non-physical-conditional': 20
 			}
 		},
 		'tough-as-nails': {
@@ -231,8 +231,11 @@ var passives = {
 				'plus-damage-conditional': 20
 			}
 		},
-		'conflaguration': {
-			'desc': 'Fire damage dealt to enemies applies a burning effect, increasing all damage done to them by <span class="skill-highlight">10%</span> for 3 seconds.'
+		'conflagration': {
+			'desc': 'Fire damage dealt to enemies applies a burning effect, increasing all damage done to them by <span class="skill-highlight">10%</span> for 3 seconds.',
+			'effect': {
+			  'plus-damage-conditional': 10
+			}
 		},
 		'paralysis': {
 			'desc': 'Lightning damage dealt to enemies has up to a <span class="skill-highlight">8%</span> chance to Stun the target for <span class="skill-highlight">2</span> seconds.'
@@ -634,7 +637,9 @@ var activeSkills = {
 				'cost-fury': 20,
 				'weapon-damage': 700,
 				'weapon-damage-for': 5,
-			},
+				'weapon-damage-static': true,
+				'weapon-damage-mh': true,
+ 			},
 		},
 		'rend~a': {
 			name: 'Rend - Lacerate',
@@ -644,6 +649,8 @@ var activeSkills = {
 				'cost-fury': 20,
 				'weapon-damage': 903,
 				'weapon-damage-for': 5,
+				'weapon-damage-static': true,
+				'weapon-damage-mh': true,
 			},
 		},
 		'rend~b': {
@@ -654,6 +661,8 @@ var activeSkills = {
 				'cost-fury': 20,
 				'weapon-damage': 700,
 				'weapon-damage-for': 5,
+				'weapon-damage-static': true,
+				'weapon-damage-mh': true,
 			},
 		},
 		'rend~c': {
@@ -664,6 +673,8 @@ var activeSkills = {
 				'cost-fury': 20,
 				'weapon-damage': 700,
 				'weapon-damage-for': 5,				
+				'weapon-damage-static': true,
+				'weapon-damage-mh': true,
 			},
 		},
 		'rend~d': {
@@ -675,6 +686,8 @@ var activeSkills = {
 				'weapon-damage': 700,
 				'weapon-damage-for': 5,				
 				'life-steal': 9,
+				'weapon-damage-static': true,
+				'weapon-damage-mh': true,
 			},
 		},
 		'rend~e': {
@@ -685,6 +698,8 @@ var activeSkills = {
 				'cost-fury': 20,
 				'weapon-damage': 700,
 				'weapon-damage-for': 5,				
+				'weapon-damage-static': true,
+				'weapon-damage-mh': true,
 			},
 		},
 		'leap': {

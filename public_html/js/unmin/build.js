@@ -565,10 +565,21 @@ $(function() {
 		var containerSkills = $("#build-active-skills");
 		// console.log(stats.skillData);
 		$.each(stats.skillData, function(k,v) {
-			// console.log(k);
 			var target = containerSkills.find("li[data-id=\"" + k + "\"] ul.details").empty();
 			$.each(v, function(s,i) {
 				switch(s) {
+				  case "per-tick-norm":
+  					target.append(statLabel("Per Tick", i, 'round'));
+				    break;
+				  case "per-tick-crit":
+  					target.append(statLabel("Critical Per Tick", i, 'round'));
+				    break;
+				  case "total-damage-norm":
+  					target.append(statLabel("Total Damage", i, 'round'));
+				    break;
+				  case "total-damage-crit":
+  					target.append(statLabel("Critical Total Damage", i, 'round'));
+				    break;
 					case "3rd-hit":
 						target.append(statLabel("Average 3rd Hit", i, 'round'));
 						break;						
@@ -625,9 +636,9 @@ $(function() {
 		tabDefense.append(statLabel("Poison Resistance", stats['resist-poison'], 'round', stats['percent-resist-poison']));
 		tabDefense.append(statLabel("Arcane/Holy Resistance", stats['resist-arcane'], 'round', stats['percent-resist-arcane']));
 		tabDefense.append(statLabel("Crowd Control Reduction", ((stats['cc-reduce'])?stats['cc-reduce']:0), 'per'));
-		tabDefense.append(statLabel("Missile Damage Reduction", stats['range-reduce'], 'per'));
-		tabDefense.append(statLabel("Melee Damage Reduction", stats['melee-reduce'], 'per'));
-		tabDefense.append(statLabel("Elite Damage Reduction", stats['elite-reduce'], 'per'));
+		tabDefense.append(statLabel("Missile Damage Reduction", stats['percent-range-reduce'], 'per'));
+		tabDefense.append(statLabel("Melee Damage Reduction", stats['percent-melee-reduce'], 'per'));
+		tabDefense.append(statLabel("Elite Damage Reduction", stats['percent-elite-reduce'], 'per'));
 		tabDefense.append(statLabel("Thorns", stats['thorns']));
 		// Offensive Statistics Display
 		tabOffense.empty();
