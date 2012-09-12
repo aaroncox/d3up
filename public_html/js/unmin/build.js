@@ -636,9 +636,9 @@ $(function() {
 		tabDefense.append(statLabel("Poison Resistance", stats['resist-poison'], 'round', stats['percent-resist-poison']));
 		tabDefense.append(statLabel("Arcane/Holy Resistance", stats['resist-arcane'], 'round', stats['percent-resist-arcane']));
 		tabDefense.append(statLabel("Crowd Control Reduction", ((stats['cc-reduce'])?stats['cc-reduce']:0), 'per'));
-		tabDefense.append(statLabel("Missile Damage Reduction", stats['range-reduce'], 'per'));
-		tabDefense.append(statLabel("Melee Damage Reduction", stats['melee-reduce'], 'per'));
-		tabDefense.append(statLabel("Elite Damage Reduction", stats['elite-reduce'], 'per'));
+		tabDefense.append(statLabel("Missile Damage Reduction", stats['percent-range-reduce'], 'per'));
+		tabDefense.append(statLabel("Melee Damage Reduction", stats['percent-melee-reduce'], 'per'));
+		tabDefense.append(statLabel("Elite Damage Reduction", stats['percent-elite-reduce'], 'per'));
 		tabDefense.append(statLabel("Thorns", stats['thorns']));
 		// Offensive Statistics Display
 		tabOffense.empty();

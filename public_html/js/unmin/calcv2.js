@@ -466,9 +466,13 @@ BuildCalculator.prototype = {
 		// ----------------------------------
 		// VS Type Resistances
 		// ----------------------------------
-		rendered['percent-resist-melee']			= this.attrs['melee-reduce'];
-		rendered['percent-resist-range']			= this.attrs['range-reduce'];
-		rendered['percent-resist-elite']			= this.attrs['elite-reduce'];		
+		_.each(['melee-reduce', 'range-reduce', 'elite-reduce'], function(v,k) {
+		  var temp = 1;
+		  _.each(this.attrs[v + '-incs'], function(val, idx) {
+		    temp = temp * (1 - val / 100);
+		  }, this);
+      rendered['percent-' + v] = Math.round((1 - temp) * 1000) / 1000;
+		}, this);
 		// ----------------------------------
 		// Block Chance
 		// Formula: ( Block Chance + Plus Block Chance )
@@ -1082,6 +1086,13 @@ BuildCalculator.prototype = {
 					av = 0;
 				}
 				switch(ak) {
+				  case "melee-reduce":
+				  case "elite-reduce":
+				  case "range-reduce":
+            if(_.indexOf(this.attrs[ak + '-incs'], av) >= 0) {
+              this.attrs[ak + '-incs'].splice(_.indexOf(this.attrs[ak + '-incs'], av), 1);              
+            }
+				    break;
 					case "armor":
 						if(json.type == 'ring' || json.type == 'amulet') {
 							this.attrs[ak] -= parseFloat(av);
@@ -1333,6 +1344,14 @@ BuildCalculator.prototype = {
 					av = 0;
 				}
 				switch(ak) {
+				  case "melee-reduce":
+				  case "elite-reduce":
+				  case "range-reduce":
+				    if(!this.attrs[ak + '-incs']) {
+				      this.attrs[ak + '-incs'] = [];
+				    }
+			      this.attrs[ak + '-incs'].push(av);
+				    break;
 					case "arcane-damage":
 					case "fire-damage":
 					case "lightning-damage":
