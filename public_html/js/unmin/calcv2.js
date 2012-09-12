@@ -979,11 +979,18 @@ BuildCalculator.prototype = {
 								if(value < 1) {
 									value = value * 100;
 								}
-								if(typeof(this.attrs[stat]) != "undefined") {
-									this.attrs[stat] += parseFloat(value);
-								} else {
-									this.attrs[stat] = parseFloat(value);
-								}
+                if(_.indexOf(['melee-reduce', 'range-reduce', 'elite-reduce'], stat) >= 0) {
+                  if(typeof(this.attrs[stat + "-incs"]) == "undefined") {
+                    this.attrs[stat + "-incs"] = [];
+  								}
+  								this.attrs[stat + "-incs"].push(value);
+                } else {                  
+  								if(typeof(this.attrs[stat]) != "undefined") {
+  									this.attrs[stat] += parseFloat(value);
+  								} else {
+  									this.attrs[stat] = parseFloat(value);
+  								}
+                }
 							}, this);
 						}
 					}, this);					
