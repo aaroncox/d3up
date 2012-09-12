@@ -231,8 +231,11 @@ var passives = {
 				'plus-damage-conditional': 20
 			}
 		},
-		'conflaguration': {
-			'desc': 'Fire damage dealt to enemies applies a burning effect, increasing all damage done to them by <span class="skill-highlight">10%</span> for 3 seconds.'
+		'conflagration': {
+			'desc': 'Fire damage dealt to enemies applies a burning effect, increasing all damage done to them by <span class="skill-highlight">10%</span> for 3 seconds.',
+			'effect': {
+			  'plus-damage-conditional': 10
+			}
 		},
 		'paralysis': {
 			'desc': 'Lightning damage dealt to enemies has up to a <span class="skill-highlight">8%</span> chance to Stun the target for <span class="skill-highlight">2</span> seconds.'
