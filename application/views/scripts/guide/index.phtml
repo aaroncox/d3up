@@ -2,15 +2,7 @@
 $this->headTitle("Diablo 3 Guides"); 
 ?>
 <div id="guides" class="content-page">
-	<div class='featured title-block' data-class="<?= $this->featured->class ?: 'all' ?>">
-		<h5 style='color: #B18135'>Featured Guide</h5>
-		<h2><?= $this->guideLink($this->featured) ?></h2>
-		<h3><?= $this->featured->description ?></h3>
-		<div class="section-preview">
-			<strong>Sections:</strong>
-			<?= $this->sectionPreview($this->featured, 6) ?>
-		</div>
-	</div>
+  <?= $this->render("./index/widgets/guides-featured.phtml") ?>
 	<div class="guide-filters">
 		<select id="guide-filter-type" class='guide-filter' data-placeholder="Filter by Type">
 			<option <?= ($this->filterType == '') ? 'selected="selected"' : '' ?> value="">All Topics</option>			

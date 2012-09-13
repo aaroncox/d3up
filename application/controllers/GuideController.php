@@ -11,13 +11,12 @@ class GuideController extends D3Up_Controller_Action
 		return $this->view->guide = $this->getRequest()->getParam('post');
 	}
 	public function indexAction() {
-		$featured = 1;
 		$query = array(
 			'published' => true,
-			'id' => array('$ne' => $featured),
+			'id' => array('$ne' => $this->view->featuredGuide),
 		);
 		$fQuery = array(
-			'id' => $featured
+			'id' => $this->view->featuredGuide
 		);
 		$sort = array(
 			'votes' => -1,

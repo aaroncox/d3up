@@ -655,17 +655,60 @@ BuildCalculator.prototype = {
 				ohMaxDamage = this.attrs['damage-oh'].max;
 			}
 		}
-		// Calculate the Average and Min/Max Bonus Damage from other items
-		if(this.attrs['max-damage']) {
-			bnMaxDamage = this.attrs['max-damage'];			
-		}
-		if(this.attrs['min-damage']) {
-			bnMinDamage = this.attrs['min-damage'];				
-		}
+		// Remove the +% Damage Bonus if it exists
+		console.log("MH Min/Max (w/ +% Damage): ", mhMinDamage, mhMaxDamage);
+    // if(this.attrs.mhRealDamage && this.attrs['mainhand-plus-damage']) {
+    //   mhMinDamage = this.attrs.mhRealDamage.min * (1 - (this.attrs['mainhand-plus-damage'] * 0.01)),
+    //   mhMaxDamage = this.attrs.mhRealDamage.max * (1 - (this.attrs['mainhand-plus-damage'] * 0.01));
+    // }
+    // if(this.attrs.ohRealDamage && this.attrs['offhand-plus-damage']) {
+    //   ohMinDamage = this.attrs.ohRealDamage.min * (1 - (this.attrs['mainhand-plus-damage'] * 0.01)),
+    //   ohMaxDamage = this.attrs.ohRealDamage.max * (1 - (this.attrs['mainhand-plus-damage'] * 0.01));
+    // }
+		console.log("MH Min/Max: ", mhMinDamage, mhMaxDamage);
+    console.log("Min/Max Damage Bonuses: " + this.attrs['min-damage'] + " - " + this.attrs['max-damage']);
+		// Add the Bonus Damage to the values without +% Damage
+    if(this.attrs['max-damage']) {
+     mhMaxDamage += this.attrs['max-damage'] / (1 - (this.attrs['mainhand-plus-damage'] * 0.01));      
+     if(ohMaxDamage) {
+       ohMaxDamage += this.attrs['max-damage'];              
+     }
+    }
+    if(this.attrs['min-damage']) {
+     mhMinDamage += this.attrs['min-damage'] / (1 - (this.attrs['mainhand-plus-damage'] * 0.01));        
+     if(ohMinDamage) {
+       ohMinDamage += this.attrs['min-damage'];              
+     }
+    }
+		console.log("MH Min/Max after +Min/Max: ", mhMinDamage, mhMaxDamage);
+		// Determine Bonus Damage from Elemental Damage Bonuses (without the +% Damage added)
+    // if(bnElePercent > 0 && this.attrs.mhRealDamage) {
+    //  if(this.isDuelWielding) {
+    //    bnEleDamage += ((this.attrs.mhRealDamage.min + bnMinDamage) + (this.attrs.ohRealDamage.min + bnMinDamage)) / 2 * (bnElePercent / 100);
+    //  } else {
+    //    bnEleDamage += (this.attrs.mhRealDamage.min + bnMinDamage) * (bnElePercent / 100);
+    //  }
+    // }
+		// Re-add the +% Damage Bonus if it exists
+    // if(this.attrs.mhRealDamage && this.attrs['mainhand-plus-damage']) {
+    //   mhMinDamage = mhMinDamage / (1 - (this.attrs['mainhand-plus-damage'] * 0.01)),
+    //   mhMaxDamage = mhMaxDamage / (1 - (this.attrs['mainhand-plus-damage'] * 0.01));
+    // }
+    // if(this.attrs.ohRealDamage && this.attrs['offhand-plus-damage']) {
+    //   ohMinDamage = ohMinDamage * (1 - (this.attrs['mainhand-plus-damage'] * 0.01)),
+    //   ohMaxDamage = ohMaxDamage * (1 - (this.attrs['mainhand-plus-damage'] * 0.01));
+    // }
+		console.log("MH Min/Max after +% Damage again: ", mhMinDamage, mhMaxDamage);
+    // _.each(['fire-damage', 'arcane-damage', 'poison-damage', 'cold-damage', 'lightning-damage', 'holy-damage'], function(v,k) {
+    //   if(_.has(this.attrs, v)) {
+    //         mhMinDamage += this.attrs[v].min;
+    //         mhMaxDamage += this.attrs[v].max;
+    //   }
+    // }, this);
+		console.log("MH Min/Max after adding +Ele Damage: ", mhMinDamage, mhMaxDamage);
 		if(this.attrs['attack-speed-incs']) {
-			atkSpeedInc = this.attrs['attack-speed-incs'];
+			atkSpeedInc = this.attrs['attack-speed-incs'] / 100;
 		}
-		bnAvgDamage = (bnMinDamage + bnMaxDamage) / 2;
 		// Elemental Damage Bonuses
 		_.each(['plus-fire-damage', 'plus-arcane-damage', 'plus-poison-damage', 'plus-cold-damage', 'plus-lightning-damage', 'plus-holy-damage'], function(v,k) {
 			if(_.has(this.attrs, v)) {
@@ -673,15 +716,7 @@ BuildCalculator.prototype = {
 				bnElePercent += this.attrs[v];
 			}
 		}, this);
-		// Determine Bonus Damage from Elemental Damage Bonuses
-		if(bnElePercent > 0 && this.attrs.mhRealDamage) {
-			if(this.isDuelWielding) {
-				bnEleDamage += ((this.attrs.mhRealDamage.min + bnMinDamage) + (this.attrs.ohRealDamage.min + bnMinDamage)) / 2 * (bnElePercent / 100);
-			} else {
-				bnEleDamage += (this.attrs.mhRealDamage.min + bnMinDamage) * (bnElePercent / 100);
-			}
-		}
-		// console.log(this.attrs.mhRealDamage.min, bnMinDamage, bnElePercent, bnEleDamage);
+    console.log(this.attrs.mhRealDamage.min, bnMinDamage, bnMaxDamage, bnElePercent, bnEleDamage);
 		// Are we duel wielding?
     // console.log(this.attrs);		
 		var mathS, mathC, mathR, mathA, mathM;
@@ -704,7 +739,7 @@ BuildCalculator.prototype = {
 			mathS = 1 + this.attrs[this.attrs.primary] * 0.01;
 			mathC = 1 + (this.attrs['critical-hit'] * 0.01) * (this.attrs['critical-hit-damage'] * 0.01);
 			mathR = (rendered['dps-speed'].mh + rendered['dps-speed'].oh) / 2 * (1 + atkSpeedInc + 0.15 + this.bonuses['plus-attack-speed']);
-			mathA = ((mhMinDamage + mhMaxDamage) / 2 + (ohMinDamage + ohMaxDamage) / 2 + bnMinDamage + bnMaxDamage + (bnEleDamage * 2)) / 2;
+			mathA = ((mhMinDamage + mhMaxDamage) / 2 + (ohMinDamage + ohMaxDamage) / 2 + (bnEleDamage * 2)) / 2;
 			mathM = (1 + this.bonuses['plus-damage']);
 			rendered['dps'] = mathS * mathC * mathR * mathA * mathM;			
 			rendered['dps-speed-display'] = Math.round(rendered['dps-speed'].mh * (1 + 0.15 + atkSpeedInc + this.bonuses['plus-attack-speed']) * 100) / 100 + " MH / " + Math.round(rendered['dps-speed'].oh * (1 + 0.15 + atkSpeedInc + this.bonuses['plus-attack-speed'])  * 100) / 100 + " OH";
@@ -718,11 +753,11 @@ BuildCalculator.prototype = {
 			mathS = 1 + this.attrs[this.attrs.primary] * 0.01;
 			mathC = 1 + (this.attrs['critical-hit'] * 0.01) * (this.attrs['critical-hit-damage'] * 0.01);
 			mathR = rendered['dps-speed'] * (1 + atkSpeedInc + this.bonuses['plus-attack-speed']);
-			mathA = ((mhMinDamage + mhMaxDamage) / 2 + (bnMinDamage + bnMaxDamage) / 2) + bnEleDamage;
+			mathA = ((mhMinDamage + mhMaxDamage) / 2) + bnEleDamage;
 			mathM = (1 + this.bonuses['plus-damage']);
 			rendered['dps'] = mathS * mathC * mathR * mathA * mathM;		
-      // console.log(mhMinDamage, mhMaxDamage, bnMinDamage, bnMaxDamage);
-      // console.log(mathS, mathC, mathR, mathA, mathM, rendered['dps'], "1w");
+      console.log(mhMinDamage, mhMaxDamage, bnMinDamage, bnMaxDamage);
+      console.log(mathS, mathC, mathR, mathA, mathM, rendered['dps'], "1w");
 			// rendered['dps'] = (((mhMinDamage + mhMaxDamage) / 2 + bnAvgDamage) * rendered['dps-speed']) * (1 + atkSpeedInc) * (this.attrs[this.attrs.primary] / 100 + 1) * 1 * ((this.attrs['critical-hit'] / 100) * (this.attrs['critical-hit-damage']/100) + 1);
 			rendered['dps-speed-display'] = Math.round(mathR * 100) / 100;
 		}
@@ -731,6 +766,7 @@ BuildCalculator.prototype = {
 			// console.log(this.bonuses['plus-damage']);
 			// return rendered['dps'] * (1 + this.bonuses['plus-damage']);
 		// }
+		console.log(rendered);
 		return rendered;
 	},
 	calcSAME: function(options) {
@@ -1006,12 +1042,14 @@ BuildCalculator.prototype = {
 		// Apply all bonuses from the Active skills indicated
 		this.applyEnabledSkills();
 		// Calculate Defensive Statistics
+		console.log("----");
 		var defenses = this.calcDefenses(),
 		 		ehp = this.calcEffectiveHealth(defenses), 
 				gearEhp = this.calcGearEhp(defenses, ehp),
 				dps = this.calcOffense(), 
 				skills = this.calcSkills();
 		// Add all of our calculated values into the values object for returning
+		console.log("----");
 		$.extend(this.values, defenses, ehp, gearEhp, dps, skills);		
 		// ----------------------------------
 		// Define Offensive Statistics before Passives so we can add to them
@@ -1035,55 +1073,55 @@ BuildCalculator.prototype = {
 		// 	console.log(this.values['dps-sharpshooter'])
 		// }
 		// Some Wackyness to calculate DPS contributions per piece
-		_.each(this.gear, function(g, i) {
-			var item = i;
-			// Unset the Item from the stats
-			this.removeItem(i);
-			// Don't deal with MH/OH atm
-			// if(i != "mainhand" && i != "offhand") {
-				// Calculate the difference in DPS if you took this piece off
-				// if(this.values['dps-damage']) {
-					var newDps = this.calcOffense();
-					this.values['dps-' + i] = this.values['dps'] - newDps['dps'];				
-				// }
-			// }
-			// Readd the Item to the set
-			this.parseItem(g, i);
-		}, this);
-		// Calculate DPS per Stat
-		var incs = {
-			'pt-primary': {'stat': 1},
-			'pt-critical-hit': {'critical-hit': 1},
-			'pt-critical-hit-damage': {'critical-hit-damage': 1},
-			'pt-min-damage': {'min-damage': 1},
-			'pt-max-damage': {'max-damage': 1},
-			'pt-attack-speed': {'attack-speed': 1}
-		};
-		_.each(incs, function(v, k) {
-			var item = {};
-			switch(k) {
-				case "pt-primary":
-					item = { attrs: { } };
-					item.attrs[this.attrs.primary] = 1;
-					break;
-				case "pt-armor":
-					item = {
-						stats: v
-					};
-					break;
-				default:
-					item = {
-						type: 'extra',
-						attrs: v
-					};
-					break;
-			}
-			this.parseItem(item, 'extra');
-			var newDps = this.calcOffense();
-			this.values['dps-' + k] = newDps['dps'] - this.values['dps'];				
-			// Re-add the Item to the gear set
-			this.removeItem('extra');
-		}, this);
+    // _.each(this.gear, function(g, i) {
+    //  var item = i;
+    //  // Unset the Item from the stats
+    //  this.removeItem(i);
+    //  // Don't deal with MH/OH atm
+    //  // if(i != "mainhand" && i != "offhand") {
+    //    // Calculate the difference in DPS if you took this piece off
+    //    // if(this.values['dps-damage']) {
+    //      var newDps = this.calcOffense();
+    //      this.values['dps-' + i] = this.values['dps'] - newDps['dps'];       
+    //    // }
+    //  // }
+    //  // Readd the Item to the set
+    //  this.parseItem(g, i);
+    // }, this);
+    // // Calculate DPS per Stat
+    // var incs = {
+    //  'pt-primary': {'stat': 1},
+    //  'pt-critical-hit': {'critical-hit': 1},
+    //  'pt-critical-hit-damage': {'critical-hit-damage': 1},
+    //  'pt-min-damage': {'min-damage': 1},
+    //  'pt-max-damage': {'max-damage': 1},
+    //  'pt-attack-speed': {'attack-speed': 1}
+    // };
+    // _.each(incs, function(v, k) {
+    //  var item = {};
+    //  switch(k) {
+    //    case "pt-primary":
+    //      item = { attrs: { } };
+    //      item.attrs[this.attrs.primary] = 1;
+    //      break;
+    //    case "pt-armor":
+    //      item = {
+    //        stats: v
+    //      };
+    //      break;
+    //    default:
+    //      item = {
+    //        type: 'extra',
+    //        attrs: v
+    //      };
+    //      break;
+    //  }
+    //  this.parseItem(item, 'extra');
+    //  var newDps = this.calcOffense();
+    //  this.values['dps-' + k] = newDps['dps'] - this.values['dps'];       
+    //  // Re-add the Item to the gear set
+    //  this.removeItem('extra');
+    // }, this);
 		// Append Attributes into the values
 		this.values = jQuery.extend(this.attrs, this.values);
 		// Return the values
@@ -1206,7 +1244,7 @@ BuildCalculator.prototype = {
 							case "quiver":
 							case "mojo":
 							case "source":
-								this.attrs['attack-speed-incs'] -= (av/100);
+								this.attrs['attack-speed-incs'] -= av;
 								break;
 							default:
 								break;
@@ -1477,6 +1515,9 @@ BuildCalculator.prototype = {
 								}
 								break;
 							default:
+  						  if(slot == "mainhand" || slot == "offhand") {
+                  this.attrs[slot + "-plus-damage"] = parseFloat(av);
+  						  }
 								break;
 						}
 						break;
@@ -1503,9 +1544,9 @@ BuildCalculator.prototype = {
 							case "mojo":
 							case "source":
 								if(!this.attrs['attack-speed-incs']) {
-									this.attrs['attack-speed-incs'] = (av/100);
+									this.attrs['attack-speed-incs'] = av;
 								} else {
-									this.attrs['attack-speed-incs'] += (av/100);										
+									this.attrs['attack-speed-incs'] += av;
 								}
 								break;
 							default:

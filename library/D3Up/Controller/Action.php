@@ -8,6 +8,7 @@
 class D3Up_Controller_Action extends Epic_Controller_Action
 {
 	public function preDispatch() {
+	  $this->view->featuredGuide = 30;
 		$this->view->profile = $profile = D3Up_Auth::getInstance()->getProfile();
 		$this->view->navRecentNews = Epic_Mongo::db('update')->fetchAll(array(), array("_created" => -1), 5);
 		if(!$profile) {

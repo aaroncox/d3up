@@ -6,12 +6,17 @@ class IndexController extends D3Up_Controller_Action {
   public function indexAction()
   {
 		$query = array(
-			'published' => true
+			'published' => true,
+			'id' => array('$ne' => $this->view->featuredGuide),
 		);
 		$sort = array(
 			'_created' => -1,
 		);
-		$this->view->recentGuides = Epic_Mongo::db('guide')->fetchAll($query, $sort, 10);	
+		$this->view->recentGuides = Epic_Mongo::db('guide')->fetchAll($query, $sort, 5);	
+		$fQuery = array(
+			'id' => $this->view->featuredGuide
+		);
+		$this->view->featured = $featured = Epic_Mongo::db('guide')->fetchOne($fQuery);
 
 		// $query = array(
 		// );

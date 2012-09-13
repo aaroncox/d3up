@@ -633,6 +633,11 @@ dd:has(:focus) .chzn-container {
 .d3up-table thead td {
 	overflow: visible !important;
 }
+.d3up-table thead td h5 {
+  margin: 0;
+  line-height: 1em;
+}
+
 #recent-items td.name {
 	width: 200px;
 	max-width: 200px;
@@ -1081,6 +1086,7 @@ tr.compared > td:first-child {
 div.title-block {
 	position: relative;
 	background-image: url('/images/bgs/default.jpeg');
+	background-position: top;
 }
 .title-block[data-class=barbarian],
 #guide[data-class=barbarian] div.title-block {
@@ -1116,8 +1122,20 @@ div.title-block h5 {
 	padding: 20px 20px 0;
 	background: rgba(0, 0, 0, 0.5); 
 }
+.home div.title-block > h3,
+.home div.title-block h1,
+.home div.title-block h2,
+.home div.title-block h5 {
+	background: rgba(0, 0, 0, 0.8); 
+}
+
 .featured.title-block > h3 {
 	padding: 20px;
+}
+.home .featured.title-block > h3 {
+  padding: 5px 20px 10px;
+  font-size: 0.8em;
+  font-weight: normal;
 }
 #build div.title-block h3 {
 	padding: 0 20px 0;	
@@ -1127,6 +1145,10 @@ div.title-block h2,
 div.title-block h5,
 div.title-block h2 {
 	padding-top: 10px;
+}
+.home div.title-block h2 {
+  padding-top: 0;
+  font-size: 1em;
 }
 #build div.title-block h5 {
 	padding-top: 0;
@@ -1395,6 +1417,9 @@ div.toc.section {
 	background: #000;
 	background: rgba(0,0,0,0.7);
 	padding: 10px 20px;
+}
+.home .section-preview {
+  display: none;
 }
 .no-guides {
 	border: 1px solid #333;
