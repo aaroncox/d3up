@@ -431,11 +431,9 @@ var activeSkills = {
 			effect: {
 				'chance-knockback': 20,
 				'generate-fury': 8,
-				'stack': {
-					'plus-damage': {
-						'limit': 3,
-						'value': 8,
-					},
+				'stackable': {
+				  'limit': 3, 
+					'plus-damage': 8,
 				},
 				'weapon-damage': 165,
 			},
@@ -834,11 +832,9 @@ var activeSkills = {
 			effect: {
 				'generate-fury': 3,
 				'weapon-damage': 110,
-				'stack': {
-					'plus-attack-speed-this': {
-						'limit': 5,
-						'value': 15,
-					},
+				'stackable': {
+				  'limit': 5,
+					'plus-attack-speed-this': 15,
 				},
 			},
 		},
@@ -849,15 +845,10 @@ var activeSkills = {
 			effect: {
 				'generate-fury': 3,
 				'weapon-damage': 110,
-				'stack': {
-					'plus-damage': {
-						'limit': 5,
-						'value': 4,
-					},
-					'plus-attack-speed-this': {
-						'limit': 5,
-						'value': 15,
-					},
+				'stackable': {
+				  'limit': 5,
+					'plus-attack-speed-this': 15,
+					'plus-damage': 5,
 				},
 			},
 		},
@@ -867,11 +858,9 @@ var activeSkills = {
 			rune: 'Each strike has a 25% chance to throw a piercing axe at a nearby enemy that deals 110% weapon damage to all enemies in its path.',
 			effect: {
 				'generate-fury': 3,
-				'stack': {
-					'plus-attack-speed-this': {
-						'limit': 5,
-						'value': 15,
-					},
+				'stackable': {
+				  'limit': 5,
+					'plus-attack-speed-this': 15,
 				},
 				'weapon-damage': 110,
 			},
@@ -883,11 +872,9 @@ var activeSkills = {
 			effect: {
 				'generate-fury': 3,
 				'weapon-damage': 110,
-				'stack': {
-					'plus-attack-speed-this': {
-						'limit': 5,
-						'value': 15,
-					},
+				'stackable': {
+				  'limit': 5,
+					'plus-attack-speed-this': 15,
 				},
 			},
 		},
@@ -899,11 +886,9 @@ var activeSkills = {
 				'generate-fury': 3,
 				'chance-stun': 20,
 				'weapon-damage': 110,
-				'stack': {
-					'plus-attack-speed-this': {
-						'limit': 5,
-						'value': 15,
-					},
+				'stackable': {
+				  'limit': 5,
+					'plus-attack-speed-this': 15,
 				},
 			},
 		},
@@ -914,11 +899,9 @@ var activeSkills = {
 			effect: {
 				'generate-fury': 3,
 				'weapon-damage': 110,
-				'stack': {
-					'plus-attack-speed-this': {
-						'limit': 5,
-						'value': 15,
-					},
+				'stackable': {
+				  'limit': 5,
+					'plus-attack-speed-this': 15,
 				},
 			},
 		},
@@ -1769,6 +1752,7 @@ var activeSkills = {
 			effect: {
 				'generate-hatred': 3,
 				'weapon-damage': 115,
+				'pierce-bonus': 70,
 			},
 		},
 		'hungering-arrow~d': {
@@ -6015,11 +5999,9 @@ var activeSkills = {
 			rune: 'Whenever you are struck by a melee attack, your Armor is increased by 30% for 30 seconds. This effect can stack up to 3 times.',
 			effect: {
 				'cost-arcane-power': 25,
-				'stack': {
-					'plus-armor': {
-						'limit': 3,
-						'value': 30,
-					},
+				'stackable': {
+				  'limit': 3,
+					'plus-armor': 30,
 				},
 			},
 		},

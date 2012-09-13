@@ -612,6 +612,12 @@ $(function() {
 					case "3rd-hit":
 						target.append(statLabel("Average 3rd Hit", i, 'round'));
 						break;						
+					case "critical-hit-2nd":
+						target.append(statLabel("2nd Pierce Critical Hit", i));
+						break;						
+					case "critical-hit-3rd":
+						target.append(statLabel("3rd Pierce Critical Hit", i));
+						break;						
 					case "per-tick":
 						target.append(statLabel("DPS", i, 'round'));
 						break;
@@ -626,6 +632,12 @@ $(function() {
 						break;
 					case "damage":
 						target.append(statLabel("Damage Range", i));
+						break;
+					case "damage-2nd":
+						target.append(statLabel("2nd Pierce Hit", i));
+						break;
+					case "damage-3rd":
+						target.append(statLabel("3rd Pierce Hit", i));
 						break;
 					case "dps":
 						target.append(statLabel("DPS", i));
