@@ -7,6 +7,28 @@
  **/
 class AjaxController extends Epic_Controller_Action
 {
+  public function buildsAction() {
+    $username = $this->getRequest()->getParam("username");
+    if(!$username) {
+      echo json_encode(array("errors" => "You must provide a username to fetch your builds.")); exit;
+    }
+    $user = Epic_Mongo::db("user")->fetchOne(array("username" => strtolower(trim($username))));
+    if(!$user) {
+      echo json_encode(array("errors" => "Invalid Username, please check that it is correct.")); exit;
+    }
+    $query = array(
+      "_createdBy" => $user->createReference()
+    );
+    $builds = Epic_Mongo::db('build')->fetchAll($query);
+    if(!count($builds)) {
+      echo json_encode(array("errors" => "No builds are associated to this username.")); exit;
+    }
+    $data = array();
+    foreach($builds as $build) {
+      $data[$build->id] = $build->name;
+    }
+    echo json_encode(array("builds" => $data)); exit;
+  }
 	public function testAction() {
 		
 	}
