@@ -8,7 +8,7 @@
 class AjaxController extends Epic_Controller_Action
 {
   public function compareAction() {
-    var_dump($this->getRequest()->getParams()); exit;
+    echo "<pre>"; var_dump($this->getRequest()->getParams()); exit;
   }
   public function buildsAction() {
     $username = $this->getRequest()->getParam("username");
