@@ -358,7 +358,13 @@ var passives = {
 			}
 		},
 		'gruesome-feast': {
-			'desc': 'Whenever you are healed by a health globe, you gain <span class="skill-highlight">10%</span> of your maximum Mana and <span class="skill-highlight">10%</span> Intelligence for <span class="skill-highlight">10</span> seconds. The Intelligence bonus can stack up to <span class="skill-highlight">5</span> times.'
+			'desc': 'Whenever you are healed by a health globe, you gain <span class="skill-highlight">10%</span> of your maximum Mana and <span class="skill-highlight">10%</span> Intelligence for <span class="skill-highlight">10</span> seconds. The Intelligence bonus can stack up to <span class="skill-highlight">5</span> times.',
+			'effect': {
+			  'stackable': {
+		      'limit': 5,
+			    'plus-intelligence-percent': 10,
+			  },
+			}
 		},
 		'bad-medicine': {
 			'desc': 'Whenever you deal Poison damage to an enemy, their damage is reduced by <span class="skill-highlight">20%</span> for <span class="skill-highlight">3</span> seconds.'
@@ -4497,6 +4503,7 @@ var activeSkills = {
 			effect: {
 				'cost-mana': 36.75,
 				'cooldown': 16,
+				'plus-armor': 100,
 			},
 		},
 		'horrify~b': {
@@ -4537,59 +4544,79 @@ var activeSkills = {
 		},
 		'soul-harvest': {
 			name: 'Soul Harvest',
-			desc: 'Feed on the life force of up to 5 enemies within 16 yards. Gain 10 Intelligence for each affected enemy. This effect lasts 30 seconds.',
+			desc: 'Feed on the life force of up to 5 enemies within 16 yards. Gain 130 Intelligence for each affected enemy. This effect lasts 30 seconds.',
 			effect: {
-				'plus-intelligence-conditional': 50,
+			  'stackable': {
+		      'limit': 5,
+			    'intelligence': 130,
+			  },
 				'cost-mana': 58.8,
 				'cooldown': 15,
 			},
 		},
 		'soul-harvest~a': {
 			name: 'Soul Harvest - Siphon',
-			desc: 'Feed on the life force of up to 5 enemies within 16 yards. Gain 10 Intelligence for each affected enemy. This effect lasts 30 seconds.',
+			desc: 'Feed on the life force of up to 5 enemies within 16 yards. Gain 130 Intelligence for each affected enemy. This effect lasts 30 seconds.',
 			rune: 'Gain 2170.68 Life for every enemy harvested.',
 			effect: {
-				'plus-intelligence-conditional': 50,
+			  'stackable': {
+		      'limit': 5,
+			    'intelligence': 130,
+			  },
 				'cost-mana': 58.8,
 				'cooldown': 15,
 			},
 		},
 		'soul-harvest~b': {
 			name: 'Soul Harvest - Soul to Waste',
-			desc: 'Feed on the life force of up to 5 enemies within 16 yards. Gain 10 Intelligence for each affected enemy. This effect lasts 30 seconds.',
+			desc: 'Feed on the life force of up to 5 enemies within 16 yards. Gain 130 Intelligence for each affected enemy. This effect lasts 30 seconds.',
 			rune: 'Increase the duration of Soul Harvest\'s effect to 60 seconds.',
 			effect: {
-				'plus-intelligence-conditional': 50,
+			  'stackable': {
+		      'limit': 5,
+			    'intelligence': 130,
+			  },
 				'cost-mana': 58.8,
 				'cooldown': 15,
 			},
 		},
 		'soul-harvest~c': {
 			name: 'Soul Harvest - Languish',
-			desc: 'Feed on the life force of up to 5 enemies within 16 yards. Gain 10 Intelligence for each affected enemy. This effect lasts 30 seconds.',
+			desc: 'Feed on the life force of up to 5 enemies within 16 yards. Gain 130 Intelligence for each affected enemy. This effect lasts 30 seconds.',
 			rune: 'Reduces the movement speed of harvested enemies by 80% for 3 seconds.',
 			effect: {
-				'plus-intelligence-conditional': 50,
+			  'stackable': {
+		      'limit': 5,
+			    'intelligence': 130,
+			  },
 				'cost-mana': 58.8,
 				'cooldown': 15,
 			},
 		},
 		'soul-harvest~d': {
 			name: 'Soul Harvest - Swallow Your Soul',
-			desc: 'Feed on the life force of up to 5 enemies within 16 yards. Gain 10 Intelligence for each affected enemy. This effect lasts 30 seconds.',
+			desc: 'Feed on the life force of up to 5 enemies within 16 yards. Gain 130 Intelligence for each affected enemy. This effect lasts 30 seconds.',
 			rune: 'Gain 39.2 Mana for every enemy harvested.',
 			effect: {
-				'plus-intelligence-conditional': 50,
+			  'stackable': {
+			    'intelligence': {
+			      'value': 130,
+			      'limit': 5
+			    }
+			  },
 				'cost-mana': 58.8,
 				'cooldown': 15,
 			},
 		},
 		'soul-harvest~e': {
 			name: 'Soul Harvest - Vengeful Spirit',
-			desc: 'Feed on the life force of up to 5 enemies within 16 yards. Gain 10 Intelligence for each affected enemy. This effect lasts 30 seconds.',
+			desc: 'Feed on the life force of up to 5 enemies within 16 yards. Gain 130 Intelligence for each affected enemy. This effect lasts 30 seconds.',
 			rune: 'Harvested enemies also take 230% weapon damage as Physical.',
 			effect: {
-				'plus-intelligence-conditional': 50,
+			  'stackable': {
+		      'limit': 5,
+			    'plus-intelligence-conditional': 130,
+			  },
 				'cost-mana': 58.8,
 				'cooldown': 15,
 				'weapon-damage': 230,

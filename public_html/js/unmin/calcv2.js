@@ -186,12 +186,13 @@ BuildCalculator.prototype = {
 			case "plus-attack-speed":
 			case "plus-damage":
 			case "plus-armor":
+			case "plus-intelligence-percent":
 				var valueAdd = e / 100;
 				// console.log(i, value);
 				this.addBonus(i, valueAdd);
 				break;
 			default:
-			 	// console.log("Unhandled Active: " + e + " " + i);
+        // console.log("Unhandled Active: " + e + " " + i);
 				break;
 		}
 	},
@@ -200,6 +201,13 @@ BuildCalculator.prototype = {
 		_.each(this.enabledSkills, function(v,k) {
 			_.each(v.effect, function(e,i) {
 				switch(i) {
+				  case "stackable":
+					  _.each(e, function(se, si) {
+  				    for(i = 0; i < v.stacks; i++) {
+  				      this.applyEnabledSkill(se, si);
+  				    }
+  				  }, this);
+				    break;
 					case "stack":
 						_.each(e, function(se, si) {
 							this.applyEnabledSkill(se.limit * se.value, si);
@@ -866,6 +874,7 @@ BuildCalculator.prototype = {
 					calcSame = false,
 					calcStatic = false,
 					activate = false,
+					stackable = false,
 					calcMhOnly = false,
 					bonuses = {};
 					// console.log(k,v);
@@ -885,6 +894,10 @@ BuildCalculator.prototype = {
 						case "plus-armor":
 						case "plus-resist-all":
 						case "plus-dodge":
+							activate = true;
+							break;
+						case "stackable":
+						  stackable = e.limit;
 							activate = true;
 							break;
 						case "plus-critical-hit-this":
@@ -938,9 +951,16 @@ BuildCalculator.prototype = {
 				}
 				rendered[k].activate = true;
 			}
+			if(stackable) {
+				if(!rendered[k]) {
+					rendered[k] = {};
+				}
+				rendered[k].stackable = stackable;
+			}
 		}, this);
 		_.each(this.passiveSkills, function(v,k) {
 			var	activate = false,
+			    stackable = false,
 					bonuses = {};
 					// console.log(k,v);
 			if(v && v.effect) {
@@ -951,6 +971,10 @@ BuildCalculator.prototype = {
 						case "damage-reduce-conditional":
 						case "non-physical-conditional":
 						case "plus-damage-conditional":
+							activate = true;
+							break;
+						case "stackable":
+						  stackable = e.limit;
 							activate = true;
 							break;
 						default:
@@ -964,6 +988,12 @@ BuildCalculator.prototype = {
 					rendered[k] = {};
 				}
 				rendered[k].activate = true;
+			}
+			if(stackable) {
+				if(!rendered[k]) {
+					rendered[k] = {};
+				}
+				rendered[k].stackable = stackable;
 			}
 		}, this);
 		// console.log(rendered);
@@ -998,6 +1028,16 @@ BuildCalculator.prototype = {
 			}
 		}, this);
 	},
+	applyStatBonuses: function() {
+    _.each(this.bonuses, function(v,k) {
+      switch(k) {
+        case "plus-intelligence-percent":
+          var toAdd = Math.round(this.attrs['intelligence'] * v);
+          this.attrs['intelligence'] += toAdd;
+          break;
+      }
+    }, this);
+	},
 	run: function() {
 		// Apply all of the passive bonuses into the this.bonuses array for use in the math below
 		this.applyPassives();
@@ -1005,6 +1045,8 @@ BuildCalculator.prototype = {
 		this.applySetBonuses();
 		// Apply all bonuses from the Active skills indicated
 		this.applyEnabledSkills();
+		// Apply Stat Bonuses
+		this.applyStatBonuses();
 		// Calculate Defensive Statistics
 		var defenses = this.calcDefenses(),
 		 		ehp = this.calcEffectiveHealth(defenses), 
