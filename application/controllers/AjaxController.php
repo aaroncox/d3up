@@ -8,7 +8,8 @@
 class AjaxController extends D3Up_Controller_Action
 {
   public function compareAction() {
-    echo "<pre>"; var_dump($this->getRequest()->getParams()); exit;
+    $this->view->params = $this->getRequest()->getParams();
+    $this->_helper->layout->setLayout('d3bit');
   }
   public function buildsAction() {
     $username = $this->getRequest()->getParam("username");
