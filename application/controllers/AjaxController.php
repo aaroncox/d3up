@@ -8,7 +8,34 @@
 class AjaxController extends D3Up_Controller_Action
 {
   public function compareAction() {
-    $this->view->params = $this->getRequest()->getParams();
+    $params = $this->getRequest()->getParams();
+    // Get our Build
+    $id = (int) $params['build'];
+    $build = $this->view->build = Epic_Mongo::db('build')->fetchOne(array("id" => $id));    
+		// Create an Item!
+		$this->view->item = $item = Epic_Mongo::newDoc('item');
+		$item->_d3bit = true;
+		$item->name = $params['name'];
+		$item->quality = array_search($params['quality'], $this->_qualityMap);
+		$item->type = $this->_typeMap[$params['type']];
+		if(isset($params['dps'])) {
+			if(in_array($item->type, array('axe','ceremonial-knife','hand-crossbow','dagger','fist-weapon','mace','mighty-weapon','spear','sword','wand','2h-mace','2h-axe','bow','daibo','crossbow','2h-mighty','polearm','staff','2h-sword'))) {
+				$item->stats = array(
+					'dps' => (int) $params['dps'],
+				);
+			} else {
+				$item->stats = array(
+					'armor' => (int) $params['dps'],
+				);
+			}			
+		}
+		foreach(explode(", ", $params['stats']) as $v) {
+			$parts = explode(" ", $v);
+			$name = array_search($parts[1], $this->_statMap);
+			if($name) {
+				$item->attrs->$name = (float) $parts[0];				
+			}
+		}
     $this->_helper->layout->setLayout('d3bit');
   }
   public function buildsAction() {
@@ -158,8 +185,8 @@ class AjaxController extends D3Up_Controller_Action
 		// Base Stats 
 		'strength' => "Str",
 		'intelligence' => "Int",
-		'vitality' => "Dex",
-		'dexterity' => "Vit",
+		'vitality' => "Vit",
+		'dexterity' => "Dex",
 		// Defensive Stats 
 		'resist-all' => "AR",
 		'armor' => "Armor",

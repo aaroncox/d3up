@@ -164,7 +164,7 @@ BuildCalculator.prototype = {
 			return '';
 		}
 		var link = $("<a href='/i/" + item.id + "' class='quality-" + item.quality + "'/>").attr("data-json", JSON.stringify(item)).html(item.name);
-		link.bindTooltip();
+    // link.bindTooltip();
 		return link;
 	},
 	applyEnabledSkill: function(e, i) {
@@ -1390,9 +1390,9 @@ BuildCalculator.prototype = {
 		// console.log(this.attrs);
 	},
 	parseItem: function(json, slot) {
-		// console.log(this.gear[slot]);
+    console.log(this.gear[slot]);
 		this.gear[slot] = json;
-		// console.log("Parsing item to slot ["+slot+"], now: " + this.gear[slot].name);
+    console.log("Parsing item to slot ["+slot+"], now: " + this.gear[slot].name);
 		// Add to SetBonus Counter
 		if(json.set) {
 			// console.log("=====", json.set);
