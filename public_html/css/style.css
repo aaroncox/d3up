@@ -433,8 +433,7 @@ dd:has(:focus) .chzn-container {
 #gear-change {
 	display: none;
 }
-#pricer, 
-#character {
+#pricer {
 	width: 550px;
 }
 #compare-notes {
@@ -444,17 +443,27 @@ dd:has(:focus) .chzn-container {
 	color: #F00;
 }
 .equipment-table {
+  width: 100%;
 }
 .equipment-table td {
 	padding: 5px;
 	vertical-align: middle;
 	width: 150px;
 }
+.equipment-table td.control {
+	vertical-align: middle;
+	width: 50px;
+}
+.equipment-table td.type {
+  font-size: 10px;
+  text-align: right;
+}
 .equipment-table td:first-child {
 	width: 60px;
 }
 .equipment-table td.primary {
 	width: auto;
+	font-size: 14px;
 }
 .sidebar.sticky {
 	position: fixed;
@@ -960,33 +969,34 @@ tr.compared > td:first-child {
 #tab-summary {
 	padding: 10px 0;
 }
+#build-passive-skills,
 #build-active-skills {
 	margin: 0;
-	padding: 5px 0;
+	padding: 1px;
 	list-style: none;
 }
 .skill-calc-row {
 	border: 1px solid #222;
-	border-radius: 4px;
 	background: #171717;
-	padding: 4px;
+	padding: 5px 10px;
 	clear: both;
 	min-height: 72px;
 	font-size: 14px;
-	margin: 10px 0;
+	margin: 1px;
 }
 .skill-calc-row img {
 	float: left;
 	margin-right: 10px;
 }
 .skill-calc-row h3 {
+  display: inline;
 	font-size: 1.4em;
 	color: #70B1D5;
 	margin: 0;
 }
 .skill-calc-row p {
 	color: #888;
-	margin: 0 0 0 74px;
+	margin: 0;
 }
 .skill-calc-row p:first-child {
 	margin-bottom: 10px;
@@ -1015,7 +1025,7 @@ tr.compared > td:first-child {
 	list-style: none;
 	padding: 0;
 	color: #fff;
-	margin: 0 0 5px 74px;
+	margin: 0 0 5px 10px;
 	font-size: 1.2em;
 }
 .skill-calc-row .effects {
@@ -1036,7 +1046,7 @@ tr.compared > td:first-child {
 .skill-label {
 	text-align: right;
 	margin-right: 10px;
-	width: 100px;
+	width: 90px;
 	display: inline-block;
 }
 #skill-chooser button {
@@ -1522,10 +1532,15 @@ div.toc.section {
 	background: -webkit-gradient(linear, left top, left bottom, color-stop(3%,#4C5A64), color-stop(4%,#404F5A), color-stop(100%,#2E3940)); /* webkit */
 	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#4C5A64', endColorstr='#2E3940',GradientType=0 ); /* ie */
 }
+#tabs-render > div > div .button {
+  margin: 5px;
+}
+.button.current,
 .button:active {
 	background-position: 0 top;
 	position: relative;
 	top: 1px;
+	margin-bottom: 3px;
 	color: #fff;
 	padding: 6px 12px 4px;
 	background: #20282D; /* old browsers */

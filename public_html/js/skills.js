@@ -23,7 +23,7 @@ var passives = {
 			}
 		},
 		'weapons-master': {
-			'desc': 'Gain a bonus based on the weapon type of your main hand weapon:<br />Swords/Daggers: <span class="skill-highlight">15%</span> increased damage<br />Maces/Axes: <span class="skill-highlight">10%</span> Critical Hit Chance<br />Polearms/Spears: <span class="skill-highlight">10%</span> attack speed<br />Mighty Weapons: <span class="skill-highlight">3</span> Fury per hit',
+			'desc': 'Gain a bonus based on the weapon type of your main hand weapon:<ul><li>Swords/Daggers: <span class="skill-highlight">15%</span> increased damage</li><li>Maces/Axes: <span class="skill-highlight">10%</span> Critical Hit Chance</li><li>Polearms/Spears: <span class="skill-highlight">10%</span> attack speed</li><li>Mighty Weapons: <span class="skill-highlight">3</span> Fury per hit</li></ul>',
 			'effect': {
 				'switch': {
 					'lookup': 'type',
@@ -291,7 +291,7 @@ var passives = {
 			'desc': 'Whenever you are at full Hatred, movement speed is increased by <span class="skill-highlight">15%</span>.'
 		},
 		'archery': {
-			'desc': 'Gain a bonus based on the weapon type of your main hand weapon:<br />Bow: <span class="skill-highlight">15%</span> increased damage<br />Crossbows: <span class="skill-highlight">50%</span> Critical Hit Damage<br />Hand Crossbows: <span class="skill-highlight">10%</span> Critical Hit Chance',
+			'desc': 'Gain a bonus based on the weapon type of your main hand weapon:<ul><li>Bow: <span class="skill-highlight">15%</span> increased damage</li><li>Crossbows: <span class="skill-highlight">50%</span> Critical Hit Damage</li><li>Hand Crossbows: <span class="skill-highlight">10%</span> Critical Hit Chance</li></ul>',
 			'effect': {
 				'switch': {
 					'lookup': 'type',

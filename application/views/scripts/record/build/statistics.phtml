@@ -1,0 +1,76 @@
+<style type="text/css" media="screen">
+  .stats-table {
+    width: 100%;
+    margin: 5px;
+  }
+  .stats-table td.hl-ehp, 
+  .stats-table td.hl-dps {
+    text-shadow: 1px solid #111;
+    font-size: 18px;
+    color: #777;
+  }
+  .stats-table td.hl-ehp .value {
+    font-weight: bold;
+    color: #00B800;
+  }
+  .stats-table td.hl-dps .value {
+    font-weight: bold;
+    color: #C82D30;
+  }
+</style>
+<table class="stats-table">
+  <tr>
+    <td class="hl-dps">
+      <div class="item-stat">
+        <span class="value">71,014.78</span>
+        <span class="stat">Damage per Second</span>
+      </div>
+    </td>
+    <td class="hl-ehp">
+      <div class="item-stat">
+        <span class="value">134,834.86</span>
+        <span class="stat">Effective Hit Points</span>
+      </div>
+    </td>
+  </tr>
+</table>
+<div class="calc-stats ui-widget ui-widget-content ui-corner-all">
+	<ul>
+		<li><a href="#tab-base">Stats</a></li>
+		<li><a href="#tab-dps">DPS</a></li>
+		<li><a href="#tab-ehp">EHP</a></li>
+		<li><a href="#tab-gains">Gains</a></li>
+	</ul>
+	<div style="background-image: none; padding: 15px 15px 0">
+		<select id="vsLevel">
+			<option value="60" selected="selected">Stats vs 60 Monster</option>
+			<option value="61">Stats vs 61 Monster</option>
+			<option value="62">Stats vs 62 Monster</option>
+			<option value="63">Stats vs 63 Monster</option>
+		</select>
+		<select id="paragonLevel">
+			<option value="">Paragon Level</option>
+			<? for($i = 1; $i <= 100; $i++): ?>
+				<option value="<?= $i ?>" <?= ($this->record->paragon == $i) ? "selected='selected'" : "" ?>>Paragon Lvl <?= $i ?></option>
+			<? endfor ?>
+		</select>
+	</div>
+	<div id="tab-base">
+		<ul id="stats-offense"><li>Damage</li></ul>
+		<ul id="stats-base"><li>base</li></ul>
+		<ul id="stats-life"><li>life</li></ul>
+		<ul id="stats-defense"><li>armor</li></ul>
+		<ul id="stats-misc"></ul>
+	</div>
+	<div id="tab-dps">
+		<ul id="stats-dps-gear"><li>test</li></ul>
+	</div>
+	<div id="tab-ehp">
+		<ul id="stats-ehp"><li>test</li></ul>
+		<ul id="stats-ehp-gear"></ul>
+	</div>
+	<div id="tab-gains">
+		<ul id="stats-dps-gains" class="resist-specific"></ul>
+		<ul id="stats-ehp-gains" class="resist-specific"></ul>
+	</div>
+</div>

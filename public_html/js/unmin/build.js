@@ -88,7 +88,8 @@ $(function() {
 		
 	var activeSelects = [1,2,3,4,5,6],
 			passiveSelects = [1,2,3],
-			choosers = $("#skill-chooser");
+			activeChooser = $("#active-skill-chooser"),
+			passiveChooser = $("#passive-skill-chooser");
 	$.each(activeSelects, function(k, v) {
 		var select = $("<select data-index='"+(v - 1)+"' data-placeholder='Select a Skill...' name='activeSelect"+v+"'>"),
 				label = $("<span class='skill-label'>").html("Skill #" + v);
@@ -102,7 +103,7 @@ $(function() {
 			}
 			select.append(option);
 		});
-		choosers.append($("<p>").append(label, select));
+		activeChooser.append($("<p>").append(label, select));
 		select.chosen({
 			allow_single_deselect: true
 		});
@@ -126,7 +127,7 @@ $(function() {
 			}
 			select.append(option);
 		});
-		choosers.append($("<p>").append(label, select));
+		passiveChooser.append($("<p>").append(label, select));
 		select.chosen({
 			allow_single_deselect: true
 		});
@@ -137,7 +138,7 @@ $(function() {
 		});
 	});
 	if(isOwner) {
-		var saveButton = $("<button>").html("Save Skills");
+		var saveButton = $("<a class='button'>").html("Save Skills");
 		saveButton.click(function() {
 			$.ajax({
 				data: {
@@ -162,10 +163,13 @@ $(function() {
 			});
 		});	
 	}
-	choosers.hide();
-	choosers.append(saveButton);
+	activeChooser.hide();
+	passiveChooser.hide();
+	activeChooser.append(saveButton);
+	passiveChooser.append(saveButton);
 	$(".skill-change").click(function() {
-		choosers.show();
+		activeChooser.show();
+    passiveChooser.show();
 	});
 	// Debugging
 	// console.log(stats);
@@ -391,13 +395,13 @@ $(function() {
 						desc = $("<p><span class='stat-helper'>Description</span>: </p>").append(data.desc),
 						rune = $("<p>"),
 						control = $("<div class='control'></div>");
-				icon.attr('data-tooltip', data.desc);
-				icon.attr('data-name', data.name);
+				h3.attr('data-tooltip', data.desc);
+				h3.attr('data-name', data.name);
 				if(data.rune) {
-					icon.attr('data-tooltip', data.desc.replace(/  /, "<br/><br/>") + "<br/><br/>" + data.rune);
+					h3.attr('data-tooltip', data.desc.replace(/  /, "<br/><br/>") + "<br/><br/>" + data.rune);
 					rune = $("<p>").html("<span class='stat-helper'>Rune Bonus</span>: " + data.rune);
 				}
-				icon.bindSkilltip();
+				h3.bindSkilltip();
 				if(data.effect) {
 					// console.log("effect ", data.effect);
 					var checkbox = $("<input type='checkbox' class='skill-activate' data-skill='" + skill + "'>");
@@ -414,12 +418,13 @@ $(function() {
 				}
 				// console.log(details);
 				activeDisplay.append($("<li>").append(icon.clone()));									
-				li.append(icon, control, h3, details, desc, rune);
+				li.append(control, h3, details);
 				target.append(li);
 				// var damage = calc.calcSkillDamage(data);
 				// console.log(data);				
 			}
 		});
+		target = $("#build-passive-skills").empty(),
 		_.each(passiveSkills, function(v) {
 			var skill = v;
 			if(skill != "undefined" && skill != "") {
@@ -434,9 +439,8 @@ $(function() {
 						details = $("<ul class='details'>"),
 						desc = $("<p>").append(data.desc),
 						control = $("<div class='control'></div>");
-				icon.attr('data-tooltip', data.desc);
-				icon.attr('data-name', v.replace(/\-/g," ").capitalize());
-				icon.bindSkilltip();
+				h3.attr('data-tooltip', data.desc);
+				h3.attr('data-name', v.replace(/\-/g," ").capitalize());
 				// if(data.effect) {
 					// console.log("effect ", data.effect);
 					var checkbox = $("<input type='checkbox' class='passive-activate' data-skill='" + skill + "'>");
@@ -452,7 +456,7 @@ $(function() {
 					control.append("Activate ", checkbox, "<br/>", select).hide();					
 				// }
 				passiveDisplay.append($("<li/>").html(icon.clone()));
-				li.append(icon, control, h3, details, desc);
+				li.append(control, h3, details, desc);
 				target.append(li);
 			}
 		});
@@ -753,11 +757,11 @@ $(function() {
 	// Run stats display
 	displayStats();
 	// Bind Character Tabs
-	$("#character").tabs({
-	    select: function(event, ui){
-	      window.location = ui.tab.href;
-	    }
-	});
+  // $("#character").tabs({
+  //     select: function(event, ui){
+  //       window.location = ui.tab.href;
+  //     }
+  // });
 	// Bind Statistics Tabs
 	$(".calc-stats").tabs();
 	// Bind SkillTips on all Skills

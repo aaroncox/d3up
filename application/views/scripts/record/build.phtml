@@ -2,9 +2,9 @@
 	$profile = Epic_Auth::getInstance()->getProfile();
 	$this->headTitle($this->record->name); 
 	$this->headTitle(ucwords(str_replace("-", " ", $this->record->class))); 
-	$myBuild = false;
+	$this->myBuild = $myBuild = false;
 	if($profile && $this->record->_createdBy && $profile->createReference() == $this->record->_createdBy->createReference()) {
-		$myBuild = true;
+		$this->myBuild = $myBuild = true;
 	}	
 ?>
 <script type="text/javascript">
@@ -20,262 +20,90 @@ var activeActives = [];
 <? endif; ?>
 </script>
 <div id="build" class="content-page">
-	<div class="build-header title-block" data-class="<?= $this->record->class ?>">
-		<? if(!$this->record->_createdBy->id && $this->record->_characterId && $this->record->_characterBt): ?>
-			<div class="controls">
-				<a href="/b/<?= $this->record->id ?>/resync" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only"><span class="ui-button-text">Sync w/Battle.net</span></a>			
-			</div>
-		<? endif ?>
-		<? if($profile && $this->record->_createdBy): ?>
-		<div class="controls">
-			<? if($profile->createReference() == $this->record->_createdBy->createReference()): ?>
-				<? if($profile->battletag): ?>
-					<a href="/b/<?= $this->record->id ?>/crawl" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only"><span class="ui-button-text">Copy from Battle.net</span></a>			
-				<? endif ?>
-				<a href="/b/<?= $this->record->id ?>/edit" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only"><span class="ui-button-text">Edit</span></a>			
-			<? else: ?>
-				<a href="/b/<?= $this->record->id ?>/copy" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only"><span class="ui-button-text">Copy this Build</span></a>
-			<? endif; ?>
-		</div>
-		<? endif; ?>
-		<h2>
-			<?= $this->mLink($this->record) ?> 
-		</h2>
-		<h3>
-			Level <span id="character-level"><?= $this->record->level ?: 60 ?></span>,
-			Paragon Level <span id="paragon-level"><?= $this->record->paragon ?: 0 ?></span>
-		</h3>
-		<h5>
-			<?= ucwords(str_replace("-", " ", $this->record->class)) ?> Build
-			<? if($this->record->_lastCrawl): ?>
-				(Last Sync w/ Battle.net: <?= date('F j, Y', $this->record->_lastCrawl) ?>)
-			<? endif ?>
-		</h5>
-		<div id="skill-display" class="ui-widget ui-corner-all ui-helper-clearfix" >
-			<div id="ratings-display">
-				<div class='item-stat inline-flow'>
-					<span class='value'><?= $this->prettyStat($this->record->views) ?></span>
-					<span class='stat'>Views</span>
-				</div>
-				<img id="button-upvote" src="/images/upvote.png" class="ui-state-disabled ui-corner-all" data-name="Build Voting	" data-tooltip="In order to record your vote, we require to to be logged in. Please login or create an account!">
-				<div class='item-stat inline-flow'>
-					<span class='value' id="vote-count" data-count="<?= $this->record->votes ?: 0 ?>"><?= $this->record->votes ?: 0 ?></span>
-					<span class='stat'>Votes</span>
-				</div>
-				<img id="button-downvote" src="/images/downvote.png" class="ui-state-disabled ui-corner-all" data-name="Build Voting	" data-tooltip="In order to record your vote, we require to to be logged in. Please login or create an account!">
-			</div>
-			<h3 class="inline-flow">Skills</h3>
-			<ul id="active-display">
-				<li style="padding: 9px">None Selected</li>
-			</ul>
-			<h3 class="inline-flow">Passives</h3>
-			<ul id="passive-display">
-				<li style="padding: 9px">None Selected</li>
-			</ul>
-		</div>
-	</div>
-	<div id="character" class="inline-flow" data-class="<?= $this->record->class ?>" <? if($myBuild) { echo "data-owner='true'"; } ?>>
-		<ul>
-			<li><a href="#build-gear">Gear</a></li>
-			<li><a href="#build-skills">Skills</a></li>
-			<? if($profile): ?>
-			<li><a href="#build-compare">Compare</a></li>
-			<? endif ?>
-			<li><a href="#item-simulate" id="item-sim-tab">Simulate Item</a></li>
-		</ul>
-		<div id="build-skills">
-			<a class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only skill-change"><span class="ui-button-text">Change Skills</span></a>
-			<div id="skill-chooser">
-			</div>
-			<ul id='build-active-skills'></ul>
-			<ul id='build-passive-skills'></ul>
-		</div>
-		<div id="item-simulate">
-			<p>Which item do you wish to simulate changes on?</p>
-			<p><select id="simulate-slot">
-				<option></option>
-				<? foreach($this->record->equipment->getSlots() as $slot): ?>
-					<option class="slot" value="<?= $slot ?>"><?= ucfirst($slot) ?></option>
-				<? endforeach; ?>
-			</select></p>
-			<p><span id="simulate-against"></span></p>
-			<div id="simulation-stats">
-				<p>Loaded below are the stats currently on the item, feel free to adjust them to see the changes live in this build as well as a table of differences that's automatically generated below.</p>
-				<p>Attributes</p>
-				<select id="simulate-attributes" data-placeholder="Select Attributes for Item" multiple="multiple" style="width: 510px">
-					<?= $this->render("./item/_itemAttributeOptions.phtml") ?>
-					<option value="armor" label="+ Armor">+ Armor</option>
-				</select>
-				<div id="simulate-stats" class="d3-item">
-					<div class="top"><p class="">Name</p></div>
-					<div class="item">
-						<p class="stats stats-primary">
-							<span class="big-stat"></span>
-							<span class="stat-helper"></span>
-						</p>
-						<p class="stats stats-extra-percent"></p>
-						<p class="stats stats-extra-range"></p>
-						<ul class="attrs">
-						</ul>
-						<ul class="sockets">
-						</ul>
-					</div>
-					<div class="bottom"> 
-						&nbsp;
-					</div>
-				</div>
-				<div class="compare-diff"></div>
-				<p>Please note: When working with a weapon, the +% Damage, +Elemental Damage, +% Speed and other attributes don't matter. The only things that matter are the Min/Max damage and Attacks per Second (Obviously Primary Stats, Crit, etc all still matter).</p>
-			</div>
-		</div>
-		<? if($profile): ?>
-		<div id="build-compare">
-			<p>This compare tool will compare what this build is <b>currently wearing</b> to an item you have in the database.</p>
-			<p>Please select the <i>slot</i> of the item you wish to compare first, then select the item from your items from the drop down.</p>
-			<p>Which item slot should we compare?</p>
-			<select id="compared-slot">
-				<option></option>
-				<? foreach($this->record->equipment->getSlots() as $slot): ?>
-					<option class="slot" value="<?= $slot ?>"><?= ucfirst($slot) ?></option>
-				<? endforeach; ?>
-			</select>
-			<span id="compared-to"></span>
-			<p>And what should we compare it to?</p>
-			My Items: 
-			<select id="compare-to">
-			</select>
-			<!-- or
-			<input type="text" id="compare-to-id" style="width: 50px"/> (Enter Item ID) -->
-			<ul id="compare-notes"></ul>
-			<div class="compare-diff"></div>
-			<p><b>Note</b>: Currently the item HAS to be created by you before you are able to compare them.</p>
-		</div>
-		<? endif ?>
-		<div id="build-gear">
-			<? if($myBuild): ?>
-			<p>Adding gear to your build will dynamically update the statistics displayed in the statistics panel.</p>
-			<p>
-				<a href="/item/create" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only"><span class="ui-button-text">Create New Item</span></a>
-				<a href="/user/items" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only"><span class="ui-button-text">View My Items</span></a>
-				<a class="saveStats ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only"><span class="ui-button-text">Save Stats to DB</span></a>
-			</p>
-			<? endif; ?>
-			<table class="equipment-table">
-			<? foreach($this->record->equipment->getSlots() as $slot): ?>
-				<tr>
-					<td>
-						<?= ucfirst($slot) ?>
-					</td>
-					<? if($myBuild): ?>
-					<td>
-						<button id="change-<?= $slot ?>" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only gear-change" data-item-type="<?= $slot ?>" role="button" aria-disabled="false"><span class="ui-button-text">Change</span></button>
-						<a id="new-<?= $slot ?>" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" href="/item/create?b=<?= $this->record->id ?>&slot=<?= $slot ?>&return=build"><span class="ui-button-text">New</span></a>
-					</td>
-					<? endif; ?>
-					<td class="primary">
-						<span class="equipped" id="equipped-<?= $slot ?>" data-slot="<?= $slot ?>">
-							<? if($this->record->equipment[$slot]->id): ?>
-								<?= $this->itemLink($this->record->equipment[$slot]) ?>
-							<? else: ?>
-								Nothing
-							<? endif ?>
-						</span>
-					</td>
-				</tr>
-			<? endforeach ?>
-			</table>
-		</div>
-		<? if($this->comments): ?>
-		<div id="build-comments">
-			<?= $this->commentForm ?>
-			<hr/>
-			<? foreach($this->comments as $comment): ?>
-				<div class='comment' id="comment-<?= $comment->id ?>" data-comment="<?= $comment->id ?>">
-					<div class='comment-meta'>
-						<span class='comment-author'><?= $comment->profile->username?:'Anonymous' ?></span> - 
-						<span class='comment-time'>
-							<?= $this->timeAgo($comment->_created) ?>
-						</span>
-					</div>
-					<div class='comment-body'>
-						<?= $comment->body ?>
-					</div>
-					<div class='comment-buttons'>
-						<a href="#">permalink</a>
-						<a class='comment-reply'>reply</a>
-					</div>
-					<div class='comment-extra'></div>
-					<div class="comment-replies">
-					<? foreach($comment->getReplies() as $reply): ?>
-						<div class='comment reply' id="comment-<?= $reply->id ?>" data-comment="<?= $reply->id ?>">
-							<div class='comment-meta'>
-								<span class='comment-author'><?= $comment->profile->username?:'Anonymous' ?></span> - 
-								<span class='comment-time'>
-									<?= $this->timeAgo($reply->_created) ?>
-								</span>
-							</div>
-							<div class='comment-body'>
-								<?= $reply->body ?>
-							</div>
-						</div>
-					<? endforeach ?>
-					</div>
-				</div>
-			<? endforeach ?>
-		</div>
-		<? endif; ?>
-	</div>
-	<div class="sidebar inline-flow" style="width: 396px">
-		<div class="calc-stats ui-widget ui-widget-content ui-corner-all">
-			<ul>
-				<li><a href="#tab-base">Stats</a></li>
-				<li><a href="#tab-dps">DPS</a></li>
-				<li><a href="#tab-ehp">EHP</a></li>
-				<li><a href="#tab-gains">Gains</a></li>
-			</ul>
-			<div style="background-image: none; padding: 15px 15px 0">
-				<select id="vsLevel">
-					<option value="60" selected="selected">Stats vs 60 Monster</option>
-					<option value="61">Stats vs 61 Monster</option>
-					<option value="62">Stats vs 62 Monster</option>
-					<option value="63">Stats vs 63 Monster</option>
-				</select>
-				<select id="paragonLevel">
-					<option value="">Paragon Level</option>
-					<? for($i = 1; $i <= 100; $i++): ?>
-						<option value="<?= $i ?>" <?= ($this->record->paragon == $i) ? "selected='selected'" : "" ?>>Paragon Lvl <?= $i ?></option>
-					<? endfor ?>
-				</select>
-			</div>
-			<div id="tab-base">
-				<ul id="stats-offense"><li>Damage</li></ul>
-				<ul id="stats-base"><li>base</li></ul>
-				<ul id="stats-life"><li>life</li></ul>
-				<ul id="stats-defense"><li>armor</li></ul>
-				<ul id="stats-misc"></ul>
-			</div>
-			<div id="tab-dps">
-				<ul id="stats-dps-gear"><li>test</li></ul>
-			</div>
-			<div id="tab-ehp">
-				<ul id="stats-ehp"><li>test</li></ul>
-				<ul id="stats-ehp-gear"></ul>
-			</div>
-			<div id="tab-gains">
-				<ul id="stats-dps-gains" class="resist-specific"></ul>
-				<ul id="stats-ehp-gains" class="resist-specific"></ul>
-			</div>
-		</div>
-	</div>
-	<div id="gear-change" title="Select an Item">
-		<p>Listed below are all of the items you've created that would fit into this equipment slot.</p>
-		<p>Please choose which item you'd like to equip.</p>
-		<fieldset>
-			<select name="available" id="available-gear" class="ui-widget-content ui-corner-all">
-			</select>
-		</fieldset>
-		</form>
-	</div>
+  <?= $this->render("./record/build/header.phtml") ?>
+	<div id="character" class="ui-helper-clearfix" data-class="<?= $this->record->class ?>" <? if($myBuild) { echo "data-owner='true'"; } ?>>
+	  <style type="text/css" media="screen">
+	   ul#tabs {
+	     width: 150px;
+	     margin: 0;
+	     padding: 5px;
+	     list-style: none;
+	     background: #111;
+	     border: 1px solid #333;
+	   }
+	   ul#tabs li {
+	     margin: 1px;
+	   }
+	   ul#tabs li.divider {
+	     padding: 10px 5px 0;
+	     font-weight: bold;
+	     text-transform: uppercase;
+	   }
+	   div#tabs-render {
+	     width: 440px;
+	     background: #111;
+	     border: 1px solid #333;
+	   }
+	   div#tabs-render > div {
+	     margin: 1px;
+	   }
+	   div#tabs-render > div > h5 {
+        margin: 1px;
+        line-height: 1em;
+        border: 1px solid #333;
+        padding: 5px 10px;
+        text-transform: uppercase;
+        color: #888;
+        font-weight: normal;
+        background: rgb(17,17,17); /* Old browsers */
+        background: -moz-linear-gradient(top, rgba(17,17,17,1) 0%, rgba(34,34,34,1) 100%); /* FF3.6+ */
+        background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(17,17,17,1)), color-stop(100%,rgba(34,34,34,1))); /* Chrome,Safari4+ */
+        background: -webkit-linear-gradient(top, rgba(17,17,17,1) 0%,rgba(34,34,34,1) 100%); /* Chrome10+,Safari5.1+ */
+        background: -o-linear-gradient(top, rgba(17,17,17,1) 0%,rgba(34,34,34,1) 100%); /* Opera 11.10+ */
+        background: -ms-linear-gradient(top, rgba(17,17,17,1) 0%,rgba(34,34,34,1) 100%); /* IE10+ */
+        background: linear-gradient(to bottom, rgba(17,17,17,1) 0%,rgba(34,34,34,1) 100%); /* W3C */
+        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#111111', endColorstr='#222222',GradientType=0 ); /* IE6-9 */
+	   }
+	   div#tabs-render > div:first-child {
+	     display: block;
+	   }
+	   div#statistics {
+	     float: right;
+	     width: 350px;
+	     background: #111;
+	     border: 1px solid #333;	     
+	   }
+	  </style>
+    <ul id="tabs" class="inline-flow">
+      <li class='divider'>Character</li>
+      <li><a data-tab="#gear" class="button current">Gear</a></a></li>
+      <li><a data-tab="#skills" class="button">Skills</a></li>
+      <li><a data-tab="#passives" class="button">Passives</a></li>
+      <li><a data-tab="#buffs" class="button">Buffs</a></li>
+      <li><a data-tab="#edit" class="button">Edit</a></li>
+      <li class='divider'>Tools</li>
+      <li><a data-tab="#sync" class="button">Battle.net Sync</a></li>
+      <li><a data-tab="#simulate" class="button">Simulate</a></li>
+      <li><a data-tab="#compare" class="button">Compare</a></li>
+      <li><a data-tab="#suggestions" class="button">Suggestions</a></li>
+      <li><a data-tab="#share" class="button">Share</a></li>
+    </ul>
+    <div id="tabs-render" class="inline-flow">
+      <div id="gear"><?= $this->render("./record/build/gear.phtml") ?></div>
+      <div id="skills"><?= $this->render("./record/build/skills.phtml") ?></div>
+      <div id="passives"><?= $this->render("./record/build/passives.phtml") ?></div>
+      <div id="buffs">buffs</div>
+      <div id="edit">edit</div>
+      <div id="sync">sync</div>
+      <div id="simulate">simulate</div>
+      <div id="compare">compare</div>
+      <div id="suggestions">suggest</div>
+      <div id="share">Share</div>
+    </div>
+    <div id="statistics" class="inline-flow">
+      <?= $this->render("record/build/statistics.phtml") ?>
+    </div>
+  </div>
 	<script type="text/javascript">
 		var bonusCounter = {};
 		$(".equipped a").each(function() {
@@ -314,5 +142,20 @@ var activeActives = [];
 		// 	$stickyEl.toggleClass('sticky', windowTop > elTop);
 		// });
 	</script>
-	<script type="text/javascript" src="/js/build.js?time=<?= time() ?>"></script>	
+	<script type="text/javascript" src="/js/unmin/build.js?time=<?= time() ?>"></script>	
+	<script type="text/javascript" charset="utf-8">
+    $(function() {
+      var controls = $('#tabs li a'),
+          tabs = $("#tabs-render"),
+          atabs = $("#tabs-render > div");
+      atabs.hide();
+      tabs.children(":first").show();
+      controls.bind('click',function(){
+        atabs.hide();
+        controls.removeClass('current');
+        tabs.find($(this).attr("data-tab")).show(); //show tab content that matches tab title index
+        $(this).addClass('current'); //add current class on clicked tab title
+      });
+    });
+  </script>
 </div>

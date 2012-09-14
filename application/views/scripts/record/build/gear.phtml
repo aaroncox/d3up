@@ -1,0 +1,27 @@
+<h5>Character Gear</h5>
+<table class="equipment-table">
+<? foreach($this->record->equipment->getSlots() as $slot): ?>
+	<tr>
+		<td class="type">
+			<?= ucfirst($slot) ?>
+		</td>
+		<td class="primary">
+			<span class="equipped" id="equipped-<?= $slot ?>" data-slot="<?= $slot ?>">
+				<? if($this->record->equipment[$slot]->id): ?>
+					<?= $this->itemLink($this->record->equipment[$slot]) ?>
+				<? else: ?>
+					Nothing
+				<? endif ?>
+			</span>
+		</td>
+		<? if($this->myBuild): ?>
+		<td class="control">
+			<a id="change-<?= $slot ?>" class="button gear-change" data-item-type="<?= $slot ?>" role="button" aria-disabled="false"><span class="ui-button-text">Change</span></button>
+		</td>
+		<td class="control">
+			<a id="new-<?= $slot ?>" class="button" href="/item/create?b=<?= $this->record->id ?>&slot=<?= $slot ?>&return=build"><span class="ui-button-text">New</span></a>
+		</td>
+		<? endif; ?>
+	</tr>
+<? endforeach ?>
+</table>

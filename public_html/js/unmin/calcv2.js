@@ -673,7 +673,7 @@ BuildCalculator.prototype = {
 			}
 		}
 		// Remove the +% Damage Bonus if it exists
-		console.log("MH Min/Max (w/ +% Damage): ", mhMinDamage, mhMaxDamage);
+    // console.log("MH Min/Max (w/ +% Damage): ", mhMinDamage, mhMaxDamage);
     // if(this.attrs.mhRealDamage && this.attrs['mainhand-plus-damage']) {
     //   mhMinDamage = this.attrs.mhRealDamage.min * (1 - (this.attrs['mainhand-plus-damage'] * 0.01)),
     //   mhMaxDamage = this.attrs.mhRealDamage.max * (1 - (this.attrs['mainhand-plus-damage'] * 0.01));
@@ -682,22 +682,22 @@ BuildCalculator.prototype = {
     //   ohMinDamage = this.attrs.ohRealDamage.min * (1 - (this.attrs['mainhand-plus-damage'] * 0.01)),
     //   ohMaxDamage = this.attrs.ohRealDamage.max * (1 - (this.attrs['mainhand-plus-damage'] * 0.01));
     // }
-		console.log("MH Min/Max: ", mhMinDamage, mhMaxDamage);
-    console.log("Min/Max Damage Bonuses: " + this.attrs['min-damage'] + " - " + this.attrs['max-damage']);
+    // console.log("MH Min/Max: ", mhMinDamage, mhMaxDamage);
+    //     console.log("Min/Max Damage Bonuses: " + this.attrs['min-damage'] + " - " + this.attrs['max-damage']);
 		// Add the Bonus Damage to the values without +% Damage
     if(this.attrs['max-damage']) {
-     mhMaxDamage += this.attrs['max-damage'] / (1 - (this.attrs['mainhand-plus-damage'] * 0.01));      
+     mhMaxDamage += this.attrs['max-damage']; // / (1 - (this.attrs['mainhand-plus-damage'] * 0.01));      
      if(ohMaxDamage) {
        ohMaxDamage += this.attrs['max-damage'];              
      }
     }
     if(this.attrs['min-damage']) {
-     mhMinDamage += this.attrs['min-damage'] / (1 - (this.attrs['mainhand-plus-damage'] * 0.01));        
+     mhMinDamage += this.attrs['min-damage']; // / (1 - (this.attrs['mainhand-plus-damage'] * 0.01));        
      if(ohMinDamage) {
        ohMinDamage += this.attrs['min-damage'];              
      }
     }
-		console.log("MH Min/Max after +Min/Max: ", mhMinDamage, mhMaxDamage);
+    // console.log("MH Min/Max after +Min/Max: ", mhMinDamage, mhMaxDamage);
 		// Determine Bonus Damage from Elemental Damage Bonuses (without the +% Damage added)
     // if(bnElePercent > 0 && this.attrs.mhRealDamage) {
     //  if(this.isDuelWielding) {
@@ -715,14 +715,14 @@ BuildCalculator.prototype = {
     //   ohMinDamage = ohMinDamage * (1 - (this.attrs['mainhand-plus-damage'] * 0.01)),
     //   ohMaxDamage = ohMaxDamage * (1 - (this.attrs['mainhand-plus-damage'] * 0.01));
     // }
-		console.log("MH Min/Max after +% Damage again: ", mhMinDamage, mhMaxDamage);
+    // console.log("MH Min/Max after +% Damage again: ", mhMinDamage, mhMaxDamage);
     // _.each(['fire-damage', 'arcane-damage', 'poison-damage', 'cold-damage', 'lightning-damage', 'holy-damage'], function(v,k) {
     //   if(_.has(this.attrs, v)) {
     //         mhMinDamage += this.attrs[v].min;
     //         mhMaxDamage += this.attrs[v].max;
     //   }
     // }, this);
-		console.log("MH Min/Max after adding +Ele Damage: ", mhMinDamage, mhMaxDamage);
+    // console.log("MH Min/Max after adding +Ele Damage: ", mhMinDamage, mhMaxDamage);
 		if(this.attrs['attack-speed-incs']) {
 			atkSpeedInc = this.attrs['attack-speed-incs'] / 100;
 		}
@@ -733,7 +733,7 @@ BuildCalculator.prototype = {
 				bnElePercent += this.attrs[v];
 			}
 		}, this);
-    console.log(this.attrs.mhRealDamage.min, bnMinDamage, bnMaxDamage, bnElePercent, bnEleDamage);
+    // console.log(this.attrs.mhRealDamage.min, bnMinDamage, bnMaxDamage, bnElePercent, bnEleDamage);
 		// Are we duel wielding?
     // console.log(this.attrs);		
 		var mathS, mathC, mathR, mathA, mathM;
@@ -773,8 +773,8 @@ BuildCalculator.prototype = {
 			mathA = ((mhMinDamage + mhMaxDamage) / 2) + bnEleDamage;
 			mathM = (1 + this.bonuses['plus-damage']);
 			rendered['dps'] = mathS * mathC * mathR * mathA * mathM;		
-      console.log(mhMinDamage, mhMaxDamage, bnMinDamage, bnMaxDamage);
-      console.log(mathS, mathC, mathR, mathA, mathM, rendered['dps'], "1w");
+      // console.log(mhMinDamage, mhMaxDamage, bnMinDamage, bnMaxDamage);
+      // console.log(mathS, mathC, mathR, mathA, mathM, rendered['dps'], "1w");
 			// rendered['dps'] = (((mhMinDamage + mhMaxDamage) / 2 + bnAvgDamage) * rendered['dps-speed']) * (1 + atkSpeedInc) * (this.attrs[this.attrs.primary] / 100 + 1) * 1 * ((this.attrs['critical-hit'] / 100) * (this.attrs['critical-hit-damage']/100) + 1);
 			rendered['dps-speed-display'] = Math.round(mathR * 100) / 100;
 		}
@@ -783,7 +783,7 @@ BuildCalculator.prototype = {
 			// console.log(this.bonuses['plus-damage']);
 			// return rendered['dps'] * (1 + this.bonuses['plus-damage']);
 		// }
-		console.log(rendered);
+    // console.log(rendered);
 		return rendered;
 	},
 	calcSAME: function(options) {
@@ -814,7 +814,7 @@ BuildCalculator.prototype = {
 			}
 		}
 		if(this.attrs['attack-speed-incs']) {
-			atkSpeedInc = this.attrs['attack-speed-incs'];
+			atkSpeedInc = this.attrs['attack-speed-incs'] / 100;
 		}
 		// Calculate the Average and Min/Max Bonus Damage from other items
 		if(this.attrs['max-damage']) {
@@ -874,6 +874,8 @@ BuildCalculator.prototype = {
 			mhAvg = mathS * ((mathAl + mathAh) / 4) * mathM * mathE;
 		}
 		dps = Math.round(((dLow + dHigh) / 2) * mathR * mathC * 100)/100;
+		console.log(atkSpeedInc);
+		console.log(dLow, dHigh, dps, mathR, mathC);
 		hit = Math.round(((dLow + dHigh) / 2) * mathC * 100)/100;
 		if(duration) {
 		  if(isStatic) {
@@ -905,6 +907,7 @@ BuildCalculator.prototype = {
 				rendered['dps'] = Math.round(dmgCycle * mathR * mathC * 100)/100;
  				rendered['3rd-hit'] = hit3;
 			}
+			console.log(dLow, dHigh);
 			rendered['damage'] = Math.round(dLow * 100)/100 + " - " + Math.round(dHigh * 100)/100;
 			rendered['critical-hit'] = Math.round(dLow * (1+ (this.attrs['critical-hit-damage'] * 0.01)) * 10) / 10 + " - " + Math.round(dHigh * (1 + (this.attrs['critical-hit-damage'] * 0.01)) * 10) / 10;
 			if(this.bonuses['pierce-bonus']) {
@@ -914,7 +917,7 @@ BuildCalculator.prototype = {
   		  rendered['critical-hit-3rd'] = Math.round((1 + (this.bonuses['pierce-bonus'] / 100) * 2) * dLow * (1+ (this.attrs['critical-hit-damage'] * 0.01)) * 10) / 10 + " - " + Math.round((1 + (this.bonuses['pierce-bonus'] / 100) * 2) * dHigh * (1 + (this.attrs['critical-hit-damage'] * 0.01)) * 10) / 10;
   		}
 		}
-    // console.log(rendered);
+    console.log(rendered);
     return rendered;
 	},
 	calcSkills: function() {
