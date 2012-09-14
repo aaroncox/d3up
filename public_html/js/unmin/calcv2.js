@@ -759,7 +759,7 @@ BuildCalculator.prototype = {
 			mathA = ((mhMinDamage + mhMaxDamage) / 2 + (ohMinDamage + ohMaxDamage) / 2 + (bnEleDamage * 2)) / 2;
 			mathM = (1 + this.bonuses['plus-damage']);
 			rendered['dps'] = mathS * mathC * mathR * mathA * mathM;			
-			rendered['dps-speed-display'] = Math.round(rendered['dps-speed'].mh * (1 + 0.15 + atkSpeedInc + this.bonuses['plus-attack-speed']) * 100) / 100 + " MH / " + Math.round(rendered['dps-speed'].oh * (1 + 0.15 + atkSpeedInc + this.bonuses['plus-attack-speed'])  * 100) / 100 + " OH";
+			rendered['dps-speed-display'] = Math.round(rendered['dps-speed'].mh * (1 + 0.15 + atkSpeedInc + this.bonuses['plus-attack-speed']) * 100) / 100 + " MH<br/>" + Math.round(rendered['dps-speed'].oh * (1 + 0.15 + atkSpeedInc + this.bonuses['plus-attack-speed'])  * 100) / 100 + " OH";
 			// console.log(mathS, mathC, mathR, mathA, mathM, rendered['dps'], "dw", rendered);
 		} else {
 			if(this.attrs['plus-aps']) {
@@ -1143,55 +1143,55 @@ BuildCalculator.prototype = {
 		// 	console.log(this.values['dps-sharpshooter'])
 		// }
 		// Some Wackyness to calculate DPS contributions per piece
-    // _.each(this.gear, function(g, i) {
-    //  var item = i;
-    //  // Unset the Item from the stats
-    //  this.removeItem(i);
-    //  // Don't deal with MH/OH atm
-    //  // if(i != "mainhand" && i != "offhand") {
-    //    // Calculate the difference in DPS if you took this piece off
-    //    // if(this.values['dps-damage']) {
-    //      var newDps = this.calcOffense();
-    //      this.values['dps-' + i] = this.values['dps'] - newDps['dps'];       
-    //    // }
-    //  // }
-    //  // Readd the Item to the set
-    //  this.parseItem(g, i);
-    // }, this);
+    _.each(this.gear, function(g, i) {
+     var item = i;
+     // Unset the Item from the stats
+     this.removeItem(i);
+     // Don't deal with MH/OH atm
+     // if(i != "mainhand" && i != "offhand") {
+       // Calculate the difference in DPS if you took this piece off
+       // if(this.values['dps-damage']) {
+         var newDps = this.calcOffense();
+         this.values['dps-' + i] = this.values['dps'] - newDps['dps'];       
+       // }
+     // }
+     // Readd the Item to the set
+     this.parseItem(g, i);
+    }, this);
     // // Calculate DPS per Stat
-    // var incs = {
-    //  'pt-primary': {'stat': 1},
-    //  'pt-critical-hit': {'critical-hit': 1},
-    //  'pt-critical-hit-damage': {'critical-hit-damage': 1},
-    //  'pt-min-damage': {'min-damage': 1},
-    //  'pt-max-damage': {'max-damage': 1},
-    //  'pt-attack-speed': {'attack-speed': 1}
-    // };
-    // _.each(incs, function(v, k) {
-    //  var item = {};
-    //  switch(k) {
-    //    case "pt-primary":
-    //      item = { attrs: { } };
-    //      item.attrs[this.attrs.primary] = 1;
-    //      break;
-    //    case "pt-armor":
-    //      item = {
-    //        stats: v
-    //      };
-    //      break;
-    //    default:
-    //      item = {
-    //        type: 'extra',
-    //        attrs: v
-    //      };
-    //      break;
-    //  }
-    //  this.parseItem(item, 'extra');
-    //  var newDps = this.calcOffense();
-    //  this.values['dps-' + k] = newDps['dps'] - this.values['dps'];       
-    //  // Re-add the Item to the gear set
-    //  this.removeItem('extra');
-    // }, this);
+    var incs = {
+     'pt-primary': {'stat': 1},
+     'pt-critical-hit': {'critical-hit': 1},
+     'pt-critical-hit-damage': {'critical-hit-damage': 1},
+     'pt-min-damage': {'min-damage': 1},
+     'pt-max-damage': {'max-damage': 1},
+     'pt-attack-speed': {'attack-speed': 1}
+    };
+    _.each(incs, function(v, k) {
+     var item = {};
+     switch(k) {
+       case "pt-primary":
+         item = { attrs: { } };
+         item.attrs[this.attrs.primary] = 1;
+         break;
+       case "pt-armor":
+         item = {
+           stats: v
+         };
+         break;
+       default:
+         item = {
+           type: 'extra',
+           attrs: v
+         };
+         break;
+     }
+     this.parseItem(item, 'extra');
+     var newDps = this.calcOffense();
+     this.values['dps-' + k] = newDps['dps'] - this.values['dps'];       
+     // Re-add the Item to the gear set
+     this.removeItem('extra');
+    }, this);
 		// Append Attributes into the values
 		this.values = jQuery.extend(this.attrs, this.values);
 		// Return the values

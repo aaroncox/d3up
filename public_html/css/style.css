@@ -116,12 +116,17 @@ body {
 	color: #ECECEC;
 	background-color: #111;
 }
-a, a:visited, a:hover, a:active, a:hover .ui-button-text {
+a, 
+a:visited, 
+a:hover, 
+a:active, 
+a .ui-button-text, 
+a:visited .ui-button-text, 
+a:hover .ui-button-text, 
+a:active .ui-button-text, 
+a:hover .ui-button-text {
 	color: #70B1D5;
 	text-decoration: none;
-}
-a:active .ui-button-text, a:visited .ui-button-text {
-	color: #fff;
 }
 #wrapper {
 	background: #222;
@@ -443,27 +448,71 @@ dd:has(:focus) .chzn-container {
 	color: #F00;
 }
 .equipment-table {
+  margin-top: 5px;
   width: 100%;
 }
+.equipment-table thead td,
+.equipment-table thead th {
+  font-size: 12px;
+  line-height: 12px;
+  padding: 5px 5px 0;
+}
+.equipment-table thead th {
+  padding-bottom: 5px;
+  border-bottom: 1px solid #333;
+}
 .equipment-table td {
-	padding: 5px;
+	padding: 10px 5px;
 	vertical-align: middle;
 	width: 150px;
 }
-.equipment-table td.control {
+.equipment-table .contributions,
+.equipment-table .stats,
+.equipment-table .gear-controls {
+  text-align: center;
 	vertical-align: middle;
+	width: 80px;
+}
+.equipment-table .gear-controls .button {
+  padding: 0 6px;
+  font-size: 12px;
+}
+.equipment-table .contributions {
 	width: 50px;
+  font-size: 14px;
+}
+.equipment-table .stats {
+  display: table-cell;
+  width: 100px;
 }
 .equipment-table td.type {
   font-size: 10px;
   text-align: right;
 }
-.equipment-table td:first-child {
-	width: 60px;
+.equipment-table td table.perfection-table {
 }
-.equipment-table td.primary {
-	width: auto;
+.equipment-table td table.perfection-table td {
+  font-size: 12px;
+  line-height: 12px;
+}
+/*.equipment-table th:first-child,
+.equipment-table td:first-child {
+  width: 50px;
+  padding: 0;
+}
+.equipment-table td:first-child {
+  font-size: 10px;
+}
+*/.equipment-table td.primary {
+	width: 200px;
 	font-size: 14px;
+	line-height: 15px;
+}
+.equipment-table td.primary .equipped-type {
+  font-size: 10px;
+}
+.equipment-table tbody tr:nth-child(2n) {
+  background: #000;
 }
 .sidebar.sticky {
 	position: fixed;
@@ -880,7 +929,7 @@ tr.compared > td:first-child {
 }
 .r2-Record-form .buttons input {
 	margin-top: 50px;
-	width: 350px;
+	width: auto;
 }
 
 .zend_form .required:after {
@@ -971,6 +1020,7 @@ tr.compared > td:first-child {
 }
 #build-passive-skills,
 #build-active-skills {
+  width: 100%;
 	margin: 0;
 	padding: 1px;
 	list-style: none;
@@ -1022,11 +1072,18 @@ tr.compared > td:first-child {
 }
 .skill-calc-row .effects,
 .skill-calc-row .details {
-	list-style: none;
+  width: 100%;
 	padding: 0;
 	color: #fff;
 	margin: 0 0 5px 10px;
 	font-size: 1.2em;
+}
+.skill-calc-row .details td {
+  padding: 0 5px;
+}
+.skill-calc-row .details td:first-child {
+  text-align: right;
+  width: 40%;
 }
 .skill-calc-row .effects {
 	margin: 0 0 5px 94px;	
@@ -1461,22 +1518,27 @@ div.toc.section {
 .content-page .warning {
 	color: #FA4545;
 }
+#tabs-render .form,
 .content-page .form {
 	padding: 20px 50px;
 }
+#tabs-render dt,
 .content-page .form dt {
 	width: 200px;
 	font-size: 15px;
 }
+#tabs-render .form dd,
 .content-page .form dd {
 	margin: 10px;
 	border: 0;
 }
+#tabs-render .form dd input,
 .content-page .form dd input {
 	width: 300px;
 }
 .footer-content,
 .content-page .social,
+#tabs-render .form-buttons,
 .content-page .form-buttons {
 	clear: both;
 	background: #111;
@@ -1561,4 +1623,25 @@ div.toc.section {
 }
 .filter-table td select {
 	width: 99%;
+}
+.statistics-table {
+  width: 305px;
+  margin: 5px 2px 0;
+  background: #111;
+  border: 1px solid #333;
+}
+.statistics-table th {
+  padding: 5px 15px 0;
+  color: #70B1D5;
+}
+.statistics-table td {
+  width: 40%;
+  padding: 2px 5px;
+  font-size: 14px;
+}
+.statistics-table td:first-child {
+  width: 60%;
+  color: #B18135;
+  text-align: right;
+  font-size: 12px;
 }

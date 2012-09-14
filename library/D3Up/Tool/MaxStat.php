@@ -152,7 +152,24 @@ class D3Up_Tool_MaxStat
 	 }
 	 return static::$_instance;
 	}
-	
+	public static function calcStat($stat, $value, $type) {
+    // var_dump($stat, $value, $type);
+    if(!in_array($type, static::$_typeMap)) {
+			return false;
+		}
+		if(!in_array($stat, array_keys(static::$_statMap))) {
+			return false;
+		}
+		
+	  $perfect = static::$_limits[static::$_typeMap[$type]]['values'][static::$_statMap[$stat]];
+		if($perfect == 0) {
+		  return false;
+			// var_dump($item->type, $key); exit;
+		} else {
+			$rating = round($value / $perfect * 100, 1);					
+		}
+		return $rating."% (".$perfect." Max)";
+	}
 	public static function calc($item) {
 
 		if(!in_array($item->type, static::$_typeMap)) {

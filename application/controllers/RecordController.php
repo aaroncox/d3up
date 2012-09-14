@@ -206,6 +206,8 @@ class RecordController extends D3Up_Controller_Action
 	public function viewAction() {
 		$record = $this->getRecord();
 		if($record->_type == "build") {
+		  $this->view->editForm = $record->getEditForm();
+		  $this->view->editForm->setAction("/build/edit/id/" . $record->id);
 			$this->checkVote();
 			$record->viewCounter();
 		}

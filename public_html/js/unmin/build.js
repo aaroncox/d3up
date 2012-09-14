@@ -24,7 +24,10 @@ $(function() {
 		if(v) {
 			v = v.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,");			
 		}
-		var data = $("<li/>").addClass('stat-' + cleaned).html($("<span class='stat-helper'/>").html(k + ": ")).append(v);
+		var tr = $("<tr>").addClass('stat-' + cleaned),
+		    label = $("<td>").html($("<span class='stat-helper'/>").html(k)),
+		    data = $("<td>").html(v);
+		tr.append(label, data);
 		if(math) {
 			if(math <= 1) {
 				data.append(" (" + (Math.round(math * 1000)/10) + "%)");
@@ -32,7 +35,7 @@ $(function() {
 				data.append(" (" + math + "%)");
 			}
 		}
-		return data;
+		return tr;
 	}
 	$("#item-sim-tab").click(function() {
 		$(".skill-activate").each(function() {
@@ -391,7 +394,7 @@ $(function() {
 						cleaned = skill.split("~"),
 						icon = $("<img src='/images/icons/" + heroClass + "-" + cleaned[0] + ".png'>"),
 						h3 = $("<h3>").html(data.name),
-						details = $("<ul class='details'>"),
+						details = $("<table class='details'>"),
 						desc = $("<p><span class='stat-helper'>Description</span>: </p>").append(data.desc),
 						rune = $("<p>"),
 						control = $("<div class='control'></div>");
@@ -572,33 +575,26 @@ $(function() {
 	function displayStats() {
 		// EHP 
 		tabEHP.empty();
-		tabEHP.append($("<ul class='resist-specific'/>").append(
-			statLabel("EHP", stats.ehp, 'round'),
-			statLabel("EHP w/ Dodge", stats['ehp-dodge'], 'round'),
-			statLabel("EHP w/ Block", "Not Implemented") //stats['ehp-block']
-		));
-		tabEHP.append($("<ul class='resist-specific'/>").append(
-			$("<li class='header'/>").html("VS Damage Source EHP"),
-			statLabel("Melee EHP", stats['ehp-melee'], 'round'),
-			statLabel("Ranged EHP", stats['ehp-range'], 'round'),
-			statLabel("Elite EHP", stats['ehp-elite'], 'round')
-		));		
-		tabEHP.append($("<ul class='resist-specific'/>").append(
-			$("<li class='header'/>").html("VS Specific Element EHP"),
-			statLabel("Physical EHP", stats['ehp-physical'], 'round'),
-			statLabel("Cold EHP", stats['ehp-cold'], 'round'),
-			statLabel("Fire EHP", stats['ehp-fire'], 'round'),
-			statLabel("Lightning EHP", stats['ehp-lightning'], 'round'),
-			statLabel("Poison EHP", stats['ehp-poison'], 'round'),
-			statLabel("Arcane/Holy EHP", stats['ehp-arcane'], 'round')
-		));
+		tabEHP.append($("<tr class='header'><th colspan='2'>Effective Hit Points</th></tr>"));
+		tabEHP.append(statLabel("EHP", stats.ehp, 'round'));
+		tabEHP.append(statLabel("EHP w/ Dodge", stats['ehp-dodge'], 'round'));
+		tabEHP.append(statLabel("EHP w/ Block", "Not Implemented")); //stats['ehp-block']
+		tabEHP.append(statLabel("Melee EHP", stats['ehp-melee'], 'round'));
+		tabEHP.append(statLabel("Ranged EHP", stats['ehp-range'], 'round'));
+		tabEHP.append(statLabel("Elite EHP", stats['ehp-elite'], 'round'));
+		tabEHP.append(statLabel("Physical EHP", stats['ehp-physical'], 'round'));
+		tabEHP.append(statLabel("Cold EHP", stats['ehp-cold'], 'round'));
+		tabEHP.append(statLabel("Fire EHP", stats['ehp-fire'], 'round'));
+		tabEHP.append(statLabel("Lightning EHP", stats['ehp-lightning'], 'round'));
+		tabEHP.append(statLabel("Poison EHP", stats['ehp-poison'], 'round'));
+		tabEHP.append(statLabel("Arcane/Holy EHP", stats['ehp-arcane'], 'round'));
 		// ----------------------------------
 		// Render Skill Damage
 		// ----------------------------------
 		var containerSkills = $("#build-active-skills");
 		// console.log(stats.skillData);
 		$.each(stats.skillData, function(k,v) {
-			var target = containerSkills.find("li[data-id=\"" + k + "\"] ul.details").empty();
+			var target = containerSkills.find("li[data-id=\"" + k + "\"] table.details").empty();
 			$.each(v, function(s,i) {
 				switch(s) {
 				  case "per-tick-norm":
@@ -660,6 +656,7 @@ $(function() {
 		// ----------------------------------	
 		// Base Statistics Display
 		tabBase.empty();
+		tabBase.append($("<tr class='header'><th colspan='2'>Base Statistics</th></tr>"));
 		tabBase.append(statLabel("Strength", stats['strength']));
 		tabBase.append(statLabel("Dexterity", stats['dexterity']));
 		tabBase.append(statLabel("Intelligence", stats['intelligence']));
@@ -668,6 +665,7 @@ $(function() {
 		tabBase.append(statLabel("Gold Find", stats['plus-gold-find'], 'per'));
 		// Defensive Statistics Display
 		tabDefense.empty();
+		tabDefense.append($("<tr class='header'><th colspan='2'>Defensive Statistics</th></tr>"));
 		tabDefense.append(statLabel("Armor", stats.armor, 'round', stats.armorReduce));
 		tabDefense.append(statLabel("All Resist", stats['resist-all'], 'round', stats['percent-resist-all']));
 		// tabDefense.append(statLabel("Block Amount", (stats['block-amount']) ? stats['block-amount'] : '~'));		
@@ -687,16 +685,14 @@ $(function() {
 		tabDefense.append(statLabel("Thorns", stats['thorns']));
 		// Offensive Statistics Display
 		tabOffense.empty();
+		tabOffense.append($("<tr class='header'><th colspan='2'>Damage Statistics</th></tr>"));
 		tabOffense.append(statLabel("DPS", stats.dps, 'round'));
-		// if(mathDpsSpecial) {
-			// tabOffense.append(statLabel("DPS w/ " + mathDpsSpecialName, mathDps));			
-		// }
 		tabOffense.append(statLabel("Attacks per Second", stats['dps-speed-display']));
 		tabOffense.append(statLabel("Critical Hit Chance", stats['critical-hit'], 'per'));
 		tabOffense.append(statLabel("Critical Hit Damage", stats['critical-hit-damage'], 'per'));
 		// Gains Stats Display
 		tabDPSGains.empty();
-		tabDPSGains.append($("<li class='header'/>").html("DPS Gained per Stat"));
+		tabDPSGains.append($("<tr class='header'><th colspan='2'>DPS Gains by Stat</th></tr>"));
 		tabDPSGains.append(statLabel("+1 Primary Stat", stats['dps-pt-primary'], 'round'));
 		tabDPSGains.append(statLabel("+1% Crit Hit", stats['dps-pt-critical-hit'], 'round'));
 		tabDPSGains.append(statLabel("+1% Crit Hit Dmg", stats['dps-pt-critical-hit-damage'], 'round'));
@@ -704,7 +700,7 @@ $(function() {
 		tabDPSGains.append(statLabel("+1 Maximum Dmg", stats['dps-pt-max-damage'], 'round'));
 		tabDPSGains.append(statLabel("+1% Attack Speed", stats['dps-pt-attack-speed'], 'round'));
 		tabEHPGains.empty();
-		tabEHPGains.append($("<li class='header'/>").html("EHP Gained per Stat"));
+		tabEHPGains.append($("<tr class='header'><th colspan='2'>EHP Gains by Stat</th></tr>"));
 		tabEHPGains.append(statLabel("+1 Armor", stats['ehp-pt-armor'], 'round'));
 		tabEHPGains.append(statLabel("+1 Strength", stats['ehp-pt-strength'], 'round'));
 		tabEHPGains.append(statLabel("+1 Intelligence", stats['ehp-pt-intelligence'], 'round'));
@@ -713,6 +709,7 @@ $(function() {
 		tabEHPGains.append(statLabel("+1% Life", stats['ehp-pt-plus-life'], 'round'));
 		// Life Stastics Display
 		tabLife.empty();
+		tabLife.append($("<tr class='header'><th colspan='2'>Health Stastistics</th></tr>"));
 		tabLife.append(statLabel("Maximum Life", stats.life, 'round'));
 		tabLife.append(statLabel("Total Life Bonus", stats['plus-life'], 'per'));
 		tabLife.append(statLabel("Life per Second", (stats['life-regen']) ? stats['life-regen'] : 0));
@@ -723,36 +720,33 @@ $(function() {
 		tabLife.append(statLabel("Bonus to Gold/Globe Radius", (stats['plus-pickup-radius']) ? stats['plus-pickup-radius'] : 0));	
 		// Add the EHP Gear Ratings
 		var ehpGear = $("<ul class='resist-specific'/>").append($("<li class='header'/>").html("Gear EHP Contributions (<a href='/faq/gear-based-ehp'>?</a>)"));
-		ehpGear.append(statLabel("Helm EHP", stats['ehp-helm'], 'round'));			
-		ehpGear.append(statLabel("Shoulder EHP", stats['ehp-shoulders'], 'round'));			
-		ehpGear.append(statLabel("Amulet EHP", stats['ehp-amulet'], 'round'));			
-		ehpGear.append(statLabel("Chest EHP", stats['ehp-chest'], 'round'));			
-		ehpGear.append(statLabel("Gloves EHP", stats['ehp-gloves'], 'round'));			
-		ehpGear.append(statLabel("Bracers EHP", stats['ehp-bracers'], 'round'));			
-		ehpGear.append(statLabel("Belt EHP", stats['ehp-belt'], 'round'));			
-		ehpGear.append(statLabel("Pants EHP", stats['ehp-pants'], 'round'));			
-		ehpGear.append(statLabel("Ring 1 EHP", stats['ehp-ring1'], 'round'));			
-		ehpGear.append(statLabel("Ring 2 EHP", stats['ehp-ring2'], 'round'));			
-		ehpGear.append(statLabel("Boots EHP", stats['ehp-boots'], 'round'));			
-		ehpGear.append(statLabel("Main Hand EHP", stats['ehp-mainhand'], 'round'));			
-		ehpGear.append(statLabel("Off Hand EHP", stats['ehp-offhand'], 'round'));			
-		$("#stats-ehp-gear").html(ehpGear);
-		// Add the DPS Gear Contributions
-		var dpsGear = $("<ul class='resist-specific'/>").append($("<li class='header'/>").html("Gear DPS Contributions (<a href='/faq/gear-based-dps'>?</a>)"));
-		dpsGear.append(statLabel("Helm DPS", stats['dps-helm'], 'round'));			
-		dpsGear.append(statLabel("Shoulder DPS", stats['dps-shoulders'], 'round'));			
-		dpsGear.append(statLabel("Amulet DPS", stats['dps-amulet'], 'round'));			
-		dpsGear.append(statLabel("Chest DPS", stats['dps-chest'], 'round'));			
-		dpsGear.append(statLabel("Gloves DPS", stats['dps-gloves'], 'round'));			
-		dpsGear.append(statLabel("Bracers DPS", stats['dps-bracers'], 'round'));			
-		dpsGear.append(statLabel("Belt DPS", stats['dps-belt'], 'round'));			
-		dpsGear.append(statLabel("Pants DPS", stats['dps-pants'], 'round'));			
-		dpsGear.append(statLabel("Ring 1 DPS", stats['dps-ring1'], 'round'));			
-		dpsGear.append(statLabel("Ring 2 DPS", stats['dps-ring2'], 'round'));			
-		dpsGear.append(statLabel("Boots DPS", stats['dps-boots'], 'round'));	
-		dpsGear.append(statLabel("Main Hand DPS", stats['dps-mainhand'], 'round'));			
-		dpsGear.append(statLabel("Off Hand DPS", stats['dps-offhand'], 'round'));			
-		$("#stats-dps-gear").html(dpsGear);	
+		// Figure out how good each rating is
+    var ehpT = 0,
+        dpsT = 0;
+		$.each(['ehp-helm','ehp-shoulders','ehp-amulet','ehp-chest','ehp-gloves','ehp-bracers','ehp-belt','ehp-pants','ehp-ring1','ehp-ring2','ehp-boots','ehp-mainhand','ehp-offhand'], function(k,v) {
+      if(stats[v] > ehpT) {
+        ehpT = stats[v];
+      }
+		})	
+		$.each(['dps-helm','dps-shoulders','dps-amulet','dps-chest','dps-gloves','dps-bracers','dps-belt','dps-pants','dps-ring1','dps-ring2','dps-boots','dps-mainhand','dps-offhand'], function(k,v) {
+      if(stats[v] > dpsT) {
+        dpsT = stats[v];
+      }
+		})
+		$.each(['ehp-helm','ehp-shoulders','ehp-amulet','ehp-chest','ehp-gloves','ehp-bracers','ehp-belt','ehp-pants','ehp-ring1','ehp-ring2','ehp-boots','ehp-mainhand','ehp-offhand'], function(k,v) {
+		  var per = stats[v] / ehpT,
+		      color = 50 * per + 200,
+		      val = Math.round(stats[v]);
+      $("#gear-" + v).html(val.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,"));
+      $("#gear-" + v).css({color: "rgb(0," + parseInt(color) + ",0)"});
+		})	
+		$.each(['dps-helm','dps-shoulders','dps-amulet','dps-chest','dps-gloves','dps-bracers','dps-belt','dps-pants','dps-ring1','dps-ring2','dps-boots','dps-mainhand','dps-offhand'], function(k,v) {
+		  var per = stats[v] / ehpT,
+		      color = 50 * per + 200,
+		      val = Math.round(stats[v]);
+      $("#gear-" + v).html(val.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,"));
+      $("#gear-" + v).css({color: "rgb(" + parseInt(color) + ",0,0)"});
+		})
 	}
 	// Run stats display
 	displayStats();

@@ -24,12 +24,14 @@ var activeActives = [];
 	<div id="character" class="ui-helper-clearfix" data-class="<?= $this->record->class ?>" <? if($myBuild) { echo "data-owner='true'"; } ?>>
 	  <style type="text/css" media="screen">
 	   ul#tabs {
+	     float: left;
 	     width: 150px;
 	     margin: 0;
 	     padding: 5px;
 	     list-style: none;
 	     background: #111;
 	     border: 1px solid #333;
+	     border-right: 0;
 	   }
 	   ul#tabs li {
 	     margin: 1px;
@@ -39,21 +41,29 @@ var activeActives = [];
 	     font-weight: bold;
 	     text-transform: uppercase;
 	   }
+	   ul#tabs li:first-child {
+	     margin: 1px;
+	     padding-top: 0;
+	   }
 	   div#tabs-render {
-	     width: 440px;
+	     float: left;
+	     width: 485px;
 	     background: #111;
 	     border: 1px solid #333;
+	     border-left: 0;
+	     padding: 0;
 	   }
 	   div#tabs-render > div {
 	     margin: 1px;
 	   }
 	   div#tabs-render > div > h5 {
-        margin: 1px;
+        margin: 0;
         line-height: 1em;
-        border: 1px solid #333;
+        border: 1px solid #222;
+        border-right: 0;
         padding: 5px 10px;
         text-transform: uppercase;
-        color: #888;
+        color: #B18135;
         font-weight: normal;
         background: rgb(17,17,17); /* Old browsers */
         background: -moz-linear-gradient(top, rgba(17,17,17,1) 0%, rgba(34,34,34,1) 100%); /* FF3.6+ */
@@ -64,23 +74,29 @@ var activeActives = [];
         background: linear-gradient(to bottom, rgba(17,17,17,1) 0%,rgba(34,34,34,1) 100%); /* W3C */
         filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#111111', endColorstr='#222222',GradientType=0 ); /* IE6-9 */
 	   }
+	   div#tabs-render > div > a.button {
+       margin: 10px;
+	   }
 	   div#tabs-render > div:first-child {
 	     display: block;
 	   }
 	   div#statistics {
 	     float: right;
-	     width: 350px;
+	     width: 310px;
 	     background: #111;
-	     border: 1px solid #333;	     
+	     border: 1px solid #333;	 
+	     padding-bottom: 2px;    
 	   }
 	  </style>
-    <ul id="tabs" class="inline-flow">
+    <ul id="tabs">
       <li class='divider'>Character</li>
       <li><a data-tab="#gear" class="button current">Gear</a></a></li>
       <li><a data-tab="#skills" class="button">Skills</a></li>
       <li><a data-tab="#passives" class="button">Passives</a></li>
       <li><a data-tab="#buffs" class="button">Buffs</a></li>
+      <? if($this->myBuild): ?>
       <li><a data-tab="#edit" class="button">Edit</a></li>
+      <? endif ?>
       <li class='divider'>Tools</li>
       <li><a data-tab="#sync" class="button">Battle.net Sync</a></li>
       <li><a data-tab="#simulate" class="button">Simulate</a></li>
@@ -88,22 +104,33 @@ var activeActives = [];
       <li><a data-tab="#suggestions" class="button">Suggestions</a></li>
       <li><a data-tab="#share" class="button">Share</a></li>
     </ul>
-    <div id="tabs-render" class="inline-flow">
+    <div id="tabs-render">
       <div id="gear"><?= $this->render("./record/build/gear.phtml") ?></div>
       <div id="skills"><?= $this->render("./record/build/skills.phtml") ?></div>
       <div id="passives"><?= $this->render("./record/build/passives.phtml") ?></div>
-      <div id="buffs">buffs</div>
-      <div id="edit">edit</div>
-      <div id="sync">sync</div>
-      <div id="simulate">simulate</div>
-      <div id="compare">compare</div>
-      <div id="suggestions">suggest</div>
-      <div id="share">Share</div>
+      <div id="buffs"><?= $this->render("./record/build/buffs.phtml") ?></div>
+      <? if($this->myBuild): ?>
+      <div id="edit"><?= $this->render("./record/build/edit.phtml") ?></div>
+      <? endif ?>
+      <div id="sync"><?= $this->render("./record/build/sync.phtml") ?></div>
+      <div id="simulate"><?= $this->render("./record/build/simulate.phtml") ?></div>
+      <div id="compare"><?= $this->render("./record/build/compare.phtml") ?></div>
+      <div id="suggestions"><?= $this->render("./record/build/suggestions.phtml") ?></div>
+      <div id="share"><?= $this->render("./record/build/share.phtml") ?></div>
     </div>
     <div id="statistics" class="inline-flow">
       <?= $this->render("record/build/statistics.phtml") ?>
     </div>
   </div>
+  <div id="gear-change" title="Select an Item">
+		<p>Listed below are all of the items you've created that would fit into this equipment slot.</p>
+		<p>Please choose which item you'd like to equip.</p>
+		<fieldset>
+			<select name="available" id="available-gear" class="ui-widget-content ui-corner-all">
+			</select>
+		</fieldset>
+		</form>
+	</div>
 	<script type="text/javascript">
 		var bonusCounter = {};
 		$(".equipped a").each(function() {
