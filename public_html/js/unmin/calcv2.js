@@ -1112,14 +1112,14 @@ BuildCalculator.prototype = {
 		// Apply Stat Bonuses
 		this.applyStatBonuses();
 		// Calculate Defensive Statistics
-		console.log("----");
+    // console.log("----");
 		var defenses = this.calcDefenses(),
 		 		ehp = this.calcEffectiveHealth(defenses), 
 				gearEhp = this.calcGearEhp(defenses, ehp),
 				dps = this.calcOffense(), 
 				skills = this.calcSkills();
 		// Add all of our calculated values into the values object for returning
-		console.log("----");
+    // console.log("----");
 		$.extend(this.values, defenses, ehp, gearEhp, dps, skills);		
 		// ----------------------------------
 		// Define Offensive Statistics before Passives so we can add to them
@@ -1390,9 +1390,9 @@ BuildCalculator.prototype = {
 		// console.log(this.attrs);
 	},
 	parseItem: function(json, slot) {
-    console.log(this.gear[slot]);
+    // console.log(this.gear[slot]);
 		this.gear[slot] = json;
-    console.log("Parsing item to slot ["+slot+"], now: " + this.gear[slot].name);
+    // console.log("Parsing item to slot ["+slot+"], now: " + this.gear[slot].name);
 		// Add to SetBonus Counter
 		if(json.set) {
 			// console.log("=====", json.set);
