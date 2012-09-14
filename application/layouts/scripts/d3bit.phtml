@@ -30,7 +30,7 @@ var newItem = <?= json_encode($this->item->cleanExport()) ?>,
     calc = new d3up.BuildCalculator,
     items = <?= $this->build->equipment->getGearJson() ?>,
     heroClass = '<?= $this->build->class ?>',
-    paragonLevel = <?= $this->build->paragon ?>,
+    paragonLevel = <?= $this->build->paragon?:0 ?>,
     activePassiveSkills = {};
 calc.setParagonLevel(paragonLevel); // This has to happen before init, need to fix that.
 calc.init();
