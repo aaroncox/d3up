@@ -1120,7 +1120,7 @@ BuildCalculator.prototype = {
 				skills = this.calcSkills();
 		// Add all of our calculated values into the values object for returning
     // console.log("----");
-		$.extend(this.values, defenses, ehp, gearEhp, dps, skills);		
+		_.extend(this.values, defenses, ehp, gearEhp, dps, skills);		
 		// ----------------------------------
 		// Define Offensive Statistics before Passives so we can add to them
 		// ----------------------------------
@@ -1193,7 +1193,7 @@ BuildCalculator.prototype = {
      this.removeItem('extra');
     }, this);
 		// Append Attributes into the values
-		this.values = jQuery.extend(this.attrs, this.values);
+		this.values = _.extend(this.attrs, this.values);
 		// Return the values
 		return this.values;
 	},

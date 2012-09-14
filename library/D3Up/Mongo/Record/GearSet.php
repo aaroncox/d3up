@@ -50,4 +50,14 @@ class D3Up_Mongo_Record_GearSet extends Epic_Mongo_Document
 		if(!$type) return null;
 		return $this->_gearMap[$type];
 	}
+	
+	public function getGearJson() {
+	  $data = array();
+	  foreach($this->_requirements as $slot => $reqs) {
+	    if($this->$slot) {
+        $data[$slot] = $this->$slot->cleanExport();
+	    }
+	  }
+    return json_encode($data);
+	}
 } // END class D3Up_Mongo_GearSet extends Epic_Mongo_Document

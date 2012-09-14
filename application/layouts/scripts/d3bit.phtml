@@ -1,14 +1,6 @@
 <!doctype html>
 <head>
-	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
-	<?= $this->headTitle("Diablo 3 DPS/EHP Calculator")->setSeparator(' | '); ?>
-	<meta name="description" content="Calculate your Diablo 3 Characters DPS/EHP from your gear" />
-	<meta name="keywords" content="diablo 3, dps, ehp, gear, calculator, effective health pool, tool, compare" />
-
-	<link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.19/themes/dot-luv/jquery-ui.css" type="text/css" />
-	<script type="text/javascript" src="http://code.jquery.com/jquery-1.7.2.js"></script>
-	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.18/jquery-ui.js"></script>
-	<script src="http://us.battle.net/d3/static/js/tooltips.js"></script>
+  <script type="text/javascript" src="http://code.jquery.com/jquery-1.7.2.js"></script>
 	<?= $this->headCss()
 			->appendStylesheet("/css/d3bit.css");
 	?>	
@@ -21,18 +13,6 @@
 	?>
 </head>
 <body>
-  <div id="character" data-class="<?= $this->build->class ?>">
-    <span id="paragon-level"><?= $this->build->paragon ?></span>
-    <div class="equipped">
-      <? foreach($this->build->equipment->getSlots() as $slot): ?>
-  			<? if($this->build->equipment[$slot]->id): ?>
-  			  <span class="equipped" id="equipped-<?= $slot ?>" data-slot="<?= $slot ?>">
-  				  <?= $this->itemLink($this->build->equipment[$slot]) ?>
-  				</span>
-  			<? endif ?>
-      <? endforeach ?>
-    </div>
-  </div>
   <div class="compare-diff">diff</div>
 <script type="text/javascript" charset="utf-8">
 <? if($this->build->passives && $this->build->passives != "null" && count($this->build->passives)): ?>
@@ -48,15 +28,13 @@ var activeActives = [];
 var newItem = <?= json_encode($this->item->cleanExport()) ?>,
     newItemSlot = 'bracers',
     calc = new d3up.BuildCalculator,
-    items = $(".equipped a"),
-    heroClass = $("#character").data('class'),
-    paragonLevel = $("#paragon-level").text(),
+    items = <?= $this->build->equipment->getGearJson() ?>,
+    heroClass = '<?= $this->build->class ?>',
+    paragonLevel = <?= $this->build->paragon ?>,
     activePassiveSkills = {};
 calc.setParagonLevel(paragonLevel); // This has to happen before init, need to fix that.
 calc.init();
-items.each(function() {
-	var slot = $(this).parent().data("slot"),  // Get the slot this gear is in
-			data = $(this).data("json");  // Get the JSON for this gear
+_.each(items, function(data,slot) {
 	calc.setItem(slot, data);
 });  	
 _.each(activePassives, function(v,k) {
@@ -65,18 +43,16 @@ _.each(activePassives, function(v,k) {
 calc.setClass(heroClass);
 calc.setPassives(activePassiveSkills);
 var stats = calc.run(),
-    oldStats = jQuery.extend({}, stats);
-var oldItem = $(".equipped-bracers").attr("data-json");
+    oldStats = _.extend({}, stats);
+var oldItem = items[newItemSlot];
 calc.init();
 calc.setClass(heroClass);
 calc.setPassives(activePassiveSkills);
 // Add the new item
 // console.log(newItem, newItemSlot);
-items.each(function() {
-	var slot = $(this).parent().data("slot"),  // Get the slot this gear is in
-			data = $(this).data("json");  // Get the JSON for this gear
+_.each(items, function(data,slot) {
 	calc.setItem(slot, data);
-});
+});  	
 calc.removeItem(newItemSlot);
 calc.setPassives(activePassiveSkills);
 calc.parseItem(newItem, newItemSlot);
@@ -89,9 +65,9 @@ var diff = calc.diff(oldStats, newStats);
 // console.log(calc.diff(oldStats, newStats));
 $(".compare-diff").empty();
 // if(!hideHelpers) {
-	var h4 = $("<h4>Comparision Results</h4>").css({margin: 0}),
-			oldLabel = $("<p/>").append("Old Item: ", calc.getItemLink(oldItem)),
-			newLabel = $("<p/>").append("New Item: ", calc.getItemLink(newItem));
+ var h4 = $("<h4>Comparision Results</h4>").css({margin: 0}),
+     oldLabel = $("<p/>").append("Old Item: ", calc.getItemLink(oldItem)),
+     newLabel = $("<p/>").append("New Item: ", calc.getItemLink(newItem));
   // if(oldItemOH) {
   //  oldLabel.append(" + Offhand: ", calc.getItemLink(oldItemOH));
   // }      
@@ -105,40 +81,40 @@ $("#compare-notes").html("");
 //  });
 // }
 var table = $("<table/>");
-		header = $("<tr/>").append("<th>Stat</th><th>Diff</th><th>Old</th><th>New</th>");
+   header = $("<tr/>").append("<th>Stat</th><th>Diff</th><th>Old</th><th>New</th>");
 table.append(header);
 $.each(diff, function(k,v) {
-	var data = v.split("|"),
-			diffVal = data[1],
-			diffName = data[0],
-			row = $("<tr/>");
-	row.append($("<td/>").html(diffName));
-	var oldStat = Math.round(oldStats[k] * 100) / 100,
-			newStat = Math.round(newStats[k] * 100) / 100;
-	if(oldStat > 99999) {
-		oldStat = Math.round(oldStat / 10) / 100 + "k";
-	}
-	if(newStat > 99999) {
-		newStat = Math.round(newStat / 10) / 100 + "k";
-	}
-	if(diffVal > 0) {
-		row.append($("<td/>").html("+"+diffVal).addClass("pos"));
-		row.append($("<td class='neg'/>").html(oldStat));
-		row.append($("<td class='pos'/>").html(newStat));				
-	} else {
-		row.append($("<td/>").html(diffVal).addClass("neg"));
-		row.append($("<td class='pos'/>").html(oldStat));
-		row.append($("<td class='neg'/>").html(newStat));				
-	}
-	table.append(row);
+ var data = v.split("|"),
+     diffVal = data[1],
+     diffName = data[0],
+     row = $("<tr/>");
+ row.append($("<td/>").html(diffName));
+ var oldStat = Math.round(oldStats[k] * 100) / 100,
+     newStat = Math.round(newStats[k] * 100) / 100;
+ if(oldStat > 99999) {
+   oldStat = Math.round(oldStat / 10) / 100 + "k";
+ }
+ if(newStat > 99999) {
+   newStat = Math.round(newStat / 10) / 100 + "k";
+ }
+ if(diffVal > 0) {
+   row.append($("<td/>").html("+"+diffVal).addClass("pos"));
+   row.append($("<td class='neg'/>").html(oldStat));
+   row.append($("<td class='pos'/>").html(newStat));       
+ } else {
+   row.append($("<td/>").html(diffVal).addClass("neg"));
+   row.append($("<td class='pos'/>").html(oldStat));
+   row.append($("<td class='neg'/>").html(newStat));       
+ }
+ table.append(row);
 });
 table.append("<tr><td colspan='10'><span class='pos'>Green = Increase</span> / <span class='neg'>Red = Decrease</span></td></tr>");
 // } else {
-// 	table.append("<tr><td colspan='10' style='text-align: center; font-weight: bold;'>These items are identical.</td></tr>");
+//   table.append("<tr><td colspan='10' style='text-align: center; font-weight: bold;'>These items are identical.</td></tr>");
 // }
 // items.find("div a").each(function() {
-// 	$(this).bindTooltip();
-// });			
+//   $(this).bindTooltip();
+// });     
 $(".compare-diff").append(table);
 </script>
 </body>
