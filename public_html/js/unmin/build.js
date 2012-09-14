@@ -317,6 +317,11 @@ $(function() {
 			activeActiveSkills[$(this).data('skill')] = activeActivesData[$(this).data('skill')];
 			if($(this).is(":checked")) {
 				enabledSkills[$(this).data('skill')] = activeActivesData[$(this).data('skill')];
+				if($(this).data('stacks')) {
+          enabledSkills[$(this).data('skill')].stacks = $(this).attr('data-stacks');
+				} else {
+          enabledSkills[$(this).data('skill')].stacks = 1;
+				}
 			}
 		});
 		$('.passive-activate').each(function() {
@@ -324,6 +329,11 @@ $(function() {
 			activePassiveSkills[$(this).data('skill')] = activePassivesData[$(this).data('skill')];
 			if($(this).is(":checked")) {
 				enabledSkills[$(this).data('skill')] = activePassivesData[$(this).data('skill')];
+				if($(this).data('stacks')) {
+          enabledSkills[$(this).data('skill')].stacks = $(this).attr('data-stacks');
+				} else {
+          enabledSkills[$(this).data('skill')].stacks = 1;
+				}
 			}
 			// console.log(activePassiveSkills, $(this).data('skill'), activePassivesData);
 		});
@@ -343,6 +353,15 @@ $(function() {
 		_.each(stats.skillData, function(v,k) {
 			if(v.activate) {
 				$(".skill-calc-row[data-id='" + k + "'] .control").show();
+			}
+			if(v.stackable) {
+				var select = $(".skill-calc-row[data-id='" + k + "'] .control select").show();
+				if(select.find("option").length == 0) {
+  				for(i = 1; i <= v.stackable; i++) {
+  				  var option = $("<option value='" + i + "'>").html(i + " Stacks");
+  				  select.append(option);
+  				}				  
+				}
 			}
 		}, this);
 		displayStats();
@@ -386,7 +405,12 @@ $(function() {
 						li.toggleClass("skill-activated");
 						recalc();
 					});
-					control.append("Activate ", checkbox).hide();					
+					var select = $("<select class='skill-stacks' data-skill='" + skill + "'>").hide();
+					select.bind('change', function() {
+						checkbox.attr("data-stacks", $(this).val());
+						recalc();
+					});
+					control.append("Activate ", checkbox, "<br/>", select).hide();					
 				}
 				// console.log(details);
 				activeDisplay.append($("<li>").append(icon.clone()));									
@@ -420,7 +444,12 @@ $(function() {
 						li.toggleClass("skill-activated");
 						recalc();
 					});
-					control.append("Activate ", checkbox).hide();					
+					var select = $("<select class='skill-stacks' data-skill='" + skill + "'>").hide();
+					select.bind('change', function() {
+						checkbox.attr("data-stacks", $(this).val());
+						recalc();
+					});
+					control.append("Activate ", checkbox, "<br/>", select).hide();					
 				// }
 				passiveDisplay.append($("<li/>").html(icon.clone()));
 				li.append(icon, control, h3, details, desc);
@@ -583,6 +612,12 @@ $(function() {
 					case "3rd-hit":
 						target.append(statLabel("Average 3rd Hit", i, 'round'));
 						break;						
+					case "critical-hit-2nd":
+						target.append(statLabel("2nd Pierce Critical Hit", i));
+						break;						
+					case "critical-hit-3rd":
+						target.append(statLabel("3rd Pierce Critical Hit", i));
+						break;						
 					case "per-tick":
 						target.append(statLabel("DPS", i, 'round'));
 						break;
@@ -597,6 +632,12 @@ $(function() {
 						break;
 					case "damage":
 						target.append(statLabel("Damage Range", i));
+						break;
+					case "damage-2nd":
+						target.append(statLabel("2nd Pierce Hit", i));
+						break;
+					case "damage-3rd":
+						target.append(statLabel("3rd Pierce Hit", i));
 						break;
 					case "dps":
 						target.append(statLabel("DPS", i));

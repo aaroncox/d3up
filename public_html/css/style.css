@@ -999,6 +999,7 @@ tr.compared > td:first-child {
 	color: #777;
 	font-weight: bold;
 	float: right;
+	text-align: center;
 }
 .skill-calc-row .effects:first-child {
 	margin-top: 5px;
