@@ -84,7 +84,7 @@
 				<? foreach($this->guide->sections as $key => $section): ?>
 					<? if(!$section->hidden || $isOwner): ?>
 					<div id="section-<?= $key ?>" class="section" data-section="<?= $key ?>" data-section-type="<?= $section->type ?: 'generic' ?>" data-hidden="<?= $section->hidden ?>">
-						<?= $this->partial("./guide/sections/".$section->type?:'generic'.".phtml", array('section' => $section)) ?>
+						<?= $this->partial("./guide/sections/".($section->type?:'generic').".phtml", array('section' => $section)) ?>
 					</div>
 					<? endif ?>
 				<? endforeach ?>
