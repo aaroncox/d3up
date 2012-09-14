@@ -71,7 +71,7 @@ calc.init();
 calc.setClass(heroClass);
 calc.setPassives(activePassiveSkills);
 // Add the new item
-console.log(newItem, newItemSlot);
+// console.log(newItem, newItemSlot);
 items.each(function() {
 	var slot = $(this).parent().data("slot"),  // Get the slot this gear is in
 			data = $(this).data("json");  // Get the JSON for this gear
@@ -85,8 +85,8 @@ var newStats = calc.run();
 // calculate the diff
 var diff = calc.diff(oldStats, newStats);
 // Debug the Diff
-console.log(oldStats, newStats);
-console.log(calc.diff(oldStats, newStats));
+// console.log(oldStats, newStats);
+// console.log(calc.diff(oldStats, newStats));
 $(".compare-diff").empty();
 // if(!hideHelpers) {
 	var h4 = $("<h4>Comparision Results</h4>").css({margin: 0}),
