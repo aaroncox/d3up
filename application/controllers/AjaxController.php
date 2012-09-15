@@ -33,36 +33,38 @@ class AjaxController extends D3Up_Controller_Action
 				);
 			}			
 		}
-		$parts = explode(",", $params['meta']);
-		$range = explode("-", $parts[0]);
-		if(count($range) > 1) {
-			if(in_array($item->type, array('axe','ceremonial-knife','hand-crossbow','dagger','fist-weapon','mace','mighty-weapon','spear','sword','wand','2h-mace','2h-axe','bow','daibo','crossbow','2h-mighty','polearm','staff','2h-sword'))) {
-				$item->stats += array(
-					'damage' => array(
-					  'min' => (int) $range[0],
-					  'max' => (int) $range[1],
-					)
-				);
-			} elseif(in_array($item->type, array('shield'))) {
-				$item->stats += array(
-					'block-amount' => array(
-					  'min' => (int) $range[0],
-					  'max' => (int) $range[1],
-					)
-				);
-			}					  
+		if(isset($params['meta'])) {
+		 	$parts = explode(",", $params['meta']);
+  		$range = explode("-", $parts[0]);
+  		if(count($range) > 1) {
+  			if(in_array($item->type, array('axe','ceremonial-knife','hand-crossbow','dagger','fist-weapon','mace','mighty-weapon','spear','sword','wand','2h-mace','2h-axe','bow','daibo','crossbow','2h-mighty','polearm','staff','2h-sword'))) {
+  				$item->stats += array(
+  					'damage' => array(
+  					  'min' => (int) $range[0],
+  					  'max' => (int) $range[1],
+  					)
+  				);
+  			} elseif(in_array($item->type, array('shield'))) {
+  				$item->stats += array(
+  					'block-amount' => array(
+  					  'min' => (int) $range[0],
+  					  'max' => (int) $range[1],
+  					)
+  				);
+  			}					  
+  		}
+      if(isset($parts[1])) {
+        if(in_array($item->type, array('axe','ceremonial-knife','hand-crossbow','dagger','fist-weapon','mace','mighty-weapon','spear','sword','wand','2h-mace','2h-axe','bow','daibo','crossbow','2h-mighty','polearm','staff','2h-sword'))) {
+  				$item->stats += array(
+  					'speed' => $parts[1],
+  				);
+  			} elseif(in_array($item->type, array('shield'))) {
+  				$item->stats += array(
+  					'block-chance' => $parts[1],
+  				);
+  			}
+      } 
 		}
-    if(isset($parts[1])) {
-      if(in_array($item->type, array('axe','ceremonial-knife','hand-crossbow','dagger','fist-weapon','mace','mighty-weapon','spear','sword','wand','2h-mace','2h-axe','bow','daibo','crossbow','2h-mighty','polearm','staff','2h-sword'))) {
-				$item->stats += array(
-					'speed' => $parts[1],
-				);
-			} elseif(in_array($item->type, array('shield'))) {
-				$item->stats += array(
-					'block-chance' => $parts[1],
-				);
-			}
-    }
 		foreach(explode(", ", $params['stats']) as $v) {
 			$parts = explode(" ", $v);
 			$name = array_search($parts[1], $this->_statMap);
@@ -163,7 +165,7 @@ class AjaxController extends D3Up_Controller_Action
 	
 	protected $_qualityMap = array(
 		null => '',
-	 	1 => 'Inferior',
+	 	1 => 'Unknown',
 	 	2 => 'Normal',
 	 	3 => 'Superior',
 	 	4 => 'Magic',

@@ -75,3 +75,24 @@ a:hover .ui-button-text {
 	color: #70B1D5;
 	text-decoration: none;
 }
+.quality-1 {
+	color: #FFFFFF !important;		
+}
+.quality-2 {
+	color: #FFFFFF !important;
+}
+.quality-3 {
+	color: #FFFFFF !important;
+}
+.quality-4 {
+  color: #7979D4 !important;				
+}
+.quality-5 {
+  color: #F8CC35 !important;		
+}
+.quality-6 {
+  color: #BF642F !important;	
+}
+.quality-7 {
+  color: #8BD442 !important;		
+}
