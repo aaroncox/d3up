@@ -1676,6 +1676,7 @@ BuildCalculator.prototype = {
 					'plus-block': '+Block', 
 					'dps': 'DPS', 
 					'ehp': 'EHP', 
+					'life': 'HP',
 					'intelligence': 'Int', 
 					'vitality': 'Vit', 
 					'dexterity': 'Dex', 
