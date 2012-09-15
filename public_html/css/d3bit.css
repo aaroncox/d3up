@@ -1,4 +1,77 @@
+html, body { overflow: hidden; height: 100% }
+body { margin:0; padding:0; }
 body {
+  font-size: 12px;
+  font-family: sans-serif;
+  color: #ececec;
+  background-color: #222;
+  margin: 0;
+  padding: 0;
+}
+.d3bit-card {
+  width: 358px;
+  height: 430px;
+  border: 1px solid #333;
+}
+.d3bit-card > h3 {
+  font-size: 16px;
+  font-weight: normal;
+  margin: 8px;
+} 
+.d3bit-card > p {
+  font-size: 12px;
+  font-weight: normal;
+  margin: 8px;
+}
+.d3bit-card .compare-diff h4 {
+  clear: both;
+  font-size: 14px;
+  font-weight: normal;
+  color: #B18135;
+  margin: 0;
+} 
+.d3bit-card .logo {
+  float: left;
+}
+.d3bit-card .logo img {
+  margin-right: 20px;
+  height: 90px;
+}
+.d3bit-card .filter {
+  
+}
+.d3bit-card table {
   background: #111;
-  color: #fff;
+  border: 1px solid #333;
+  margin: 5px;
+  width: 340px;
+}
+.d3bit-card table th {
+  padding: 5px;
+}
+.d3bit-card table td {
+  text-align: center;
+}
+.d3bit-card table td:first-child {
+  width: 80px;
+  text-align: right;
+}
+.pos {
+	color: #0F0;
+}
+.neg {
+	color: #F00;
+}
+
+a, 
+a:visited, 
+a:hover, 
+a:active, 
+a .ui-button-text, 
+a:visited .ui-button-text, 
+a:hover .ui-button-text, 
+a:active .ui-button-text, 
+a:hover .ui-button-text {
+	color: #70B1D5;
+	text-decoration: none;
 }

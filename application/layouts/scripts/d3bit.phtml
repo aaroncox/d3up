@@ -11,25 +11,12 @@
 			->appendFile("/js/skills.js")
 			->appendFile("/js/unmin/calcv2.js")
 	?>
-	<style type="text/css" media="screen">
-	  html, body { overflow: hidden; height: 100% }
-    body { margin:0; padding:0; }
-	  body {
-	    margin: 0;
-	    padding: 0;
-	  }
-	 .d3bit-card {
-	   width: 360px;
-	   height: 432px;
-	   border: 1px solid #fff;
-	 }
-	 .d3bit-card .filter {
-	   
-	 }
-	</style>
 </head>
 <body>
   <div class="d3bit-card">
+    <div class="logo"><img src="/images/logo.png"></div>
+    <h3>D3Up.com Item Comparision</h3>
+    <p>Using Build: <a href="#" onclick="window.external.OpenLink('http://beta.d3up.com/b/<?= $this->build->id ?>')"><?= $this->build->name ?></a></p>
     <div class="filter">
       Compare Against: 
       <select class="compare-slot">
@@ -97,24 +84,17 @@ function calcDiff() {
   // console.log(calc.diff(oldStats, newStats));
   $(".compare-diff").empty();
   // if(!hideHelpers) {
-   var h4 = $("<h4>Comparision Results</h4>").css({margin: 0}),
-       oldLabel = $("<p/>").append("Old Item: ", calc.getD3BitItemLink(oldItem)),
-       newLabel = $("<p/>").append("New Item: ", calc.getD3BitItemLink(newItem));
+   var h4 = $("<tr><th colspan='4'><h4>Results</h4></th></tr>"),
+       oldItemDisplay = $("<th colspan='2'>").append("Old: ", calc.getD3BitItemLink(oldItem)),
+       newItemDisplay = $("<th colspan='2'>").append("New: ", calc.getD3BitItemLink(newItem));
     // if(oldItemOH) {
     //  oldLabel.append(" + Offhand: ", calc.getItemLink(oldItemOH));
     // }      
   // }
-  $(".compare-diff").append(h4, oldLabel, newLabel);
-  // Do we need to add any notices?
-  $("#compare-notes").html("");
-  // if(notices.length > 0) {
-  //  $.each(notices, function(k,v) {
-  //    $("#compare-notes").append(v);
-  //  });
-  // }
-  var table = $("<table/>");
-     header = $("<tr/>").append("<th>Stat</th><th>Diff</th><th>Old</th><th>New</th>");
-  table.append(header);
+  var table = $("<table/>"),
+      itemLinks = $("<tr/>").append(oldItemDisplay, newItemDisplay),
+      header = $("<tr/>").append("<th>Stat</th><th>Diff</th><th>Old</th><th>New</th>");
+  table.append(h4, itemLinks, header);
   $.each(diff, function(k,v) {
    var data = v.split("|"),
        diffVal = data[1],
