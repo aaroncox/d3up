@@ -32,7 +32,23 @@ class D3Up_Mongo_Record_Item extends Epic_Mongo_Document_Record
 		'offhand' => array('axe', 'dagger', 'hand-crossbow', 'fist-weapon', 'mace', 'mighty-weapon', 'spear', 'sword', 'mojo', 'source', 'quiver', 'shield'),
 	);
 	
-	public function getSlotByType($type) {
+	public function getPossibleSlots($type = null) {
+	  if($type == null) {
+	    $type = $this->type;
+	  }
+		$slots = array();
+		foreach(static::$slotTypeMap as $k => $v) {
+			if(in_array($type, $v)) {
+				$slots[] = $k;
+			}
+		}
+		return $slots;	  
+	}
+	
+	public function getSlotByType($type = null) {
+	  if($type == null) {
+	    $type = $this->type;
+	  }
 		$slots = array();
 		foreach(static::$slotTypeMap as $k => $v) {
 			if(in_array($type, $v)) {

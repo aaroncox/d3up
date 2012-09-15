@@ -36,6 +36,7 @@ class AjaxController extends D3Up_Controller_Action
 				$item->attrs->$name = (float) $parts[0];				
 			}
 		}
+		$this->view->slots = $item->getPossibleSlots();
     $this->_helper->layout->setLayout('d3bit');
   }
   public function buildsAction() {

@@ -164,8 +164,15 @@ BuildCalculator.prototype = {
 			return '';
 		}
 		var link = $("<a href='/i/" + item.id + "' class='quality-" + item.quality + "'/>").attr("data-json", JSON.stringify(item)).html(item.name);
-    // link.bindTooltip();
+    link.bindTooltip();
 		return link;
+	},
+	getD3BitItemLink: function(item) {
+	  if(item == null) {
+			return '';
+		}
+		var link = $("<a class='quality-" + item.quality + "'/>").attr("data-json", JSON.stringify(item)).html(item.name).attr("onclick", "window.external.OpenLink('http://beta.d3up.com/i/" + item.id + "')");
+		return link;	  
 	},
 	applyEnabledSkill: function(e, i) {
 		switch(i) {
