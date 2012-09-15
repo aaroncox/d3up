@@ -85,16 +85,15 @@ function calcDiff() {
   $(".compare-diff").empty();
   // if(!hideHelpers) {
    var h4 = $("<tr><th colspan='4'><h4>Results</h4></th></tr>"),
-       oldItemDisplay = $("<th colspan='2'>").append("Old: ", calc.getD3BitItemLink(oldItem)),
-       newItemDisplay = $("<th colspan='2'>").append("New: ", calc.getD3BitItemLink(newItem));
+       oldItemDisplay = $("<th colspan='4'>").append("Wearing: ", calc.getD3BitItemLink(oldItem)),
+       newItemDisplay = $("<th colspan='4'>").append("Scanned: ", calc.getD3BitItemLink(newItem));
     // if(oldItemOH) {
     //  oldLabel.append(" + Offhand: ", calc.getItemLink(oldItemOH));
     // }      
   // }
   var table = $("<table/>"),
-      itemLinks = $("<tr/>").append(oldItemDisplay, newItemDisplay),
       header = $("<tr/>").append("<th>Stat</th><th>Diff</th><th>Old</th><th>New</th>");
-  table.append(h4, itemLinks, header);
+  table.append(h4, $("<tr/>").append(oldItemDisplay), $("<tr/>").append(newItemDisplay), header);
   $.each(diff, function(k,v) {
    var data = v.split("|"),
        diffVal = data[1],
