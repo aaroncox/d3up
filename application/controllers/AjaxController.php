@@ -17,18 +17,52 @@ class AjaxController extends D3Up_Controller_Action
 		$item->_d3bit = true;
 		$item->name = $params['name'];
 		$item->quality = array_search($params['quality'], $this->_qualityMap);
+		if(!isset($params['type']) || $params['type'] == "Unknown") {
+		  throw new Exception("The type of item must be defined before a compare can occur.");
+		}
+		$item->stats = array();
 		$item->type = $this->_typeMap[$params['type']];
 		if(isset($params['dps'])) {
 			if(in_array($item->type, array('axe','ceremonial-knife','hand-crossbow','dagger','fist-weapon','mace','mighty-weapon','spear','sword','wand','2h-mace','2h-axe','bow','daibo','crossbow','2h-mighty','polearm','staff','2h-sword'))) {
-				$item->stats = array(
+				$item->stats += array(
 					'dps' => (int) $params['dps'],
 				);
 			} else {
-				$item->stats = array(
+				$item->stats += array(
 					'armor' => (int) $params['dps'],
 				);
 			}			
 		}
+		$parts = explode(",", $params['meta']);
+		$range = explode("-", $parts[0]);
+		if(count($range) > 1) {
+			if(in_array($item->type, array('axe','ceremonial-knife','hand-crossbow','dagger','fist-weapon','mace','mighty-weapon','spear','sword','wand','2h-mace','2h-axe','bow','daibo','crossbow','2h-mighty','polearm','staff','2h-sword'))) {
+				$item->stats += array(
+					'damage' => array(
+					  'min' => (int) $range[0],
+					  'max' => (int) $range[1],
+					)
+				);
+			} elseif(in_array($item->type, array('shield'))) {
+				$item->stats += array(
+					'block-amount' => array(
+					  'min' => (int) $range[0],
+					  'max' => (int) $range[1],
+					)
+				);
+			}					  
+		}
+    if(isset($parts[1])) {
+      if(in_array($item->type, array('axe','ceremonial-knife','hand-crossbow','dagger','fist-weapon','mace','mighty-weapon','spear','sword','wand','2h-mace','2h-axe','bow','daibo','crossbow','2h-mighty','polearm','staff','2h-sword'))) {
+				$item->stats += array(
+					'speed' => $parts[1],
+				);
+			} elseif(in_array($item->type, array('shield'))) {
+				$item->stats += array(
+					'block-chance' => $parts[1],
+				);
+			}
+    }
 		foreach(explode(", ", $params['stats']) as $v) {
 			$parts = explode(" ", $v);
 			$name = array_search($parts[1], $this->_statMap);
