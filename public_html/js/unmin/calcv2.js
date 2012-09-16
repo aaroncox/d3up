@@ -19,6 +19,7 @@ BuildCalculator.prototype = {
 	gearSelector: null,			// Where is the gear on the page?
 	passiveSkills: [],			// What passives do we use?
 	activeSkills: [],				// What actives do we use?
+	companionSkills: [],    // What companion skills are active?
 	enabledSkills: [],			// What actives/passives are conditional and enabled?
 	// Options
 	vsLevel: 60,
@@ -132,6 +133,9 @@ BuildCalculator.prototype = {
 	setPassives: function(passives) {
 		this.passiveSkills = passives;
 	},
+	setCompanionSkills: function(skills) {
+	  this.companionSkills = skills;
+	},
 	addBonus: function(effect, value) {
 		if(this.bonuses[effect]) {
 			this.bonuses[effect] += value;								
@@ -214,6 +218,7 @@ BuildCalculator.prototype = {
 	applyEnabledSkills: function() {
 		// console.log(this.activeSkills);
 		_.each(this.enabledSkills, function(v,k) {
+		  console.log(v,k);
 			_.each(v.effect, function(e,i) {
 				switch(i) {
 				  case "stackable":

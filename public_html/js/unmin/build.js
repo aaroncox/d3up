@@ -66,6 +66,7 @@ $(function() {
 			passiveDisplay = $("#passive-display"),	
 			activeActivesData = {},		
 			activePassivesData = {},
+			activeCompanionData = {},
 			calc = new d3up.BuildCalculator,
 			activeActiveSkills = {},
 			activePassiveSkills = {},
@@ -117,6 +118,13 @@ $(function() {
 			displaySkills();
 		});
 	});
+	$.each(['scoundrel', 'enchantress', 'templar'], function(k, v) {
+	  $.each(activeSkills[v], function(slug, data) {
+			if(activeSkills[v]) {
+				activeCompanionData[slug] = activeSkills[v][slug];	
+			}
+		});
+	});	
 	$.each(passiveSelects, function(k, v) {
 		var select = $("<select data-index='"+(v - 1)+"' data-placeholder='Select a Skill...' name='passiveSelect"+v+"'>"),
 				label = $("<span class='skill-label'>").html("Passive #" + v);
@@ -317,6 +325,7 @@ $(function() {
 	function recalc() {
 		activeActiveSkills = {};
 		activePassiveSkills = {};
+		activeCompanionSkills = {};
 		enabledSkills = {};
 		enabledPassiveSkills = {};
 		calc.init();
@@ -344,9 +353,17 @@ $(function() {
 			}
 			// console.log(activePassiveSkills, $(this).data('skill'), activePassivesData);
 		});
+		$('.companion-activate').each(function() {
+			// console.log($(this).data('skill'));
+			activeCompanionSkills[$(this).data('skill')] = activeCompanionData[$(this).data('skill')];
+			if($(this).is(":checked")) {
+				enabledSkills[$(this).data('skill')] = activeCompanionData[$(this).data('skill')];
+			}
+		});
 		calc.setActives(activeActiveSkills);
 		calc.setEnabledSkills(enabledSkills);
 		calc.setPassives(activePassiveSkills);
+		calc.setCompanionSkills(activeCompanionSkills);
 		calc.setParagonLevel($("#paragon-level").text());
 		calc.setClass($("#character").data('class'));
 			$(".equipped a").each(function() {
@@ -446,7 +463,7 @@ $(function() {
 				h3.attr('data-name', v.replace(/\-/g," ").capitalize());
 				// if(data.effect) {
 					// console.log("effect ", data.effect);
-					var checkbox = $("<input type='checkbox' class='passive-activate' data-skill='" + skill + "'>");
+					var checkbox = $("<input type='checkbox' class='passives-activate' data-skill='" + skill + "'>");
 					checkbox.click(function() {
 						li.toggleClass("skill-activated");
 						recalc();
@@ -463,7 +480,46 @@ $(function() {
 				target.append(li);
 			}
 		});
-		recalc();
+		target = $("#companion-buffs").empty();
+		var companions = ['scoundrel', 'enchantress', 'templar'];
+		_.each(companions, function(c) {
+		  _.each(activeSkills[c], function(k, v) {
+		    var skill = v;
+  			if(skill != "undefined" && skill != "") {
+  				var data = activeSkills[c][skill];
+  				if(!data || !data.effect) {
+  					return;
+  				}
+  				var	li = $("<li class='skill-calc-row'>").attr("data-id", skill).attr("id", "skill-" + skill),
+  						cleaned = skill.split("~"),
+  						icon = $("<img src='/images/icons/" + c + "-" + cleaned[0] + ".png'>"),
+  						h3 = $("<h3>").html(c.capitalize() + " - " + v.replace(/\-/g, " ").capitalize()),
+  						details = $("<ul class='details'>"),
+  						desc = $("<p>").append(data.desc),
+  						control = $("<div class='control'></div>");
+  				h3.attr('data-tooltip', data.desc);
+  				h3.attr('data-name', v.replace(/\-/g," ").capitalize());
+  				// if(data.effect) {
+  					// console.log("effect ", data.effect);
+  					var checkbox = $("<input type='checkbox' class='companion-activate' data-skill='" + skill + "'>");
+  					checkbox.click(function() {
+  						li.toggleClass("skill-activated");
+              recalc();
+  					});
+            // var select = $("<select class='skill-stacks' data-skill='" + skill + "'>").hide();
+            // select.bind('change', function() {
+            //  checkbox.attr("data-stacks", $(this).val());
+            //  recalc();
+            // });
+  					control.append("Activate ", checkbox); //, "<br/>" select).hide();					
+  				// }
+          // passiveDisplay.append($("<li/>").html(icon.clone()));
+  				li.append(control, h3, details, desc);
+  				target.append(li);
+  			}
+		  });
+		});
+    // recalc();
 		// console.log(activeSelect.val());
 	}
 	if(isOwner) {

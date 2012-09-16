@@ -176,7 +176,7 @@ var activeActives = [];
           tabs = $("#tabs-render"),
           atabs = $("#tabs-render > div");
       atabs.hide();
-      tabs.children(":first").show();
+      tabs.children("#buffs").show();
       controls.bind('click',function(){
         atabs.hide();
         controls.removeClass('current');

@@ -6781,23 +6781,23 @@ var activeSkills = {
 		'charm': {
 			name: 'Charm',
 			desc: 'Charms an enemy to fight for you for 4 seconds.',
-			effect: {
-				'cooldown': 25,
-			},
+      // effect: {
+        // 'cooldown': 25,
+      // },
 		},
 		'forceful-push': {
 			name: 'Forceful Push',
 			desc: 'Summon an Arcane explosion 8 yards around an enemy, dealing 100% weapon damage as Arcane and knocking back all monsters caught within it.',
-			effect: {
-				'cooldown': 10,
-			},
+      // effect: {
+        // 'cooldown': 10,
+      // },
 		},
 		'reflect-missiles': {
 			name: 'Reflect Missiles',
 			desc: 'Place a shield on the Enchantress and her allies that reflects incoming projectiles for 5 seconds.',
-			effect: {
-				'cooldown': 20,
-			},
+      // effect: {
+        // 'cooldown': 20,
+      // },
 		},
 		'powered-armor': {
 			name: 'Powered Armor',
@@ -6809,17 +6809,17 @@ var activeSkills = {
 		'disorient': {
 			name: 'Disorient',
 			desc: 'Cast a flash of Confusion on a group of enemies in an area, causing them to stumble around disoriented for 2 seconds.',
-			effect: {
-				'cooldown': 45,
-			},
+      // effect: {
+        // 'cooldown': 45,
+      // },
 		},
 		'erosion': {
 			name: 'Erosion',
 			desc: 'Conjures a pool of energy that deals 50% weapon damage as Arcane  per second. Affected enemies take an extra 15% damage from all attacks for 3 seconds.',
-			effect: {
-				'cooldown': 15,
-				'weapon-damage': 50,
-			},
+      // effect: {
+        // 'cooldown': 15,
+        // 'weapon-damage': 50,
+      // },
 		},
 		'focused-mind': {
 			name: 'Focused Mind',
@@ -6831,25 +6831,25 @@ var activeSkills = {
 		'mass-control': {
 			name: 'Mass Control',
 			desc: 'The Enchantress lobs a bulb of magical energy at the player that will hex all enemies within 8 yards into chickens for 5 seconds. Hexed enemies are unable to perform offensive actions.',
-			effect: {
-				'cooldown': 60,
-			},
+      // effect: {
+        // 'cooldown': 60,
+      // },
 		},
 	},
 	'templar': {
 		'heal': {
 			name: 'Heal',
 			desc: 'Heals you or the Templar for 4651.46 Life.',
-			effect: {
-				'cooldown': 30,
-			},
+      // effect: {
+        // 'cooldown': 30,
+      // },
 		},
 		'intervene': {
 			name: 'Intervene',
 			desc: 'Taunts enemies attacking the hero for 3 seconds when the hero is below 50% Life.',
-			effect: {
-				'cooldown': 60,
-			},
+      // effect: {
+        // 'cooldown': 60,
+      // },
 		},
 		'loyalty': {
 			name: 'Loyalty',
@@ -6862,17 +6862,17 @@ var activeSkills = {
 		'charge': {
 			name: 'Charge',
 			desc: 'Charges a target, dealing 50% weapon damage and stunning all enemies within 8 yards for 2 seconds.',
-			effect: {
-				'cooldown': 30,
-			},
+      // effect: {
+        // 'cooldown': 30,
+      // },
 		},
 		'onslaught': {
 			name: 'Onslaught',
 			desc: 'Delivers a massive blow to an enemy for 200% weapon damage.',
-			effect: {
-				'cooldown': 15,
-				'weapon-damage': 200,
-			},
+      // effect: {
+        // 'cooldown': 15,
+        // 'weapon-damage': 200,
+      // },
 		},
 		'inspire': {
 			name: 'Inspire',
@@ -6881,48 +6881,48 @@ var activeSkills = {
 		'guardian': {
 			name: 'Guardian',
 			desc: 'Rush to the aid of wounded ally, knocking back enemies within 15 yards and healing the wounded ally for 4651.46 Life.',
-			effect: {
-				'cooldown': 30,
-			},
+      // effect: {
+        // 'cooldown': 30,
+      // },
 		},
 	},
 	'scoundrel': {
 		'crippling-shot': {
 			name: 'Crippling Shot',
 			desc: 'Ranged attack that slows the target by 60% for 3 seconds.',
-			effect: {
-				'cooldown': 6,
-			},
+      // effect: {
+        // 'cooldown': 6,
+      // },
 		},
 		'poison-bolts': {
 			name: 'Poison Bolts',
 			desc: 'Ranged attack which deals 40% weapon damage and an additional 40% weapon damage as Poison over 3 seconds.',
-			effect: {
-				'cooldown': 6,
-				'weapon-damage-for': 3,
-			},
+      // effect: {
+        // 'cooldown': 6,
+        // 'weapon-damage-for': 3,
+      // },
 		},
 		'dirty-fighting': {
 			name: 'Dirty Fighting',
 			desc: 'Blinds enemies in front of the Scoundrel for 3 seconds.',
-			effect: {
-				'cooldown': 30,
-			},
+      // effect: {
+        // 'cooldown': 30,
+      // },
 		},
 		'vanish': {
 			name: 'Vanish',
 			desc: 'The Scoundrel vanishes in a cloud of smoke when injured, reappearing after 5 seconds. While vanished, he will heal himself for 15504.85 Life.',
-			effect: {
-				'cooldown': 30,
-			},
+      // effect: {
+        // 'cooldown': 30,
+      // },
 		},
 		'powered-shot': {
 			name: 'Powered Shot',
 			desc: 'Powerful ranged attack that explodes on impact, dealing 25% weapon damage as Arcane to targets within 6 yards and has a 50% chance to Stun targets for 2 seconds.',
-			effect: {
-				'cooldown': 20,
-				'chance-stun': 50,
-			},
+      // effect: {
+        // 'cooldown': 20,
+        // 'chance-stun': 50,
+      // },
 		},
 		'multishot': {
 			name: 'Multishot',
@@ -6931,6 +6931,9 @@ var activeSkills = {
 		'hysteria': {
 			name: 'Hysteria',
 			desc: 'Whenever you or the Scoundrel land a Critical Hit, you both will go into hysterics, increasing all damage done by 10% for 3 seconds. This effect cannot occur more than once every 6 seconds.',
+			'effect': {
+        'plus-damage-conditional': 10
+			}
 		},
 		'anatomy': {
 			name: 'Anatomy',
