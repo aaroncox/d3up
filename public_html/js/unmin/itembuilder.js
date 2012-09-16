@@ -539,12 +539,12 @@ var itemBuilder = {
 		// Update the Attributes if nessicary
 		_.each(this.item.attrs, function(v, k) {
 			if(!this.preview.attrs.find("#input-" + k).length) {
-        console.log(builder.skillText);
+        // console.log(builder.skillText);
 				var container = $("<span>"),
 						input = "<input type='text' value='" + v + "' name='" + k + "' tabindex='100'>", 
 						hidden = "<input type='hidden' value='true' name='" + k + "' tabindex='100'>",
 						helper = builder.skillText[k];
-						console.log(builder.skillText[k], k);
+						// console.log(builder.skillText[k], k);
 				if(helper.search("VVV") >= 0) {
 					helper = helper.replace(/VVV/, input);										
 				} else {
