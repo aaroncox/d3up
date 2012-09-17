@@ -38,8 +38,9 @@ $(function() {
       d2 = $("<td class='range'>").html(parts[1]);
   		tr.append(label, d1, dv, d2, controls);		  
 		} else {
-		  data = $("<td colspan='3'>").html(v);
-  		tr.append(label, data, controls);		  
+		  data = $("<td>").html(v);
+		  var placeholder = $("<td colspan='2'>");
+  		tr.append(label, data, placeholder, controls);		  
 		}
 		if(math) {
 			if(math <= 1) {

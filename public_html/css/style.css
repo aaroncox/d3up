@@ -1107,11 +1107,11 @@ tr.skill-calc-row > td {
   font-weight: normal;
 }
 .skill-calc-row .details td {
-/*  text-align: center;*/
+  text-align: right;
   padding: 0 5px;
 }
 .skill-calc-row .details td.range {
-  width: 75px;
+  width: 1%;
 }
 .skill-calc-row .details td.range-div {
   width: 10px;
