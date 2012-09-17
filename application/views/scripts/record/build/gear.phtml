@@ -58,19 +58,27 @@
             <? if($total): ?>
               <table class="d3up-table perfection-table">
               <? foreach($this->record->equipment[$slot]->attrs as $attr => $val):?> 
-                <tr>
                 <? if(is_object($val)): ?>
                   <? $val = implode("-", $val->export()) ?>
                 <? endif ?>
                 <? if($this->shortStat($val, $attr)): ?>
+                <tr>
                   <td><?= $this->shortStat(null, $attr) ?></td>
                   <td><?= $val ?></td>
                   <td>
                     <?= $max->calcStat($attr, $val, $this->record->equipment[$slot]->type) ?>
                   </td>
+                </tr>
+                <?
+                  $rating = $max->calcStat($attr, $val, $this->record->equipment[$slot]->type, true);
+                ?>
+                <tr>
+                  <td colspan='3'>
+                    <div style='width: <?= $rating['rating'] ?>%; height: 3px; background: #f00'></div>
+                  </td>
+                </tr>
                 <? endif ?>
                 <? $count++ ?>
-                </tr>
               <? endforeach ?>
               </table>
             <? endif ?>
