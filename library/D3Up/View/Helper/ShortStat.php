@@ -214,6 +214,9 @@ class D3Up_View_Helper_ShortStat extends Zend_View_Helper_Abstract
   
   public function shortStat($val, $name) {
     if(isset($this->map[$name])) {
+      if($val == null) {
+        return $this->map[$name];
+      }
       return $val . ' ' . $this->map[$name];      
     }
     return null;

@@ -19,10 +19,13 @@ var activeActives = <?= json_encode($this->record->actives->export()); ?>;
 var activeActives = [];
 <? endif; ?>
 </script>
-<div id="build" class="content-page">
+<div id="build">
   <?= $this->render("./record/build/header.phtml") ?>
 	<div id="character" class="ui-helper-clearfix" data-class="<?= $this->record->class ?>" <? if($myBuild) { echo "data-owner='true'"; } ?>>
 	  <style type="text/css" media="screen">
+	   #character {
+	     border-top: 1px solid #333;
+	   }
 	   ul#tabs {
 	     float: left;
 	     width: 150px;
@@ -31,7 +34,7 @@ var activeActives = [];
 	     list-style: none;
 	     background: #111;
 	     border: 1px solid #333;
-	     border-right: 0;
+	     border-top: 0;
 	   }
 	   ul#tabs li {
 	     margin: 1px;
@@ -47,24 +50,32 @@ var activeActives = [];
 	   }
 	   div#tabs-render {
 	     float: left;
-	     width: 485px;
-	     background: #111;
-	     border: 1px solid #333;
-	     border-left: 0;
+	     width: 494px;
+	     border: 0;
 	     padding: 0;
 	   }
+	   div#tabs-render .content-page {
+	     border: 0;
+	   }
+	   div#tabs-render.content-page .form, 
+	   div#tabs-render.content-page .page {
+	     padding: 2px;
+       margin: 10px 5px;
+	   }
+	   div#tabs-render.content-page .form {
+  	   padding: 20px 50px;	     
+	   } 
 	   div#tabs-render > div {
-	     margin: 1px;
 	   }
 	   div#tabs-render > div > h5 {
         margin: 0;
-        line-height: 1em;
-        border: 1px solid #222;
+        font-size: 1em;
+        line-height: 1.4em;
+        font-weight: bold;
         border-right: 0;
         padding: 5px 10px;
         text-transform: uppercase;
         color: #B18135;
-        font-weight: normal;
         background: rgb(17,17,17); /* Old browsers */
         background: -moz-linear-gradient(top, rgba(17,17,17,1) 0%, rgba(34,34,34,1) 100%); /* FF3.6+ */
         background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(17,17,17,1)), color-stop(100%,rgba(34,34,34,1))); /* Chrome,Safari4+ */
@@ -85,9 +96,16 @@ var activeActives = [];
 	     width: 310px;
 	     background: #111;
 	     border: 1px solid #333;	 
+	     border-top: 0;
 	     padding-bottom: 2px;    
+	     margin: 0 2px 0 0;
 	   }
 	  </style>
+	  <? if($this->resync): ?>
+	  <div class="notifications">
+      <strong>Notice</strong>: Your character has been synchronized with the Battle.net Profile specified.
+	  </div>
+	  <? endif ?>
     <ul id="tabs">
       <li class='divider'>Character</li>
       <li><a data-tab="#gear" class="button current">Gear</a></a></li>
@@ -104,7 +122,7 @@ var activeActives = [];
       <li><a data-tab="#suggestions" class="button">Suggestions</a></li>
       <li><a data-tab="#share" class="button">Share</a></li>
     </ul>
-    <div id="tabs-render">
+    <div id="tabs-render" class="content-page">
       <div id="gear"><?= $this->render("./record/build/gear.phtml") ?></div>
       <div id="skills"><?= $this->render("./record/build/skills.phtml") ?></div>
       <div id="passives"><?= $this->render("./record/build/passives.phtml") ?></div>
@@ -176,7 +194,7 @@ var activeActives = [];
           tabs = $("#tabs-render"),
           atabs = $("#tabs-render > div");
       atabs.hide();
-      tabs.children("#buffs").show();
+      tabs.children("#skills").show();
       controls.bind('click',function(){
         atabs.hide();
         controls.removeClass('current');

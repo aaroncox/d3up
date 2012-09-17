@@ -9,8 +9,8 @@ html { font-size: 100%; -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 10
 html, button, input, select, textarea { font-family: sans-serif; color: #222; }
 body { margin: 0; font-size: 1em; line-height: 1.4; }
 
-::-moz-selection { background: #fe57a1; color: #fff; text-shadow: none; }
-::selection { background: #fe57a1; color: #fff; text-shadow: none; }
+::-moz-selection { background: #B3D4FC; color: #fff; text-shadow: none; }
+::selection { background: #B3D4FC; color: #fff; text-shadow: none; }
 
 a { color: #00e; }
 a:visited { color: #551a8b; }
@@ -480,6 +480,7 @@ dd:has(:focus) .chzn-container {
 .equipment-table .contributions {
 	width: 50px;
   font-size: 14px;
+  line-height: 1.1em;
 }
 .equipment-table .stats {
   display: table-cell;
@@ -494,6 +495,8 @@ dd:has(:focus) .chzn-container {
 .equipment-table td table.perfection-table td {
   font-size: 12px;
   line-height: 12px;
+  width: auto;
+  padding: 3px;
 }
 /*.equipment-table th:first-child,
 .equipment-table td:first-child {
@@ -560,16 +563,24 @@ dd:has(:focus) .chzn-container {
 }
 .stat-ehp, 
 .stat-dps {
-	font-size: 24px;
-	font-weight: bold;
-	margin: 0 0 10px;
+/*  font-size: 24px;
+  font-weight: bold;
+  margin: 0 0 10px;
+*/
 }
+.notifications,
 .featured,
 .build-header {
 	border: 1px solid #333;
 	text-shadow: 1px 2px 2px #000;
 	margin-bottom: 5px;
 	padding-bottom: 0;
+}
+.notifications {
+  background-color: #111;
+  text-align: center;
+  color: #f00;
+  padding: 10px;
 }
 .featured {
 	font-size: 1.2em;
@@ -1018,31 +1029,34 @@ tr.compared > td:first-child {
 #tab-summary {
 	padding: 10px 0;
 }
+#companion-buffs,
 #build-passive-skills,
 #build-active-skills {
-  width: 100%;
 	margin: 0;
 	padding: 1px;
-	list-style: none;
+	width: 100%;
+	border-collapse: separate;
+  border-spacing: 2px;
 }
 .skill-calc-row {
-	border: 1px solid #222;
+/*  border: 1px solid #222;*/
 	background: #171717;
-	padding: 5px 10px;
-	clear: both;
-	min-height: 72px;
 	font-size: 14px;
-	margin: 1px;
 }
-.skill-calc-row img {
-	float: left;
+.skill-calc-row h3 img {
+  height: 30px;
+  line-height: 30px;
 	margin-right: 10px;
 }
 .skill-calc-row h3 {
-  display: inline;
-	font-size: 1.4em;
+  border: 1px solid #171717;
+	font-size: 1.2em;
 	color: #70B1D5;
 	margin: 0;
+	display: inline;
+}
+tr.skill-calc-row > td {
+  padding: 5px;
 }
 .skill-calc-row p {
 	color: #888;
@@ -1051,7 +1065,7 @@ tr.compared > td:first-child {
 .skill-calc-row p:first-child {
 	margin-bottom: 10px;
 }
-.skill-calc-row.skill-activated {
+.skill-calc-row.skill-activated td h3 {
 	border: 1px solid #70B1D5;
 }
 .skill-calc-row .control {
@@ -1075,15 +1089,43 @@ tr.compared > td:first-child {
   width: 100%;
 	padding: 0;
 	color: #fff;
-	margin: 0 0 5px 10px;
-	font-size: 1.2em;
+	font-size: 1.1em;
+	padding: 5px 10px;
+	margin: 5px 0;
+	border: 1px solid #333;
+}
+.skill-calc-row .details {
+  display: none;
+}
+.skill-calc-row .details th {
+  background: #000;
+  border: 1px solid #333;
+  padding: 5px;
+  text-align: left;
+  color: #70B1D5;
+  text-decoration: underline;
+  font-weight: normal;
 }
 .skill-calc-row .details td {
+/*  text-align: center;*/
   padding: 0 5px;
 }
+.skill-calc-row .details td.range {
+  width: 75px;
+}
+.skill-calc-row .details td.range-div {
+  width: 10px;
+}
+.skill-calc-row .details td.skill-control {
+  width: auto;
+}
+.skill-calc-row .details tr:nth-child(2n) {
+  background-color: #000;
+}
 .skill-calc-row .details td:first-child {
-  text-align: right;
-  width: 40%;
+  color: #B18135;
+  text-align: left;
+  width: 175px;
 }
 .skill-calc-row .effects {
 	margin: 0 0 5px 94px;	

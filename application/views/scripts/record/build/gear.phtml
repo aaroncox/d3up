@@ -1,97 +1,104 @@
-<h5>Character Gear</h5>
+<h5>Gear / Items</h5>
 <? if($this->myBuild): ?>
   <a class="button show-gear-change"><span class="ui-button-text">Change Gear</span></a>
 <? endif ?>
-<table class="equipment-table">
-  <thead>
-    <tr>
-      <td>&nbsp;</td>
-      <td colspan="2" style="text-align: center">
-        <select id="gear-stats">
-          <option value="contributions">EHP/DPS Contributions</option>
-          <option value="stats">Gear Stats / Perfection</option>
-          <? if($this->myBuild): ?><option value="gear-controls">Controls</option><? endif ?>
-        </select>
-      </td>
-    </tr>
-    <tr>
-      <th>Name</th>
-      <? if($this->myBuild): ?>
-      <th class="cell-header gear-controls" colspan="2">Controls</th>
-      <? endif ?>
-      <th class="cell-header contributions">DPS</th>
-      <th class="cell-header contributions">EHP</th>
-      <th class="cell-header stats">Gear Stats</th>
-      <th class="cell-header stats">Perfection</th>
-    </tr>
-  </thead>
-  <tbody>
-    <? foreach($this->record->equipment->getSlots() as $slot): ?>
-    	<tr>
-    		<td class="primary">
-    			<span class="equipped" id="equipped-<?= $slot ?>" data-slot="<?= $slot ?>">
-    				<? if($this->record->equipment[$slot]->id): ?>
-    					<?= $this->itemLink($this->record->equipment[$slot]) ?>
-    				<? else: ?>
-    					Nothing
-    				<? endif ?>
-    			</span>
-    			<br/><span class="equipped-type"><?= ucfirst($slot) ?></span>
-    		</td>
-    		<? if($this->myBuild): ?>
-        <td class="cell-data gear-controls">
-          <a id="change-<?= $slot ?>" class="button gear-change" data-item-type="<?= $slot ?>" role="button" aria-disabled="false"><span class="ui-button-text">Change</span></button>
+<div class="page">
+  <table class="equipment-table">
+    <thead>
+      <tr>
+        <td>&nbsp;</td>
+        <td colspan="2" style="text-align: center">
+          <select id="gear-stats">
+            <option value="contributions">EHP/DPS Contributions</option>
+            <option value="stats">Gear Stats / Perfection</option>
+            <? if($this->myBuild): ?><option value="gear-controls">Controls</option><? endif ?>
+          </select>
         </td>
-        <td class="cell-data gear-controls">
-          <a id="new-<?= $slot ?>" class="button" href="/item/create?b=<?= $this->record->id ?>&slot=<?= $slot ?>&return=build"><span class="ui-button-text">New Item</span></a>
-        </td>
+      </tr>
+      <tr>
+        <th>Name</th>
+        <? if($this->myBuild): ?>
+        <th class="cell-header gear-controls" colspan="2">Controls</th>
         <? endif ?>
-        <td class="cell-data contributions" id="gear-dps-<?= $slot ?>">Y</td>
-        <td class="cell-data contributions" id="gear-ehp-<?= $slot ?>">X</td>
-        <td class="cell-data stats" colspan="2">
-          <? 
-            $total = count($this->record->equipment[$slot]->attrs);
-            $count = 1;
-            $max = D3Up_Tool_MaxStat::getInstance();
-          ?>
-          <table class="d3up-table perfection-table">
-          <? foreach($this->record->equipment[$slot]->attrs as $attr => $val):?> 
-            <tr>
-            <? if(is_object($val)): ?>
-              <? $val = implode("-", $val->export()) ?>
+        <th class="cell-header contributions">DPS<br/>(% of Total)</th>
+        <th class="cell-header contributions">EHP<br/>(% of Total)</th>
+        <th class="cell-header stats">Gear Stats</th>
+        <th class="cell-header stats">Perfection</th>
+      </tr>
+    </thead>
+    <tbody>
+      <? foreach($this->record->equipment->getSlots() as $slot): ?>
+      	<tr>
+      		<td class="primary">
+      			<span class="equipped" id="equipped-<?= $slot ?>" data-slot="<?= $slot ?>">
+      				<? if($this->record->equipment[$slot]->id): ?>
+      					<?= $this->itemLink($this->record->equipment[$slot]) ?>
+      				<? else: ?>
+      					Nothing
+      				<? endif ?>
+      			</span>
+      			<br/><span class="equipped-type"><?= ucfirst($slot) ?></span>
+      		</td>
+      		<? if($this->myBuild): ?>
+          <td class="cell-data gear-controls">
+            <a id="change-<?= $slot ?>" class="button gear-change" data-item-type="<?= $slot ?>" role="button" aria-disabled="false"><span class="ui-button-text">Change</span></button>
+          </td>
+          <td class="cell-data gear-controls">
+            <a id="new-<?= $slot ?>" class="button" href="/item/create?b=<?= $this->record->id ?>&slot=<?= $slot ?>&return=build"><span class="ui-button-text">New Item</span></a>
+          </td>
+          <? endif ?>
+          <td class="cell-data contributions" id="gear-dps-<?= $slot ?>">~</td>
+          <td class="cell-data contributions" id="gear-ehp-<?= $slot ?>">~</td>
+          <td class="cell-data stats" colspan="2">
+            <? 
+              $total = count($this->record->equipment[$slot]->attrs);
+              $count = 1;
+              $max = D3Up_Tool_MaxStat::getInstance();
+            ?>
+            <? if($total): ?>
+              <table class="d3up-table perfection-table">
+              <? foreach($this->record->equipment[$slot]->attrs as $attr => $val):?> 
+                <tr>
+                <? if(is_object($val)): ?>
+                  <? $val = implode("-", $val->export()) ?>
+                <? endif ?>
+                <? if($this->shortStat($val, $attr)): ?>
+                  <td><?= $this->shortStat(null, $attr) ?></td>
+                  <td><?= $val ?></td>
+                  <td>
+                    <?= $max->calcStat($attr, $val, $this->record->equipment[$slot]->type) ?>
+                  </td>
+                <? endif ?>
+                <? $count++ ?>
+                </tr>
+              <? endforeach ?>
+              </table>
             <? endif ?>
-            <? if($this->shortStat($val, $attr)): ?>
-              <td><?= $this->shortStat($val, $attr) ?></td>
-              <td><?= $max->calcStat($attr, $val, $this->record->equipment[$slot]->type) ?></td>
-            <? endif ?>
-            <? $count++ ?>
-            </tr>
-          <? endforeach ?>
-          </table>
-        </td>
-    	</tr>
-    <? endforeach ?>
-  </tbody>
-</table>
-<script type="text/javascript" charset="utf-8">
-  $(function() {
-    var selector = $("#gear-stats"),
-        table = $(".equipment-table"),
-        cellHeader = $(".cell-header"),
-        cellData = $(".cell-data"),
-        gearChange = $(".show-gear-change");
-    gearChange.click(function() {
-      selector.find("option").removeAttr("selected");
-      selector.find("option[value=gear-controls]").attr("selected", "selected");
-      selector.trigger("change");
-    });
-    cellData.hide();
-    cellHeader.hide();
-    table.find(".contributions").show();
-    selector.bind('change', function() {
+          </td>
+      	</tr>
+      <? endforeach ?>
+    </tbody>
+  </table>
+  <script type="text/javascript" charset="utf-8">
+    $(function() {
+      var selector = $("#gear-stats"),
+          table = $(".equipment-table"),
+          cellHeader = $(".cell-header"),
+          cellData = $(".cell-data"),
+          gearChange = $(".show-gear-change");
+      gearChange.click(function() {
+        selector.find("option").removeAttr("selected");
+        selector.find("option[value=gear-controls]").attr("selected", "selected");
+        selector.trigger("change");
+      });
       cellData.hide();
       cellHeader.hide();
-      table.find("." + $(this).val()).show();
+      table.find(".contributions").show();
+      selector.bind('change', function() {
+        cellData.hide();
+        cellHeader.hide();
+        table.find("." + $(this).val()).show();
+      });
     });
-  });
-</script>
+  </script>
+</div>

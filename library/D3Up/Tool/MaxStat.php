@@ -152,7 +152,7 @@ class D3Up_Tool_MaxStat
 	 }
 	 return static::$_instance;
 	}
-	public static function calcStat($stat, $value, $type) {
+	public static function calcStat($stat, $value, $type, $asArray = false) {
     // var_dump($stat, $value, $type);
     if(!in_array($type, static::$_typeMap)) {
 			return false;
@@ -168,7 +168,14 @@ class D3Up_Tool_MaxStat
 		} else {
 			$rating = round($value / $perfect * 100, 1);					
 		}
-		return $rating."% (".$perfect." Max)";
+		if($asArray == true) {
+		  return array(
+		    'rating' => $rating,
+		    'perfect' => $perfect,
+		    'value' => $value,
+		  );
+		}
+		return $rating."% of ".$perfect;
 	}
 	public static function calc($item) {
 

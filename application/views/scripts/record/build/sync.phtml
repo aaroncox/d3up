@@ -1,1 +1,13 @@
 <h5>Sync Character with Battle.net Profile</h5>
+<div class="form">
+<? if($this->record->_characterBt && $this->record->_characterRg && $this->record->_characterId): ?>
+  <p>This build has been setup to import from the following Battle.net Character:</p>
+  <center><a href="<?= D3Up_Tool_Crawler::makeUrl($this->record->_characterRg, $this->record->_characterBt, $this->record->_characterId) ?>"><?= $this->record->_characterBt ?> - Character ID #<?= $this->record->_characterId?></a></center>
+  <a class="button" href="/b/<?= $this->record->id ?>/resync">Resync with Battle.net</a>
+  <p>You may sync your profile once every 15 minutes by clicking the button above.</p>
+  <p>If you'd like to change which character this build is sync'd with, feel free to use the button below to sync one of your other characters.</p>
+  <a class="button" href="/b/<?= $this->record->id ?>/crawl">Specify which Character to Sync</a>
+<? else: ?>
+  <p></p>
+<? endif ?>
+</div>

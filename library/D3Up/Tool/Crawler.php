@@ -31,13 +31,13 @@ class D3Up_Tool_Crawler
 
 	static public function get($url) {
 		$config = array(
-			// 'adapter' => 'Zend_Http_Client_Adapter_Proxy',
-			// 'timeout' => '15',
-			// 'useragent' => '',
-			// 'proxy_host' => '192.168.1.7',
-			// 'proxy_port' => '8888',
-			// 'proxy_user' => '',
-			// 'proxy_pass' => '',
+      'adapter' => 'Zend_Http_Client_Adapter_Proxy',
+      'timeout' => '15',
+      'useragent' => '',
+      'proxy_host' => '192.168.1.7',
+      'proxy_port' => '8888',
+      'proxy_user' => '',
+      'proxy_pass' => '',
 			'encoding'      => 'UTF-8'
 		);
 		$client = new Zend_Http_Client($url, $config);
@@ -517,6 +517,11 @@ class D3Up_Tool_Crawler
 			// Look to see if this item exists!
 			$found = Epic_Mongo::db('item')->fetchOne($query);
 			// Did we find this item already?
+			if($slot == 'mainhand') {
+			  if(isset($data['type']) && isset($data['type']['twoHanded'])) {
+          $build->equipment['offhand'] = null;
+			  }
+			}
 			if(!$found) {
 				// If we didn't, lets make it!
 				$new = Epic_Mongo::newDoc('item');
@@ -580,5 +585,9 @@ class D3Up_Tool_Crawler
 			return false;
 		}
 		return $url = self::$profileUrl[$user->region] . strtolower(str_replace("#", "-", $user->battletag)) . "/hero/" . $character;		
+	}
+	
+	public static function makeUrl($region, $battletag, $character) {
+	  return $url = self::$profileUrl[$region] . strtolower(str_replace("#", "-", $battletag)) . "/hero/" . $character;		
 	}
 } // END class D3Up_Tool_Crawler

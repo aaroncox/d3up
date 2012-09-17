@@ -1640,7 +1640,7 @@ var activeSkills = {
 		},
 		'wrath-of-the-berserker': {
 			name: 'Wrath of the Berserker',
-			desc: 'Enter a berserker rage which raises several attributes for 15 seconds.  Critical Hit Chance: 10% Attack Speed: 25% Dodge Chance: 20% Movement Speed: 20%',
+			desc: 'Enter a berserker rage which raises several attributes for 15 seconds.  <ul><li>Critical Hit Chance: 10%</li><li>Attack Speed: 25%</li><li>Dodge Chance: 20%</li><li>Movement Speed: 20%</li></ul>',
 			effect: {
 				'cost-fury': 50,
 				'cooldown': 120,
@@ -1652,7 +1652,7 @@ var activeSkills = {
 		},
 		'wrath-of-the-berserker~a': {
 			name: 'Wrath of the Berserker - Insanity',
-			desc: 'Enter a berserker rage which raises several attributes for 15 seconds.  Critical Hit Chance: 10% Attack Speed: 25% Dodge Chance: 20% Movement Speed: 20%',
+			desc: 'Enter a berserker rage which raises several attributes for 15 seconds.  <ul><li>Critical Hit Chance: 10%</li><li>Attack Speed: 25%</li><li>Dodge Chance: 20%</li><li>Movement Speed: 20%</li></ul>',
 			rune: 'While active your damage is also increased by 100%.',
 			effect: {
 				'cost-fury': 50,
@@ -1666,7 +1666,7 @@ var activeSkills = {
 		},
 		'wrath-of-the-berserker~b': {
 			name: 'Wrath of the Berserker - Arreat\'s Wail',
-			desc: 'Enter a berserker rage which raises several attributes for 15 seconds.  Critical Hit Chance: 10% Attack Speed: 25% Dodge Chance: 20% Movement Speed: 20%',
+			desc: 'Enter a berserker rage which raises several attributes for 15 seconds.  <ul><li>Critical Hit Chance: 10%</li><li>Attack Speed: 25%</li><li>Dodge Chance: 20%</li><li>Movement Speed: 20%</li></ul>',
 			rune: 'Activating Wrath of the Berserker knocks back all enemies within 12 yards and deals 430% weapon damage to them.',
 			effect: {
 				'cost-fury': 50,
@@ -1680,7 +1680,7 @@ var activeSkills = {
 		},
 		'wrath-of-the-berserker~c': {
 			name: 'Wrath of the Berserker - Striding Giant',
-			desc: 'Enter a berserker rage which raises several attributes for 15 seconds.  Critical Hit Chance: 10% Attack Speed: 25% Dodge Chance: 20% Movement Speed: 20%',
+			desc: 'Enter a berserker rage which raises several attributes for 15 seconds.  <ul><li>Critical Hit Chance: 10%</li><li>Attack Speed: 25%</li><li>Dodge Chance: 20%</li><li>Movement Speed: 20%</li></ul>',
 			rune: 'Increases bonus to Dodge Chance to 60%.',
 			effect: {
 				'cost-fury': 50,
@@ -1693,7 +1693,7 @@ var activeSkills = {
 		},
 		'wrath-of-the-berserker~d': {
 			name: 'Wrath of the Berserker - Thrive on Chaos',
-			desc: 'Enter a berserker rage which raises several attributes for 15 seconds.  Critical Hit Chance: 10% Attack Speed: 25% Dodge Chance: 20% Movement Speed: 20%',
+			desc: 'Enter a berserker rage which raises several attributes for 15 seconds.  <ul><li>Critical Hit Chance: 10%</li><li>Attack Speed: 25%</li><li>Dodge Chance: 20%</li><li>Movement Speed: 20%</li></ul>',
 			rune: 'Every 25 Fury gained while Wrath of the Berserker is active adds 1 second to the duration of the effect.',
 			effect: {
 				'cost-fury': 50,
@@ -1706,7 +1706,7 @@ var activeSkills = {
 		},
 		'wrath-of-the-berserker~e': {
 			name: 'Wrath of the Berserker - Slaughter',
-			desc: 'Enter a berserker rage which raises several attributes for 15 seconds.  Critical Hit Chance: 10% Attack Speed: 25% Dodge Chance: 20% Movement Speed: 20%',
+			desc: 'Enter a berserker rage which raises several attributes for 15 seconds.  <ul><li>Critical Hit Chance: 10%</li><li>Attack Speed: 25%</li><li>Dodge Chance: 20%</li><li>Movement Speed: 20%</li></ul>',
 			rune: 'While Wrath of the Berserker is active, Critical Hits have a chance to cause an eruption of blood dealing 155% weapon damage to enemies within 15 yards.',
 			effect: {
 				'cost-fury': 50,
@@ -6943,6 +6943,23 @@ var activeSkills = {
 			},
 		},
 	},
+	'shrine': {
+	  'protection-shrine': {
+	    name: 'Protection Shrine',
+	    desc: 'Buff when activating a Protection Shrine.',
+	    effect: {
+	      'plus-damage-reduce': 25
+	    }
+	  },
+	  'frenzy-shrine': {
+	    name: 'Frenzy Shrine',
+	    desc: 'Buff when activating a Frenzy Shrine.',
+	    effect: {
+	      'plus-attack-speed': 25,
+	      'critical-hit-damage': 25
+	    }
+	  },
+	}
 };
 var td = [];
 td['strength'] = '+VVV Strength';

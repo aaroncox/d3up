@@ -210,6 +210,7 @@ class RecordController extends D3Up_Controller_Action
 		  $this->view->editForm->setAction("/build/edit/id/" . $record->id);
 			$this->checkVote();
 			$record->viewCounter();
+			$this->view->resync = $this->getRequest()->getParam("resync");
 		}
 		if($record->_type == 'item') {
 			$this->getSimilarItems();
@@ -317,9 +318,6 @@ class RecordController extends D3Up_Controller_Action
 	}
 	public function resyncAction() {
 		$record = $this->getRecord();
-		if($record->_createdBy->id) {
-			throw new Exception("This isn't an anonymous build, someone owns this build and you cannot sync it from Battle.net.");
-		}
 		if(!$record->_characterId) {
 			throw new Exception("[ID] This build isn't attached to a Battle.net Profile");
 		}
@@ -329,16 +327,31 @@ class RecordController extends D3Up_Controller_Action
 		if(!$record->_characterBt) {
 			throw new Exception("[RG] This build isn't attached to a Battle.net Profile");
 		}
-		if(time() <= $record->_lastCrawl + 60 * 60 * 1) {
-			throw new Exception("Anonymous Profiles may only be crawled once every hour. This profile has been updated too recently to be updated again, try again later!");
+		$profile = D3Up_Auth::getInstance()->getProfile();
+		if($record->_createdBy && $profile && $profile->id == $record->_createdBy->id) {
+  		if(time() <= $record->_lastCrawl + 60 * 15) {
+  			throw new Exception("Profiles may only be crawled once every 15 minutes. This profile has been updated too recently to be updated again, try again later!");
+  		}
+  		if(!$record->_characterRg || !$record->_characterBt || !$record->_characterId) {
+    		$this->_redirect("/b/" . $record->id ."/crawl");
+  		}
+  		D3Up_Tool_Crawler::getInstance()->crawl($record, $profile, $record->_characterId);		  
+  	} elseif($record->_createdBy) {
+  	  if($record->_createdBy->id) {
+  			throw new Exception("This isn't an anonymous build, someone owns this build and you cannot sync it from Battle.net.");
+  		}
+		} else {
+  		if(time() <= $record->_lastCrawl + 60 * 60 * 1) {
+  			throw new Exception("Anonymous Profiles may only be crawled once every hour. This profile has been updated too recently to be updated again, try again later!");
+  		}
+  		$fakeProfile = Epic_Mongo::newDoc('profile');
+  		$fakeProfile->region = $record->_characterRg;
+  		$fakeProfile->battletag = $record->_characterBt;
+  		D3Up_Tool_Crawler::getInstance()->crawl($record, $fakeProfile, $record->_characterId);		  
 		}
-		$fakeProfile = Epic_Mongo::newDoc('profile');
-		$fakeProfile->region = $record->_characterRg;
-		$fakeProfile->battletag = $record->_characterBt;
-		D3Up_Tool_Crawler::getInstance()->crawl($record, $fakeProfile, $record->_characterId);
 		$record->crawlCount++;
 		$record->_lastCrawl = time();
 		$record->save();
-		$this->_redirect("/b/" . $record->id);
+		$this->_redirect("/b/" . $record->id ."?resync=true");
 	}
 } // END class RecordController extends Epic_Controller_Action

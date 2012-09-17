@@ -1,4 +1,10 @@
-var itemBuilder = {
+(function( d3up ) {
+
+function ItemBuilder() {
+	this.init();
+}
+
+ItemBuilder.prototype = {
 	// Storage for the Item data
 	item: {
 		name: null,								// Name of the Item
@@ -251,6 +257,17 @@ var itemBuilder = {
 		'leg-litany-of-the-undaunted': 'This ring sometimes summons a Skeleton when you attack.',
 		'leg-demons-flight': 'Chance to reflect projectiles when you are hit by enemies.',
 		'leg-the-murlocket': 'Call forth a creature from the depths.',
+		// Skill Descriptions
+		'generate-fury': 'Generates VVV Fury',
+		'weapon-damage': 'Deals VVV% Weapon Damage',
+		'cost-fury': 'Cost: VVV Fury',
+		'weapon-damage-for': 'Deals damage over VVV seconds',
+		'plus-crit-hit': '+VVV% Critical Hit Chance',
+		'cooldown': 'Cooldown: VVV seconds',
+		'plus-resist-all': '+VVV Resist All',
+		'plus-armor': '+VVV% Armor',
+		'plus-dodge': '+VVV% Dodge',
+		'plus-movement-speed': '+VVV% Movement Speed',
 	},
 	// Set the Name input 
 	setNameInput: function(element) {
@@ -346,17 +363,19 @@ var itemBuilder = {
 	bindItemTypeSelect: function() {
 		var selector = this.itemTypeSelect,
 				builder = this;
-		selector.bind('change', function() {
-			builder.item.type = $(this).val();
-			builder.item.typeName = $(this).selectedOption();//.text();
-			_.each(builder.itemClass, function(v,k) {
-				if(_.indexOf(v, $(this).val()) >= 0) {
-					builder.item.itemClass = k;
-					builder.initPreview();	// Not sure why... but I have to rebuild it
-					builder.updatePreview();				
-				}
-			}, this);
-		});
+		if(selector) {
+  		selector.bind('change', function() {
+  			builder.item.type = $(this).val();
+  			builder.item.typeName = $(this).selectedOption();//.text();
+  			_.each(builder.itemClass, function(v,k) {
+  				if(_.indexOf(v, $(this).val()) >= 0) {
+  					builder.item.itemClass = k;
+  					builder.initPreview();	// Not sure why... but I have to rebuild it
+  					builder.updatePreview();				
+  				}
+  			}, this);
+  		});		  
+		}
 	},
 	// Set the Attribute Selector
 	setAttributeSelect: function(element) {
@@ -366,23 +385,25 @@ var itemBuilder = {
 	bindAttributeSelect: function() {
 		var selector = this.attributeSelect,
 				builder = this;
-		selector.bind('change', function() {
-			var attributes = selector.val();
-			// Add all attributes that are chosen
-			_.each(attributes, function(v) {
-				builder.addAttribute(v);
-			}, builder);
-			// Check previous attributes to make sure they weren't deselected
-			_.each(builder.attrsSelected, function(v) {
-				if(_.indexOf(attributes, v) < 0) {
-					builder.removeAttribute(v);
-				}
-			});
-			// Set the valid attributes for the next iteration
-			builder.attrsSelected = attributes;
-			// Update the Preview Pane
-			builder.updatePreview();
-		});
+		if(selector) {
+  		selector.bind('change', function() {
+  			var attributes = selector.val();
+  			// Add all attributes that are chosen
+  			_.each(attributes, function(v) {
+  				builder.addAttribute(v);
+  			}, builder);
+  			// Check previous attributes to make sure they weren't deselected
+  			_.each(builder.attrsSelected, function(v) {
+  				if(_.indexOf(attributes, v) < 0) {
+  					builder.removeAttribute(v);
+  				}
+  			});
+  			// Set the valid attributes for the next iteration
+  			builder.attrsSelected = attributes;
+  			// Update the Preview Pane
+  			builder.updatePreview();
+  		});		  
+		}
 	},
 	// Set the Item Preview Area
 	setItemPreview: function(element) {
@@ -459,23 +480,25 @@ var itemBuilder = {
 		_.each(this.footerElements, function(element) { 
 			this.preview.footer.append(element);
 		}, this);
-		this.itemPreview.empty().append(
-			this.preview.header, 
-			this.preview.body.append(
-				this.preview.itemMeta.append(
-					this.preview.itemQuality,
-					" ", 
-					this.preview.itemType
-				),
-				this.preview.statsPrimary, 
-				this.preview.statsRange, 
-				this.preview.statsPercent, 
-				this.preview.attrs, 
-				this.preview.sockets,
-				this.preview.setBonus
-			), 
-			this.preview.footer
-		);
+		if(this.itemPreview) {
+		 	this.itemPreview.empty().append(
+  			this.preview.header, 
+  			this.preview.body.append(
+  				this.preview.itemMeta.append(
+  					this.preview.itemQuality,
+  					" ", 
+  					this.preview.itemType
+  				),
+  				this.preview.statsPrimary, 
+  				this.preview.statsRange, 
+  				this.preview.statsPercent, 
+  				this.preview.attrs, 
+  				this.preview.sockets,
+  				this.preview.setBonus
+  			), 
+  			this.preview.footer
+  		); 
+		}
 	},
 	// Update the Item Preview
 	updatePreview: function() {
@@ -760,3 +783,5 @@ var itemBuilder = {
 		};
 	}
 };
+d3up.ItemBuilder = ItemBuilder;
+})( d3up );
