@@ -62,8 +62,8 @@
                   <? $val = implode("-", $val->export()) ?>
                 <? endif ?>
                 <? if($this->shortStat($val, $attr)): ?>
-                <tr>
-                  <td><?= $this->shortStat(null, $attr) ?></td>
+                <tr class='item-rating item-rating-<?= $attr ?>'>
+                  <td class='item-rating-filter' data-attr="<?= $attr ?>"><?= $this->shortStat(null, $attr) ?></td>
                   <td><?= $val ?></td>
                   <td>
                     <?= $max->calcStat($attr, $val, $this->record->equipment[$slot]->type) ?>
@@ -73,7 +73,7 @@
                   $rating = $max->calcStat($attr, $val, $this->record->equipment[$slot]->type, true);
                 ?>
                 <? if(isset($rating['rating'])): ?>
-                <tr>
+                <tr class='item-rating item-rating-<?= $attr ?>'>
                   <td colspan='3'>
                     <div class='rating-bar' data-percent="<?= $rating['rating'] ?>" style='width: <?= $rating['rating'] ?>%; height: 3px;'></div>
                   </td>
@@ -109,7 +109,20 @@
         cellHeader.hide();
         table.find("." + $(this).val()).show();
       });
-      $(".rating-bar").each(function() { var elem = $(this); elem.css("background", $.Color( "black" ).hsla({}).transition($.Color( "red" ), (elem.data("percent") / 100))); });
+      var itemRatings = $("tr.item-rating"),
+          toggle = false;
+      $(".item-rating-filter").bind('click', function() {
+        if(toggle == false) {
+          var attr = $(this).data("attr");
+          itemRatings.hide();
+          $("tr.item-rating-" + attr).show();
+          toggle = true;          
+        } else {
+          $("tr.item-rating").show();
+          toggle = false;
+        }
+      }).css({cursor: 'pointer'});
+      $( ".rating-bar" ).each(function() { var elem = $(this), percent = elem.data("percent") / 100; if (percent>1) { elem.css("background-color", "white"); } else { elem.css("background-color", $.Color( "red" ).lightness(0.5).transition($.Color( "green" ).lightness(0.5), percent)); } });    
     });
   </script>
 </div>
