@@ -410,7 +410,7 @@ $(function() {
 				if(this.btnSaveGuide) {
 					this.btnSaveGuide.bind('click', function() {
 						$(".btnDone").trigger('click');
-						// console.log($this.data);
+						// d3up.log($this.data);
 						$.ajax({
 						  type: 'POST',
 						  data: {

@@ -211,20 +211,20 @@ BuildCalculator.prototype = {
 				this.addBonus(i, valueAdd);
 				break;
 			default:
-        // console.log("Unhandled Active: " + e + " " + i);
+        // d3up.log("Unhandled Active: " + e + " " + i);
 				break;
 		}
 	},
 	applyEnabledSkills: function() {
-    console.log(this.activeSkills);
+    d3up.log(this.activeSkills);
 		_.each(this.enabledSkills, function(v,k) {
-		  console.log(v,k);
+		  d3up.log(v,k);
 			_.each(v.effect, function(e,i) {
 				switch(i) {
 				  case "stackable":
 					  _.each(e, function(se, si) {
   				    for(i = 0; i < v.stacks; i++) {
-                // console.log(se, si);
+                // d3up.log(se, si);
   				      this.applyEnabledSkill(se, si);
   				    }
   				  }, this);
@@ -270,7 +270,7 @@ BuildCalculator.prototype = {
 				// mathDpsSpecial = Math.round(mathDps * 100) / 100;
 			}
 		};
-		// console.log(reverse);
+		// d3up.log(reverse);
 		effects[ "plus-thorns" ] =
 		effects[ "plus-armor" ] =
 		effects[ "plus-resist-all" ] =
@@ -281,7 +281,7 @@ BuildCalculator.prototype = {
 		_.each(this.passiveSkills, function(v,k) {
 			// if(passives[this.class][v] && typeof passives[this.class][v]['effect'] != "undefined") {
 			if(v.effect) {
-				// console.log(k,v);
+				// d3up.log(k,v);
 				_.each(v.effect, function(value, effect) {
 					// If reverse is true, reverse the stat gains to undo passive bonuses.
 					if(reverse == true && effect != "switch") {
@@ -293,7 +293,7 @@ BuildCalculator.prototype = {
 					switch(effect) {
 						case "flatten-resists":
 							// this.attrs['resist-all'] = highest;
-							// console.log(this.attrs['resist-all'], highest, this.attrs['resist-all'] + highest);
+							// d3up.log(this.attrs['resist-all'], highest, this.attrs['resist-all'] + highest);
 							this.bonuses['flatten-resists'] = true;
 							break;
 						case "melee-reduce":
@@ -356,14 +356,14 @@ BuildCalculator.prototype = {
 									} 
 								}, this);
 							}
-							// console.log(value.against);
+							// d3up.log(value.against);
 							if(typeof this.gear[value.against] != "undefined") {
-								// console.log(value.cases);
+								// d3up.log(value.cases);
 								_.each(value.cases, function(c, i) {
 									var match = false;
-									// console.log(c,i);
+									// d3up.log(c,i);
 									_.each(c.caseOf.split("|"), function(l, n) {
-										// console.log("now", value.against, value.lookup, this.gear[value.against][value.lookup], this.gear);
+										// d3up.log("now", value.against, value.lookup, this.gear[value.against][value.lookup], this.gear);
 										if(l == this.gear[value.against][value.lookup]) {
 											_.each(c.effect, function(eff, e) {
 												if(reverse == true) {
@@ -379,7 +379,7 @@ BuildCalculator.prototype = {
 														break;
 													case "critical-hit-damage":
 														this.attrs['critical-hit-damage'] = this.attrs['critical-hit-damage'] + (eff * 100);
-														// console.log("up chd" , this.attrs['critical-hit-damage']);
+														// d3up.log("up chd" , this.attrs['critical-hit-damage']);
 														break;
 													case "attack-speed": 
 														if(this.attrs['attack-speed-incs']) {
@@ -390,10 +390,10 @@ BuildCalculator.prototype = {
 														break;
 													case "critical-hit":
 														this.attrs['critical-hit'] = this.attrs['critical-hit'] + (eff * 100);														
-														// console.log("up ch" , this.attrs['critical-hit'], eff);
+														// d3up.log("up ch" , this.attrs['critical-hit'], eff);
 														break;
 													default:
-													 	// console.log("Unhandled Switch: " + e + " [" + eff + "]");
+													 	// d3up.log("Unhandled Switch: " + e + " [" + eff + "]");
 														break;
 												}													
 											}, this);
@@ -403,7 +403,7 @@ BuildCalculator.prototype = {
 							}
 							break;
 						default:
-							// console.log("Unhandled Effect: " + effect + "[" + value + "]");
+							// d3up.log("Unhandled Effect: " + effect + "[" + value + "]");
 							break;
 					}
 				}, this);						
@@ -611,13 +611,13 @@ BuildCalculator.prototype = {
 		var rendered = {};	// Storage for Rendered Statistics
 		// Loop through each piece of gear
 		_.each(this.gear, function(g, i) {
-			// console.log("remove passives");
+			// d3up.log("remove passives");
 			this.applyPassives(true); // Reverses Passive Gains
 			// Store the Item to for restoration
 			var item = i;
 			// Unset the Item from the stats and gear set
 			this.removeItem(i);
-			// console.log("add passives");
+			// d3up.log("add passives");
 			this.applyPassives(); // Re-apply the Passive Gains without the Item
 			// Do the EHP calculations without that item
 			var tDefenses = this.calcDefenses(),
@@ -685,7 +685,7 @@ BuildCalculator.prototype = {
 			}
 		}
 		// Remove the +% Damage Bonus if it exists
-    // console.log("MH Min/Max (w/ +% Damage): ", mhMinDamage, mhMaxDamage);
+    // d3up.log("MH Min/Max (w/ +% Damage): ", mhMinDamage, mhMaxDamage);
     // if(this.attrs.mhRealDamage && this.attrs['mainhand-plus-damage']) {
     //   mhMinDamage = this.attrs.mhRealDamage.min * (1 - (this.attrs['mainhand-plus-damage'] * 0.01)),
     //   mhMaxDamage = this.attrs.mhRealDamage.max * (1 - (this.attrs['mainhand-plus-damage'] * 0.01));
@@ -694,8 +694,8 @@ BuildCalculator.prototype = {
     //   ohMinDamage = this.attrs.ohRealDamage.min * (1 - (this.attrs['mainhand-plus-damage'] * 0.01)),
     //   ohMaxDamage = this.attrs.ohRealDamage.max * (1 - (this.attrs['mainhand-plus-damage'] * 0.01));
     // }
-    // console.log("MH Min/Max: ", mhMinDamage, mhMaxDamage);
-    //     console.log("Min/Max Damage Bonuses: " + this.attrs['min-damage'] + " - " + this.attrs['max-damage']);
+    // d3up.log("MH Min/Max: ", mhMinDamage, mhMaxDamage);
+    //     d3up.log("Min/Max Damage Bonuses: " + this.attrs['min-damage'] + " - " + this.attrs['max-damage']);
 		// Add the Bonus Damage to the values without +% Damage
     if(this.attrs['max-damage']) {
      mhMaxDamage += this.attrs['max-damage']; // / (1 - (this.attrs['mainhand-plus-damage'] * 0.01));      
@@ -709,7 +709,7 @@ BuildCalculator.prototype = {
        ohMinDamage += this.attrs['min-damage'];              
      }
     }
-    // console.log("MH Min/Max after +Min/Max: ", mhMinDamage, mhMaxDamage);
+    // d3up.log("MH Min/Max after +Min/Max: ", mhMinDamage, mhMaxDamage);
 		// Determine Bonus Damage from Elemental Damage Bonuses (without the +% Damage added)
     // if(bnElePercent > 0 && this.attrs.mhRealDamage) {
     //  if(this.isDuelWielding) {
@@ -727,27 +727,27 @@ BuildCalculator.prototype = {
     //   ohMinDamage = ohMinDamage * (1 - (this.attrs['mainhand-plus-damage'] * 0.01)),
     //   ohMaxDamage = ohMaxDamage * (1 - (this.attrs['mainhand-plus-damage'] * 0.01));
     // }
-    // console.log("MH Min/Max after +% Damage again: ", mhMinDamage, mhMaxDamage);
+    // d3up.log("MH Min/Max after +% Damage again: ", mhMinDamage, mhMaxDamage);
     // _.each(['fire-damage', 'arcane-damage', 'poison-damage', 'cold-damage', 'lightning-damage', 'holy-damage'], function(v,k) {
     //   if(_.has(this.attrs, v)) {
     //         mhMinDamage += this.attrs[v].min;
     //         mhMaxDamage += this.attrs[v].max;
     //   }
     // }, this);
-    // console.log("MH Min/Max after adding +Ele Damage: ", mhMinDamage, mhMaxDamage);
+    // d3up.log("MH Min/Max after adding +Ele Damage: ", mhMinDamage, mhMaxDamage);
 		if(this.attrs['attack-speed-incs']) {
 			atkSpeedInc = this.attrs['attack-speed-incs'] / 100;
 		}
 		// Elemental Damage Bonuses
 		_.each(['plus-fire-damage', 'plus-arcane-damage', 'plus-poison-damage', 'plus-cold-damage', 'plus-lightning-damage', 'plus-holy-damage'], function(v,k) {
 			if(_.has(this.attrs, v)) {
-				// console.log(this.attrs[v]);
+				// d3up.log(this.attrs[v]);
 				bnElePercent += this.attrs[v];
 			}
 		}, this);
-    // console.log(this.attrs.mhRealDamage.min, bnMinDamage, bnMaxDamage, bnElePercent, bnEleDamage);
+    // d3up.log(this.attrs.mhRealDamage.min, bnMinDamage, bnMaxDamage, bnElePercent, bnEleDamage);
 		// Are we duel wielding?
-    // console.log(this.attrs);		
+    // d3up.log(this.attrs);		
 		var mathS, mathC, mathR, mathA, mathM;
 		if(this.isDuelWielding) {
 		  if(this.attrs['plus-aps']) {
@@ -762,9 +762,9 @@ BuildCalculator.prototype = {
   			};
       }
 			
-			// console.log(mhMinDamage, mhMaxDamage, ohMinDamage, ohMaxDamage, bnMinDamage, bnMaxDamage);
-			// console.log(this.attrs['speed'], this.attrs['speed-oh']);
-			// console.log(rendered['dps-speed'].mh, rendered['dps-speed'].oh);
+			// d3up.log(mhMinDamage, mhMaxDamage, ohMinDamage, ohMaxDamage, bnMinDamage, bnMaxDamage);
+			// d3up.log(this.attrs['speed'], this.attrs['speed-oh']);
+			// d3up.log(rendered['dps-speed'].mh, rendered['dps-speed'].oh);
 			mathS = 1 + this.attrs[this.attrs.primary] * 0.01;
 			mathC = 1 + (this.attrs['critical-hit'] * 0.01) * (this.attrs['critical-hit-damage'] * 0.01);
 			mathR = (rendered['dps-speed'].mh + rendered['dps-speed'].oh) / 2 * (1 + atkSpeedInc + 0.15 + this.bonuses['plus-attack-speed']);
@@ -772,7 +772,7 @@ BuildCalculator.prototype = {
 			mathM = (1 + this.bonuses['plus-damage']);
 			rendered['dps'] = mathS * mathC * mathR * mathA * mathM;			
 			rendered['dps-speed-display'] = Math.round(rendered['dps-speed'].mh * (1 + 0.15 + atkSpeedInc + this.bonuses['plus-attack-speed']) * 100) / 100 + " MH<br/>" + Math.round(rendered['dps-speed'].oh * (1 + 0.15 + atkSpeedInc + this.bonuses['plus-attack-speed'])  * 100) / 100 + " OH";
-			// console.log(mathS, mathC, mathR, mathA, mathM, rendered['dps'], "dw", rendered);
+			// d3up.log(mathS, mathC, mathR, mathA, mathM, rendered['dps'], "dw", rendered);
 		} else {
 			if(this.attrs['plus-aps']) {
         rendered['dps-speed'] = Math.floor((this.attrs['speed'] + this.attrs['plus-aps']) * 1024) / 1024;
@@ -785,17 +785,17 @@ BuildCalculator.prototype = {
 			mathA = ((mhMinDamage + mhMaxDamage) / 2) + bnEleDamage;
 			mathM = (1 + this.bonuses['plus-damage']);
 			rendered['dps'] = mathS * mathC * mathR * mathA * mathM;		
-      // console.log(mhMinDamage, mhMaxDamage, bnMinDamage, bnMaxDamage);
-      // console.log(mathS, mathC, mathR, mathA, mathM, rendered['dps'], "1w");
+      // d3up.log(mhMinDamage, mhMaxDamage, bnMinDamage, bnMaxDamage);
+      // d3up.log(mathS, mathC, mathR, mathA, mathM, rendered['dps'], "1w");
 			// rendered['dps'] = (((mhMinDamage + mhMaxDamage) / 2 + bnAvgDamage) * rendered['dps-speed']) * (1 + atkSpeedInc) * (this.attrs[this.attrs.primary] / 100 + 1) * 1 * ((this.attrs['critical-hit'] / 100) * (this.attrs['critical-hit-damage']/100) + 1);
 			rendered['dps-speed-display'] = Math.round(mathR * 100) / 100;
 		}
 		// Add any bonus damage onto the damage calculation
 		// if(this.bonuses['plus-damage']) {
-			// console.log(this.bonuses['plus-damage']);
+			// d3up.log(this.bonuses['plus-damage']);
 			// return rendered['dps'] * (1 + this.bonuses['plus-damage']);
 		// }
-    // console.log(rendered);
+    // d3up.log(rendered);
 		return rendered;
 	},
 	calcSAME: function(options) {
@@ -835,7 +835,7 @@ BuildCalculator.prototype = {
 		if(this.attrs['min-damage']) {
 			bnMinDamage = this.attrs['min-damage'];				
 		}
-		// console.log(this.attrs);
+		// d3up.log(this.attrs);
 		bnAvgDamage = (bnMinDamage + bnMaxDamage) / 2;
 		// Convert mathE to a percentage
 		mathE = mathE / 100;
@@ -853,9 +853,9 @@ BuildCalculator.prototype = {
 				bnEleDamage += (this.attrs.mhRealDamage.min + bnMinDamage) * 2;
 			}
 		}
-		// console.log(this.attrs.mhRealDamage.min, bnMinDamage, bnEleDamage);
+		// d3up.log(this.attrs.mhRealDamage.min, bnMinDamage, bnEleDamage);
 		// Are we duel wielding?
-    // console.log(mhOnly);
+    // d3up.log(mhOnly);
 		if(this.isDuelWielding && !mhOnly) {
 			rendered['dps-speed'] = {
 				// mh: this.attrs['speed'],
@@ -872,7 +872,7 @@ BuildCalculator.prototype = {
 			mathC = 1 + (this.attrs['critical-hit'] * 0.01) * (this.attrs['critical-hit-damage'] * 0.01);
 			dLow = mathS * mathAl * mathM * mathE;
 			dHigh = mathS * mathAh * mathM * mathE;
-			// console.log(mathS, mathAl, mathAh, mathM, dLow, dHigh, mathE);
+			// d3up.log(mathS, mathAl, mathAh, mathM, dLow, dHigh, mathE);
 		} else {
 			rendered['dps-speed'] = Math.floor(this.attrs['speed'] * 1024) / 1024;
 			mathS = 1 + this.attrs[this.attrs.primary] * 0.01;
@@ -886,8 +886,8 @@ BuildCalculator.prototype = {
 			mhAvg = mathS * ((mathAl + mathAh) / 4) * mathM * mathE;
 		}
 		dps = Math.round(((dLow + dHigh) / 2) * mathR * mathC);
-		console.log(atkSpeedInc);
-		console.log(dLow, dHigh, dps, mathR, mathC);
+		d3up.log(atkSpeedInc);
+		d3up.log(dLow, dHigh, dps, mathR, mathC);
 		hit = Math.round(((dLow + dHigh) / 2) * mathC);
 		if(duration) {
 		  if(isStatic) {
@@ -897,7 +897,7 @@ BuildCalculator.prototype = {
         rendered['total-damage-norm'] = tNorm * 2;
         rendered['per-tick-crit'] = Math.round(tCrit / duration); 
         rendered['total-damage-crit'] = tCrit * 2; 
-        // console.log(rendered, mhAvg);
+        // d3up.log(rendered, mhAvg);
 		  } else {
   			// dps = Math.round(((dLow + dHigh) / 2 ) * mathC * 100)/100;
   			rendered['per-tick'] = Math.round(hit / duration);
@@ -919,7 +919,7 @@ BuildCalculator.prototype = {
 				rendered['dps'] = Math.round(dmgCycle * mathR * mathC);
  				rendered['3rd-hit'] = hit3;
 			}
-			console.log(dLow, dHigh);
+			d3up.log(dLow, dHigh);
 			rendered['damage'] = Math.round(dLow) + " - " + Math.round(dHigh);
 			rendered['critical-hit'] = Math.round(dLow * (1+ (this.attrs['critical-hit-damage'] * 0.01))) + " - " + Math.round(dHigh * (1 + (this.attrs['critical-hit-damage'] * 0.01)));
 			if(this.bonuses['pierce-bonus']) {
@@ -929,12 +929,12 @@ BuildCalculator.prototype = {
   		  rendered['critical-hit-3rd'] = Math.round((1 + (this.bonuses['pierce-bonus'] / 100) * 2) * dLow * (1+ (this.attrs['critical-hit-damage'] * 0.01))) + " - " + Math.round((1 + (this.bonuses['pierce-bonus'] / 100) * 2) * dHigh * (1 + (this.attrs['critical-hit-damage'] * 0.01)));
   		}
 		}
-    console.log(rendered);
+    d3up.log(rendered);
     return rendered;
 	},
 	calcSkills: function() {
 		var rendered = {};
-		console.log(this.activeSkills);
+		d3up.log(this.activeSkills);
 		_.each(this.activeSkills, function(v,k) {
 			var options = {},
 			    calcDot = false,
@@ -944,7 +944,7 @@ BuildCalculator.prototype = {
 					stackable = false,
 					calcMhOnly = false,
 					bonuses = {};
-					// console.log(k,v);
+					// d3up.log(k,v);
 			if(v && v.effect) {
 				_.each(v.effect, function(e,i) {
 					switch(i) {
@@ -999,7 +999,7 @@ BuildCalculator.prototype = {
               options.isStatic = true;
 						  break;
 						default:
-              // console.log("not supported ",e,i);
+              // d3up.log("not supported ",e,i);
 							break;
 
 					}
@@ -1035,10 +1035,10 @@ BuildCalculator.prototype = {
 			var	activate = false,
 			    stackable = false,
 					bonuses = {};
-					// console.log(k,v);
+					// d3up.log(k,v);
 			if(v && v.effect) {
 				_.each(v.effect, function(e,i) {
-					// console.log(e,i);
+					// d3up.log(e,i);
 					switch(i) {
 						case "spirit-combo-strike":
 						case "damage-reduce-conditional":
@@ -1051,7 +1051,7 @@ BuildCalculator.prototype = {
 							activate = true;
 							break;
 						default:
-							// console.log("not supported ",e,i);
+							// d3up.log("not supported ",e,i);
 							break;
 					}
 				}, this);	
@@ -1069,7 +1069,7 @@ BuildCalculator.prototype = {
 				rendered[k].stackable = stackable;
 			}
 		}, this);
-		// console.log(rendered);
+		// d3up.log(rendered);
 		return {skillData: rendered};
 	},
 	applySetBonuses: function() {
@@ -1109,7 +1109,7 @@ BuildCalculator.prototype = {
           this.attrs['intelligence'] += toAdd;
           break;
         default:
-          // console.log("Not handling: " + v + k);
+          // d3up.log("Not handling: " + v + k);
           break;
       }
     }, this);
@@ -1124,14 +1124,14 @@ BuildCalculator.prototype = {
 		// Apply Stat Bonuses
 		this.applyStatBonuses();
 		// Calculate Defensive Statistics
-    // console.log("----");
+    // d3up.log("----");
 		var defenses = this.calcDefenses(),
 		 		ehp = this.calcEffectiveHealth(defenses), 
 				gearEhp = this.calcGearEhp(defenses, ehp),
 				dps = this.calcOffense(), 
 				skills = this.calcSkills();
 		// Add all of our calculated values into the values object for returning
-    // console.log("----");
+    // d3up.log("----");
 		_.extend(this.values, defenses, ehp, gearEhp, dps, skills);		
 		// ----------------------------------
 		// Define Offensive Statistics before Passives so we can add to them
@@ -1152,7 +1152,7 @@ BuildCalculator.prototype = {
 		// 	this.attrs['critical-hit'] = 100;
 		// 	this.values['dps-sharpshooter'] = this.calculateDps();
 		// 	this.attrs['critical-hit'] = oldCrit;
-		// 	console.log(this.values['dps-sharpshooter'])
+		// 	d3up.log(this.values['dps-sharpshooter'])
 		// }
 		// Some Wackyness to calculate DPS contributions per piece
     _.each(this.gear, function(g, i) {
@@ -1212,10 +1212,10 @@ BuildCalculator.prototype = {
 	removeItem: function(slot) {
 		var json = this.gear[slot];
 		this.gear[slot] = false;
-		// console.log("Removing Item from ["+slot+"], now: " + this.gear[slot]);
+		// d3up.log("Removing Item from ["+slot+"], now: " + this.gear[slot]);
 		if(json.set) {
-			// console.log("=====", json.set);
-			// console.log("-1 for " + slot);
+			// d3up.log("=====", json.set);
+			// d3up.log("-1 for " + slot);
 			this.sets[json.set]--;
 		}
 		if(json.attrs) {
@@ -1399,16 +1399,16 @@ BuildCalculator.prototype = {
 				}
 			}, this);					
 		}
-		// console.log(this.attrs);
+		// d3up.log(this.attrs);
 	},
 	parseItem: function(json, slot) {
-    // console.log(this.gear[slot]);
+    // d3up.log(this.gear[slot]);
 		this.gear[slot] = json;
-    // console.log("Parsing item to slot ["+slot+"], now: " + this.gear[slot].name);
+    // d3up.log("Parsing item to slot ["+slot+"], now: " + this.gear[slot].name);
 		// Add to SetBonus Counter
 		if(json.set) {
-			// console.log("=====", json.set);
-			// console.log("+1 for " + slot);
+			// d3up.log("=====", json.set);
+			// d3up.log("+1 for " + slot);
 			if(!this.sets[json.set]) {
 				this.sets[json.set] = 0;
 			}
@@ -1713,10 +1713,10 @@ BuildCalculator.prototype = {
 					}
 					if(s2[key] - s1[key] != 0) {
 						diff[key] = allowed[key] + "|" + Math.round((s2[key] - s1[key]) * 100) / 100;						
-						// console.log(key + " - s2["+s2[key]+"] - s1["+s1[key]+"] = "+diff[allowed[key]]);					
+						// d3up.log(key + " - s2["+s2[key]+"] - s1["+s1[key]+"] = "+diff[allowed[key]]);					
 					}
 				} else {
-					// console.log("disallowed: "+ key);
+					// d3up.log("disallowed: "+ key);
 				}
 			}
 		});

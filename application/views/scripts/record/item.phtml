@@ -131,7 +131,7 @@
 								link = $('<a class="quality-'+item.quality+'" href="/i/'+item.id+'">'+item.name+'</a>').attr("data-json", JSON.stringify(v.item)),
 								tr = $("<tr class='item-row'/>");
 						link.bindTooltip();
-						// console.log(item);
+						// d3up.log(item);
 						tr.append($("<td/>").append(link));
 						target.append(tr);
 					});

@@ -164,7 +164,7 @@ $(function() {
 		});
 	});
 	if(isOwner) {
-	  console.log("Rawrwrwrawr");
+	  d3up.log("Rawrwrwrawr");
 		var skillSaveButton = $("<a class='button'>").html("Save Skills"),
 		    passiveSaveButton = $("<a class='button'>").html("Save Skills");
 		passiveSaveButton.click(function() {
@@ -233,7 +233,7 @@ $(function() {
 	  }
 	});
 	// Debugging
-	// console.log(stats);
+	// d3up.log(stats);
 	// if(activeSkills && activeSkills[heroClass]) {
 	// 	var idx = 0;
 	// 	$.each(activeSkills[heroClass], function(k,v) {
@@ -249,7 +249,7 @@ $(function() {
 	// });
 	// $.each(activeActives, function(key, active) {
 	// 	activeSelect.find("option[value='" + active + "']").attr("selected", "selected");
-	// 	// console.log(key, active);
+	// 	// d3up.log(key, active);
 	// 	// if(k == active) {
 	// 	// 	selected = 'selected="selected"';
 	// 	// }
@@ -309,7 +309,7 @@ $(function() {
 	// 	if(!activeActives) {
 	// 		activeActives = [];
 	// 	}
-	// 	// console.log(skills);
+	// 	// d3up.log(skills);
 	// 	if(!skills || activeActives.length != skills.length) {
 	// 		if(isOwner && skills.length <= 6) {
 	// 			setTimeout(function() {
@@ -379,9 +379,9 @@ $(function() {
 		enabledSkills = {};
 		enabledPassiveSkills = {};
 		calc.init();
-    // console.log("calc");
+    // d3up.log("calc");
 		$('.skill-activate').each(function() {
-      // console.log("rawr");
+      // d3up.log("rawr");
 			activeActiveSkills[$(this).data('skill')] = activeActivesData[$(this).data('skill')];
 			if($(this).is(":checked")) {
 				enabledSkills[$(this).data('skill')] = activeActivesData[$(this).data('skill')];
@@ -393,7 +393,7 @@ $(function() {
 			}
 		});
 		$('.passive-activate').each(function() {
-			// console.log($(this).data('skill'));
+			// d3up.log($(this).data('skill'));
 			activePassiveSkills[$(this).data('skill')] = activePassivesData[$(this).data('skill')];
 			if($(this).is(":checked")) {
 				enabledSkills[$(this).data('skill')] = activePassivesData[$(this).data('skill')];
@@ -403,10 +403,10 @@ $(function() {
           enabledSkills[$(this).data('skill')].stacks = 1;
 				}
 			}
-			// console.log(activePassiveSkills, $(this).data('skill'), activePassivesData);
+			// d3up.log(activePassiveSkills, $(this).data('skill'), activePassivesData);
 		});
 		$('.companion-activate').each(function() {
-      // console.log($(this).data('skill'));
+      // d3up.log($(this).data('skill'));
 			activeCompanionSkills[$(this).data('skill')] = activeCompanionData[$(this).data('skill')];
 			if($(this).is(":checked")) {
 				enabledSkills[$(this).data('skill')] = activeCompanionData[$(this).data('skill')];
@@ -423,7 +423,7 @@ $(function() {
 				data = $(this).data("json");						// Get the JSON for this gear
 		calc.setItem(slot, data);
 	});
-    // console.log(activePassiveSkills);
+    // d3up.log(activePassiveSkills);
 		stats = calc.run();
 		_.each(stats.skillData, function(v,k) {
 			if(v.activate) {
@@ -478,7 +478,7 @@ $(function() {
 				icon.bindSkilltip();
 				h3.bindSkilltip();
 				if(data.effect) {
-					// console.log("effect ", data.effect);
+					// d3up.log("effect ", data.effect);
 					var checkbox = $("<input type='checkbox' class='skill-activate' data-skill='" + skill + "'>");
 					checkbox.click(function() {
 						tr.toggleClass("skill-activated");
@@ -491,12 +491,12 @@ $(function() {
 					});
 					control.append("Activate ", checkbox, "<br/>", select).hide();					
 				}
-				// console.log(details);
+				// d3up.log(details);
 				activeDisplay.append($("<li>").append(icon.clone()));									
 				tr.append($("<td>").append(control, h3, details));
 				target.append(tr);
 				// var damage = calc.calcSkillDamage(data);
-				// console.log(data);				
+				// d3up.log(data);				
 			}
 		});
 		target = $("#build-passive-skills").empty(),
@@ -522,7 +522,7 @@ $(function() {
 				icon.bindSkilltip();
 				h3.bindSkilltip();
 				// if(data.effect) {
-					// console.log("effect ", data.effect);
+					// d3up.log("effect ", data.effect);
 					var checkbox = $("<input type='checkbox' class='passives-activate' data-skill='" + skill + "'>");
 					checkbox.click(function() {
 						tr.toggleClass("skill-activated");
@@ -560,7 +560,7 @@ $(function() {
   				h3.attr('data-tooltip', data.desc);
   				h3.attr('data-name', v.replace(/\-/g," ").capitalize());
   				// if(data.effect) {
-            // console.log("effect ", data.effect);
+            // d3up.log("effect ", data.effect);
   					var checkbox = $("<input type='checkbox' class='companion-activate' data-skill='" + skill + "'>");
   					checkbox.click(function() {
   						tr.toggleClass("skill-activated");
@@ -580,7 +580,7 @@ $(function() {
 		  });
 		});
     recalc();
-		// console.log(activeSelect.val());
+		// d3up.log(activeSelect.val());
 	}
 	if(isOwner) {
 		$(".gear-change").click(function() {
@@ -709,7 +709,7 @@ $(function() {
 		// Render Skill Damage
 		// ----------------------------------
 		var containerSkills = $("#build-active-skills");
-    // console.log(stats.skillData);
+    // d3up.log(stats.skillData);
 		$.each(stats.skillData, function(k,v) {
 			var target = containerSkills.find("tr[data-id=\"" + k + "\"] table.details").empty(),
 			    th = $("<th colspan='10' class='skill-damage'>").html("Damage Statistics");
@@ -782,7 +782,7 @@ $(function() {
     		    tr.append(td);
     			  target.append(tr);			    
   		    } else {
-  		      console.log(i);
+  		      d3up.log(i);
   		    }
   		  });			  
 			}
@@ -982,7 +982,7 @@ $(function() {
 				existing.val(v);
 			}
 		});
-		// console.log($("#equipped-" + simItemType + " a").data('json'), simAgainstData, simItemType);
+		// d3up.log($("#equipped-" + simItemType + " a").data('json'), simAgainstData, simItemType);
 		// simAgainst.bindTooltip();
 		// simAgainstDisplay.find(".top p").empty().append(simAgainst);
 		var statsValue = simAgainstDisplay.find(".stats-primary .big-stat").empty(),
@@ -1136,7 +1136,7 @@ $(function() {
 									simAgainstData.stats.damage.max = ($(this).val()) ? parseFloat($(this).val()) : 0;
 									break;
 								default:
-									// console.log($(this));
+									// d3up.log($(this));
 									return false;
 									break;
 							}
@@ -1170,7 +1170,7 @@ $(function() {
 						statsRange.append(di1, "-", di2).append(" Damage");
 						break;
 					default: 
-						// console.log(k,v);
+						// d3up.log(k,v);
 						break;
 				}
 				input.bind('keyup', function() {
@@ -1266,10 +1266,10 @@ $(function() {
 							calc.removeItem(simItemType);
 							calc.parseItem(simAgainstData, simItemType);
 							stats = calc.run();
-							// console.log(simAgainstData, prevStats);
+							// d3up.log(simAgainstData, prevStats);
 							calcDiff(prevStats, simAgainstData, simItemType, true);
 							displayStats();
-							// console.log(stats, newStats, simItemType);
+							// d3up.log(stats, newStats, simItemType);
 							// calcDiff(stats, newStats, simItemType);
 							// recalc();
 						});
@@ -1352,7 +1352,7 @@ $(function() {
 		// calculate the diff
 		var diff = calc.diff(oldStats, newStats);
 		// Debug the Diff
-		// console.log(calc.diff(oldStats, newStats));
+		// d3up.log(calc.diff(oldStats, newStats));
 		$(".compare-diff").empty();
 		if(!hideHelpers) {
 			var h4 = $("<h4>Comparision Results</h4>").css({margin: 0}),

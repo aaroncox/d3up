@@ -24,9 +24,9 @@ $(function() {
 						buildItems = $("#build-" + selectedBuild + " .build-items a"),
 						heroClass = buildContainer.data('class');
 				// Get this build's stats (into global 'stats' variable)
-				// console.log(passives);
+				// d3up.log(passives);
 				calc(buildItems, passiveSkills);
-				// console.log(stats);
+				// d3up.log(stats);
 				var current = {},
 						changed = {},
 						original = {},
@@ -185,7 +185,7 @@ $(function() {
 				}, 0);
 			},
 			error: function() {
-				// console.log("error");
+				// d3up.log("error");
 			}
 		});
 		return false;

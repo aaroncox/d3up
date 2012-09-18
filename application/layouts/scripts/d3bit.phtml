@@ -68,7 +68,7 @@ function calcDiff() {
   calc.setClass(heroClass);
   calc.setPassives(activePassiveSkills);
   // Add the new item
-  // console.log(newItem, newItemSlot);
+  // d3up.log(newItem, newItemSlot);
   _.each(items, function(data,slot) {
   	calc.setItem(slot, data);
   });  	
@@ -80,8 +80,8 @@ function calcDiff() {
   // calculate the diff
   var diff = calc.diff(oldStats, newStats);
   // Debug the Diff
-  // console.log(oldStats, newStats);
-  // console.log(calc.diff(oldStats, newStats));
+  // d3up.log(oldStats, newStats);
+  // d3up.log(calc.diff(oldStats, newStats));
   $(".compare-diff").empty();
   // if(!hideHelpers) {
    var h4 = $("<tr><th colspan='4'><h4>Results</h4></th></tr>"),

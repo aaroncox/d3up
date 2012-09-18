@@ -1,3 +1,5 @@
 window.d3up = (function() {
-	return {};
+	return {
+	   log: function() { if ( window.console ) { d3up.log.apply(console, arguments); } }
+	};
 })();

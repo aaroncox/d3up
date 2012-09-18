@@ -442,7 +442,7 @@ ItemBuilder.prototype = {
 	// Update the Value of an Attribute
 	updateAttribute: function(name, value) {
 		this.item.attrs[name] = parseFloat(value);
-		// console.log(this.attrs);
+		// d3up.log(this.attrs);
 	},
 	// Remove a specific attribute by name
 	removeAttribute: function(name) {
@@ -527,7 +527,7 @@ ItemBuilder.prototype = {
 		if(this.item.setBonus) {
 			this.preview.setBonus.empty();
 			var bonusData = this.getBonusHtml(this.item.setBonus);
-			// console.log(bonusData.list);
+			// d3up.log(bonusData.list);
 			this.preview.setBonus.append(
 				bonusData.name,
 				bonusData.list
@@ -562,12 +562,12 @@ ItemBuilder.prototype = {
 		// Update the Attributes if nessicary
 		_.each(this.item.attrs, function(v, k) {
 			if(!this.preview.attrs.find("#input-" + k).length) {
-        console.log(builder.skillText);
+        d3up.log(builder.skillText);
 				var container = $("<span>"),
 						input = "<input type='text' value='" + v + "' name='" + k + "' tabindex='100'>", 
 						hidden = "<input type='hidden' value='true' name='" + k + "' tabindex='100'>",
 						helper = builder.skillText[k];
-						console.log(builder.skillText[k], k);
+						d3up.log(builder.skillText[k], k);
 				if(helper.search("VVV") >= 0) {
 					helper = helper.replace(/VVV/, input);										
 				} else {

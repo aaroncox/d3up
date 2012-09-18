@@ -46,7 +46,7 @@
 				newSkill.class = 'scoundrel';
 			}
 			if(newSkill.class == 'undefined') {
-				console.log(html.text());				
+				d3up.log(html.text());				
 			}
 			newSkill.slug = v.slug.replace(/[\b\t\n\v\f\r']/g, function(val) { return map[val]; });
 			newSkill.icon = $(v.tooltip).find("img").attr("src");
@@ -808,7 +808,7 @@
 				if(k == 0) {
 					var clean = frag.text().replace(/[\b\t\n\v\f\r']/g, function(val) { return map[val]; });
 					// Bunch of Logic to build the skills...
-					// console.log(clean);
+					// d3up.log(clean);
 					newSkill.desc = clean;
 					// target.append("\r\tdesc: '" + clean + "',");					
 				}
@@ -819,14 +819,14 @@
 				}
 			});
 			if(newSkill.class == 'undefined' || typeof(newSkill.desc) == 'undefined') {
-				// console.log("Unknown: " + html.text());				
+				// d3up.log("Unknown: " + html.text());				
 			} else {
 				newSkill = determineEffects(newSkill);
 				skills[newSkill.class].push(newSkill);				
 			}
 			
 		});
-		console.log(skills);
+		d3up.log(skills);
 		
 		var wgets = $("#wgets")
 		var target = $("#json");
