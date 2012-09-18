@@ -72,11 +72,13 @@
                 <?
                   $rating = $max->calcStat($attr, $val, $this->record->equipment[$slot]->type, true);
                 ?>
+                <? if(isset($rating['rating'])): ?>
                 <tr>
                   <td colspan='3'>
-                    <div style='width: <?= $rating['rating'] ?>%; height: 3px; background: #f00'></div>
+                    <div class='rating-bar' data-percent="<?= $rating['rating'] ?>" style='width: <?= $rating['rating'] ?>%; height: 3px;'></div>
                   </td>
                 </tr>
+                <? endif ?>
                 <? endif ?>
                 <? $count++ ?>
               <? endforeach ?>
@@ -107,6 +109,7 @@
         cellHeader.hide();
         table.find("." + $(this).val()).show();
       });
+      $(".rating-bar").each(function() { var elem = $(this); elem.css("background", $.Color( "black" ).hsla({}).transition($.Color( "red" ), (elem.data("percent") / 100))); });
     });
   </script>
 </div>
