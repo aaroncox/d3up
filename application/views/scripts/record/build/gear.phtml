@@ -62,8 +62,8 @@
                   <? $val = implode("-", $val->export()) ?>
                 <? endif ?>
                 <? if($this->shortStat($val, $attr)): ?>
-                <tr class='item-rating item-rating-<?= $attr ?>'>
-                  <td class='item-rating-filter' data-attr="<?= $attr ?>"><?= $this->shortStat(null, $attr) ?></td>
+                <tr class='item-rating item-rating-<?= $attr ?> item-rating-filter' data-attr="<?= $attr ?>">
+                  <td><?= $this->shortStat(null, $attr) ?></td>
                   <td><?= $val ?></td>
                   <td>
                     <?= $max->calcStat($attr, $val, $this->record->equipment[$slot]->type) ?>
@@ -72,13 +72,19 @@
                 <?
                   $rating = $max->calcStat($attr, $val, $this->record->equipment[$slot]->type, true);
                 ?>
-                <? if(isset($rating['rating'])): ?>
-                <tr class='item-rating item-rating-<?= $attr ?>'>
-                  <td colspan='3'>
-                    <div class='rating-bar' data-percent="<?= $rating['rating'] ?>" style='width: <?= $rating['rating'] ?>%; height: 3px;'></div>
-                  </td>
-                </tr>
-                <? endif ?>
+                  <? if(isset($rating['rating'])): ?>
+                  <tr class='item-rating item-rating-<?= $attr ?> item-rating-filter' data-attr="<?= $attr ?>">
+                    <td colspan='3'>
+                      <div class='rating-bar' data-percent="<?= $rating['rating'] ?>" style='width: <?= $rating['rating'] ?>%; height: 3px;'></div>
+                    </td>
+                  </tr>
+                  <? else: ?>
+                  <tr class='item-rating item-rating-<?= $attr ?>'>
+                    <td colspan='3'>
+                      <div class='rating-bar' data-percent="<?= $rating['rating'] ?>" style='width: <?= $rating['rating'] ?>%; height: 3px;'></div>
+                    </td>
+                  </tr>
+                  <? endif ?>
                 <? endif ?>
                 <? $count++ ?>
               <? endforeach ?>
