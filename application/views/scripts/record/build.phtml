@@ -198,7 +198,11 @@
           buildEmpty = new d3up.Build, 
           compare = new d3up.Compare;
       console.log(compare);
+      // Render build to Statistics Panels
       build.renderTo($("#statistics"));
+      // Render build to a few of the Gear tabs
+      build.renderTo($("#gear"));
+      console.log(build.getStats());
       // console.log(build.getGear(), buildEmpty.getGear());
       // console.log(build.getSkills(), buildEmpty.getSkills());
 	  });
@@ -237,7 +241,7 @@
       });
       cellData.hide();
       cellHeader.hide();
-      table.find(".stats").show();
+      table.find(".contributions").show();
       selector.bind('change', function() {
         cellData.hide();
         cellHeader.hide();

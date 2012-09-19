@@ -623,7 +623,11 @@ BuildCalculator.prototype = {
 			var tDefenses = this.calcDefenses(),
 					tEhp = this.calcEffectiveHealth(tDefenses);
 			// Calculate the Difference in EHP without the item
-			rendered['ehp-' + i] = ehp.ehp - tEhp['ehp'];				
+			rendered['ehp-' + i] = ehp.ehp - tEhp['ehp'];		
+			if(!rendered['ehp-gear-total']) {
+			  rendered['ehp-gear-total'] = 0;
+			}
+			rendered['ehp-gear-total'] += rendered['ehp-' + i];
 			// Re-add the Item to the gear set
 			this.applyPassives(true); // Reverses Passive Gains
 			this.parseItem(g, i);
@@ -1182,7 +1186,11 @@ BuildCalculator.prototype = {
        // Calculate the difference in DPS if you took this piece off
        // if(this.values['dps-damage']) {
          var newDps = this.calcOffense();
-         this.values['dps-' + i] = this.values['dps'] - newDps['dps'];       
+         this.values['dps-' + i] = this.values['dps'] - newDps['dps'];   
+         if(!this.values['dps-gear-total']) {
+   			   this.values['dps-gear-total'] = 0;
+   			 }
+   			 this.values['dps-gear-total'] += this.values['dps-' + i];
        // }
      // }
      // Readd the Item to the set

@@ -54,8 +54,8 @@
             <a id="new-<?= $slot ?>" class="button" href="/item/create?b=<?= $this->record->id ?>&slot=<?= $slot ?>&return=build"><span class="ui-button-text">New Item</span></a>
           </td>
           <? endif ?>
-          <td class="cell-data contributions" id="gear-dps-<?= $slot ?>">~</td>
-          <td class="cell-data contributions" id="gear-ehp-<?= $slot ?>">~</td>
+          <td class="cell-data contributions" data-display="dps-heat" data-value="dps-<?= $slot ?>">~</td>
+          <td class="cell-data contributions" data-display="ehp-heat" data-value="ehp-<?= $slot ?>">~</td>
           <td class="cell-data stats" colspan="2">
             <? 
               $total = count($this->record->equipment[$slot]->attrs);

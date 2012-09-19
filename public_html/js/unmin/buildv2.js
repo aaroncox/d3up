@@ -45,11 +45,24 @@
       var build = this,
           elements = elem.find("*[data-value]");
       elements.each(function() {
+        $(this).empty();
         var id = $(this).data("value"),
             value = build.stats[id],
             type = $(this).data("display");
         if(type) {
           switch(type) {
+            case "dps-heat":
+              // $("#gear-" + v).html(val + "<br/>(" + (Math.round(tPer * 1000) / 10) + "%)");
+              $(this).append($("<p>").append(Math.round(value / build.stats['dps-gear-total'] * 1000) / 10, "%"));
+              $(this).css("color", $.Color( "#750" ).transition($.Color( "#f50" ), ((value / build.stats['dps']) * 8))); 
+              break;
+            case "ehp-heat":
+              // $("#gear-" + v).html(val + "<br/>(" + (Math.round(tPer * 1000) / 10) + "%)");
+              // console.log(value, build.stats['ehp'], (value / build.stats['ehp']), "" + $.Color( "#570" ).transition($.Color( "#5F0" ), ((value / build.stats['ehp']) * 6)));
+              // console.log(build.stats['ehp-gear-total']);
+              $(this).append($("<p>").append(Math.round(value / build.stats['ehp-gear-total'] * 1000) / 10, "%"));
+              $(this).css("color", $.Color( "#570" ).transition($.Color( "#5F0" ), ((value / build.stats['ehp']) * 4))); 
+              break;
             default:
               console.log("Unknown Formatter: " + type);
               break;
@@ -61,7 +74,7 @@
         } else {
           value = "~";
         }
-        $(this).html(value);
+        $(this).prepend(value);
       });
     },
     
