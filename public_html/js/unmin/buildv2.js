@@ -58,15 +58,15 @@
               break;
             case "dps-heat":
               // $("#gear-" + v).html(val + "<br/>(" + (Math.round(tPer * 1000) / 10) + "%)");
-              $(this).append($("<p>").append(Math.round(value / build.stats['dps-gear-total'] * 100), "%"));
-              $(this).css("color", $.Color( "#FFF" ).transition($.Color( "#f50" ), ((value / build.stats['dps']) * 5))); 
+              $(this).append($("<p>").append(Math.round(value / build.stats['dps-gear-total'] * 1000) / 10, "%"));
+              $(this).css("color", $.Color( "#750" ).transition($.Color( "#f50" ), ((value / build.stats['dps']) * 8))); 
               break;
             case "ehp-heat":
               // $("#gear-" + v).html(val + "<br/>(" + (Math.round(tPer * 1000) / 10) + "%)");
               // console.log(value, build.stats['ehp'], (value / build.stats['ehp']), "" + $.Color( "#570" ).transition($.Color( "#5F0" ), ((value / build.stats['ehp']) * 6)));
               // console.log(build.stats['ehp-gear-total']);
-              $(this).append($("<p>").append(Math.round(value / build.stats['ehp-gear-total'] * 100), "%"));
-              $(this).css("color", $.Color( "#FFF" ).transition($.Color( "#5F0" ), ((value / build.stats['ehp']) * 3))); 
+              $(this).append($("<p>").append(Math.round(value / build.stats['ehp-gear-total'] * 1000) / 10, "%"));
+              $(this).css("color", $.Color( "#570" ).transition($.Color( "#5F0" ), ((value / build.stats['ehp']) * 4))); 
               break;
             default:
               console.log("Unknown Formatter: " + type);
