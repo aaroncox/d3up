@@ -64,8 +64,6 @@ class BuildController extends Epic_Controller_Action
 		// Create a new Build
 		$build = Epic_Mongo::newDoc('build');
 		$form = $this->view->form = $build->getEditForm();
-		$login = $this->view->login = new Epic_Auth_Form_Login();		
-		$this->_handleForm($login);
 		if($this->getRequest()->isPost()) {
 			$result = $form->process($this->getRequest()->getParams());
 			if($result) {
