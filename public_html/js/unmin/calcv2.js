@@ -216,9 +216,9 @@ BuildCalculator.prototype = {
 		}
 	},
 	applyEnabledSkills: function() {
-    d3up.log(this.activeSkills);
+    // d3up.log(this.activeSkills);
 		_.each(this.enabledSkills, function(v,k) {
-		  d3up.log(v,k);
+      // d3up.log(v,k);
 			_.each(v.effect, function(e,i) {
 				switch(i) {
 				  case "stackable":
@@ -886,8 +886,8 @@ BuildCalculator.prototype = {
 			mhAvg = mathS * ((mathAl + mathAh) / 4) * mathM * mathE;
 		}
 		dps = Math.round(((dLow + dHigh) / 2) * mathR * mathC);
-		d3up.log(atkSpeedInc);
-		d3up.log(dLow, dHigh, dps, mathR, mathC);
+		// d3up.log(atkSpeedInc);
+    // d3up.log(dLow, dHigh, dps, mathR, mathC);
 		hit = Math.round(((dLow + dHigh) / 2) * mathC);
 		if(duration) {
 		  if(isStatic) {
@@ -919,7 +919,7 @@ BuildCalculator.prototype = {
 				rendered['dps'] = Math.round(dmgCycle * mathR * mathC);
  				rendered['3rd-hit'] = hit3;
 			}
-			d3up.log(dLow, dHigh);
+			// d3up.log(dLow, dHigh);
 			rendered['damage'] = Math.round(dLow) + " - " + Math.round(dHigh);
 			rendered['critical-hit'] = Math.round(dLow * (1+ (this.attrs['critical-hit-damage'] * 0.01))) + " - " + Math.round(dHigh * (1 + (this.attrs['critical-hit-damage'] * 0.01)));
 			if(this.bonuses['pierce-bonus']) {
@@ -929,12 +929,12 @@ BuildCalculator.prototype = {
   		  rendered['critical-hit-3rd'] = Math.round((1 + (this.bonuses['pierce-bonus'] / 100) * 2) * dLow * (1+ (this.attrs['critical-hit-damage'] * 0.01))) + " - " + Math.round((1 + (this.bonuses['pierce-bonus'] / 100) * 2) * dHigh * (1 + (this.attrs['critical-hit-damage'] * 0.01)));
   		}
 		}
-    d3up.log(rendered);
+    // d3up.log(rendered);
     return rendered;
 	},
 	calcSkills: function() {
 		var rendered = {};
-		d3up.log(this.activeSkills);
+		// d3up.log(this.activeSkills);
 		_.each(this.activeSkills, function(v,k) {
 			var options = {},
 			    calcDot = false,
@@ -1071,6 +1071,24 @@ BuildCalculator.prototype = {
 		}, this);
 		// d3up.log(rendered);
 		return {skillData: rendered};
+	},
+	setBuild: function(build) {
+	  // Set all our Skill Data
+	  this.setActives(build.skills.actives);
+		this.setPassives(build.skills.passives);
+
+    // calc.setEnabledSkills(this.skills.passives);
+    // calc.setCompanionSkills(activeCompanionSkills);
+
+    // If we have meta, set it
+    if(build.meta) {
+      this.setParagonLevel(build.meta.paragon);
+      this.setClass(build.meta.heroClass);      
+    }
+    // Parse all gear into proper slots
+    _.each(build.gear, function(json, slot) {
+      this.setItem(slot, json);
+    }, this);
 	},
 	applySetBonuses: function() {
 		_.each(this.sets, function(v,k) {

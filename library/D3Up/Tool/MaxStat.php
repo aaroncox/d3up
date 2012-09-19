@@ -175,7 +175,7 @@ class D3Up_Tool_MaxStat
 		    'value' => $value,
 		  );
 		}
-		return $rating."% of ".$perfect;
+		return "<span class='percent'>".$rating."%</span> of ".$perfect;
 	}
 	public static function calc($item) {
 

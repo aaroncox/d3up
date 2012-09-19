@@ -7,18 +7,6 @@
 		$this->myBuild = $myBuild = true;
 	}	
 ?>
-<script type="text/javascript">
-<? if($this->record->passives && $this->record->passives != "null" && count($this->record->passives)): ?>
-var activePassives = <?= json_encode($this->record->passives->export()); ?>;
-<? else: ?>
-var activePassives = [];
-<? endif; ?>
-<? if($this->record->actives && $this->record->actives != "null" && count($this->record->actives)): ?>
-var activeActives = <?= json_encode($this->record->actives->export()); ?>;
-<? else: ?>
-var activeActives = [];
-<? endif; ?>
-</script>
 <div id="build">
   <?= $this->render("./record/build/header.phtml") ?>
 	<div id="character" class="ui-helper-clearfix" data-class="<?= $this->record->class ?>" <? if($myBuild) { echo "data-owner='true'"; } ?>>
@@ -187,8 +175,37 @@ var activeActives = [];
 		// 	$stickyEl.toggleClass('sticky', windowTop > elTop);
 		// });
 	</script>
-	<script type="text/javascript" src="/js/unmin/build.js?time=<?= time() ?>"></script>	
+	<script type="text/javascript" src="/js/unmin/compare.js"></script>	
+	<script type="text/javascript" src="/js/unmin/buildv2.js"></script>	
 	<script type="text/javascript" charset="utf-8">
+	  $(function() {
+      var skills = {
+            actives: <?= json_encode($this->record->actives->export()); ?>,
+            passives: <?= json_encode($this->record->passives->export()); ?>
+          },
+          gearSlots = $("#build-gear .equipped"),
+          gear = gearSlots.find("a[data-json]"),
+          meta = {
+            level: '<?= $this->record->level ?>',
+            paragon: '<?= $this->record->paragon ?>',
+            heroClass: '<?= $this->record->class ?>'
+          },
+          build = new d3up.Build({
+            gear: gear, 
+            skills: skills,
+            meta: meta
+          }),
+          buildEmpty = new d3up.Build, 
+          compare = new d3up.Compare;
+      console.log(compare);
+      build.renderTo($("#statistics"));
+      // console.log(build.getGear(), buildEmpty.getGear());
+      // console.log(build.getSkills(), buildEmpty.getSkills());
+	  });
+	
+	
+	
+	
     $(function() {
       var controls = $('#tabs li a'),
           tabs = $("#tabs-render"),
@@ -201,6 +218,104 @@ var activeActives = [];
         tabs.find($(this).attr("data-tab")).show(); //show tab content that matches tab title index
         $(this).addClass('current'); //add current class on clicked tab title
       });
+    });
+    $(function() {
+      var selector = $("#gear-stats"),
+          table = $(".equipment-table"),
+          cellHeader = $(".cell-header"),
+          cellData = $(".cell-data"),
+          gearChange = $(".show-gear-change"),
+          gearFilter = $("#gear-filters"),
+          gearFilters = $(".equipment-table .filters"),
+          itemRatings = $("tr.item-rating");
+      gearFilter.chosen();
+      gearFilters.hide();
+      gearChange.click(function() {
+        selector.find("option").removeAttr("selected");
+        selector.find("option[value=gear-controls]").attr("selected", "selected");
+        selector.trigger("change");
+      });
+      cellData.hide();
+      cellHeader.hide();
+      table.find(".stats").show();
+      selector.bind('change', function() {
+        cellData.hide();
+        cellHeader.hide();
+        table.find("." + $(this).val()).show();
+      });
+      $(".item-rating-filter").bind('click', function() {
+        var attr = $(this).data("attr");
+        gearFilter.find("option[value=" + attr + "]").attr("selected", "selected");
+        gearFilter.trigger("liszt:updated");
+        gearFilter.trigger("change");
+        gearFilters.show();
+      }).css({cursor: 'pointer'});
+      var button = $("<a class='button'>").bind('click', function() {
+        $(".perfection-table").find(".no-match-placeholder").remove();
+        $("tr.item-rating").show().removeClass("no-match");
+        toggle = false;            
+        $(".equipment-table > tbody").find(".remove-filter").remove();
+        gearFilter.find("option").attr("selected", null);
+        gearFilters.hide();
+      }).html("Remove Filter");
+      gearFilters.find("th").append(button); 
+      gearFilter.bind('change', function() {
+        var attrs = $(this).val(),
+            attr = "";
+        if(attrs && attrs.length > 0) {
+          $.each(attrs, function(k, a) {
+            if(attr == "") {
+              attr += ".item-rating-" + a;
+            } else {
+              attr += ", .item-rating-" + a;            
+            }
+          });
+          itemRatings.not(attr).hide().addClass("no-match");
+          $.each(attrs, function(k,v) {
+            $(".item-rating-" + v).show().removeClass("no-match");
+          });
+        } else {
+          gearFilter.find("option").attr("selected", null);
+          gearFilter.trigger("liszt:updated");
+          $(".perfection-table").find(".no-match-placeholder").remove();
+          $(".equipment-table > tbody").find(".remove-filter").remove();
+          $("tr.item-rating").show().removeClass("no-match");
+          gearFilters.hide();
+        }
+        $(".perfection-table").each(function() {
+          if($(this).find(".item-rating.no-match").length == $(this).find(".item-rating").length) {
+            if($(this).find(".no-match-placeholder").length < 1) {
+              $(this).append("<tr class='no-match-placeholder'><td colspan='3' style='color: #F50'>None</td></tr>");              
+            }
+          } else {
+            $(this).find(".no-match-placeholder").remove();
+          }
+        });
+      })
+      // Calculate Armor Percentages
+      var tArmor = $("tr.stat-armor td.data").text().replace(",","");
+      $(".item-rating-armor .rating-bar").each(function() {
+        // console.log(tArmor);
+        $(this).attr("data-percent", $(this).data("value") / 1000 * 100);
+        $(this).css("width", Math.round(($(this).data("value") / 1000) * 100) + "%");
+      });
+      // Apply Colors to Ratings Bars
+      $(".rating-bar").each(function() { 
+        var elem = $(this), 
+            attr = $(this).closest("tr.item-rating").data("attr"),
+            percent = elem.attr("data-percent") / 100,
+            elem2 = $(this).closest(".perfection-table").find(".item-rating-" + attr + " .bounds .percent");
+        if (percent > 1) { 
+          elem.css("background-color", "white"); 
+          elem2.css("color", "white"); 
+        } else if(percent == 0) {
+          elem.css("background-color", "#555"); 
+          elem2.css("color", "#555"); 
+        } else { 
+          elem.css("background-color", $.Color( "red" ).lightness(0.5).transition($.Color( "green" ).lightness(0.5), percent)); 
+          elem2.css("color", $.Color( "red" ).lightness(0.5).transition($.Color( "green" ).lightness(0.5), percent));
+        } 
+      });    
     });
   </script>
 </div>

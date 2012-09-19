@@ -2,10 +2,10 @@
 <div class="form">
 <? if($this->record->_characterBt && $this->record->_characterRg && $this->record->_characterId): ?>
   <p>This build has been setup to import from the following Battle.net Character:</p>
-  <center><a href="<?= D3Up_Tool_Crawler::makeUrl($this->record->_characterRg, $this->record->_characterBt, $this->record->_characterId) ?>"><?= $this->record->_characterBt ?> - Character ID #<?= $this->record->_characterId?></a></center>
-  <a class="button" href="/b/<?= $this->record->id ?>/resync">Resync with Battle.net</a>
+  <div class='notice'><a href="<?= D3Up_Tool_Crawler::makeUrl($this->record->_characterRg, $this->record->_characterBt, $this->record->_characterId) ?>"><?= $this->record->_characterBt ?> - Character ID #<?= $this->record->_characterId?></a></div>
+  <a class="button" href="/b/<?= $this->record->id ?>/resync">Resync above character with D3Up.com</a>
   <p>You may sync your profile once every 15 minutes by clicking the button above.</p>
-  <p>If you'd like to change which character this build is sync'd with, feel free to use the button below to sync one of your other characters.</p>
+  <p>If you'd like to change which character this build is sync'd with, feel free to use the button below to sync one of your other characters. I'd recommend against it, normally you should just create a new build, but if you need to correct the character, feel free.</p>
   <a class="button" href="/b/<?= $this->record->id ?>/crawl">Specify which Character to Sync</a>
 <? else: ?>
   <p></p>

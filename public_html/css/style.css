@@ -318,7 +318,7 @@ ul#simulate-stats input,
 }
 .d3up-table tbody tr th:last-child,
 .d3up-table tbody tr td:last-child {
-	border-right: 1px solid #000;
+/*  border-right: 1px solid #000;*/
 }
 .d3up-table td {
 	padding: 5px;
@@ -451,6 +451,10 @@ dd:has(:focus) .chzn-container {
   margin-top: 5px;
   width: 100%;
 }
+.equipment-table .filters th {
+  font-weight: normal;
+  text-align: left;
+}
 .equipment-table thead td,
 .equipment-table thead th {
   font-size: 12px;
@@ -497,6 +501,14 @@ dd:has(:focus) .chzn-container {
   line-height: 12px;
   width: auto;
   padding: 3px;
+}
+.equipment-table td table.perfection-table td:first-child {
+  width: 75px;
+}
+
+.equipment-table td table.perfection-table td.bounds {
+  text-align: right;
+  color: #999;
 }
 /*.equipment-table th:first-child,
 .equipment-table td:first-child {
@@ -579,7 +591,7 @@ dd:has(:focus) .chzn-container {
 .notifications {
   background-color: #111;
   text-align: center;
-  color: #f00;
+  color: #f50;
   padding: 10px;
 }
 .featured {
@@ -960,7 +972,7 @@ tr.compared > td:first-child {
 	list-style: none;
 }
 #content .zend_form ul.errors li {
-	color: #f00;
+	color: #f50;
 }
 .per-min {
 	color: #070;
@@ -1057,6 +1069,7 @@ tr.compared > td:first-child {
 }
 tr.skill-calc-row > td {
   padding: 5px;
+  border: 1px solid #222;
 }
 .skill-calc-row p {
 	color: #888;
@@ -1065,7 +1078,7 @@ tr.skill-calc-row > td {
 .skill-calc-row p:first-child {
 	margin-bottom: 10px;
 }
-.skill-calc-row.skill-activated td h3 {
+.skill-calc-row.skill-activated > td {
 	border: 1px solid #70B1D5;
 }
 .skill-calc-row .control {
@@ -1102,7 +1115,7 @@ tr.skill-calc-row > td {
   border: 1px solid #333;
   padding: 5px;
   text-align: left;
-  color: #70B1D5;
+  color: #ececec;
   text-decoration: underline;
   font-weight: normal;
 }
@@ -1307,7 +1320,7 @@ div.title-block h2 {
 }
 #publish-status.false,
 #save-status.unsaved {
-	color: #f00;
+	color: #f50;
 }
 .ui-button {
 	border: 1px solid #000;
@@ -1545,6 +1558,13 @@ div.toc.section {
 	padding: 5px 15px;
 	border: 1px solid #333;
 }
+.content-page .form .notice {
+  text-align: center;
+  padding: 20px;
+  background: #333;
+  border: 1px solid #555;
+  font-size: 1.2em;
+}
 .content-page .import {
 	float: right;
 	width: 400px;
@@ -1669,8 +1689,6 @@ div.toc.section {
 .statistics-table {
   width: 305px;
   margin: 5px 2px 0;
-  background: #111;
-  border: 1px solid #333;
 }
 .statistics-table th {
   padding: 5px 15px 0;

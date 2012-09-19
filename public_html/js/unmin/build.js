@@ -38,7 +38,7 @@ $(function() {
       d2 = $("<td class='range'>").html(parts[1]);
   		tr.append(label, d1, dv, d2, controls);		  
 		} else {
-		  data = $("<td>").html(v);
+		  data = $("<td class='data'>").html(v);
 		  var placeholder = $("<td colspan='2'>");
   		tr.append(label, data, placeholder, controls);		  
 		}
@@ -164,7 +164,6 @@ $(function() {
 		});
 	});
 	if(isOwner) {
-	  d3up.log("Rawrwrwrawr");
 		var skillSaveButton = $("<a class='button'>").html("Save Skills"),
 		    passiveSaveButton = $("<a class='button'>").html("Save Skills");
 		passiveSaveButton.click(function() {
@@ -379,9 +378,7 @@ $(function() {
 		enabledSkills = {};
 		enabledPassiveSkills = {};
 		calc.init();
-    // d3up.log("calc");
 		$('.skill-activate').each(function() {
-      // d3up.log("rawr");
 			activeActiveSkills[$(this).data('skill')] = activeActivesData[$(this).data('skill')];
 			if($(this).is(":checked")) {
 				enabledSkills[$(this).data('skill')] = activeActivesData[$(this).data('skill')];
@@ -782,7 +779,7 @@ $(function() {
     		    tr.append(td);
     			  target.append(tr);			    
   		    } else {
-  		      d3up.log(i);
+  		      d3up.log("Unhandled Ability Effect: " + i);
   		    }
   		  });			  
 			}
@@ -888,20 +885,21 @@ $(function() {
       if(stats[v]) {
   		  var per = stats[v] / ehpM,
   		      tPer = stats[v] / ehpT,
-  		      color = 50 * per + 200,
-  		      val = Math.round(stats[v]).toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,"); 
+  		      val = Math.round(stats[v]).toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,");
         $("#gear-" + v).html(val + "<br/>(" + (Math.round(tPer * 1000) / 10) + "%)");
-        $("#gear-" + v).css({color: "rgb(0," + parseInt(color) + ",0)"});        
+        // $("#gear-" + v).css({color: "rgb(0," + parseInt(color) + ",0)"});  
+        $("#gear-" + v).css("color", $.Color( "#570" ).transition($.Color( "#5F0" ), (tPer * 8))); 
+        
       }
 		});
 		$.each(['dps-helm','dps-shoulders','dps-amulet','dps-chest','dps-gloves','dps-bracers','dps-belt','dps-pants','dps-ring1','dps-ring2','dps-boots','dps-mainhand','dps-offhand'], function(k,v) {
 		  if(stats[v]) {
   		  var per = stats[v] / dpsM,
   		      tPer = stats[v] / dpsT,
-    	      color = 50 * per + 200,
   		      val = Math.round(stats[v]).toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,");
         $("#gear-" + v).html(val + "<br/>(" + (Math.round(tPer * 1000) / 10) + "%)");
-        $("#gear-" + v).css({color: "rgb(" + parseInt(color) + ",0,0)"});
+        // $("#gear-" + v).css({color: "rgb(" + parseInt(color) + ",0,0)"});
+        $("#gear-" + v).css("color", $.Color( "#750" ).transition($.Color( "#f50" ), (tPer * 12))); 
       }
 		});
 	}

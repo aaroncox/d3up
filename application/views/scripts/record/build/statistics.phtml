@@ -21,13 +21,13 @@
   <tr>
     <td class="hl-dps">
       <div class="item-stat">
-        <span class="value">71,014.78</span>
+        <span data-value="dps" class="value">~</span>
         <span class="stat">Damage per Second</span>
       </div>
     </td>
     <td class="hl-ehp">
       <div class="item-stat">
-        <span class="value">134,834.86</span>
+        <span data-value="ehp" class="value">~</span>
         <span class="stat">Effective Hit Points</span>
       </div>
     </td>
@@ -47,10 +47,81 @@
   	<? endfor ?>
   </select>
 </div>
-<table class="statistics-table" id="stats-offense"></table>
-<table class="statistics-table" id="stats-base"></table>
-<table class="statistics-table" id="stats-life"></table>
-<table class="statistics-table" id="stats-defense"></table>
-<table class="statistics-table" id="stats-ehp"></table>
-<table class="statistics-table" id="stats-dps-gains"></table>
-<table class="statistics-table" id="stats-ehp-gains"></table>
+<table class="statistics-table" id="stats-offense">
+  <tr class='header'><th colspan='10'>Damage Statistics</th></tr>
+  <tr><td>Attacks per Second </td><td data-value='dps-speed-display'></td></tr>
+  <tr><td>Critical Hit Chance </td><td data-value='critical-hit'></td></tr>
+  <tr><td>Critical Hit Damage </td><td data-value='critical-hit-damage'></td></tr>
+</table>
+<table class="statistics-table" id="stats-base">
+  <tr class='header'><th colspan='10'>Base Statistics</th></tr>
+  <tr><td>Strength </td><td data-value='strength'></td></tr>
+  <tr><td>Dexterity </td><td data-value='dexterity'></td></tr> 
+  <tr><td>Intelligence </td><td data-value='intelligence'></td></tr>
+  <tr><td>Vitality </td><td data-value='vitality'></td></tr>
+  <tr><td>Magic Find </td><td data-value='plus-magic-find'></td></tr>
+  <tr><td>Gold Find </td><td data-value='plus-gold-find'></td></tr>
+</table>
+<table class="statistics-table" id="stats-life">
+  <tr class='header'><th colspan='10'>Health Stastistics</th></tr> 
+  <tr><td>Maximum Life</td><td data-value='life'></td></tr>
+  <tr><td>Total Life Bonus </td><td data-value='plus-life'></td></tr>
+  <tr><td>Life per Second </td><td data-value='life-regen'></td></tr>
+  <tr><td>Life Steal </td><td data-value='life-steal'></td></tr>
+  <tr><td>Life per Kill </td><td data-value='life-kill'></td></tr>
+  <tr><td>Life per Hit </td><td data-value='life-hit'></td></tr>
+  <tr><td>Health Globe Healing Bonus </td><td data-value='health-globes'></td></tr>
+  <tr><td>Bonus to Gold/Globe Radius </td><td data-value='plus-pickup-radius'></td></tr>
+</table>
+<table class="statistics-table" id="stats-defense">
+  <tr class='header'><th colspan='10'>Defensive Statistics</th></tr>
+  <tr><td>Armor</td><td data-value='armor'>~</td></tr>
+  <tr><td>All Resist </td><td data-value='resist-all'></td></tr> 
+  <tr><td>Block Chance </td><td data-value='block-chance'></td></tr>
+  <tr><td>Dodge Chance </td><td data-value='dodge-chance'></td></tr>
+  <tr><td>Damage Reduction</td><td data-value='damage-reduction'></td></tr>
+  <tr><td>Physical Resistance </td><td data-value='resist-physical'></td></tr>
+  <tr><td>Cold Resistance </td><td data-value='resist-cold'></td></tr>
+  <tr><td>Fire Resistance </td><td data-value='resist-fire'></td></tr>
+  <tr><td>Lightning Resistance </td><td data-value='resist-lightning'></td></tr>
+  <tr><td>Poison Resistance </td><td data-value='resist-poison'></td></tr>
+  <tr><td>Arcane/Holy Resistance </td><td data-value='resist-arcane'></td></tr>
+  <tr><td>Crowd Control Reduction </td><td data-value='cc-reduce'></td></tr>
+  <tr><td>Missile Damage Reduction </td><td data-value='percent-range-reduce'></td></tr>
+  <tr><td>Melee Damage Reduction </td><td data-value='percent-melee-reduce'></td></tr>
+  <tr><td>Elite Damage Reduction </td><td data-value='percent-elite-reduce'></td></tr>
+  <tr><td>Thorns </td><td data-value='thorns'></td></tr>
+</table>
+<table class="statistics-table" id="stats-ehp">
+  <tr class='header'><th colspan='10'>Effective Hit Points</th></tr>
+  <tr><td>EHP </td><td data-value="ehp"></td></tr>
+  <tr><td>EHP w/ Dodge </td><td data-value="ehp-dodge"></td></tr>
+  <tr><td>EHP w/ Block </td><td data-value="ehp-block"></td></tr>
+  <tr><td>Melee EHP </td><td data-value="ehp-melee"></td></tr>
+  <tr><td>Ranged EHP </td><td data-value="ehp-range"></td></tr>
+  <tr><td>Elite EHP </td><td data-value="ehp-elite"></td></tr>
+  <tr><td>Physical EHP </td><td data-value="ehp-physical"></td></tr>
+  <tr><td>Cold EHP </td><td data-value="ehp-cold"></td></tr>
+  <tr><td>Fire EHP </td><td data-value="ehp-fire"></td></tr>
+  <tr><td>Lightning EHP </td><td data-value="ehp-lightning"></td></tr>
+  <tr><td>Poison EHP </td><td data-value="ehp-poison"></td></tr>
+  <tr><td>Arcane/Holy EHP </td><td data-value="ehp-poison"></td></tr>
+</table>
+<table class="statistics-table" id="stats-dps-gains">
+  <tr class='header'><th colspan='10'>DPS Gains by Stat</th></tr>
+  <tr><td>+1 Primary Stat </td><td data-value='dps-pt-primary'></td></tr>
+  <tr><td>+1% Crit Hit </td><td data-value='dps-pt-critical-hit'></td></tr>
+  <tr><td>+1% Crit Hit Dmg </td><td data-value='dps-pt-critical-hit-damage'></td></tr> 
+  <tr><td>+1 Minimum Dmg </td><td data-value='dps-pt-min-damage'></td></tr>
+  <tr><td>+1 Maximum Dmg </td><td data-value='dps-pt-max-damage'></td></tr>
+  <tr><td>+1% Attack Speed </td><td data-value='dps-pt-attack-speed'></td></tr>
+</table>
+<table class="statistics-table" id="stats-ehp-gains">
+  <tr class='header'><th colspan='10'>EHP Gains by Stat</th></tr>
+  <tr><td>+1 Armor </td><td data-value='ehp-pt-armor'></td></tr>
+  <tr><td>+1 Strength </td><td data-value='ehp-pt-strength'></td></tr>
+  <tr><td>+1 Intelligence </td><td data-value='ehp-pt-intelligence'></td></tr>
+  <tr><td>+1 Vitality </td><td data-value='ehp-pt-vitality'></td></tr>
+  <tr><td>+1 Resist All </td><td data-value='ehp-pt-resist-all'></td></tr>
+  <tr><td>+1% Life </td><td data-value='ehp-pt-plus-life'></td></tr>
+</table>

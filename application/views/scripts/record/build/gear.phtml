@@ -3,7 +3,7 @@
   <a class="button show-gear-change"><span class="ui-button-text">Change Gear</span></a>
 <? endif ?>
 <div class="page">
-  <table class="equipment-table">
+  <table class="equipment-table" id="build-gear">
     <thead>
       <tr>
         <td>&nbsp;</td>
@@ -25,6 +25,13 @@
         <th class="cell-header stats">Gear Stats</th>
         <th class="cell-header stats">Perfection</th>
       </tr>
+      <tr class="filters">
+        <th colspan='3'>
+          <select id="gear-filters" multiple="multiple" data-placeholder="Select Attributes to Filter By...">
+            <?= $this->render("./item/_itemAttributeOptions.phtml") ?>
+          </select>
+        </th>
+      </tr>
     </thead>
     <tbody>
       <? foreach($this->record->equipment->getSlots() as $slot): ?>
@@ -32,7 +39,7 @@
       		<td class="primary">
       			<span class="equipped" id="equipped-<?= $slot ?>" data-slot="<?= $slot ?>">
       				<? if($this->record->equipment[$slot]->id): ?>
-      					<?= $this->itemLink($this->record->equipment[$slot]) ?>
+      					<?= $this->itemLink($this->record->equipment[$slot], array('slot' => $slot)) ?>
       				<? else: ?>
       					Nothing
       				<? endif ?>
@@ -57,7 +64,29 @@
             ?>
             <? if($total): ?>
               <table class="d3up-table perfection-table">
+              <? if(isset($this->record->equipment[$slot]->stats['armor'])): ?>
+                <?
+                  // Special If to create armor row
+                  $armor = $this->record->equipment[$slot]->stats['armor'];
+                  if(isset($this->record->equipment[$slot]->attrs['armor'])) {
+                    $armor += $this->record->equipment[$slot]->attrs['armor'];
+                  }
+                ?>
+                <tr class='item-rating item-rating-armor item-rating-filter' data-attr="armor">
+                  <td>Armor</td>
+                  <td><?= $armor ?></td>
+                  <td class='bounds'>
+                  </td>
+                </tr>
+                <tr class='item-rating item-rating-armor item-rating-filter' data-attr="armor">
+                  <td colspan='3'>
+                    <div class='rating-bar' data-value="<?= $armor ?>" style='width: 50%; height: 3px;'></div>
+                  </td>
+                </tr>
+                <? $count++ ?>
+              <? endif ?>
               <? foreach($this->record->equipment[$slot]->attrs as $attr => $val):?> 
+                <? if($attr == 'armor') { continue; } ?>
                 <? if(is_object($val)): ?>
                   <? $val = implode("-", $val->export()) ?>
                 <? endif ?>
@@ -65,8 +94,8 @@
                 <tr class='item-rating item-rating-<?= $attr ?> item-rating-filter' data-attr="<?= $attr ?>">
                   <td><?= $this->shortStat(null, $attr) ?></td>
                   <td><?= $val ?></td>
-                  <td>
-                    <?= $max->calcStat($attr, $val, $this->record->equipment[$slot]->type) ?>
+                  <td class='bounds'>
+                    <?= $max->calcStat($attr, $val, $this->record->equipment[$slot]->type) ?: '???' ?>
                   </td>
                 </tr>
                 <?
@@ -81,7 +110,7 @@
                   <? else: ?>
                   <tr class='item-rating item-rating-<?= $attr ?>'>
                     <td colspan='3'>
-                      <div class='rating-bar' data-percent="0" style='width: 1%; height: 3px;'></div>
+                      <div class='rating-bar' data-percent="0" style='width: 100%; height: 3px; background-color: #444'></div>
                     </td>
                   </tr>
                   <? endif ?>
@@ -95,40 +124,4 @@
       <? endforeach ?>
     </tbody>
   </table>
-  <script type="text/javascript" charset="utf-8">
-    $(function() {
-      var selector = $("#gear-stats"),
-          table = $(".equipment-table"),
-          cellHeader = $(".cell-header"),
-          cellData = $(".cell-data"),
-          gearChange = $(".show-gear-change");
-      gearChange.click(function() {
-        selector.find("option").removeAttr("selected");
-        selector.find("option[value=gear-controls]").attr("selected", "selected");
-        selector.trigger("change");
-      });
-      cellData.hide();
-      cellHeader.hide();
-      table.find(".contributions").show();
-      selector.bind('change', function() {
-        cellData.hide();
-        cellHeader.hide();
-        table.find("." + $(this).val()).show();
-      });
-      var itemRatings = $("tr.item-rating"),
-          toggle = false;
-      $(".item-rating-filter").bind('click', function() {
-        if(toggle == false) {
-          var attr = $(this).data("attr");
-          itemRatings.hide();
-          $("tr.item-rating-" + attr).show();
-          toggle = true;          
-        } else {
-          $("tr.item-rating").show();
-          toggle = false;
-        }
-      }).css({cursor: 'pointer'});
-      $( ".rating-bar" ).each(function() { var elem = $(this), percent = elem.data("percent") / 100; if (percent>1) { elem.css("background-color", "white"); } else { elem.css("background-color", $.Color( "red" ).lightness(0.5).transition($.Color( "green" ).lightness(0.5), percent)); } });    
-    });
-  </script>
 </div>
