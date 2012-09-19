@@ -562,7 +562,7 @@ ItemBuilder.prototype = {
 		// Update the Attributes if nessicary
 		_.each(this.item.attrs, function(v, k) {
 			if(!this.preview.attrs.find("#input-" + k).length) {
-        d3up.log(builder.skillText);
+        // d3up.log(builder.skillText);
 				var container = $("<span>"),
 						input = "<input type='text' value='" + v + "' name='" + k + "' tabindex='100'>", 
 						hidden = "<input type='hidden' value='true' name='" + k + "' tabindex='100'>",

@@ -30,19 +30,22 @@ class D3Up_Tool_Crawler
 	);
 
 	static public function get($url) {
-		$config = array(
-      // 'adapter' => 'Zend_Http_Client_Adapter_Proxy',
-      // 'timeout' => '15',
-      // 'useragent' => '',
-      // 'proxy_host' => '192.168.1.7',
-      // 'proxy_port' => '8888',
-      // 'proxy_user' => '',
-      // 'proxy_pass' => '',
-			'encoding'      => 'UTF-8'
-		);
-		$client = new Zend_Http_Client($url, $config);
-		$response = $client->request();
-		$body = $response->getBody();
+    // var_dump($url); 
+	  $body = file_get_contents($url);
+    // $config = array(
+    //  // 'adapter' => 'Zend_Http_Client_Adapter_Proxy',
+    //  // 'timeout' => '15',
+    //  // 'useragent' => '',
+    //  // 'proxy_host' => '192.168.1.7',
+    //  // 'proxy_port' => '8888',
+    //  // 'proxy_user' => '',
+    //  // 'proxy_pass' => '',
+    //  'encoding'      => 'UTF-8'
+    // );
+    // $client = new Zend_Http_Client($url, $config);
+    // $response = $client->request();
+    // $body = $response->getBody();
+    // var_dump($body); exit;
 		return Zend_Json::decode($body);
 	}
 	
@@ -391,7 +394,7 @@ class D3Up_Tool_Crawler
 		$status = array();
 		$skills = array();
 		$passives = array();
-    // echo "<pre>"; var_dump($profile); exit;
+    // echo "<pre>"; var_dump($url, $profile); exit;
 		foreach($profile['skills']['active'] as $idx => $skill) {
 			$current = $skill['skill']['slug'];
 			if(isset($skill['rune'])) {
@@ -566,7 +569,8 @@ class D3Up_Tool_Crawler
 	}
 	
 	public function getCharactersByTag($tag, $region) {
-		$url = self::$profileUrl[$region] . strtolower(str_replace("#", "-", $tag)) . "/";
+		$url = self::$profileUrl[$region] . strtolower(str_replace("#", "-", $tag)) . "/index";
+    // var_dump($url); exit;
 		$data = self::get($url);
 		return $data['heroes'];		
 	}
@@ -575,7 +579,7 @@ class D3Up_Tool_Crawler
 		if(!$user->battletag) {
 			return false;
 		}
-		$url = self::$profileUrl[$user->region] . strtolower(str_replace("#", "-", $user->battletag)) . "/";
+		$url = self::$profileUrl[$user->region] . strtolower(str_replace("#", "-", $user->battletag)) . "/index";
 		$data = self::get($url);
 		return $data['heroes'];
 	}
@@ -584,7 +588,8 @@ class D3Up_Tool_Crawler
 		if(!$user->battletag) {
 			return false;
 		}
-		return $url = self::$profileUrl[$user->region] . strtolower(str_replace("#", "-", $user->battletag)) . "/hero/" . $character;		
+		$url = self::$profileUrl[$user->region] . strtolower(str_replace("#", "-", $user->battletag)) . "/hero/" . $character;
+		return $url;		
 	}
 	
 	public static function makeUrl($region, $battletag, $character) {

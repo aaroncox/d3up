@@ -601,9 +601,9 @@ BuildCalculator.prototype = {
 		// Formula: ( Life / (Percentage Damage Taken * Modifier ) )
 		// ----------------------------------
 		rendered['ehp-dodge'] = defenses.life / ( rendered.damageTaken * ( 1 - defenses['dodge-chance'] / 100));
-		rendered['ehp-melee'] = defenses.life / ( rendered.damageTaken * ( 1 - defenses['percent-resist-melee'] 	/ 100));
-		rendered['ehp-range'] = defenses.life / ( rendered.damageTaken * ( 1 - defenses['percent-resist-range'] 	/ 100));
-		rendered['ehp-elite'] = defenses.life / ( rendered.damageTaken * ( 1 - defenses['percent-resist-elite'] 	/ 100));
+		rendered['ehp-melee'] = defenses.life / ( rendered.damageTaken * ( 1 - defenses['percent-melee-reduce'] 	/ 100));
+		rendered['ehp-range'] = defenses.life / ( rendered.damageTaken * ( 1 - defenses['percent-range-reduce'] 	/ 100));
+		rendered['ehp-elite'] = defenses.life / ( rendered.damageTaken * ( 1 - defenses['percent-elite-reduce'] 	/ 100));
 		// Return the Values for EHP
 		return rendered;
 	},
@@ -745,11 +745,19 @@ BuildCalculator.prototype = {
 		// Elemental Damage Bonuses
 		_.each(['plus-fire-damage', 'plus-arcane-damage', 'plus-poison-damage', 'plus-cold-damage', 'plus-lightning-damage', 'plus-holy-damage'], function(v,k) {
 			if(_.has(this.attrs, v)) {
-				// d3up.log(this.attrs[v]);
+        // console.log(this.attrs[v]);
 				bnElePercent += this.attrs[v];
 			}
 		}, this);
-    // d3up.log(this.attrs.mhRealDamage.min, bnMinDamage, bnMaxDamage, bnElePercent, bnEleDamage);
+		// Determine Bonus Damage from Elemental Damage Bonuses
+		if(bnElePercent > 0 && this.attrs.mhRealDamage) {
+			if(this.isDuelWielding) {
+				bnEleDamage += ((this.attrs.mhRealDamage.min + bnMinDamage) + (this.attrs.ohRealDamage.min + bnMinDamage)) / 2 * (bnElePercent / 100);
+			} else {
+				bnEleDamage += (this.attrs.mhRealDamage.min + bnMinDamage) * (bnElePercent / 100);
+			}
+		}
+    // console.log(this.attrs.mhRealDamage.min, bnMinDamage, bnElePercent, bnEleDamage);
 		// Are we duel wielding?
     // d3up.log(this.attrs);		
 		var mathS, mathC, mathR, mathA, mathM;
@@ -1523,7 +1531,7 @@ BuildCalculator.prototype = {
 					case "cold-damage":
 					case "holy-damage":
 						this.attrs[ak] = av;
-						if(this.attrs['damage']) {
+						if(this.attrs['damage'] && typeof(av) == 'object') {
 							if(slot == "mainhand") {
 								this.attrs['mhRealDamage'] = {
 									min: this.attrs['damage']['min'] - av.min,
