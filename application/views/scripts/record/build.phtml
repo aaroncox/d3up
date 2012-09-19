@@ -202,7 +202,7 @@
       build.renderTo($("#statistics"));
       // Render build to a few of the Gear tabs
       build.renderTo($("#gear"));
-      console.log(build.getStats());
+      console.log(build.getStats())
       // console.log(build.getGear(), buildEmpty.getGear());
       // console.log(build.getSkills(), buildEmpty.getSkills());
 	  });
@@ -246,13 +246,16 @@
         cellData.hide();
         cellHeader.hide();
         table.find("." + $(this).val()).show();
+        $(".equipment-table .filters").hide();
+        if($(this).val() == 'stats') {
+          $(".equipment-table .filters").show();          
+        }
       });
       $(".item-rating-filter").bind('click', function() {
         var attr = $(this).data("attr");
         gearFilter.find("option[value=" + attr + "]").attr("selected", "selected");
         gearFilter.trigger("liszt:updated");
         gearFilter.trigger("change");
-        gearFilters.show();
       }).css({cursor: 'pointer'});
       var button = $("<a class='button'>").bind('click', function() {
         $(".perfection-table").find(".no-match-placeholder").remove();
@@ -260,9 +263,11 @@
         toggle = false;            
         $(".equipment-table > tbody").find(".remove-filter").remove();
         gearFilter.find("option").attr("selected", null);
-        gearFilters.hide();
-      }).html("Remove Filter");
+        gearFilter.trigger("liszt:updated");
+        gearFilter.trigger("change");
+      }).html("Remove All Filters");
       gearFilters.find("th").append(button); 
+      gearFilters.find(".button").hide();
       gearFilter.bind('change', function() {
         var attrs = $(this).val(),
             attr = "";
@@ -278,13 +283,14 @@
           $.each(attrs, function(k,v) {
             $(".item-rating-" + v).show().removeClass("no-match");
           });
+          gearFilters.find(".button").show();
         } else {
           gearFilter.find("option").attr("selected", null);
           gearFilter.trigger("liszt:updated");
           $(".perfection-table").find(".no-match-placeholder").remove();
           $(".equipment-table > tbody").find(".remove-filter").remove();
           $("tr.item-rating").show().removeClass("no-match");
-          gearFilters.hide();
+          gearFilters.find(".button").hide();
         }
         $(".perfection-table").each(function() {
           if($(this).find(".item-rating.no-match").length == $(this).find(".item-rating").length) {
@@ -300,8 +306,8 @@
       var tArmor = $("tr.stat-armor td.data").text().replace(",","");
       $(".item-rating-armor .rating-bar").each(function() {
         // console.log(tArmor);
-        $(this).attr("data-percent", $(this).data("value") / 1000 * 100);
-        $(this).css("width", Math.round(($(this).data("value") / 1000) * 100) + "%");
+        $(this).attr("data-percent", $(this).data("percent") / 1000 * 100);
+        $(this).css("width", Math.round(($(this).data("percent") / 1000) * 100) + "%");
       });
       // Apply Colors to Ratings Bars
       $(".rating-bar").each(function() { 

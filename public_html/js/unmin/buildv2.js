@@ -48,20 +48,25 @@
         $(this).empty();
         var id = $(this).data("value"),
             value = build.stats[id],
-            type = $(this).data("display");
+            type = $(this).data("display"),
+            suffix = "",
+            prefix = "";
         if(type) {
           switch(type) {
+            case "percent":
+              suffix = "%";
+              break;
             case "dps-heat":
               // $("#gear-" + v).html(val + "<br/>(" + (Math.round(tPer * 1000) / 10) + "%)");
-              $(this).append($("<p>").append(Math.round(value / build.stats['dps-gear-total'] * 1000) / 10, "%"));
-              $(this).css("color", $.Color( "#750" ).transition($.Color( "#f50" ), ((value / build.stats['dps']) * 8))); 
+              $(this).append($("<p>").append(Math.round(value / build.stats['dps-gear-total'] * 100), "%"));
+              $(this).css("color", $.Color( "#FFF" ).transition($.Color( "#f50" ), ((value / build.stats['dps']) * 5))); 
               break;
             case "ehp-heat":
               // $("#gear-" + v).html(val + "<br/>(" + (Math.round(tPer * 1000) / 10) + "%)");
               // console.log(value, build.stats['ehp'], (value / build.stats['ehp']), "" + $.Color( "#570" ).transition($.Color( "#5F0" ), ((value / build.stats['ehp']) * 6)));
               // console.log(build.stats['ehp-gear-total']);
-              $(this).append($("<p>").append(Math.round(value / build.stats['ehp-gear-total'] * 1000) / 10, "%"));
-              $(this).css("color", $.Color( "#570" ).transition($.Color( "#5F0" ), ((value / build.stats['ehp']) * 4))); 
+              $(this).append($("<p>").append(Math.round(value / build.stats['ehp-gear-total'] * 100), "%"));
+              $(this).css("color", $.Color( "#FFF" ).transition($.Color( "#5F0" ), ((value / build.stats['ehp']) * 3))); 
               break;
             default:
               console.log("Unknown Formatter: " + type);
@@ -71,10 +76,10 @@
         if(value) {
           value = Math.round(value * 100) / 100;
           value = value.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,");          
+          $(this).prepend(prefix + value + suffix);
         } else {
-          value = "~";
+          $(this).prepend("0");
         }
-        $(this).prepend(value);
       });
     },
     

@@ -481,10 +481,14 @@ dd:has(:focus) .chzn-container {
   padding: 0 6px;
   font-size: 12px;
 }
-.equipment-table .contributions {
+.equipment-table td.contributions {
 	width: 50px;
   font-size: 14px;
   line-height: 1.1em;
+  text-align: right;
+}
+.equipment-table .cell-data p {
+  margin: 3px;
 }
 .equipment-table .stats {
   display: table-cell;

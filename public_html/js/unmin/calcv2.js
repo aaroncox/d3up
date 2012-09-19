@@ -440,6 +440,7 @@ BuildCalculator.prototype = {
 		// Formula: ( Armor / ( 50 * Monster Level + Armor ) )
 		// ----------------------------------
 		rendered.armorReduction = rendered.armor / (50 * this.vsLevel + rendered.armor);
+		rendered['damage-reduction'] = rendered.armorReduction * 100;
 		// ----------------------------------
 		// Resist All
 		// Formula: ( Resist All + ( Intelligence / 10 ) )

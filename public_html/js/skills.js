@@ -3706,7 +3706,7 @@ var activeSkills = {
 		'seven-sided-strike~a': {
 			name: 'Seven-Sided Strike - Sudden Assault',
 			desc: 'Dash rapidly between nearby enemies, dealing 1777% weapon damage over 7 hits.',
-			rune: 'Teleport to the target, increasing damage done to 1008% weapon damage over 7 strikes.',
+			rune: 'Teleport to the target, increasing damage done to 2309% weapon damage over 7 strikes.',
 			effect: {
 				'cost-spirit': 50,
 				'cooldown': 30,
