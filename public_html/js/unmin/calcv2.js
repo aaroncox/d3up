@@ -686,7 +686,7 @@ BuildCalculator.prototype = {
 		// Elemental Damage Bonuses
 		_.each(['plus-fire-damage', 'plus-arcane-damage', 'plus-poison-damage', 'plus-cold-damage', 'plus-lightning-damage', 'plus-holy-damage'], function(v,k) {
 			if(_.has(this.attrs, v)) {
-        console.log(this.attrs[v]);
+        // console.log(this.attrs[v]);
 				bnElePercent += this.attrs[v];
 			}
 		}, this);
@@ -698,7 +698,7 @@ BuildCalculator.prototype = {
 				bnEleDamage += (this.attrs.mhRealDamage.min + bnMinDamage) * (bnElePercent / 100);
 			}
 		}
-    console.log(this.attrs.mhRealDamage.min, bnMinDamage, bnElePercent, bnEleDamage);
+    // console.log(this.attrs.mhRealDamage.min, bnMinDamage, bnElePercent, bnEleDamage);
 		// Are we duel wielding?
     // console.log(this.attrs);		
 		var mathS, mathC, mathR, mathA, mathM;
