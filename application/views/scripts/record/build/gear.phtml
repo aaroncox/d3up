@@ -46,13 +46,17 @@
       			</span>
       			<br/><span class="equipped-type"><?= ucfirst($slot) ?></span>
       		</td>
-      		<? if($this->myBuild): ?>
           <td class="cell-data gear-controls">
             <a id="change-<?= $slot ?>" class="button gear-change" data-item-type="<?= $slot ?>" role="button" aria-disabled="false"><span class="ui-button-text">Change/Compare</span></button>
           </td>
+      		<? if($this->myBuild): ?>
           <td class="cell-data gear-controls">
             <a id="new-<?= $slot ?>" class="button" href="/item/create?b=<?= $this->record->id ?>&slot=<?= $slot ?>&return=build"><span class="ui-button-text">New Item</span></a>
           </td>
+          <? else: ?>
+          <td class="cell-data gear-controls">
+            <a class="button" href="/i/<?= $this->record->id ?>/copy"><span class="ui-button-text">Copy Item</span></a>
+          </td>          
           <? endif ?>
           <td class="cell-data contributions" data-display="dps-heat" data-value="dps-<?= $slot ?>">~</td>
           <td class="cell-data contributions" data-display="ehp-heat" data-value="ehp-<?= $slot ?>">~</td>
