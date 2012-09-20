@@ -192,7 +192,7 @@ class ItemController extends D3Up_Controller_Action
 				'_createdBy' => $profile->createReference(),
 				'type' => array('$in' => $acceptable),
 			);
-			$items = Epic_Mongo::db('item')->fetchAll($query);
+			$items = Epic_Mongo::db('item')->fetchAll($query, array("name" => 1));
 			$data = array();
 			foreach($items as $item) {
 				$data[$item->id] = json_encode($item->cleanExport());

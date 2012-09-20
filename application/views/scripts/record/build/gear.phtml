@@ -1,7 +1,5 @@
 <h5>Gear / Items</h5>
-<? if($this->myBuild): ?>
-  <a class="button show-gear-change"><span class="ui-button-text">Change/Compare Gear</span></a>
-<? endif ?>
+<a class="button show-gear-change"><span class="ui-button-text"><?= ($this->myBuild) ? "Change/" : "" ?>Compare Gear</span></a>
 <div class="page">
   <table class="equipment-table" id="build-gear">
     <thead>
@@ -17,9 +15,7 @@
       </tr>
       <tr>
         <th>Name</th>
-        <? if($this->myBuild): ?>
         <th class="cell-header gear-controls" colspan="2">Controls</th>
-        <? endif ?>
         <th class="cell-header contributions">DPS<br/>(% of Total)</th>
         <th class="cell-header contributions">EHP<br/>(% of Total)</th>
         <th class="cell-header stats">Gear Stats</th>
@@ -47,7 +43,7 @@
       			<br/><span class="equipped-type"><?= ucfirst($slot) ?></span>
       		</td>
           <td class="cell-data gear-controls">
-            <a id="change-<?= $slot ?>" class="button gear-change" data-item-type="<?= $slot ?>" role="button" aria-disabled="false"><span class="ui-button-text">Change/Compare</span></button>
+            <a id="change-<?= $slot ?>" class="button gear-change" data-item-type="<?= $slot ?>" role="button" aria-disabled="false"><span class="ui-button-text"><?= ($this->myBuild) ? "Change/" : "" ?>Compare</span></button>
           </td>
       		<? if($this->myBuild): ?>
           <td class="cell-data gear-controls">
