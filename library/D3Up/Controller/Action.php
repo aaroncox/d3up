@@ -18,10 +18,8 @@ class D3Up_Controller_Action extends Epic_Controller_Action
 			$this->_handleForm($loginForm);
 		} else {
 			$query = array('_createdBy' => $profile->createReference());
-			$sort = array();
+			$sort = array("paragon" => -1, "level" => -1);
 			$this->view->userBuilds = Epic_Mongo::db('build')->fetchAll($query, $sort, 5);
-			$query = array('author' => $profile->createReference());
-			$this->view->userGuides = Epic_Mongo::db('guide')->fetchAll($query, $sort, 5);
 		}
 	}
 } // END class D3Up_Controller_Action

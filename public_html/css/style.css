@@ -465,7 +465,7 @@ dd:has(:focus) .chzn-container {
   padding-bottom: 5px;
   border-bottom: 1px solid #333;
 }
-.equipment-table td {
+.equipment-table > tbody > tr > td {
 	padding: 10px 5px;
 	vertical-align: middle;
 	width: 150px;
@@ -476,6 +476,16 @@ dd:has(:focus) .chzn-container {
   text-align: center;
 	vertical-align: middle;
 	width: 80px;
+	line-height: 1em;
+}
+.equipment-table .compare-row {
+  
+}
+.equipment-table .compare-row th {
+  color: #ececec;
+}
+.equipment-table .compare-row h4 {
+  margin: 0;
 }
 .equipment-table .gear-controls .button {
   padding: 0 6px;
@@ -1703,9 +1713,33 @@ div.toc.section {
   padding: 2px 5px;
   font-size: 14px;
 }
-.statistics-table td:first-child {
+.statistics-table > tbody > tr > td:first-child {
   width: 60%;
   color: #B18135;
   text-align: right;
+  font-size: 12px;
+}
+#compare-table {
+  display: none;
+}
+#compare-table .compare-overview {
+  background: #111;
+  color: #ececec;
+  text-align: center;
+}
+#compare-table .compare-overview {
+  border-top: 1px solid #333;
+}
+#compare-table tbody {
+  border-top: 1px solid #333;
+}
+#compare-table tbody tr {
+  text-align: center;
+  font-size: 10px;
+}
+#compare-table thead tr td {
+  font-size: 11px;
+}
+#compare-table tbody tr td {
   font-size: 12px;
 }

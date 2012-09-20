@@ -165,7 +165,7 @@ BuildCalculator.prototype = {
 	},
 	getItemLink: function(item) {
 		if(item == null) {
-			return '';
+			return '<a style="color: #ececec">Nothing</a>';
 		}
 		var link = $("<a href='/i/" + item.id + "' class='quality-" + item.quality + "'/>").attr("data-json", JSON.stringify(item)).html(item.name);
     link.bindTooltip();
@@ -1086,6 +1086,8 @@ BuildCalculator.prototype = {
 		return {skillData: rendered};
 	},
 	setBuild: function(build) {
+	  // Refresh this to an empty build
+	  this.init();
 	  // Set all our Skill Data
 	  this.setActives(build.skills.actives);
 		this.setPassives(build.skills.passives);
@@ -1100,7 +1102,11 @@ BuildCalculator.prototype = {
     }
     // Parse all gear into proper slots
     _.each(build.gear, function(json, slot) {
-      this.setItem(slot, json);
+      if(json) {
+        this.setItem(slot, json);        
+      } else {
+        this.removeItem(slot);
+      }
     }, this);
 	},
 	applySetBonuses: function() {
@@ -1247,6 +1253,9 @@ BuildCalculator.prototype = {
 	removeItem: function(slot) {
 		var json = this.gear[slot];
 		this.gear[slot] = false;
+		if(!json) {
+		  return false;
+		}
 		// d3up.log("Removing Item from ["+slot+"], now: " + this.gear[slot]);
 		if(json.set) {
 			// d3up.log("=====", json.set);
@@ -1441,6 +1450,9 @@ BuildCalculator.prototype = {
 		this.gear[slot] = json;
     // d3up.log("Parsing item to slot ["+slot+"], now: " + this.gear[slot].name);
 		// Add to SetBonus Counter
+		if(!json) {
+      return false;
+		}
 		if(json.set) {
 			// d3up.log("=====", json.set);
 			// d3up.log("+1 for " + slot);
@@ -1737,6 +1749,7 @@ BuildCalculator.prototype = {
 					'critical-hit': 'Crit Hit', 
 					'critical-hit-damage': 'Crit Hit Dmg'
 				};
+		console.log(s1, s2);
 		_.each(s1, function(val, key) {
 			if(typeof(s2[key]) != "undefined") {
 				if(allowed.hasOwnProperty(key)) {

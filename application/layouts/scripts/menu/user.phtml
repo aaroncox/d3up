@@ -4,11 +4,8 @@
 	<div class="col_1 col_first">
 		<h2 style="margin-bottom: 0">Quick Access</h2>
 	</div>
-	<div class="col_1">
+	<div class="col_2">
 		<h2>My Builds</h2>
-	</div>
-	<div class="col_1">
-		<h2>My Guides</h2>
 	</div>
 	<div class="col_1 col_first">
 		<p><a class="button" href="/user/builds">My Builds</a></p>
@@ -17,28 +14,16 @@
 		<p><a class="button" href="/user/edit">My Profile</a></p>
 		<p><a class="button" href="/user/logout">Logout</a></p>
 	</div>
-	<div class="col_1">
+	<div class="col_2">
 		<? if(count($this->userBuilds)): ?>
 		<ul class="dropdown_links">
 			<? foreach($this->userBuilds as $build): ?>
-			<li><?= $this->mLink($build) ?></li>
+			  <li class="build <?= $build->class ?>"><?= $this->mLink($build, array("text" => $build->name . "<br/><span class='level'>Level ".($build->level?:60)."</span>, Paragon <span class='paragon'>".($build->paragon?:0)."</span>")) ?></li>
 			<? endforeach ?>
 		</ul>
 		<? else: ?>
 		<p class="notice">You don't have any builds!</p>
 		<p><a class="button" href="/build/create">Create a Build</a></p>
 		<? endif ?>
-	</div>
-	<div class="col_1">
-		<? if(count($this->userGuides)): ?>
-		<ul class="dropdown_links">
-			<? foreach($this->userGuides as $guide): ?>
-			<li><?= $this->guideLink($guide) ?></li>
-			<? endforeach ?>
-		</ul>
-		<? else: ?>
-		<p class="notice">You don't have any guides!</p>
-		<p><a class="button" href="/guide/create">Create a Guide</a></p>
-			<? endif ?>
 	</div>
 </div>

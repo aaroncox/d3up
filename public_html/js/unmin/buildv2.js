@@ -13,6 +13,7 @@
   	return this.init(data);
   }
   Build.prototype = {
+    slots: ['helm', 'shoulders', 'amulet', 'chest', 'gloves', 'bracers', 'belt', 'pants', 'ring1', 'ring2', 'boots', 'mainhand', 'offhand'],
     init: function(data) {
       this.calc = new d3up.BuildCalculator;
       this.heroClass = false;
@@ -35,13 +36,16 @@
           this.setSkills(data.skills);
         }     
       }
-      this.run();
     }, 
     run: function() {
       this.calc.setBuild(this);
       this.stats = this.calc.run();
     },
     renderTo: function(elem) {
+      // If we've called render before run, then run it before the render
+      if(!this.stats.strength) {
+        this.run();
+      }
       var build = this,
           elements = elem.find("*[data-value]");
       elements.each(function() {
@@ -82,7 +86,6 @@
         }
       });
     },
-    
     setGear: function(gear) {
       var build = this;
       $.each(gear, function(k,v) {
@@ -91,6 +94,9 @@
             item = $.parseJSON($this.attr("data-json"));
         build.gear[slot] = item;
       });
+    },
+    setItem: function(slot, item) {
+      this.gear[slot] = item;
     },
     setMeta: function(meta) {
       this.meta = meta;

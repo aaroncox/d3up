@@ -1,6 +1,6 @@
 <h5>Gear / Items</h5>
 <? if($this->myBuild): ?>
-  <a class="button show-gear-change"><span class="ui-button-text">Change Gear</span></a>
+  <a class="button show-gear-change"><span class="ui-button-text">Change/Compare Gear</span></a>
 <? endif ?>
 <div class="page">
   <table class="equipment-table" id="build-gear">
@@ -11,7 +11,7 @@
           <select id="gear-stats">
             <option value="contributions">EHP/DPS Contributions</option>
             <option value="stats">Gear Stats / Perfection</option>
-            <? if($this->myBuild): ?><option value="gear-controls">Controls</option><? endif ?>
+            <option value="gear-controls">Change/Compare Items</option>
           </select>
         </td>
       </tr>
@@ -35,7 +35,7 @@
     </thead>
     <tbody>
       <? foreach($this->record->equipment->getSlots() as $slot): ?>
-      	<tr>
+      	<tr data-slot="<?= $slot ?>">
       		<td class="primary">
       			<span class="equipped" id="equipped-<?= $slot ?>" data-slot="<?= $slot ?>">
       				<? if($this->record->equipment[$slot]->id): ?>
@@ -48,7 +48,7 @@
       		</td>
       		<? if($this->myBuild): ?>
           <td class="cell-data gear-controls">
-            <a id="change-<?= $slot ?>" class="button gear-change" data-item-type="<?= $slot ?>" role="button" aria-disabled="false"><span class="ui-button-text">Change</span></button>
+            <a id="change-<?= $slot ?>" class="button gear-change" data-item-type="<?= $slot ?>" role="button" aria-disabled="false"><span class="ui-button-text">Change/Compare</span></button>
           </td>
           <td class="cell-data gear-controls">
             <a id="new-<?= $slot ?>" class="button" href="/item/create?b=<?= $this->record->id ?>&slot=<?= $slot ?>&return=build"><span class="ui-button-text">New Item</span></a>
