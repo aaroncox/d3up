@@ -17,6 +17,7 @@ ItemBuilder.prototype = {
 		socketCount: 0,						// Storage for the # of Sockets
 		setBonus: null						// Storage for which set this item is part of
 	},
+	changeCallback: false,			// Fires anytime anything changes
 	headerElements: [],					// Any additional elements to append to the header					
 	footerElements: [],					// Any additional elements to append to the footer
 	attrsSelected: [],					// The attributes that have already been selected, to avoid removing/adding additional
@@ -414,6 +415,9 @@ ItemBuilder.prototype = {
 		if(!this.item.stats[name]) {
 			this.item.stats[name] = 0;
 		}
+		if(this.changeCallback) {
+			this.changeCallback(this);
+		}
 	},
 	// Update the Value of a Stat
 	updateStat: function(name, value) {
@@ -421,14 +425,26 @@ ItemBuilder.prototype = {
 			this.item.stats = {};
 		}
 		this.item.stats[name] = parseFloat(value);
+		if(this.changeCallback) {
+			this.changeCallback(this);
+		}
 	},
 	// Remove a specific stat by name
 	removeStat: function(name) {
 		delete this.item.stats[name];
+		if(this.changeCallback) {
+			this.changeCallback(this);
+		}
 	},
 	// Remove all existing stats
 	removeStats: function(name) {
 		this.item.stats = {};
+		if(this.changeCallback) {
+			this.changeCallback(this);
+		}
+	},
+	setChangeCallback: function(fn) {
+		this.changeCallback = fn;
 	},
 	// Add an Attribute to this.item.attrs
 	addAttribute: function(name) {
@@ -442,15 +458,23 @@ ItemBuilder.prototype = {
 	// Update the Value of an Attribute
 	updateAttribute: function(name, value) {
 		this.item.attrs[name] = parseFloat(value);
-		// d3up.log(this.attrs);
+		if(this.changeCallback) {
+			this.changeCallback(this);
+		}
 	},
 	// Remove a specific attribute by name
 	removeAttribute: function(name) {
 		delete this.item.attrs[name];
+		if(this.changeCallback) {
+			this.changeCallback(this);
+		}
 	},
 	// Remove all existing attributes
 	removeAttributes: function(name) {
 		this.item.attrs = {};
+		if(this.changeCallback) {
+			this.changeCallback(this);
+		}
 	},
 	// Initialize the Preview
 	initPreview: function() {
@@ -503,6 +527,10 @@ ItemBuilder.prototype = {
 	// Update the Item Preview
 	updatePreview: function() {
 		var builder = this;
+		// No item? No preview!
+		if(!this.item) {
+			return;
+		}
 		// Update the Name
 		this.preview.header.find("p").html(this.item.name);
 		// Update the Quality
@@ -516,7 +544,7 @@ ItemBuilder.prototype = {
 			this.preview.setBonus.addClass("quality-" + this.item.quality);
 		}
 		// Update the Type
-		if(this.item.type) {
+		if(this.item.type && this.itemTypeSelect) {
 			this.item.typeName = this.itemTypeSelect.selectedOption().text();
 			this.preview.itemType.html(this.item.typeName);
 		}
@@ -567,7 +595,6 @@ ItemBuilder.prototype = {
 						input = "<input type='text' value='" + v + "' name='" + k + "' tabindex='100'>", 
 						hidden = "<input type='hidden' value='true' name='" + k + "' tabindex='100'>",
 						helper = builder.skillText[k];
-						d3up.log(builder.skillText[k], k);
 				if(helper.search("VVV") >= 0) {
 					helper = helper.replace(/VVV/, input);										
 				} else {
@@ -588,6 +615,7 @@ ItemBuilder.prototype = {
 			}
 		}, this);
 		// Add stats relevant to the Item's Class
+		// console.log(builder.item, builder.preview.attrs.html());
 		switch(builder.item.itemClass) {
 			case "none":
 				builder.preview.statsPrimary.empty();
@@ -727,24 +755,40 @@ ItemBuilder.prototype = {
 		this.preview.footer.append(element);
 	},
 	// Sets the Item 
-	setItem: function(item) {
+	setItem: function(slot, item) {
+		this.slot = slot;
 		// Set the Item
-		this.item = item;
-		// Adjust the Socket Count
-		if(item.sockets) {
-			this.item.socketCount = item.sockets.length;			
+		this.item = _.clone(item, true);
+		if(this.item) {
+			// Adjust the Socket Count
+			if(this.item.sockets) {
+				this.item.socketCount = item.sockets.length;			
+			}
+			// Figure out the itemClass
+			_.each(this.itemClass, function(v,k) {
+				if(_.indexOf(v, item.type) >= 0) {
+					this.item.itemClass = k;
+				}
+			}, this);			
+			// Adjust the Set
+			this.item.setBonus = item.set;
 		}
-		// Adjust the Set
-		this.item.setBonus = item.set;
 		// Update the Fields
-		this.qualitySelect.trigger("change");
-		this.itemTypeSelect.trigger("change");
-		this.attributeSelect.trigger("change");
-		this.updatePreview();
+		if(this.qualitySelect) {
+			this.qualitySelect.trigger("change");			
+		}
+		if(this.itemTypeSelect) {			
+			this.itemTypeSelect.trigger("change");
+		}
+		if(this.attributeSelect) {
+			this.attributeSelect.trigger("change");			
+		}
+		this.initPreview();
+		this.updatePreview();				
 	},
 	// Returns the Item Object for parsing
 	getItem: function() {
-		return this.item;
+		return _.clone(this.item, true);
 	},
 	getBonusHtml: function(setBonus) {
 		var bonuses = $("<ul class='bonuses'>"),

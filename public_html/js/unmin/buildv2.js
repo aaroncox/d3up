@@ -14,6 +14,7 @@
   }
   Build.prototype = {
     slots: ['helm', 'shoulders', 'amulet', 'chest', 'gloves', 'bracers', 'belt', 'pants', 'ring1', 'ring2', 'boots', 'mainhand', 'offhand'],
+    elems: {},
     init: function(data) {
       this.calc = new d3up.BuildCalculator;
       this.heroClass = false;
@@ -21,6 +22,7 @@
       this.skills = {
         actives: {},
         passives: {},
+        enabled: {},
         misc: {}
       };
       this.stats = {};
@@ -39,7 +41,29 @@
     }, 
     run: function() {
       this.calc.setBuild(this);
+      // console.log(this);
       this.stats = this.calc.run();
+      // console.log("running calc");
+      // Loop through the Skill Data recieved
+      // $.each(this.stats.skillData, function(k,v) {
+        // This is an activatable skill
+        // if(v.activate) {
+          
+        // }
+        // console.log(v);
+      // });
+      // console.log(this.stats);
+    },
+    renderAgain: function() {
+      var build = this;
+      // Reset the Calculator with our new Build
+      this.calc.setBuild(this);
+      // Run the new Stats
+      this.stats = this.calc.run();
+      // Loop through all Elements previously used and re-render
+      $.each(this.elems, function(k) {
+        build.renderTo($(k));
+      });
     },
     renderTo: function(elem) {
       // If we've called render before run, then run it before the render
@@ -48,6 +72,7 @@
       }
       var build = this,
           elements = elem.find("*[data-value]");
+      this.elems[elem.selector] = true;
       elements.each(function() {
         $(this).empty();
         var id = $(this).data("value"),
@@ -73,7 +98,7 @@
               $(this).css("color", $.Color( "#570" ).transition($.Color( "#5F0" ), ((value / build.stats['ehp']) * 4))); 
               break;
             default:
-              console.log("Unknown Formatter: " + type);
+              // console.log("Unknown Formatter: " + type);
               break;
           }
         }
@@ -86,7 +111,153 @@
         }
       });
     },
+    renderSkillsTo: function(elem) {
+      // If we've called render before run, then run it before the render
+      if(!this.stats.strength) {
+        this.run();
+      }
+      var build = this,
+          compare = d3up.buildCompare,
+          elements = elem.find("*[data-skill-type]");
+      elements.each(function() {
+        var $this = $(this),
+            type = $(this).data("skill-type"), 
+            display = $(this).data("display"),
+            icon = false,
+            name = false;
+        // Remove Existing Elements
+        $(this).empty();
+        // Loop through selected Skills and Render
+        $.each(build.skills[type], function(slug, data) {
+          if(!data) {
+            return null;
+          }
+          switch(display) {
+            case "icon":
+              var li = $("<li>"),
+                  cleaned = slug.split("~"),
+                  icon = $("<img class='skill-icon' src='/images/icons/" + build.meta.heroClass + "-" + cleaned[0] + ".png'>");
+              icon.attr('data-tooltip', data.desc),
+              icon.attr('data-name', data.name);
+              icon.attr('data-skill', slug);
+              icon.click(function() {
+                var checkbox = $(".skill-activate[data-skill='" + slug + "']");
+                if(checkbox.length) {
+                  $(this).toggleClass("skill-activated");                  
+                  if(checkbox.is(":checked")) {
+                    checkbox.removeAttr("checked");
+                  } else {
+                    checkbox.attr("checked", "checked");
+                  }
+                  checkbox.trigger("change");
+                }
+                
+              });
+              if(!data.name) {
+                icon.attr('data-name', slug.replace(/\-/g, " ").capitalize());
+              }
+              if(data.rune) {
+                icon.attr('data-tooltip', data.desc.replace(/  /, "<br/><br/>") + "<br/><br/>" + data.rune);
+              }
+              icon.bindSkilltip();
+              li.append(icon);
+              $this.append(li);
+              break;
+            case "table-row":
+              var skillName = data.name,
+                  cleaned = slug.split("~"),
+                  h3 = $("<h3>").html(skillName),
+                  skillIcon = $("#build-header").find("img[data-skill='" + slug + "']"),
+                  icon = $("<img src='/images/icons/" + build.meta.heroClass + "-" + cleaned[0] + ".png'>"),
+                  tr = $("<tr class='skill-calc-row' data-id='" + slug + "'>"),
+                  td = $("<td>"),
+                  control = $("<div class='control'></div>");
+              if(!skillName) {
+                skillName = slug.replace(/\-/g, " ").capitalize();
+                h3.html(skillName);
+              }
+          		if(data.effect) {
+          		  var select = $("<select class='skill-stacks' data-skill='" + slug + "'>").hide(),
+          		      checkbox = $("<input type='checkbox' class='skill-activate' data-skill='" + slug + "'>"),
+      					    skill = build.stats.skillData[slug];
+      					if(skill && skill.activate) {
+          				td.append(control);
+          			}
+          			if(skill && skill.stackable) {
+          				select.show();
+          				if(select.find("option").length == 0) {
+            				for(i = 1; i <= skill.stackable; i++) {
+            				  var option = $("<option value='" + i + "'>").html(i + " Stacks");
+            				  select.append(option);
+            				}				  
+          				}
+          				// Set the Default
+          				checkbox.attr("data-stacks", 1);
+          			}
+                if(build.stats.skillData[slug] && build.stats.skillData[slug].activate) {
+
+                }
+                checkbox.click(function() {
+                  // tr.toggleClass("skill-activated");
+                });
+                // select.bind('change', function() {
+                  //  checkbox.attr("data-stacks", $(this).val());
+                // });
+                checkbox.bind('change', function() {
+                  var name = $(this).attr('data-skill'), 
+                      type = $(this).closest("table").data("skill-type");
+                  if($(this).is(":checked")) {
+                    skillIcon.addClass("skill-activated");
+                    tr.addClass("skill-activated");
+                    $.each(d3up.builds, function(k) {
+                      d3up.builds[k].skills.enabled[name] = build.skills[type][name];                      
+                      // console.log("applying [" + name + "] to build id#" + k);
+                      // console.log("enabled", d3up.builds[k].skills.enabled);
+                      if($(this).attr("data-stacks")) {
+                        // console.log("adding stacks (" + $(this).attr("data-stacks") + ") to build id#" + k);
+                        d3up.builds[k].skills.enabled[name].stacks = $(this).attr("data-stacks");
+                      }
+                    });
+                  } else {
+                    skillIcon.removeClass("skill-activated");
+                    tr.removeClass("skill-activated");
+                    $.each(d3up.builds, function(k) {
+                      // console.log("removing [" + name + "] from build id#" + k);
+                      delete d3up.builds[k].skills.enabled[name];
+                      // console.log("enabled", d3up.builds[k].skills.enabled);
+                    });
+                  }
+                  // Update any Compare's that might be active...
+                  $(".compare-change").trigger("change");
+                  $.each(d3up.builds, function(k) {
+                    d3up.builds[k].renderAgain();
+                    // console.log(k, d3up.builds[k]);
+                  });
+                });
+                select.bind('change', function() {
+                  checkbox.attr("data-stacks", $(this).val());
+                  checkbox.trigger('change');
+                });
+      					control.append("Activate ", checkbox, select);					
+      				}
+              h3.prepend(icon);
+              td.prepend(h3);
+              tr.append(td);
+              $this.append(tr);
+              break;
+            default:
+              // console.log("Unhandled Display Type: " + display);
+              break;
+          }
+        });
+      });
+    },
+    diffWith: function(build) {
+      // Compares this build to the build passed in
+      return this.calc.diff(this.getStats(), build.getStats());
+    },
     setGear: function(gear) {
+      // console.log("setting gear");
       var build = this;
       $.each(gear, function(k,v) {
         var $this = $(v);
@@ -96,8 +267,11 @@
       });
     },
     setItem: function(slot, item) {
-      this.gear[slot] = item;
+      this.gear[slot] = _.clone(item, true);
     },
+		getItem: function(slot) {
+			return _.clone(this.gear[slot], true);
+		},
     setMeta: function(meta) {
       this.meta = meta;
     },
@@ -113,7 +287,7 @@
               build.skills[type][slug] = activeSkills[build.meta.heroClass][slug];
               break;
             default:
-              console.log("Unknown Skills Type: " + type);
+              // console.log("Unknown Skills Type: " + type);
               break;
           }
         });

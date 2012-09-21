@@ -1,5 +1,7 @@
 <h5>Gear / Items</h5>
-<a class="button show-gear-change"><span class="ui-button-text"><?= ($this->myBuild) ? "Change/" : "" ?>Compare Gear</span></a>
+<? if(D3Up_Auth::getInstance()->getProfile()): ?>
+  <a class="button show-gear-change"><span class="ui-button-text"><?= ($this->myBuild) ? "Change/" : "" ?>Compare Gear</span></a>
+<? endif ?>
 <div class="page">
   <table class="equipment-table" id="build-gear">
     <thead>
@@ -34,33 +36,32 @@
       	<tr data-slot="<?= $slot ?>">
       		<td class="primary">
       			<span class="equipped" id="equipped-<?= $slot ?>" data-slot="<?= $slot ?>">
-      				<? if($this->record->equipment[$slot]->id): ?>
+      				<? if($this->record->equipment[$slot] && $this->record->equipment[$slot]->id): ?>
       					<?= $this->itemLink($this->record->equipment[$slot], array('slot' => $slot)) ?>
       				<? else: ?>
-      					Nothing
+      					<a>Nothing</a>
       				<? endif ?>
       			</span>
       			<br/><span class="equipped-type"><?= ucfirst($slot) ?></span>
       		</td>
           <td class="cell-data gear-controls">
-            <a id="change-<?= $slot ?>" class="button gear-change" data-item-type="<?= $slot ?>" role="button" aria-disabled="false"><span class="ui-button-text"><?= ($this->myBuild) ? "Change/" : "" ?>Compare</span></button>
+        		<? if(D3Up_Auth::getInstance()->getProfile()): ?>
+              <a id="change-<?= $slot ?>" class="button gear-change" data-item-type="<?= $slot ?>" role="button" aria-disabled="false"><span class="ui-button-text">Modify</button>
+            <? endif ?>
           </td>
-      		<? if($this->myBuild): ?>
           <td class="cell-data gear-controls">
-            <a id="new-<?= $slot ?>" class="button" href="/item/create?b=<?= $this->record->id ?>&slot=<?= $slot ?>&return=build"><span class="ui-button-text">New Item</span></a>
-          </td>
-          <? else: ?>
-          <td class="cell-data gear-controls">
-            <a class="button" href="/i/<?= $this->record->id ?>/copy"><span class="ui-button-text">Copy Item</span></a>
+            <a id="simulate-<?= $slot ?>" class="button gear-simulate" data-item-type="<?= $slot ?>" role="button" aria-disabled="false"><span class="ui-button-text">Simulate</button>
           </td>          
-          <? endif ?>
           <td class="cell-data contributions" data-display="dps-heat" data-value="dps-<?= $slot ?>">~</td>
           <td class="cell-data contributions" data-display="ehp-heat" data-value="ehp-<?= $slot ?>">~</td>
           <td class="cell-data stats" colspan="2">
             <? 
-              $total = count($this->record->equipment[$slot]->attrs);
-              $count = 1;
-              $max = D3Up_Tool_MaxStat::getInstance();
+              $total = null;
+              if($this->record->equipment[$slot]) {
+                $total = count($this->record->equipment[$slot]->attrs);
+                $count = 1;
+                $max = D3Up_Tool_MaxStat::getInstance();                
+              }
             ?>
             <? if($total): ?>
               <table class="d3up-table perfection-table">

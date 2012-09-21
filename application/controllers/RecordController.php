@@ -244,26 +244,32 @@ class RecordController extends D3Up_Controller_Action
 						case "equip":
 							$slot = $this->getRequest()->getParam('slot');
 							$newItem = $this->getRequest()->getParam('newItem');
-							$item = Epic_Mongo::db('item')->fetchOne(array('id' => (int) $newItem));
-							// If we are wearing a 2h weapon, blank out the offhand
-							if(isset($record->equipment['mainhand']->id)) {
-								switch($record->equipment['mainhand']->type) {
-									case '2h-mace': 
-									case '2h-axe': 
-									case 'daibo': 
-									case '2h-mighty': 
-									case 'polearm': 
-									case 'staff': 
-									case '2h-sword':
-										$record->equipment['offhand'] = null;
-										break;
-								}								
+							if($newItem == "") {
+                // Blank out the Item
+                $record->equipment[$slot] = null;
+							} else {
+							  // Fetch the new Item
+							 	$item = Epic_Mongo::db('item')->fetchOne(array('id' => (int) $newItem));
+  							// If we are wearing a 2h weapon, blank out the offhand
+  							if(isset($record->equipment['mainhand']->id)) {
+  								switch($record->equipment['mainhand']->type) {
+  									case '2h-mace': 
+  									case '2h-axe': 
+  									case 'daibo': 
+  									case '2h-mighty': 
+  									case 'polearm': 
+  									case 'staff': 
+  									case '2h-sword':
+  										$record->equipment['offhand'] = null;
+  										break;
+  								}								
+  							}
+  							if(in_array($item->type, array('2h-mace', '2h-axe', 'daibo', 'crossbow', '2h-mighty', 'polearm', 'staff', '2h-sword'))) {								
+  								$record->equipment['offhand'] = null;
+  							}
+  							$record->equipment[$slot] = $item;
+  							$record->equipmentCount = count($record->equipment); 
 							}
-							if(in_array($item->type, array('2h-mace', '2h-axe', 'daibo', 'crossbow', '2h-mighty', 'polearm', 'staff', '2h-sword'))) {								
-								$record->equipment['offhand'] = null;
-							}
-							$record->equipment[$slot] = $item;
-							$record->equipmentCount = count($record->equipment);
 							foreach($this->getRequest()->getParam('stats') as $k => $v) {
 								$record->stats->$k = floatVal($v);
 							}

@@ -6,9 +6,9 @@
     init: function(data) {
 
     },
-    table: function(diff) {
-      var build = d3up.build,
-			    compare = d3up.buildCompare,
+    table: function(diff, target) {
+      var build = d3up.builds.build,
+			    compare = d3up.builds[target],
           tBody = $("<tbody/>"),
           tHeader = $("<tr/>");
       tHeader.append("<th>Stat</th>", "<th>Diff</th>", "<th>Old</th>", "<th>New</th>");

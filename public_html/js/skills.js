@@ -480,7 +480,7 @@ var activeSkills = {
 		'hammer-of-the-ancients~a': {
 			name: 'Hammer of the Ancients - Smash',
 			desc: 'Call forth a massive hammer to smash enemies directly in front of you for 325% weapon damage. Hammer of the Ancients has a 5% increased Critical Hit Chance.',
-			rune: 'Strike a smaller area for 270% weapon damage.',
+			rune: 'Strike a smaller area for 406% weapon damage.',
 			effect: {
 				'cost-fury': 20,
 				'plus-critical-hit-this': 5,
@@ -490,7 +490,7 @@ var activeSkills = {
 		'hammer-of-the-ancients~b': {
 			name: 'Hammer of the Ancients - Rolling Thunder',
 			desc: 'Call forth a massive hammer to smash enemies directly in front of you for 325% weapon damage. Hammer of the Ancients has a 5% increased Critical Hit Chance.',
-			rune: 'Create a shockwave that deals 155% weapon damage to all enemies within 22 yards in front of you.',
+			rune: 'Create a shockwave that deals 275% weapon damage to all enemies within 22 yards in front of you.',
 			effect: {
 				'cost-fury': 20,
 				'plus-critical-hit-this': 5,
@@ -500,7 +500,7 @@ var activeSkills = {
 		'hammer-of-the-ancients~c': {
 			name: 'Hammer of the Ancients - The Devil\'s Anvil',
 			desc: 'Call forth a massive hammer to smash enemies directly in front of you for 325% weapon damage. Hammer of the Ancients has a 5% increased Critical Hit Chance.',
-			rune: 'Create a tremor at the point of impact for 2 seconds that slows the movement speed of enemies by 60%0.',
+			rune: 'Create a tremor at the point of impact for 2 seconds that slows the movement speed of enemies by 60%.',
 			effect: {
 				'cost-fury': 20,
 				'weapon-damage': 325,

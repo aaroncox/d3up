@@ -199,7 +199,7 @@ class ItemController extends D3Up_Controller_Action
 			}
 			echo json_encode($data); exit;
 		}
-		return false;
+		return json_encode(array(''));
 	}
 	public function salesHistoryAction() {
 		$query = array();

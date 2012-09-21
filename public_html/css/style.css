@@ -173,7 +173,7 @@ a:hover .ui-button-text {
 	float: right;
 	display: inline-block;
 }
-ul#simulate-stats input,
+ul.simulate-item input,
 .item-preview ul.attrs input {
 	margin: 2px 5px;
 	width: 45px;
@@ -475,18 +475,33 @@ dd:has(:focus) .chzn-container {
 .equipment-table .gear-controls {
   text-align: center;
 	vertical-align: middle;
-	width: 80px;
+	width: 85px;
 	line-height: 1em;
+}
+#tabs-render .equipment-table .primary.gear-controls {
+	width: 177px;
+}
+#tabs-render .equipment-table .primary .button,
+#tabs-render .equipment-table .primary.gear-controls a.button {
+	display: inline-block;
+	width: 90px;
+	margin-top: 10px;
+}
+#tabs-render .equipment-table .primary.gear-controls a.button:first-child {
+	margin-right: 10px;
 }
 .equipment-table .compare-row {
   
 }
+.equipment-table .simulate-row th,
 .equipment-table .compare-row th {
   color: #ececec;
 }
+.equipment-table .simulate-row h4,
 .equipment-table .compare-row h4 {
   margin: 0;
 }
+.equipment-table .primary .button,
 .equipment-table .gear-controls .button {
   padding: 0 6px;
   font-size: 12px;
@@ -532,10 +547,14 @@ dd:has(:focus) .chzn-container {
 .equipment-table td:first-child {
   font-size: 10px;
 }
-*/.equipment-table td.primary {
+*/
+.equipment-table td.primary {
 	width: 200px;
 	font-size: 14px;
 	line-height: 15px;
+}
+.equipment-table td.primary a {
+	color: #ececec;
 }
 .equipment-table td.primary .equipped-type {
   font-size: 10px;
@@ -543,10 +562,12 @@ dd:has(:focus) .chzn-container {
 .equipment-table tbody tr:nth-child(2n) {
   background: #000;
 }
-.sidebar.sticky {
+#compare-table.sticky {
+	background: #111;
+	border: 1px solid #333;
 	position: fixed;
 	top: 0;
-	margin-left: 5px;
+	margin-top: 20px;
 }
 .calc-stats ul {
 	list-style: none;
@@ -1032,21 +1053,33 @@ tr.compared > td:first-child {
 	outline: none;
 	border: none;
 }
-#simulate-stats {
-	margin: 30px auto;
+.simulate-row .chzn-container, 
+.simulate-row select{
+	width: 450px;
+	margin: 5px auto;
+}
+.simulate-item {
+	margin: 10px auto;
 }
 .item-preview .big-stat input {
 	width: 180px;
 }
+.simulate-item.d3-item .item ul.sockets > li select {
+	max-width: 300px;
+}
+.simulate-item.d3-item .item ul.attrs li {
+	line-height: 28px;
+}
 .item-preview input,
-#simulate-stats input {
+.simulate-item input {
 	width: 50px;
+	display: inline;
 	margin: 0 5px;
 }
 .item-preview select {
 	max-width: 300px;
 }
-#simulate-stats .big-stat input {
+.simulate-item .big-stat input {
 	width: 200px;
 }
 .pricer-tab {
@@ -1092,6 +1125,10 @@ tr.skill-calc-row > td {
 .skill-calc-row p:first-child {
 	margin-bottom: 10px;
 }
+.skill-icon {
+  border: 1px solid #222;
+}
+.skill-icon.skill-activated,
 .skill-calc-row.skill-activated > td {
 	border: 1px solid #70B1D5;
 }
@@ -1101,6 +1138,9 @@ tr.skill-calc-row > td {
 	font-weight: bold;
 	float: right;
 	text-align: center;
+}
+.skill-calc-row .control select {
+  margin-left: 5px;
 }
 .skill-calc-row .effects:first-child {
 	margin-top: 5px;

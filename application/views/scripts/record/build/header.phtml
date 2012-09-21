@@ -1,4 +1,4 @@
-<div class="build-header title-block" data-class="<?= $this->record->class ?>">
+<div id="build-header" class="build-header title-block" data-class="<?= $this->record->class ?>">
 	<? if(!$this->record->_createdBy->id && $this->record->_characterId && $this->record->_characterBt): ?>
 		<div class="controls">
 			<a href="/b/<?= $this->record->id ?>/resync" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only"><span class="ui-button-text">Sync w/Battle.net</span></a>			
@@ -31,11 +31,11 @@
 			<img id="button-downvote" src="/images/downvote.png" class="ui-state-disabled ui-corner-all" data-name="Build Voting	" data-tooltip="In order to record your vote, we require to to be logged in. Please login or create an account!">
 		</div>
 		<h3 class="inline-flow">Skills</h3>
-		<ul id="active-display">
+		<ul id="active-display" data-skill-type="actives" data-display="icon">
 			<li style="padding: 9px">None Selected</li>
 		</ul>
 		<h3 class="inline-flow">Passives</h3>
-		<ul id="passive-display">
+		<ul id="passive-display" data-skill-type="passives" data-display="icon">
 			<li style="padding: 9px">None Selected</li>
 		</ul>
 	</div>

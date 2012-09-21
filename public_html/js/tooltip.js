@@ -112,8 +112,8 @@ $.fn.bindTooltip = function() {
 	
 }
 $.fn.bindSkilltip = function() {
-	var tooltip = $(".d3up-tooltip");
-	var container = $("<div class='d3-item'/>"),
+	var tooltip = $(".d3up-tooltip"),
+      container = $("<div class='d3-item'/>"),
 			header = $("<div class='top'/>"),
 			content = $("<div class='item'/>"),
 			footer = $("<div class='bottom'/>");

@@ -9,7 +9,7 @@
 ?>
 <div id="build">
   <?= $this->render("./record/build/header.phtml") ?>
-	<div id="character" class="ui-helper-clearfix" data-class="<?= $this->record->class ?>" <? if($myBuild) { echo "data-owner='true'"; } ?>>
+	<div id="character" class="ui-helper-clearfix" data-id="<?= $this->record->id ?>" data-class="<?= $this->record->class ?>" <? if($myBuild) { echo "data-owner='true'"; } ?>>
 	  <style type="text/css" media="screen">
 	   #character {
 	     border-top: 1px solid #333;
@@ -104,9 +104,9 @@
       <li><a data-tab="#edit" class="button">Edit</a></li>
       <? endif ?>
       <li class='divider'>Tools</li>
+      <? if(!$this->record->_createdBy->id || ($profile && $profile->id === $this->record->_createdBy->id)): ?>
       <li><a data-tab="#sync" class="button">Battle.net Sync</a></li>
-      <li><a data-tab="#simulate" class="button">Simulate Item</a></li>
-      <li><a data-tab="#compare" class="button">Compare</a></li>
+      <? endif ?>
       <li><a data-tab="#suggestions" class="button">Suggestions</a></li>
       <li><a data-tab="#share" class="button">Share</a></li>
     </ul>
@@ -118,9 +118,9 @@
       <? if($this->myBuild): ?>
       <div id="edit"><?= $this->render("./record/build/edit.phtml") ?></div>
       <? endif ?>
+      <? if(!$this->record->_createdBy->id || ($profile && $profile->id === $this->record->_createdBy->id)): ?>
       <div id="sync"><?= $this->render("./record/build/sync.phtml") ?></div>
-      <div id="simulate"><?= $this->render("./record/build/simulate.phtml") ?></div>
-      <div id="compare"><?= $this->render("./record/build/compare.phtml") ?></div>
+      <? endif ?>
       <div id="suggestions"><?= $this->render("./record/build/suggestions.phtml") ?></div>
       <div id="share"><?= $this->render("./record/build/share.phtml") ?></div>
     </div>
@@ -137,6 +137,19 @@
 		</fieldset>
 		</form>
 	</div>
+	<script type="text/javascript" charset="utf-8">
+	 	<? if($this->alreadyVoted): ?>
+ 		var voted = '<?= $this->alreadyVoted ?>';
+ 		<? else: ?>
+ 		var voted = false;
+ 		<? endif ?>
+ 		<? if($profile): ?>
+ 		var isLoggedIn = true;
+ 		<? else: ?>
+ 		var isLoggedIn = false;
+ 		<? endif ?>
+ 	</script>
+	</script>
 	<script type="text/javascript" src="/js/unmin/compare.js"></script>	
 	<script type="text/javascript" src="/js/unmin/buildv2.js"></script>	
 	<script type="text/javascript" src="/js/unmin/buildui.js"></script>	
@@ -145,7 +158,7 @@
     // Legacy Code, Needs Revamped Eventually
     // ------------------------------
 		var bonusCounter = {};
-		$(".equipped a").each(function() {
+		$(".equipped a[json]").each(function() {
 			var json = $(this).data("json");
 			if(json.set) {
 				if(!bonusCounter[json.set]) {
@@ -154,57 +167,63 @@
 				bonusCounter[json.set]++;
 			}
 		});
-		$(".equipped a").each(function() {
+		$(".equipped a[json]").each(function() {
 			var json = $(this).data("json");
 			if(json.set) {
 				$(this).attr("data-set-count", bonusCounter[json.set]);
 			}
 		});
-		<? if($this->alreadyVoted): ?>
-		var voted = '<?= $this->alreadyVoted ?>';
-		<? else: ?>
-		var voted = false;
-		<? endif ?>
-		<? if($profile): ?>
-		var isLoggedIn = true;
-		<? else: ?>
-		var isLoggedIn = false;
-		<? endif ?>
-	</script>
+  </script>
 	<script type="text/javascript">
-  	// ------------------------------
-    // BuildV2 Scripts for This Page
-    // ------------------------------
-    var skills = {
-          actives: <?= json_encode($this->record->actives->export()); ?>,
-          passives: <?= json_encode($this->record->passives->export()); ?>
-        },
-        gearSlots = $("#build-gear .equipped"),
-        gear = gearSlots.find("a[data-json]"),
-        meta = {
-          level: '<?= $this->record->level ?>',
-          paragon: '<?= $this->record->paragon ?>',
-          heroClass: '<?= $this->record->class ?>'
-        },
-        build = new d3up.Build({
-          gear: gear, 
-          skills: skills,
-          meta: meta
-        }),
-        buildCompare = new d3up.Build({
-          gear: gear, 
-          skills: skills,
-          meta: meta
-        }),
-        buildEmpty = new d3up.Build, 
-        compare = new d3up.Compare;
-    // Store these so that BuildUI.js can get to em
-    d3up.build = build;
-    d3up.buildCompare = buildCompare;
-    d3up.compare = compare;
-    // Render build to Statistics Panels
-    build.renderTo($("#statistics"));
-    // Render build to a few of the Gear tabs
-    build.renderTo($("#gear"));
+	  $(function() {
+	    // ------------------------------
+      // BuildV2 Scripts for This Page
+      // ------------------------------
+      var skills = {
+            actives: <?= json_encode($this->record->actives->export()); ?>,
+            passives: <?= json_encode($this->record->passives->export()); ?>
+          },
+          gearSlots = $("#build-gear .equipped"),
+          gear = gearSlots.find("a[data-json]"),
+          meta = {
+            level: '<?= $this->record->level ?>',
+            paragon: '<?= $this->record->paragon ?>',
+            heroClass: '<?= $this->record->class ?>'
+          },
+          build = new d3up.Build({
+            gear: gear, 
+            skills: skills,
+            meta: meta
+          }),
+          buildCompare = new d3up.Build({
+            gear: gear, 
+            skills: skills,
+            meta: meta
+          }),
+          buildSimulate = new d3up.Build({
+            gear: gear, 
+            skills: skills,
+            meta: meta
+          }),
+          buildEmpty = new d3up.Build, 
+          compare = new d3up.Compare;
+      buildCompare.run();
+      // Store these so that BuildUI.js can get to em
+      d3up.builds = {
+        build: build,
+        compare: buildCompare,
+        simulate: buildSimulate
+      };
+      d3up.compare = compare;
+      // Render build to Statistics Panels
+      build.renderTo($("#statistics"));
+      // Render build to a few of the Gear tabs
+      build.renderTo($("#gear"));
+      // Render the Skills and Data to the Header
+      build.renderSkillsTo($("#build-header"));
+      // Render the Skills into the Skills Tab
+      build.renderSkillsTo($("#skills"));
+      build.renderSkillsTo($("#passives"));
+	  });
   </script>
 </div>

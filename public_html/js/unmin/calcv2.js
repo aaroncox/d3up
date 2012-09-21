@@ -179,6 +179,7 @@ BuildCalculator.prototype = {
 		return link;	  
 	},
 	applyEnabledSkill: function(e, i) {
+    // console.log(e,i);
 		switch(i) {
 			case "plus-dodge":
 				var value = e / 100;
@@ -209,6 +210,7 @@ BuildCalculator.prototype = {
 			case "plus-intelligence-percent":
 				var valueAdd = e / 100;
 				this.addBonus(i, valueAdd);
+        // console.log("adding " + i + ": " + valueAdd);
 				break;
 			default:
         // d3up.log("Unhandled Active: " + e + " " + i);
@@ -216,15 +218,16 @@ BuildCalculator.prototype = {
 		}
 	},
 	applyEnabledSkills: function() {
-    // d3up.log(this.activeSkills);
+    // console.log(this.enabledSkills);
 		_.each(this.enabledSkills, function(v,k) {
       // d3up.log(v,k);
 			_.each(v.effect, function(e,i) {
 				switch(i) {
 				  case "stackable":
 					  _.each(e, function(se, si) {
+              // console.log(v.stacks + " stacks");
   				    for(i = 0; i < v.stacks; i++) {
-                // d3up.log(se, si);
+                // console.log(se, si);
   				      this.applyEnabledSkill(se, si);
   				    }
   				  }, this);
@@ -279,6 +282,10 @@ BuildCalculator.prototype = {
 		};
 
 		_.each(this.passiveSkills, function(v,k) {
+		  if(!v) {
+		    return false;
+		  }
+      // console.log(v);
 			// if(passives[this.class][v] && typeof passives[this.class][v]['effect'] != "undefined") {
 			if(v.effect) {
 				// d3up.log(k,v);
@@ -1091,8 +1098,8 @@ BuildCalculator.prototype = {
 	  // Set all our Skill Data
 	  this.setActives(build.skills.actives);
 		this.setPassives(build.skills.passives);
-
-    // calc.setEnabledSkills(this.skills.passives);
+    // console.log(build);
+    this.setEnabledSkills(build.skills.enabled);
     // calc.setCompanionSkills(activeCompanionSkills);
 
     // If we have meta, set it
@@ -1749,7 +1756,7 @@ BuildCalculator.prototype = {
 					'critical-hit': 'Crit Hit', 
 					'critical-hit-damage': 'Crit Hit Dmg'
 				};
-		console.log(s1, s2);
+    // console.log(s1, s2);
 		_.each(s1, function(val, key) {
 			if(typeof(s2[key]) != "undefined") {
 				if(allowed.hasOwnProperty(key)) {
