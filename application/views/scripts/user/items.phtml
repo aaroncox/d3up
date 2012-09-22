@@ -16,14 +16,6 @@
 	?>
 	<div class="item-list">
 		<div class="filters">
-			<? if($profile): ?>
-			<select id="buildSelect" data-placeholder="Compare Items against build...">
-				<option value=""></option>
-				<? foreach($builds as $build): ?>
-					<option value="<?= $build->id ?>"><?= $build->name ?></option>
-				<? endforeach ?>
-			</select>
-			<? endif; ?>
 			<select data-placeholder="Filter by Slot" id="slotType" name="slotType" style="width: 150px">
 		    <option label="" value=""></option>
 				<? foreach(D3Up_Mongo_Record_Item::$slotTypeMap as $slot => $type): ?>
@@ -229,6 +221,12 @@
 	<? endif ?>
 			<tbody>
 				<tr>
+				  <td class='select'>
+				    <input type="checkbox" class='select-all'>
+				  </td>
+				  <td>
+				    Select All
+				  </td>
 					<td colspan="10" class="item-paginator td-paginator">
 						<?php echo $this->paginationControl($this->items,
 						                                    'Elastic',
@@ -242,6 +240,9 @@
 				</tr>
 				<? foreach($this->items as $item): ?>
 				<tr class="item-row" id="item-<?= $item->id ?>">
+				  <td class='select'>
+				    <input type="checkbox">
+				  </td>
 						<td class="name">
 							<div class="item-stat">
 								<span class="value">
@@ -253,7 +254,7 @@
 									<?= $item->stats->armor . " Armor"?>
 								<? endif; ?>
 								<? if($item->stats->dps): ?>
-									<?= $item->stats->dps." dps" ." @ ".$item->stats->speed." A/S" ?>
+									<?= round($item->stats->dps, 2)." dps" ." @ ".round($item->stats->speed, 2)." A/S" ?>
 								<? endif; ?>
 								</span>
 							<? endif; ?>
@@ -309,10 +310,13 @@
 						<? endif ?>
 						<? if($profile): ?>
 						<td class='controls'>
-							<?= $this->mLink($item, array('action' => 'delete', 'text' => 'Delete'))?>
-							<?= $this->mLink($item, array('action' => 'edit', 'text' => 'Edit'))?>
-							<a class="compareThis" data-item="<?= $item->id ?>">Compare</a>
-							<a href="/user/shop?selectItem=<?= $item->id ?>">Sell</a>
+							<?= $this->itemLink($item, array('action' => 'delete', 'text' => 'Delete', 'button' => true))?>
+						</td>
+						<td class='controls'>
+							<?= $this->itemLink($item, array('action' => 'edit', 'text' => 'Edit', 'button' => true))?>
+						</td>
+						<td class='controls'>
+							<a class='button' href="/user/shop?selectItem=<?= $item->id ?>">Sell</a>
 						</td>
 					<? endif ?>
 					</tr>

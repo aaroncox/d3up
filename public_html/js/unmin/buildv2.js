@@ -40,19 +40,8 @@
       }
     }, 
     run: function() {
-      this.calc.setBuild(this);
-      // console.log(this);
+			this.calc.setBuild(this)
       this.stats = this.calc.run();
-      // console.log("running calc");
-      // Loop through the Skill Data recieved
-      // $.each(this.stats.skillData, function(k,v) {
-        // This is an activatable skill
-        // if(v.activate) {
-          
-        // }
-        // console.log(v);
-      // });
-      // console.log(this.stats);
     },
     renderAgain: function() {
       var build = this;
@@ -61,23 +50,22 @@
       // Run the new Stats
       this.stats = this.calc.run();
       // Loop through all Elements previously used and re-render
-      $.each(this.elems, function(k) {
-        build.renderTo($(k));
+      $.each(this.elems, function(k,v) {
+        build.renderTo(v);
       });
     },
     renderTo: function(elem) {
       // If we've called render before run, then run it before the render
-      if(!this.stats.strength) {
+      if($.isEmptyObject(this.stats)) {
         this.run();
       }
-      var build = this,
-          elements = elem.find("*[data-value]");
-      this.elems[elem.selector] = true;
-      elements.each(function() {
-        $(this).empty();
-        var id = $(this).data("value"),
+      var build = this;
+      this.elems[elem.selector] = elem;
+      elem.find("*[data-value]").each(function() {
+				var stat = $(this).empty(),
+        		id = stat.data("value"),
             value = build.stats[id],
-            type = $(this).data("display"),
+            type = stat.data("display"),
             suffix = "",
             prefix = "";
         if(type) {
@@ -87,27 +75,29 @@
               break;
             case "dps-heat":
               // $("#gear-" + v).html(val + "<br/>(" + (Math.round(tPer * 1000) / 10) + "%)");
-              $(this).append($("<p>").append(Math.round(value / build.stats['dps-gear-total'] * 1000) / 10, "%"));
-              $(this).css("color", $.Color( "#750" ).transition($.Color( "#f50" ), ((value / build.stats['dps']) * 8))); 
+              stat.append($("<p>").append(Math.round(value / build.stats['dps-gear-total'] * 1000) / 10, "%"));
+              stat.css("color", $.Color( "#750" ).transition($.Color( "#f50" ), ((value / build.stats['dps']) * 8))); 
               break;
             case "ehp-heat":
               // $("#gear-" + v).html(val + "<br/>(" + (Math.round(tPer * 1000) / 10) + "%)");
               // console.log(value, build.stats['ehp'], (value / build.stats['ehp']), "" + $.Color( "#570" ).transition($.Color( "#5F0" ), ((value / build.stats['ehp']) * 6)));
               // console.log(build.stats['ehp-gear-total']);
-              $(this).append($("<p>").append(Math.round(value / build.stats['ehp-gear-total'] * 1000) / 10, "%"));
-              $(this).css("color", $.Color( "#570" ).transition($.Color( "#5F0" ), ((value / build.stats['ehp']) * 4))); 
+              stat.append($("<p>").append(Math.round(value / build.stats['ehp-gear-total'] * 1000) / 10, "%"));
+              stat.css("color", $.Color( "#570" ).transition($.Color( "#5F0" ), ((value / build.stats['ehp']) * 4))); 
               break;
             default:
               // console.log("Unknown Formatter: " + type);
               break;
           }
         }
-        if(value) {
+        if(isNaN(parseFloat(value)) && value) {
+					stat.prepend(prefix + value + suffix);
+				} else if(value) {
           value = Math.round(value * 100) / 100;
           value = value.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,");          
-          $(this).prepend(prefix + value + suffix);
+          stat.prepend(prefix + value + suffix);
         } else {
-          $(this).prepend("0");
+          stat.prepend(prefix + "0" + suffix);
         }
       });
     },
@@ -229,6 +219,7 @@
                   }
                   // Update any Compare's that might be active...
                   $(".compare-change").trigger("change");
+									$(".simulate-change").trigger("change");
                   $.each(d3up.builds, function(k) {
                     d3up.builds[k].renderAgain();
                     // console.log(k, d3up.builds[k]);

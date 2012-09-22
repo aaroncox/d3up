@@ -207,10 +207,12 @@
 				var skill = activeSkills[$(this).attr("data-class")][$(this).attr("data-id")];
 				if(!skill) {
 					skill = passives[$(this).attr("data-class")][$(this).attr("data-id")];
-					skill.name = $(this).attr("data-id").replace(/\-/g," ").capitalize();
+					if(skill) {
+  					skill.name = $(this).attr("data-id").replace(/\-/g," ").capitalize();					  
+					}
 				}
-				var tooltip = skill.desc;
 				if(skill) {
+  				var tooltip = skill.desc;
 					if(skill.rune) {
 						tooltip = tooltip + "<br/><br/>" + skill.rune;
 					}

@@ -5,7 +5,7 @@ function average() {
 			sum = 0,
 			length = arguments.length;
 	for ( ; index < length; index++ ) {
-		sum += arguments[ index ] || 0;
+		sum += parseFloat(arguments[ index ]) || 0;
 	}
 	return sum / length;
 }
@@ -515,6 +515,11 @@ BuildCalculator.prototype = {
 		// Formula: ( Block Chance + Plus Block Chance )
 		rendered['block-chance'] = this.attrs['block-chance'] + this.attrs['plus-block'];
 		// ----------------------------------
+		// Block Value
+		if(this.attrs['block-amount']) {
+			rendered['block-value'] = average.apply(null, this.attrs['block-amount'].split("-"));			
+		}
+		// ----------------------------------
 		// Dodge Chance
 		// Formula: Dodge uses Ranges and is more complex, more info here - http://www.clicktoloot.com/p/combat.html#dodge
 		// ----------------------------------
@@ -603,7 +608,7 @@ BuildCalculator.prototype = {
 		// EHP Calculation 
 		// Formula: ( Life / Percentage Damage Taken )
 		// ----------------------------------
-		rendered['ehp'] = defenses.life / rendered.damageTaken;
+		rendered['ehp'] = defenses.life / rendered.damageTaken;		
 		// ----------------------------------
 		// EHP Calculation by Damage Type
 		// Formula: ( Life / (Percentage Damage Taken * Modifier ) )
@@ -612,6 +617,22 @@ BuildCalculator.prototype = {
 		rendered['ehp-melee'] = defenses.life / ( rendered.damageTaken * ( 1 - defenses['percent-melee-reduce'] 	/ 100));
 		rendered['ehp-range'] = defenses.life / ( rendered.damageTaken * ( 1 - defenses['percent-range-reduce'] 	/ 100));
 		rendered['ehp-elite'] = defenses.life / ( rendered.damageTaken * ( 1 - defenses['percent-elite-reduce'] 	/ 100));
+		// ----------------------------------
+		// EHP Block Calculation 
+		// Formula: 
+		// ----------------------------------
+		if(defenses['block-chance'] && defenses['block-value']) {
+			var hit = 70000,
+					taken = rendered.damageTaken * hit,
+					reduced = (defenses['block-chance'] / 100 * defenses['block-value']),
+					change = taken / (taken - reduced);
+			rendered['ehp-block'] = ( rendered['ehp-dodge']  * change );
+			if(rendered['ehp-block'] < 0) {
+				rendered['ehp-block'] = "Invulnerable";
+			}
+			console.log(defenses, taken, reduced, change, rendered, rendered['ehp-block']);
+		}
+		
 		// Return the Values for EHP
 		return rendered;
 	},
@@ -1721,7 +1742,7 @@ BuildCalculator.prototype = {
 			}, this);
 		}
 	},
-	diff: function(s1, s2) {
+	diff: function(s1, s2, allowAll) {
 		var diff = {},
 				allowed = {
 					'ap-max': 'Max AP', 
@@ -1759,7 +1780,7 @@ BuildCalculator.prototype = {
     // console.log(s1, s2);
 		_.each(s1, function(val, key) {
 			if(typeof(s2[key]) != "undefined") {
-				if(allowed.hasOwnProperty(key)) {
+				if(allowAll || allowed.hasOwnProperty(key)) {
 					if(!s1[key]) {
 						s1[key] = 0;
 					}
@@ -1767,7 +1788,11 @@ BuildCalculator.prototype = {
 						s2[key] = 0;
 					}
 					if(s2[key] - s1[key] != 0) {
-						diff[key] = allowed[key] + "|" + Math.round((s2[key] - s1[key]) * 100) / 100;						
+						if(allowAll) {
+							diff[key] = allowed[key] + "|" + Math.round((s2[key] - s1[key]) * 100) / 100;						
+						} else {
+							diff[key] = allowed[key] + "|" + Math.round((s2[key] - s1[key]) * 100) / 100;													
+						}
 						// d3up.log(key + " - s2["+s2[key]+"] - s1["+s1[key]+"] = "+diff[allowed[key]]);					
 					}
 				} else {

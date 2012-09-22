@@ -1,19 +1,21 @@
 <?
 	$this->headTitle("Create a Diablo 3 Item"); 
 ?>
-<div class="create-form ui-widget ui-widget-content ui-corner-all ui-helper-clearfix">
-	<form method="post">
-		<div id="simulate-item" class="d3-item item-preview"></div>
-		<div>
-			<h2>Create an Item</h2>
-			<?= $this->form ?>
-		</div>
-	</form>
+<div class="content-page">
+  <div class='form'>
+  	<form method="post">
+  		<div id="simulate-item" class="d3-item item-preview"></div>
+  		<div>
+  			<h2>Create an Item</h2>
+  			<?= $this->form ?>
+  		</div>
+  	</form>
+  </div>
 </div>
 <script type="text/javascript">
 $(function() {
 	// Establish the Builder
-	var builder = Object.create(itemBuilder);
+	var builder = new d3up.ItemBuilder;
 	// Set the Name Field
 	builder.setNameInput($("#name"));
 	// Set the Quality Selector
@@ -28,11 +30,9 @@ $(function() {
 	builder.setItemPreview($("#simulate-item"));
 	// Initialize the Item Builder
 	builder.init();
-
 	<? if($this->record->id): ?>
-	builder.setItem(<?= json_encode($this->record->cleanExport()) ?>);
+	builder.setItem('create', <?= json_encode($this->record->cleanExport()) ?>);
 	<? endif ?>
-
 
 	$("#quality").chosen({
 		placeholder: 'Choose the item\'s quality...',
@@ -42,10 +42,10 @@ $(function() {
 		placeholder: 'No Sockets...',
 		allowClear: true
 	});
-	$("#attributes").chosen({
-		placeholder: 'What attributes does this item have?',
-		allowClear: true
-	});
+  $("#attributes").chosen({
+   placeholder: 'What attributes does this item have?',
+   allowClear: true
+  });
 	$("#itemType").chosen({
 		placeholder: 'Choose the item type...',
 		allowClear: true

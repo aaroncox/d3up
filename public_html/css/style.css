@@ -503,7 +503,7 @@ dd:has(:focus) .chzn-container {
 }
 .equipment-table .primary .button,
 .equipment-table .gear-controls .button {
-  padding: 0 6px;
+  padding: 6px;
   font-size: 12px;
 }
 .equipment-table td.contributions {
@@ -746,6 +746,10 @@ dd:has(:focus) .chzn-container {
 	max-width: 120px;
 	overflow: hidden;
 }
+#recent-items td.select {
+	width: 30px;
+	text-align: center;
+}
 .d3up-table thead td {
 	overflow: visible !important;
 }
@@ -779,6 +783,10 @@ dd:has(:focus) .chzn-container {
 }
 .item-list .filters {
 	float: right;
+}
+#recent-items td.controls {
+	width: 60px;
+	float: none;
 }
 #recent-items td.controls,
 .item-stat {
@@ -1640,8 +1648,11 @@ div.toc.section {
 }
 #tabs-render dt,
 .content-page .form dt {
-	width: 200px;
+	width: 300px;
 	font-size: 15px;
+}
+.content-page .form dd #attributes {
+	width: 400px;
 }
 #tabs-render .form dd,
 .content-page .form dd {
@@ -1741,18 +1752,37 @@ div.toc.section {
 	width: 99%;
 }
 .statistics-table {
-  width: 305px;
-  margin: 5px 2px 0;
+  width: 304px;
+  margin: 2px;
 }
-.statistics-table th {
-  padding: 5px 15px 0;
-  color: #70B1D5;
+.statistics-table thead th:active,
+.statistics-table thead th {
+	-webkit-touch-callout: none;
+	-webkit-user-select: none;
+	-khtml-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+	cursor: pointer;
+	display: table-cell;
+	text-align: left;
+	padding: 0;
+}
+.statistics-table thead .ui-icon {
+	top: 2px;
+	position: relative;
+	margin: 0 5px;
+	display: inline-block;
+}
+.statistics-table.collapsed tbody {
+	display: none;
 }
 .statistics-table td {
   width: 40%;
   padding: 2px 5px;
   font-size: 14px;
 }
+.statistics-table > thead > tr > td:first-child, 
 .statistics-table > tbody > tr > td:first-child {
   width: 60%;
   color: #B18135;
@@ -1762,7 +1792,7 @@ div.toc.section {
 #compare-table {
   display: none;
 }
-#compare-table .compare-overview {
+#	 .compare-overview {
   background: #111;
   color: #ececec;
   text-align: center;
@@ -1773,8 +1803,16 @@ div.toc.section {
 #compare-table tbody {
   border-top: 1px solid #333;
 }
+#compare-table .diff {
+	border-right: 1px solid #333;
+	border-left: 1px solid #333;
+}
+#compare-table tr,
+#compare-table td {
+	width: auto;
+	text-align: right;
+}
 #compare-table tbody tr {
-  text-align: center;
   font-size: 10px;
 }
 #compare-table thead tr td {

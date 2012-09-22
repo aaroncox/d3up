@@ -37,6 +37,8 @@ ItemBuilder.prototype = {
 		"weapon": ["2h-mace","2h-axe","bow","daibo","crossbow","2h-mighty","polearm","staff","2h-sword","axe","ceremonial-knife","hand-crossbow","dagger","fist-weapon","mace","mighty-weapon","spear","sword","wand"],	
 		"shield": ["shield"]
 	},
+	// Gem Effects
+	gemEffect: {"chipped_amethyst":["Chipped Amethyst",["plus-life",5],["life-hit",2],["vitality",6]],"chipped_emerald":["Chipped Emerald",["plus-gold-find",5],["critical-hit-damage",10],["dexterity",6]],"chipped_ruby":["Chipped Ruby",["plus-experience-percent",5],["damage","2-4"],["strength",6]],"chipped_topaz":["Chipped Topaz",["plus-magic-find",5],["thorns",2],["intelligence",6]],"flawed_amethyst":["Flawed Amethyst",["plus-life",6],["life-hit",3],["vitality",10]],"flawed_emerald":["Flawed Emerald",["plus-gold-find",7],["critical-hit-damage",15],["dexterity",10]],"flawed_ruby":["Flawed Ruby",["plus-experience-percent",7],["damage","4-8"],["strength",10]],"flawed_topaz":["Flawed Topaz",["plus-magic-find",7],["thorns",3],["intelligence",10]],"amethyst":["Amethyst",["plus-life",7],["life-hit",6],["vitality",14]],"emerald":["Emerald",["plus-gold-find",9],["critical-hit-damage",20],["dexterity",14]],"ruby":["Ruby",["plus-experience-percent",9],["damage","8-16"],["strength",14]],"topaz":["Topaz",["plus-magic-find",9],["thorns",6],["intelligence",14]],"flawless_amethyst":["Flawless Amethyst",["plus-life",8],["life-hit",10],["vitality",18]],"flawless_emerald":["Flawless Emerald",["plus-gold-find",11],["critical-hit-damage",25],["dexterity",18]],"flawless_ruby":["Flawless Ruby",["plus-experience-percent",11],["damage","10-20"],["strength",18]],"flawless_topaz":["Flawless Topaz",["plus-magic-find",11],["thorns",10],["intelligence",18]],"perfect_amethyst":["Perfect Amethyst",["plus-life",9],["life-hit",15],["vitality",22]],"perfect_emerald":["Perfect Emerald",["plus-gold-find",13],["critical-hit-damage",30],["dexterity",22]],"perfect_ruby":["Perfect Ruby",["plus-experience-percent",13],["damage","11-22"],["strength",22]],"perfect_topaz":["Perfect Topaz",["plus-magic-find",13],["thorns",15],["intelligence",22]],"radiant_amethyst":["Radiant Amethyst",["plus-life",10],["life-hit",25],["vitality",26]],"radiant_emerald":["Radiant Emerald",["plus-gold-find",15],["critical-hit-damage",35],["dexterity",26]],"radiant_ruby":["Radiant Ruby",["plus-experience-percent",15],["damage","12-24"],["strength",26]],"radiant_topaz":["Radiant Topaz",["plus-magic-find",15],["thorns",30],["intelligence",26]],"square_amethyst":["Square Amethyst",["plus-life",11],["life-hit",35],["vitality",30]],"square_emerald":["Square Emerald",["plus-gold-find",17],["critical-hit-damage",40],["dexterity",30]],"square_ruby":["Square Ruby",["plus-experience-percent",17],["damage","13-26"],["strength",30]],"square_topaz":["Square Topaz",["plus-magic-find",17],["thorns",50],["intelligence",30]],"flawless_square_amethyst":["Flawless Square Amethyst",["plus-life",12],["life-hit",65],["vitality",34]],"flawless_square_emerald":["Flawless Square Emerald",["plus-gold-find",19],["critical-hit-damage",45],["dexterity",34]],"flawless_square_ruby":["Flawless Square Ruby",["plus-experience-percent",19],["damage","14-28"],["strength",34]],"flawless_square_topaz":["Flawless Square Topaz",["plus-magic-find",19],["thorns",100],["intelligence",34]],"perfect_square_amethyst":["Perfect Square Amethyst",["plus-life",13],["life-hit",105],["vitality",38]],"perfect_square_emerald":["Perfect Square Emerald",["plus-gold-find",21],["critical-hit-damage",50],["dexterity",38]],"perfect_square_ruby":["Perfect Square Ruby",["plus-experience-percent",21],["damage","15-30"],["strength",38]],"perfect_square_topaz":["Perfect Square Topaz",["plus-magic-find",21],["thorns",200],["intelligence",38]],"radiant_square_amethyst":["Radiant Square Amethyst",["plus-life",14],["life-hit",190],["vitality",42]],"radiant_square_emerald":["Radiant Square Emerald",["plus-gold-find",23],["critical-hit-damage",60],["dexterity",42]],"radiant_square_ruby":["Radiant Square Ruby",["plus-experience-percent",23],["damage","16-32"],["strength",42]],"radiant_square_topaz":["Radiant Square Topaz",["plus-magic-find",23],["thorns",350],["intelligence",42]],"star_amethyst":["Star Amethyst",["plus-life",15],["life-hit",300],["vitality",46]],"star_emerald":["Star Emerald",["plus-gold-find",25],["critical-hit-damage",70],["dexterity",46]],"star_ruby":["Star Ruby",["plus-experience-percent",25],["damage","17-34"],["strength",46]],"star_topaz":["Star Topaz",["plus-magic-find",25],["thorns",600],["intelligence",46]],"flawless_star_amethyst":["Flawless Star Amethyst",["plus-life",16],["life-hit",400],["vitality",50]],"flawless_star_emerald":["Flawless Star Emerald",["plus-gold-find",27],["critical-hit-damage",80],["dexterity",50]],"flawless_star_ruby":["Flawless Star Ruby",["plus-experience-percent",27],["damage","18-36"],["strength",50]],"flawless_star_topaz":["Flawless Star Topaz",["plus-magic-find",27],["thorns",900],["intelligence",50]],"perfect_star_amethyst":["Perfect Star Amethyst",["plus-life",17],["life-hit",500],["vitality",54]],"perfect_star_emerald":["Perfect Star Emerald",["plus-gold-find",29],["critical-hit-damage",90],["dexterity",54]],"perfect_star_ruby":["Perfect Star Ruby",["plus-experience-percent",29],["damage","19-38"],["strength",54]],"perfect_star_topaz":["Perfect Star Topaz",["plus-magic-find",29],["thorns",1250],["intelligence",54]],"radiant_star_amethyst":["Radiant Star Amethyst",["plus-life",18],["life-hit",600],["vitality",58]],"radiant_star_emerald":["Radiant Star Emerald",["plus-gold-find",31],["critical-hit-damage",100],["dexterity",58]],"radiant_star_ruby":["Radiant Star Ruby",["plus-experience-percent",31],["damage","20-40"],["strength",58]],"radiant_star_topaz":["Radiant Star Topaz",["plus-magic-find",31],["thorns",1800],["intelligence",58]]},
 	// Listing of Qualities
 	qualityMap: ['Unspecified', 'Inferior', 'Normal', 'Superior', 'Magic', 'Rare', 'Legendary', 'Set'],
 	// Listing of Skill Text on Items
@@ -297,6 +299,10 @@ ItemBuilder.prototype = {
 			selector.bind('change', function() {
 				builder.item.socketCount = $(this).val();
 				builder.updatePreview();
+				builder.redoSocketAttrs()
+				if(builder.changeCallback) {
+					builder.changeCallback(builder);
+				}
 			});					
 		}
 	},
@@ -424,7 +430,24 @@ ItemBuilder.prototype = {
 		if(!this.item.stats) {
 			this.item.stats = {};
 		}
-		this.item.stats[name] = parseFloat(value);
+		switch(name) {
+			case "damage-max":
+				this.item.stats.damage.max = parseFloat(value);
+				break;
+			case "damage-min":
+				this.item.stats.damage.min = parseFloat(value);
+				break;
+			default:
+				this.item.stats[name] = parseFloat(value);
+				break;
+		}
+		if(_.indexOf(['damage-max', 'damage-min', 'speed'], name) >= 0) {
+			var dpsDisplay = this.preview.statsPrimary.find("input[name=stat_dps]"),
+					dpsMin = this.item.stats.damage.min,
+					dpsMax = this.item.stats.damage.max, 
+					dpsSpeed = this.item.stats.speed;
+			dpsDisplay.val((dpsMin + dpsMax) / 2 * dpsSpeed);
+		}
 		if(this.changeCallback) {
 			this.changeCallback(this);
 		}
@@ -524,6 +547,33 @@ ItemBuilder.prototype = {
   		); 
 		}
 	},
+	redoSocketAttrs: function() {
+		this.item.socketAttrs = {};
+		_.each(this.item.sockets, function(v,k) {
+			if(this.item.itemClass == 'weapon') {
+				// Weapon Effects
+				var effect = this.gemEffect[v][2][0],
+						value = this.gemEffect[v][2][1];
+			} else if(_.indexOf(["spirit-stone","voodoo-mask","wizard-hat","helm"], this.item.type) >= 0) {
+				// Helm Effects
+				var effect = this.gemEffect[v][1][0],
+						value = this.gemEffect[v][1][1];
+			} else {
+				// Other Effects
+				var effect = this.gemEffect[v][3][0],
+						value = this.gemEffect[v][3][1];
+			}
+			if(this.item.socketAttrs[effect]) {
+				this.item.socketAttrs[effect] += value;
+			} else {
+				this.item.socketAttrs[effect] = value;				
+			}
+		}, this);
+		// Fire the Callback
+		if(this.changeCallback) {
+			this.changeCallback(this);
+		}
+	},
 	// Update the Item Preview
 	updatePreview: function() {
 		var builder = this;
@@ -549,8 +599,12 @@ ItemBuilder.prototype = {
 			this.preview.itemType.html(this.item.typeName);
 		}
 		// No sockets? Empty the UL
-		if(this.item.socketCount == 0) {
+		if(this.item.socketCount != this.preview.sockets.find("select").length) {
+			for(i = this.item.socketCount; i < this.preview.sockets.find("select").length; i++) {
+				this.item.sockets.pop();
+			}
 			this.preview.sockets.empty();
+			this.redoSocketAttrs();
 		}
 		if(this.item.setBonus) {
 			this.preview.setBonus.empty();
@@ -563,6 +617,7 @@ ItemBuilder.prototype = {
 		}
 		// Update the Selects for the Sockets
 		for(i = 0; i < this.item.socketCount; i++) {
+			var $this = this;
 			if(!this.preview.sockets.find("#socket"+i).length) {
 				var select = $("<select name='socket" + i + "' id='socket" + i + "' tabindex='150'>");
 				select.append($("<option value=''>Empty</option>"));
@@ -584,6 +639,15 @@ ItemBuilder.prototype = {
 					}
 					select.append(option);
 				}, this);
+				select.bind('change', function() {
+					var id = $(this).attr("id").replace("socket", ""), 
+							gem = $(this).find(":selected").val();
+					if(!$this.item.sockets) {
+						$this.item.sockets = [];
+					}
+					$this.item.sockets[id] = gem;
+					$this.redoSocketAttrs();
+				});
 				this.preview.sockets.append($("<li>").append(select));
 			}
 		}
@@ -640,7 +704,7 @@ ItemBuilder.prototype = {
 				break;
 			case "weapon":
 				if(!builder.preview.statsPrimary.find("input[name=stat_dps]").length) {
-					var dps = $("<input name='stat_dps' tabindex='50'>"),
+					var dps = $("<input name='stat_dps' tabindex='50' disabled='disabled'>"),
 							min = $("<input name='stat_damage-min' tabindex='50'>"),
 							max = $("<input name='stat_damage-max' tabindex='50'>"),
 							speed = $("<input name='stat_speed' tabindex='50'>");
