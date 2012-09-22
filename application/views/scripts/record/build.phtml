@@ -95,7 +95,7 @@
 	  </div>
 	  <? endif ?>
     <ul id="tabs">
-      <li class='divider'>Character</li>
+      <li class='divider'>Build</li>
       <li><a data-tab="#gear" class="button current">Gear</a></a></li>
       <li><a data-tab="#skills" class="button">Skills</a></li>
       <li><a data-tab="#passives" class="button">Passives</a></li>
@@ -110,8 +110,8 @@
       <? if($this->myBuild): ?>
       <li><a class="button" href="/user/items">My Items</a></li>
       <? endif ?>
-      <li><a data-tab="#suggestions" class="button">Suggestions</a></li>
-      <li><a data-tab="#share" class="button">Share</a></li>
+      <!-- <li><a data-tab="#suggestions" class="button">Suggestions</a></li>
+      <li><a data-tab="#share" class="button">Share</a></li> -->
     </ul>
     <div id="tabs-render" class="content-page">
       <div id="gear"><?= $this->render("./record/build/gear.phtml") ?></div>
@@ -124,8 +124,8 @@
       <? if(!$this->record->_createdBy->id || ($profile && $profile->id === $this->record->_createdBy->id)): ?>
       <div id="sync"><?= $this->render("./record/build/sync.phtml") ?></div>
       <? endif ?>
-      <div id="suggestions"><?= $this->render("./record/build/suggestions.phtml") ?></div>
-      <div id="share"><?= $this->render("./record/build/share.phtml") ?></div>
+      <!-- <div id="suggestions"><?= $this->render("./record/build/suggestions.phtml") ?></div>
+      <div id="share"><?= $this->render("./record/build/share.phtml") ?></div> -->
     </div>
     <div id="statistics" class="inline-flow">
       <?= $this->render("record/build/statistics.phtml") ?>
