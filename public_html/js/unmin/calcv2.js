@@ -630,7 +630,6 @@ BuildCalculator.prototype = {
 			if(rendered['ehp-block'] < 0) {
 				rendered['ehp-block'] = "Invulnerable";
 			}
-			console.log(defenses, taken, reduced, change, rendered, rendered['ehp-block']);
 		}
 		
 		// Return the Values for EHP

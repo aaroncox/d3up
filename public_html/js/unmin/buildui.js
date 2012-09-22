@@ -73,7 +73,7 @@ $(function() {
 		  $.each(d3up.builds, function(k) {
 		    d3up.builds[k].renderAgain();
 		  });
-		  // Remove the Compare Overview row
+			itemRow.find(".gear-change").html("Modify");
 		}
 		if($("." + simulateRowName).length) {
 		  $("." + simulateRowName).remove();
@@ -97,7 +97,7 @@ $(function() {
 		    statistics.find(".statistics-table").show();   
 		    compareResults.hide();     
 		  }
-			$(this).html("Simulate")
+			$(this).html("Simulate");
 		  return false;
 		}
 		$(this).html("Cancel");
@@ -286,6 +286,7 @@ $(function() {
 		  $.each(d3up.builds, function(k) {
 		    d3up.builds[k].renderAgain();
 		  });
+			itemRow.find(".gear-simulate").html("Simulate");
 		}
 		if($("." + compareRowName).length) {
 		  $("." + compareRowName).remove();
