@@ -1,271 +1,3 @@
-<style type="text/css">
-	.menu-bar {
-		border: 1px solid #111;
-		background: #222;		
-		padding: 2px;
-		margin: 0 0 5px; 
-	}
-	.menu-wrap {
-		border: 1px solid #333;
-		background: #111;
-	}
-
-	#megamenu * {
-		-webkit-box-sizing: content-box;
-    -moz-box-sizing: content-box;
-    box-sizing: content-box;
-	}
-
-	#megamenu > li a,
-	#megamenu > li span {
-		cursor: pointer;
-	}
-
-	#megamenu li h5 a.drop {
-		padding-right:21px;
-		background:url("/images/down-arrow.png") no-repeat center right;
-	}
-	
-	#megamenu li.social {
-	  float: right;
-	  padding: 9px 10px;
-	}
-
-	.dropdown_1column, 
-	.dropdown_2columns, 
-	.dropdown_3columns, 
-	.dropdown_4columns,
-	.dropdown_5columns {
-		margin:5px auto;
-		float:left;
-		position:absolute;
-		left:-999em;
-		text-align:left;
-		padding:15px;
-		border:1px solid #333;
-		border-top: 0;
-		background:#111;
-	  -webkit-box-shadow: 5px 5px 20px 0px #111;
-	          box-shadow: 5px 5px 20px 0px #111;
-	}
-
-	.dropdown_1column {width: 160px;}
-	.dropdown_2columns {width: 320px;}
-	.dropdown_3columns {width: 480px;}
-	.dropdown_4columns {width: 640px;}
-	.dropdown_5columns {width: 800px;}
-
-	#megamenu li:hover .dropdown_1column, 
-	#megamenu li:hover .dropdown_2columns, 
-	#megamenu li:hover .dropdown_3columns,
-	#megamenu li:hover .dropdown_4columns,
-	#megamenu li:hover .dropdown_5columns {
-		left:-2px;
-		top:auto;
-		z-index: 9999;
-		background: rgb(17,17,17); /* Old browsers */
-		background: -moz-linear-gradient(top, rgba(17,17,17,1) 0%, rgba(34,34,34,1) 100%); /* FF3.6+ */
-		background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(17,17,17,1)), color-stop(100%,rgba(34,34,34,1))); /* Chrome,Safari4+ */
-		background: -webkit-linear-gradient(top, rgba(17,17,17,1) 0%,rgba(34,34,34,1) 100%); /* Chrome10+,Safari5.1+ */
-		background: -o-linear-gradient(top, rgba(17,17,17,1) 0%,rgba(34,34,34,1) 100%); /* Opera 11.10+ */
-		background: -ms-linear-gradient(top, rgba(17,17,17,1) 0%,rgba(34,34,34,1) 100%); /* IE10+ */
-		background: linear-gradient(to bottom, rgba(17,17,17,1) 0%,rgba(34,34,34,1) 100%); /* W3C */
-		filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#111111', endColorstr='#222222',GradientType=0 ); /* IE6-9 */
-	}
-
-	.col_1,
-	.col_2,
-	.col_3,
-	.col_4,
-	.col_5 {
-		display:inline;
-		float: left;
-		position: relative;
-		margin-left: 5px;
-		margin-right: 5px;
-	}
-	.col_1 {width:150px;}
-	.col_2 {width:310px;}
-	.col_3 {width:470px;}
-	.col_4 {width:630px;}
-	.col_5 {width:790px;}
-
-	#megamenu .menu_right {
-		float:right;
-		margin-right:0px;
-	}
-
-	#megamenu li:hover .align_right {
-		left:auto;
-		right:-1px;
-		top:auto;
-	}
-
-	#megamenu p, #megamenu h2, #megamenu h3, #megamenu ul li {
-		line-height:21px;
-		font-size:12px;
-		text-align:left;
-		text-shadow: 1px 1px 1px #000;
-	}
-	#megamenu h2 {
-	  color: #B18135;
-		font-size:21px;
-		font-weight:400;
-		letter-spacing:-1px;
-		margin:7px 0 14px 0;
-		padding-bottom:14px;
-		border-bottom:1px solid #666666;
-	}
-	#megamenu h3 {
-		font-size:14px;
-		margin:7px 0 14px 0;
-		padding-bottom:7px;
-		border-bottom:1px solid #888888;
-	}
-	#megamenu p {
-		line-height:18px;
-		margin:0 0 10px 0;
-	}
-	
-	.img_left { /* Image sticks to the left */
-		width:auto;
-		float:left;
-		margin:5px 15px 5px 5px;
-	}
-	#megamenu li ul {
-		list-style:none;
-		padding:0; 
-		margin:0 0 12px 0;		
-	}
-	#megamenu li ul li {
-		position:relative;
-		text-shadow: 1px 1px 1px #000;
-		padding:0;
-		margin:0;
-		float:none;
-		text-align:left;
-	}
-	#megamenu {
-		margin: 1px;
-		padding: 0;
-		list-style: none;
-		background: rgb(51,51,51); /* Old browsers */
-		background: -moz-linear-gradient(top, rgba(51,51,51,1) 0%, rgba(17,17,17,1) 100%); /* FF3.6+ */
-		background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(51,51,51,1)), color-stop(100%,rgba(17,17,17,1))); /* Chrome,Safari4+ */
-		background: -webkit-linear-gradient(top, rgba(51,51,51,1) 0%,rgba(17,17,17,1) 100%); /* Chrome10+,Safari5.1+ */
-		background: -o-linear-gradient(top, rgba(51,51,51,1) 0%,rgba(17,17,17,1) 100%); /* Opera 11.10+ */
-		background: -ms-linear-gradient(top, rgba(51,51,51,1) 0%,rgba(17,17,17,1) 100%); /* IE10+ */
-		background: linear-gradient(to bottom, rgba(51,51,51,1) 0%,rgba(17,17,17,1) 100%); /* W3C */
-		filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#333333', endColorstr='#111111',GradientType=0 ); /* IE6-9 *//*		border: 1px solid #f00;*/
-	}
-	#megamenu li {
-		display: block;
-		float: left;
-		text-align: center;
-		position: relative;
-		padding: 5px 0 5px 37px;
-	}
-	#megamenu li:first-child {
-/*		padding: 5px 25px 5px 50px;*/
-	}
-	#megamenu li > h5 {
-		font-size: 22px;
-		line-height: 22px;
-		margin: 5px 0 0;
-	}
-	#megamenu li > h5 a {
-		color: #fff;
-		font-weight: normal;
-	}
-	#megamenu li > span {
-		text-transform: uppercase;
-		font-size: 12px;
-		line-height: 12px;
-		color: #70B1D5;
-	}
-	#megamenu li ul li a {
-		display: block;
-	}
-	#megamenu li ul.dropdown_links li {
-		border-top: 1px solid #000;
-		background: #222;
-		font-size: 12px;
-		text-align: left;
-		height: 42px;
-		line-height: 42px;
-		padding: 0 15px;
-		background-repeat: no-repeat; 
-		background-position: middle left;	
-		cursor: pointer;		
-		overflow: hidden;
-	}
-	#megamenu li ul.dropdown_links li.build a {
-	  line-height: 21px;
-	}
-	#megamenu li ul.dropdown_links .paragon {
-	 color: #A791C2;
-	}
-	#megamenu li ul.dropdown_links li:hover {
-		background-color: #333;
-	}
-	#megamenu li ul.dropdown_links li a {
-		height: 42px;
-		overflow: hidden;
-		color: #ececec;
-	}
-	#megamenu li p.notice {
-		background: #111;
-		height: 30px;
-		line-height: 30px;
-		margin-bottom: 10px;
-		text-align: center;
-		color: #fff;
-	}
-	#megamenu li form {
-		border: 1px solid #1C252B;
-		background: #232B30;
-		margin-bottom: 8px;
-	}
-	#megamenu li form dd {
-		width: 150px;
-	}
-	#megamenu li form dt {
-		width: 80px;
-		font-size: 10px;
-	}
-	#megamenu li form input[type=submit] {
-		color: #ececec;
-		margin: 5px auto;
-	}
-	#megamenu li ul li:first-child {
-		border-top: 0px;
-	}
-	#megamenu li ul li.barbarian {
-		padding-left: 48px;
-		background-image: url('/images/barbarian.png');
-	}
-	#megamenu li ul li.wizard {
-		padding-left: 48px;
-		background-image: url('/images/wizard.png');
-	}
-	#megamenu li ul li.demon-hunter {
-		padding-left: 48px;
-		background-image: url('/images/demon-hunter.png');
-	}
-	#megamenu li ul li.monk {
-		padding-left: 48px;
-		background-image: url('/images/monk.png');
-	}
-	#megamenu li ul li.witch-doctor {
-		padding-left: 48px;
-		background-image: url('/images/witch-doctor.png');
-	}
-	#megamenu li:hover .align_right {
-		left: auto;
-		right: -1px;
-		top: auto;
-	}
-</style>
 <div class="menu-bar">
 	<div class="menu-wrap">
 		<ul id="megamenu" class="ui-helper-clearfix">
@@ -379,46 +111,46 @@
 					</div>
 	      </div>
 			</li>
-			<li>
-				<h5><a href="/updates" class="drop">Help</a></h5>
-				<span><a href="/updates" class="drop">FAQs & Info</a></span>
-				<div class="dropdown_3columns align_right">
-					<div class="col_3">
-						<h2 style="border: 0; margin-bottom: 0">Diablo 3 Guides</h2>
-					</div>
-					<div class="col_1">
-						<h3>Class Guides</h3>
-						<ul class="dropdown_links">
-							<li class='barbarian'><a href="/guide?class=barbarian">Barbarian</a></li>
-							<li class='demon-hunter'><a href="/guide?class=demon-hunter">Demon Hunter</a></li>
-							<li class='monk'><a href="/guide?class=monk">Monk</a></li>
-							<li class='witch-doctor'><a href="/guide?class=witch-doctor">Witch Doctor</a></li>
-							<li class='wizard'><a href="/guide?class=wizard">Wizard</a></li>
-						</ul>   
-					</div>
-					<div class="col_1">
-						<h3>Guides Types</h3>
-						<ul class="dropdown_links">
-							<li><a href="/guide?type=general">General</a></li>
-							<li><a href="/guide?type=class">Class</a></li>
-							<li><a href="/guide?type=farming">Farming</a></li>
-							<li><a href="/guide?type=leveling">Leveling</a></li>
-							<li><a href="/guide?type=pvp">PVP</a></li>
-						</ul>   
-					</div>
-					<div class="col_1">
-						<h3>More</h3>
-						<ul class="dropdown_links">
-							<li><a href="/guide/create">Create a Guide</a></li>
-							<li><a href="#">Highest Voted</a></li>
-							<li><a href="#">Most Viewed</a></li>
-						</ul>   
-					</div>
-					<div class="col_3">
-						<p>All the guides on D3Up.com are created by Diablo 3 players to help share successful strategies. Feel free to create your own guide if you'd like to share something you've discovered!</p>
-					</div>
-	      </div>
-			</li>
+      <!-- <li>
+        <h5><a href="/updates" class="drop">Help</a></h5>
+        <span><a href="/updates" class="drop">FAQs & Info</a></span>
+        <div class="dropdown_3columns align_right">
+          <div class="col_3">
+            <h2 style="border: 0; margin-bottom: 0">Diablo 3 Guides</h2>
+          </div>
+          <div class="col_1">
+            <h3>Class Guides</h3>
+            <ul class="dropdown_links">
+              <li class='barbarian'><a href="/guide?class=barbarian">Barbarian</a></li>
+              <li class='demon-hunter'><a href="/guide?class=demon-hunter">Demon Hunter</a></li>
+              <li class='monk'><a href="/guide?class=monk">Monk</a></li>
+              <li class='witch-doctor'><a href="/guide?class=witch-doctor">Witch Doctor</a></li>
+              <li class='wizard'><a href="/guide?class=wizard">Wizard</a></li>
+            </ul>   
+          </div>
+          <div class="col_1">
+            <h3>Guides Types</h3>
+            <ul class="dropdown_links">
+              <li><a href="/guide?type=general">General</a></li>
+              <li><a href="/guide?type=class">Class</a></li>
+              <li><a href="/guide?type=farming">Farming</a></li>
+              <li><a href="/guide?type=leveling">Leveling</a></li>
+              <li><a href="/guide?type=pvp">PVP</a></li>
+            </ul>   
+          </div>
+          <div class="col_1">
+            <h3>More</h3>
+            <ul class="dropdown_links">
+              <li><a href="/guide/create">Create a Guide</a></li>
+              <li><a href="#">Highest Voted</a></li>
+              <li><a href="#">Most Viewed</a></li>
+            </ul>   
+          </div>
+          <div class="col_3">
+            <p>All the guides on D3Up.com are created by Diablo 3 players to help share successful strategies. Feel free to create your own guide if you'd like to share something you've discovered!</p>
+          </div>
+        </div>
+      </li> -->
 			<li class='social'>
 			  <a href="http://facebook.com/d3upgrade"><img src='/images/f_logo.png'/></a>
 			</li>

@@ -31,7 +31,7 @@ class GuideController extends D3Up_Controller_Action
 		
 		$this->view->featured = $featured = Epic_Mongo::db('guide')->fetchOne($fQuery);
 		
-		$guides = Epic_Mongo::db('guide')->fetchAll($query, $sort);
+		$guides = Epic_Mongo::db('guide')->fetchAll($query, array('_updated' => -1));
 		$paginator = Zend_Paginator::factory($guides);
 		$paginator->setCurrentPageNumber($this->getRequest()->getParam('page', 1))->setItemCountPerPage(15)->setPageRange(3);
 		$this->view->guides = $paginator;

@@ -583,6 +583,7 @@ $(function() {
 			$.each(d3up.builds, function(k) {
 				skills[id] = skill;
 				d3up.builds[k].setSkills({actives: skills});
+				d3up.builds[k].run();
 		  });
 	    d3up.builds.build.renderSkillsTo($("#skills"));
 		});

@@ -182,8 +182,8 @@
       // BuildV2 Scripts for This Page
       // ------------------------------
       var skills = {
-            actives: <?= json_encode(($this->record->actives) ? $this->record->actives->export() : array()); ?>,
-            passives: <?= json_encode(($this->record->passives) ? $this->record->passives->export() : array()); ?>
+            actives: <?= json_encode(($this->record->actives instanceOf Shanty_Mongo_Document) ? $this->record->actives->export() : array()); ?>,
+            passives: <?= json_encode(($this->record->passives instanceOf Shanty_Mongo_Document) ? $this->record->passives->export() : array()); ?>
           },
           gearSlots = $("#build-gear .equipped"),
           gear = gearSlots.find("a[data-json]"),

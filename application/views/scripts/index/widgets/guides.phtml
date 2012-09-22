@@ -1,14 +1,14 @@
 <table class='d3up-table page'>		
   <thead>
     <tr>
-      <td colspan="10"><h5 style='color: #B18135'>Recent Guides</h5></td>
+      <td colspan="10"><h5 style='color: #B18135'>Recently Updated Guides</h5></td>
     </tr>
   </thead>
 	<tbody>
 		<? foreach($this->recentGuides as $guide): ?>
 		<tr class='guide'>
 			<td class='guide'>
-				<p><?= $this->guideLink($guide) ?></p>
+				<p><?= $this->guideLink($guide) ?> (Updated: <?= $this->timeAgo(($guide->_updated ?: $guide->_created)) ?>)</p>
 				<p><?= $guide->description ?></p>
 			</td>
 			<td class='stat'><?= $this->prettyStat($guide->votes) ?></td>

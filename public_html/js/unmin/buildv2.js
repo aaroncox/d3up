@@ -200,6 +200,7 @@
           		  var select = $("<select class='skill-stacks' data-skill='" + slug + "'>").hide(),
           		      checkbox = $("<input type='checkbox' class='skill-activate' data-skill='" + slug + "'>"),
       					    skill = build.stats.skillData[slug];
+								// console.log(skillName, isBuff, skill);
       					if(isBuff || (skill && skill.activate)) {
           				td.append(control);
           			}
@@ -230,7 +231,11 @@
                     skillIcon.addClass("skill-activated");
                     tr.addClass("skill-activated");
                     $.each(d3up.builds, function(k) {
-                      d3up.builds[k].skills.enabled[name] = activeSkills[type][name];                      
+											if(!isBuff) {
+		                    d3up.builds[k].skills.enabled[name] = build.skills[type][name];                      												
+											} else {
+	                      d3up.builds[k].skills.enabled[name] = activeSkills[type][name];                      												
+											}
                       // console.log("applying [" + name + "] to build id#" + k);
                       // console.log("enabled", d3up.builds[k].skills.enabled);
                       if($(this).attr("data-stacks")) {
