@@ -4,6 +4,14 @@
 <div class="home content-page with-sidebar ui-helper-clearfix">
   <?= $this->render("./index/widgets/guides-featured.phtml") ?>
   <?= $this->render("/index/widgets/guides.phtml")?>
+  <table id="recent-builds" class="d3up-table">
+    <thead>
+      <tr>
+        <td colspan="10"><h5 style="color: #B18135">Recent Builds</h5></td>
+      </tr>
+    </thead>
+    <?= $this->render("./build/_build-table.phtml")?>
+  </table>
 	<div class="page">rawr</div>
 	<div class="page">rawr</div>
 	<div class="page">rawr</div>

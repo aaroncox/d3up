@@ -6777,7 +6777,7 @@ var activeSkills = {
 			},
 		},
 	},
-	'enchantress': {
+	'misc-buffs': {
 		'charm': {
 			name: 'Charm',
 			desc: 'Charms an enemy to fight for you for 4 seconds.',
@@ -6835,8 +6835,6 @@ var activeSkills = {
         // 'cooldown': 60,
       // },
 		},
-	},
-	'templar': {
 		'heal': {
 			name: 'Heal',
 			desc: 'Heals you or the Templar for 4651.46 Life.',
@@ -6885,8 +6883,6 @@ var activeSkills = {
         // 'cooldown': 30,
       // },
 		},
-	},
-	'scoundrel': {
 		'crippling-shot': {
 			name: 'Crippling Shot',
 			desc: 'Ranged attack that slows the target by 60% for 3 seconds.',
@@ -6942,8 +6938,6 @@ var activeSkills = {
 				'plus-crit-hit': 3,
 			},
 		},
-	},
-	'shrine': {
 	  'protection-shrine': {
 	    name: 'Protection Shrine',
 	    desc: 'Buff when activating a Protection Shrine.',

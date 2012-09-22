@@ -177,7 +177,7 @@ class RecordController extends D3Up_Controller_Action
 			)
 		);
 		$toCompare = json_decode($this->getRequest()->getParam('attrs'));
-		if(empty($toCompare)) {
+		if(empty($toCompare) && $item->rating) {
 			$toCompare = array_keys($item->rating->export());
 			unset($toCompare['total']);
 		}
@@ -209,9 +209,10 @@ class RecordController extends D3Up_Controller_Action
 		  $this->view->editForm = $record->getEditForm();
 		  $this->view->editForm->setAction("/build/edit/id/" . $record->id);
 			$this->checkVote();
-			$record->viewCounter();
 			$this->view->resync = $this->getRequest()->getParam("resync");
 		}
+		// Count a View
+		$record->viewCounter();
 		if($record->_type == 'item') {
 			$this->getSimilarItems();
 		}

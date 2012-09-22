@@ -327,7 +327,7 @@ ul.simulate-item input,
 	overflow: hidden;
 }
 .d3up-table td.name {
-	width: 350px;
+	width: 100%;
 }
 .d3up-table td.guide {
 	
@@ -342,13 +342,7 @@ ul.simulate-item input,
 	margin: 0;
 	font-weight: bold;
 }
-.home .d3up-table td.name {
-	width: 150px;
-	max-width: 150px;
-	overflow: hidden;
-}
 .d3up-table td.name a {
-	display: block;
 	white-space: nowrap;
 	overflow: hidden;
 }
@@ -710,6 +704,7 @@ dd:has(:focus) .chzn-container {
 }
 .d3up-table td.skills {
 	width: 280px;
+	min-width: 280px;
 }
 .d3up-table td.skills img {
 	width: 25px;
@@ -746,7 +741,7 @@ dd:has(:focus) .chzn-container {
 	max-width: 120px;
 	overflow: hidden;
 }
-#recent-items td.select {
+.d3up-table td.select {
 	width: 30px;
 	text-align: center;
 }
@@ -759,8 +754,7 @@ dd:has(:focus) .chzn-container {
 }
 
 #recent-items td.name {
-	width: 200px;
-	max-width: 200px;
+	width: 100%;
 	overflow: hidden;
 }
 .d3up-table td.name .item-stat,
@@ -791,7 +785,7 @@ dd:has(:focus) .chzn-container {
 #recent-items td.controls,
 .item-stat {
 	text-align: center;
-	line-height: 1.5em;
+	line-height: 1.25em;
 }
 .item-stat .value {
 	line-height: 1.5em;
@@ -804,8 +798,7 @@ dd:has(:focus) .chzn-container {
 	line-height: 1.5em;
 }
 .d3up-table td.sorted {
-	border-left: 1px solid #FF0;
-	border-right: 1px solid #FF0;
+/*	min-width: 5em; */
 }
 td.sorted .value {
 /*	color: #FF0;*/
@@ -884,6 +877,19 @@ tr.compared > td:first-child {
 #user-complete.d3up-table td.name {
 	width: 250px;
 }
+#recent-builds .name {
+	width: 200px;
+}
+#recent-builds .name a {
+	overflow: hidden;
+	display: block;
+	height: 36px;
+	max-width: 135px;
+}
+#recent-builds .votes,
+#recent-builds .views {
+	display: none;
+}
 .home .recent-items .d3up-table td.name {
 	width: 200px;
 }
@@ -896,11 +902,11 @@ tr.compared > td:first-child {
 .table-filters select {
 	min-width: 150px;
 }
-.d3up-table .td-paginator {
+.paginator {
 	padding: 0;
 }
-.d3up-table .td-paginator div span,
-.d3up-table .td-paginator div a {
+.d3up-table .paginator span,
+.d3up-table .paginator a {
 	text-align: center;
 	border-right: 1px solid #000;
 	float: left;
@@ -908,8 +914,8 @@ tr.compared > td:first-child {
 	font-size: 13px;
 	line-height: 28px;
 }
-.d3up-table .td-paginator div span:nth-child(2n),
-.d3up-table .td-paginator div a:nth-child(2n) {
+.d3up-table .paginator span:nth-child(2n),
+.d3up-table .paginator a:nth-child(2n) {
 	background: #191919;
 }
 .table-header {
@@ -1654,6 +1660,10 @@ div.toc.section {
 .content-page .form dd #attributes {
 	width: 400px;
 }
+.content-page .form dd {
+	max-width: 400px;
+}
+
 #tabs-render .form dd,
 .content-page .form dd {
 	margin: 10px;
@@ -1720,6 +1730,10 @@ div.toc.section {
 	background: -moz-linear-gradient(top, #4C5A64 3%, #404F5A 4%, #2E3940 100%); /* firefox */
 	background: -webkit-gradient(linear, left top, left bottom, color-stop(3%,#4C5A64), color-stop(4%,#404F5A), color-stop(100%,#2E3940)); /* webkit */
 	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#4C5A64', endColorstr='#2E3940',GradientType=0 ); /* ie */
+}
+.button-bar .button {
+	display: inline-block;
+	line-height: 1em;
 }
 #tabs-render > div > div .button {
   margin: 5px;
@@ -1820,4 +1834,18 @@ div.toc.section {
 }
 #compare-table tbody tr td {
   font-size: 12px;
+}
+#my-items .item-row .gear-controls {
+	width: 100px;
+}
+#my-items .item-row .gear-controls .button {
+	line-height: 1em;
+  display: none;
+}
+#my-items .item-row:hover .gear-controls .button {
+  display: block;
+}
+.user-bar {
+	float: right;
+	margin-right: 10px;
 }

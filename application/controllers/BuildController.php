@@ -78,9 +78,9 @@ class BuildController extends D3Up_Controller_Action
 		$form = $this->view->form = $build->getEditForm();
 		if($this->getRequest()->isPost()) {
 			$result = $form->process($this->getRequest()->getParams());
-			if($result) {
+			$battletag = $this->getRequest()->getParam('battletag');
+			if($result && $battletag) {
 				$build = Epic_Mongo::db('build')->find($result['upserted']);
-				$battletag = $this->getRequest()->getParam('battletag');
 				$region = $this->getRequest()->getParam('region');
 				$character = $this->getRequest()->getParam('character-id', null);
 				if($character == "") {
@@ -99,8 +99,8 @@ class BuildController extends D3Up_Controller_Action
 				$build->_characterId = $character;
 				$build->_lastCrawl = time();
 				$build->save();
-				$this->_redirect("/b/".$build->id);				
 			}
+			$this->_redirect("/b/".$build->id);				
 		}
 	}
 	public function editAction() {

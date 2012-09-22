@@ -17,7 +17,22 @@ class IndexController extends D3Up_Controller_Action {
 			'id' => $this->view->featuredGuide
 		);
 		$this->view->featured = $featured = Epic_Mongo::db('guide')->fetchOne($fQuery);
-
+    $query = array(
+      'private' => array('$ne' => true),
+      'stats.dps' => array('$exists' => true),
+      'stats.ehp' => array('$exists' => true),
+      '_original' => array('$exists' => false),
+    );
+    $this->view->builds = Epic_Mongo::db('build')->fetchAll($query, $sort, 10); 
+    
+    $this->view->counts = array(
+      'guides' => count(Epic_Mongo::db("guide")->fetchAll(array('published' => true))),
+      'builds' => count(Epic_Mongo::db("build")->fetchAll()),
+      'items' => count(Epic_Mongo::db("item")->fetchAll()),
+      'sales' => count(Epic_Mongo::db("sale")->fetchAll()),
+    );
+    
+    // var_dump($this->view->builds->export()); exit;
 		// $query = array(
 		// );
 		
@@ -32,14 +47,6 @@ class IndexController extends D3Up_Controller_Action {
 		// 	$this->view->buildClass = $query['class'] = $class;
 		// }
 		// $this->view->recentSales = $sales = Epic_Mongo::db('sale')->fetchAll(array('soldSuccess' => true), array('soldOn' => -1), 10);
-		// $query = array(
-		// 	'private' => array('$ne' => true),
-		// 	'stats.dps' => array('$exists' => true),
-		// 	'actives' => array('$exists' => true),
-		// 	'passives' => array('$exists' => true),
-		// 	'_original' => array('$exists' => false),
-		// );
-		// $this->view->recentBuilds = Epic_Mongo::db('build')->fetchAll($query, $sort, 10);	
 		// $this->view->viewsBuilds = Epic_Mongo::db('build')->fetchAll($query, array("views" => -1), 10);	
 		// $this->view->votesBuilds = Epic_Mongo::db('build')->fetchAll($query, array("votes" => -1), 10);	
 
@@ -47,12 +54,6 @@ class IndexController extends D3Up_Controller_Action {
 		// $this->view->votesGuides = Epic_Mongo::db('guide')->fetchAll($query, array("votes" => -1), 10);	
 
 		// // $this->view->guideBuilds = Epic_Mongo::db('build')->fetchAll($query, array("votes" => -1), 10);	
-		// $this->view->counts = array(
-		// 	'guides' => count(Epic_Mongo::db("guide")->fetchAll(array('published' => true))),
-		// 	'builds' => count(Epic_Mongo::db("build")->fetchAll()),
-		// 	'items' => count(Epic_Mongo::db("item")->fetchAll()),
-		// 	'sales' => count(Epic_Mongo::db("sale")->fetchAll()),
-		// );
 		// if($this->_request->isXmlHttpRequest()) {
 		// 	$this->_helper->layout->disableLayout();
 		// }

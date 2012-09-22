@@ -124,4 +124,10 @@ class D3Up_Mongo_Record_Item extends Epic_Mongo_Document_Record
 		$export['display'] = $display;
 		return $export;
 	}
+	public function viewCounter() {
+		if(Epic_Mongo::db('view')->track($this, $_SERVER)) {
+			$this->_lastViewed = time();
+			$this->save();
+		}
+	}
 } // END class D3Up_Mongo_Record_Item extends Epic_Mongo_Document_Record

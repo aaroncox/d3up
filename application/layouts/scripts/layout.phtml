@@ -44,7 +44,14 @@
 				<a href="/"><img src="/images/logo.jpg" alt="D3Up.com" /></a>
 			</div>
 			<div id="header-content" class="inline-flow">
-				<h2 class="table-header">Diablo 3 EHP/DPS/Gear Calculator and Guides</h2>
+				<h2 class="table-header">
+				  Diablo 3 EHP/DPS/Gear Calculator and Guides
+				  <? if($this->profile): ?>
+			      <span class='user-bar'><a href="/user/edit"><?= $this->profile->username ?></a></span>
+				  <? else: ?>
+				    <span class='user-bar'><a href="/user/login">Login</a></span>
+				  <? endif ?>
+  		  </h2>
 				<?= $this->render("_system-message.phtml")?>
 			</div>
 		</div>

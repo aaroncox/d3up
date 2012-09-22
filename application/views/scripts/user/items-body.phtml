@@ -1,0 +1,108 @@
+<tbody>
+	<tr>
+	  <td class='select'>
+	    <input type="checkbox" class='select-all'>
+	  </td>
+		<td colspan="10" class="item-paginator">
+			<?php echo $this->paginationControl($this->items,
+			                                    'Elastic',
+			                                    'item/_pages.phtml',
+																					array(
+																						'itemType' => $this->itemType,
+																						'sortAttrs' => $this->sortAttrs,
+																						'slotType' => $this->slotType,
+																					)); ?>
+	    <div class='button-bar'>
+	      <a class='button delete-selected'>Delete Selected</a>
+	      <a class='button' href='/user/delete-items'>Delete All Items</a>
+	    </div>
+		</td>
+	</tr>
+<? if(!count($this->items)): ?>
+	<tr>
+		<td colspan="10">	
+			<h3 style="text-align: center; color: #f00">No Items found with your search parameters</h3>
+		</td>
+	</tr>
+<? else: ?>
+	<? foreach($this->items as $item): ?>
+	<tr class="item-row" id="item-<?= $item->id ?>">
+	  <td class='select'>
+	    <input type="checkbox">
+	  </td>
+			<td class="name">
+				<div class="item-stat">
+					<span class="value">
+						<?= $this->itemLink($item) ?>
+					</span>
+				<? if($item->stats): ?>
+					<span class="stat">
+					<? if($item->stats->armor): ?>
+						<?= $item->stats->armor . " Armor"?>
+					<? endif; ?>
+					<? if($item->stats->dps): ?>
+						<?= round($item->stats->dps, 2)." dps" ." @ ".round($item->stats->speed, 2)." A/S" ?>
+					<? endif; ?>
+					</span>
+				<? endif; ?>
+			</td>
+			<?
+				if($item->stats) {
+					$stats = $item->stats->export();								
+				}
+				$socketAttrs = array();
+				$attrs = $item->attrs->getAttributesArray($item->type);
+				$export = $item->cleanExport();
+				if(isset($export['socketAttrs'])) {
+					$socketAttrs = $export['socketAttrs'];
+				}
+				// Put whatever we're filtering in first 
+				if($this->sortAttrs) {
+					foreach($this->sortAttrs as $k => $v) {
+						switch($v) {
+							case "base_armor":
+								$val = $stats['armor'];
+								break;
+							case "base_dps":
+								$val = $stats['dps'];
+								break;
+							default:
+								$val = $attrs[$v];
+								break;
+						}
+						if(isset($socketAttrs[$k])) {
+							$val += $socketAttrs[$k];
+						}
+						unset($attrs[$v]);
+						echo "<td class='sorted'>".$this->itemStat($v, $val, $item->rating[$v])."</td>";							
+					}
+				}
+				$count = count($this->sortAttrs);
+			?>
+			<? if($this->profile): ?>
+			<td class='gear-controls'>
+				<?= $this->itemLink($item, array('action' => 'delete', 'text' => 'Delete', 'button' => true))?>
+			</td>
+			<td class='gear-controls'>
+				<?= $this->itemLink($item, array('action' => 'edit', 'text' => 'Edit', 'button' => true))?>
+			</td>
+			<td class='gear-controls'>
+				<a class='button' href="/user/shop?selectItem=<?= $item->id ?>">Sell</a>
+			</td>
+		<? endif ?>
+		</tr>
+	<? endforeach; ?>
+	<tr>
+		<td colspan="10" class="item-paginator td-paginator">
+			<?php echo $this->paginationControl($this->items,
+			                                    'Elastic',
+			                                    'item/_pages.phtml',
+																					array(
+																						'itemType' => $this->itemType,
+																						'sortAttrs' => $this->sortAttrs,
+																						'slotType' => $this->slotType,																									
+																					)); ?>
+		</td>
+	</tr>
+<? endif ?>
+</tbody>

@@ -499,7 +499,134 @@ $(function() {
         $(this).find(".no-match-placeholder").remove();
       }
     });
-  })
+  });
+	// Show/hide skill changer
+	$(".passive-change").bind('click', function() {
+		var chooser = $("#passive-skill-chooser");
+		if(chooser.is(":visible")) {
+			chooser.hide();
+		} else {
+			chooser.show();
+		}
+		var selects = $("#passive-skill-chooser select");
+		$.each(selects, function() {
+			$(this).chosen({
+				allow_single_deselect: true
+			});			
+		});
+	});
+	$(".skill-change").bind('click', function() {
+		var chooser = $("#active-skill-chooser");
+		if(chooser.is(":visible")) {
+			chooser.hide();
+		} else {
+			chooser.show();
+		}
+		var selects = $("#active-skill-chooser select");
+		$.each(selects, function() {
+			$(this).chosen({
+				allow_single_deselect: true
+			});			
+		});
+	});
+	// Hide the Choosers
+	$("#passive-skill-chooser").hide();
+	$("#active-skill-chooser").hide();
+	// Create the Selects for passives
+	$.each([0,1,2], function(k, v) {
+		var select = $("<select data-index='"+(v - 1)+"' data-placeholder='Select a Skill...' name='passiveSelect"+v+"'>"),
+				label = $("<span class='skill-label'>").html("Passive #" + v),
+				build = d3up.builds.build,
+				heroClass = build.meta.heroClass, 
+				skills = _.keys(build.getSkills().passives);
+		select.append("<option value=''>None</option>");
+		$.each(passives[heroClass], function(slug, data) {
+			var option = $("<option value='" + slug + "'>").html(slug.replace(/\-/g, " ").capitalize()),
+					idx = v;
+			if(skills[idx] && skills[idx] == slug) {
+				option.attr("selected", "selected");
+				select.attr("data-skill", slug);
+			}
+			select.append(option);
+		});
+		$("#passive-skill-chooser").append($("<p>").append(label, select));
+		select.bind('change', function() {
+			var skill = $(this).val(),
+					id = parseInt($(this).attr("name").replace("passiveSelect", ""));
+			$.each(d3up.builds, function(k) {
+				skills[id] = skill;
+				d3up.builds[k].setSkills({passives: skills});
+		  });
+	    d3up.builds.build.renderSkillsTo($("#passives"));
+		});
+	});
+	// Create the Selects for actives
+	$.each([0,1,2,3,4,5], function(k, v) {
+		var select = $("<select data-index='"+(v - 1)+"' data-placeholder='Select a Skill...' name='activeSelect"+v+"'>"),
+				label = $("<span class='skill-label'>").html("Passive #" + v),
+				build = d3up.builds.build,
+				heroClass = build.meta.heroClass, 
+				skills = _.keys(build.getSkills().actives);
+		select.append("<option value=''>None</option>");
+		$.each(activeSkills[heroClass], function(slug, data) {
+			var option = $("<option value='" + slug + "'>").html(slug.replace(/\-/g, " ").capitalize()),
+					idx = v;
+			if(skills[idx] && skills[idx] == slug) {
+				option.attr("selected", "selected");
+			}
+			select.append(option);
+		});
+		$("#active-skill-chooser").append($("<p>").append(label, select));
+		select.bind('change', function() {
+			var skill = $(this).val(), 
+					id = parseInt($(this).attr("name").replace("activeSelect", ""));
+			$.each(d3up.builds, function(k) {
+				skills[id] = skill;
+				d3up.builds[k].setSkills({actives: skills});
+		  });
+	    d3up.builds.build.renderSkillsTo($("#skills"));
+		});
+	});
+	// Append Save Buttons
+	var savePassives = $("<a class='save-skills button'>").html("Save Passives");
+	$("#passive-skill-chooser").append(savePassives);
+	var saveActives = $("<a class='save-skills button'>").html("Save Skills");
+	$("#active-skill-chooser").append(saveActives);
+	// Bind Clicks
+	$(".save-skills").click(function() {
+		var skills = [],
+				passives = [];
+		$("#passive-skill-chooser").find("select").each(function() {
+			passives.push($(this).val());
+		});
+		$("#active-skill-chooser").find("select").each(function() {
+			skills.push($(this).val());
+		});
+		$("#active-skill-chooser").hide();
+		$("#passive-skill-chooser").hide();
+		// console.log(passives);
+		$.ajax({
+			data: {
+				a: 'skills',
+				actives: skills,
+				passives: passives,
+				stats: {
+					dps: d3up.builds.build.stats.dps,
+					ehp: d3up.builds.build.stats.ehp
+				},
+				success: function() {
+					$($("<div style='padding: 20px'/>").html("Saved!")).dialog({
+						modal: true,
+						buttons: {
+							Ok: function() {
+								$( this ).dialog( "close" );
+							}
+						}
+					});
+				}
+			}
+		});
+	});
   // Calculate Armor Percentages
   var tArmor = $("tr.stat-armor td.data").text().replace(",","");
   $(".item-rating-armor .rating-bar").each(function() {

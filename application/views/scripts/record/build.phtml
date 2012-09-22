@@ -107,6 +107,9 @@
       <? if(!$this->record->_createdBy->id || ($profile && $profile->id === $this->record->_createdBy->id)): ?>
       <li><a data-tab="#sync" class="button">Battle.net Sync</a></li>
       <? endif ?>
+      <? if($this->myBuild): ?>
+      <li><a class="button" href="/user/items">My Items</a></li>
+      <? endif ?>
       <li><a data-tab="#suggestions" class="button">Suggestions</a></li>
       <li><a data-tab="#share" class="button">Share</a></li>
     </ul>
@@ -152,7 +155,6 @@
 	</script>
 	<script type="text/javascript" src="/js/unmin/compare.js"></script>	
 	<script type="text/javascript" src="/js/unmin/buildv2.js"></script>	
-	<script type="text/javascript" src="/js/unmin/buildui.js"></script>	
   <script type="text/javascript">
     // ------------------------------
     // Legacy Code, Needs Revamped Eventually
@@ -180,8 +182,8 @@
       // BuildV2 Scripts for This Page
       // ------------------------------
       var skills = {
-            actives: <?= json_encode($this->record->actives->export()); ?>,
-            passives: <?= json_encode($this->record->passives->export()); ?>
+            actives: <?= json_encode(($this->record->actives) ? $this->record->actives->export() : array()); ?>,
+            passives: <?= json_encode(($this->record->passives) ? $this->record->passives->export() : array()); ?>
           },
           gearSlots = $("#build-gear .equipped"),
           gear = gearSlots.find("a[data-json]"),
@@ -224,6 +226,9 @@
       // Render the Skills into the Skills Tab
       build.renderSkillsTo($("#skills"));
       build.renderSkillsTo($("#passives"));
+      build.renderSkillsTo($("#buffs"));
 	  });
   </script>
+  <script type="text/javascript" src="/js/unmin/buildui.js"></script>	
+	
 </div>

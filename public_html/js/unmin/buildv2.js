@@ -114,11 +114,42 @@
             type = $(this).data("skill-type"), 
             display = $(this).data("display"),
             icon = false,
-            name = false;
+            name = false, 
+						unordered = build.skills[type],
+						ordered = {};
+				if(type == "misc-buffs") {
+					ordered = {};
+					$.each(['misc-buffs'], function(k, v) {
+						var buffs = activeSkills[v];
+						$.each(buffs, function(idx, skill) {
+							if(skill.effect) {
+								ordered[idx] = {
+									slug: idx,
+									isBuff: true,
+									data: activeSkills[v][idx]
+								};														
+							}
+						});
+						// console.log(v, ordered);
+					});
+				} else {
+					$.each(unordered, function(slug, data) {
+						ordered[data.order] = {
+							slug: slug,
+							data: data
+						};
+					});					
+				}
         // Remove Existing Elements
         $(this).empty();
         // Loop through selected Skills and Render
-        $.each(build.skills[type], function(slug, data) {
+        $.each(ordered, function(idx, skill) {
+					var slug = skill.slug,
+							data = skill.data, 
+							isBuff = false;
+					if(skill.isBuff) {
+						isBuff = true
+					}
           if(!data) {
             return null;
           }
@@ -158,7 +189,6 @@
                   cleaned = slug.split("~"),
                   h3 = $("<h3>").html(skillName),
                   skillIcon = $("#build-header").find("img[data-skill='" + slug + "']"),
-                  icon = $("<img src='/images/icons/" + build.meta.heroClass + "-" + cleaned[0] + ".png'>"),
                   tr = $("<tr class='skill-calc-row' data-id='" + slug + "'>"),
                   td = $("<td>"),
                   control = $("<div class='control'></div>");
@@ -170,7 +200,7 @@
           		  var select = $("<select class='skill-stacks' data-skill='" + slug + "'>").hide(),
           		      checkbox = $("<input type='checkbox' class='skill-activate' data-skill='" + slug + "'>"),
       					    skill = build.stats.skillData[slug];
-      					if(skill && skill.activate) {
+      					if(isBuff || (skill && skill.activate)) {
           				td.append(control);
           			}
           			if(skill && skill.stackable) {
@@ -200,7 +230,7 @@
                     skillIcon.addClass("skill-activated");
                     tr.addClass("skill-activated");
                     $.each(d3up.builds, function(k) {
-                      d3up.builds[k].skills.enabled[name] = build.skills[type][name];                      
+                      d3up.builds[k].skills.enabled[name] = activeSkills[type][name];                      
                       // console.log("applying [" + name + "] to build id#" + k);
                       // console.log("enabled", d3up.builds[k].skills.enabled);
                       if($(this).attr("data-stacks")) {
@@ -231,7 +261,10 @@
                 });
       					control.append("Activate ", checkbox, select);					
       				}
-              h3.prepend(icon);
+							if(!isBuff) {
+								icon = $("<img src='/images/icons/" + build.meta.heroClass + "-" + cleaned[0] + ".png'>");
+	              h3.prepend(icon);								
+							}
               td.prepend(h3);
               tr.append(td);
               $this.append(tr);
@@ -273,9 +306,11 @@
           switch(type) {
             case "passives":
               build.skills[type][slug] = passives[build.meta.heroClass][slug];
+							build.skills[type][slug].order = idx;
               break;
             case "actives":
               build.skills[type][slug] = activeSkills[build.meta.heroClass][slug];
+							build.skills[type][slug].order = idx;
               break;
             default:
               // console.log("Unknown Skills Type: " + type);

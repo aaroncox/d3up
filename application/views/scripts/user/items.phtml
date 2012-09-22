@@ -1,20 +1,11 @@
-<? if($this->notLoggedIn): ?>
-	<p>This feature is only available to logged in users due to the nature of the application.</p>
-	<p>When logged in, the database will save the items you create and associate them to your account for ease of access.</p>
-	<p>Interested? Feel free to wander over to the <a href="/user/register">registration page</a> to create an account, or if you already have one, you can <a href="/user/login">login</a>.</p>
-<? else: ?>
-<? $profile = Epic_Auth::getInstance()->getProfile(); ?>
-	<? if(!$this->disableScripts): ?>
-	<?
-		$this->headTitle('My Items'); 
-		if($profile) {
-			$query = array(
-				'_createdBy' => $profile->createReference()
-			);
-			$builds = Epic_Mongo::db('build')->fetchAll($query);
-		}
-	?>
-	<div class="item-list">
+<? 
+    $this->headTitle('My Items'); 
+?>
+  <!-- <div class="content-sidebar">
+  rawr
+  </div>   -->
+  <!-- <div class="home content-page with-sidebar ui-helper-clearfix"> -->
+	<div class="content-page ui-helper-clearfix">
 		<div class="filters">
 			<select data-placeholder="Filter by Slot" id="slotType" name="slotType" style="width: 150px">
 		    <option label="" value=""></option>
@@ -80,7 +71,7 @@
 			</select>
 		</div>
 		<h2 class="table-header">My Items</h2>
-		<table id="recent-items" class="d3up-table">
+		<table id="my-items" class="d3up-table">
 			<thead>
 				<tr>
 					<td colspan="100" class="sorting">
@@ -208,150 +199,11 @@
 					</td>
 				</tr>
 			</thead>
-	<? endif; ?>
-	<? if(!count($this->items)): ?>
-		<tbody>
-			<tr>
-				<td colspan="10">	
-					<h3 style="text-align: center; color: #f00">No Items found with your search parameters</h3>
-				</td>
-			</tr>
-		</tbody>
-		<? exit; ?>
-	<? endif ?>
-			<tbody>
-				<tr>
-				  <td class='select'>
-				    <input type="checkbox" class='select-all'>
-				  </td>
-				  <td>
-				    Select All
-				  </td>
-					<td colspan="10" class="item-paginator td-paginator">
-						<?php echo $this->paginationControl($this->items,
-						                                    'Elastic',
-						                                    'item/_pages.phtml',
-																								array(
-																									'itemType' => $this->itemType,
-																									'sortAttrs' => $this->sortAttrs,
-																									'slotType' => $this->slotType,
-																								)); ?>
-					</td>
-				</tr>
-				<? foreach($this->items as $item): ?>
-				<tr class="item-row" id="item-<?= $item->id ?>">
-				  <td class='select'>
-				    <input type="checkbox">
-				  </td>
-						<td class="name">
-							<div class="item-stat">
-								<span class="value">
-									<?= $this->itemLink($item) ?>
-								</span>
-							<? if($item->stats): ?>
-								<span class="stat">
-								<? if($item->stats->armor): ?>
-									<?= $item->stats->armor . " Armor"?>
-								<? endif; ?>
-								<? if($item->stats->dps): ?>
-									<?= round($item->stats->dps, 2)." dps" ." @ ".round($item->stats->speed, 2)." A/S" ?>
-								<? endif; ?>
-								</span>
-							<? endif; ?>
-						</td>
-						<?
-							if($item->stats) {
-								$stats = $item->stats->export();								
-							}
-							$socketAttrs = array();
-							$attrs = $item->attrs->getAttributesArray($item->type);
-							$export = $item->cleanExport();
-							if(isset($export['socketAttrs'])) {
-								$socketAttrs = $export['socketAttrs'];
-							}
-							// Put whatever we're filtering in first 
-							if($this->sortAttrs) {
-								foreach($this->sortAttrs as $k => $v) {
-									switch($v) {
-										case "base_armor":
-											$val = $stats['armor'];
-											break;
-										case "base_dps":
-											$val = $stats['dps'];
-											break;
-										default:
-											$val = $attrs[$v];
-											break;
-									}
-									if(isset($socketAttrs[$k])) {
-										$val += $socketAttrs[$k];
-									}
-									unset($attrs[$v]);
-									echo "<td class='sorted'>".$this->itemStat($v, $val, $item->rating[$v])."</td>";							
-								}
-							}
-							$count = count($this->sortAttrs);
-						?>
-						<? foreach($attrs as $k => $v): ?>
-							<? 
-								$count++;
-								$val = $v;
-								if(isset($socketAttrs[$k])) {
-									$val += $socketAttrs[$k];
-								}
-							?>
-							<? if($count > 6) { continue; } ?>
-							<td><?= $this->itemStat($k, $val, $item->rating[$k]) ?></td>
-						<? endforeach ?>
-						<? if($count < 6): ?>
-							<? for($i = $count; $i < 6; $i++): ?>
-								<td>&nbsp;</td>
-							<? endfor ?>
-						<? endif ?>
-						<? if($profile): ?>
-						<td class='controls'>
-							<?= $this->itemLink($item, array('action' => 'delete', 'text' => 'Delete', 'button' => true))?>
-						</td>
-						<td class='controls'>
-							<?= $this->itemLink($item, array('action' => 'edit', 'text' => 'Edit', 'button' => true))?>
-						</td>
-						<td class='controls'>
-							<a class='button' href="/user/shop?selectItem=<?= $item->id ?>">Sell</a>
-						</td>
-					<? endif ?>
-					</tr>
-				<? endforeach; ?>
-				<tr>
-					<td colspan="10" class="item-paginator td-paginator">
-						<?php echo $this->paginationControl($this->items,
-						                                    'Elastic',
-						                                    'item/_pages.phtml',
-																								array(
-																									'itemType' => $this->itemType,
-																									'sortAttrs' => $this->sortAttrs,
-																									'slotType' => $this->slotType,																									
-																								)); ?>
-					</td>
-				</tr>
-			</tbody>
-	<? if(!$this->disableScripts): ?>
+	
+  <?= $this->render("/user/items-body.phtml") ?>
+
 		</table>
 	</div>
-	<? if($profile): ?>
-	<div id="my-builds">
-		<? foreach($builds as $build): ?>
-		<div class="build-parent" id="build-<?= $build->id ?>" data-class="<?= $build->class ?>">
-			<div class="build-items">
-				<? foreach($build->equipment as $slot => $gear):?>
-					<span class="<?= $slot ?>" data-slot="<?= $slot ?>"><?= $this->itemLink($gear) ?></span>
-				<? endforeach ?>
-			</div>
-			<div class="build-passives" data-json='<?= ($build->passives)?json_encode($build->passives->export()):"" ?>'></div>
-		</div>
-		<? endforeach ?>
-	</div>
-	<? endif ?>
-
 	<? if($this->itemType): ?>
 	<script type="text/javascript">
 		$(function() {
@@ -364,16 +216,3 @@
 		} ?>
 	</script>
 	<? endif ?>
-	<? else: ?>
-	<p>You don't have any items yet!</p>
-	<p>Click the "Add Item" button above to get started.</p>
-	<? endif; ?>
-<? endif; ?>
-<script type="text/javascript">
-$(document).ready(function() {
-	oTable = $('#my-items').dataTable({
-		"bJQueryUI": true,
-		"bStateSave": true
-	});
-});	
-</script>
