@@ -180,28 +180,28 @@ class RecordController extends D3Up_Controller_Action
 		if(empty($toCompare) && $item->rating && $item->rating instanceOf Shanty_Mongo_Document) {
 			$toCompare = array_keys($item->rating->export());
 			unset($toCompare['total']);
+  		foreach($toCompare as $attr) {
+  			$query['rating'] = array(
+  				'$ne' => $item->rating->export()
+  			);
+  			if($item->rating[$attr]) {
+  				$value = $item->rating[$attr];
+  				$query['rating.'.$attr] = array(
+  					'$gt' => ($value - 10),
+  					'$lt' => ($value + 10),
+  				);
+
+  				// var_dump($item->rating[$attr]);
+  			}
+  		}
+  		// Get rid of the total
+  		unset($query['rating.total']);
+  		$query['id'] = array(
+  			'$ne' => $item->id
+  		);
+  		$items = Epic_Mongo::db('item')->fetchAll($query, array(), 8);							
+  		$this->view->similar = $items;
 		}
-		foreach($toCompare as $attr) {
-			$query['rating'] = array(
-				'$ne' => $item->rating->export()
-			);
-			if($item->rating[$attr]) {
-				$value = $item->rating[$attr];
-				$query['rating.'.$attr] = array(
-					'$gt' => ($value - 10),
-					'$lt' => ($value + 10),
-				);
-				
-				// var_dump($item->rating[$attr]);
-			}
-		}
-		// Get rid of the total
-		unset($query['rating.total']);
-		$query['id'] = array(
-			'$ne' => $item->id
-		);
-		$items = Epic_Mongo::db('item')->fetchAll($query, array(), 8);							
-		$this->view->similar = $items;
 	}
 	public function viewAction() {
 		$record = $this->getRecord();
