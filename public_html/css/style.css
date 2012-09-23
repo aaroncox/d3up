@@ -2118,8 +2118,9 @@ div.toc.section {
 	right: -1px;
 	top: auto;
 }
-.d3bit-scanned {
-	
+.d3bit-scanned p {
+	font-size: 0.9em; 
+	line-height: 1.2em	
 }
 .d3up-table.d3bit-scanned td.name {
 	width: auto;

@@ -9,9 +9,10 @@
         </tr>
         <tr><th colspan='2'>Recently Scanned Items</th></tr>
         <tr>
-          <td colspan='2' style="font-size: 0.9em; line-height: 1.2em">These are the most recently scanned items using the <a href="http://d3bit.com">D3Bit.com Tooltip Scanner</a> for your Build.</td>
+          <td colspan='2'><p>These are the most recently scanned items using the <a href="http://d3bit.com">D3Bit.com Tooltip Scanner</a> for your Build.</p></td>
       </thead>
       <tbody>
+        <? if(count($this->d3bit)) :?>
         <? foreach($this->d3bit as $item): ?>
           <tr class='button-bar'>
             <td class='name'>
@@ -23,6 +24,15 @@
             <td class='single-control'><a class='button' href='/i/<?= $item->id ?>/convert'>Copy to My Items</a></td>
           </tr>
         <? endforeach ?>
+        <? else: ?>
+          <tr>
+            <td colspan='4'>
+              <h2 style="margin-top: 0">No Items Found!</h2>
+              <p>This panel updates with items that you've scanned and compared to your builds using the <a href="http://d3bit.com">D3Bit.com Tooltip Scanner</a>.</p>
+              <p>To get started, download the <a href="http://d3bit.com">D3Bit Client</a> and enter your D3Up.com username in the appropriate field. Each time you analyze an item against one of your builds, it will appear here.</p>
+            </td>
+          </tr>
+        <? endif ?>
       </tbody>
     </table>
   </div>
