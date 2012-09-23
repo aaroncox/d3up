@@ -6780,7 +6780,7 @@ var activeSkills = {
 	'misc-buffs': {
 		'charm': {
 			name: 'Charm',
-			desc: 'Charms an enemy to fight for you for 4 seconds.',
+			desc: 'Charms an enemy to fight for you for <span class="skill-highlight">4</span> seconds.',
       // effect: {
         // 'cooldown': 25,
       // },
@@ -6801,7 +6801,7 @@ var activeSkills = {
 		},
 		'powered-armor': {
 			name: 'Powered Armor',
-			desc: 'Enchantress buffs herself and her allies, increasing Armor by 15%. Attackers are slowed by 30% for 3 seconds.',
+			desc: 'Enchantress buffs herself and her allies, increasing Armor by <span class="skill-highlight">15%</span>. Attackers are slowed by <span class="skill-highlight">30%</span> for <span class="skill-highlight">3</span> seconds.',
 			effect: {
 				'plus-armor': 15,
 			},
@@ -6823,7 +6823,7 @@ var activeSkills = {
 		},
 		'focused-mind': {
 			name: 'Focused Mind',
-			desc: 'An aura that increases attack speed by 3% for allies within 40 yards.',
+			desc: 'An aura that increases attack speed by <span class="skill-highlight">3%</span> for allies within 40 yards.',
 			effect: {
 				'plus-attack-speed': 3,
 			},
@@ -6851,7 +6851,7 @@ var activeSkills = {
 		},
 		'loyalty': {
 			name: 'Loyalty',
-			desc: 'Regenerates 155.05 Life per second for you and the Templar.',
+			desc: 'Regenerates <span class="skill-highlight">155.05</span> Life per second for you and the Templar.',
 		},
 		'intimidate': {
 			name: 'Intimidate',
@@ -6874,7 +6874,7 @@ var activeSkills = {
 		},
 		'inspire': {
 			name: 'Inspire',
-			desc: 'Increase resource generation for all allies that the Templar is following. Mana: 2 per second. Arcane Power: 0.5 per second. Hatred: 1 per second. Fury: 8% generated. Spirit: 12% generated.',
+			desc: 'Increase resource generation for all allies that the Templar is following. <ul><li>Mana: <span class="skill-highlight">2</span> per second.</li><li>Arcane Power: <span class="skill-highlight">0.5</span> per second.</li><li>Hatred: <span class="skill-highlight">1</span> per second.</li><li>Fury: <span class="skill-highlight">8%</span> generated.</li><li>Spirit: <span class="skill-highlight">12%</span> generated.</li></ul>',
 		},
 		'guardian': {
 			name: 'Guardian',
@@ -6926,28 +6926,28 @@ var activeSkills = {
 		},
 		'hysteria': {
 			name: 'Hysteria',
-			desc: 'Whenever you or the Scoundrel land a Critical Hit, you both will go into hysterics, increasing all damage done by 10% for 3 seconds. This effect cannot occur more than once every 6 seconds.',
+			desc: 'Whenever you or the Scoundrel land a Critical Hit, you both will go into hysterics, increasing all damage done by <span class="skill-highlight">10%</span> for <span class="skill-highlight">3</span> seconds. This effect cannot occur more than once every 6 seconds.',
 			'effect': {
         'plus-damage-conditional': 10
 			}
 		},
 		'anatomy': {
 			name: 'Anatomy',
-			desc: 'Increases Critical Hit Chance by 3% for the Scoundrel and his allies.',
+			desc: 'Increases Critical Hit Chance by <span class="skill-highlight">3%</span> for the Scoundrel and his allies.',
 			effect: {
 				'plus-crit-hit': 3,
 			},
 		},
 	  'protection-shrine': {
 	    name: 'Protection Shrine',
-	    desc: 'Buff when activating a Protection Shrine.',
+	    desc: 'Reduces damage taken by <span class="skill-highlight">25%</span>.',
 	    effect: {
 	      'plus-damage-reduce': 25
 	    }
 	  },
 	  'frenzy-shrine': {
 	    name: 'Frenzy Shrine',
-	    desc: 'Buff when activating a Frenzy Shrine.',
+	    desc: 'Increases attack speed by <span class="skill-highlight">25%</span> and critical hit damage by <span class="skill-highlight">25%</span>.',
 	    effect: {
 	      'plus-attack-speed': 25,
 	      'critical-hit-damage': 25

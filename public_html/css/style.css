@@ -1118,6 +1118,7 @@ tr.compared > td:first-child {
 /*  border: 1px solid #222;*/
 	background: #171717;
 	font-size: 14px;
+	text-align: left;
 }
 .skill-calc-row h3 img {
   height: 30px;
@@ -2127,4 +2128,24 @@ div.toc.section {
 }
 .d3bit-scanned .item-stat .value {
 	font-size: 1em;
+}
+.statistics-table.skill-effect-table {
+	width: 200px;
+}
+.statistics-table.skill-data-table {
+	width: 250px;
+}
+.statistics-table.skill-data-table td {
+	width: auto;
+}
+.statistics-table.skill-effect-table td span.value{
+	color: #fff;
+}
+.statistics-table.skill-data-table > thead > tr > td:first-child, 
+.statistics-table.skill-data-table > tbody > tr > td:first-child {
+	width: auto;
+}
+.skill-description {
+	font-size: 1em;
+	padding: 5px 15px;
 }

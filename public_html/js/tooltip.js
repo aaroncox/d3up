@@ -128,8 +128,8 @@ $.fn.bindSkilltip = function() {
 		tooltip.empty().append(container);
 		var position = {
 			of: $this,
-			at: "right bottom",
-			my: "left top",
+			at: "right top",
+			my: "left bottom",
 			offset: "0 10",
 			collision: "flip"
 		};

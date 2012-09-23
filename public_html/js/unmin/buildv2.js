@@ -15,8 +15,10 @@
   Build.prototype = {
     slots: ['helm', 'shoulders', 'amulet', 'chest', 'gloves', 'bracers', 'belt', 'pants', 'ring1', 'ring2', 'boots', 'mainhand', 'offhand'],
     elems: {},
+		skillElems: {},
     init: function(data) {
       this.calc = new d3up.BuildCalculator;
+			this.builder = new d3up.ItemBuilder;
       this.heroClass = false;
       this.gear = {};
       this.skills = {
@@ -52,6 +54,10 @@
       // Loop through all Elements previously used and re-render
       $.each(this.elems, function(k,v) {
         build.renderTo(v);
+      });
+      // Loop through all Skill Elements previously used and re-render
+      $.each(this.skillElems, function(k,v) {
+        build.renderSkillsTo(v);
       });
     },
     renderTo: function(elem) {
@@ -106,6 +112,7 @@
       if(!this.stats.strength) {
         this.run();
       }
+      this.skillElems[elem.selector] = elem;
       var build = this,
           compare = d3up.buildCompare,
           elements = elem.find("*[data-skill-type]");
@@ -190,7 +197,7 @@
                   h3 = $("<h3>").html(skillName),
                   skillIcon = $("#build-header").find("img[data-skill='" + slug + "']"),
                   tr = $("<tr class='skill-calc-row' data-id='" + slug + "'>"),
-                  td = $("<td>"),
+                  td = $("<td colspan='2'>"),
                   control = $("<div class='control'></div>");
               if(!skillName) {
                 skillName = slug.replace(/\-/g, " ").capitalize();
@@ -200,6 +207,13 @@
           		  var select = $("<select class='skill-stacks' data-skill='" + slug + "'>").hide(),
           		      checkbox = $("<input type='checkbox' class='skill-activate' data-skill='" + slug + "'>"),
       					    skill = build.stats.skillData[slug];
+								if(d3up.builds['build'].skills.enabled[slug]) {
+									skillIcon.addClass("skill-activated");
+									checkbox.attr("checked", "checked");
+								} else {
+									skillIcon.removeClass("skill-activated");
+									checkbox.removeAttr("checked");
+								}
 								// console.log(skillName, isBuff, skill);
       					if(isBuff || (skill && skill.activate)) {
           				td.append(control);
@@ -215,19 +229,19 @@
           				// Set the Default
           				checkbox.attr("data-stacks", 1);
           			}
-                if(build.stats.skillData[slug] && build.stats.skillData[slug].activate) {
-
-                }
-                checkbox.click(function() {
+                // if(build.stats.skillData[slug] && build.stats.skillData[slug].activate) {
+                // 
+                // }
+                // checkbox.click(function() {
                   // tr.toggleClass("skill-activated");
-                });
+                // });
                 // select.bind('change', function() {
                   //  checkbox.attr("data-stacks", $(this).val());
                 // });
                 checkbox.bind('change', function() {
                   var name = $(this).attr('data-skill'), 
                       type = $(this).closest("table").data("skill-type");
-                  if($(this).is(":checked")) {
+                  if(!d3up.builds['build'].skills.enabled[name]) {
                     skillIcon.addClass("skill-activated");
                     tr.addClass("skill-activated");
                     $.each(d3up.builds, function(k) {
@@ -268,11 +282,35 @@
       				}
 							if(!isBuff) {
 								icon = $("<img src='/images/icons/" + build.meta.heroClass + "-" + cleaned[0] + ".png'>");
+								icon.attr('data-tooltip', data.desc);
+								icon.attr('data-name', data.name);
+								icon.bindSkilltip();
 	              h3.prepend(icon);								
 							}
               td.prepend(h3);
               tr.append(td);
               $this.append(tr);
+							if(build.stats.skillData[slug]) {
+								var skillTable = $("<table class='statistics-table skill-data-table'>"),
+										effectTable = $("<table class='statistics-table skill-effect-table'>");
+								$.each(build.stats.skillData[slug], function(s,v) {
+									skillTable.append(build.renderSkillData(s,v));
+								});
+								if(build.skills.actives[slug]) {
+									if(build.skills.actives[slug].effect) {
+										$.each(build.skills.actives[slug].effect, function(k,v) {
+											effectTable.append(build.renderEffectData(k, v));																					
+										});
+									}
+								}
+								$this.append($("<tr>").append($("<td>").append(skillTable), $("<td>").append(effectTable)));
+							}
+							if(build.skills.passives[slug]) {
+								$this.append($("<tr>").append($("<td colspan='2' class='skill-description'>").append(build.skills.passives[slug].desc)));
+							}
+							if(activeSkills['misc-buffs'][slug]) {
+								$this.append($("<tr>").append($("<td colspan='2' class='skill-description'>").append(activeSkills['misc-buffs'][slug].desc)));
+							}
               break;
             default:
               // console.log("Unhandled Display Type: " + display);
@@ -281,6 +319,126 @@
         });
       });
     },
+		renderSkillData: function(s,i) {
+			var row = $("<tr>"), 
+					label = false,
+					value = false;
+			switch(s) {
+			  case "per-tick-norm":
+					label = "Per Tick";
+					value = i;
+			    break;
+			  case "per-tick-crit":
+					label = "Critical Per Tick";
+					value = i;
+			    break;
+			  case "total-damage-norm":
+					label = "Total Damage";
+					value = i;
+			    break;
+			  case "total-damage-crit":
+					label = "Critical Damage Total";
+					value = i;
+			    break;
+				case "3rd-hit":
+					label = "Average 3rd Hit";
+					value = i;
+					break;						
+				case "critical-hit-2nd":
+					label = "2nd Pierce Critical Hit";
+					value = i;
+					break;						
+				case "critical-hit-3rd":
+					label = "3rd Pierce Critical Hit";
+					value = i;
+					break;						
+				case "per-tick":
+					label = "DPS";
+					value = i;
+					break;
+				case "total-damage":
+					label = "Total Damage/Cast";
+					value = i;
+					break;
+				case "average-hit":
+					label = "Average Hit";
+					value = i;
+					break;
+				case "damage-tick":
+					label = "Damage per Tick";
+					value = i;
+					break;
+				case "damage":
+					label = "Damage Range";
+					value = i;
+					break;
+				case "damage-2nd":
+					label = "2nd Pierce Hit";
+					value = i;
+					break;
+				case "damage-3rd":
+					label = "3rd Pierce Hit";
+					value = i;
+					break;
+				case "dps":
+					label = "DPS";
+					value = i;
+					break;
+				case "critical-hit":
+					label = "Critical Hit";
+					value = i;
+					break;
+				case "critical-hit-tick":
+					label = "Per Tick Crit";
+					value = i;
+					break;
+			}
+			if(label && value) {
+				row.append($("<td>").html(label));
+				row.append($("<td>").html(i))
+				return row;
+			}
+			return false;
+		},
+		renderEffectData: function(k, v) {
+			var row = $("<tr>"), 
+					effect = false,
+					wrap = $("<span class='skill-highlight'>").append(v); 
+			switch(k) {
+				default:
+					if(this.builder.skillText[k]) {
+						effect = this.builder.skillText[k].replace("VVV", wrap[0].outerHTML);						
+					}
+					break;
+			}
+			if(effect) {
+				row.append($("<td>").html(effect));
+				return row;
+			}
+			return false;
+			//  target.append($("<tr>").append(th));
+			//  		  $.each(activeActivesData[k].effect, function(i,e) {
+			//  		    var tr = $("<tr>"),
+			//  		        td = $("<td colspan='10'>");
+			//  		    if(itemBuilder.skillText[i]) {
+			//  		      var value = "<span class='skill-highlight'>" + e + "</span>",
+			//  		          desc = itemBuilder.skillText[i].replace("VVV", value);
+			//    		    td.append(desc);
+			//    		    tr.append(td);
+			//    			  target.append(tr);			    
+			//  		    } else {
+			//  		      d3up.log("Unhandled Ability Effect: " + i);
+			//  		    }
+			//  		  });			  
+			// }
+			//      if(target.find('.statLabel').length == 0) {
+			//        target.find('.skill-damage').hide();
+			//      }
+			//      if(target.text() != "") {
+			//        target.show();
+			//      }
+			// });
+		},
     diffWith: function(build) {
       // Compares this build to the build passed in
       return this.calc.diff(this.getStats(), build.getStats());
@@ -308,19 +466,21 @@
       var build = this;
       $.each(skills, function(type, data) {
         $.each(data, function(idx, slug) {
-          switch(type) {
-            case "passives":
-              build.skills[type][slug] = passives[build.meta.heroClass][slug];
-							build.skills[type][slug].order = idx;
-              break;
-            case "actives":
-              build.skills[type][slug] = activeSkills[build.meta.heroClass][slug];
-							build.skills[type][slug].order = idx;
-              break;
-            default:
-              // console.log("Unknown Skills Type: " + type);
-              break;
-          }
+					if(slug) {
+					  switch(type) {
+	            case "passives":
+	              build.skills[type][slug] = passives[build.meta.heroClass][slug];
+								build.skills[type][slug].order = idx;
+	              break;
+	            case "actives":
+	              build.skills[type][slug] = activeSkills[build.meta.heroClass][slug];
+								build.skills[type][slug].order = idx;
+	              break;
+	            default:
+	              // console.log("Unknown Skills Type: " + type);
+	              break;
+	          }	
+					}
         });
       });
     },

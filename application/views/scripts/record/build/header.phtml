@@ -1,9 +1,4 @@
 <div id="build-header" class="build-header title-block" data-class="<?= $this->record->class ?>">
-	<? if(!$this->record->_createdBy->id && $this->record->_characterId && $this->record->_characterBt): ?>
-		<div class="controls">
-			<a href="/b/<?= $this->record->id ?>/resync" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only"><span class="ui-button-text">Sync w/Battle.net</span></a>			
-		</div>
-	<? endif ?>
 	<h2>
 		<?= $this->mLink($this->record) ?> 
 	</h2>
