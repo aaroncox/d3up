@@ -2125,3 +2125,6 @@ div.toc.section {
 .d3up-table.d3bit-scanned td.name {
 	width: auto;
 }
+.d3bit-scanned .item-stat .value {
+	font-size: 1em;
+}
