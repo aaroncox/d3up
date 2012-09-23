@@ -177,7 +177,7 @@ class RecordController extends D3Up_Controller_Action
 			)
 		);
 		$toCompare = json_decode($this->getRequest()->getParam('attrs'));
-		if(empty($toCompare) && $item->rating) {
+		if(empty($toCompare) && $item->rating && $item->rating instanceOf Shanty_Mongo_Document) {
 			$toCompare = array_keys($item->rating->export());
 			unset($toCompare['total']);
 		}
