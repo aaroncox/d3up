@@ -17,7 +17,7 @@
   <div class="d3bit-card">
     <div class="logo"><img src="/images/logo.png"></div>
     <h3>D3Up.com Item Comparision</h3>
-    <p>Using Build: <a href="#" onclick="window.external.OpenLink('http://beta.d3up.com/b/<?= $this->build->id ?>')"><?= $this->build->name ?></a></p>
+    <p>Using Build: <a href="#" href="http://d3up.com/b/<?= $this->build->id ?>')"><?= $this->build->name ?></a></p>
     <div class="filter">
       Compare Against: 
       <select class="compare-slot">
@@ -147,10 +147,6 @@ function calcDiff(itemBuilder) {
    }
    body.append(row);
   });
-  var fTR = $("<tr>"),
-      fTD1 = $("<td>Viewable:</td>"),
-      fTD2 = $("<td colspan='3'><a href='http://d3up.com/i/<?= $this->item->id ?>'>http://d3up.com/i/<?= $this->item->id ?></a></td>");
-  body.append(fTR.append(fTD1, fTD2));
   // table.append("<tr><td colspan='10'><span class='pos'>Green = Increase</span> / <span class='neg'>Red = Decrease</span></td></tr>");
   // } else {
   //   table.append("<tr><td colspan='10' style='text-align: center; font-weight: bold;'>These items are identical.</td></tr>");
