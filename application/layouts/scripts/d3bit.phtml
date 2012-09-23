@@ -15,8 +15,8 @@
 </head>
 <body>
   <div class="d3bit-card">
-    <div class="logo"><img src="/images/logo.png"></div>
-    <h3>D3Up.com Item Comparision</h3>
+    <div class="logo"><img src="http://beta.d3up.com/images/logo.jpg"></div>
+    <h3><a href="#" onclick="window.external.OpenLink('http://d3up.com')">D3Up.com</a> Item Comparision</h3>
     <p>Using Build: <a href="#" onclick="window.external.OpenLink('http://beta.d3up.com/b/<?= $this->build->id ?>')"><?= $this->build->name ?></a></p>
     <select class="compare-slot">
       <? foreach($this->slots as $slot): ?>
@@ -155,7 +155,7 @@ function calcDiff(itemBuilder) {
 }
 calcDiff();
 $(".statistics-table .header th").append(slot);
-console.log((428 + 804) / 2 * Math.floor(1.36 * 1024) / 1024);
+
 </script>
 </body>
 </html>

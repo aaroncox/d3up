@@ -21,7 +21,7 @@ body {
 .d3bit-card > p {
   font-size: 12px;
   font-weight: normal;
-  margin: 8px;
+  margin: 4px;
 }
 .d3bit-card .compare-diff h4 {
   clear: both;
@@ -34,8 +34,8 @@ body {
   float: left;
 }
 .d3bit-card .logo img {
-  margin: 0 20px;
-  height: 60px;
+  margin: 0 10px;
+  height: 70px;
 }
 .d3bit-card .filter {
   
@@ -43,7 +43,7 @@ body {
 .d3bit-card table {
   background: #111;
   border: 1px solid #333;
-  margin: 5px;
+  margin: 0 5px 5px;
   width: 348px;
 }
 .d3bit-card table th {

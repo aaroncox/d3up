@@ -12,6 +12,9 @@ class AjaxController extends D3Up_Controller_Action
     // Get our Build
     $id = (int) $params['build'];
     $build = $this->view->build = Epic_Mongo::db('build')->fetchOne(array("id" => $id));    
+    if(!$build) {
+      echo "A build must be selected to compare against."; exit;
+    }
 		// Create an Item!
 		$this->view->item = $item = Epic_Mongo::newDoc('item');
     $item->_createdBy = Epic_Mongo::db('user')->fetchOne(array('id' => (int) $build->_createdBy->id));
