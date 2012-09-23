@@ -63,6 +63,9 @@ class D3Up_Mongo_Record_Item extends Epic_Mongo_Document_Record
 	}
 	
 	public function save() {
+	  if(!$this->_created) {
+	    $this->_created = time();
+	  }
 		$this->rating = D3Up_Tool_MaxStat::getInstance()->calc($this);
 		return parent::save();
 	}
@@ -99,11 +102,13 @@ class D3Up_Mongo_Record_Item extends Epic_Mongo_Document_Record
 				}
 			}
 		}
-		$export['slots'] = array();
-		foreach(self::$slotTypeMap as $slot => $types) {
-			if(in_array($export['type'], $types)) {
-				$export['slots'][] = $slot;
-			}
+		if(isset($export['type'])) {
+  		$export['slots'] = array();
+  		foreach(self::$slotTypeMap as $slot => $types) {
+  			if(in_array($export['type'], $types)) {
+  				$export['slots'][] = $slot;
+  			}
+  		}		  
 		}
 		// if($export['id'] == 28) {
 		// 	echo "<pre>"; var_dump($export); exit;			
@@ -115,9 +120,18 @@ class D3Up_Mongo_Record_Item extends Epic_Mongo_Document_Record
 				$attrs[$k] = $helper->prettyDisplay($k, $v); 
 			}			
 		}
+		$quality = '';
+		if(isset($export['quality'])) {
+		  $quality = $helper->_qualityMap[$export['quality']];
+		}
+		$type = '';
+		if(isset($export['type'])) {
+		  $type = $export['type'];
+		}
+		
 		$display = array(
-			'quality' => $helper->_qualityMap[$export['quality']],
-			'type' => ucwords(str_replace("-", " ", $export['type'])),
+			'quality' => $quality,
+			'type' => ucwords(str_replace("-", " ", $type)),
 			'attrs' => $attrs,
 			'sockets' => $sockets,
 		);

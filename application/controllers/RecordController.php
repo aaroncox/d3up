@@ -361,4 +361,10 @@ class RecordController extends D3Up_Controller_Action
 		$record->save();
 		$this->_redirect("/b/" . $record->id ."?resync=true");
 	}
+	public function convertAction() {
+	  $record = $this->getRecord();
+	  $record->_d3bit = null;
+	  $record->save();
+	  $this->_redirect('/user/items');
+	}
 } // END class RecordController extends Epic_Controller_Action

@@ -550,7 +550,10 @@ ItemBuilder.prototype = {
 	redoSocketAttrs: function() {
 		this.item.socketAttrs = {};
 		_.each(this.item.sockets, function(v,k) {
-			if(this.item.itemClass == 'weapon') {
+			var effect = false;
+			if(v == "") {
+				
+			} else if(this.item.itemClass == 'weapon') {
 				// Weapon Effects
 				var effect = this.gemEffect[v][2][0],
 						value = this.gemEffect[v][2][1];
@@ -563,10 +566,12 @@ ItemBuilder.prototype = {
 				var effect = this.gemEffect[v][3][0],
 						value = this.gemEffect[v][3][1];
 			}
-			if(this.item.socketAttrs[effect]) {
-				this.item.socketAttrs[effect] += value;
-			} else {
-				this.item.socketAttrs[effect] = value;				
+			if(effect) {
+				if(this.item.socketAttrs[effect]) {
+					this.item.socketAttrs[effect] += value;
+				} else {
+					this.item.socketAttrs[effect] = value;				
+				}				
 			}
 		}, this);
 		// Fire the Callback
@@ -620,7 +625,7 @@ ItemBuilder.prototype = {
 			var $this = this;
 			if(!this.preview.sockets.find("#socket"+i).length) {
 				var select = $("<select name='socket" + i + "' id='socket" + i + "' tabindex='150'>");
-				select.append($("<option value=''>Empty</option>"));
+				select.append($("<option value=''>Socket #" + i + ": Empty</option>"));
 				_.each(gems, function(v,k) {
 					var option = $("<option>"),
 							idx = 3; // Default to 3 for most items

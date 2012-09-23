@@ -1,11 +1,32 @@
 <? 
     $this->headTitle('My Items'); 
 ?>
-  <!-- <div class="content-sidebar">
-  rawr
-  </div>   -->
-  <!-- <div class="home content-page with-sidebar ui-helper-clearfix"> -->
-	<div class="content-page ui-helper-clearfix">
+  <div class="content-sidebar">
+    <table class='d3up-table d3bit-scanned'>
+      <thead>
+        <tr>
+          <th colspan='2'><a href="http://d3bit.com"><img src="/images/d3bit.png"></a></th>
+        </tr>
+        <tr><th colspan='2'>Recently Scanned Items</th></tr>
+        <tr>
+          <td colspan='2' style="font-size: 0.9em; line-height: 1.2em">These are the most recently scanned items using the <a href="http://d3bit.com">D3Bit.com Tooltip Scanner</a> for your Build.</td>
+      </thead>
+      <tbody>
+        <? foreach($this->d3bit as $item): ?>
+          <tr class='button-bar'>
+            <td class='name'>
+              <div class="item-stat">
+                <span class="value"><?= $this->itemLink($item)?></span>
+                <span class="stat">Scanned: <?= $this->timeAgo($item->_created) ?></span>
+              </div>
+            </td>
+            <td class='single-control'><a class='button' href='/i/<?= $item->id ?>/convert'>Copy to My Items</a></td>
+          </tr>
+        <? endforeach ?>
+      </tbody>
+    </table>
+  </div>
+  <div class="home content-page with-sidebar ui-helper-clearfix">
 		<div class="filters">
 			<select data-placeholder="Filter by Slot" id="slotType" name="slotType" style="width: 150px">
 		    <option label="" value=""></option>
@@ -200,7 +221,7 @@
 				</tr>
 			</thead>
 	
-  <?= $this->render("/user/items-body.phtml") ?>
+    <?= $this->render("/user/items-body.phtml") ?>
 
 		</table>
 	</div>

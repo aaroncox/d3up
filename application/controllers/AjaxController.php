@@ -14,6 +14,7 @@ class AjaxController extends D3Up_Controller_Action
     $build = $this->view->build = Epic_Mongo::db('build')->fetchOne(array("id" => $id));    
 		// Create an Item!
 		$this->view->item = $item = Epic_Mongo::newDoc('item');
+    $item->_createdBy = Epic_Mongo::db('user')->fetchOne(array('id' => (int) $build->_createdBy->id));
 		$item->_d3bit = true;
 		$item->name = $params['name'];
 		$item->quality = array_search($params['quality'], $this->_qualityMap);
@@ -69,9 +70,31 @@ class AjaxController extends D3Up_Controller_Action
 			$parts = explode(" ", $v);
 			$name = array_search($parts[1], $this->_statMap);
 			if($name) {
-				$item->attrs->$name = (float) $parts[0];				
+			  if($name == "sockets") {
+		      $sockets = array();
+		      $total = (int) $parts[0];
+          for($i = 0; $i < $total; $i++) {
+            $sockets[] = "";
+          }
+          $item->sockets = $sockets;
+			  } else {
+  				$item->attrs->$name = (float) $parts[0];							    
+			  }
 			}
 		}
+		$query = array(
+		  'stats' => $item->stats,
+		  'attrs' => $item->attrs->export(),
+		  '_createdBy' => $build->_createdBy->createReference(),
+		);
+		// Has this user scanned this item?
+    $test = Epic_Mongo::db('item')->fetchOne($query);
+    if($test) {
+      // Just use it instead...
+      $this->view->item = $item = $test;
+    } else {
+  		$item->save();      
+    }
 		$this->view->slots = $item->getPossibleSlots();
     $this->_helper->layout->setLayout('d3bit');
   }
@@ -219,6 +242,7 @@ class AjaxController extends D3Up_Controller_Action
 	);
 
 	protected $_statMap = array(
+	  'sockets' => "Soc",
 		// Base Stats 
 		'strength' => "Str",
 		'intelligence' => "Int",

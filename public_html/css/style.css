@@ -326,6 +326,9 @@ ul.simulate-item input,
 	line-height: 34px;
 	overflow: hidden;
 }
+.d3up-table td.single-control {
+	width: 150px;
+}
 .d3up-table td.name {
 	width: 100%;
 }
@@ -1806,7 +1809,7 @@ div.toc.section {
 #compare-table {
   display: none;
 }
-#	 .compare-overview {
+.compare-overview {
   background: #111;
   color: #ececec;
   text-align: center;
@@ -2114,4 +2117,10 @@ div.toc.section {
 	left: auto;
 	right: -1px;
 	top: auto;
+}
+.d3bit-scanned {
+	
+}
+.d3up-table.d3bit-scanned td.name {
+	width: auto;
 }

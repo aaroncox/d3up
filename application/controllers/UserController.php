@@ -147,8 +147,12 @@ class UserController extends D3Up_Controller_Action
 			$this->view->sortAttrs = $sortAttrs;
 		} else {
 			$sort['_created'] = -1;
+			$sort['_scanned'] = -1;
 		}
+		$query['_d3bit'] = array('$exists' => false);
 		$items = Epic_Mongo::db('item')->fetchAll($query, $sort);			
+		$query['_d3bit'] = array('$exists' => true);
+		$this->view->d3bit = Epic_Mongo::db('item')->fetchAll($query, $sort, 20);			
 		$paginator = Zend_Paginator::factory($items);
 		$paginator->setCurrentPageNumber($this->getRequest()->getParam('page', 1))->setItemCountPerPage(20)->setPageRange(3);
 		$this->view->items = $paginator;
