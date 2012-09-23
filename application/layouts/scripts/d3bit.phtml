@@ -137,11 +137,11 @@ function calcDiff(itemBuilder) {
      newStat = Math.round(newStat / 10) / 100 + "k";
    }
    if(diffVal > 0) {
-     row.append($("<td/>").html("+"+diffVal).addClass("pos"));
+     row.append($("<td class='diff'/>").html("+"+diffVal).addClass("pos"));
      row.append($("<td class='neg'/>").html(oldStat));
      row.append($("<td class='pos'/>").html(newStat));       
    } else {
-     row.append($("<td/>").html(diffVal).addClass("neg"));
+     row.append($("<td class='diff'/>").html(diffVal).addClass("neg"));
      row.append($("<td class='pos'/>").html(oldStat));
      row.append($("<td class='neg'/>").html(newStat));       
    }
