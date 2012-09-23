@@ -34,8 +34,8 @@ body {
   float: left;
 }
 .d3bit-card .logo img {
-  margin-right: 20px;
-  height: 90px;
+  margin: 0 20px;
+  height: 60px;
 }
 .d3bit-card .filter {
   

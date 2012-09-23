@@ -175,7 +175,7 @@ BuildCalculator.prototype = {
 	  if(item == null) {
 			return '';
 		}
-		var link = $("<a class='quality-" + item.quality + "'/>").attr("data-json", JSON.stringify(item)).html(item.name).attr("onclick", "window.external.OpenLink('http://beta.d3up.com/i/" + item.id + "')");
+		var link = $("<a href='#' class='quality-" + item.quality + "'/>").attr("data-json", JSON.stringify(item)).html(item.name).attr("onclick", "window.external.OpenLink('http://beta.d3up.com/i/" + item.id + "')");
 		return link;	  
 	},
 	applyEnabledSkill: function(e, i) {

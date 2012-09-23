@@ -18,14 +18,11 @@
     <div class="logo"><img src="/images/logo.png"></div>
     <h3>D3Up.com Item Comparision</h3>
     <p>Using Build: <a href="#" onclick="window.external.OpenLink('http://beta.d3up.com/b/<?= $this->build->id ?>')"><?= $this->build->name ?></a></p>
-    <div class="filter">
-      Compare Against: 
-      <select class="compare-slot">
-        <? foreach($this->slots as $slot): ?>
-          <option value='<?=$slot?>'><?= $slot ?></option>
-        <? endforeach ?>
-      </select>
-    </div>
+    <select class="compare-slot">
+      <? foreach($this->slots as $slot): ?>
+        <option value='<?=$slot?>'><?= $slot ?></option>
+      <? endforeach ?>
+    </select>
     <div class="compare-diff">
       <h3>Error: Couldn't load</h3>
       <p><a href=''></a></p>
@@ -158,7 +155,7 @@ function calcDiff(itemBuilder) {
 }
 calcDiff();
 $(".statistics-table .header th").append(slot);
-
+console.log((428 + 804) / 2 * Math.floor(1.36 * 1024) / 1024);
 </script>
 </body>
 </html>
