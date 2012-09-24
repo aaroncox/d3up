@@ -205,8 +205,12 @@
               }
           		if(data.effect) {
           		  var select = $("<select class='skill-stacks' data-skill='" + slug + "'>").hide(),
-          		      checkbox = $("<input type='checkbox' class='skill-activate' data-skill='" + slug + "'>"),
+										stacks = data.stacks,
+          		      checkbox = $("<input type='checkbox' class='skill-activate' data-skill='" + slug + "' data-stacks='" + stacks + "'>"),
       					    skill = build.stats.skillData[slug];
+								if(!stacks) {
+									stacks = 1;
+								}
 								if(d3up.builds['build'].skills.enabled[slug]) {
 									skillIcon.addClass("skill-activated");
 									checkbox.attr("checked", "checked");
@@ -214,20 +218,26 @@
 									skillIcon.removeClass("skill-activated");
 									checkbox.removeAttr("checked");
 								}
+								// console.log(stacks);
 								// console.log(skillName, isBuff, skill);
       					if(isBuff || (skill && skill.activate)) {
           				td.append(control);
           			}
+								
           			if(skill && skill.stackable) {
           				select.show();
           				if(select.find("option").length == 0) {
             				for(i = 1; i <= skill.stackable; i++) {
             				  var option = $("<option value='" + i + "'>").html(i + " Stacks");
+											if(stacks == i) {
+												// console.log("selecting #" + i, stacks);
+												option.attr("selected", "selected");
+											}
             				  select.append(option);
             				}				  
           				}
           				// Set the Default
-          				checkbox.attr("data-stacks", 1);
+          				checkbox.attr("data-stacks", stacks);
           			}
                 // if(build.stats.skillData[slug] && build.stats.skillData[slug].activate) {
                 // 
@@ -240,6 +250,7 @@
                 // });
                 checkbox.bind('change', function() {
                   var name = $(this).attr('data-skill'), 
+											stacks = $(this).attr('data-stacks'),
                       type = $(this).closest("table").data("skill-type");
                   if(!d3up.builds['build'].skills.enabled[name]) {
                     skillIcon.addClass("skill-activated");
@@ -251,10 +262,10 @@
 	                      d3up.builds[k].skills.enabled[name] = activeSkills[type][name];                      												
 											}
                       // console.log("applying [" + name + "] to build id#" + k);
-                      // console.log("enabled", d3up.builds[k].skills.enabled);
-                      if($(this).attr("data-stacks")) {
-                        // console.log("adding stacks (" + $(this).attr("data-stacks") + ") to build id#" + k);
-                        d3up.builds[k].skills.enabled[name].stacks = $(this).attr("data-stacks");
+                      // console.log("enabled", d3up.builds[k].skills.enabled, $(this));
+                      if(stacks) {
+                        // console.log("adding stacks (" + stacks + ") to build id#" + k);
+                        d3up.builds[k].skills.enabled[name].stacks = stacks;
                       }
                     });
                   } else {
@@ -275,8 +286,15 @@
                   });
                 });
                 select.bind('change', function() {
-                  checkbox.attr("data-stacks", $(this).val());
-                  checkbox.trigger('change');
+									var stacks = $(this).val()
+                  checkbox.attr("data-stacks", stacks);
+                  $.each(d3up.builds, function(k) {
+										if(d3up.builds[k].skills.enabled[slug]) {
+											d3up.builds[k].skills.enabled[slug].stacks = stacks; 										
+	                    d3up.builds[k].renderAgain();											
+										}
+                  });
+                  // checkbox.trigger('change');
                 });
       					control.append("Activate ", checkbox, select);					
       				}

@@ -78,7 +78,7 @@ class BuildController extends D3Up_Controller_Action
 		$form = $this->view->form = $build->getEditForm();
 		if($this->getRequest()->isPost()) {
 			$result = $form->process($this->getRequest()->getParams());
-			$battletag = $this->getRequest()->getParam('battletag');
+			$battletag = $profile->battletag ?: $this->getRequest()->getParam('battletag');
 			if($result && $battletag) {
 				$build = Epic_Mongo::db('build')->find($result['upserted']);
 				$region = $this->getRequest()->getParam('region');

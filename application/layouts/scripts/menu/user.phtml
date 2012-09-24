@@ -21,6 +21,7 @@
 			  <li class="build <?= $build->class ?>"><?= $this->mLink($build, array("text" => $build->name . "<br/><span class='level'>Level ".($build->level?:60)."</span>, Paragon <span class='paragon'>".($build->paragon?:0)."</span>")) ?></li>
 			<? endforeach ?>
 		</ul>
+		<a class='button' href="/build/create">Create New Build</a>
 		<? else: ?>
 		<p class="notice">You don't have any builds!</p>
 		<p><a class="button" href="/build/create">Create a Build</a></p>

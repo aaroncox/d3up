@@ -260,7 +260,7 @@ $(function() {
 				compareNew = $("<a>").html("New Item").attr("href", "/item/create?b=" + buildId + "&slot=" + itemSlot + "&return=build").addClass('button'),
         compareToTd = $("<td class='primary gear-controls'>").append(compareTo, "<br/>", compareNew, compareEquip),
         compareToRow = $("<tr class='compare-row'>").append(itemDisplay, compareToTd),
-        compareToHeader = $("<tr>").append("<th colspan='10'><h4>Please select an item to compare/change your " + itemSlot + " to...</h4></th>"),
+        compareToHeader = $("<tr>").append("<th colspan='10'><h4>Please select an item to compare/change this " + itemSlot + " to...</h4></th>"),
         compareSimulateHeader = $("<tr>").append("<th colspan='10'><h4>Tweak the item below as you see fit to change your " + itemSlot + "</h4></th>").hide(),
 				compareToSimulateTd = $("<td colspan='2'>"),
 				compareToSimulateRow = $("<tr class='simulate-row'>").append(compareToSimulateTd).hide(),
@@ -271,6 +271,10 @@ $(function() {
         compareResultsHeader = compareResults.find("thead"),
         compareResultsData = compareResults.find("tbody"),
         compareSelect = $("");
+		if(!$("#character").data("owner")) {
+			compareEquip.hide();
+			compareNew.hide();
+		}
 	  compareResults.find(".overview-" + itemSlot).remove();
 		if($("." + simulateRowName).length) {
 		  $("." + simulateRowName).remove();

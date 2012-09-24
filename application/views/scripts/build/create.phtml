@@ -35,7 +35,7 @@
 								<select name='character-id' id="characters">
 									<option value=''>Select a Character...</option>
 									<? foreach($this->characters as $k => $v): ?>
-										<option data-name="<?= $v['name'] ?>" data-class="<?= $v['class'] ?>" value='<?= $v['id'] ?>'>[<?= $v['level'] ?>] <?= $v['name']?> - <?= ucwords(str_replace("-", " ", $v['class'])) ?>
+										<option data-name="<?= $v['name'] ?>" data-paragon="<?= $v['paragonLevel'] ?>" data-class="<?= $v['class'] ?>" value='<?= $v['id'] ?>'>[<?= $v['level'] ?>] <?= $v['name']?> - <?= ucwords(str_replace("-", " ", $v['class'])) ?>
 									<? endforeach ?>
 								</select>
 							</div>

@@ -73,7 +73,7 @@ class RecordController extends D3Up_Controller_Action
 				$new->_original = $record;
 				$new->_createdBy = $profile;
 				$new->save();
-				$this->_redirect("/i/".$new->id);		
+				$this->_redirect("/user/items");
 			}
 		}
 		if($record instanceOf D3Up_Mongo_Record_Build) {

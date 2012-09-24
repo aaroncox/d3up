@@ -3693,7 +3693,7 @@ var activeSkills = {
 				'cooldown': 20,
 			},
 		},
-		'seven-sided-strike': {
+		'sevensided-strike': {
 			name: 'Seven-Sided Strike',
 			desc: 'Dash rapidly between nearby enemies, dealing 1777% weapon damage over 7 hits.',
 			effect: {
@@ -3703,7 +3703,7 @@ var activeSkills = {
 				'weapon-damage-for': 7
 			},
 		},
-		'seven-sided-strike~a': {
+		'sevensided-strike~a': {
 			name: 'Seven-Sided Strike - Sudden Assault',
 			desc: 'Dash rapidly between nearby enemies, dealing 1777% weapon damage over 7 hits.',
 			rune: 'Teleport to the target, increasing damage done to 2309% weapon damage over 7 strikes.',
@@ -3714,7 +3714,7 @@ var activeSkills = {
 				'weapon-damage-for': 7
 			},
 		},
-		'seven-sided-strike~b': {
+		'sevensided-strike~b': {
 			name: 'Seven-Sided Strike - Several-Sided Strike',
 			desc: 'Dash rapidly between nearby enemies, dealing 1777% weapon damage over 7 hits.',
 			rune: 'Increases the number of strikes to 9.',
@@ -3725,7 +3725,7 @@ var activeSkills = {
 				'weapon-damage-for': 9
 			},
 		},
-		'seven-sided-strike~c': {
+		'sevensided-strike~c': {
 			name: 'Seven-Sided Strike - Pandemonium',
 			desc: 'Dash rapidly between nearby enemies, dealing 1777% weapon damage over 7 hits.',
 			rune: 'Enemies hit by Seven-Sided Strike have a 25% chance to be stunned for 7 seconds by each hit.',
@@ -3737,7 +3737,7 @@ var activeSkills = {
 				'weapon-damage-for': 7
 			},
 		},
-		'seven-sided-strike~d': {
+		'sevensided-strike~d': {
 			name: 'Seven-Sided Strike - Sustained Attack',
 			desc: 'Dash rapidly between nearby enemies, dealing 1777% weapon damage over 7 hits.',
 			rune: 'Reduces the cooldown of Seven-Sided Strike to 23 seconds.',
@@ -3748,7 +3748,7 @@ var activeSkills = {
 				'weapon-damage-for': 7
 			},
 		},
-		'seven-sided-strike~e': {
+		'sevensided-strike~e': {
 			name: 'Seven-Sided Strike - Fulminating Onslaught',
 			desc: 'Dash rapidly between nearby enemies, dealing 1777% weapon damage over 7 hits.',
 			rune: 'Each strike explodes, dealing 254% weapon damage as Holy in a 7 yard radius around the target.',
@@ -4532,7 +4532,7 @@ var activeSkills = {
 			effect: {
 			  'stackable': {
 		      'limit': 5,
-			    'intelligence': 130,
+			    'plus-intelligence-conditional': 130,
 			  },
 				'cost-mana': 58.8,
 				'cooldown': 15,
@@ -4545,7 +4545,7 @@ var activeSkills = {
 			effect: {
 			  'stackable': {
 		      'limit': 5,
-			    'intelligence': 130,
+			    'plus-intelligence-conditional': 130,
 			  },
 				'cost-mana': 58.8,
 				'cooldown': 15,
@@ -4558,7 +4558,7 @@ var activeSkills = {
 			effect: {
 			  'stackable': {
 		      'limit': 5,
-			    'intelligence': 130,
+			    'plus-intelligence-conditional': 130,
 			  },
 				'cost-mana': 58.8,
 				'cooldown': 15,
@@ -4571,7 +4571,7 @@ var activeSkills = {
 			effect: {
 			  'stackable': {
 		      'limit': 5,
-			    'intelligence': 130,
+			    'plus-intelligence-conditional': 130,
 			  },
 				'cost-mana': 58.8,
 				'cooldown': 15,
@@ -4583,10 +4583,8 @@ var activeSkills = {
 			rune: 'Gain 39.2 Mana for every enemy harvested.',
 			effect: {
 			  'stackable': {
-			    'intelligence': {
-			      'value': 130,
-			      'limit': 5
-			    }
+		      'limit': 5,
+			    'plus-intelligence-conditional': 130,
 			  },
 				'cost-mana': 58.8,
 				'cooldown': 15,

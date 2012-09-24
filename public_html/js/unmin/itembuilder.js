@@ -432,9 +432,15 @@ ItemBuilder.prototype = {
 		}
 		switch(name) {
 			case "damage-max":
+				if(!this.item.stats.damage) {
+					this.item.stats.damage = {};
+				}
 				this.item.stats.damage.max = parseFloat(value);
 				break;
 			case "damage-min":
+				if(!this.item.stats.damage) {
+					this.item.stats.damage = {};
+				}
 				this.item.stats.damage.min = parseFloat(value);
 				break;
 			default:
@@ -480,7 +486,19 @@ ItemBuilder.prototype = {
 	},
 	// Update the Value of an Attribute
 	updateAttribute: function(name, value) {
-		this.item.attrs[name] = parseFloat(value);
+		switch(name) {
+			case "minmax-damage":
+				var parts = value.split("-");
+				this.item.attrs[name] = {
+					min: parts[0],
+					max: parts[1]
+				}
+				break;
+			default:
+				this.item.attrs[name] = parseFloat(value);
+				break;
+		}
+		console.log(name, value);
 		if(this.changeCallback) {
 			this.changeCallback(this);
 		}

@@ -15,12 +15,12 @@
 	<div class="single-item">
 		<?= $this->displayItem($this->record) ?>
 	</div>
-	<p style="text-align: center">
+	<p style="text-align: center; padding: 0 50px">
 		<? if($profile && $this->record->_createdBy && $profile->createReference() == $this->record->_createdBy->createReference()): ?>
-		<a href="/i/<?= $this->record->id ?>/edit" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only gear-change"><span class="ui-button-text">Edit</span></a>
+		<a href="/i/<?= $this->record->id ?>/edit" class="button"><span class="ui-button-text">Edit</span></a>
 		<? endif; ?>
 		<? if($profile && $this->record->_createdBy && $profile->createReference() != $this->record->_createdBy->createReference()): ?>
-		<a href="/i/<?= $this->record->id ?>/copy" class="has-tooltip ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only gear-change"><span class="ui-button-text" data-tooltip="Copy this item into 'My Items'">Make a Copy</span></a>
+		<a href="/i/<?= $this->record->id ?>/copy" class="button"><span class="ui-button-text" data-tooltip="Copy this item into 'My Items'">Make a Copy</span></a>
 		<? endif; ?>
 	</p>
 	<? if($this->record->rating): ?>
