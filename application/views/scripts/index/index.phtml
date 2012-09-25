@@ -13,3 +13,27 @@
     <?= $this->render("./build/_build-table.phtml")?>
   </table>
 </div>
+<script type="text/javascript" charset="utf-8">
+  $(function() {
+    $("td.skills img").each(function() {
+  		if($(this).data("id") && $(this).data("id") != "undefined") {
+  			var skill = activeSkills[$(this).attr("data-class")][$(this).attr("data-id")];
+  			if(!skill) {
+  				skill = passives[$(this).attr("data-class")][$(this).attr("data-id")];
+  				if(skill) {
+  					skill.name = $(this).attr("data-id").replace(/\-/g," ").capitalize();					  
+  				}
+  			}
+  			if(skill) {
+  				var tooltip = skill.desc;
+  				if(skill.rune) {
+  					tooltip = tooltip + "<br/><br/>" + skill.rune;
+  				}
+  				$(this).attr("data-name", skill.name);
+  				$(this).attr("data-tooltip", tooltip);
+  				$(this).bindSkilltip();				
+  			}				
+  		}
+  	});    
+  });
+</script>
