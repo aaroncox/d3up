@@ -338,7 +338,7 @@ class RecordController extends D3Up_Controller_Action
 		// Admin Diagnostics
 		if($profile && $profile->id == 2) {
 		  echo "<pre>"; var_dump($record->export(), $profile->export()); 
-  		D3Up_Tool_Crawler::getInstance()->crawl($record, $profile, $record->_characterId);		  
+  		D3Up_Tool_Crawler::getInstance()->crawl($record, $record->_createdBy, $record->_characterId);		  
 		  $record->crawlCount++;
   		$record->_lastCrawl = time();
   		$record->save();
