@@ -1,22 +1,31 @@
-<div class="content-page">
+<div class="content-page sidebar">
+	<div class='page'>
+	  <h3>Most Recent Update to D3Up.com</h3>
+	  <ul>
+	  <? foreach($this->navRecentNews as $recent): ?>
+      <li><a href='/update/<?= $recent->id ?>'>V<?= $recent->version ?></a> (<?= $this->timeAgo($recent->_created) ?>)</li>
+	  <? endforeach ?>
+	  </ul>
+	</div>
 	<div class='page'>
 		<h3>What is D3Up.com?</h3>
-		<p>D3Up is a tool specifically designed to help you optimize your Diablo 3 character builds by calculating your stats and simulating changes in real time as you tweak your skills and gear.</p>
+		<p>D3Up.com is a web application specifically designed to help you optimize your Diablo 3 character builds by calculating your stats and simulating gear changes in real time as you tweak anything and everything.</p>
+		<p>For a walk through on how to create your build, check out the <a href="http://www.youtube.com/watch?v=OaRts-nmOE8">D3Up.com Introduction (16m)</a> video on YouTube!</p>
 	</div>
 	<div class='page'>
 		<h3>What can I do here?</h3>
 		<ul>
-			<li><a href="/item/create">Create Items</a> to share with others or add to your builds.</li>
-			<li>Create <a href="/build/create">Character Builds</a>, complete with gear, skills and detailed statistics!</li>
-			<li><a href="http://d3up.com/update/23">Import Your Character</a> into a character build from the D3 Armory!</li>
-			<li>Compare the items in your build to other items you've created.</li>
-			<li>Simulate changes to your gear that will update your stats in real-time.</li>
-			<li>Log all of your sales on the Diablo 3 Auction House using "My Shop".</li>
+			<li>Create a <a href="/build/create">Character Build</a> that will calculate your EHP, DPS, Statistics and Individual Skill-Based DPS!</li>
+			<li><a href="http://d3up.com/update/23">Import Your Character</a> automatically into a character build from the D3 Armory!</li>
+			<li>Compare the items in your build to other items you've created!</li>
+			<li>Simulate changes to your gear that will update your stats in real-time!</li>
+			<li><a href="/item/create">Create Items</a> to share with others, add to your build or to compare with your current gear!</li>
 		</ul>
 	</div>
 	<div class='page'>
 		<h3>Wanna help?</h3>
-		<p>If you appreciate the site and want to help support it, buy me a beer or something.</p>
+		<p>The most important thing ANYONE can do is submit feedback, please <a href='mailto:aaron.cox@greymass.com'>email me</a> with any bugs or feedback!</p>
+		<p>If you just can't seem to find anything wrong and want to show your appreciation for the site, buy me a beer or something!</p>
 		<div style="text-align: center; margin: 5px">
 			<form action="https://www.paypal.com/cgi-bin/webscr" method="post">
 			<input type="hidden" name="cmd" value="_s-xclick">

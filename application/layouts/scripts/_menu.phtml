@@ -100,7 +100,7 @@
 						<h3>Recent Updates</h3>
 						<ul class="dropdown_links">
 							<? foreach($this->navRecentNews as $news): ?>
-								<li><a href="/update/<?= $news->id ?>">Version 0.<?= $news->version ?></a></li>
+								<li><a href="/update/<?= $news->id ?>">Version <?= $news->version ?></a></li>
 							<? endforeach ?>
 						</ul>   
 					</div>

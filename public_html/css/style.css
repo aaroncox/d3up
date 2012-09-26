@@ -1430,6 +1430,20 @@ div.title-block h2 {
 	float: right;
 	width: 350px;
 }
+.content-page.sidebar .page {
+	font-size: 14px;
+}
+.content-page.sidebar .page h3{
+	margin: 0;
+	color: #B18135;
+}
+.content-page.sidebar .page ul {
+	padding-left: 20px;
+}
+.content-page.sidebar {
+}
+.content-page.sidebar {
+}
 .section .section-content  {
 	padding: 25px;
 }
