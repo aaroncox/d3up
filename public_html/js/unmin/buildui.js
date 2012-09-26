@@ -26,6 +26,15 @@ $(function() {
 		header.closest(".statistics-table").toggleClass('collapsed');
 		header.find("span.ui-icon").toggleClass("ui-icon-minusthick ui-icon-plusthick");
 	});
+	
+	// Change VS Level
+	$("#vsLevel").bind("change", function() {
+		var level = $(this).val();
+		$.each(d3up.builds, function(k) {
+			d3up.builds[k].calc.setVsLevel(level);
+	    d3up.builds[k].renderAgain();
+	  });
+	});
 
 	// Sticky Statistics on the page
 	var $window = $(window),
