@@ -335,15 +335,6 @@ class RecordController extends D3Up_Controller_Action
 		if(!$record->_characterBt) {
 			throw new Exception("[RG] This build isn't attached to a Battle.net Profile");
 		}
-		// Admin Diagnostics
-		if($profile && $profile->id == 2) {
-		  echo "<pre>"; var_dump($record->export(), $profile->export()); 
-  		D3Up_Tool_Crawler::getInstance()->crawl($record, $record->_createdBy, $record->_characterId);		  
-		  $record->crawlCount++;
-  		$record->_lastCrawl = time();
-  		$record->save();
-  		exit;
-		}
 		if($record->_createdBy && $profile && $profile->id == $record->_createdBy->id) {
   		if(time() <= $record->_lastCrawl + 60 * 15) {
   			throw new Exception("Profiles may only be crawled once every 15 minutes. This profile has been updated too recently to be updated again, try again later!");
@@ -351,7 +342,10 @@ class RecordController extends D3Up_Controller_Action
   		if(!$record->_characterRg || !$record->_characterBt || !$record->_characterId) {
     		$this->_redirect("/b/" . $record->id ."/crawl");
   		}
-  		D3Up_Tool_Crawler::getInstance()->crawl($record, $profile, $record->_characterId);		  
+  		if(!$record->_createdBy->region) {
+  		  throw new Exception("You do not have the 'Region' field filled out on your profile! Click <a href='/user/edit'>edit profile</a> and choose your region");
+  		}
+  		D3Up_Tool_Crawler::getInstance()->crawl($record, $record->_createdBy, $record->_characterId);		  
   	} elseif($record->_createdBy) {
   	  if($record->_createdBy->id) {
   			throw new Exception("This isn't an anonymous build, someone owns this build and you cannot sync it from Battle.net.");
