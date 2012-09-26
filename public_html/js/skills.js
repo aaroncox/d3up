@@ -110,7 +110,7 @@ var passives = {
 		'unforgiving': {
 			'desc': 'You no longer degenerate Fury. Instead, you gain <span class="skill-highlight">1</span> Fury every <span class="skill-highlight">2</span> seconds.'
 		},
-		'boon-of-bul-kathos': {
+		'boon-of-bulkathos': {
 				'desc': 'The cooldown on your Earthquake, Call of the Ancients, and Wrath of the Berserker skills is reduced by <span class="skill-highlight">30</span> seconds.'
 		}
 	},
