@@ -141,10 +141,12 @@
 					});
 				} else {
 					$.each(unordered, function(slug, data) {
-						ordered[data.order] = {
-							slug: slug,
-							data: data
-						};
+						if(data.order) {
+							ordered[data.order] = {
+								slug: slug,
+								data: data
+							};							
+						}
 					});					
 				}
         // Remove Existing Elements
