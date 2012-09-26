@@ -22,7 +22,7 @@ switch($("#itemType").val()) {
 		case "2h-mace":
 		case "2h-axe":
 		case "bow":
-		case "diabo":
+		case "daibo":
 		case "crossbow":
 		case "2h-mighty":
 		case "polearm":
@@ -113,7 +113,7 @@ $("#itemType").bind("change", function() {
 		case "2h-mace":
 		case "2h-axe":
 		case "bow":
-		case "diabo":
+		case "daibo":
 		case "crossbow":
 		case "2h-mighty":
 		case "polearm":
@@ -204,7 +204,7 @@ $("#sockets").bind("change", function() {
 					case "2h-mace":
 					case "2h-axe":
 					case "bow":
-					case "diabo":
+					case "daibo":
 					case "crossbow":
 					case "2h-mighty":
 					case "polearm":

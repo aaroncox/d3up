@@ -53,7 +53,7 @@ class D3Up_Tool_MaxStat
 	);
 	protected static $_limits = array(
 		array(
-			'types' => 'axe|ceremonial-knife|hand-crossbow|dagger|fist-weapon|mace|mighty-weapon|spear|sword|wand|2h-mace|2h-axe|bow|diabo|crossbow|2h-mighty|polearm|staff|2h-sword',
+			'types' => 'axe|ceremonial-knife|hand-crossbow|dagger|fist-weapon|mace|mighty-weapon|spear|sword|wand|2h-mace|2h-axe|bow|daibo|crossbow|2h-mighty|polearm|staff|2h-sword',
 			'values' => array(350, 350, 350, 350, 0, 2878, 959, 64, 3, 0, 0, 24, 0, 0, 18, 50, 0, 100, 11, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
 		),
 		array(
@@ -152,7 +152,31 @@ class D3Up_Tool_MaxStat
 	 }
 	 return static::$_instance;
 	}
-	
+	public static function calcStat($stat, $value, $type, $asArray = false) {
+    // var_dump($stat, $value, $type);
+    if(!in_array($type, static::$_typeMap)) {
+			return false;
+		}
+		if(!in_array($stat, array_keys(static::$_statMap))) {
+			return false;
+		}
+		
+	  $perfect = static::$_limits[static::$_typeMap[$type]]['values'][static::$_statMap[$stat]];
+		if($perfect == 0) {
+		  return false;
+			// var_dump($item->type, $key); exit;
+		} else {
+			$rating = round($value / $perfect * 100, 1);					
+		}
+		if($asArray == true) {
+		  return array(
+		    'rating' => $rating,
+		    'perfect' => $perfect,
+		    'value' => $value,
+		  );
+		}
+		return "<span class='percent'>".$rating."%</span> of ".$perfect;
+	}
 	public static function calc($item) {
 
 		if(!in_array($item->type, static::$_typeMap)) {

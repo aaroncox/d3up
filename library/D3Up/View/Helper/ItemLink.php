@@ -19,9 +19,13 @@ class D3Up_View_Helper_ItemLink extends Epic_View_Helper_MLink
 		if(isset($params['text'])) {
 			$linkText = $params['text'];
 		}
+		$slot = null;
+		if(isset($params['slot'])) {
+		  $slot = $params['slot'];
+		}
 		if(isset($params['button']) && $params['button'] == true) {
 			return $this->view->htmlTag("a", array(
-				'class' => 'ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only',
+				'class' => 'button',
 				'href' => $this->view->url(array(
 					'record' => $item,
 				)+$urlParams, 'item', true),
@@ -30,6 +34,7 @@ class D3Up_View_Helper_ItemLink extends Epic_View_Helper_MLink
 		return $this->view->htmlTag("a", array(
 			'class' => 'quality-'.$item->quality,
 			'data-json' => json_encode($item->cleanExport()),
+			'data-slot' => $slot,
 			'href' => $this->view->url(array(
 				'record' => $item,
 			)+$urlParams, 'item', true),

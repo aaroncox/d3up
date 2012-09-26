@@ -5,10 +5,101 @@
  * @package default
  * @author Aaron Cox
  **/
-class AjaxController extends Epic_Controller_Action
+class AjaxController extends D3Up_Controller_Action
 {
   public function compareAction() {
-    echo "<pre>"; var_dump($this->getRequest()->getParams()); exit;
+    $params = $this->getRequest()->getParams();
+    // Get our Build
+    $id = (int) $params['build'];
+    $build = $this->view->build = Epic_Mongo::db('build')->fetchOne(array("id" => $id));    
+    if(!$build) {
+      echo "A build must be selected to compare against."; exit;
+    }
+		// Create an Item!
+		$this->view->item = $item = Epic_Mongo::newDoc('item');
+    $item->_createdBy = Epic_Mongo::db('user')->fetchOne(array('id' => (int) $build->_createdBy->id));
+		$item->_d3bit = true;
+		$item->name = $params['name'];
+		$item->quality = array_search($params['quality'], $this->_qualityMap);
+		if(!isset($params['type']) || $params['type'] == "Unknown") {
+		  throw new Exception("The type of item must be defined before a compare can occur.");
+		}
+		$item->stats = array();
+		$item->type = $this->_typeMap[$params['type']];
+		if(isset($params['dps'])) {
+			if(in_array($item->type, array('axe','ceremonial-knife','hand-crossbow','dagger','fist-weapon','mace','mighty-weapon','spear','sword','wand','2h-mace','2h-axe','bow','daibo','crossbow','2h-mighty','polearm','staff','2h-sword'))) {
+				$item->stats += array(
+					'dps' => (int) $params['dps'],
+				);
+			} else {
+				$item->stats += array(
+					'armor' => (int) $params['dps'],
+				);
+			}			
+		}
+		if(isset($params['meta'])) {
+		 	$parts = explode(",", $params['meta']);
+  		$range = explode("-", $parts[0]);
+  		if(count($range) > 1) {
+  			if(in_array($item->type, array('axe','ceremonial-knife','hand-crossbow','dagger','fist-weapon','mace','mighty-weapon','spear','sword','wand','2h-mace','2h-axe','bow','daibo','crossbow','2h-mighty','polearm','staff','2h-sword'))) {
+  				$item->stats += array(
+  					'damage' => array(
+  					  'min' => (int) $range[0],
+  					  'max' => (int) $range[1],
+  					)
+  				);
+  			} elseif(in_array($item->type, array('shield'))) {
+  				$item->stats += array(
+  					'block-amount' => array(
+  					  'min' => (int) $range[0],
+  					  'max' => (int) $range[1],
+  					)
+  				);
+  			}					  
+  		}
+      if(isset($parts[1])) {
+        if(in_array($item->type, array('axe','ceremonial-knife','hand-crossbow','dagger','fist-weapon','mace','mighty-weapon','spear','sword','wand','2h-mace','2h-axe','bow','daibo','crossbow','2h-mighty','polearm','staff','2h-sword'))) {
+  				$item->stats += array(
+  					'speed' => $parts[1],
+  				);
+  			} elseif(in_array($item->type, array('shield'))) {
+  				$item->stats += array(
+  					'block-chance' => $parts[1],
+  				);
+  			}
+      } 
+		}
+		foreach(explode(", ", $params['stats']) as $v) {
+			$parts = explode(" ", $v);
+			$name = array_search($parts[1], $this->_statMap);
+			if($name) {
+			  if($name == "sockets") {
+		      $sockets = array();
+		      $total = (int) $parts[0];
+          for($i = 0; $i < $total; $i++) {
+            $sockets[] = "";
+          }
+          $item->sockets = $sockets;
+			  } else {
+  				$item->attrs->$name = (float) $parts[0];							    
+			  }
+			}
+		}
+		$query = array(
+		  'stats' => $item->stats,
+		  'attrs' => $item->attrs->export(),
+		  '_createdBy' => $build->_createdBy->createReference(),
+		);
+		// Has this user scanned this item?
+    $test = Epic_Mongo::db('item')->fetchOne($query);
+    if($test) {
+      // Just use it instead...
+      $this->view->item = $item = $test;
+    } else {
+  		$item->save();      
+    }
+		$this->view->slots = $item->getPossibleSlots();
+    $this->_helper->layout->setLayout('d3bit');
   }
   public function buildsAction() {
     $username = $this->getRequest()->getParam("username");
@@ -72,7 +163,7 @@ class AjaxController extends Epic_Controller_Action
 		$item->quality = array_search($params['q'], $this->_qualityMap);
 		$item->type = $this->_typeMap[$params['t']];
 		if(isset($params['d'])) {
-			if(in_array($item->type, array('axe','ceremonial-knife','hand-crossbow','dagger','fist-weapon','mace','mighty-weapon','spear','sword','wand','2h-mace','2h-axe','bow','diabo','crossbow','2h-mighty','polearm','staff','2h-sword'))) {
+			if(in_array($item->type, array('axe','ceremonial-knife','hand-crossbow','dagger','fist-weapon','mace','mighty-weapon','spear','sword','wand','2h-mace','2h-axe','bow','daibo','crossbow','2h-mighty','polearm','staff','2h-sword'))) {
 				$item->stats = array(
 					'dps' => $params['d'],
 				);
@@ -100,7 +191,7 @@ class AjaxController extends Epic_Controller_Action
 	
 	protected $_qualityMap = array(
 		null => '',
-	 	1 => 'Inferior',
+	 	1 => 'Unknown',
 	 	2 => 'Normal',
 	 	3 => 'Superior',
 	 	4 => 'Magic',
@@ -122,7 +213,7 @@ class AjaxController extends Epic_Controller_Action
 		'Wand' => 'wand',
 		'Two-Handed Axe' => '2h-axe', 
 		'Bow' => 'bow', 
-		'Daibo' => 'diabo', 
+		'Daibo' => 'daibo', 
 		'Crossbow' => 'crossbow', 
 		'Two-Handed Mace' => '2h-mace', 
 		'Two-Handed Mighty Weapon' => '2h-mighty', 
@@ -154,11 +245,12 @@ class AjaxController extends Epic_Controller_Action
 	);
 
 	protected $_statMap = array(
+	  'sockets' => "Soc",
 		// Base Stats 
 		'strength' => "Str",
 		'intelligence' => "Int",
-		'vitality' => "Dex",
-		'dexterity' => "Vit",
+		'vitality' => "Vit",
+		'dexterity' => "Dex",
 		// Defensive Stats 
 		'resist-all' => "AR",
 		'armor' => "Armor",

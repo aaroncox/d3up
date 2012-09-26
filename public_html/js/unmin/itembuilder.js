@@ -1,4 +1,10 @@
-var itemBuilder = {
+(function( d3up ) {
+
+function ItemBuilder() {
+	this.init();
+}
+
+ItemBuilder.prototype = {
 	// Storage for the Item data
 	item: {
 		name: null,								// Name of the Item
@@ -11,6 +17,7 @@ var itemBuilder = {
 		socketCount: 0,						// Storage for the # of Sockets
 		setBonus: null						// Storage for which set this item is part of
 	},
+	changeCallback: false,			// Fires anytime anything changes
 	headerElements: [],					// Any additional elements to append to the header					
 	footerElements: [],					// Any additional elements to append to the footer
 	attrsSelected: [],					// The attributes that have already been selected, to avoid removing/adding additional
@@ -27,9 +34,11 @@ var itemBuilder = {
 	itemClass: {
 		"none": ["amulet", "ring", "mojo", "source", "quiver"],
 		"armor": ["belt","boots","bracers","chest","cloak","gloves","helm","pants","mighty-belt","shoulders","spirit-stone","voodoo-mask","wizard-hat"],
-		"weapon": ["2h-mace","2h-axe","bow","diabo","crossbow","2h-mighty","polearm","staff","2h-sword","axe","ceremonial-knife","hand-crossbow","dagger","fist-weapon","mace","mighty-weapon","spear","sword","wand"],	
+		"weapon": ["2h-mace","2h-axe","bow","daibo","crossbow","2h-mighty","polearm","staff","2h-sword","axe","ceremonial-knife","hand-crossbow","dagger","fist-weapon","mace","mighty-weapon","spear","sword","wand"],	
 		"shield": ["shield"]
 	},
+	// Gem Effects
+	gemEffect: {"chipped_amethyst":["Chipped Amethyst",["plus-life",5],["life-hit",2],["vitality",6]],"chipped_emerald":["Chipped Emerald",["plus-gold-find",5],["critical-hit-damage",10],["dexterity",6]],"chipped_ruby":["Chipped Ruby",["plus-experience-percent",5],["damage","2-4"],["strength",6]],"chipped_topaz":["Chipped Topaz",["plus-magic-find",5],["thorns",2],["intelligence",6]],"flawed_amethyst":["Flawed Amethyst",["plus-life",6],["life-hit",3],["vitality",10]],"flawed_emerald":["Flawed Emerald",["plus-gold-find",7],["critical-hit-damage",15],["dexterity",10]],"flawed_ruby":["Flawed Ruby",["plus-experience-percent",7],["damage","4-8"],["strength",10]],"flawed_topaz":["Flawed Topaz",["plus-magic-find",7],["thorns",3],["intelligence",10]],"amethyst":["Amethyst",["plus-life",7],["life-hit",6],["vitality",14]],"emerald":["Emerald",["plus-gold-find",9],["critical-hit-damage",20],["dexterity",14]],"ruby":["Ruby",["plus-experience-percent",9],["damage","8-16"],["strength",14]],"topaz":["Topaz",["plus-magic-find",9],["thorns",6],["intelligence",14]],"flawless_amethyst":["Flawless Amethyst",["plus-life",8],["life-hit",10],["vitality",18]],"flawless_emerald":["Flawless Emerald",["plus-gold-find",11],["critical-hit-damage",25],["dexterity",18]],"flawless_ruby":["Flawless Ruby",["plus-experience-percent",11],["damage","10-20"],["strength",18]],"flawless_topaz":["Flawless Topaz",["plus-magic-find",11],["thorns",10],["intelligence",18]],"perfect_amethyst":["Perfect Amethyst",["plus-life",9],["life-hit",15],["vitality",22]],"perfect_emerald":["Perfect Emerald",["plus-gold-find",13],["critical-hit-damage",30],["dexterity",22]],"perfect_ruby":["Perfect Ruby",["plus-experience-percent",13],["damage","11-22"],["strength",22]],"perfect_topaz":["Perfect Topaz",["plus-magic-find",13],["thorns",15],["intelligence",22]],"radiant_amethyst":["Radiant Amethyst",["plus-life",10],["life-hit",25],["vitality",26]],"radiant_emerald":["Radiant Emerald",["plus-gold-find",15],["critical-hit-damage",35],["dexterity",26]],"radiant_ruby":["Radiant Ruby",["plus-experience-percent",15],["damage","12-24"],["strength",26]],"radiant_topaz":["Radiant Topaz",["plus-magic-find",15],["thorns",30],["intelligence",26]],"square_amethyst":["Square Amethyst",["plus-life",11],["life-hit",35],["vitality",30]],"square_emerald":["Square Emerald",["plus-gold-find",17],["critical-hit-damage",40],["dexterity",30]],"square_ruby":["Square Ruby",["plus-experience-percent",17],["damage","13-26"],["strength",30]],"square_topaz":["Square Topaz",["plus-magic-find",17],["thorns",50],["intelligence",30]],"flawless_square_amethyst":["Flawless Square Amethyst",["plus-life",12],["life-hit",65],["vitality",34]],"flawless_square_emerald":["Flawless Square Emerald",["plus-gold-find",19],["critical-hit-damage",45],["dexterity",34]],"flawless_square_ruby":["Flawless Square Ruby",["plus-experience-percent",19],["damage","14-28"],["strength",34]],"flawless_square_topaz":["Flawless Square Topaz",["plus-magic-find",19],["thorns",100],["intelligence",34]],"perfect_square_amethyst":["Perfect Square Amethyst",["plus-life",13],["life-hit",105],["vitality",38]],"perfect_square_emerald":["Perfect Square Emerald",["plus-gold-find",21],["critical-hit-damage",50],["dexterity",38]],"perfect_square_ruby":["Perfect Square Ruby",["plus-experience-percent",21],["damage","15-30"],["strength",38]],"perfect_square_topaz":["Perfect Square Topaz",["plus-magic-find",21],["thorns",200],["intelligence",38]],"radiant_square_amethyst":["Radiant Square Amethyst",["plus-life",14],["life-hit",190],["vitality",42]],"radiant_square_emerald":["Radiant Square Emerald",["plus-gold-find",23],["critical-hit-damage",60],["dexterity",42]],"radiant_square_ruby":["Radiant Square Ruby",["plus-experience-percent",23],["damage","16-32"],["strength",42]],"radiant_square_topaz":["Radiant Square Topaz",["plus-magic-find",23],["thorns",350],["intelligence",42]],"star_amethyst":["Star Amethyst",["plus-life",15],["life-hit",300],["vitality",46]],"star_emerald":["Star Emerald",["plus-gold-find",25],["critical-hit-damage",70],["dexterity",46]],"star_ruby":["Star Ruby",["plus-experience-percent",25],["damage","17-34"],["strength",46]],"star_topaz":["Star Topaz",["plus-magic-find",25],["thorns",600],["intelligence",46]],"flawless_star_amethyst":["Flawless Star Amethyst",["plus-life",16],["life-hit",400],["vitality",50]],"flawless_star_emerald":["Flawless Star Emerald",["plus-gold-find",27],["critical-hit-damage",80],["dexterity",50]],"flawless_star_ruby":["Flawless Star Ruby",["plus-experience-percent",27],["damage","18-36"],["strength",50]],"flawless_star_topaz":["Flawless Star Topaz",["plus-magic-find",27],["thorns",900],["intelligence",50]],"perfect_star_amethyst":["Perfect Star Amethyst",["plus-life",17],["life-hit",500],["vitality",54]],"perfect_star_emerald":["Perfect Star Emerald",["plus-gold-find",29],["critical-hit-damage",90],["dexterity",54]],"perfect_star_ruby":["Perfect Star Ruby",["plus-experience-percent",29],["damage","19-38"],["strength",54]],"perfect_star_topaz":["Perfect Star Topaz",["plus-magic-find",29],["thorns",1250],["intelligence",54]],"radiant_star_amethyst":["Radiant Star Amethyst",["plus-life",18],["life-hit",600],["vitality",58]],"radiant_star_emerald":["Radiant Star Emerald",["plus-gold-find",31],["critical-hit-damage",100],["dexterity",58]],"radiant_star_ruby":["Radiant Star Ruby",["plus-experience-percent",31],["damage","20-40"],["strength",58]],"radiant_star_topaz":["Radiant Star Topaz",["plus-magic-find",31],["thorns",1800],["intelligence",58]]},
 	// Listing of Qualities
 	qualityMap: ['Unspecified', 'Inferior', 'Normal', 'Superior', 'Magic', 'Rare', 'Legendary', 'Set'],
 	// Listing of Skill Text on Items
@@ -251,6 +260,17 @@ var itemBuilder = {
 		'leg-litany-of-the-undaunted': 'This ring sometimes summons a Skeleton when you attack.',
 		'leg-demons-flight': 'Chance to reflect projectiles when you are hit by enemies.',
 		'leg-the-murlocket': 'Call forth a creature from the depths.',
+		// Skill Descriptions
+		'generate-fury': 'Generates VVV Fury',
+		'weapon-damage': 'Deals VVV% Weapon Damage',
+		'cost-fury': 'Cost: VVV Fury',
+		'weapon-damage-for': 'Deals damage over VVV seconds',
+		'plus-crit-hit': '+VVV% Critical Hit Chance',
+		'cooldown': 'Cooldown: VVV seconds',
+		'plus-resist-all': '+VVV Resist All',
+		'plus-armor': '+VVV% Armor',
+		'plus-dodge': '+VVV% Dodge',
+		'plus-movement-speed': '+VVV% Movement Speed',
 	},
 	// Set the Name input 
 	setNameInput: function(element) {
@@ -279,6 +299,10 @@ var itemBuilder = {
 			selector.bind('change', function() {
 				builder.item.socketCount = $(this).val();
 				builder.updatePreview();
+				builder.redoSocketAttrs()
+				if(builder.changeCallback) {
+					builder.changeCallback(builder);
+				}
 			});					
 		}
 	},
@@ -346,17 +370,19 @@ var itemBuilder = {
 	bindItemTypeSelect: function() {
 		var selector = this.itemTypeSelect,
 				builder = this;
-		selector.bind('change', function() {
-			builder.item.type = $(this).val();
-			builder.item.typeName = $(this).selectedOption();//.text();
-			_.each(builder.itemClass, function(v,k) {
-				if(_.indexOf(v, $(this).val()) >= 0) {
-					builder.item.itemClass = k;
-					builder.initPreview();	// Not sure why... but I have to rebuild it
-					builder.updatePreview();				
-				}
-			}, this);
-		});
+		if(selector) {
+  		selector.bind('change', function() {
+  			builder.item.type = $(this).val();
+  			builder.item.typeName = $(this).selectedOption();//.text();
+  			_.each(builder.itemClass, function(v,k) {
+  				if(_.indexOf(v, $(this).val()) >= 0) {
+  					builder.item.itemClass = k;
+  					builder.initPreview();	// Not sure why... but I have to rebuild it
+  					builder.updatePreview();				
+  				}
+  			}, this);
+  		});		  
+		}
 	},
 	// Set the Attribute Selector
 	setAttributeSelect: function(element) {
@@ -366,23 +392,25 @@ var itemBuilder = {
 	bindAttributeSelect: function() {
 		var selector = this.attributeSelect,
 				builder = this;
-		selector.bind('change', function() {
-			var attributes = selector.val();
-			// Add all attributes that are chosen
-			_.each(attributes, function(v) {
-				builder.addAttribute(v);
-			}, builder);
-			// Check previous attributes to make sure they weren't deselected
-			_.each(builder.attrsSelected, function(v) {
-				if(_.indexOf(attributes, v) < 0) {
-					builder.removeAttribute(v);
-				}
-			});
-			// Set the valid attributes for the next iteration
-			builder.attrsSelected = attributes;
-			// Update the Preview Pane
-			builder.updatePreview();
-		});
+		if(selector) {
+  		selector.bind('change', function() {
+  			var attributes = selector.val();
+  			// Add all attributes that are chosen
+  			_.each(attributes, function(v) {
+  				builder.addAttribute(v);
+  			}, builder);
+  			// Check previous attributes to make sure they weren't deselected
+  			_.each(builder.attrsSelected, function(v) {
+  				if(_.indexOf(attributes, v) < 0) {
+  					builder.removeAttribute(v);
+  				}
+  			});
+  			// Set the valid attributes for the next iteration
+  			builder.attrsSelected = attributes;
+  			// Update the Preview Pane
+  			builder.updatePreview();
+  		});		  
+		}
 	},
 	// Set the Item Preview Area
 	setItemPreview: function(element) {
@@ -393,21 +421,59 @@ var itemBuilder = {
 		if(!this.item.stats[name]) {
 			this.item.stats[name] = 0;
 		}
+		if(this.changeCallback) {
+			this.changeCallback(this);
+		}
 	},
 	// Update the Value of a Stat
 	updateStat: function(name, value) {
 		if(!this.item.stats) {
 			this.item.stats = {};
 		}
-		this.item.stats[name] = parseFloat(value);
+		switch(name) {
+			case "damage-max":
+				if(!this.item.stats.damage) {
+					this.item.stats.damage = {};
+				}
+				this.item.stats.damage.max = parseFloat(value);
+				break;
+			case "damage-min":
+				if(!this.item.stats.damage) {
+					this.item.stats.damage = {};
+				}
+				this.item.stats.damage.min = parseFloat(value);
+				break;
+			default:
+				this.item.stats[name] = parseFloat(value);
+				break;
+		}
+		if(_.indexOf(['damage-max', 'damage-min', 'speed'], name) >= 0) {
+			var dpsDisplay = this.preview.statsPrimary.find("input[name=stat_dps]"),
+					dpsMin = this.item.stats.damage.min,
+					dpsMax = this.item.stats.damage.max, 
+					dpsSpeed = this.item.stats.speed;
+			dpsDisplay.val((dpsMin + dpsMax) / 2 * dpsSpeed);
+		}
+		if(this.changeCallback) {
+			this.changeCallback(this);
+		}
 	},
 	// Remove a specific stat by name
 	removeStat: function(name) {
 		delete this.item.stats[name];
+		if(this.changeCallback) {
+			this.changeCallback(this);
+		}
 	},
 	// Remove all existing stats
 	removeStats: function(name) {
 		this.item.stats = {};
+		if(this.changeCallback) {
+			this.changeCallback(this);
+		}
+	},
+	setChangeCallback: function(fn) {
+		this.changeCallback = fn;
 	},
 	// Add an Attribute to this.item.attrs
 	addAttribute: function(name) {
@@ -420,16 +486,36 @@ var itemBuilder = {
 	},
 	// Update the Value of an Attribute
 	updateAttribute: function(name, value) {
-		this.item.attrs[name] = parseFloat(value);
-		// console.log(this.attrs);
+		switch(name) {
+			case "minmax-damage":
+				var parts = value.split("-");
+				this.item.attrs[name] = {
+					min: parts[0],
+					max: parts[1]
+				}
+				break;
+			default:
+				this.item.attrs[name] = parseFloat(value);
+				break;
+		}
+		console.log(name, value);
+		if(this.changeCallback) {
+			this.changeCallback(this);
+		}
 	},
 	// Remove a specific attribute by name
 	removeAttribute: function(name) {
 		delete this.item.attrs[name];
+		if(this.changeCallback) {
+			this.changeCallback(this);
+		}
 	},
 	// Remove all existing attributes
 	removeAttributes: function(name) {
 		this.item.attrs = {};
+		if(this.changeCallback) {
+			this.changeCallback(this);
+		}
 	},
 	// Initialize the Preview
 	initPreview: function() {
@@ -459,27 +545,65 @@ var itemBuilder = {
 		_.each(this.footerElements, function(element) { 
 			this.preview.footer.append(element);
 		}, this);
-		this.itemPreview.empty().append(
-			this.preview.header, 
-			this.preview.body.append(
-				this.preview.itemMeta.append(
-					this.preview.itemQuality,
-					" ", 
-					this.preview.itemType
-				),
-				this.preview.statsPrimary, 
-				this.preview.statsRange, 
-				this.preview.statsPercent, 
-				this.preview.attrs, 
-				this.preview.sockets,
-				this.preview.setBonus
-			), 
-			this.preview.footer
-		);
+		if(this.itemPreview) {
+		 	this.itemPreview.empty().append(
+  			this.preview.header, 
+  			this.preview.body.append(
+  				this.preview.itemMeta.append(
+  					this.preview.itemQuality,
+  					" ", 
+  					this.preview.itemType
+  				),
+  				this.preview.statsPrimary, 
+  				this.preview.statsRange, 
+  				this.preview.statsPercent, 
+  				this.preview.attrs, 
+  				this.preview.sockets,
+  				this.preview.setBonus
+  			), 
+  			this.preview.footer
+  		); 
+		}
+	},
+	redoSocketAttrs: function() {
+		this.item.socketAttrs = {};
+		_.each(this.item.sockets, function(v,k) {
+			var effect = false;
+			if(v == "") {
+				
+			} else if(this.item.itemClass == 'weapon') {
+				// Weapon Effects
+				var effect = this.gemEffect[v][2][0],
+						value = this.gemEffect[v][2][1];
+			} else if(_.indexOf(["spirit-stone","voodoo-mask","wizard-hat","helm"], this.item.type) >= 0) {
+				// Helm Effects
+				var effect = this.gemEffect[v][1][0],
+						value = this.gemEffect[v][1][1];
+			} else {
+				// Other Effects
+				var effect = this.gemEffect[v][3][0],
+						value = this.gemEffect[v][3][1];
+			}
+			if(effect) {
+				if(this.item.socketAttrs[effect]) {
+					this.item.socketAttrs[effect] += value;
+				} else {
+					this.item.socketAttrs[effect] = value;				
+				}				
+			}
+		}, this);
+		// Fire the Callback
+		if(this.changeCallback) {
+			this.changeCallback(this);
+		}
 	},
 	// Update the Item Preview
 	updatePreview: function() {
 		var builder = this;
+		// No item? No preview!
+		if(!this.item) {
+			return;
+		}
 		// Update the Name
 		this.preview.header.find("p").html(this.item.name);
 		// Update the Quality
@@ -493,18 +617,22 @@ var itemBuilder = {
 			this.preview.setBonus.addClass("quality-" + this.item.quality);
 		}
 		// Update the Type
-		if(this.item.type) {
+		if(this.item.type && this.itemTypeSelect) {
 			this.item.typeName = this.itemTypeSelect.selectedOption().text();
 			this.preview.itemType.html(this.item.typeName);
 		}
 		// No sockets? Empty the UL
-		if(this.item.socketCount == 0) {
+		if(this.item.socketCount != this.preview.sockets.find("select").length) {
+			for(i = this.item.socketCount; i < this.preview.sockets.find("select").length; i++) {
+				this.item.sockets.pop();
+			}
 			this.preview.sockets.empty();
+			this.redoSocketAttrs();
 		}
 		if(this.item.setBonus) {
 			this.preview.setBonus.empty();
 			var bonusData = this.getBonusHtml(this.item.setBonus);
-			// console.log(bonusData.list);
+			// d3up.log(bonusData.list);
 			this.preview.setBonus.append(
 				bonusData.name,
 				bonusData.list
@@ -512,9 +640,10 @@ var itemBuilder = {
 		}
 		// Update the Selects for the Sockets
 		for(i = 0; i < this.item.socketCount; i++) {
+			var $this = this;
 			if(!this.preview.sockets.find("#socket"+i).length) {
 				var select = $("<select name='socket" + i + "' id='socket" + i + "' tabindex='150'>");
-				select.append($("<option value=''>Empty</option>"));
+				select.append($("<option value=''>Socket #" + i + ": Empty</option>"));
 				_.each(gems, function(v,k) {
 					var option = $("<option>"),
 							idx = 3; // Default to 3 for most items
@@ -533,18 +662,26 @@ var itemBuilder = {
 					}
 					select.append(option);
 				}, this);
+				select.bind('change', function() {
+					var id = $(this).attr("id").replace("socket", ""), 
+							gem = $(this).find(":selected").val();
+					if(!$this.item.sockets) {
+						$this.item.sockets = [];
+					}
+					$this.item.sockets[id] = gem;
+					$this.redoSocketAttrs();
+				});
 				this.preview.sockets.append($("<li>").append(select));
 			}
 		}
 		// Update the Attributes if nessicary
 		_.each(this.item.attrs, function(v, k) {
 			if(!this.preview.attrs.find("#input-" + k).length) {
-        // console.log(builder.skillText);
+        // d3up.log(builder.skillText);
 				var container = $("<span>"),
 						input = "<input type='text' value='" + v + "' name='" + k + "' tabindex='100'>", 
 						hidden = "<input type='hidden' value='true' name='" + k + "' tabindex='100'>",
 						helper = builder.skillText[k];
-						// console.log(builder.skillText[k], k);
 				if(helper.search("VVV") >= 0) {
 					helper = helper.replace(/VVV/, input);										
 				} else {
@@ -565,6 +702,7 @@ var itemBuilder = {
 			}
 		}, this);
 		// Add stats relevant to the Item's Class
+		// console.log(builder.item, builder.preview.attrs.html());
 		switch(builder.item.itemClass) {
 			case "none":
 				builder.preview.statsPrimary.empty();
@@ -589,7 +727,7 @@ var itemBuilder = {
 				break;
 			case "weapon":
 				if(!builder.preview.statsPrimary.find("input[name=stat_dps]").length) {
-					var dps = $("<input name='stat_dps' tabindex='50'>"),
+					var dps = $("<input name='stat_dps' tabindex='50' disabled='disabled'>"),
 							min = $("<input name='stat_damage-min' tabindex='50'>"),
 							max = $("<input name='stat_damage-max' tabindex='50'>"),
 							speed = $("<input name='stat_speed' tabindex='50'>");
@@ -704,24 +842,40 @@ var itemBuilder = {
 		this.preview.footer.append(element);
 	},
 	// Sets the Item 
-	setItem: function(item) {
+	setItem: function(slot, item) {
+		this.slot = slot;
 		// Set the Item
-		this.item = item;
-		// Adjust the Socket Count
-		if(item.sockets) {
-			this.item.socketCount = item.sockets.length;			
+		this.item = _.clone(item, true);
+		if(this.item) {
+			// Adjust the Socket Count
+			if(this.item.sockets) {
+				this.item.socketCount = item.sockets.length;			
+			}
+			// Figure out the itemClass
+			_.each(this.itemClass, function(v,k) {
+				if(_.indexOf(v, item.type) >= 0) {
+					this.item.itemClass = k;
+				}
+			}, this);			
+			// Adjust the Set
+			this.item.setBonus = item.set;
 		}
-		// Adjust the Set
-		this.item.setBonus = item.set;
 		// Update the Fields
-		this.qualitySelect.trigger("change");
-		this.itemTypeSelect.trigger("change");
-		this.attributeSelect.trigger("change");
-		this.updatePreview();
+		if(this.qualitySelect) {
+			this.qualitySelect.trigger("change");			
+		}
+		if(this.itemTypeSelect) {			
+			this.itemTypeSelect.trigger("change");
+		}
+		if(this.attributeSelect) {
+			this.attributeSelect.trigger("change");			
+		}
+		this.initPreview();
+		this.updatePreview();				
 	},
 	// Returns the Item Object for parsing
 	getItem: function() {
-		return this.item;
+		return _.clone(this.item, true);
 	},
 	getBonusHtml: function(setBonus) {
 		var bonuses = $("<ul class='bonuses'>"),
@@ -760,3 +914,5 @@ var itemBuilder = {
 		};
 	}
 };
+d3up.ItemBuilder = ItemBuilder;
+})( d3up );

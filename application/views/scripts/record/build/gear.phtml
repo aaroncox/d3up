@@ -1,0 +1,128 @@
+<h5>Gear / Items</h5>
+<? if(D3Up_Auth::getInstance()->getProfile()): ?>
+  <a class="button show-gear-change"><span class="ui-button-text"><?= ($this->myBuild) ? "Change /" : "" ?> Compare / Simulate Gear</span></a>
+<? endif ?>
+<div class="page">
+  <table class="equipment-table" id="build-gear">
+    <thead>
+      <tr>
+        <td>&nbsp;</td>
+        <td colspan="2" style="text-align: center">
+          <select id="gear-stats">
+            <option value="contributions">EHP/DPS Contributions</option>
+            <option value="stats">Gear Stats / Perfection</option>
+            <option value="gear-controls">Change/Compare Items</option>
+          </select>
+        </td>
+      </tr>
+      <tr>
+        <th>Name</th>
+        <th class="cell-header gear-controls" colspan="2">Controls</th>
+        <th class="cell-header contributions">DPS<br/>(% of Total)</th>
+        <th class="cell-header contributions">EHP<br/>(% of Total)</th>
+        <th class="cell-header stats">Gear Stats</th>
+        <th class="cell-header stats">Perfection</th>
+      </tr>
+      <tr class="filters">
+        <th colspan='3'>
+          <select id="gear-filters" multiple="multiple" data-placeholder="Select Attributes to Filter By...">
+            <?= $this->render("./item/_itemAttributeOptions.phtml") ?>
+          </select>
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <? foreach($this->record->equipment->getSlots() as $slot): ?>
+      	<tr data-slot="<?= $slot ?>">
+      		<td class="primary">
+      			<span class="equipped" id="equipped-<?= $slot ?>" data-slot="<?= $slot ?>">
+      				<? if($this->record->equipment[$slot] && $this->record->equipment[$slot]->id): ?>
+      					<?= $this->itemLink($this->record->equipment[$slot], array('slot' => $slot)) ?>
+      				<? else: ?>
+      					<a>Nothing</a>
+      				<? endif ?>
+      			</span>
+      			<br/><span class="equipped-type"><?= ucfirst($slot) ?></span>
+      		</td>
+          <td class="cell-data gear-controls">
+        		<? if(D3Up_Auth::getInstance()->getProfile()): ?>
+              <a id="change-<?= $slot ?>" class="button gear-change" data-item-type="<?= $slot ?>" role="button" aria-disabled="false"><span class="ui-button-text">Modify</button>
+            <? endif ?>
+          </td>
+          <td class="cell-data gear-controls">
+            <a id="simulate-<?= $slot ?>" class="button gear-simulate" data-item-type="<?= $slot ?>" role="button" aria-disabled="false"><span class="ui-button-text">Simulate</button>
+          </td>          
+          <td class="cell-data contributions" data-display="dps-heat" data-value="dps-<?= $slot ?>">~</td>
+          <td class="cell-data contributions" data-display="ehp-heat" data-value="ehp-<?= $slot ?>">~</td>
+          <td class="cell-data stats" colspan="2">
+            <? 
+              $total = null;
+              if($this->record->equipment[$slot]) {
+                $total = count($this->record->equipment[$slot]->attrs);
+                $count = 1;
+                $max = D3Up_Tool_MaxStat::getInstance();                
+              }
+            ?>
+            <? if($total): ?>
+              <table class="d3up-table perfection-table">
+              <? if(isset($this->record->equipment[$slot]->stats['armor'])): ?>
+                <?
+                  // Special If to create armor row
+                  $armor = $this->record->equipment[$slot]->stats['armor'];
+                  if(isset($this->record->equipment[$slot]->attrs['armor'])) {
+                    $armor += $this->record->equipment[$slot]->attrs['armor'];
+                  }
+                ?>
+                <tr class='item-rating item-rating-armor item-rating-filter' data-attr="armor">
+                  <td>Armor</td>
+                  <td><?= $armor ?></td>
+                  <td class='bounds'>
+                  </td>
+                </tr>
+                <tr class='item-rating item-rating-armor item-rating-filter' data-attr="armor">
+                  <td colspan='3'>
+                    <div class='rating-bar' data-percent="<?= $armor ?>" style='width: 50%; height: 3px;'></div>
+                  </td>
+                </tr>
+                <? $count++ ?>
+              <? endif ?>
+              <? foreach($this->record->equipment[$slot]->attrs as $attr => $val):?> 
+                <? if($attr == 'armor') { continue; } ?>
+                <? if(is_object($val)): ?>
+                  <? $val = implode("-", $val->export()) ?>
+                <? endif ?>
+                <? if($this->shortStat($val, $attr)): ?>
+                <tr class='item-rating item-rating-<?= $attr ?> item-rating-filter' data-attr="<?= $attr ?>">
+                  <td><?= $this->shortStat(null, $attr) ?></td>
+                  <td><?= $val ?></td>
+                  <td class='bounds'>
+                    <?= $max->calcStat($attr, $val, $this->record->equipment[$slot]->type) ?: '???' ?>
+                  </td>
+                </tr>
+                <?
+                  $rating = $max->calcStat($attr, $val, $this->record->equipment[$slot]->type, true);
+                ?>
+                  <? if(isset($rating['rating'])): ?>
+                  <tr class='item-rating item-rating-<?= $attr ?> item-rating-filter' data-attr="<?= $attr ?>">
+                    <td colspan='3'>
+                      <div class='rating-bar' data-percent="<?= $rating['rating'] ?>" style='width: <?= $rating['rating'] ?>%; height: 3px;'></div>
+                    </td>
+                  </tr>
+                  <? else: ?>
+                  <tr class='item-rating item-rating-<?= $attr ?>'>
+                    <td colspan='3'>
+                      <div class='rating-bar' data-percent="0" style='width: 100%; height: 3px; background-color: #444'></div>
+                    </td>
+                  </tr>
+                  <? endif ?>
+                <? endif ?>
+                <? $count++ ?>
+              <? endforeach ?>
+              </table>
+            <? endif ?>
+          </td>
+      	</tr>
+      <? endforeach ?>
+    </tbody>
+  </table>
+</div>

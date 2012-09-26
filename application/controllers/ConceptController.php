@@ -5,7 +5,7 @@
  * @package default
  * @author Aaron Cox
  **/
-class ConceptController extends Epic_Controller_Action
+class ConceptController extends D3Up_Controller_Action
 {
 	public function indexAction() {
 		

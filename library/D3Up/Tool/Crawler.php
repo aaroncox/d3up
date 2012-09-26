@@ -84,8 +84,8 @@ class D3Up_Tool_Crawler
 		'2haxe' => '2h-axe',
 		'axe2h' => '2h-axe',
 		'bow' => 'bow',
-		'diabo' => 'diabo',
-		'combatstaff' => 'diabo',
+		'daibo' => 'daibo',
+		'combatstaff' => 'daibo',
 		'crossbow' => 'crossbow',
 		'2hmighty' => '2h-mighty',
 		'mighty2h' => '2h-mighty',
@@ -133,7 +133,7 @@ class D3Up_Tool_Crawler
 		'2h-mace' => 'Two-Handed Mace',
 		'2h-axe' => 'Two-Handed Axe',
 		'bow' => 'Bow',
-		'diabo' => 'Diabo',
+		'daibo' => 'Daibo',
 		'crossbow' => 'Crossbow',
 		'2h-mighty' => 'Two-Handed Mighty Weapon',
 		'polearm' => 'Polearm',
@@ -520,6 +520,11 @@ class D3Up_Tool_Crawler
 			// Look to see if this item exists!
 			$found = Epic_Mongo::db('item')->fetchOne($query);
 			// Did we find this item already?
+			if($slot == 'mainhand') {
+			  if(isset($data['type']) && isset($data['type']['twoHanded'])) {
+          $build->equipment['offhand'] = null;
+			  }
+			}
 			if(!$found) {
 				// If we didn't, lets make it!
 				$new = Epic_Mongo::newDoc('item');
@@ -585,5 +590,9 @@ class D3Up_Tool_Crawler
 		}
 		$url = self::$profileUrl[$user->region] . strtolower(str_replace("#", "-", $user->battletag)) . "/hero/" . $character;
 		return $url;		
+	}
+	
+	public static function makeUrl($region, $battletag, $character) {
+	  return $url = self::$profileUrl[$region] . strtolower(str_replace("#", "-", $battletag)) . "/hero/" . $character;		
 	}
 } // END class D3Up_Tool_Crawler

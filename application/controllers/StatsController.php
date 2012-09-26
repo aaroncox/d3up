@@ -5,7 +5,7 @@
  * @package default
  * @author Aaron Cox
  **/
-class StatsController extends Epic_Controller_Action
+class StatsController extends D3Up_Controller_Action
 {
 	public function indexAction() {
 		

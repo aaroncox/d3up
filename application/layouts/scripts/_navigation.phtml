@@ -1,0 +1,63 @@
+<div id="navigation-wrapper">
+	<!-- <ul id="navigation" class="dropdown ui-helper-clearfix ui-widget ui-widget-content"  style="text-align: center">
+		<li><a href="/">Home</a></li>
+		<li><a href="/guide">Guides <img src='/images/down-arrow.png' /></a>
+			<ul class="sub_menu">
+				<li><a href="/guide/create">Create Guide</a></li>
+				<li><a href="/user/guides">My Guides</a></li>
+				<li class='barbarian'><a href="/guide?class=barbarian">Barbarian</a></li>
+				<li class='demon-hunter'><a href="/guide?class=demon-hunter">Demon Hunter</a></li>
+				<li class='monk'><a href="/guide?class=monk">Monk</a></li>
+				<li class='witch-doctor'><a href="/guide?class=witch-doctor">Witch Doctor</a></li>
+				<li class='wizard'><a href="/guide?class=wizard">Wizard</a></li>
+				<li><a href="/guide">All Guides</a></li>
+			</ul>
+		</li>
+		<li><a href="/items">Items <img src='/images/down-arrow.png' /></a>
+			<ul class="sub_menu">
+				<li><a href="/item/create">Create Item</a></li>
+				<li><a href="/user/items">My Items</a></li>
+				<li><a href="/items">Item Search</a></li>
+				<li><a href="/item/sales-history">Sales History</a></li>
+			</ul>
+		</li>
+		<li><a href="/build">Builds <img src='/images/down-arrow.png' /></a>
+			<ul class="sub_menu">
+				<li><a href="/build/create">Create Build</a></li>
+				<li><a href="/user/builds">My Builds</a></li>
+				<li class='barbarian'><a href="/build?class=barbarian">Barbarian</a></li>
+				<li class='demon-hunter'><a href="/build?class=demon-hunter">Demon Hunter</a></li>
+				<li class='monk'><a href="/build?class=monk">Monk</a></li>
+				<li class='witch-doctor'><a href="/build?class=witch-doctor">Witch Doctor</a></li>
+				<li class='wizard'><a href="/build?class=wizard">Wizard</a></li>
+				<li><a href="/build">All Builds</a></li>
+			</ul>
+		</li>
+		<li><a href="/user/shop">My Shop <img src='/images/down-arrow.png' /></a>
+			<ul class="sub_menu">
+				<li><a href="/item/pricer">Item Pricer</a></li>
+			</ul>
+		</li>
+		<?  if(true == false): ?>
+		<li><a href="/bazaar">Bazaar <img src='/images/down-arrow.png' /></a>
+			<ul class="sub_menu">
+				<li><a href="/user/shop">My Shop</a></li>
+			</ul>
+		</li>					
+		<? endif ?>
+		<li><a href="/updates">Updates</a></li>
+		<li><a>User <img src='/images/down-arrow.png' /></a>
+			<ul class="sub_menu">
+			<? if($profile = Epic_Auth::getInstance()->getProfile()): ?>
+				<li><a href="/user/edit">Edit Profile</a></li>	
+				<li><a href="/user/change-password">Change Password</a></li>
+				<li><a href="/user/logout">Logout</a></li>
+			<? else: ?>
+				<li><a href="/user/login">Login</a></li>
+				<li><a href="/user/register">Register</a></li>
+			<? endif; ?>
+			</ul>
+		</li>
+		<li><a href="/faqs">Help</a></li>
+	</ul> -->
+</div>

@@ -75,7 +75,7 @@ $.fn.bindTooltip = function() {
 	}
 	
 	if(item.set) {
-		var builder = Object.create(itemBuilder);
+		var builder = new d3up.ItemBuilder;
 		var data = builder.getBonusHtml(item.set);
 		itemSetBonus.empty().append(data.name, data.list);
 		if($(this).data("set-count")) {
@@ -112,8 +112,8 @@ $.fn.bindTooltip = function() {
 	
 }
 $.fn.bindSkilltip = function() {
-	var tooltip = $(".d3up-tooltip");
-	var container = $("<div class='d3-item'/>"),
+	var tooltip = $(".d3up-tooltip"),
+      container = $("<div class='d3-item'/>"),
 			header = $("<div class='top'/>"),
 			content = $("<div class='item'/>"),
 			footer = $("<div class='bottom'/>");
@@ -128,8 +128,8 @@ $.fn.bindSkilltip = function() {
 		tooltip.empty().append(container);
 		var position = {
 			of: $this,
-			at: "right bottom",
-			my: "left top",
+			at: "right top",
+			my: "left bottom",
 			offset: "0 10",
 			collision: "flip"
 		};

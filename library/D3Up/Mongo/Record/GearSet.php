@@ -36,7 +36,7 @@ class D3Up_Mongo_Record_GearSet extends Epic_Mongo_Document
 		'ring1' => array('ring'),
 		'ring2' => array('ring'),
 		'boots' => array('boots'),
-		'mainhand' => array('2h-mace', '2h-axe', 'bow', 'diabo', 'crossbow', '2h-mighty', 'polearm', 'staff', '2h-sword', 'ceremonial-knife', 'wand', 'axe', 'hand-crossbow', 'dagger', 'fist-weapon', 'mace', 'mighty-weapon', 'spear', 'sword'),
+		'mainhand' => array('2h-mace', '2h-axe', 'bow', 'daibo', 'crossbow', '2h-mighty', 'polearm', 'staff', '2h-sword', 'ceremonial-knife', 'wand', 'axe', 'hand-crossbow', 'dagger', 'fist-weapon', 'mace', 'mighty-weapon', 'spear', 'sword'),
 		'offhand' => array('axe', 'hand-crossbow', 'dagger', 'fist-weapon', 'mace', 'mighty-weapon', 'spear', 'sword', 'mojo', 'source', 'quiver', 'shield'),
 	);
 
@@ -49,5 +49,15 @@ class D3Up_Mongo_Record_GearSet extends Epic_Mongo_Document
 	public function getAcceptableTypes($type) {
 		if(!$type) return null;
 		return $this->_gearMap[$type];
+	}
+	
+	public function getGearJson() {
+	  $data = array();
+	  foreach($this->_requirements as $slot => $reqs) {
+	    if($this->$slot) {
+        $data[$slot] = $this->$slot->cleanExport();
+	    }
+	  }
+    return json_encode($data);
 	}
 } // END class D3Up_Mongo_GearSet extends Epic_Mongo_Document

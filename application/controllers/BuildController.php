@@ -5,16 +5,27 @@
  * @package default
  * @author Aaron Cox
  **/
-class BuildController extends Epic_Controller_Action
+class BuildController extends D3Up_Controller_Action
 {
 	public function indexAction() {
 		$query = array(
 			'private' => array('$ne' => true),
 			'stats.dps' => array('$gt' => 0),
 			'stats.ehp' => array('$gt' => 0),
+			// 'votes' => array('$gt' => -5),
 			'actives' => array('$exists' => true),
 			'passives' => array('$exists' => true),
 		);
+		if($this->view->selectedActives = $skills = $this->getRequest()->getParam("skills")) {
+			if($skills != "null") {
+				$query['actives']['$all'] = array_values(explode("|", $skills));				
+			}
+		}
+		if($this->view->selectedPassives = $passives = $this->getRequest()->getParam("passives")) {
+			if($passives != "null") {
+				$query['passives']['$all'] = array_values(explode("|", $passives));
+			}
+		}
 		$sort = array(
 			'_created' => -1,
 		);
@@ -32,7 +43,7 @@ class BuildController extends Epic_Controller_Action
 					break;
 			}
 		}
-		// var_dump($sort, $query);
+		// echo "<pre>"; var_dump($sort, $query); echo "</pre>";
 		if($class = $this->getRequest()->getParam('class')) {
 			if($class != "null") {				
 				$this->view->class = $query['class'] = $class;
@@ -48,6 +59,7 @@ class BuildController extends Epic_Controller_Action
 		$paginator->setCurrentPageNumber($this->getRequest()->getParam('page', 1))->setItemCountPerPage(15)->setPageRange(3);
 		$this->view->builds = $paginator;
 		if($this->_request->isXmlHttpRequest()) {
+			$this->view->noScript = true;
 			$this->_helper->layout->disableLayout();
 		}
 	}
@@ -66,9 +78,9 @@ class BuildController extends Epic_Controller_Action
 		$form = $this->view->form = $build->getEditForm();
 		if($this->getRequest()->isPost()) {
 			$result = $form->process($this->getRequest()->getParams());
-			if($result) {
+			$battletag = $profile->battletag ?: $this->getRequest()->getParam('battletag');
+			if($result && $battletag) {
 				$build = Epic_Mongo::db('build')->find($result['upserted']);
-				$battletag = $this->getRequest()->getParam('battletag');
 				$region = $this->getRequest()->getParam('region');
 				$character = $this->getRequest()->getParam('character-id', null);
 				if($character == "") {
@@ -87,8 +99,8 @@ class BuildController extends Epic_Controller_Action
 				$build->_characterId = $character;
 				$build->_lastCrawl = time();
 				$build->save();
-				$this->_redirect("/b/".$build->id);				
 			}
+			$this->_redirect("/b/".$build->id);				
 		}
 	}
 	public function editAction() {

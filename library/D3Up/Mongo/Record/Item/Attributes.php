@@ -15,7 +15,7 @@ class D3Up_Mongo_Record_Item_Attributes extends Epic_Mongo_Document
 			case '2h-mace': 
 			case '2h-axe': 
 			case 'bow': 
-			case 'diabo': 
+			case 'daibo': 
 			case 'crossbow': 
 			case '2h-mighty': 
 			case 'polearm': 

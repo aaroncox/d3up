@@ -5,7 +5,7 @@
  * @package default
  * @author Aaron Cox
  **/
-class RecordController extends Epic_Controller_Action
+class RecordController extends D3Up_Controller_Action
 {
 	public function getRecord() {
 		return $this->view->record = $this->getRequest()->getParam('record');
@@ -73,7 +73,7 @@ class RecordController extends Epic_Controller_Action
 				$new->_original = $record;
 				$new->_createdBy = $profile;
 				$new->save();
-				$this->_redirect("/i/".$new->id);		
+				$this->_redirect("/user/items");
 			}
 		}
 		if($record instanceOf D3Up_Mongo_Record_Build) {
@@ -177,38 +177,42 @@ class RecordController extends Epic_Controller_Action
 			)
 		);
 		$toCompare = json_decode($this->getRequest()->getParam('attrs'));
-		if(empty($toCompare)) {
+		if(empty($toCompare) && $item->rating && $item->rating instanceOf Shanty_Mongo_Document) {
 			$toCompare = array_keys($item->rating->export());
 			unset($toCompare['total']);
+  		foreach($toCompare as $attr) {
+  			$query['rating'] = array(
+  				'$ne' => $item->rating->export()
+  			);
+  			if($item->rating[$attr]) {
+  				$value = $item->rating[$attr];
+  				$query['rating.'.$attr] = array(
+  					'$gt' => ($value - 10),
+  					'$lt' => ($value + 10),
+  				);
+
+  				// var_dump($item->rating[$attr]);
+  			}
+  		}
+  		// Get rid of the total
+  		unset($query['rating.total']);
+  		$query['id'] = array(
+  			'$ne' => $item->id
+  		);
+  		$items = Epic_Mongo::db('item')->fetchAll($query, array(), 8);							
+  		$this->view->similar = $items;
 		}
-		foreach($toCompare as $attr) {
-			$query['rating'] = array(
-				'$ne' => $item->rating->export()
-			);
-			if($item->rating[$attr]) {
-				$value = $item->rating[$attr];
-				$query['rating.'.$attr] = array(
-					'$gt' => ($value - 10),
-					'$lt' => ($value + 10),
-				);
-				
-				// var_dump($item->rating[$attr]);
-			}
-		}
-		// Get rid of the total
-		unset($query['rating.total']);
-		$query['id'] = array(
-			'$ne' => $item->id
-		);
-		$items = Epic_Mongo::db('item')->fetchAll($query, array(), 8);							
-		$this->view->similar = $items;
 	}
 	public function viewAction() {
 		$record = $this->getRecord();
 		if($record->_type == "build") {
+		  $this->view->editForm = $record->getEditForm();
+		  $this->view->editForm->setAction("/build/edit/id/" . $record->id);
 			$this->checkVote();
-			$record->viewCounter();
+			$this->view->resync = $this->getRequest()->getParam("resync");
 		}
+		// Count a View
+		$record->viewCounter();
 		if($record->_type == 'item') {
 			$this->getSimilarItems();
 		}
@@ -241,26 +245,32 @@ class RecordController extends Epic_Controller_Action
 						case "equip":
 							$slot = $this->getRequest()->getParam('slot');
 							$newItem = $this->getRequest()->getParam('newItem');
-							$item = Epic_Mongo::db('item')->fetchOne(array('id' => (int) $newItem));
-							// If we are wearing a 2h weapon, blank out the offhand
-							if(isset($record->equipment['mainhand']->id)) {
-								switch($record->equipment['mainhand']->type) {
-									case '2h-mace': 
-									case '2h-axe': 
-									case 'diabo': 
-									case '2h-mighty': 
-									case 'polearm': 
-									case 'staff': 
-									case '2h-sword':
-										$record->equipment['offhand'] = null;
-										break;
-								}								
+							if($newItem == "") {
+                // Blank out the Item
+                $record->equipment[$slot] = null;
+							} else {
+							  // Fetch the new Item
+							 	$item = Epic_Mongo::db('item')->fetchOne(array('id' => (int) $newItem));
+  							// If we are wearing a 2h weapon, blank out the offhand
+  							if(isset($record->equipment['mainhand']->id)) {
+  								switch($record->equipment['mainhand']->type) {
+  									case '2h-mace': 
+  									case '2h-axe': 
+  									case 'daibo': 
+  									case '2h-mighty': 
+  									case 'polearm': 
+  									case 'staff': 
+  									case '2h-sword':
+  										$record->equipment['offhand'] = null;
+  										break;
+  								}								
+  							}
+  							if(in_array($item->type, array('2h-mace', '2h-axe', 'daibo', 'crossbow', '2h-mighty', 'polearm', 'staff', '2h-sword'))) {								
+  								$record->equipment['offhand'] = null;
+  							}
+  							$record->equipment[$slot] = $item;
+  							$record->equipmentCount = count($record->equipment); 
 							}
-							if(in_array($item->type, array('2h-mace', '2h-axe', 'diabo', 'crossbow', '2h-mighty', 'polearm', 'staff', '2h-sword'))) {								
-								$record->equipment['offhand'] = null;
-							}
-							$record->equipment[$slot] = $item;
-							$record->equipmentCount = count($record->equipment);
 							foreach($this->getRequest()->getParam('stats') as $k => $v) {
 								$record->stats->$k = floatVal($v);
 							}
@@ -315,9 +325,6 @@ class RecordController extends Epic_Controller_Action
 	}
 	public function resyncAction() {
 		$record = $this->getRecord();
-		if($record->_createdBy->id) {
-			throw new Exception("This isn't an anonymous build, someone owns this build and you cannot sync it from Battle.net.");
-		}
 		if(!$record->_characterId) {
 			throw new Exception("[ID] This build isn't attached to a Battle.net Profile");
 		}
@@ -327,16 +334,37 @@ class RecordController extends Epic_Controller_Action
 		if(!$record->_characterBt) {
 			throw new Exception("[RG] This build isn't attached to a Battle.net Profile");
 		}
-		if(time() <= $record->_lastCrawl + 60 * 60 * 1) {
-			throw new Exception("Anonymous Profiles may only be crawled once every hour. This profile has been updated too recently to be updated again, try again later!");
+		$profile = D3Up_Auth::getInstance()->getProfile();
+		if($record->_createdBy && $profile && $profile->id == $record->_createdBy->id) {
+  		if(time() <= $record->_lastCrawl + 60 * 15) {
+  			throw new Exception("Profiles may only be crawled once every 15 minutes. This profile has been updated too recently to be updated again, try again later!");
+  		}
+  		if(!$record->_characterRg || !$record->_characterBt || !$record->_characterId) {
+    		$this->_redirect("/b/" . $record->id ."/crawl");
+  		}
+  		D3Up_Tool_Crawler::getInstance()->crawl($record, $profile, $record->_characterId);		  
+  	} elseif($record->_createdBy) {
+  	  if($record->_createdBy->id) {
+  			throw new Exception("This isn't an anonymous build, someone owns this build and you cannot sync it from Battle.net.");
+  		}
+		} else {
+  		if(time() <= $record->_lastCrawl + 60 * 60 * 1) {
+  			throw new Exception("Anonymous Profiles may only be crawled once every hour. This profile has been updated too recently to be updated again, try again later!");
+  		}
+  		$fakeProfile = Epic_Mongo::newDoc('profile');
+  		$fakeProfile->region = $record->_characterRg;
+  		$fakeProfile->battletag = $record->_characterBt;
+  		D3Up_Tool_Crawler::getInstance()->crawl($record, $fakeProfile, $record->_characterId);		  
 		}
-		$fakeProfile = Epic_Mongo::newDoc('profile');
-		$fakeProfile->region = $record->_characterRg;
-		$fakeProfile->battletag = $record->_characterBt;
-		D3Up_Tool_Crawler::getInstance()->crawl($record, $fakeProfile, $record->_characterId);
 		$record->crawlCount++;
 		$record->_lastCrawl = time();
 		$record->save();
-		$this->_redirect("/b/" . $record->id);
+		$this->_redirect("/b/" . $record->id ."?resync=true");
+	}
+	public function convertAction() {
+	  $record = $this->getRecord();
+	  $record->_d3bit = null;
+	  $record->save();
+	  $this->_redirect('/user/items');
 	}
 } // END class RecordController extends Epic_Controller_Action

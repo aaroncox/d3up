@@ -1,4 +1,4 @@
-<div class='ui-widget ui-widget-content ui-corner-all'>
+<div class='page'>
 	<h3>Site Updates</h3>
 	<? $posts = Epic_Mongo::db('update')->fetchAll(array(), array("_created" => -1), 5)?>
 	<ul style="padding: 10px 0; margin: 0; list-style: none">
@@ -9,5 +9,4 @@
 			</li>
 	<? endforeach ?>
 	</ul>
-	
 </div>

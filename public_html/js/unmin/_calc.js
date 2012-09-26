@@ -159,7 +159,7 @@ if(isOwner) {
 			switch(mh.type) {
 				case '2h-mace': 
 				case '2h-axe': 
-				case 'diabo': 
+				case 'daibo': 
 				case '2h-mighty': 
 				case 'polearm': 
 				case 'staff': 
@@ -222,7 +222,7 @@ if(isOwner) {
 										switch(itemData.type) {
 											case '2h-mace': 
 											case '2h-axe': 
-											case 'diabo': 
+											case 'daibo': 
 											case '2h-mighty': 
 											case 'polearm': 
 											case 'staff': 
@@ -266,7 +266,7 @@ function calc(target, passiveSkills) {
 	if(!heroClass) {
 		// This sucks
 		heroClass = $(target).parent().parent().parent().data('class');
-		// console.log(heroClass, target);
+		// d3up.log(heroClass, target);
 	}
 	// ----------------------------------
 	// Loop through equipped gear and gather all statistics from JSON
@@ -646,7 +646,7 @@ function calc(target, passiveSkills) {
 														mathCriticalHit = mathCriticalHit + (eff * 100);														
 														break;
 													default:
-													 	console.log("Unhandled Switch: " + e + " [" + eff + "]");
+													 	d3up.log("Unhandled Switch: " + e + " [" + eff + "]");
 														break;
 												}													
 											})
@@ -656,7 +656,7 @@ function calc(target, passiveSkills) {
 							}
 							break;
 						default:
-							console.log("Unhandled Effect: " + effect + "[" + value + "]");
+							d3up.log("Unhandled Effect: " + effect + "[" + value + "]");
 							break;
 					}
 				});						
@@ -695,19 +695,19 @@ function calc(target, passiveSkills) {
 			// 		cd = (mathCriticalHit / 100) * (mathCriticalHitDamage / 100) + 1,
 			// 		mathDps = Math.round((wd1+wd2+(bd*2))*((as1+as2)*(bs+1)/4)*cd*(primaryAttr/100) * 100)/100,
 			// 		mathSpeed = Math.round(mathSpeed * (1 + mathSpeedAdditive + 0.15) * 100)/100;
-			// console.log("Bonus Attack Speed = " + Math.round(mathSpeedAdditive * 100) + "%");
-			// console.log("MH Min Damage = " + mathDamage.min);
-			// console.log("MH Max Damage = " + mathDamage.max);
-			// console.log("OH Min Damage = " + mathDamageOH.min);
-			// console.log("OH Max Damage = " + mathDamageOH.max);
-			// console.log("AVG Bonus Damage = " + mathDamageAdd);
-			// console.log("MH Speed = " + stats['speed']);
-			// console.log("OH Speed = " + stats['speed-oh']);
-			// console.log("Critical Hit Chance = " + mathCriticalHit);
-			// console.log("Critical Hit Damage = " + mathCriticalHitDamage);
-			// console.log("Primary Attribute = " + primaryAttr);
+			// d3up.log("Bonus Attack Speed = " + Math.round(mathSpeedAdditive * 100) + "%");
+			// d3up.log("MH Min Damage = " + mathDamage.min);
+			// d3up.log("MH Max Damage = " + mathDamage.max);
+			// d3up.log("OH Min Damage = " + mathDamageOH.min);
+			// d3up.log("OH Max Damage = " + mathDamageOH.max);
+			// d3up.log("AVG Bonus Damage = " + mathDamageAdd);
+			// d3up.log("MH Speed = " + stats['speed']);
+			// d3up.log("OH Speed = " + stats['speed-oh']);
+			// d3up.log("Critical Hit Chance = " + mathCriticalHit);
+			// d3up.log("Critical Hit Damage = " + mathCriticalHitDamage);
+			// d3up.log("Primary Attribute = " + primaryAttr);
 			mathSpeedAdditive = Math.round(mathSpeedAdditive * 1000) / 1000;
-			// console.log(stats['speed'], stats['speed-oh'], mathSpeedAdditive);
+			// d3up.log(stats['speed'], stats['speed-oh'], mathSpeedAdditive);
 			// stats['speed'] = 1.2;
 			// stats['speed-oh'] = 1.3;
 			// mathSpeedAdditive = 0.14;
@@ -726,10 +726,10 @@ function calc(target, passiveSkills) {
 			var orig = (stats['speed'] + stats['speed-oh']) / 2, 
 					newMath = 1/((Math.round(stats['speed'] * 1024)/1024) * (1 + mathSpeedAdditive)) + 1/((Math.round(stats['speed-oh'] * 1024) / 1024) * (1 + mathSpeedAdditive));
 			
-			// console.log(orig, mathC, mathSpeedAdditive);
+			// d3up.log(orig, mathC, mathSpeedAdditive);
 			
-			// console.log(mathDamage.min,mathDamage.max,mathDamageOH.min, mathDamageOH.max, mathDamageAddMin, mathDamageAddMax);
-			// console.log(mathS, mathC, mathR, mathA, mathM);
+			// d3up.log(mathDamage.min,mathDamage.max,mathDamageOH.min, mathDamageOH.max, mathDamageAddMin, mathDamageAddMax);
+			// d3up.log(mathS, mathC, mathR, mathA, mathM);
 			// var s = ((stats.mhmin + stats.mhmax + stats.ohmin + stats.ohmax) / 2 + 6 + 12) / 2, 
 			//     c = (1.4 + 1.4) / 2,
 			//     r = 1 + 0.15 + stats.as,
@@ -752,8 +752,8 @@ function calc(target, passiveSkills) {
 					// mathDps2 = (((mathDamageOH.min + mathDamageOH.max) / 2 + mathDamageAdd) * stats['speed']) * (1 + mathSpeedAdditive) * (primaryAttr / 100 ) * 1 * ((mathCriticalHit / 100) * (mathCriticalHitDamage/100) + 1),
 					// mathDps = (mathDps1 + mathDps2) / 2 * 1.15;
 					// test = 1.15 * ((wda1 * av1 * ms1) + (wda2  * av2 * ms2)) / ((1 / 2.1) + (1 / 2.1));
-					// console.log(mathDps, as1, cd1, ms1, av1);
-			// console.log(mathDps1, mathDps2, mathDps);
+					// d3up.log(mathDps, as1, cd1, ms1, av1);
+			// d3up.log(mathDps1, mathDps2, mathDps);
 			/* 
 			(1 + passive skill boosts)
 			(Weapon 1 average damage + ((minimum damage bonus + maximum damage bonus)/2))
@@ -781,12 +781,12 @@ function calc(target, passiveSkills) {
 			// 		mathM = 1 + (mathCriticalHit / 100) * (mathCriticalHitDamage / 100),
 			// 		mathDps = Math.round((mathS * mathC * mathR * mathA * mathM) * 100) / 100,
 					// mathSpeed = Math.round(mathSpeed * (1 + mathSpeedAdditive) * 100)/100;
-			// console.log(mathDps);
+			// d3up.log(mathDps);
 			// Else single weapon, do normally
 			mathSpeed = Math.round(mathSpeed * (1 + mathSpeedAdditive) * 100)/100;
 			mathDps = (((mathDamage.min + mathDamage.max) / 2 + mathDamageAdd) * stats['speed']) * (1 + mathSpeedAdditive) * (primaryAttr / 100 + 1) * 1 * ((mathCriticalHit / 100) * (mathCriticalHitDamage/100)+ 1);
 			mathDps = Math.round(mathDps * 100) / 100;	
-			// console.log("2h");	
+			// d3up.log("2h");	
 			// tabOffense.append("((" + mathDamage.min + "+" + mathDamage.max + ")" + "/ 2 + " + mathDamageAdd + ") * " + stats['speed'] + ") * " + mathSpeedAdditive + ") * " + "(" + primaryAttr + "/ 100 + 1) * 1 * ((" + mathCriticalHit + "/ 100) * (" + mathCriticalHitDamage + "/100)+ 1)");				
 		}
 		if(mathPlusDamage) {
@@ -832,7 +832,7 @@ function calc(target, passiveSkills) {
 			mathEHPArcane = mathLifeTotal / ((1 - mathDR) * (1 - mathARArcane));
 	// Are we a Monk or Barbarian?
 	if(heroClass == "monk" || heroClass == "barbarian") {
-		// console.log("Adding monk/barb bonus");
+		// d3up.log("Adding monk/barb bonus");
 		// Add the Passive 30% Damage Reduction those two classes get
 		mathDT = (1 - mathAR) * (1 - mathDR) * (1 - 0.3);
 		// Recalculate the individual resistance EHPs including the 30% Reduction
@@ -864,7 +864,7 @@ function calc(target, passiveSkills) {
 	// 	var data = $(this).data("json"),
 	// 			slot = $(this).parent().data("slot");
 	// 	
-	// 	console.log(data, slot); 
+	// 	d3up.log(data, slot); 
 		
 		// calc(".equipped a");
 		// Get the new possible stats
@@ -930,7 +930,7 @@ function calc(target, passiveSkills) {
 		// 	slotStats.mathEHP = slotStats.life / slotStats.mathDT;			
 		// // }
 		// slotEHP[slot] = slotStats.mathEHP;			
-		// console.log(slotEHP[slot], slotStats.mathAR, slotStats.mathDT, slotStats.mathAllResist, slotStats.life);
+		// d3up.log(slotEHP[slot], slotStats.mathAR, slotStats.mathDT, slotStats.mathAllResist, slotStats.life);
 		// if(data.stats) {
 		// 	$.each(data.stats, function(k,v) {
 		// 		switch(k) {
@@ -943,7 +943,7 @@ function calc(target, passiveSkills) {
 		// if(data.attrs) {
 		// 	$.each(data.attrs, function(k,v) {
 				
-		// 		// console.log(k, v);
+		// 		// d3up.log(k, v);
 		// 	});
 		// }
 
@@ -1068,7 +1068,7 @@ function calcDiff(currentStats, upgradeItem) {
 	switch(upgradeItem.type) {
 		case '2h-mace': 
 		case '2h-axe': 
-		case 'diabo': 
+		case 'daibo': 
 		case '2h-mighty': 
 		case 'polearm': 
 		case 'staff': 

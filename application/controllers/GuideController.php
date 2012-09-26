@@ -5,19 +5,18 @@
  * @package default
  * @author Aaron Cox
  **/
-class GuideController extends Epic_Controller_Action
+class GuideController extends D3Up_Controller_Action
 {
 	public function getGuide() {
 		return $this->view->guide = $this->getRequest()->getParam('post');
 	}
 	public function indexAction() {
-		$featured = 1;
 		$query = array(
 			'published' => true,
-			'id' => array('$ne' => $featured),
+			'id' => array('$ne' => $this->view->featuredGuide),
 		);
 		$fQuery = array(
-			'id' => $featured
+			'id' => $this->view->featuredGuide
 		);
 		$sort = array(
 			'votes' => -1,
@@ -32,7 +31,7 @@ class GuideController extends Epic_Controller_Action
 		
 		$this->view->featured = $featured = Epic_Mongo::db('guide')->fetchOne($fQuery);
 		
-		$guides = Epic_Mongo::db('guide')->fetchAll($query, $sort);
+		$guides = Epic_Mongo::db('guide')->fetchAll($query, array('_updated' => -1));
 		$paginator = Zend_Paginator::factory($guides);
 		$paginator->setCurrentPageNumber($this->getRequest()->getParam('page', 1))->setItemCountPerPage(15)->setPageRange(3);
 		$this->view->guides = $paginator;

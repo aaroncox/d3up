@@ -5,7 +5,7 @@
  * @package default
  * @author Aaron Cox
  **/
-class UserController extends Epic_Controller_Action
+class UserController extends D3Up_Controller_Action
 {
 	public function editAction() {
 		$profile = D3Up_Auth::getInstance()->getProfile();
@@ -47,72 +47,119 @@ class UserController extends Epic_Controller_Action
 	}
 	public function buildsAction() {
 		$profile = D3Up_Auth::getInstance()->getProfile();
-		if($profile) {
-			$builds = Epic_Mongo::db('build')->fetchAll(array('_createdBy' => $profile->createReference()));			
-			$paginator = Zend_Paginator::factory($builds);
-			$paginator->setCurrentPageNumber($this->getRequest()->getParam('page', 1))->setItemCountPerPage(20);
-			$this->view->builds = $paginator;			
-		} else {
-			$this->view->notLoggedIn = true;
+		if(!$profile) {
+		  $this->_redirect("/user/login");
+		}
+		$query = array(
+      '_createdBy' => $profile->createReference(),
+		);
+		if($this->view->selectedActives = $skills = $this->getRequest()->getParam("skills")) {
+			if($skills != "null") {
+				$query['actives']['$all'] = array_values(explode("|", $skills));				
+			}
+		}
+		if($this->view->selectedPassives = $passives = $this->getRequest()->getParam("passives")) {
+			if($passives != "null") {
+				$query['passives']['$all'] = array_values(explode("|", $passives));
+			}
+		}
+		$sort = array(
+			'_created' => -1,
+		);
+		if($this->view->sortBy = $sortBy = $this->getRequest()->getParam('sort')) {
+			$sort = array();
+			switch($sortBy) {
+				case "dps":
+				case "ehp":
+					$sort['stats.'.$sortBy] = -1;
+					break;
+				case "votes":
+				case "views":
+					$sort[$sortBy] = -1;
+					break;
+			}
+		}
+		// echo "<pre>"; var_dump($sort, $query); echo "</pre>";
+		if($class = $this->getRequest()->getParam('class')) {
+			if($class != "null") {				
+				$this->view->class = $query['class'] = $class;
+			}
+		}
+		if($hasGuide = $this->getRequest()->getParam('guide')) {
+			if($hasGuide == "true") {				
+				$this->view->hasGuide = $query['guideIsPublished'] = true;
+			}
+		}
+		$builds = Epic_Mongo::db('build')->fetchAll($query, $sort);	
+		$paginator = Zend_Paginator::factory($builds);
+		$paginator->setCurrentPageNumber($this->getRequest()->getParam('page', 1))->setItemCountPerPage(15)->setPageRange(3);
+		$this->view->builds = $paginator;
+		if($this->_request->isXmlHttpRequest()) {
+			$this->view->noScript = true;
+			$this->_helper->layout->disableLayout();
 		}
 	}
 	public function itemsAction() {
-		$profile = D3Up_Auth::getInstance()->getProfile();
-		if($profile) {
-			$query = array(
-				"_createdBy" => $profile->createReference(),
-			);
-			if($slot = $this->getRequest()->getParam('slot')) {
-				$possible = D3Up_Mongo_Record_Item::$slotTypeMap;
-				$query['type']['$in'] = $possible[$slot];
-				$this->view->slotType = $slot;
-			}
-			if($type = $this->getRequest()->getParam('type')) {
-				$this->view->itemType = $query['type'] = $type;
-			}
-			$query['method'] = array('$ne' => 'ah');
-			if($sellMethod = $this->getRequest()->getParam('sellMethod')) {
-				$this->view->sellMethod = $query['method'] = $sellMethod;
-			}
-			$sort = array();
-			if($sortAttr = $this->getRequest()->getParam('sort')) {
-				$sortAttrs = explode(",", $sortAttr);
-				foreach($sortAttrs as $k => $v) {
-					switch($v) {
-						// Special Cases
-						case "base_armor":
-							$key = 'stats.armor';
-							break;
-						case "base_dps":
-							$key = 'stats.dps';
-							break;
-						default:
-							$key = 'attrs.'.$v;
-							break;
-					}
-					$query[$key] = array(
-						'$ne' => '',
-						'$exists' => true
-					);				
-					$sort[$key] = -1;
+    $profile = $this->view->profile = Epic_Auth::getInstance()->getProfile();
+    if(!$profile) {
+      return $this->_redirect("/user/login");
+    }
+    if($this->view->profile) {
+    	$query = array(
+    		'_createdBy' => $profile->createReference()
+    	);
+    	$this->view->builds = Epic_Mongo::db('build')->fetchAll($query);
+    }
+		if($slot = $this->getRequest()->getParam('slot')) {
+			$possible = D3Up_Mongo_Record_Item::$slotTypeMap;
+			$query['type']['$in'] = $possible[$slot];
+			$this->view->slotType = $slot;
+		}
+		if($type = $this->getRequest()->getParam('type')) {
+			$this->view->itemType = $query['type'] = $type;
+		}
+		$query['method'] = array('$ne' => 'ah');
+		if($sellMethod = $this->getRequest()->getParam('sellMethod')) {
+			$this->view->sellMethod = $query['method'] = $sellMethod;
+		}
+		$sort = array();
+		if($sortAttr = $this->getRequest()->getParam('sort')) {
+			$sortAttrs = explode(",", $sortAttr);
+			foreach($sortAttrs as $k => $v) {
+				switch($v) {
+					// Special Cases
+					case "base_armor":
+						$key = 'stats.armor';
+						break;
+					case "base_dps":
+						$key = 'stats.dps';
+						break;
+					default:
+						$key = 'attrs.'.$v;
+						break;
 				}
-				$this->view->sortAttrs = $sortAttrs;
-			} else {
-				$sort['_created'] = -1;
+				$query[$key] = array(
+					'$ne' => '',
+					'$exists' => true
+				);				
+				$sort[$key] = -1;
 			}
-			$items = Epic_Mongo::db('item')->fetchAll($query, $sort);			
-			$paginator = Zend_Paginator::factory($items);
-			$paginator->setCurrentPageNumber($this->getRequest()->getParam('page', 1))->setItemCountPerPage(20)->setPageRange(3);
-			$this->view->items = $paginator;
-			if($this->_request->isXmlHttpRequest()) {
-				$this->view->disableScripts = true;
-				$this->_helper->layout->disableLayout();
-			}
-			// $paginator = Zend_Paginator::factory($items);
-			// $paginator->setCurrentPageNumber($this->getRequest()->getParam('page', 1))->setItemCountPerPage(20);
-			// $this->view->items = $items;
+			$this->view->sortAttrs = $sortAttrs;
 		} else {
-			$this->view->notLoggedIn = true;
+			$sort['_created'] = -1;
+			$sort['_scanned'] = -1;
+		}
+		$query['_d3bit'] = array('$exists' => false);
+		$items = Epic_Mongo::db('item')->fetchAll($query, $sort);			
+		$query['_d3bit'] = array('$exists' => true);
+		$this->view->d3bit = Epic_Mongo::db('item')->fetchAll($query, $sort, 20);			
+		$paginator = Zend_Paginator::factory($items);
+		$paginator->setCurrentPageNumber($this->getRequest()->getParam('page', 1))->setItemCountPerPage(20)->setPageRange(3);
+		$this->view->items = $paginator;
+		if($this->_request->isXmlHttpRequest()) {
+			$this->view->disableScripts = true;
+			$this->_helper->viewRenderer('itemsBody');
+			$this->_helper->layout->disableLayout();
 		}
 	}
 	public function shopAction() {
@@ -365,6 +412,30 @@ class UserController extends Epic_Controller_Action
 			$this->view->guides = $paginator;
 		} else {
 			$this->_redirect('/user/login');
+		}
+	}
+	public function deleteItemsAction() {
+		$this->view->profile = $profile = D3Up_Auth::getInstance()->getProfile();
+		if(!$profile) {
+		  $this->_redirect('/user/login');
+		}
+		$query = array(
+			'_createdBy' => $profile->createReference(),
+		);
+		if($ids = $this->getRequest()->getParam("ids")) {
+      $query['id']['$in'] = array_map(function($value) {
+        return (int) $value;
+      }, explode(",", $ids));
+		}
+		$this->view->items = $items = Epic_Mongo::db('item')->fetchAll($query); 		  
+		$this->view->ids = $ids;
+		$this->view->selected = $ids?"the selected":"all of your";
+		if($confirm = $this->getRequest()->getParam('confirm')) {
+      foreach($items as $item) {
+        $item->_createdBy = null;
+        $item->save();
+      }
+      $this->_redirect('/user/items');
 		}
 	}
 } // END class UserController extends Epic_Controller_Action

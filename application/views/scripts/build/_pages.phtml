@@ -4,37 +4,31 @@
 	if($this->class) {
 		$params .= "&class=".$this->class;
 	}
-	if($this->isGeared) {
-		$params .= "&geared=true";
-	}
-	if($this->hasGuide) {
-		$params .= "&guide=true";
-	}
 	if($this->sortBy) {
 		$params .= "&sort=".$this->sortBy;
 	}
+	if($this->selectedActives) {
+		$params .= "&skills=".$this->selectedActives;
+	}
+	if($this->selectedPassives) {
+		$params .= "&passives=".$this->selectedPassives;
+	}
 ?>
-<div id="item-pagination" style="text-align: right">
+<div id="build-pagination" style="text-align: right">
 	<!-- Previous page link -->
 	<?php if (isset($this->previous)): ?>
-		<a href="?page=<?= $this->previous ?><?= $params ?>">&lsaquo;</a>
+		<a class="button" href="?page=1">&laquo;</a>
 	<?php endif; ?>
-
 	<!-- Numbered page links -->
 	<?php foreach ($this->pagesInRange as $page): ?>
 		<?php if ($page != $this->current): ?>
-			<a href="?page=<?= $page ?><?= $params ?>"><?php echo $page; ?></a>
+			<a class="button" href="?page=<?= $page ?><?= $params ?>"><?php echo $page; ?></a>
 		<?php else: ?>
-			<span><?php echo $page; ?></span>
+			<span class="button"><?php echo $page; ?></span>
 		<?php endif; ?>
 	<?php endforeach; ?>
-
-	<!-- Next page link -->
-	<?php if (isset($this->next)): ?>
-		<a href="?page=<?= $this->next ?><?= $params ?>">&rsaquo;</a>
-	<?php endif; ?>
 	<?php if (isset($this->last) && $this->last != $this->next && $this->last != $this->current): ?>
-		<a href="?page=<?= $this->last ?><?= $params ?>">&raquo;</a>
+		<a class="button" href="?page=<?= $this->last ?><?= $params ?>">&raquo;</a>
 	<?php endif; ?>
 </div>
 <?php endif; ?>

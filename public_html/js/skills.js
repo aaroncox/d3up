@@ -23,13 +23,13 @@ var passives = {
 			}
 		},
 		'weapons-master': {
-			'desc': 'Gain a bonus based on the weapon type of your main hand weapon:<br />Swords/Daggers: <span class="skill-highlight">15%</span> increased damage<br />Maces/Axes: <span class="skill-highlight">10%</span> Critical Hit Chance<br />Polearms/Spears: <span class="skill-highlight">10%</span> attack speed<br />Mighty Weapons: <span class="skill-highlight">3</span> Fury per hit',
+			'desc': 'Gain a bonus based on the weapon type of your main hand weapon:<ul><li>Swords/Daggers: <span class="skill-highlight">15%</span> increased damage</li><li>Maces/Axes: <span class="skill-highlight">10%</span> Critical Hit Chance</li><li>Polearms/Spears: <span class="skill-highlight">10%</span> attack speed</li><li>Mighty Weapons: <span class="skill-highlight">3</span> Fury per hit</li></ul>',
 			'effect': {
 				'switch': {
 					'lookup': 'type',
 					'against': 'mainhand',
 					'cases': [
-					// '2h-mace', '2h-axe', 'bow', 'diabo', 'crossbow', '2h-mighty', 'polearm', 'staff', '2h-sword', 'axe', 'ceremonial-knife', 'hand-crossbow', 'dagger', 'fist-weapon', 'mace', 'mighty-weapon', 'spear', 'sword', 'wand'
+					// '2h-mace', '2h-axe', 'bow', 'daibo', 'crossbow', '2h-mighty', 'polearm', 'staff', '2h-sword', 'axe', 'ceremonial-knife', 'hand-crossbow', 'dagger', 'fist-weapon', 'mace', 'mighty-weapon', 'spear', 'sword', 'wand'
 						{
 							"caseOf": "sword|dagger|2h-sword",
 							'effect': {
@@ -291,7 +291,7 @@ var passives = {
 			'desc': 'Whenever you are at full Hatred, movement speed is increased by <span class="skill-highlight">15%</span>.'
 		},
 		'archery': {
-			'desc': 'Gain a bonus based on the weapon type of your main hand weapon:<br />Bow: <span class="skill-highlight">15%</span> increased damage<br />Crossbows: <span class="skill-highlight">50%</span> Critical Hit Damage<br />Hand Crossbows: <span class="skill-highlight">10%</span> Critical Hit Chance',
+			'desc': 'Gain a bonus based on the weapon type of your main hand weapon:<ul><li>Bow: <span class="skill-highlight">15%</span> increased damage</li><li>Crossbows: <span class="skill-highlight">50%</span> Critical Hit Damage</li><li>Hand Crossbows: <span class="skill-highlight">10%</span> Critical Hit Chance</li></ul>',
 			'effect': {
 				'switch': {
 					'lookup': 'type',
@@ -480,7 +480,7 @@ var activeSkills = {
 		'hammer-of-the-ancients~a': {
 			name: 'Hammer of the Ancients - Smash',
 			desc: 'Call forth a massive hammer to smash enemies directly in front of you for 325% weapon damage. Hammer of the Ancients has a 5% increased Critical Hit Chance.',
-			rune: 'Strike a smaller area for 270% weapon damage.',
+			rune: 'Strike a smaller area for 406% weapon damage.',
 			effect: {
 				'cost-fury': 20,
 				'plus-critical-hit-this': 5,
@@ -490,7 +490,7 @@ var activeSkills = {
 		'hammer-of-the-ancients~b': {
 			name: 'Hammer of the Ancients - Rolling Thunder',
 			desc: 'Call forth a massive hammer to smash enemies directly in front of you for 325% weapon damage. Hammer of the Ancients has a 5% increased Critical Hit Chance.',
-			rune: 'Create a shockwave that deals 155% weapon damage to all enemies within 22 yards in front of you.',
+			rune: 'Create a shockwave that deals 275% weapon damage to all enemies within 22 yards in front of you.',
 			effect: {
 				'cost-fury': 20,
 				'plus-critical-hit-this': 5,
@@ -500,7 +500,7 @@ var activeSkills = {
 		'hammer-of-the-ancients~c': {
 			name: 'Hammer of the Ancients - The Devil\'s Anvil',
 			desc: 'Call forth a massive hammer to smash enemies directly in front of you for 325% weapon damage. Hammer of the Ancients has a 5% increased Critical Hit Chance.',
-			rune: 'Create a tremor at the point of impact for 2 seconds that slows the movement speed of enemies by 60%0.',
+			rune: 'Create a tremor at the point of impact for 2 seconds that slows the movement speed of enemies by 60%.',
 			effect: {
 				'cost-fury': 20,
 				'weapon-damage': 325,
@@ -1640,7 +1640,7 @@ var activeSkills = {
 		},
 		'wrath-of-the-berserker': {
 			name: 'Wrath of the Berserker',
-			desc: 'Enter a berserker rage which raises several attributes for 15 seconds.  Critical Hit Chance: 10% Attack Speed: 25% Dodge Chance: 20% Movement Speed: 20%',
+			desc: 'Enter a berserker rage which raises several attributes for 15 seconds.  <ul><li>Critical Hit Chance: 10%</li><li>Attack Speed: 25%</li><li>Dodge Chance: 20%</li><li>Movement Speed: 20%</li></ul>',
 			effect: {
 				'cost-fury': 50,
 				'cooldown': 120,
@@ -1652,7 +1652,7 @@ var activeSkills = {
 		},
 		'wrath-of-the-berserker~a': {
 			name: 'Wrath of the Berserker - Insanity',
-			desc: 'Enter a berserker rage which raises several attributes for 15 seconds.  Critical Hit Chance: 10% Attack Speed: 25% Dodge Chance: 20% Movement Speed: 20%',
+			desc: 'Enter a berserker rage which raises several attributes for 15 seconds.  <ul><li>Critical Hit Chance: 10%</li><li>Attack Speed: 25%</li><li>Dodge Chance: 20%</li><li>Movement Speed: 20%</li></ul>',
 			rune: 'While active your damage is also increased by 100%.',
 			effect: {
 				'cost-fury': 50,
@@ -1666,7 +1666,7 @@ var activeSkills = {
 		},
 		'wrath-of-the-berserker~b': {
 			name: 'Wrath of the Berserker - Arreat\'s Wail',
-			desc: 'Enter a berserker rage which raises several attributes for 15 seconds.  Critical Hit Chance: 10% Attack Speed: 25% Dodge Chance: 20% Movement Speed: 20%',
+			desc: 'Enter a berserker rage which raises several attributes for 15 seconds.  <ul><li>Critical Hit Chance: 10%</li><li>Attack Speed: 25%</li><li>Dodge Chance: 20%</li><li>Movement Speed: 20%</li></ul>',
 			rune: 'Activating Wrath of the Berserker knocks back all enemies within 12 yards and deals 430% weapon damage to them.',
 			effect: {
 				'cost-fury': 50,
@@ -1680,7 +1680,7 @@ var activeSkills = {
 		},
 		'wrath-of-the-berserker~c': {
 			name: 'Wrath of the Berserker - Striding Giant',
-			desc: 'Enter a berserker rage which raises several attributes for 15 seconds.  Critical Hit Chance: 10% Attack Speed: 25% Dodge Chance: 20% Movement Speed: 20%',
+			desc: 'Enter a berserker rage which raises several attributes for 15 seconds.  <ul><li>Critical Hit Chance: 10%</li><li>Attack Speed: 25%</li><li>Dodge Chance: 20%</li><li>Movement Speed: 20%</li></ul>',
 			rune: 'Increases bonus to Dodge Chance to 60%.',
 			effect: {
 				'cost-fury': 50,
@@ -1693,7 +1693,7 @@ var activeSkills = {
 		},
 		'wrath-of-the-berserker~d': {
 			name: 'Wrath of the Berserker - Thrive on Chaos',
-			desc: 'Enter a berserker rage which raises several attributes for 15 seconds.  Critical Hit Chance: 10% Attack Speed: 25% Dodge Chance: 20% Movement Speed: 20%',
+			desc: 'Enter a berserker rage which raises several attributes for 15 seconds.  <ul><li>Critical Hit Chance: 10%</li><li>Attack Speed: 25%</li><li>Dodge Chance: 20%</li><li>Movement Speed: 20%</li></ul>',
 			rune: 'Every 25 Fury gained while Wrath of the Berserker is active adds 1 second to the duration of the effect.',
 			effect: {
 				'cost-fury': 50,
@@ -1706,7 +1706,7 @@ var activeSkills = {
 		},
 		'wrath-of-the-berserker~e': {
 			name: 'Wrath of the Berserker - Slaughter',
-			desc: 'Enter a berserker rage which raises several attributes for 15 seconds.  Critical Hit Chance: 10% Attack Speed: 25% Dodge Chance: 20% Movement Speed: 20%',
+			desc: 'Enter a berserker rage which raises several attributes for 15 seconds.  <ul><li>Critical Hit Chance: 10%</li><li>Attack Speed: 25%</li><li>Dodge Chance: 20%</li><li>Movement Speed: 20%</li></ul>',
 			rune: 'While Wrath of the Berserker is active, Critical Hits have a chance to cause an eruption of blood dealing 155% weapon damage to enemies within 15 yards.',
 			effect: {
 				'cost-fury': 50,
@@ -3693,7 +3693,7 @@ var activeSkills = {
 				'cooldown': 20,
 			},
 		},
-		'seven-sided-strike': {
+		'sevensided-strike': {
 			name: 'Seven-Sided Strike',
 			desc: 'Dash rapidly between nearby enemies, dealing 1777% weapon damage over 7 hits.',
 			effect: {
@@ -3703,10 +3703,10 @@ var activeSkills = {
 				'weapon-damage-for': 7
 			},
 		},
-		'seven-sided-strike~a': {
+		'sevensided-strike~a': {
 			name: 'Seven-Sided Strike - Sudden Assault',
 			desc: 'Dash rapidly between nearby enemies, dealing 1777% weapon damage over 7 hits.',
-			rune: 'Teleport to the target, increasing damage done to 1008% weapon damage over 7 strikes.',
+			rune: 'Teleport to the target, increasing damage done to 2309% weapon damage over 7 strikes.',
 			effect: {
 				'cost-spirit': 50,
 				'cooldown': 30,
@@ -3714,7 +3714,7 @@ var activeSkills = {
 				'weapon-damage-for': 7
 			},
 		},
-		'seven-sided-strike~b': {
+		'sevensided-strike~b': {
 			name: 'Seven-Sided Strike - Several-Sided Strike',
 			desc: 'Dash rapidly between nearby enemies, dealing 1777% weapon damage over 7 hits.',
 			rune: 'Increases the number of strikes to 9.',
@@ -3725,7 +3725,7 @@ var activeSkills = {
 				'weapon-damage-for': 9
 			},
 		},
-		'seven-sided-strike~c': {
+		'sevensided-strike~c': {
 			name: 'Seven-Sided Strike - Pandemonium',
 			desc: 'Dash rapidly between nearby enemies, dealing 1777% weapon damage over 7 hits.',
 			rune: 'Enemies hit by Seven-Sided Strike have a 25% chance to be stunned for 7 seconds by each hit.',
@@ -3737,7 +3737,7 @@ var activeSkills = {
 				'weapon-damage-for': 7
 			},
 		},
-		'seven-sided-strike~d': {
+		'sevensided-strike~d': {
 			name: 'Seven-Sided Strike - Sustained Attack',
 			desc: 'Dash rapidly between nearby enemies, dealing 1777% weapon damage over 7 hits.',
 			rune: 'Reduces the cooldown of Seven-Sided Strike to 23 seconds.',
@@ -3748,7 +3748,7 @@ var activeSkills = {
 				'weapon-damage-for': 7
 			},
 		},
-		'seven-sided-strike~e': {
+		'sevensided-strike~e': {
 			name: 'Seven-Sided Strike - Fulminating Onslaught',
 			desc: 'Dash rapidly between nearby enemies, dealing 1777% weapon damage over 7 hits.',
 			rune: 'Each strike explodes, dealing 254% weapon damage as Holy in a 7 yard radius around the target.',
@@ -4532,7 +4532,7 @@ var activeSkills = {
 			effect: {
 			  'stackable': {
 		      'limit': 5,
-			    'intelligence': 130,
+			    'plus-intelligence-conditional': 130,
 			  },
 				'cost-mana': 58.8,
 				'cooldown': 15,
@@ -4545,7 +4545,7 @@ var activeSkills = {
 			effect: {
 			  'stackable': {
 		      'limit': 5,
-			    'intelligence': 130,
+			    'plus-intelligence-conditional': 130,
 			  },
 				'cost-mana': 58.8,
 				'cooldown': 15,
@@ -4558,7 +4558,7 @@ var activeSkills = {
 			effect: {
 			  'stackable': {
 		      'limit': 5,
-			    'intelligence': 130,
+			    'plus-intelligence-conditional': 130,
 			  },
 				'cost-mana': 58.8,
 				'cooldown': 15,
@@ -4571,7 +4571,7 @@ var activeSkills = {
 			effect: {
 			  'stackable': {
 		      'limit': 5,
-			    'intelligence': 130,
+			    'plus-intelligence-conditional': 130,
 			  },
 				'cost-mana': 58.8,
 				'cooldown': 15,
@@ -4583,10 +4583,8 @@ var activeSkills = {
 			rune: 'Gain 39.2 Mana for every enemy harvested.',
 			effect: {
 			  'stackable': {
-			    'intelligence': {
-			      'value': 130,
-			      'limit': 5
-			    }
+		      'limit': 5,
+			    'plus-intelligence-conditional': 130,
 			  },
 				'cost-mana': 58.8,
 				'cooldown': 15,
@@ -6777,31 +6775,31 @@ var activeSkills = {
 			},
 		},
 	},
-	'enchantress': {
+	'misc-buffs': {
 		'charm': {
 			name: 'Charm',
-			desc: 'Charms an enemy to fight for you for 4 seconds.',
-			effect: {
-				'cooldown': 25,
-			},
+			desc: 'Charms an enemy to fight for you for <span class="skill-highlight">4</span> seconds.',
+      // effect: {
+        // 'cooldown': 25,
+      // },
 		},
 		'forceful-push': {
 			name: 'Forceful Push',
 			desc: 'Summon an Arcane explosion 8 yards around an enemy, dealing 100% weapon damage as Arcane and knocking back all monsters caught within it.',
-			effect: {
-				'cooldown': 10,
-			},
+      // effect: {
+        // 'cooldown': 10,
+      // },
 		},
 		'reflect-missiles': {
 			name: 'Reflect Missiles',
 			desc: 'Place a shield on the Enchantress and her allies that reflects incoming projectiles for 5 seconds.',
-			effect: {
-				'cooldown': 20,
-			},
+      // effect: {
+        // 'cooldown': 20,
+      // },
 		},
 		'powered-armor': {
 			name: 'Powered Armor',
-			desc: 'Enchantress buffs herself and her allies, increasing Armor by 15%. Attackers are slowed by 30% for 3 seconds.',
+			desc: 'Enchantress buffs herself and her allies, increasing Armor by <span class="skill-highlight">15%</span>. Attackers are slowed by <span class="skill-highlight">30%</span> for <span class="skill-highlight">3</span> seconds.',
 			effect: {
 				'plus-armor': 15,
 			},
@@ -6809,21 +6807,21 @@ var activeSkills = {
 		'disorient': {
 			name: 'Disorient',
 			desc: 'Cast a flash of Confusion on a group of enemies in an area, causing them to stumble around disoriented for 2 seconds.',
-			effect: {
-				'cooldown': 45,
-			},
+      // effect: {
+        // 'cooldown': 45,
+      // },
 		},
 		'erosion': {
 			name: 'Erosion',
 			desc: 'Conjures a pool of energy that deals 50% weapon damage as Arcane  per second. Affected enemies take an extra 15% damage from all attacks for 3 seconds.',
-			effect: {
-				'cooldown': 15,
-				'weapon-damage': 50,
-			},
+      // effect: {
+        // 'cooldown': 15,
+        // 'weapon-damage': 50,
+      // },
 		},
 		'focused-mind': {
 			name: 'Focused Mind',
-			desc: 'An aura that increases attack speed by 3% for allies within 40 yards.',
+			desc: 'An aura that increases attack speed by <span class="skill-highlight">3%</span> for allies within 40 yards.',
 			effect: {
 				'plus-attack-speed': 3,
 			},
@@ -6831,29 +6829,27 @@ var activeSkills = {
 		'mass-control': {
 			name: 'Mass Control',
 			desc: 'The Enchantress lobs a bulb of magical energy at the player that will hex all enemies within 8 yards into chickens for 5 seconds. Hexed enemies are unable to perform offensive actions.',
-			effect: {
-				'cooldown': 60,
-			},
+      // effect: {
+        // 'cooldown': 60,
+      // },
 		},
-	},
-	'templar': {
 		'heal': {
 			name: 'Heal',
 			desc: 'Heals you or the Templar for 4651.46 Life.',
-			effect: {
-				'cooldown': 30,
-			},
+      // effect: {
+        // 'cooldown': 30,
+      // },
 		},
 		'intervene': {
 			name: 'Intervene',
 			desc: 'Taunts enemies attacking the hero for 3 seconds when the hero is below 50% Life.',
-			effect: {
-				'cooldown': 60,
-			},
+      // effect: {
+        // 'cooldown': 60,
+      // },
 		},
 		'loyalty': {
 			name: 'Loyalty',
-			desc: 'Regenerates 155.05 Life per second for you and the Templar.',
+			desc: 'Regenerates <span class="skill-highlight">155.05</span> Life per second for you and the Templar.',
 		},
 		'intimidate': {
 			name: 'Intimidate',
@@ -6862,67 +6858,65 @@ var activeSkills = {
 		'charge': {
 			name: 'Charge',
 			desc: 'Charges a target, dealing 50% weapon damage and stunning all enemies within 8 yards for 2 seconds.',
-			effect: {
-				'cooldown': 30,
-			},
+      // effect: {
+        // 'cooldown': 30,
+      // },
 		},
 		'onslaught': {
 			name: 'Onslaught',
 			desc: 'Delivers a massive blow to an enemy for 200% weapon damage.',
-			effect: {
-				'cooldown': 15,
-				'weapon-damage': 200,
-			},
+      // effect: {
+        // 'cooldown': 15,
+        // 'weapon-damage': 200,
+      // },
 		},
 		'inspire': {
 			name: 'Inspire',
-			desc: 'Increase resource generation for all allies that the Templar is following. Mana: 2 per second. Arcane Power: 0.5 per second. Hatred: 1 per second. Fury: 8% generated. Spirit: 12% generated.',
+			desc: 'Increase resource generation for all allies that the Templar is following. <ul><li>Mana: <span class="skill-highlight">2</span> per second.</li><li>Arcane Power: <span class="skill-highlight">0.5</span> per second.</li><li>Hatred: <span class="skill-highlight">1</span> per second.</li><li>Fury: <span class="skill-highlight">8%</span> generated.</li><li>Spirit: <span class="skill-highlight">12%</span> generated.</li></ul>',
 		},
 		'guardian': {
 			name: 'Guardian',
 			desc: 'Rush to the aid of wounded ally, knocking back enemies within 15 yards and healing the wounded ally for 4651.46 Life.',
-			effect: {
-				'cooldown': 30,
-			},
+      // effect: {
+        // 'cooldown': 30,
+      // },
 		},
-	},
-	'scoundrel': {
 		'crippling-shot': {
 			name: 'Crippling Shot',
 			desc: 'Ranged attack that slows the target by 60% for 3 seconds.',
-			effect: {
-				'cooldown': 6,
-			},
+      // effect: {
+        // 'cooldown': 6,
+      // },
 		},
 		'poison-bolts': {
 			name: 'Poison Bolts',
 			desc: 'Ranged attack which deals 40% weapon damage and an additional 40% weapon damage as Poison over 3 seconds.',
-			effect: {
-				'cooldown': 6,
-				'weapon-damage-for': 3,
-			},
+      // effect: {
+        // 'cooldown': 6,
+        // 'weapon-damage-for': 3,
+      // },
 		},
 		'dirty-fighting': {
 			name: 'Dirty Fighting',
 			desc: 'Blinds enemies in front of the Scoundrel for 3 seconds.',
-			effect: {
-				'cooldown': 30,
-			},
+      // effect: {
+        // 'cooldown': 30,
+      // },
 		},
 		'vanish': {
 			name: 'Vanish',
 			desc: 'The Scoundrel vanishes in a cloud of smoke when injured, reappearing after 5 seconds. While vanished, he will heal himself for 15504.85 Life.',
-			effect: {
-				'cooldown': 30,
-			},
+      // effect: {
+        // 'cooldown': 30,
+      // },
 		},
 		'powered-shot': {
 			name: 'Powered Shot',
 			desc: 'Powerful ranged attack that explodes on impact, dealing 25% weapon damage as Arcane to targets within 6 yards and has a 50% chance to Stun targets for 2 seconds.',
-			effect: {
-				'cooldown': 20,
-				'chance-stun': 50,
-			},
+      // effect: {
+        // 'cooldown': 20,
+        // 'chance-stun': 50,
+      // },
 		},
 		'multishot': {
 			name: 'Multishot',
@@ -6930,16 +6924,34 @@ var activeSkills = {
 		},
 		'hysteria': {
 			name: 'Hysteria',
-			desc: 'Whenever you or the Scoundrel land a Critical Hit, you both will go into hysterics, increasing all damage done by 10% for 3 seconds. This effect cannot occur more than once every 6 seconds.',
+			desc: 'Whenever you or the Scoundrel land a Critical Hit, you both will go into hysterics, increasing all damage done by <span class="skill-highlight">10%</span> for <span class="skill-highlight">3</span> seconds. This effect cannot occur more than once every 6 seconds.',
+			'effect': {
+        'plus-damage-conditional': 10
+			}
 		},
 		'anatomy': {
 			name: 'Anatomy',
-			desc: 'Increases Critical Hit Chance by 3% for the Scoundrel and his allies.',
+			desc: 'Increases Critical Hit Chance by <span class="skill-highlight">3%</span> for the Scoundrel and his allies.',
 			effect: {
 				'plus-crit-hit': 3,
 			},
 		},
-	},
+	  'protection-shrine': {
+	    name: 'Protection Shrine',
+	    desc: 'Reduces damage taken by <span class="skill-highlight">25%</span>.',
+	    effect: {
+	      'plus-damage-reduce': 25
+	    }
+	  },
+	  'frenzy-shrine': {
+	    name: 'Frenzy Shrine',
+	    desc: 'Increases attack speed by <span class="skill-highlight">25%</span> and critical hit damage by <span class="skill-highlight">25%</span>.',
+	    effect: {
+	      'plus-attack-speed': 25,
+	      'critical-hit-damage': 25
+	    }
+	  },
+	}
 };
 var td = [];
 td['strength'] = '+VVV Strength';

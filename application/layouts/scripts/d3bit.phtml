@@ -1,0 +1,161 @@
+<!doctype html>
+<head>
+  <script type="text/javascript" src="http://code.jquery.com/jquery-1.7.2.js"></script>
+	<?= $this->headCss()
+			->appendStylesheet("/css/d3bit.css");
+	?>	
+	<?= $this->headJs()
+			->appendFile("/js/json3.js")
+			->appendFile("/js/d3up.js")
+			->appendFile("/js/underscore.js")
+			->appendFile("/js/skills.js")
+			->appendFile("/js/unmin/calcv2.js")
+			->appendFile("/js/unmin/itembuilder.js")
+	?>
+</head>
+<body>
+  <div class="d3bit-card">
+    <div class="logo"><img src="http://beta.d3up.com/images/logo.jpg"></div>
+    <h3><a href="#" onclick="window.external.OpenLink('http://d3up.com')">D3Up.com</a> Item Comparision</h3>
+    <p>Using Build: <a href="#" onclick="window.external.OpenLink('http://beta.d3up.com/b/<?= $this->build->id ?>')"><?= $this->build->name ?></a></p>
+    <select class="compare-slot">
+      <? foreach($this->slots as $slot): ?>
+        <option value='<?=$slot?>'><?= $slot ?></option>
+      <? endforeach ?>
+    </select>
+    <div class="compare-diff">
+      <h3>Error: Couldn't load</h3>
+      <p><a href=''></a></p>
+    </div>
+    <div id='simulate-item'>
+      test
+    </div>
+  </div>
+<script type="text/javascript" charset="utf-8">
+<? if($this->build->passives && $this->build->passives != "null" && count($this->build->passives)): ?>
+var activePassives = <?= json_encode($this->build->passives->export()); ?>;
+<? else: ?>
+var activePassives = [];
+<? endif; ?>
+<? if($this->build->actives && $this->build->actives != "null" && count($this->build->actives)): ?>
+var activeActives = <?= json_encode($this->build->actives->export()); ?>;
+<? else: ?>
+var activeActives = [];
+<? endif; ?>  
+var newItem = <?= json_encode($this->item->cleanExport()) ?>,
+    slot = $(".compare-slot"),
+    newItemSlot = slot.val(),
+    calc = new d3up.BuildCalculator,
+    builder = new d3up.ItemBuilder,
+    items = <?= $this->build->equipment->getGearJson() ?>,
+    heroClass = '<?= $this->build->class ?>',
+    paragonLevel = <?= $this->build->paragon?:0 ?>,
+    activePassiveSkills = {};
+    
+// Set the Name Field
+// builder.setNameInput($("#name"));
+// Set the Quality Selector
+// builder.setQualitySelect($("#quality"));
+// Set the Type Selector
+// builder.setItemTypeSelect($("#itemType"));
+// Set the Attribute Selector
+// builder.setAttributeSelect($("#attributes"));
+// Set the Socket selector
+builder.setSocketSelect($("#sockets"));
+// Set the Item Preview
+builder.setItemPreview($("#simulate-item"));
+builder.setItem(slot.val(), newItem);
+// Initialize the Item Builder
+builder.init();
+builder.setChangeCallback(calcDiff);
+// console.log(newItem);
+builder.updatePreview();
+slot.bind('change', function() {
+  newItemSlot = $(this).val();
+  calcDiff();
+});
+function calcDiff(itemBuilder) {
+  calc.setParagonLevel(paragonLevel); // This has to happen before init, need to fix that.
+  calc.init();
+  _.each(items, function(data,slot) {
+  	calc.setItem(slot, data);
+  });  	
+  _.each(activePassives, function(v,k) {
+    activePassiveSkills[k] = passives[heroClass][v];
+  });
+  calc.setClass(heroClass);
+  calc.setPassives(activePassiveSkills);
+  var stats = calc.run(),
+      oldStats = _.extend({}, stats);
+  var oldItem = items[newItemSlot];
+  calc.init();
+  calc.setClass(heroClass);
+  calc.setPassives(activePassiveSkills);
+  // Add the new item
+  // d3up.log(newItem, newItemSlot);
+  _.each(items, function(data,slot) {
+  	calc.setItem(slot, data);
+  });  	
+  calc.removeItem(newItemSlot);
+  calc.setPassives(activePassiveSkills);
+  calc.parseItem(builder.getItem(), newItemSlot);
+  // Get new stats
+  var newStats = calc.run();
+  // calculate the diff
+  var diff = calc.diff(oldStats, newStats);
+  // Debug the Diff
+  // d3up.log(oldStats, newStats);
+  // d3up.log(calc.diff(oldStats, newStats));
+  $(".compare-diff").empty();
+  // if(!hideHelpers) {
+   var h4 = $('<tr class="header "><th colspan="10" class="button"></span>Comparison Results</th></tr>'),
+       vsRow = $("<td colspan='10'>").append(calc.getD3BitItemLink(oldItem), " vs ", calc.getD3BitItemLink(newItem));
+    // if(oldItemOH) {
+    //  oldLabel.append(" + Offhand: ", calc.getItemLink(oldItemOH));
+    // }      
+  // }
+  var table = $("<table class='statistics-table' id='compare-table'/>"),
+      head = $("<thead>").append(h4, vsRow);
+      headers = $("<tr>").append("<th>Stat</th><th>Diff</th><th>Old</th><th>New</th>"),
+      body = $("<tbody>").append(headers);
+  table.append(head, body);
+  $.each(diff, function(k,v) {
+   var data = v.split("|"),
+       diffVal = data[1],
+       diffName = data[0],
+       row = $("<tr/>");
+   row.append($("<td/>").html(diffName));
+   var oldStat = Math.round(oldStats[k] * 100) / 100,
+       newStat = Math.round(newStats[k] * 100) / 100;
+   if(oldStat > 99999) {
+     oldStat = Math.round(oldStat / 10) / 100 + "k";
+   }
+   if(newStat > 99999) {
+     newStat = Math.round(newStat / 10) / 100 + "k";
+   }
+   if(diffVal > 0) {
+     row.append($("<td class='diff'/>").html("+"+diffVal).addClass("pos"));
+     row.append($("<td class='neg'/>").html(oldStat));
+     row.append($("<td class='pos'/>").html(newStat));       
+   } else {
+     row.append($("<td class='diff'/>").html(diffVal).addClass("neg"));
+     row.append($("<td class='pos'/>").html(oldStat));
+     row.append($("<td class='neg'/>").html(newStat));       
+   }
+   body.append(row);
+  });
+  // table.append("<tr><td colspan='10'><span class='pos'>Green = Increase</span> / <span class='neg'>Red = Decrease</span></td></tr>");
+  // } else {
+  //   table.append("<tr><td colspan='10' style='text-align: center; font-weight: bold;'>These items are identical.</td></tr>");
+  // }
+  // items.find("div a").each(function() {
+  //   $(this).bindTooltip();
+  // });     
+  $(".compare-diff").append(table);  
+}
+calcDiff();
+$(".statistics-table .header th").append(slot);
+
+</script>
+</body>
+</html>

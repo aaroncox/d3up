@@ -1,32 +1,34 @@
-<div class="ui-widget ui-corner-all ui-widget-content ui-helper-clearfix" style="padding: 20px">
-	<? if($this->record->_type == 'item'): ?>
-		<div style="float: right; width: 424px; margin: 10px;">
-			<?= $this->displayItem($this->record) ?>
-		</div>
-	<? endif ?>
-	<? if($this->record->_type == 'build'): ?>
-		<div style="float: right; width: 200px; border: 1px solid #777; padding: 10px; margin: 10px;">
-			<p><b>Build Name</b>: <span class="skill-highlight"><?= $this->record->name ?></span></p>
-			<p><b>Class</b>: <span class="skill-highlight"><?= ucwords(str_replace("-", " ", $this->record->class)) ?></span></p>
-			<p><b>Original Creator</b>: <span class="skill-highlight"><?= $this->record->_createdBy->username ?></span></p>
-		</div>
-	<? endif; ?>
-	<h2 style="color: #00C800">Are you sure you want to make a copy of this?</h2>
-	<p style="font-size: 1.2em; line-height: 1.6em">
-		Making a copy of a <strong><?= $this->record->_type ?></strong> will make a brand new copy
-		<? if($this->record->_type == 'build'): ?>
-		, including all of the skills, passives and gear, 
-		<? endif ?>
-		that you will own and be able to edit. 
-		</p>
-		<? if($this->record->_type == 'build'): ?>
-			<p>Keep in mind, this is going to copy all of the items currently equipped into your "My Items", so you have a copy of each one for editing yourself.</p>
-		<? endif; ?>
-	</p>
-	<p>
-		Please confirm your decision:
-	</p>
-	<p>
-		<a href="?confirm=true" class='ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only' style="padding: 5px; width: 450px">Yes, make a copy.</a>
-	</p>
+<div class='content-page'>
+  <div class='page ui-helper-clearfix'>
+  	<? if($this->record->_type == 'item'): ?>
+  		<div style="float: right; width: 424px; margin: 10px;">
+  			<?= $this->displayItem($this->record) ?>
+  		</div>
+  	<? endif ?>
+  	<? if($this->record->_type == 'build'): ?>
+  		<div style="float: right; width: 200px; border: 1px solid #777; padding: 10px; margin: 10px;">
+  			<p><b>Build Name</b>: <span class="skill-highlight"><?= $this->record->name ?></span></p>
+  			<p><b>Class</b>: <span class="skill-highlight"><?= ucwords(str_replace("-", " ", $this->record->class)) ?></span></p>
+  			<p><b>Original Creator</b>: <span class="skill-highlight"><?= $this->record->_createdBy->username ?></span></p>
+  		</div>
+  	<? endif; ?>
+  	<h2 style="color: #00C800">Are you sure you want to make a copy of this?</h2>
+  	<p style="font-size: 1.2em; line-height: 1.6em">
+  		Making a copy of a <strong><?= $this->record->_type ?></strong> will make a brand new copy
+  		<? if($this->record->_type == 'build'): ?>
+  		, including all of the skills, passives and gear, 
+  		<? endif ?>
+  		that you will own and be able to edit. 
+  		</p>
+  		<? if($this->record->_type == 'build'): ?>
+  			<p>Keep in mind, this is going to copy all of the items currently equipped into your "My Items", so you have a copy of each one for editing yourself.</p>
+  		<? endif; ?>
+  	</p>
+  	<p>
+  		Please confirm your decision:
+  	</p>
+  	<p>
+  		<a href="?confirm=true" class='button' style="padding: 5px; width: 450px">Yes, make a copy.</a>
+  	</p>
+  </div>
 </div>

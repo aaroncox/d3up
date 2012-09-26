@@ -1,6 +1,6 @@
-<div class="home inline-flow">
+<div class="home content-page inline-flow">
 	<?= $this->render("./post/types/".$this->post->_type.".phtml") ?>
-	<div id="disqus_thread" class="ui-widget ui-widget-content ui-corner-all" style="margin-top: 20px; padding: 10px"></div>
+	<div id="disqus_thread" class="page" style="margin-top: 20px; padding: 10px"></div>
 	<script type="text/javascript">
 	    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
 	    var disqus_shortname = 'd3up'; // required: replace example with your forum shortname
@@ -16,6 +16,5 @@
 	<a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
 </div>
 <div class="info inline-flow">
-	<?= $this->render("./post/_updates.phtml")?>
 	<?= $this->render("./index/_sidebar.phtml")?>
 </div>

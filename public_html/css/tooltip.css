@@ -67,6 +67,11 @@
 .d3-item .item p.stats {
 	margin-left:70px;
 	margin-bottom: 5px;
+	width: auto;
+	text-align: left;
+}
+.d3-item .item p.stats {
+	display: block;	
 }
 .d3-item .item .stats-primary {
 	margin-bottom: 10px;

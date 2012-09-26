@@ -1,100 +1,40 @@
-<div class="home inline-flow">
-	<div class="homepage-widget recent-builds">
-		<ul>
-			<li><h2 class="ui-table-header">Find Diablo 3 Guides</h2></li>
-			<!-- <li><a href="#build-guides">Guides</a></li> -->
-			<li><a href="#guide-recent">Recent</a></li>
-			<li><a href="#guide-views">Views</a></li>
-			<li><a href="#guide-votes">Votes</a></li>
-		</ul>
-		<div id="guide-views">
-			<h3 class="table-header">Most Viewed Guides</h3>
-			<?= $this->partial("./index/_guide-table.phtml", array('guides' => $this->viewsGuides))?>
-		</div>
-		<div id="guide-votes">
-			<h3 class="table-header">Highest Voted Guides</h3>
-			<?= $this->partial("./index/_guide-table.phtml", array('guides' => $this->votesGuides))?>
-		</div>
-		<div id="guide-recent">
-			<h3 class="table-header">Recently created Guides</h3>
-			<?= $this->partial("./index/_guide-table.phtml", array('guides' => $this->recentGuides))?>
-		</div>
-		<h4>Looking for more guides? Check out the <a href="/guide/">Guides</a> page.</h4>
-	</div>
-	<div class="homepage-widget recent-builds">
-		<ul>
-			<li><h2 class="ui-table-header">Find Character Builds</h2></li>
-			<!-- <li><a href="#build-guides">Guides</a></li> -->
-			<li><a href="#build-recent">Recent</a></li>
-			<li><a href="#build-views">Views</a></li>
-			<li><a href="#build-votes">Votes</a></li>
-		</ul>
-		<div id="build-views">
-			<h3 class="table-header">Most Viewed Character Builds</h3>
-			<?= $this->partial("./index/_build-views.phtml", array('builds' => $this->viewsBuilds))?>
-		</div>
-		<div id="build-votes">
-			<h3 class="table-header">Highest Voted Character Builds</h3>
-			<?= $this->partial("./index/_build-votes.phtml", array('builds' => $this->votesBuilds))?>
-		</div>
-		<div id="build-recent">
-			<h3 class="table-header">Recently created Builds</h3>
-			<?= $this->partial("./index/_build-table.phtml", array('builds' => $this->recentBuilds))?>
-		</div>
-		<h4>Looking for more? Check out the <a href="/build/">Character Builds</a> page.</h4>
-	</div>
-	<div class="homepage-widget recent-items">
-		<ul>
-			<li><h2 class="ui-table-header">Find Items</h2></li>
-			<li><a href="#item-recent">Recently Created</a></li>
-			<li><a href="#item-sales">Recent Sales</a></li>
-		</ul>
-		<div id="item-recent">
-			<h3 class="table-header">Recently Created Items</h3>
-			<?= $this->partial("./index/_item-table.phtml", array('items' => $this->recentItems))?>
-		</div>
-		<div id="item-sales">
-			<h3 class="table-header">Recently Sold Items</h3>
-			<?= $this->partial("./index/_item-sales.phtml", array('items' => $this->recentSales))?>
-		</div>
-		<h4>Looking for more? Check out the <a href="/items/">Item Search</a> page.</h4>
-	</div>
-	<script type="text/javascript">
-		$(".recent-builds, .recent-items").tabs();
-	</script>
+<div class="content-sidebar">
+	<?= $this->render("./index/_sidebar.phtml") ?>
 </div>
-<div class="info inline-flow">
-	<?= $this->render("./post/_updates.phtml")?>
-	<?= $this->render("./index/_sidebar.phtml")?>
-	<div class='ui-widget ui-widget-content ui-corner-all'>
-		<h3>Statistics</h3>
-		<ul>
-			<li><?= $this->prettyStat($this->counts['guides'], 1) ?> <a href="/guide">Guides</a></li>
-			<li><?= $this->prettyStat($this->counts['items'], 1) ?> <a href="/items">Items</a></li>
-			<li><?= $this->prettyStat($this->counts['builds'], 1) ?> <a href="/build/">Character Builds</a></li>
-			<li><?= $this->prettyStat($this->counts['sales'], 1) ?> <a href="/item/sales-history">Sales</a></li>
-		</ul>
-	</div>
+<div class="home content-page with-sidebar ui-helper-clearfix">
+  <?= $this->render("./index/widgets/video-builds.phtml") ?>
+  <?= $this->render("./index/widgets/guides-featured.phtml") ?>
+  <?= $this->render("/index/widgets/guides.phtml")?>
+  <table id="recent-builds" class="d3up-table">
+    <thead>
+      <tr>
+        <td colspan="10"><h5 style="color: #B18135">Recent Builds</h5></td>
+      </tr>
+    </thead>
+    <?= $this->render("./build/_build-table.phtml")?>
+  </table>
 </div>
-<script type="text/javascript">
-	$(function() {
-		$("td.skills img").each(function() {
-			if($(this).data("id") && $(this).data("id") != "undefined") {
-				var skill = activeSkills[$(this).attr("data-class")][$(this).attr("data-id")];
-				if(!skill) {
-					skill = passives[$(this).attr("data-class")][$(this).attr("data-id")];
-					skill.name = $(this).attr("data-id").replace(/\-/g," ").capitalize();
-				}
-				var tooltip = skill.desc;
-				if(skill) {
-					if(skill.rune) {
-						tooltip = tooltip + "<br/><br/>" + skill.rune;
-					}
-					$(this).attr("data-name", skill.name);
-					$(this).attr("data-tooltip", tooltip);
-					$(this).bindSkilltip();				
-				}				
-			}
-		});
-	});
+<script type="text/javascript" charset="utf-8">
+  $(function() {
+    $("td.skills img").each(function() {
+  		if($(this).data("id") && $(this).data("id") != "undefined") {
+  			var skill = activeSkills[$(this).attr("data-class")][$(this).attr("data-id")];
+  			if(!skill) {
+  				skill = passives[$(this).attr("data-class")][$(this).attr("data-id")];
+  				if(skill) {
+  					skill.name = $(this).attr("data-id").replace(/\-/g," ").capitalize();					  
+  				}
+  			}
+  			if(skill) {
+  				var tooltip = skill.desc;
+  				if(skill.rune) {
+  					tooltip = tooltip + "<br/><br/>" + skill.rune;
+  				}
+  				$(this).attr("data-name", skill.name);
+  				$(this).attr("data-tooltip", tooltip);
+  				$(this).bindSkilltip();				
+  			}				
+  		}
+  	});    
+  });
 </script>

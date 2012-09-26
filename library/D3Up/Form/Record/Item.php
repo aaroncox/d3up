@@ -120,7 +120,7 @@ class D3Up_Form_Record_Item extends Epic_Form
 				'2h-mace' => 'Two-Handed Mace',
 				'2h-axe' => 'Two-Handed Axe',
 				'bow' => 'Bow',
-				'diabo' => 'Diabo',
+				'daibo' => 'Daibo',
 				'crossbow' => 'Crossbow',
 				'2h-mighty' => 'Two-Handed Mighty Weapon',
 				'polearm' => 'Polearm',
@@ -233,6 +233,7 @@ class D3Up_Form_Record_Item extends Epic_Form
 			$item->sockets = null;
 		}
 		// Determine and set Item Specific Values (Armor vs Weapons)
+		var_dump($this->_allData);
 		switch($this->itemType->getValue()) {
 			case "shield":
 				$stats = array(
@@ -266,7 +267,7 @@ class D3Up_Form_Record_Item extends Epic_Form
 			case "2h-mace":
 			case "2h-axe":
 			case "bow":
-			case "diabo":
+			case "daibo":
 			case "crossbow":
 			case "2h-mighty":
 			case "polearm":
@@ -283,7 +284,7 @@ class D3Up_Form_Record_Item extends Epic_Form
 			case "sword":
 			case "wand":
 				$stats = array(
-					'dps' => (float) $this->_allData['stat_dps'],
+					'dps' => (float) ($this->_allData['stat_damage-min'] + $this->_allData['stat_damage-max']) / 2 * $this->_allData['stat_speed'],
 					'speed' => (float) $this->_allData['stat_speed'],
 					'damage' => array(
 						'min' => (int) $this->_allData['stat_damage-min'],

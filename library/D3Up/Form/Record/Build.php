@@ -82,7 +82,6 @@ class D3Up_Form_Record_Build extends Epic_Form
 		
 		$this->addElement("checkbox", "private", array(
 			'label' => 'Private?',
-			'description' => 'Check this to make your build private',
 			'tabindex' => 25,
 		));
 
@@ -109,11 +108,11 @@ class D3Up_Form_Record_Build extends Epic_Form
 			'profileUrl' => $build->profileUrl,
 		));
 		
-		if($this->isNewRecord()) {
+		if($build->isNewDocument()) {
 			$this->setButtons(array("save" => "Create Build"));					
 		} else {
 			$this->class->setValue($build->class);
-			$this->setButtons(array("save" => "Create Build"));		
+			$this->setButtons(array("save" => "Save Build"));		
 		}
 
 	}

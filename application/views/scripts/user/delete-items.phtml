@@ -1,0 +1,20 @@
+<div class="content-page">
+  <div class="form ui-helper-clearfix">
+  	<h2 style="color: #C80000">Are you sure you want to delete <?= $this->selected ?> items?</h2>
+  	<p style="font-size: 1.2em; line-height: 1.6em">
+  	  Deleting items will remove them from all item selection menus on D3Up.com, but it will NOT remove them from your build's current equipment.
+  	</p>
+  	<div class='notice'>
+      Item's Selected for Deletion: <?= count($this->items) ?>
+    </div>
+  	<p>
+  		Please confirm your choice:
+  	</p>
+  	<p>
+  		<a href="?confirm=true&amp;ids=<?= $this->ids ?>" class='button' style="padding: 5px; width: 450px">Yes, remove them.</a>
+  	</p>
+  	<p>
+  		<a href="/user/items" class='button' style="padding: 5px; width: 450px">No, keep them</a>
+  	</p>
+  </div>
+</div>

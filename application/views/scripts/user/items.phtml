@@ -1,29 +1,43 @@
-<? if($this->notLoggedIn): ?>
-	<p>This feature is only available to logged in users due to the nature of the application.</p>
-	<p>When logged in, the database will save the items you create and associate them to your account for ease of access.</p>
-	<p>Interested? Feel free to wander over to the <a href="/user/register">registration page</a> to create an account, or if you already have one, you can <a href="/user/login">login</a>.</p>
-<? else: ?>
-<? $profile = Epic_Auth::getInstance()->getProfile(); ?>
-	<? if(!$this->disableScripts): ?>
-	<?
-		$this->headTitle('My Items'); 
-		if($profile) {
-			$query = array(
-				'_createdBy' => $profile->createReference()
-			);
-			$builds = Epic_Mongo::db('build')->fetchAll($query);
-		}
-	?>
-	<div class="item-list">
+<? 
+    $this->headTitle('My Items'); 
+?>
+  <div class="content-sidebar">
+    <table class='d3up-table d3bit-scanned'>
+      <thead>
+        <tr>
+          <th colspan='2'><a href="http://d3bit.com"><img src="/images/d3bit.png"></a></th>
+        </tr>
+        <tr><th colspan='2'>Recently Scanned Items</th></tr>
+        <tr>
+          <td colspan='2'><p>These are the most recently scanned items using the <a href="http://d3bit.com">D3Bit.com Tooltip Scanner</a> for your Build.</p></td>
+      </thead>
+      <tbody>
+        <? if(count($this->d3bit)) :?>
+        <? foreach($this->d3bit as $item): ?>
+          <tr class='button-bar'>
+            <td class='name'>
+              <div class="item-stat">
+                <span class="value"><?= $this->itemLink($item)?></span>
+                <span class="stat">Scanned: <?= $this->timeAgo($item->_created) ?></span>
+              </div>
+            </td>
+            <td class='single-control'><a class='button' href='/i/<?= $item->id ?>/convert'>Copy to My Items</a></td>
+          </tr>
+        <? endforeach ?>
+        <? else: ?>
+          <tr>
+            <td colspan='4'>
+              <h2 style="margin-top: 0">No Items Found!</h2>
+              <p>This panel updates with items that you've scanned and compared to your builds using the <a href="http://d3bit.com">D3Bit.com Tooltip Scanner</a>.</p>
+              <p>To get started, download the <a href="http://d3bit.com">D3Bit Client</a> and enter your D3Up.com username in the appropriate field. Each time you analyze an item against one of your builds, it will appear here.</p>
+            </td>
+          </tr>
+        <? endif ?>
+      </tbody>
+    </table>
+  </div>
+  <div class="home content-page with-sidebar ui-helper-clearfix">
 		<div class="filters">
-			<? if($profile): ?>
-			<select id="buildSelect" data-placeholder="Compare Items against build...">
-				<option value=""></option>
-				<? foreach($builds as $build): ?>
-					<option value="<?= $build->id ?>"><?= $build->name ?></option>
-				<? endforeach ?>
-			</select>
-			<? endif; ?>
 			<select data-placeholder="Filter by Slot" id="slotType" name="slotType" style="width: 150px">
 		    <option label="" value=""></option>
 				<? foreach(D3Up_Mongo_Record_Item::$slotTypeMap as $slot => $type): ?>
@@ -65,7 +79,7 @@
 		    <option label="Two-Handed Mace" value="2h-mace">Two-Handed Mace</option>
 		    <option label="Two-Handed Axe" value="2h-axe">Two-Handed Axe</option>
 		    <option label="Bow" value="bow">Bow</option>
-		    <option label="Diabo" value="diabo">Diabo</option>
+		    <option label="Daibo" value="daibo">Daibo</option>
 		    <option label="Crossbow" value="crossbow">Crossbow</option>
 		    <option label="Two-Handed Mighty Weapon" value="2h-mighty">Two-Handed Mighty Weapon</option>
 		    <option label="Polearm" value="polearm">Polearm</option>
@@ -88,7 +102,7 @@
 			</select>
 		</div>
 		<h2 class="table-header">My Items</h2>
-		<table id="recent-items" class="d3up-table">
+		<table id="my-items" class="d3up-table">
 			<thead>
 				<tr>
 					<td colspan="100" class="sorting">
@@ -216,138 +230,11 @@
 					</td>
 				</tr>
 			</thead>
-	<? endif; ?>
-	<? if(!count($this->items)): ?>
-		<tbody>
-			<tr>
-				<td colspan="10">	
-					<h3 style="text-align: center; color: #f00">No Items found with your search parameters</h3>
-				</td>
-			</tr>
-		</tbody>
-		<? exit; ?>
-	<? endif ?>
-			<tbody>
-				<tr>
-					<td colspan="10" class="item-paginator td-paginator">
-						<?php echo $this->paginationControl($this->items,
-						                                    'Elastic',
-						                                    'item/_pages.phtml',
-																								array(
-																									'itemType' => $this->itemType,
-																									'sortAttrs' => $this->sortAttrs,
-																									'slotType' => $this->slotType,
-																								)); ?>
-					</td>
-				</tr>
-				<? foreach($this->items as $item): ?>
-				<tr class="item-row" id="item-<?= $item->id ?>">
-						<td class="name">
-							<div class="item-stat">
-								<span class="value">
-									<?= $this->itemLink($item) ?>
-								</span>
-							<? if($item->stats): ?>
-								<span class="stat">
-								<? if($item->stats->armor): ?>
-									<?= $item->stats->armor . " Armor"?>
-								<? endif; ?>
-								<? if($item->stats->dps): ?>
-									<?= $item->stats->dps." dps" ." @ ".$item->stats->speed." A/S" ?>
-								<? endif; ?>
-								</span>
-							<? endif; ?>
-						</td>
-						<?
-							if($item->stats) {
-								$stats = $item->stats->export();								
-							}
-							$socketAttrs = array();
-							$attrs = $item->attrs->getAttributesArray($item->type);
-							$export = $item->cleanExport();
-							if(isset($export['socketAttrs'])) {
-								$socketAttrs = $export['socketAttrs'];
-							}
-							// Put whatever we're filtering in first 
-							if($this->sortAttrs) {
-								foreach($this->sortAttrs as $k => $v) {
-									switch($v) {
-										case "base_armor":
-											$val = $stats['armor'];
-											break;
-										case "base_dps":
-											$val = $stats['dps'];
-											break;
-										default:
-											$val = $attrs[$v];
-											break;
-									}
-									if(isset($socketAttrs[$k])) {
-										$val += $socketAttrs[$k];
-									}
-									unset($attrs[$v]);
-									echo "<td class='sorted'>".$this->itemStat($v, $val, $item->rating[$v])."</td>";							
-								}
-							}
-							$count = count($this->sortAttrs);
-						?>
-						<? foreach($attrs as $k => $v): ?>
-							<? 
-								$count++;
-								$val = $v;
-								if(isset($socketAttrs[$k])) {
-									$val += $socketAttrs[$k];
-								}
-							?>
-							<? if($count > 6) { continue; } ?>
-							<td><?= $this->itemStat($k, $val, $item->rating[$k]) ?></td>
-						<? endforeach ?>
-						<? if($count < 6): ?>
-							<? for($i = $count; $i < 6; $i++): ?>
-								<td>&nbsp;</td>
-							<? endfor ?>
-						<? endif ?>
-						<? if($profile): ?>
-						<td class='controls'>
-							<?= $this->mLink($item, array('action' => 'delete', 'text' => 'Delete'))?>
-							<?= $this->mLink($item, array('action' => 'edit', 'text' => 'Edit'))?>
-							<a class="compareThis" data-item="<?= $item->id ?>">Compare</a>
-							<a href="/user/shop?selectItem=<?= $item->id ?>">Sell</a>
-						</td>
-					<? endif ?>
-					</tr>
-				<? endforeach; ?>
-				<tr>
-					<td colspan="10" class="item-paginator td-paginator">
-						<?php echo $this->paginationControl($this->items,
-						                                    'Elastic',
-						                                    'item/_pages.phtml',
-																								array(
-																									'itemType' => $this->itemType,
-																									'sortAttrs' => $this->sortAttrs,
-																									'slotType' => $this->slotType,																									
-																								)); ?>
-					</td>
-				</tr>
-			</tbody>
-	<? if(!$this->disableScripts): ?>
+	
+    <?= $this->render("/user/items-body.phtml") ?>
+
 		</table>
 	</div>
-	<? if($profile): ?>
-	<div id="my-builds">
-		<? foreach($builds as $build): ?>
-		<div class="build-parent" id="build-<?= $build->id ?>" data-class="<?= $build->class ?>">
-			<div class="build-items">
-				<? foreach($build->equipment as $slot => $gear):?>
-					<span class="<?= $slot ?>" data-slot="<?= $slot ?>"><?= $this->itemLink($gear) ?></span>
-				<? endforeach ?>
-			</div>
-			<div class="build-passives" data-json='<?= ($build->passives)?json_encode($build->passives->export()):"" ?>'></div>
-		</div>
-		<? endforeach ?>
-	</div>
-	<? endif ?>
-
 	<? if($this->itemType): ?>
 	<script type="text/javascript">
 		$(function() {
@@ -360,16 +247,3 @@
 		} ?>
 	</script>
 	<? endif ?>
-	<? else: ?>
-	<p>You don't have any items yet!</p>
-	<p>Click the "Add Item" button above to get started.</p>
-	<? endif; ?>
-<? endif; ?>
-<script type="text/javascript">
-$(document).ready(function() {
-	oTable = $('#my-items').dataTable({
-		"bJQueryUI": true,
-		"bStateSave": true
-	});
-});	
-</script>

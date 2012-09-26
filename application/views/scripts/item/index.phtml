@@ -60,7 +60,7 @@
 		    <option label="Two-Handed Mace" value="2h-mace">Two-Handed Mace</option>
 		    <option label="Two-Handed Axe" value="2h-axe">Two-Handed Axe</option>
 		    <option label="Bow" value="bow">Bow</option>
-		    <option label="Diabo" value="diabo">Diabo</option>
+		    <option label="Daibo" value="daibo">Daibo</option>
 		    <option label="Crossbow" value="crossbow">Crossbow</option>
 		    <option label="Two-Handed Mighty Weapon" value="2h-mighty">Two-Handed Mighty Weapon</option>
 		    <option label="Polearm" value="polearm">Polearm</option>
@@ -192,8 +192,7 @@
 						<? endif ?>
 						<? if($profile): ?>
 						<td class='controls'>
-								<?= $this->mLink($item, array('action' => 'copy', 'text' => 'Copy'))?>
-								<a class="compareThis" data-item="<?= $item->id ?>">Compare</a>
+							<?= $this->itemLink($item, array('action' => 'copy', 'text' => 'Copy', 'button' => true))?>
 						</td>
 					<? endif ?>
 					</tr>

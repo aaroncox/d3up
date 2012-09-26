@@ -5,7 +5,7 @@
  * @package default
  * @author Aaron Cox
  **/
-class PostController extends Epic_Controller_Action
+class PostController extends D3Up_Controller_Action
 {
 	public function getPost() {
 		return $this->view->post = $this->getRequest()->getParam('post');

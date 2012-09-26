@@ -35,7 +35,7 @@
 								<select name='character-id' id="characters">
 									<option value=''>Select a Character...</option>
 									<? foreach($this->characters as $k => $v): ?>
-										<option data-name="<?= $v['name'] ?>" data-class="<?= $v['class'] ?>" value='<?= $v['id'] ?>'>[<?= $v['level'] ?>] <?= $v['name']?> - <?= ucwords(str_replace("-", " ", $v['class'])) ?>
+										<option data-name="<?= $v['name'] ?>" data-paragon="<?= $v['paragonLevel'] ?>" data-class="<?= $v['class'] ?>" value='<?= $v['id'] ?>'>[<?= $v['level'] ?>] <?= $v['name']?> - <?= ucwords(str_replace("-", " ", $v['class'])) ?>
 									<? endforeach ?>
 								</select>
 							</div>
@@ -139,6 +139,7 @@
 							option.val(v.id);
 							option.attr("data-class", v.class);
 							option.attr("data-name", v.name);
+							option.attr("data-paragon", v.paragonLevel);
 							option.html("[" + v.level + "] " + v.name + " - " + v.class.replace(/-/g, ' ').capitalize());
 							charListManual.append(option);
 						});
@@ -152,6 +153,7 @@
 		});
 		charListManual.bind('change', function() {
 			var name = $(this).find(":selected").attr("data-name"),
+	        paragon = $(this).find(":selected").attr("data-paragon"),
 					cls = $(this).find(":selected").attr("data-class"), 
 					clsPick = $("#class-element select").find("option[value=" + cls + "]");
 			$("#class-element select").find("option").each(function() {
@@ -159,9 +161,11 @@
 			})
 			$("#name-element input").attr("value", name);
 			clsPick.attr("selected", "selected");
+			$("#paragon-element input").attr("value", paragon);
 		});
 		charList.bind('change', function() {
 			var name = $(this).find(":selected").attr("data-name"),
+			    paragon = $(this).find(":selected").attr("data-paragon"),
 					cls = $(this).find(":selected").attr("data-class"), 
 					clsPick = $("#class-element select").find("option[value=" + cls + "]");
 			$("#class-element select").find("option").each(function() {
@@ -169,6 +173,7 @@
 			})
 			$("#name-element input").attr("value", name);
 			clsPick.attr("selected", "selected");
+			$("#paragon-element input").attr("value", paragon);
 		});
 	});
 </script>

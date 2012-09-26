@@ -2,7 +2,7 @@
 /**
  * ErrorController
  **/
-class ErrorController extends Epic_Controller_Action 
+class ErrorController extends D3Up_Controller_Action 
 {
   /**
    * errorAction() is the action that will be called by the "ErrorHandler" 

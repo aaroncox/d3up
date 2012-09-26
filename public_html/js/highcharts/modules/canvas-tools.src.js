@@ -298,7 +298,7 @@ function RGBColor(color_string)
  */
 if(!window.console) {
 	window.console = {};
-	window.console.log = function(str) {};
+	window.d3up.log = function(str) {};
 	window.console.dir = function(str) {};
 }
 
@@ -2691,7 +2691,7 @@ if(!Array.prototype.indexOf){
 		svg.Element.desc.prototype = new svg.Element.ElementBase;		
 		
 		svg.Element.MISSING = function(node) {
-			console.log('ERROR: Element \'' + node.nodeName + '\' not yet implemented.');
+			d3up.log('ERROR: Element \'' + node.nodeName + '\' not yet implemented.');
 		}
 		svg.Element.MISSING.prototype = new svg.Element.ElementBase;
 		

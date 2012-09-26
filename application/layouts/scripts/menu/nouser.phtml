@@ -1,0 +1,28 @@
+<h5><a href="/build/create" class="drop">Getting Started</a></h5>
+<span>Start using the Calculator</span>
+<div class="dropdown_4columns">
+	<div class="col_2 col_first">
+		<h2>Ready to use the Calculator?</h2>
+	</div>
+	<div class="col_2">
+		<h2>Login or Register for Full Control</h2>
+	</div>
+	<div class="col_2 col_first">
+		<p>You can either create a character from scratch or import directly from your Diablo 3 Armory profile! Click below to get started using our tools.</p>
+		<p><a class="button" href="/build/create">Create/Import your Character Build</a></p>
+		<h3>Need more info on creating a build?</h3>
+		<p>Looking for more information on how to use the Build Creator, Calculator and all of D3Up.com's Tools?</p>
+		<p><a class="button" href="/guide/12/creating-your-build-on-d3up-com">Check out our guide on Creating Builds</a></p>
+	</div>
+	<div class="col_2">
+		<form method="post" action="/user/login">
+			<?= $this->loginForm->username ?>
+			<?= $this->loginForm->password ?>
+			<p style="text-align: center">
+				<?= $this->loginForm->save ?>
+			</p>
+		</form>
+		<p>You don't have to login or register to use D3Up.com's tools, but if you want to be able to edit the build in the future, please login or register first.</p>
+		<a href="/user/register" class="button">Register</a>
+	</div>
+</div>

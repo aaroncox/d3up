@@ -1,0 +1,223 @@
+html, body { overflow: hidden; height: 100% }
+body { margin:0; padding:0; }
+body {
+  font-size: 12px;
+  font-family: sans-serif;
+  color: #ececec;
+  background-color: #222;
+  margin: 0;
+  padding: 0;
+}
+.d3bit-card {
+  width: 358px;
+  height: 430px;
+  border: 1px solid #333;
+}
+.d3bit-card > h3 {
+  font-size: 16px;
+  font-weight: normal;
+  margin: 12px;
+} 
+.d3bit-card > p {
+  font-size: 12px;
+  font-weight: normal;
+  margin: 4px;
+}
+.d3bit-card .compare-diff h4 {
+  clear: both;
+  font-size: 14px;
+  font-weight: normal;
+  color: #B18135;
+  margin: 0;
+} 
+.d3bit-card .logo {
+  float: left;
+}
+.d3bit-card .logo img {
+  margin: 0 10px;
+  height: 70px;
+}
+.d3bit-card .filter {
+  
+}
+.d3bit-card table {
+  background: #111;
+  border: 1px solid #333;
+  margin: 0 5px 5px;
+  width: 348px;
+}
+.d3bit-card table th {
+  padding: 5px;
+}
+.d3bit-card table td {
+  text-align: center;
+}
+.d3bit-card table td:first-child {
+  width: 80px;
+  text-align: right;
+}
+.pos {
+	color: #0F0;
+}
+.neg {
+	color: #F00;
+}
+
+a, 
+a:visited, 
+a:hover, 
+a:active, 
+a .ui-button-text, 
+a:visited .ui-button-text, 
+a:hover .ui-button-text, 
+a:active .ui-button-text, 
+a:hover .ui-button-text {
+	color: #70B1D5;
+	text-decoration: none;
+}
+.quality-1 {
+	color: #FFFFFF !important;		
+}
+.quality-2 {
+	color: #FFFFFF !important;
+}
+.quality-3 {
+	color: #FFFFFF !important;
+}
+.quality-4 {
+  color: #7979D4 !important;				
+}
+.quality-5 {
+  color: #F8CC35 !important;		
+}
+.quality-6 {
+  color: #BF642F !important;	
+}
+.quality-7 {
+  color: #8BD442 !important;		
+}
+.compare-overview {
+  background: #111;
+  color: #ececec;
+  text-align: center;
+}
+#compare-table .compare-overview {
+  border-top: 1px solid #333;
+}
+#compare-table tbody {
+  border-top: 1px solid #333;
+}
+#compare-table .diff {
+	border-right: 1px solid #333;
+	border-left: 1px solid #333;
+}
+#compare-table tr,
+#compare-table td {
+	width: auto;
+	text-align: right;
+}
+#compare-table tbody tr {
+  font-size: 10px;
+}
+#compare-table thead tr td {
+  font-size: 11px;
+}
+#compare-table tbody tr td {
+  font-size: 12px;
+}
+#simulate-item p,
+#simulate-item .top,
+#simulate-item ul.attrs {
+	display: none;
+}
+#simulate-item ul.sockets {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+#simulate-item ul.sockets select {
+	width: 340px;
+	max-width: 340px;
+	margin: 0px auto;
+	display: block;
+}
+.button {
+	cursor: pointer;
+	font-size: 14px;
+	outline: 0;
+	padding: 5px 12px;
+	display: block;
+	text-align: center;
+	font-weight: bold;
+	text-shadow: 1px 1px #1f272b;
+	border: 1px solid #1c252b;
+	border-radius: 3px;
+	-moz-border-radius: 3px;
+	-webkit-border-radius: 3px;
+	background: #232B30; /* old browsers */
+	background: -moz-linear-gradient(top, #3D4850 3%, #313d45 4%, #232B30 100%); /* firefox */
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(3%,#3D4850), color-stop(4%,#313d45), color-stop(100%,#232B30)); /* webkit */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#3D4850', endColorstr='#232B30',GradientType=0 ); /* ie */
+	box-shadow: 1px 1px 1px rgba(0,0,0,0.2); /* CSS3 */
+	-moz-box-shadow: 1px 1px 1px rgba(0,0,0,0.2); /* Firefox */
+	-webkit-box-shadow: 1px 1px 1px rgba(0,0,0,0.2); /* Safari, Chrome */
+	text-shadow: 1px 1px #111;
+	font-weight: normal;
+	-webkit-touch-callout: none;
+	-webkit-user-select: none;
+	-khtml-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+	outline: none;
+}
+.button:hover {
+	color: #fff;
+	background: #4C5A64; /* old browsers */
+	background: -moz-linear-gradient(top, #4C5A64 3%, #404F5A 4%, #2E3940 100%); /* firefox */
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(3%,#4C5A64), color-stop(4%,#404F5A), color-stop(100%,#2E3940)); /* webkit */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#4C5A64', endColorstr='#2E3940',GradientType=0 ); /* ie */
+}
+.statistics-table {
+  width: 304px;
+  margin: 2px;
+}
+.statistics-table thead th:active,
+.statistics-table thead th {
+	-webkit-touch-callout: none;
+	-webkit-user-select: none;
+	-khtml-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+	cursor: pointer;
+	display: table-cell;
+	text-align: left;
+	padding: 0 10px;
+	line-height: 24px;
+}
+.statistics-table thead .ui-icon {
+	top: 2px;
+	position: relative;
+	margin: 0 5px;
+	display: inline-block;
+}
+.statistics-table.collapsed tbody {
+	display: none;
+}
+.statistics-table td {
+  width: 40%;
+  padding: 2px 5px;
+  font-size: 14px;
+	line-height: 14px;
+}
+.statistics-table > thead > tr > td:first-child, 
+.statistics-table > tbody > tr > td:first-child {
+  width: 60%;
+  color: #B18135;
+  text-align: right;
+  font-size: 12px;
+}
+.compare-slot {
+	float: right;
+}

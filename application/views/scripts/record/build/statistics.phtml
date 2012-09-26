@@ -1,0 +1,173 @@
+<style type="text/css" media="screen">
+  .stats-table {
+    width: 285px;
+    margin: 10px auto 10px;
+    border: 1px solid #333;
+    background: #222;
+  }
+  .stats-table td.hl-ehp, 
+  .stats-table td.hl-dps {
+    text-shadow: 2px 2px 2px #111;
+    font-size: 18px;
+    color: #ececec;
+    padding: 5px;
+  }
+  .stats-table td.hl-dps .value {
+    color: #F50;
+  } 
+  .stats-table td.hl-ehp .value {
+    color: #5F0;
+  }   
+  .stats-table td.hl-dps .value,
+  .stats-table td.hl-ehp .value {
+    font-weight: bold;
+  }
+</style>
+<table class="stats-table">
+  <tr>
+    <td class="hl-dps">
+      <div class="item-stat">
+        <span data-value="dps" class="value">~</span>
+        <span class="stat">Damage per Second</span>
+      </div>
+    </td>
+    <td class="hl-ehp">
+      <div class="item-stat">
+        <span data-value="ehp" class="value">~</span>
+        <span class="stat">Effective Hit Points</span>
+      </div>
+    </td>
+  </tr>
+</table>
+<div style="text-align: center; margin-bottom: 10px">
+  <select id="vsLevel">
+  	<option value="60" selected="selected">Stats vs 60 Monster</option>
+  	<option value="61">Stats vs 61 Monster</option>
+  	<option value="62">Stats vs 62 Monster</option>
+  	<option value="63">Stats vs 63 Monster</option>
+  </select>
+  <select id="powerLevel">
+    <option value="">Power Level</option>
+  </select>
+</div>
+<table class="statistics-table" id="compare-table">
+  <thead>
+    <tr class='header '><th colspan='10' class="button"><span class='ui-icon-minusthick ui-icon'></span>Comparison Results</th></tr>
+  </thead>
+  <tbody>
+  </tbody>
+</table>
+<table class="statistics-table" id="stats-offense">
+  <thead>
+    <tr class='header '><th colspan='10' class="button"><span class='ui-icon-minusthick ui-icon'></span>Damage Statistics</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>DPS</td><td data-value='dps'></td></tr>
+    <tr><td>Attacks per Second </td><td data-value='dps-speed-display'></td></tr>
+    <tr><td>Critical Hit Chance </td><td data-value='critical-hit' data-display='percent'></td></tr>
+    <tr><td>Critical Hit Damage </td><td data-value='critical-hit-damage' data-display='percent'></td></tr>
+  </tbody>
+</table>
+<table class="statistics-table collapsed" id="stats-dps-gains">
+  <thead>
+    <tr class='header '><th colspan='10' class="button"><span class='ui-icon-plusthick ui-icon'></span>DPS Gains by Stat</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>+1 Primary Stat </td><td data-value='dps-pt-primary'></td></tr>
+    <tr><td>+1% Crit Hit </td><td data-value='dps-pt-critical-hit'></td></tr>
+    <tr><td>+1% Crit Hit Dmg </td><td data-value='dps-pt-critical-hit-damage'></td></tr> 
+    <tr><td>+1 Minimum Dmg </td><td data-value='dps-pt-min-damage'></td></tr>
+    <tr><td>+1 Maximum Dmg </td><td data-value='dps-pt-max-damage'></td></tr>
+    <tr><td>+1% Attack Speed </td><td data-value='dps-pt-attack-speed'></td></tr>
+  </tbody>
+</table>
+<table class="statistics-table" id="stats-base">
+  <thead>
+    <tr class='header '><th colspan='10' class="button"><span class='ui-icon-minusthick ui-icon'></span>Base Statistics</th></tr>
+  </thead>
+  <tbody>  
+    <tr><td>Strength </td><td data-value='strength'></td></tr>
+    <tr><td>Dexterity </td><td data-value='dexterity'></td></tr> 
+    <tr><td>Intelligence </td><td data-value='intelligence'></td></tr>
+    <tr><td>Vitality </td><td data-value='vitality'></td></tr>
+    <tr><td>Magic Find </td><td data-value='plus-magic-find' data-display="percent"></td></tr>
+    <tr><td>Gold Find </td><td data-value='plus-gold-find' data-display="percent"></td></tr>
+  </tbody>
+</table>
+<table class="statistics-table" id="stats-defense">
+  <thead>
+    <tr class='header '><th colspan='10' class="button"><span class='ui-icon-minusthick ui-icon'></span>Defensive Statistics</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>Armor</td><td data-value='armor'>~</td></tr>
+    <tr><td>All Resist </td><td data-value='resist-all'></td></tr> 
+    <tr><td>Block Chance </td><td data-value='block-chance' data-display='percent'></td></tr>
+    <tr><td>Dodge Chance </td><td data-value='dodge-chance' data-display='percent'></td></tr>
+    <tr><td>Damage Reduction</td><td data-value='damage-reduction' data-display='percent'></td></tr>
+    <tr><td>Thorns </td><td data-value='thorns'></td></tr>
+  </tbody>
+</table>
+<table class="statistics-table collapsed" id="stats-defense-specific">
+  <thead>
+    <tr class='header '><th colspan='10' class="button"><span class='ui-icon-plusthick ui-icon'></span>Defensive Specifics</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>Physical Resistance </td><td data-value='resist-physical'></td></tr>
+    <tr><td>Cold Resistance </td><td data-value='resist-cold'></td></tr>
+    <tr><td>Fire Resistance </td><td data-value='resist-fire'></td></tr>
+    <tr><td>Lightning Resistance </td><td data-value='resist-lightning'></td></tr>
+    <tr><td>Poison Resistance </td><td data-value='resist-poison'></td></tr>
+    <tr><td>Arcane/Holy Resistance </td><td data-value='resist-arcane'></td></tr>
+    <tr><td>Crowd Control Reduction </td><td data-value='cc-reduce'></td></tr>
+    <tr><td>Missile Damage Reduction </td><td data-value='percent-range-reduce' data-display='percent'></td></tr>
+    <tr><td>Melee Damage Reduction </td><td data-value='percent-melee-reduce' data-display='percent'></td></tr>
+    <tr><td>Elite Damage Reduction </td><td data-value='percent-elite-reduce' data-display='percent'></td></tr>
+  </tbody>
+</table>
+<table class="statistics-table collapsed" id="stats-ehp">
+  <thead>
+    <tr class='header '><th colspan='10' class="button"><span class='ui-icon-plusthick ui-icon'></span>Effective Hit Points</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>EHP </td><td data-value="ehp"></td></tr>
+    <tr><td>EHP w/ Dodge </td><td data-value="ehp-dodge"></td></tr>
+    <tr><td>EHP w/ Block </td><td data-value="ehp-block"></td></tr>
+    <tr><td>Melee EHP </td><td data-value="ehp-melee"></td></tr>
+    <tr><td>Ranged EHP </td><td data-value="ehp-range"></td></tr>
+    <tr><td>Elite EHP </td><td data-value="ehp-elite"></td></tr>
+    <tr><td>Physical EHP </td><td data-value="ehp-physical"></td></tr>
+    <tr><td>Cold EHP </td><td data-value="ehp-cold"></td></tr>
+    <tr><td>Fire EHP </td><td data-value="ehp-fire"></td></tr>
+    <tr><td>Lightning EHP </td><td data-value="ehp-lightning"></td></tr>
+    <tr><td>Poison EHP </td><td data-value="ehp-poison"></td></tr>
+    <tr><td>Arcane/Holy EHP </td><td data-value="ehp-poison"></td></tr>
+  </tbody>
+</table>
+<table class="statistics-table collapsed" id="stats-ehp-gains">
+  <thead>
+    <tr class='header '><th colspan='10' class="button"><span class='ui-icon-plusthick ui-icon'></span>EHP Gains by Stat</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>+1 Armor </td><td data-value='ehp-pt-armor'></td></tr>
+    <tr><td>+1 Strength </td><td data-value='ehp-pt-strength'></td></tr>
+    <tr><td>+1 Intelligence </td><td data-value='ehp-pt-intelligence'></td></tr>
+    <tr><td>+1 Vitality </td><td data-value='ehp-pt-vitality'></td></tr>
+    <tr><td>+1 Resist All </td><td data-value='ehp-pt-resist-all'></td></tr>
+    <tr><td>+1% Life </td><td data-value='ehp-pt-plus-life'></td></tr>
+  </tbody>
+</table>
+<table class="statistics-table" id="stats-life">
+  <thead>
+    <tr class='header'><th colspan='10' class="button"><span class='ui-icon-minusthick ui-icon'></span>Health Stastistics</th></tr> 
+  </thead>
+  <tbody>
+    <tr><td>Maximum Life</td><td data-value='life'></td></tr>
+    <tr><td>Life Steal </td><td data-value='life-steal' data-display='percent'></td></tr>
+    <tr><td>Life per Hit </td><td data-value='life-hit'></td></tr>
+    <tr><td>Total Life Bonus </td><td data-value='plus-life' data-display='percent'></td></tr>
+    <tr><td>Life per Second </td><td data-value='life-regen'></td></tr>
+    <tr><td>Life per Kill </td><td data-value='life-kill'></td></tr>
+    <tr><td>Health Globe Healing Bonus </td><td data-value='health-globes'></td></tr>
+    <tr><td>Bonus to Gold/Globe Radius </td><td data-value='plus-pickup-radius'></td></tr>
+  </tbody>  
+</table>

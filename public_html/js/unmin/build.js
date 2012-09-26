@@ -15,8 +15,12 @@ $(function() {
 					v = "0%";
 				}
 				break;
+			case "around":
+			  v = Math.round(v);
+			  break;
 			case "round":
 				v = Math.round(v * 100) / 100;
+				break;
 			default:
 				break;
 		}
@@ -24,7 +28,20 @@ $(function() {
 		if(v) {
 			v = v.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,");			
 		}
-		var data = $("<li/>").addClass('stat-' + cleaned).html($("<span class='stat-helper'/>").html(k + ": ")).append(v);
+		var tr = $("<tr>").addClass('stat-' + cleaned + ' statLabel'),
+		    label = $("<td>").html(k), 
+		    controls = $("<td>").addClass('skill-control').html("");
+		if(v.toString().split("-").length == 2) {
+		  var parts = v.toString().split("-");
+      d1 = $("<td class='range'>").html(parts[0]);
+      dv = $("<td class='range-div'>").html("-");
+      d2 = $("<td class='range'>").html(parts[1]);
+  		tr.append(label, d1, dv, d2, controls);		  
+		} else {
+		  data = $("<td class='data'>").html(v);
+		  var placeholder = $("<td colspan='2'>");
+  		tr.append(label, data, placeholder, controls);		  
+		}
 		if(math) {
 			if(math <= 1) {
 				data.append(" (" + (Math.round(math * 1000)/10) + "%)");
@@ -32,7 +49,7 @@ $(function() {
 				data.append(" (" + math + "%)");
 			}
 		}
-		return data;
+		return tr;
 	}
 	$("#item-sim-tab").click(function() {
 		$(".skill-activate").each(function() {
@@ -63,12 +80,14 @@ $(function() {
 			passiveDisplay = $("#passive-display"),	
 			activeActivesData = {},		
 			activePassivesData = {},
+			activeCompanionData = {},
 			calc = new d3up.BuildCalculator,
+			itemBuilder = new d3up.ItemBuilder,
 			activeActiveSkills = {},
 			activePassiveSkills = {},
 			enabledSkills = {},
 			enabledPassiveSkills = {};
-			
+	itemBuilder.init();
 	// Setup Defaults and Reset
 	calc.init();
 	// Setup the Class for the Calculator
@@ -88,7 +107,8 @@ $(function() {
 		
 	var activeSelects = [1,2,3,4,5,6],
 			passiveSelects = [1,2,3],
-			choosers = $("#skill-chooser");
+			activeChooser = $("#active-skill-chooser"),
+			passiveChooser = $("#passive-skill-chooser");
 	$.each(activeSelects, function(k, v) {
 		var select = $("<select data-index='"+(v - 1)+"' data-placeholder='Select a Skill...' name='activeSelect"+v+"'>"),
 				label = $("<span class='skill-label'>").html("Skill #" + v);
@@ -102,7 +122,7 @@ $(function() {
 			}
 			select.append(option);
 		});
-		choosers.append($("<p>").append(label, select));
+		activeChooser.append($("<p>").append(label, select));
 		select.chosen({
 			allow_single_deselect: true
 		});
@@ -113,6 +133,13 @@ $(function() {
 			displaySkills();
 		});
 	});
+	$.each(['scoundrel', 'enchantress', 'templar', 'shrine'], function(k, v) {
+	  $.each(activeSkills[v], function(slug, data) {
+			if(activeSkills[v]) {
+				activeCompanionData[slug] = activeSkills[v][slug];	
+			}
+		});
+	});	
 	$.each(passiveSelects, function(k, v) {
 		var select = $("<select data-index='"+(v - 1)+"' data-placeholder='Select a Skill...' name='passiveSelect"+v+"'>"),
 				label = $("<span class='skill-label'>").html("Passive #" + v);
@@ -126,7 +153,7 @@ $(function() {
 			}
 			select.append(option);
 		});
-		choosers.append($("<p>").append(label, select));
+		passiveChooser.append($("<p>").append(label, select));
 		select.chosen({
 			allow_single_deselect: true
 		});
@@ -137,8 +164,9 @@ $(function() {
 		});
 	});
 	if(isOwner) {
-		var saveButton = $("<button>").html("Save Skills");
-		saveButton.click(function() {
+		var skillSaveButton = $("<a class='button'>").html("Save Skills"),
+		    passiveSaveButton = $("<a class='button'>").html("Save Skills");
+		passiveSaveButton.click(function() {
 			$.ajax({
 				data: {
 					a: 'skills',
@@ -161,14 +189,50 @@ $(function() {
 				}
 			});
 		});	
+		skillSaveButton.click(function() {
+			$.ajax({
+				data: {
+					a: 'skills',
+					actives: activeActives,
+					passives: activePassives,
+					stats: {
+						dps: stats.dps,
+						ehp: stats.ehp
+					},
+					success: function() {
+						$($("<div style='padding: 20px'/>").html("Saved!")).dialog({
+							modal: true,
+							buttons: {
+								Ok: function() {
+									$( this ).dialog( "close" );
+								}
+							}
+						});
+					}
+				}
+			});
+		});
 	}
-	choosers.hide();
-	choosers.append(saveButton);
+  activeChooser.hide();
+  passiveChooser.hide();
+	activeChooser.append(skillSaveButton);
+	passiveChooser.append(passiveSaveButton);
 	$(".skill-change").click(function() {
-		choosers.show();
+	  if(activeChooser.is(":visible")) {
+  		activeChooser.hide();	    
+	  } else {
+  		activeChooser.show();
+	  }
+	});
+	$(".passive-change").click(function() {
+	  if(passiveChooser.is(":visible")) {
+      passiveChooser.hide();
+	  } else {
+      passiveChooser.show();
+	  }
 	});
 	// Debugging
-	// console.log(stats);
+	// d3up.log(stats);
 	// if(activeSkills && activeSkills[heroClass]) {
 	// 	var idx = 0;
 	// 	$.each(activeSkills[heroClass], function(k,v) {
@@ -184,7 +248,7 @@ $(function() {
 	// });
 	// $.each(activeActives, function(key, active) {
 	// 	activeSelect.find("option[value='" + active + "']").attr("selected", "selected");
-	// 	// console.log(key, active);
+	// 	// d3up.log(key, active);
 	// 	// if(k == active) {
 	// 	// 	selected = 'selected="selected"';
 	// 	// }
@@ -244,7 +308,7 @@ $(function() {
 	// 	if(!activeActives) {
 	// 		activeActives = [];
 	// 	}
-	// 	// console.log(skills);
+	// 	// d3up.log(skills);
 	// 	if(!skills || activeActives.length != skills.length) {
 	// 		if(isOwner && skills.length <= 6) {
 	// 			setTimeout(function() {
@@ -310,6 +374,7 @@ $(function() {
 	function recalc() {
 		activeActiveSkills = {};
 		activePassiveSkills = {};
+		activeCompanionSkills = {};
 		enabledSkills = {};
 		enabledPassiveSkills = {};
 		calc.init();
@@ -325,7 +390,7 @@ $(function() {
 			}
 		});
 		$('.passive-activate').each(function() {
-			// console.log($(this).data('skill'));
+			// d3up.log($(this).data('skill'));
 			activePassiveSkills[$(this).data('skill')] = activePassivesData[$(this).data('skill')];
 			if($(this).is(":checked")) {
 				enabledSkills[$(this).data('skill')] = activePassivesData[$(this).data('skill')];
@@ -335,11 +400,19 @@ $(function() {
           enabledSkills[$(this).data('skill')].stacks = 1;
 				}
 			}
-			// console.log(activePassiveSkills, $(this).data('skill'), activePassivesData);
+			// d3up.log(activePassiveSkills, $(this).data('skill'), activePassivesData);
+		});
+		$('.companion-activate').each(function() {
+      // d3up.log($(this).data('skill'));
+			activeCompanionSkills[$(this).data('skill')] = activeCompanionData[$(this).data('skill')];
+			if($(this).is(":checked")) {
+				enabledSkills[$(this).data('skill')] = activeCompanionData[$(this).data('skill')];
+			}
 		});
 		calc.setActives(activeActiveSkills);
 		calc.setEnabledSkills(enabledSkills);
 		calc.setPassives(activePassiveSkills);
+		calc.setCompanionSkills(activeCompanionSkills);
 		calc.setParagonLevel($("#paragon-level").text());
 		calc.setClass($("#character").data('class'));
 			$(".equipped a").each(function() {
@@ -347,8 +420,7 @@ $(function() {
 				data = $(this).data("json");						// Get the JSON for this gear
 		calc.setItem(slot, data);
 	});
-
-		// console.log(activePassiveSkills);
+    // d3up.log(activePassiveSkills);
 		stats = calc.run();
 		_.each(stats.skillData, function(v,k) {
 			if(v.activate) {
@@ -383,26 +455,30 @@ $(function() {
 				if(!data || !data['effect']) {
 					return;
 				}
-				var	li = $("<li class='skill-calc-row'>").attr("data-json", JSON.stringify(data.effect)).attr("data-id", skill).attr("id", "skill-" + skill),
+				var	tr = $("<tr class='skill-calc-row'>").attr("data-json", JSON.stringify(data.effect)).attr("data-id", skill).attr("id", "skill-" + skill),
 						cleaned = skill.split("~"),
 						icon = $("<img src='/images/icons/" + heroClass + "-" + cleaned[0] + ".png'>"),
 						h3 = $("<h3>").html(data.name),
-						details = $("<ul class='details'>"),
+						details = $("<table class='details'>"),
 						desc = $("<p><span class='stat-helper'>Description</span>: </p>").append(data.desc),
 						rune = $("<p>"),
 						control = $("<div class='control'></div>");
+				h3.attr('data-tooltip', data.desc);
+				h3.attr('data-name', data.name);
 				icon.attr('data-tooltip', data.desc);
 				icon.attr('data-name', data.name);
 				if(data.rune) {
-					icon.attr('data-tooltip', data.desc.replace(/  /, "<br/><br/>") + "<br/><br/>" + data.rune);
+					h3.attr('data-tooltip', data.desc.replace(/  /, "<br/><br/>") + "<br/><br/>" + data.rune);
 					rune = $("<p>").html("<span class='stat-helper'>Rune Bonus</span>: " + data.rune);
 				}
+				h3.prepend(icon);
 				icon.bindSkilltip();
+				h3.bindSkilltip();
 				if(data.effect) {
-					// console.log("effect ", data.effect);
+					// d3up.log("effect ", data.effect);
 					var checkbox = $("<input type='checkbox' class='skill-activate' data-skill='" + skill + "'>");
 					checkbox.click(function() {
-						li.toggleClass("skill-activated");
+						tr.toggleClass("skill-activated");
 						recalc();
 					});
 					var select = $("<select class='skill-stacks' data-skill='" + skill + "'>").hide();
@@ -412,14 +488,15 @@ $(function() {
 					});
 					control.append("Activate ", checkbox, "<br/>", select).hide();					
 				}
-				// console.log(details);
+				// d3up.log(details);
 				activeDisplay.append($("<li>").append(icon.clone()));									
-				li.append(icon, control, h3, details, desc, rune);
-				target.append(li);
+				tr.append($("<td>").append(control, h3, details));
+				target.append(tr);
 				// var damage = calc.calcSkillDamage(data);
-				// console.log(data);				
+				// d3up.log(data);				
 			}
 		});
+		target = $("#build-passive-skills").empty(),
 		_.each(passiveSkills, function(v) {
 			var skill = v;
 			if(skill != "undefined" && skill != "") {
@@ -427,21 +504,25 @@ $(function() {
 				if(!data) {
 					return;
 				}
-				var	li = $("<li class='skill-calc-row'>").attr("data-id", skill).attr("id", "skill-" + skill),
+				var	tr = $("<tr class='skill-calc-row'>").attr("data-id", skill).attr("id", "skill-" + skill),
 						cleaned = skill.split("~"),
 						icon = $("<img src='/images/icons/" + heroClass + "-" + cleaned[0] + ".png'>"),
 						h3 = $("<h3>").html(v.replace(/\-/g, " ").capitalize()),
 						details = $("<ul class='details'>"),
 						desc = $("<p>").append(data.desc),
 						control = $("<div class='control'></div>");
+				h3.attr('data-tooltip', data.desc);
+				h3.attr('data-name', v.replace(/\-/g," ").capitalize());
 				icon.attr('data-tooltip', data.desc);
 				icon.attr('data-name', v.replace(/\-/g," ").capitalize());
+				h3.prepend(icon);
 				icon.bindSkilltip();
+				h3.bindSkilltip();
 				// if(data.effect) {
-					// console.log("effect ", data.effect);
-					var checkbox = $("<input type='checkbox' class='passive-activate' data-skill='" + skill + "'>");
+					// d3up.log("effect ", data.effect);
+					var checkbox = $("<input type='checkbox' class='passives-activate' data-skill='" + skill + "'>");
 					checkbox.click(function() {
-						li.toggleClass("skill-activated");
+						tr.toggleClass("skill-activated");
 						recalc();
 					});
 					var select = $("<select class='skill-stacks' data-skill='" + skill + "'>").hide();
@@ -452,12 +533,51 @@ $(function() {
 					control.append("Activate ", checkbox, "<br/>", select).hide();					
 				// }
 				passiveDisplay.append($("<li/>").html(icon.clone()));
-				li.append(icon, control, h3, details, desc);
-				target.append(li);
+				tr.append(control, h3, details, desc);
+				target.append(tr);
 			}
 		});
-		recalc();
-		// console.log(activeSelect.val());
+		target = $("#companion-buffs").empty();
+		var companions = ['scoundrel', 'enchantress', 'templar', 'shrine'];
+		_.each(companions, function(c) {
+		  _.each(activeSkills[c], function(k, v) {
+		    var skill = v;
+  			if(skill != "undefined" && skill != "") {
+  				var data = activeSkills[c][skill];
+  				if(!data || !data.effect) {
+  					return;
+  				}
+  				var	tr = $("<tr class='skill-calc-row'>").attr("data-id", skill).attr("id", "skill-" + skill),
+  						cleaned = skill.split("~"),
+  						icon = $("<img src='/images/icons/" + c + "-" + cleaned[0] + ".png'>"),
+  						h3 = $("<h3>").html(c.capitalize() + " - " + v.replace(/\-/g, " ").capitalize()),
+  						details = $("<ul class='details'>"),
+  						desc = $("<p>").append(data.desc),
+  						control = $("<div class='control'></div>");
+  				h3.attr('data-tooltip', data.desc);
+  				h3.attr('data-name', v.replace(/\-/g," ").capitalize());
+  				// if(data.effect) {
+            // d3up.log("effect ", data.effect);
+  					var checkbox = $("<input type='checkbox' class='companion-activate' data-skill='" + skill + "'>");
+  					checkbox.click(function() {
+  						tr.toggleClass("skill-activated");
+              recalc();
+  					});
+            // var select = $("<select class='skill-stacks' data-skill='" + skill + "'>").hide();
+            // select.bind('change', function() {
+            //  checkbox.attr("data-stacks", $(this).val());
+            //  recalc();
+            // });
+  					control.append("Activate ", checkbox); //, "<br/>" select).hide();					
+  				// }
+          // passiveDisplay.append($("<li/>").html(icon.clone()));
+  				tr.append(control, h3, details, desc);
+  				target.append(tr);
+  			}
+		  });
+		});
+    recalc();
+		// d3up.log(activeSelect.val());
 	}
 	if(isOwner) {
 		$(".gear-change").click(function() {
@@ -469,7 +589,7 @@ $(function() {
 					switch(mh.type) {
 						case '2h-mace': 
 						case '2h-axe': 
-						case 'diabo': 
+						case 'daibo': 
 						case '2h-mighty': 
 						case 'polearm': 
 						case 'staff': 
@@ -522,7 +642,7 @@ $(function() {
 									switch(itemData.type) {
 										case '2h-mace': 
 										case '2h-axe': 
-										case 'diabo': 
+										case 'daibo': 
 										case '2h-mighty': 
 										case 'polearm': 
 										case 'staff': 
@@ -568,49 +688,45 @@ $(function() {
 	function displayStats() {
 		// EHP 
 		tabEHP.empty();
-		tabEHP.append($("<ul class='resist-specific'/>").append(
-			statLabel("EHP", stats.ehp, 'round'),
-			statLabel("EHP w/ Dodge", stats['ehp-dodge'], 'round'),
-			statLabel("EHP w/ Block", "Not Implemented") //stats['ehp-block']
-		));
-		tabEHP.append($("<ul class='resist-specific'/>").append(
-			$("<li class='header'/>").html("VS Damage Source EHP"),
-			statLabel("Melee EHP", stats['ehp-melee'], 'round'),
-			statLabel("Ranged EHP", stats['ehp-range'], 'round'),
-			statLabel("Elite EHP", stats['ehp-elite'], 'round')
-		));		
-		tabEHP.append($("<ul class='resist-specific'/>").append(
-			$("<li class='header'/>").html("VS Specific Element EHP"),
-			statLabel("Physical EHP", stats['ehp-physical'], 'round'),
-			statLabel("Cold EHP", stats['ehp-cold'], 'round'),
-			statLabel("Fire EHP", stats['ehp-fire'], 'round'),
-			statLabel("Lightning EHP", stats['ehp-lightning'], 'round'),
-			statLabel("Poison EHP", stats['ehp-poison'], 'round'),
-			statLabel("Arcane/Holy EHP", stats['ehp-arcane'], 'round')
-		));
+		tabEHP.append($("<tr class='header'><th colspan='10'>Effective Hit Points</th></tr>"));
+		tabEHP.append(statLabel("EHP", stats.ehp, 'round'));
+		$(".hl-ehp .value").html((Math.round(stats.ehp * 100) / 100).toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,"));
+		tabEHP.append(statLabel("EHP w/ Dodge", stats['ehp-dodge'], 'round'));
+		tabEHP.append(statLabel("EHP w/ Block", "Not Implemented")); //stats['ehp-block']
+		tabEHP.append(statLabel("Melee EHP", stats['ehp-melee'], 'round'));
+		tabEHP.append(statLabel("Ranged EHP", stats['ehp-range'], 'round'));
+		tabEHP.append(statLabel("Elite EHP", stats['ehp-elite'], 'round'));
+		tabEHP.append(statLabel("Physical EHP", stats['ehp-physical'], 'round'));
+		tabEHP.append(statLabel("Cold EHP", stats['ehp-cold'], 'round'));
+		tabEHP.append(statLabel("Fire EHP", stats['ehp-fire'], 'round'));
+		tabEHP.append(statLabel("Lightning EHP", stats['ehp-lightning'], 'round'));
+		tabEHP.append(statLabel("Poison EHP", stats['ehp-poison'], 'round'));
+		tabEHP.append(statLabel("Arcane/Holy EHP", stats['ehp-arcane'], 'round'));
 		// ----------------------------------
 		// Render Skill Damage
 		// ----------------------------------
 		var containerSkills = $("#build-active-skills");
-		// console.log(stats.skillData);
+    // d3up.log(stats.skillData);
 		$.each(stats.skillData, function(k,v) {
-			var target = containerSkills.find("li[data-id=\"" + k + "\"] ul.details").empty();
+			var target = containerSkills.find("tr[data-id=\"" + k + "\"] table.details").empty(),
+			    th = $("<th colspan='10' class='skill-damage'>").html("Damage Statistics");
+			target.append($("<tr>").append(th));			  
 			$.each(v, function(s,i) {
 				switch(s) {
 				  case "per-tick-norm":
-  					target.append(statLabel("Per Tick", i, 'round'));
+  					target.append(statLabel("Per Tick", i, 'around'));
 				    break;
 				  case "per-tick-crit":
-  					target.append(statLabel("Critical Per Tick", i, 'round'));
+  					target.append(statLabel("Critical Per Tick", i, 'around'));
 				    break;
 				  case "total-damage-norm":
-  					target.append(statLabel("Total Damage", i, 'round'));
+  					target.append(statLabel("Total Damage", i, 'around'));
 				    break;
 				  case "total-damage-crit":
-  					target.append(statLabel("Critical Total Damage", i, 'round'));
+  					target.append(statLabel("Critical Total Damage", i, 'around'));
 				    break;
 					case "3rd-hit":
-						target.append(statLabel("Average 3rd Hit", i, 'round'));
+						target.append(statLabel("Average 3rd Hit", i, 'around'));
 						break;						
 					case "critical-hit-2nd":
 						target.append(statLabel("2nd Pierce Critical Hit", i));
@@ -619,16 +735,16 @@ $(function() {
 						target.append(statLabel("3rd Pierce Critical Hit", i));
 						break;						
 					case "per-tick":
-						target.append(statLabel("DPS", i, 'round'));
+						target.append(statLabel("DPS", i, 'around'));
 						break;
 					case "total-damage":
-						target.append(statLabel("Total Damage per Cast", i, 'round'));
+						target.append(statLabel("Total Damage/Cast", i, 'around'));
 						break;
 					case "average-hit":
 						target.append(statLabel("Average Hit", i));
 						break;
 					case "damage-tick":
-						target.append(statLabel("Per Tick", i));
+						target.append(statLabel("Damage Per Tick", i));
 						break;
 					case "damage":
 						target.append(statLabel("Damage Range", i));
@@ -650,12 +766,36 @@ $(function() {
 						break;
 				}
 			});
+			if(activeActivesData[k].effect) {
+			  var th = $("<th colspan='10' class='skill-effects'>").append("Skill Effects");
+			  target.append($("<tr>").append(th));
+  		  $.each(activeActivesData[k].effect, function(i,e) {
+  		    var tr = $("<tr>"),
+  		        td = $("<td colspan='10'>");
+  		    if(itemBuilder.skillText[i]) {
+  		      var value = "<span class='skill-highlight'>" + e + "</span>",
+  		          desc = itemBuilder.skillText[i].replace("VVV", value);
+    		    td.append(desc);
+    		    tr.append(td);
+    			  target.append(tr);			    
+  		    } else {
+  		      d3up.log("Unhandled Ability Effect: " + i);
+  		    }
+  		  });			  
+			}
+      if(target.find('.statLabel').length == 0) {
+        target.find('.skill-damage').hide();
+      }
+      if(target.text() != "") {
+        target.show();
+      }
 		});
 		// ----------------------------------
 		// Render the Stasistics below
 		// ----------------------------------	
 		// Base Statistics Display
 		tabBase.empty();
+		tabBase.append($("<tr class='header'><th colspan='10'>Base Statistics</th></tr>"));
 		tabBase.append(statLabel("Strength", stats['strength']));
 		tabBase.append(statLabel("Dexterity", stats['dexterity']));
 		tabBase.append(statLabel("Intelligence", stats['intelligence']));
@@ -664,6 +804,7 @@ $(function() {
 		tabBase.append(statLabel("Gold Find", stats['plus-gold-find'], 'per'));
 		// Defensive Statistics Display
 		tabDefense.empty();
+		tabDefense.append($("<tr class='header'><th colspan='10'>Defensive Statistics</th></tr>"));
 		tabDefense.append(statLabel("Armor", stats.armor, 'round', stats.armorReduce));
 		tabDefense.append(statLabel("All Resist", stats['resist-all'], 'round', stats['percent-resist-all']));
 		// tabDefense.append(statLabel("Block Amount", (stats['block-amount']) ? stats['block-amount'] : '~'));		
@@ -683,16 +824,15 @@ $(function() {
 		tabDefense.append(statLabel("Thorns", stats['thorns']));
 		// Offensive Statistics Display
 		tabOffense.empty();
+		tabOffense.append($("<tr class='header'><th colspan='10'>Damage Statistics</th></tr>"));
 		tabOffense.append(statLabel("DPS", stats.dps, 'round'));
-		// if(mathDpsSpecial) {
-			// tabOffense.append(statLabel("DPS w/ " + mathDpsSpecialName, mathDps));			
-		// }
+		$(".hl-dps .value").html((Math.round(stats.dps * 100) / 100).toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,"));
 		tabOffense.append(statLabel("Attacks per Second", stats['dps-speed-display']));
 		tabOffense.append(statLabel("Critical Hit Chance", stats['critical-hit'], 'per'));
 		tabOffense.append(statLabel("Critical Hit Damage", stats['critical-hit-damage'], 'per'));
 		// Gains Stats Display
 		tabDPSGains.empty();
-		tabDPSGains.append($("<li class='header'/>").html("DPS Gained per Stat"));
+		tabDPSGains.append($("<tr class='header'><th colspan='10'>DPS Gains by Stat</th></tr>"));
 		tabDPSGains.append(statLabel("+1 Primary Stat", stats['dps-pt-primary'], 'round'));
 		tabDPSGains.append(statLabel("+1% Crit Hit", stats['dps-pt-critical-hit'], 'round'));
 		tabDPSGains.append(statLabel("+1% Crit Hit Dmg", stats['dps-pt-critical-hit-damage'], 'round'));
@@ -700,7 +840,7 @@ $(function() {
 		tabDPSGains.append(statLabel("+1 Maximum Dmg", stats['dps-pt-max-damage'], 'round'));
 		tabDPSGains.append(statLabel("+1% Attack Speed", stats['dps-pt-attack-speed'], 'round'));
 		tabEHPGains.empty();
-		tabEHPGains.append($("<li class='header'/>").html("EHP Gained per Stat"));
+		tabEHPGains.append($("<tr class='header'><th colspan='10'>EHP Gains by Stat</th></tr>"));
 		tabEHPGains.append(statLabel("+1 Armor", stats['ehp-pt-armor'], 'round'));
 		tabEHPGains.append(statLabel("+1 Strength", stats['ehp-pt-strength'], 'round'));
 		tabEHPGains.append(statLabel("+1 Intelligence", stats['ehp-pt-intelligence'], 'round'));
@@ -709,6 +849,7 @@ $(function() {
 		tabEHPGains.append(statLabel("+1% Life", stats['ehp-pt-plus-life'], 'round'));
 		// Life Stastics Display
 		tabLife.empty();
+		tabLife.append($("<tr class='header'><th colspan='10'>Health Stastistics</th></tr>"));
 		tabLife.append(statLabel("Maximum Life", stats.life, 'round'));
 		tabLife.append(statLabel("Total Life Bonus", stats['plus-life'], 'per'));
 		tabLife.append(statLabel("Life per Second", (stats['life-regen']) ? stats['life-regen'] : 0));
@@ -719,45 +860,57 @@ $(function() {
 		tabLife.append(statLabel("Bonus to Gold/Globe Radius", (stats['plus-pickup-radius']) ? stats['plus-pickup-radius'] : 0));	
 		// Add the EHP Gear Ratings
 		var ehpGear = $("<ul class='resist-specific'/>").append($("<li class='header'/>").html("Gear EHP Contributions (<a href='/faq/gear-based-ehp'>?</a>)"));
-		ehpGear.append(statLabel("Helm EHP", stats['ehp-helm'], 'round'));			
-		ehpGear.append(statLabel("Shoulder EHP", stats['ehp-shoulders'], 'round'));			
-		ehpGear.append(statLabel("Amulet EHP", stats['ehp-amulet'], 'round'));			
-		ehpGear.append(statLabel("Chest EHP", stats['ehp-chest'], 'round'));			
-		ehpGear.append(statLabel("Gloves EHP", stats['ehp-gloves'], 'round'));			
-		ehpGear.append(statLabel("Bracers EHP", stats['ehp-bracers'], 'round'));			
-		ehpGear.append(statLabel("Belt EHP", stats['ehp-belt'], 'round'));			
-		ehpGear.append(statLabel("Pants EHP", stats['ehp-pants'], 'round'));			
-		ehpGear.append(statLabel("Ring 1 EHP", stats['ehp-ring1'], 'round'));			
-		ehpGear.append(statLabel("Ring 2 EHP", stats['ehp-ring2'], 'round'));			
-		ehpGear.append(statLabel("Boots EHP", stats['ehp-boots'], 'round'));			
-		ehpGear.append(statLabel("Main Hand EHP", stats['ehp-mainhand'], 'round'));			
-		ehpGear.append(statLabel("Off Hand EHP", stats['ehp-offhand'], 'round'));			
-		$("#stats-ehp-gear").html(ehpGear);
-		// Add the DPS Gear Contributions
-		var dpsGear = $("<ul class='resist-specific'/>").append($("<li class='header'/>").html("Gear DPS Contributions (<a href='/faq/gear-based-dps'>?</a>)"));
-		dpsGear.append(statLabel("Helm DPS", stats['dps-helm'], 'round'));			
-		dpsGear.append(statLabel("Shoulder DPS", stats['dps-shoulders'], 'round'));			
-		dpsGear.append(statLabel("Amulet DPS", stats['dps-amulet'], 'round'));			
-		dpsGear.append(statLabel("Chest DPS", stats['dps-chest'], 'round'));			
-		dpsGear.append(statLabel("Gloves DPS", stats['dps-gloves'], 'round'));			
-		dpsGear.append(statLabel("Bracers DPS", stats['dps-bracers'], 'round'));			
-		dpsGear.append(statLabel("Belt DPS", stats['dps-belt'], 'round'));			
-		dpsGear.append(statLabel("Pants DPS", stats['dps-pants'], 'round'));			
-		dpsGear.append(statLabel("Ring 1 DPS", stats['dps-ring1'], 'round'));			
-		dpsGear.append(statLabel("Ring 2 DPS", stats['dps-ring2'], 'round'));			
-		dpsGear.append(statLabel("Boots DPS", stats['dps-boots'], 'round'));	
-		dpsGear.append(statLabel("Main Hand DPS", stats['dps-mainhand'], 'round'));			
-		dpsGear.append(statLabel("Off Hand DPS", stats['dps-offhand'], 'round'));			
-		$("#stats-dps-gear").html(dpsGear);	
+		// Figure out how good each rating is
+    var ehpT = 0,
+        ehpM = 0,
+        dpsT = 0,
+        dpsM = 0;
+		$.each(['ehp-helm','ehp-shoulders','ehp-amulet','ehp-chest','ehp-gloves','ehp-bracers','ehp-belt','ehp-pants','ehp-ring1','ehp-ring2','ehp-boots','ehp-mainhand','ehp-offhand'], function(k,v) {
+		  if(stats[v] && stats[v] != "undefined") {
+  		  ehpT += stats[v];
+        if(stats[v] > ehpM) {
+          ehpM = stats[v];
+        }
+      }
+		});	
+		$.each(['dps-helm','dps-shoulders','dps-amulet','dps-chest','dps-gloves','dps-bracers','dps-belt','dps-pants','dps-ring1','dps-ring2','dps-boots','dps-mainhand','dps-offhand'], function(k,v) {
+		  if(stats[v] && stats[v] != "undefined") {
+  		  dpsT += stats[v];
+        if(stats[v] > dpsM) {
+          dpsM = stats[v];
+        }		    
+		  }
+		});
+		$.each(['ehp-helm','ehp-shoulders','ehp-amulet','ehp-chest','ehp-gloves','ehp-bracers','ehp-belt','ehp-pants','ehp-ring1','ehp-ring2','ehp-boots','ehp-mainhand','ehp-offhand'], function(k,v) {
+      if(stats[v]) {
+  		  var per = stats[v] / ehpM,
+  		      tPer = stats[v] / ehpT,
+  		      val = Math.round(stats[v]).toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,");
+        $("#gear-" + v).html(val + "<br/>(" + (Math.round(tPer * 1000) / 10) + "%)");
+        // $("#gear-" + v).css({color: "rgb(0," + parseInt(color) + ",0)"});  
+        $("#gear-" + v).css("color", $.Color( "#570" ).transition($.Color( "#5F0" ), (tPer * 8))); 
+        
+      }
+		});
+		$.each(['dps-helm','dps-shoulders','dps-amulet','dps-chest','dps-gloves','dps-bracers','dps-belt','dps-pants','dps-ring1','dps-ring2','dps-boots','dps-mainhand','dps-offhand'], function(k,v) {
+		  if(stats[v]) {
+  		  var per = stats[v] / dpsM,
+  		      tPer = stats[v] / dpsT,
+  		      val = Math.round(stats[v]).toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,");
+        $("#gear-" + v).html(val + "<br/>(" + (Math.round(tPer * 1000) / 10) + "%)");
+        // $("#gear-" + v).css({color: "rgb(" + parseInt(color) + ",0,0)"});
+        $("#gear-" + v).css("color", $.Color( "#750" ).transition($.Color( "#f50" ), (tPer * 12))); 
+      }
+		});
 	}
 	// Run stats display
 	displayStats();
 	// Bind Character Tabs
-	$("#character").tabs({
-	    select: function(event, ui){
-	      window.location = ui.tab.href;
-	    }
-	});
+  // $("#character").tabs({
+  //     select: function(event, ui){
+  //       window.location = ui.tab.href;
+  //     }
+  // });
 	// Bind Statistics Tabs
 	$(".calc-stats").tabs();
 	// Bind SkillTips on all Skills
@@ -827,7 +980,7 @@ $(function() {
 				existing.val(v);
 			}
 		});
-		// console.log($("#equipped-" + simItemType + " a").data('json'), simAgainstData, simItemType);
+		// d3up.log($("#equipped-" + simItemType + " a").data('json'), simAgainstData, simItemType);
 		// simAgainst.bindTooltip();
 		// simAgainstDisplay.find(".top p").empty().append(simAgainst);
 		var statsValue = simAgainstDisplay.find(".stats-primary .big-stat").empty(),
@@ -856,7 +1009,7 @@ $(function() {
 						case "2h-mace":
 						case "2h-axe":
 						case "bow":
-						case "diabo":
+						case "daibo":
 						case "crossbow":
 						case "2h-mighty":
 						case "polearm":
@@ -981,7 +1134,7 @@ $(function() {
 									simAgainstData.stats.damage.max = ($(this).val()) ? parseFloat($(this).val()) : 0;
 									break;
 								default:
-									// console.log($(this));
+									// d3up.log($(this));
 									return false;
 									break;
 							}
@@ -1015,7 +1168,7 @@ $(function() {
 						statsRange.append(di1, "-", di2).append(" Damage");
 						break;
 					default: 
-						// console.log(k,v);
+						// d3up.log(k,v);
 						break;
 				}
 				input.bind('keyup', function() {
@@ -1111,10 +1264,10 @@ $(function() {
 							calc.removeItem(simItemType);
 							calc.parseItem(simAgainstData, simItemType);
 							stats = calc.run();
-							// console.log(simAgainstData, prevStats);
+							// d3up.log(simAgainstData, prevStats);
 							calcDiff(prevStats, simAgainstData, simItemType, true);
 							displayStats();
-							// console.log(stats, newStats, simItemType);
+							// d3up.log(stats, newStats, simItemType);
 							// calcDiff(stats, newStats, simItemType);
 							// recalc();
 						});
@@ -1177,7 +1330,7 @@ $(function() {
 		switch(newItem.type) {
 			case '2h-mace': 
 			case '2h-axe': 
-			case 'diabo': 
+			case 'daibo': 
 			case '2h-mighty': 
 			case 'polearm': 
 			case 'staff': 
@@ -1197,7 +1350,7 @@ $(function() {
 		// calculate the diff
 		var diff = calc.diff(oldStats, newStats);
 		// Debug the Diff
-		// console.log(calc.diff(oldStats, newStats));
+		// d3up.log(calc.diff(oldStats, newStats));
 		$(".compare-diff").empty();
 		if(!hideHelpers) {
 			var h4 = $("<h4>Comparision Results</h4>").css({margin: 0}),
@@ -1255,6 +1408,7 @@ $(function() {
 		calc.parseItem(oldItem, slot);
 		// return diff['mod'];
 	}
+	recalc();
 	// Vote button logic
 	var upvote = $("#button-upvote"),
 			downvote = $("#button-downvote");

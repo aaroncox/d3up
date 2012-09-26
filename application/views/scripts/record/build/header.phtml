@@ -1,0 +1,41 @@
+<div id="build-header" class="build-header title-block" data-class="<?= $this->record->class ?>">
+	<h2>
+		<?= $this->mLink($this->record) ?> 
+	</h2>
+	<h3>
+		Level <span id="character-level"><?= $this->record->level ?: 60 ?></span>,
+		Paragon Level <span id="paragon-level"><?= $this->record->paragon ?: 0 ?></span>
+	</h3>
+	<h5>
+		<?= ucwords(str_replace("-", " ", $this->record->class)) ?> Build
+		<? if($this->record->_lastCrawl): ?>
+			(Last Sync w/ Battle.net: <?= date('F j, Y', $this->record->_lastCrawl) ?>)
+		<? endif ?>
+	</h5>
+	<div id="skill-display" class="ui-widget ui-corner-all ui-helper-clearfix" >
+		<div id="ratings-display">
+			<div class='item-stat inline-flow'>
+				<span class='value'><?= $this->prettyStat($this->record->views) ?></span>
+				<span class='stat'>Views</span>
+			</div>
+			<img id="button-upvote" src="/images/upvote.png" class="ui-state-disabled ui-corner-all" data-name="Build Voting	" data-tooltip="In order to record your vote, we require to to be logged in. Please login or create an account!">
+			<div class='item-stat inline-flow'>
+				<span class='value' id="vote-count" data-count="<?= $this->record->votes ?: 0 ?>"><?= $this->record->votes ?: 0 ?></span>
+				<span class='stat'>Votes</span>
+			</div>
+			<img id="button-downvote" src="/images/downvote.png" class="ui-state-disabled ui-corner-all" data-name="Build Voting	" data-tooltip="In order to record your vote, we require to to be logged in. Please login or create an account!">
+		</div>
+		<div class="active-container inline-flow">
+  		<h3 class="inline-flow">Skills</h3>
+  		<ul id="active-display" data-skill-type="actives" data-display="icon">
+  			<li style="padding: 9px">None Selected</li>
+  		</ul>
+  	</div>
+		<div class="passive-container inline-flow">
+  		<h3 class="inline-flow">Passives</h3>
+  		<ul id="passive-display" data-skill-type="passives" data-display="icon">
+  			<li style="padding: 9px">None Selected</li>
+  		</ul>
+  	</div>
+	</div>
+</div>

@@ -315,7 +315,7 @@ $(function() {
 			var $this = this,
 					id = section.attr("data-section"),
 					hidden = section.attr("data-hidden"),
-					controls = $("<div class='section-control'>"),
+					controls = $("<div class='section-control button-bar'>"),
 					btnEdit = $("<a class='button btnEdit'>Edit</a>"),
 					toggleHidden = $("<label for='tglHidden'>Hidden?</label><input type='checkbox' name='tglHidden' class='tglHidden'>"),
 					sectionType = $("<select name='section-type'>"),
@@ -410,7 +410,7 @@ $(function() {
 				if(this.btnSaveGuide) {
 					this.btnSaveGuide.bind('click', function() {
 						$(".btnDone").trigger('click');
-						// console.log($this.data);
+						// d3up.log($this.data);
 						$.ajax({
 						  type: 'POST',
 						  data: {

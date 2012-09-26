@@ -1,9 +1,8 @@
-<div class="home inline-flow">
+<div class="content-page home inline-flow">
 	<? foreach($this->posts as $post): ?>
 		<?= $this->partial("./post/types/".$post->_type.".phtml", array('post' => $post)) ?>
 		<p style="padding: 0 10px; text-align: right"><a href="/update/<?= $post->id ?>#disqus_thread">Loading Comments</a></p>
 	<? endforeach; ?>
-
 	<?php echo $this->paginationControl($this->posts,
 	                                    'Elastic',
 	                                    'post/_pages.phtml'); ?>
