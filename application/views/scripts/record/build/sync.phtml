@@ -6,7 +6,7 @@
     <p>This build was created by someone who wasn't logged in and just wanted to import their character. No edits can be made to the gear/skills on this build, the only way to change it is to resync with Battle.net. </p>
   <? endif ?>
   <p>This Build uses the following character:</p>
-  <div class='notice'><a href="<?= D3Up_Tool_Crawler::makeUrl($this->record->_characterRg, $this->record->_characterBt, $this->record->_characterId) ?>"><?= $this->record->_characterBt ?> - Character ID #<?= $this->record->_characterId?></a></div>
+  <div class='notice'><a href="<?= D3Up_Tool_Crawler::makeUrl($this->record->_characterRg, $this->record->_characterBt, $this->record->_characterId) ?>"><?= $this->record->_characterBt ?> <br/> Character ID #<?= $this->record->_characterId?></a></div>
   <a class="button" href="/b/<?= $this->record->id ?>/resync">Resync above character with D3Up.com</a>
   <? if($this->record->_createdBy->id): ?>
     <p>You may sync your profile once every (15) minutes by clicking the button above.</p>
@@ -18,6 +18,8 @@
     <a class='button' href='/build/create'>Create a new Build</a>
   <? endif ?>
 <? else: ?>
-  <p></p>
+  <p>We aren't sure which character you used to sync this build with the first time. This is most likely due to the character not being sync'd in a while.</p>
+  <p>Please use the button below and pick which character you'd like to sync this build with from here on out.</p>
+  <a class="button" href="/b/<?= $this->record->id ?>/crawl">Specify which Character to Sync</a>
 <? endif ?>
 </div>
