@@ -488,11 +488,15 @@
 					  switch(type) {
 	            case "passives":
 	              build.skills[type][slug] = passives[build.meta.heroClass][slug];
-								build.skills[type][slug].order = idx;
+								if(build.skills[type][slug]) {
+									build.skills[type][slug].order = idx;									
+								}
 	              break;
 	            case "actives":
 	              build.skills[type][slug] = activeSkills[build.meta.heroClass][slug];
-								build.skills[type][slug].order = idx;
+								if(build.skills[type][slug]) {
+									build.skills[type][slug].order = idx;									
+								}
 	              break;
 	            default:
 	              // console.log("Unknown Skills Type: " + type);
