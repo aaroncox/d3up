@@ -325,6 +325,7 @@ class RecordController extends D3Up_Controller_Action
 	}
 	public function resyncAction() {
 		$record = $this->getRecord();
+		$profile = D3Up_Auth::getInstance()->getProfile();
 		if(!$record->_characterId) {
 			throw new Exception("[ID] This build isn't attached to a Battle.net Profile");
 		}
@@ -334,7 +335,14 @@ class RecordController extends D3Up_Controller_Action
 		if(!$record->_characterBt) {
 			throw new Exception("[RG] This build isn't attached to a Battle.net Profile");
 		}
-		$profile = D3Up_Auth::getInstance()->getProfile();
+		// Admin Diagnostics
+		if($profile && $profile->id == 2) {
+  		D3Up_Tool_Crawler::getInstance()->crawl($record, $profile, $record->_characterId);		  
+		  $record->crawlCount++;
+  		$record->_lastCrawl = time();
+  		$record->save();
+  		exit;
+		}
 		if($record->_createdBy && $profile && $profile->id == $record->_createdBy->id) {
   		if(time() <= $record->_lastCrawl + 60 * 15) {
   			throw new Exception("Profiles may only be crawled once every 15 minutes. This profile has been updated too recently to be updated again, try again later!");
