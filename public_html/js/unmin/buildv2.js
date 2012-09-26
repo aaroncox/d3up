@@ -96,15 +96,19 @@
               break;
           }
         }
-        if(isNaN(parseFloat(value)) && value) {
+				if(id == 'dps-speed-display') {
 					stat.prepend(prefix + value + suffix);
-				} else if(value) {
-          value = Math.round(value * 100) / 100;
-          value = value.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,");          
-          stat.prepend(prefix + value + suffix);
-        } else {
-          stat.prepend(prefix + "0" + suffix);
-        }
+				} else {
+	        if(isNaN(parseFloat(value)) && value) {
+						stat.prepend(prefix + value + suffix);
+					} else if(value) {
+	          value = Math.round(value * 100) / 100;
+	          value = value.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,");          
+	          stat.prepend(prefix + value + suffix);
+	        } else {
+	          stat.prepend(prefix + "0" + suffix);
+	        }					
+				}
       });
     },
     renderSkillsTo: function(elem) {
