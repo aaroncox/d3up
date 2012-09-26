@@ -141,7 +141,7 @@
 					});
 				} else {
 					$.each(unordered, function(slug, data) {
-						if(data.order) {
+						if(data) {
 							ordered[data.order] = {
 								slug: slug,
 								data: data
