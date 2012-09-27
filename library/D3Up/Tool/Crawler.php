@@ -30,22 +30,19 @@ class D3Up_Tool_Crawler
 	);
 
 	static public function get($url) {
-    // var_dump($url); 
-	  $body = file_get_contents($url);
-    // $config = array(
-    //  // 'adapter' => 'Zend_Http_Client_Adapter_Proxy',
-    //  // 'timeout' => '15',
-    //  // 'useragent' => '',
-    //  // 'proxy_host' => '192.168.1.7',
-    //  // 'proxy_port' => '8888',
-    //  // 'proxy_user' => '',
-    //  // 'proxy_pass' => '',
-    //  'encoding'      => 'UTF-8'
+    // --- With Proxy
+    // $aContext = array(
+    //     'http' => array(
+    //         'proxy' => 'tcp://192.168.1.7:8888',
+    //         'request_fulluri' => true,
+    //     ),
     // );
-    // $client = new Zend_Http_Client($url, $config);
-    // $response = $client->request();
-    // $body = $response->getBody();
-    // var_dump($body); exit;
+    // $cxContext = stream_context_create($aContext);
+    // $body = file_get_contents($url, false, $cxContext);
+    
+    // --- No Proxy
+	  $body = file_get_contents($url);
+		
 		return Zend_Json::decode($body);
 	}
 	
