@@ -582,7 +582,7 @@ $(function() {
 				skills = _.keys(build.getSkills().actives);
 		select.append("<option value=''>None</option>");
 		$.each(activeSkills[heroClass], function(slug, data) {
-			var option = $("<option value='" + slug + "'>").html(slug.replace(/\-/g, " ").capitalize()),
+			var option = $("<option value='" + slug + "'>").html(data.name),
 					idx = v;
 			if(skills[idx] && skills[idx] == slug) {
 				option.attr("selected", "selected");
@@ -602,45 +602,47 @@ $(function() {
 		});
 	});
 	// Append Save Buttons
-	var savePassives = $("<a class='save-skills button'>").html("Save Passives");
-	$("#passive-skill-chooser").append(savePassives);
-	var saveActives = $("<a class='save-skills button'>").html("Save Skills");
-	$("#active-skill-chooser").append(saveActives);
-	// Bind Clicks
-	$(".save-skills").click(function() {
-		var skills = [],
-				passives = [];
-		$("#passive-skill-chooser").find("select").each(function() {
-			passives.push($(this).val());
-		});
-		$("#active-skill-chooser").find("select").each(function() {
-			skills.push($(this).val());
-		});
-		$("#active-skill-chooser").hide();
-		$("#passive-skill-chooser").hide();
-		// console.log(passives);
-		$.ajax({
-			data: {
-				a: 'skills',
-				actives: skills,
-				passives: passives,
-				stats: {
-					dps: d3up.builds.build.stats.dps,
-					ehp: d3up.builds.build.stats.ehp
-				},
-				success: function() {
-					$($("<div style='padding: 20px'/>").html("Saved!")).dialog({
-						modal: true,
-						buttons: {
-							Ok: function() {
-								$( this ).dialog( "close" );
+	if($("#character").data("owner")) {
+		var savePassives = $("<a class='save-skills button'>").html("Save Passives");
+		$("#passive-skill-chooser").append(savePassives);
+		var saveActives = $("<a class='save-skills button'>").html("Save Skills");
+		$("#active-skill-chooser").append(saveActives);
+		// Bind Clicks
+		$(".save-skills").click(function() {
+			var skills = [],
+					passives = [];
+			$("#passive-skill-chooser").find("select").each(function() {
+				passives.push($(this).val());
+			});
+			$("#active-skill-chooser").find("select").each(function() {
+				skills.push($(this).val());
+			});
+			$("#active-skill-chooser").hide();
+			$("#passive-skill-chooser").hide();
+			// console.log(passives);
+			$.ajax({
+				data: {
+					a: 'skills',
+					actives: skills,
+					passives: passives,
+					stats: {
+						dps: d3up.builds.build.stats.dps,
+						ehp: d3up.builds.build.stats.ehp
+					},
+					success: function() {
+						$($("<div style='padding: 20px'/>").html("Saved!")).dialog({
+							modal: true,
+							buttons: {
+								Ok: function() {
+									$( this ).dialog( "close" );
+								}
 							}
-						}
-					});
+						});
+					}
 				}
-			}
+			});
 		});
-	});
+	}
   // Calculate Armor Percentages
   var tArmor = $("tr.stat-armor td.data").text().replace(",","");
   $(".item-rating-armor .rating-bar").each(function() {
