@@ -1774,7 +1774,8 @@ BuildCalculator.prototype = {
 					'poison-resist': 'Poison Res', 
 					'physical-resist': 'Physical Res', 
 					'critical-hit': 'Crit Hit', 
-					'critical-hit-damage': 'Crit Hit Dmg'
+					'critical-hit-damage': 'Crit Hit Dmg',
+					'dps-speed-display': 'Attk/Sec',
 				};
     // console.log(s1, s2);
 		_.each(s1, function(val, key) {
