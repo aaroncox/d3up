@@ -577,6 +577,9 @@ BuildCalculator.prototype = {
 			// Formula: ( 1 - Percentage Resist All ) * ( 1 - Percentage Armor Reduction ) * (1 - Bonus Damage Reduction) * (1 - 30% Melee Damage Reduction )
 			// ----------------------------------
 			rendered.damageTaken 			= ( 1 - defenses['percent-resist-all'] ) * ( 1 - defenses.armorReduction ) * (1 - this.bonuses['plus-damage-reduce']) * ( 1 - 0.3 );
+			rendered['total-armor-reduction'] = defenses.armorReduction * 100;
+			rendered['total-resist-reduction'] = defenses['percent-resist-all'] * 100;
+			rendered['total-damage-reduction'] = (1 - rendered.damageTaken) * 100;
 			// ----------------------------------
 			// Individual EHP Calculations for each resist
 			// Formula: ( Life / ( 1 - Percentage Armor Reduction ) * ( 1 - Percentage Individual Resist ) * (1 - 30% Melee Damage Reduction ) )
@@ -1767,7 +1770,6 @@ BuildCalculator.prototype = {
 					'blockChance': 'Block %', 
 					'allResist': 'All Resists', 
 					'lifeTotal': 'Life', 
-					'armorReduction': 'Dmg Reduce', 
 					'plus-life': '+Life', 
 					'armor': 'Armor', 
 					'cold-resist': 'Cold Res', 
@@ -1783,6 +1785,9 @@ BuildCalculator.prototype = {
 					'ehp-dodge': 'EHP w/ Dodge',
 					'block-amount': 'Block', 
 					'block-chance': '%Block',
+					'total-armor-reduction': 'Armor DmgReduce', 
+					'total-resist-reduction': 'Resist DmgReduce',
+					'total-damage-reduction': 'Total DmgReduce',
 				};
     // console.log(s1, s2);
 		_.each(s1, function(val, key) {
