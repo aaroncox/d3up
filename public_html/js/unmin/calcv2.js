@@ -390,10 +390,11 @@ BuildCalculator.prototype = {
 														break;
 													case "attack-speed": 
 														if(this.attrs['attack-speed-incs']) {
-															this.attrs['attack-speed-incs'] += eff;															
+															this.attrs['attack-speed-incs'] += (eff * 100);															
 														} else {
-															this.attrs['attack-speed-incs'] = eff;
+															this.attrs['attack-speed-incs'] = (eff * 100);
 														}
+														// console.log(c, i, eff);
 														break;
 													case "critical-hit":
 														this.attrs['critical-hit'] = this.attrs['critical-hit'] + (eff * 100);														
@@ -774,6 +775,7 @@ BuildCalculator.prototype = {
 		if(this.attrs['attack-speed-incs']) {
 			atkSpeedInc = this.attrs['attack-speed-incs'] / 100;
 		}
+		// console.log(this.attrs['attack-speed-incs']);
 		// Elemental Damage Bonuses
 		_.each(['plus-fire-damage', 'plus-arcane-damage', 'plus-poison-damage', 'plus-cold-damage', 'plus-lightning-damage', 'plus-holy-damage'], function(v,k) {
 			if(_.has(this.attrs, v)) {
