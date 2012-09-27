@@ -517,7 +517,7 @@ BuildCalculator.prototype = {
 		// ----------------------------------
 		// Block Value
 		if(this.attrs['block-amount']) {
-			rendered['block-value'] = average.apply(null, this.attrs['block-amount'].split("-"));			
+			rendered['block-amount'] = average.apply(null, this.attrs['block-amount'].split("-"));			
 		}
 		// ----------------------------------
 		// Dodge Chance
@@ -621,11 +621,12 @@ BuildCalculator.prototype = {
 		// EHP Block Calculation 
 		// Formula: 
 		// ----------------------------------
-		if(defenses['block-chance'] && defenses['block-value']) {
+		if(defenses['block-chance'] && defenses['block-amount']) {
 			var hit = 70000,
 					taken = rendered.damageTaken * hit,
-					reduced = (defenses['block-chance'] / 100 * defenses['block-value']),
+					reduced = (defenses['block-chance'] / 100 * defenses['block-amount']),
 					change = taken / (taken - reduced);
+			// console.log(defenses['block-amount']);
 			rendered['ehp-block'] = ( rendered['ehp-dodge']  * change );
 			if(rendered['ehp-block'] < 0) {
 				rendered['ehp-block'] = "Invulnerable";
@@ -1461,8 +1462,9 @@ BuildCalculator.prototype = {
 							};
 						}							
 						break;
+					case "block-value":
 					case "block-amount":
-						this.attrs[ak] = 0;
+						this.attrs['block-amount'] = 0;
 						break;
 					default:
 						this.attrs[ak] -= parseFloat(av);
@@ -1522,9 +1524,10 @@ BuildCalculator.prototype = {
 							};
 						}							
 						break;
+					case "block-value":
 					case "block-amount":
 						this.isDuelWielding = false;
-						this.attrs[ak] = av['min'] + "-" + av['max'];
+						this.attrs['block-amount'] = av['min'] + "-" + av['max'];
 						break;
 					case "armor":
 						switch(json.type) {
@@ -1776,6 +1779,10 @@ BuildCalculator.prototype = {
 					'critical-hit': 'Crit Hit', 
 					'critical-hit-damage': 'Crit Hit Dmg',
 					'dps-speed-display': 'Attk/Sec',
+					'ehp-block': 'EHP w/ Block',
+					'ehp-dodge': 'EHP w/ Dodge',
+					'block-amount': 'Block', 
+					'block-chance': '%Block',
 				};
     // console.log(s1, s2);
 		_.each(s1, function(val, key) {

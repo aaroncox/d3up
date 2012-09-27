@@ -296,7 +296,7 @@ class D3Up_View_Helper_DisplayItem extends Zend_View_Helper_Abstract
 		return $html;
 	}
 	private function _renderBottom() {
-		if($this->_item->_createdBy->id) {
+		if($this->_item->_createdBy && $this->_item->_createdBy->id) {
 			$extra = "";
 			if($this->_item->_original->id) {
 				$extra = " (Copied from <a href='/i/".$this->_item->_original->id."'>Here</a>)";

@@ -443,6 +443,18 @@ ItemBuilder.prototype = {
 				}
 				this.item.stats.damage.min = parseFloat(value);
 				break;
+			case "block-min":
+				if(!this.item.stats['block-amount']) {
+					this.item.stats['block-amount'] = {};
+				}
+				this.item.stats['block-amount'].min = parseFloat(value);
+				break;
+			case "block-max":
+				if(!this.item.stats['block-amount']) {
+					this.item.stats['block-amount'] = {};
+				}
+				this.item.stats['block-amount'].max = parseFloat(value);
+				break;
 			default:
 				this.item.stats[name] = parseFloat(value);
 				break;
@@ -498,7 +510,7 @@ ItemBuilder.prototype = {
 				this.item.attrs[name] = parseFloat(value);
 				break;
 		}
-		console.log(name, value);
+		// console.log(name, value);
 		if(this.changeCallback) {
 			this.changeCallback(this);
 		}
