@@ -889,6 +889,9 @@ tr.compared > td:first-child {
 	height: 36px;
 	max-width: 135px;
 }
+#recent-builds td.stat {
+	font-size: 12px;
+}
 #recent-builds .votes,
 #recent-builds .views {
 	display: none;
