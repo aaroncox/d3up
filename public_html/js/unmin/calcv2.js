@@ -792,8 +792,8 @@ BuildCalculator.prototype = {
 		if(this.isDuelWielding) {
 		  if(this.attrs['plus-aps']) {
   			rendered['dps-speed'] = {
-  				mh: Math.floor((this.attrs['speed'] + this.attrs['plus-aps']) * 1024) / 1024,
-  				oh: Math.floor((this.attrs['speed-oh'] + this.attrs['plus-aps']) * 1024) / 1024
+  				mh: Math.floor((this.attrs['speed'] + (this.attrs['plus-aps'] / 2)) * 1024) / 1024,
+  				oh: Math.floor((this.attrs['speed-oh'] + (this.attrs['plus-aps'] / 2)) * 1024) / 1024
   			};
       } else {
   			rendered['dps-speed'] = {
