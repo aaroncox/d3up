@@ -83,22 +83,25 @@
     // ------------------------------
     // Legacy Code, Needs Revamped Eventually
     // ------------------------------
-		var bonusCounter = {};
-		$(".equipped a[json]").each(function() {
-			var json = $(this).data("json");
-			if(json.set) {
-				if(!bonusCounter[json.set]) {
-					bonusCounter[json.set] = 0;
-				}
-				bonusCounter[json.set]++;
-			}
-		});
-		$(".equipped a[json]").each(function() {
-			var json = $(this).data("json");
-			if(json.set) {
-				$(this).attr("data-set-count", bonusCounter[json.set]);
-			}
-		});
+    $(function() {
+  		var bonusCounter = {};
+  		$(".equipped a").each(function() {
+  			var json = $(this).data("json");
+  			if(json.set) {
+  				if(!bonusCounter[json.set]) {
+  					bonusCounter[json.set] = 0;
+  				}
+  				bonusCounter[json.set]++;
+  			}
+  		});
+  		$(".equipped a").each(function() {
+  			var json = $(this).data("json");
+  			if(json.set) {
+  				$(this).attr("data-set-count", bonusCounter[json.set]);
+  				$(this).bindTooltip();
+  			}
+  		});      
+    });
   </script>
 	<script type="text/javascript">
 	  $(function() {

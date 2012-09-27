@@ -35,6 +35,7 @@ class D3Up_View_Helper_ItemLink extends Epic_View_Helper_MLink
 			'class' => 'quality-'.$item->quality,
 			'data-json' => json_encode($item->cleanExport()),
 			'data-slot' => $slot,
+			'data-set' => $item->set,
 			'href' => $this->view->url(array(
 				'record' => $item,
 			)+$urlParams, 'item', true),

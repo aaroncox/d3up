@@ -78,7 +78,8 @@ $.fn.bindTooltip = function() {
 		var builder = new d3up.ItemBuilder;
 		var data = builder.getBonusHtml(item.set);
 		itemSetBonus.empty().append(data.name, data.list);
-		if($(this).data("set-count")) {
+		// console.log($(this).attr("data-set-count"));
+		if($(this).attr("data-set-count")) {
 			var count = $(this).data("set-count");
 			if(data.list) {
 				data.list.find("div.data-count").each(function() {
