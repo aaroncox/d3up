@@ -6975,6 +6975,7 @@ td['physical-resist'] = '+VVV Physical Resistance';
 td['poison-resist'] = '+VVV Poison Resistance';
 td['thorns'] = 'Melee attackers take VVV damage per hit';
 td['attack-speed'] = 'Attack speed increased by VVV%';
+td['plus-aps'] = '+VVV Attacks per Second';
 td['critical-hit'] = 'Critical Hit Chance increased by VVV%';
 td['critical-hit-damage'] = 'Critical Hit Damage increased by VVV%';
 td['plus-damage'] = '+VVV% Damage';

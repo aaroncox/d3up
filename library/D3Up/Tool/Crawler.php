@@ -182,6 +182,7 @@ class D3Up_Tool_Crawler
 		// Offensive Stats
 		'attack-speed' => 'Attack speed increased by [v]%',
 		'attack-speed~2' => 'Increases attack speed by [v]%',
+		'plus-aps' => '+[v] Attacks per Second',
 		'critical-hit' => 'Critical Hit Chance increased by [v]%',
 		'critical-hit-damage' => 'Critical Hit Damage increased by [v]%',
 		'plus-damage' => '+[v]% Damage',
@@ -395,6 +396,7 @@ class D3Up_Tool_Crawler
 		$skills = array();
 		$passives = array();
     // echo "<pre>"; var_dump($url, $profile); exit;
+    // if(isset($profile['skills'])) {      
 		foreach($profile['skills']['active'] as $idx => $skill) {
 			$current = $skill['skill']['slug'];
 			if(isset($skill['rune'])) {
@@ -407,6 +409,7 @@ class D3Up_Tool_Crawler
 		foreach($profile['skills']['passive'] as $skill) {
 			$passives[] = $skill['skill']['slug'];			
 		}
+    // }
 		foreach ($profile['items'] as $slot => $gear) {
 			// if($slot != "offHand") {
 			// 	continue;
@@ -484,8 +487,9 @@ class D3Up_Tool_Crawler
 					$stat = $parts[0];
 					$text = str_replace("–", "-", $attr);
 					$regex = "/".str_replace(array('+', '[v]'), array('\+','(\d+(\.\d+)?)'), $regex)."/i";
-					// var_dump($text, $regex);
+          // var_dump($text, $regex);
 					if(preg_match($regex, $text, $matches)) {
+            // var_dump(count($matches));
 						if(count($matches) > 3) {
 							$attrsArray[$stat] = array(
 								'min' => (float) $matches[1],
@@ -513,6 +517,9 @@ class D3Up_Tool_Crawler
 			// Add Attributes to the Item and Query
 			$query['attrs'] = $attrsArray;
 			$query['stats'] = $statsArray;
+			if($slot == "mainhand") {
+  			// var_dump($attrsArray); exit;			  
+			}
 			if($gearSet) {
 				$query['set'] = $gearSet;
 			}
@@ -520,6 +527,7 @@ class D3Up_Tool_Crawler
 			// Look to see if this item exists!
 			$found = Epic_Mongo::db('item')->fetchOne($query);
 			// Did we find this item already?
+      // var_dump($slot); exit;
 			if($slot == 'mainhand') {
 			  if(isset($data['type']) && isset($data['type']['twoHanded'])) {
           $build->equipment['offhand'] = null;
@@ -543,7 +551,9 @@ class D3Up_Tool_Crawler
 				$new->attrs->setFromArray($attrsArray);
 				$new->_created = time();
 				$new->_createdBy = $user;
-				// var_dump($new->export()); exit;
+				if($slot == 'mainhand') {
+          // var_dump($new->export()); exit;
+        }
 				$new->save();
 				$status[$slot] = array(
 					'result' => 'new',
