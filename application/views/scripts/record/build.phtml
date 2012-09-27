@@ -87,7 +87,7 @@
   		var bonusCounter = {};
   		$(".equipped a").each(function() {
   			var json = $(this).data("json");
-  			if(json.set) {
+  			if(json && json.set) {
   				if(!bonusCounter[json.set]) {
   					bonusCounter[json.set] = 0;
   				}
@@ -96,7 +96,7 @@
   		});
   		$(".equipped a").each(function() {
   			var json = $(this).data("json");
-  			if(json.set) {
+  			if(json && json.set) {
   				$(this).attr("data-set-count", bonusCounter[json.set]);
   				$(this).bindTooltip();
   			}
