@@ -1,0 +1,49 @@
+<tbody>
+	<tr>
+		<th></th>
+		<th>Name</th>
+		<th>Skills</th>
+		<th>DPS</th>
+		<th>EHP</th>
+		<th></th>
+	</tr>
+<? foreach($this->builds as $build): ?>
+	<tr class='build-row'>
+		<td class="icon"><img src="/images/<?= $build->class ?>.png"/></td>
+		<td class='name'><?= $this->mLink($build) ?></td>
+		<td class="skills">
+			<? if($build->actives): ?>
+				<? foreach($build->actives as $active): ?>
+					<? 
+						if($active == "undefined") {
+							?>
+							<img data-class="<?= $build->class ?>" src="/images/icons/unknown.png" class="skill-tip"/>
+							<?
+							continue;
+						}
+						$explode = explode("~", $active);
+						$skill = $explode[0];
+					?>
+					<img data-class="<?= $build->class ?>" data-id="<?= $active ?>" data-class="<?= $build->class ?>" src="/images/icons/<?= $build->class ?>-<?= $skill ?>.png" class="skill-tip"/>
+				<? endforeach ?>
+			<? endif ?>
+			<? if($build->passives): ?>
+				<? foreach($build->passives as $passive): ?>
+					<? 
+						$explode = explode("~", $passive);
+						$skill = $explode[0];
+					?>
+					<img data-class="<?= $build->class ?>" data-id="<?= $passive ?>" src="/images/icons/<?= $build->class ?>-<?= $skill ?>.png" class="skill-tip"/>
+				<? endforeach ?>
+			<? endif ?>
+		</td>
+		<td class="stat"><?= $this->prettyStat($build->stats['dps']) ?></td>
+		<td class="stat"><?= $this->prettyStat($build->stats['ehp']) ?></td>
+		<td class="stat">
+		  <? if(D3Up_Auth::getInstance()->getProfile()->id == $build->_createdBy->id): ?>
+		    <?= $this->mLink($build, array('action' => 'delete', 'text' => 'Delete'))?>
+		  <? endif ?>
+		</td>
+	</tr>
+<? endforeach; ?>
+</tbody>
