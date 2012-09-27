@@ -36,6 +36,7 @@
 		<th>Skills</th>
 		<th><a href="?sort=dps<?= $params ?>">DPS</a></th>
 		<th><a href="?sort=ehp<?= $params ?>">EHP</a></th>
+		<th></th>
 	</tr>
 <? foreach($this->builds as $build): ?>
 	<tr class='build-row'>
@@ -77,6 +78,11 @@
 		</td>
 		<td class="stat"><?= $this->prettyStat($build->stats['dps']) ?></td>
 		<td class="stat"><?= $this->prettyStat($build->stats['ehp']) ?></td>
+		<td class="stat">
+		  <? if(D3Up_Auth::getInstance()->getProfile()->id == $build->_createdBy->id): ?>
+		    <?= $this->mLink($build, array('action' => 'delete', 'text' => 'Delete'))?>
+		  <? endif ?>
+		</td>
 	</tr>
 <? endforeach; ?>
 	<tr>
