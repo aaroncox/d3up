@@ -70,6 +70,7 @@ builder.init();
 builder.setChangeCallback(calcDiff);
 // console.log(newItem);
 builder.updatePreview();
+console.log(slot);
 slot.bind('change', function() {
   newItemSlot = $(this).val();
   calcDiff();
@@ -108,12 +109,13 @@ function calcDiff(itemBuilder) {
   // d3up.log(calc.diff(oldStats, newStats));
   $(".compare-diff").empty();
   // if(!hideHelpers) {
-   var h4 = $('<tr class="header "><th colspan="10" class="button"></span>Comparison Results</th></tr>'),
+   var h4 = $('<tr class="header "><th colspan="10" class="button">Comparison Results</th></tr>'),
        vsRow = $("<td colspan='10'>").append(calc.getD3BitItemLink(oldItem), " vs ", calc.getD3BitItemLink(newItem));
     // if(oldItemOH) {
     //  oldLabel.append(" + Offhand: ", calc.getItemLink(oldItemOH));
     // }      
   // }
+  // h4.find("th").append(slot);
   var table = $("<table class='statistics-table' id='compare-table'/>"),
       head = $("<thead>").append(h4, vsRow);
       headers = $("<tr>").append("<th>Stat</th><th>Diff</th><th>Old</th><th>New</th>"),
@@ -152,9 +154,11 @@ function calcDiff(itemBuilder) {
   //   $(this).bindTooltip();
   // });     
   $(".compare-diff").append(table);  
+  
 }
 calcDiff();
-$(".statistics-table .header th").append(slot);
+// slot.hide();
+// $(".statistics-table .header th").append(slot);
 
 </script>
 <script type="text/javascript">
@@ -168,6 +172,6 @@ clicky_site_ids.push(66607061);
   ( document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0] ).appendChild( s );
 })();
 </script>
-<noscript><p><img alt="Clicky" width="1" height="1" src="//in.getclicky.com/66607061ns.gif" /></p></noscript>
+<noscript><p><img alt="Clicky" width="1" height="1" src="//in.getclicky.com/66607061ns.gif" /></p></noscript> 
 </body>
 </html>

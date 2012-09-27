@@ -311,7 +311,16 @@
 								icon = $("<img src='/images/icons/" + build.meta.heroClass + "-" + cleaned[0] + ".png'>");
 								icon.attr('data-tooltip', data.desc);
 								icon.attr('data-name', data.name);
+								if(data.rune) {
+									icon.attr('data-tooltip', data.desc.replace(/  /, "<br/><br/>") + "<br/><br/>" + data.rune);
+								}
+								h3.attr('data-tooltip', data.desc);
+								h3.attr('data-name', data.name);
+								if(data.rune) {
+									h3.attr('data-tooltip', data.desc.replace(/  /, "<br/><br/>") + "<br/><br/>" + data.rune);
+								}
 								icon.bindSkilltip();
+								h3.bindSkilltip();
 	              h3.prepend(icon);								
 							}
               td.prepend(h3);
