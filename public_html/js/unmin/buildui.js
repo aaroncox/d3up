@@ -82,7 +82,7 @@ $(function() {
 		  $.each(d3up.builds, function(k) {
 		    d3up.builds[k].renderAgain();
 		  });
-			itemRow.find(".gear-change").html("Modify");
+			itemRow.find(".gear-change").html("Modify/Compare");
 		}
 		if($("." + simulateRowName).length) {
 		  $("." + simulateRowName).remove();
@@ -318,7 +318,7 @@ $(function() {
 		    statistics.find(".statistics-table").show();   
 		    compareResults.hide();     
 		  }
-			$(this).html("Modify");
+			$(this).html("Modify/Compare");
 		  // Remove the Compare Overview row
 		  return false;
 		}
