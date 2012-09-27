@@ -102,6 +102,9 @@
 	        if(isNaN(parseFloat(value)) && value) {
 						stat.prepend(prefix + value + suffix);
 					} else if(value) {
+						if(stat.data("multiply")) {
+							value = value * 100;
+						}
 	          value = Math.round(value * 100) / 100;
 	          value = value.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,");          
 	          stat.prepend(prefix + value + suffix);

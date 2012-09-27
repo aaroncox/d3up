@@ -3861,7 +3861,6 @@ var activeSkills = {
 			rune: 'While your vortex is at the maximum stack count, Critical Hits have a chance to spawn a lightning tornado that periodically electrocutes nearby enemies for 20% weapon damage as Lightning. Each spawned lightning tornado lasts 3 seconds.',
 			effect: {
 				'cost-spirit': 75,
-				'weapon-damage': 20,
 				'stack': {
 					'weapon-damage': {
 						'limit': 3,
