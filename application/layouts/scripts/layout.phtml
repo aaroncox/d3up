@@ -49,7 +49,7 @@
 				  <? if($this->profile): ?>
 			      <span class='user-bar'><a href="/user/edit"><?= $this->profile->username ?></a> | <a href="/user/logout">Logout</a></span>
 				  <? else: ?>
-				    <span class='user-bar'><a href="/user/login">Login</a></span>
+				    <span class='user-bar'><a href="/user/login">Login</a> | <a href='/user/register'>Register</a></span>
 				  <? endif ?>
   		  </h2>
 				<?= $this->render("_system-message.phtml")?>
