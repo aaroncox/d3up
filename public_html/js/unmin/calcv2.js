@@ -1759,6 +1759,7 @@ BuildCalculator.prototype = {
 					'resist-all': 'Resist All',
 					'thorns': 'Thorns', 
 					'life-hit': 'Life/Hit', 
+					'life-regen': 'Life/Regen',
 					'ap-on-crit': 'AP/Crit', 
 					'plus-block': '+Block', 
 					'dps': 'DPS', 
