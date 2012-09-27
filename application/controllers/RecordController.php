@@ -346,10 +346,8 @@ class RecordController extends D3Up_Controller_Action
   		  throw new Exception("You do not have the 'Region' field filled out on your profile! Click <a href='/user/edit'>edit profile</a> and choose your region");
   		}
   		D3Up_Tool_Crawler::getInstance()->crawl($record, $record->_createdBy, $record->_characterId);		  
-  	} elseif($record->_createdBy) {
-  	  if($record->_createdBy->id) {
-  			throw new Exception("This isn't an anonymous build, someone owns this build and you cannot sync it from Battle.net.");
-  		}
+  	} elseif($record->_createdBy->id) {
+			throw new Exception("This isn't an anonymous build, someone owns this build and you cannot sync it from Battle.net.");
 		} else {
   		if(time() <= $record->_lastCrawl + 60 * 60 * 1) {
   			throw new Exception("Anonymous Profiles may only be crawled once every hour. This profile has been updated too recently to be updated again, try again later!");
