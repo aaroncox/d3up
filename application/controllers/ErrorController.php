@@ -81,4 +81,10 @@ class ErrorController extends D3Up_Controller_Action
       // pass the request to the view
       $this->view->request   = $errors->request; 
   } 
+  
+  public function fixGuideAction() {
+    $guide = Epic_Mongo::db('guide')->fetchOne(array('id' => 30)); 
+    $guide->sections[3]->skills[2]->skill = 'sevensided-strike~e';
+    $guide->save();
+  }
 } // END class ErrorController
