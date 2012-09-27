@@ -5380,8 +5380,7 @@ var activeSkills = {
 			effect: {
 				'cost-mana': 102.9,
 				'cooldown': 25,
-				'weapon-damage': 800,
-				'weapon-damage-for': 5,
+				'weapon-damage': 765,
 			},
 		},
 		'fetish-army': {
