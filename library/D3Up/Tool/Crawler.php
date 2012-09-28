@@ -428,10 +428,14 @@ class D3Up_Tool_Crawler
 			}
 			$type = static::$_dirtyTypes[$dirtyType];
 			// Start the Query 
+			$realUser = D3Up_Auth::getInstance()->getProfile();
+			if(!$realUser) {
+			  $realUser = $user;
+			}
 			$query = array(
 				'name' => $data['name'],
 				'type' => $type,
-				'_createdBy' => $user->createReference(),
+				'_createdBy' => $realUser->createReference(),
 			);
 			// Do the Attributes on the Item
 			$attrsArray = array();
@@ -551,7 +555,7 @@ class D3Up_Tool_Crawler
 				$new->sockets = $socketsArray;
 				$new->attrs->setFromArray($attrsArray);
 				$new->_created = time();
-				$new->_createdBy = $user;
+				$new->_createdBy = $realUser;
 				if($slot == 'mainhand') {
           // var_dump($new->export()); exit;
         }
