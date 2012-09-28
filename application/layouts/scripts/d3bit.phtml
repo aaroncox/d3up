@@ -36,6 +36,9 @@
     <? 
     $url = '?';
     foreach($this->params as $key => $param) {
+      if($key == 'battletag') {
+        $param = urlencode($param);
+      }
       $url .= "&".$key."=".$param;
     } 
     ?>
