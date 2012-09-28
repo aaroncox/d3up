@@ -98,6 +98,11 @@
         }
 				if(id == 'dps-speed-display') {
 					stat.prepend(prefix + value + suffix);
+				} else if(id == 'sharpshooter-dps') { 
+					stat.parent().show();
+					value = Math.round(value * 100) / 100;
+          value = value.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,");          
+					stat.prepend(value);
 				} else {
 	        if(isNaN(parseFloat(value)) && value) {
 						stat.prepend(prefix + value + suffix);

@@ -1217,13 +1217,15 @@ BuildCalculator.prototype = {
 		// } else {
 		// 	this.values['dps-speedTotal'] = Math.round(this.values['dps-speed'] * (1 + this.values['dps-addAttackSpeed']) * 100)/100;
 		// }
-		// if(this.bonuses['sharpshooter']) {
-		// 	var oldCrit = this.attrs['critical-hit'];
-		// 	this.attrs['critical-hit'] = 100;
-		// 	this.values['dps-sharpshooter'] = this.calculateDps();
-		// 	this.attrs['critical-hit'] = oldCrit;
-		// 	d3up.log(this.values['dps-sharpshooter'])
-		// }
+		if(this.bonuses['sharpshooter']) {
+			var oldCrit = this.attrs['critical-hit'];
+			this.attrs['critical-hit'] = 100;
+			var ssDps = this.calcOffense();
+			// console.log(ssDps); 
+			this.values['sharpshooter-dps'] = ssDps.dps;
+			this.attrs['critical-hit'] = oldCrit;
+			// d3up.log(this.values['dps-sharpshooter'])
+		}
 		// Some Wackyness to calculate DPS contributions per piece
     _.each(this.gear, function(g, i) {
      var item = i;
