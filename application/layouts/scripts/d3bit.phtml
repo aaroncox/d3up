@@ -40,6 +40,7 @@
             actives: <?= json_encode(($this->build->actives instanceOf Shanty_Mongo_Document) ? $this->build->actives->export() : array()); ?>,
             passives: <?= json_encode(($this->build->passives instanceOf Shanty_Mongo_Document) ? $this->build->passives->export() : array()); ?>
           },
+          builder = new d3up.ItemBuilder,
           gearSlots = $("#build-gear .equipped"),
           gear = <?= $this->build->equipment->getGearJson() ?>,
           newItem = <?= json_encode($this->item->cleanExport()) ?>,
@@ -58,16 +59,51 @@
             skills: skills,
             meta: meta
           });
-      build.run();
-      buildCompare.run();
-      $(".compare-slot").bind('change', function() {
+      
+      // Set the Name Field
+      // builder.setNameInput($("#name"));
+      // Set the Quality Selector
+      // builder.setQualitySelect($("#quality"));
+      // Set the Type Selector
+      // builder.setItemTypeSelect($("#itemType"));
+      // Set the Attribute Selector
+      // builder.setAttributeSelect($("#attributes"));
+      // Set the Socket selector
+      builder.setSocketSelect($("#sockets"));
+      // Set the Item Preview
+      builder.setItemPreview($("#simulate-item"));
+      builder.setItem($("compare-slot").val(), newItem);
+      // Initialize the Item Builder
+      builder.init();
+      builder.setChangeCallback(calcDiff);
+      // console.log(newItem);
+      builder.updatePreview();    
+      
+      function calcDiff(newBuild) {
         build.setGear(gear);
         buildCompare.setGear(gear);
         build.run();
         buildCompare.run();
         // console.log(build, buildCompare);
-        var slotToReplace = $(this).val();
-        buildCompare.setItem(slotToReplace, newItem);
+        var slotToReplace = $(".compare-slot").val(),
+            item = newItem,
+            ohRemoved = false;
+        if(newBuild) {
+          buildCompare.setItem(slotToReplace, newBuild.getItem());          
+        } else {
+          buildCompare.setItem(slotToReplace, newItem);          
+        }
+        // if(newBuild) {
+        //   console.log("using newbuild", newBuild);
+        //   item = ;
+        // }
+        // console.log(item);
+        // buildCompare.setItem(slotToReplace, newBuild.getItem());          
+        if(_.indexOf(['2h-mace','2h-axe','daibo','2h-mighty','polearm','staff','2h-sword'], item.type) >= 0) {
+          // console.log("is type and removing oh");
+          ohRemoved = true;
+          buildCompare.setItem('offhand', null);          
+        }
         buildCompare.run();
         var diff = build.diffWith(buildCompare);
         // Table Rendering
@@ -76,6 +112,9 @@
             oldLink = build.calc.getD3BitItemLink(build.calc.getItem(slotToReplace));
         if(!build.calc.getItem(slotToReplace).name) {
           oldLink = "Nothing (" + slotToReplace + ")";
+        }
+        if(ohRemoved) {
+          oldLink.append(" + ", build.calc.getD3BitItemLink(build.calc.getItem('offhand')));
         }
         var newLink = buildCompare.calc.getD3BitItemLink(buildCompare.calc.getItem(slotToReplace)),
              vsRow = $("<td colspan='10'>").append(oldLink, " vs ", newLink);
@@ -119,6 +158,14 @@
         //   $(this).bindTooltip();
         // });     
         $(".compare-diff").append(table);
+        // console.log('diff');
+      }
+      
+      build.run();
+      buildCompare.run();
+      $(".compare-slot").bind('change', function() {
+        builder.setItem($("compare-slot").val(), newItem);
+        calcDiff();
       });
       $(".compare-slot").trigger('change');
     });
