@@ -7,6 +7,9 @@ body {
   background-color: #222;
   margin: 0;
   padding: 0;
+	overflow: auto;
+  overflow-y: scroll;
+  overflow-x: hidden;
 }
 .d3bit-card {
   width: 358px;
