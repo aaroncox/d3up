@@ -485,12 +485,16 @@
       return this.calc.diff(this.getStats(), build.getStats());
     },
     setGear: function(gear) {
-      // console.log("setting gear");
       var build = this;
       $.each(gear, function(k,v) {
-        var $this = $(v);
-        var slot = $this.attr("data-slot"),
-            item = $.parseJSON($this.attr("data-json"));
+				if($.isPlainObject(v)) {
+					var slot = k, 
+							item = v;
+				} else {
+	        var $this = $(v);
+	        var slot = $this.attr("data-slot"),
+	            item = $.parseJSON($this.attr("data-json"));					
+				}
         build.gear[slot] = item;
       });
     },

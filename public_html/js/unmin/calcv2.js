@@ -157,6 +157,9 @@ BuildCalculator.prototype = {
 	getItem: function(slot) {
 		return this.gear[slot];
 	},
+	getGear: function() {
+		return this.gear;
+	},
 	setItem: function(slot, item) {
 		// Save the JSON in the proper slot
 		this.gear[slot] = item;
@@ -164,7 +167,7 @@ BuildCalculator.prototype = {
 		this.parseItem(item, slot);
 	},
 	getItemLink: function(item) {
-		if(item == null) {
+		if(item == null || !item.name) {
 			return '<a style="color: #ececec">Nothing</a>';
 		}
 		var link = $("<a href='/i/" + item.id + "' class='quality-" + item.quality + "'/>").attr("data-json", JSON.stringify(item)).html(item.name);
@@ -1288,6 +1291,9 @@ BuildCalculator.prototype = {
 	removeItem: function(slot) {
 		var json = this.gear[slot];
 		this.gear[slot] = false;
+		if(slot == 'offhand') {
+			this.isDuelWielding = false;
+		}
 		if(!json) {
 		  return false;
 		}
@@ -1505,6 +1511,7 @@ BuildCalculator.prototype = {
 							this.attrs[ak] = parseFloat(av);
 						}
 						if(slot == "offhand") {
+							// console.log("adding dw", ak, av);
 							this.isDuelWielding = true;
 							this.attrs['speed-oh'] = parseFloat(av);
 						}
