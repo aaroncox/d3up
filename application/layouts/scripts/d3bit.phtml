@@ -5,6 +5,7 @@
 			->appendStylesheet("/css/d3bit.css");
 	?>	
 	<?= $this->headJs()
+	    ->appendFile("/js/scrollpane.js")
 			->appendFile("/js/json3.js")
 			->appendFile("/js/d3up.js")
 			->appendFile("/js/underscore.js")
@@ -33,6 +34,7 @@
   </div>
   <script type="text/javascript">
 	  $(function() {
+	    $(".d3bit-card").jScrollPane();
 	    // ------------------------------
       // BuildV2 Scripts for This Page
       // ------------------------------
