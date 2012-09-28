@@ -51,7 +51,9 @@ $.fn.bindTooltip = function() {
 			itemPrimaryBigStat.html(item.stats.dps);
 			itemPrimaryHelper.html("Damage Per Second");
 			itemExtraPercent.html(item.stats['speed'] + " <span class='stat-helper'>Attacks per Second</span>");
-			itemExtraRange.html(item.stats['damage']['min'] + "-" + item.stats['damage']['max'] + " <span class='stat-helper'>Damage</span>");
+			if(item.stats['damage']) {
+				itemExtraRange.html(item.stats['damage']['min'] + "-" + item.stats['damage']['max'] + " <span class='stat-helper'>Damage</span>");				
+			}
 		}
 		// Add the BigStat and Helper to the primary
 		itemPrimary.append(itemPrimaryBigStat, itemPrimaryHelper);
