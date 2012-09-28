@@ -82,6 +82,7 @@ class AjaxController extends D3Up_Controller_Action
 		 	  }
 		 	  $item->sockets = $newSockets;
 		 	}
+	 	  
 		 	if(count($parts)) {
 		 	 	$range = explode("-", $parts[0]);
     		if(count($range) > 1) {
@@ -119,6 +120,7 @@ class AjaxController extends D3Up_Controller_Action
 		$query = array(
 		  'stats' => $item->stats,
 		  'attrs' => $item->attrs->export(),
+		  'sockets' => $item->sockets,
 		  '_createdBy' => $build->_createdBy->createReference(),
 		);
 		// Has this user scanned this item?
