@@ -12,6 +12,7 @@ body {
   overflow-x: hidden;
 }
 .d3bit-card {
+	height: 432px;
   width: 358px;
   border: 1px solid #333;
 }
