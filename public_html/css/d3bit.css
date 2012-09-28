@@ -11,7 +11,8 @@ body {
 }
 .d3bit-card {
 	height: 432px;
-  width: 358px;
+  width: 353px;
+	padding-right: 5px;
   border: 1px solid #333;
 	overflow: auto;
   overflow-y: scroll;
@@ -48,7 +49,7 @@ body {
   background: #111;
   border: 1px solid #333;
   margin: 0 5px 5px;
-  width: 348px;
+  width: 343px;
 }
 .d3bit-card table th {
   padding: 5px;
