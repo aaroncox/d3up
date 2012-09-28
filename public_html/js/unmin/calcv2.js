@@ -512,7 +512,7 @@ BuildCalculator.prototype = {
 		  _.each(this.attrs[v + '-incs'], function(val, idx) {
 		    temp = temp * (1 - val / 100);
 		  }, this);
-      rendered['percent-' + v] = Math.round((1 - temp) * 1000) / 1000;
+      rendered['percent-' + v] = Math.round((1 - temp) * 10000) / 10000;
 		}, this);
 		// ----------------------------------
 		// Block Chance
@@ -621,9 +621,9 @@ BuildCalculator.prototype = {
 		// Formula: ( Life / (Percentage Damage Taken * Modifier ) )
 		// ----------------------------------
 		rendered['ehp-dodge'] = defenses.life / ( rendered.damageTaken * ( 1 - defenses['dodge-chance'] / 100));
-		rendered['ehp-melee'] = defenses.life / ( rendered.damageTaken * ( 1 - defenses['percent-melee-reduce'] 	/ 100));
-		rendered['ehp-range'] = defenses.life / ( rendered.damageTaken * ( 1 - defenses['percent-range-reduce'] 	/ 100));
-		rendered['ehp-elite'] = defenses.life / ( rendered.damageTaken * ( 1 - defenses['percent-elite-reduce'] 	/ 100));
+		rendered['ehp-melee'] = defenses.life / ( rendered.damageTaken * ( 1 - defenses['percent-melee-reduce'] ));
+		rendered['ehp-range'] = defenses.life / ( rendered.damageTaken * ( 1 - defenses['percent-range-reduce'] ));
+		rendered['ehp-elite'] = defenses.life / ( rendered.damageTaken * ( 1 - defenses['percent-elite-reduce'] ));
 		// ----------------------------------
 		// EHP Block Calculation 
 		// Formula: 
