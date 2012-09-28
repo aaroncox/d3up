@@ -146,6 +146,13 @@ a:hover .ui-button-text {
 	margin: 0px 5px;
 	display: block;
 }
+#warning-browser {
+	text-align: center;
+	background-color: #F00;
+	color: #FFF;
+	font-size: 1.1em;
+	padding: 5px;
+}
 .controls {
 	margin-bottom: 10px;
 }
