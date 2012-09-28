@@ -17,11 +17,6 @@
 </head>
 <body>
   <div class="d3bit-card">
-    <!--[if lt IE 9]>
-  	<div id="warning-browser">
-  		<strong>WARNING</strong>: The version of Internet Explorer your computer has doesn't work with the Compare feature. Please Upgrade to IE9/10 using Windows Update to use this feature.
-  	</div>
-    <![endif]-->
     <div class="logo"><img src="http://d3up.com/images/logo.jpg"></div>
     <h3><a href="#" onclick="window.external.OpenLink('http://d3up.com')">D3Up.com</a> Item Comparision</h3>
     <p>Using Build: <a href="#" onclick="window.external.OpenLink('http://d3up.com/b/<?= $this->build->id ?>')"><?= $this->build->name ?></a></p>
@@ -30,9 +25,11 @@
         <option value='<?=$slot?>'><?= $slot ?></option>
       <? endforeach ?>
     </select>
-    <div class="compare-diff">
-      <h3>Error: Couldn't load</h3>
-      <p><a href=''></a></p>
+    <div class="compare-diff" style="clear:both">
+      <h3>Error: Couldn't load.</h3>
+    	<div id="warning-browser">
+    		<strong>Notice</strong>: If your computer has IE8, please upgrade to IE9/10. It may resolve this problem.
+    	</div>
     </div>
     <div class='controls'>
       <div id='simulate-item'>
