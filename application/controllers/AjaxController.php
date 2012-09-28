@@ -118,6 +118,7 @@ class AjaxController extends D3Up_Controller_Action
 		 	}
 		}
 		$query = array(
+		  'type' => $item->type,
 		  'stats' => $item->stats,
 		  'attrs' => $item->attrs->export(),
 		  'sockets' => $item->sockets,
