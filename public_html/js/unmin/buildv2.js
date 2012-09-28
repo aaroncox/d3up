@@ -98,7 +98,7 @@
         }
 				if(id == 'dps-speed-display') {
 					stat.prepend(prefix + value + suffix);
-				} else if(id == 'sharpshooter-dps' && parseFloat(value)) { 
+				} else if(_.indexOf(['sharpshooter-dps', 'dps-elites'], id) >= 0 && parseFloat(value)) { 
 					stat.parent().show();
 					value = Math.round(value * 100) / 100;
           value = value.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,");          

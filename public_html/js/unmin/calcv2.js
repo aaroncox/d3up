@@ -845,6 +845,10 @@ BuildCalculator.prototype = {
 			// return rendered['dps'] * (1 + this.bonuses['plus-damage']);
 		// }
     // d3up.log(rendered);
+		if(this.attrs['elite-damage']) {
+			rendered['dps-elites'] = Math.round(rendered['dps'] * (1 + (this.attrs['elite-damage'] / 100)) * 100) / 100;
+		}
+
 		return rendered;
 	},
 	calcSAME: function(options) {
