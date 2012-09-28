@@ -9,6 +9,7 @@ class AjaxController extends D3Up_Controller_Action
 {
   public function compareAction() {
     $params = $this->getRequest()->getParams();
+    // var_dump($params); exit;
     // Get our Build
     $id = (int) $params['build'];
     $build = $this->view->build = Epic_Mongo::db('build')->fetchOne(array("id" => $id));    
@@ -40,21 +41,26 @@ class AjaxController extends D3Up_Controller_Action
 		foreach(explode(", ", $params['stats']) as $v) {
 			$parts = explode(" ", $v);
       // var_dump($parts); 
-			$name = array_search($parts[1], $this->_statMap);
-      // var_dump($name);
-			if($name) {
-			  if($name == "sockets") {
-		      $sockets = array();
-		      $total = (int) $parts[0];
-          for($i = 0; $i < $total; $i++) {
-            $sockets[] = "";
-          }
-          $item->sockets = $sockets;
-			  } else {
-  				$item->attrs->$name = (float) $parts[0];							    
-			  }
-			}
+      if(count($parts) > 1) {
+       	$name = array_search($parts[1], $this->_statMap);
+        // var_dump($name);
+  			if($name) {
+  			  if($name == "sockets") {
+  		      $sockets = array();
+  		      $total = (int) $parts[0];
+            for($i = 0; $i < $total; $i++) {
+              $sockets[] = "";
+            }
+            $item->sockets = $sockets;
+  			  } else {
+    				$item->attrs->$name = (float) $parts[0];							    
+  			  }
+  			} 
+      } else {
+        
+      }
 		}
+    // exit;
 		if(isset($params['meta'])) {
 		 	$parts = explode(",", $params['meta']);
 		 	if($item->sockets) {
@@ -62,14 +68,16 @@ class AjaxController extends D3Up_Controller_Action
 		 	  for($i = 0; $i < count($item->sockets); $i ++) {
 		 	    $socket = array_pop($parts);
 		 	    $p = explode(" ", $socket);
-    			$name = array_search($p[1], $this->_statMap);
-    			$match = array($name, (int) $p[0]);
-		 	    foreach($this->_gemMap as $slug => $gem) {
-		 	      foreach($gem as $stat => $value) {
-		 	        if(is_array($value) && $match == $value) {
-                $newSockets[] = $slug;
-		 	        }
-		 	      }
+		 	    if(count($p) > 1) {
+      			$name = array_search($p[1], $this->_statMap);
+      			$match = array($name, (int) $p[0]);
+  		 	    foreach($this->_gemMap as $slug => $gem) {
+  		 	      foreach($gem as $stat => $value) {
+  		 	        if(is_array($value) && $match == $value) {
+                  $newSockets[] = $slug;
+  		 	        }
+  		 	      }
+  		 	    }		 	      
 		 	    }
 		 	  }
 		 	  $item->sockets = $newSockets;

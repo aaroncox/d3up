@@ -21,7 +21,7 @@ body {
 .d3bit-card h3 {
   font-size: 16px;
   font-weight: normal;
-  margin: 2px 0 4px;
+  margin: 5px 0 4px;
 } 
 .d3bit-card p {
   font-size: 12px;
@@ -143,8 +143,11 @@ a:hover .ui-button-text {
 #simulate-item ul.sockets select {
 	width: 340px;
 	max-width: 340px;
-	margin: 0px auto;
+	margin: 0px 5px;
 	display: block;
+}
+.controls {
+	margin-bottom: 10px;
 }
 .button {
 	cursor: pointer;
@@ -234,10 +237,10 @@ a:hover .ui-button-text {
   background-color: rgba(0,0,0,0.8)  !important;
 }
 .jspTrack {
-  background-color: rgba(255,255,255,0.4) !important;
+  background-color: #333 !important;
 }
 .jspVerticalBar {
   width: 10px !important;
   opacity: 0.4;
-  background-color: rgba(255,255,255,0.4);
+  background-color: #222
 }

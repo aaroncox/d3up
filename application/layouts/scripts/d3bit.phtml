@@ -29,7 +29,10 @@
       <h3>Error: Couldn't load</h3>
       <p><a href=''></a></p>
     </div>
-    <div id='simulate-item'>
+    <div class='controls'>
+      <p>Modify Sockets:</p>
+      <div id='simulate-item'>
+      </div>
     </div>
   </div>
   <script type="text/javascript">
@@ -106,6 +109,7 @@
           buildCompare.setItem('offhand', null);          
         }
         buildCompare.run();
+        // console.log(build, buildCompare);
         var diff = build.diffWith(buildCompare);
         // Table Rendering
         $(".compare-diff").empty();
