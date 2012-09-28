@@ -33,6 +33,16 @@
       <div id='simulate-item'>
       </div>
     </div>
+    <? 
+    $url = '?';
+    foreach($this->params as $key => $param) {
+      $url .= "&".$key."=".$param;
+    } 
+    ?>
+    <div style='text-align: center'>
+      <p>Having Problems with this Compare?</p>
+      <p>Report it and include <a href='http://d3up.com/ajax/compare/<?= $url ?>'>this link</a> so we can see it!</p>
+    </div>
   </div>
   <script type="text/javascript">
 	  $(function() {

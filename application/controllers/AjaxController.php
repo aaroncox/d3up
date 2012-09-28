@@ -8,7 +8,7 @@
 class AjaxController extends D3Up_Controller_Action
 {
   public function compareAction() {
-    $params = $this->getRequest()->getParams();
+    $this->view->params = $params = $this->getRequest()->getParams();
     // var_dump($params); exit;
     // Get our Build
     $id = (int) $params['build'];
