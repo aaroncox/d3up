@@ -576,7 +576,7 @@ $(function() {
 	// Create the Selects for actives
 	$.each([0,1,2,3,4,5], function(k, v) {
 		var select = $("<select data-index='"+(v - 1)+"' data-placeholder='Select a Skill...' name='activeSelect"+v+"'>"),
-				label = $("<span class='skill-label'>").html("Passive #" + v),
+				label = $("<span class='skill-label'>").html("Skill #" + v),
 				build = d3up.builds.build,
 				heroClass = build.meta.heroClass, 
 				skills = _.keys(build.getSkills().actives);
