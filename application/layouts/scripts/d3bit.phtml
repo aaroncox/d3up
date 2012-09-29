@@ -182,6 +182,10 @@
       
       build.run();
       buildCompare.run();
+      <? if($_GET['debug'] == 'true'): ?>
+      console.log(build, buildCompare);
+      <? endif ?>
+      
       $(".compare-slot").bind('change', function() {
         builder.setItem($("compare-slot").val(), newItem);
         calcDiff();

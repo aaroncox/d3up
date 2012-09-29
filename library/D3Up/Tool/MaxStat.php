@@ -50,11 +50,19 @@ class D3Up_Tool_MaxStat
 		'poison-resist' => 33,
 		'arcane-resist' => 34,
 		'plus-life' => 35,
+		'sockets' => 36,
+		// Elemental Damage Bonuses on Weapons
+		'cold-damage' => 37,
+		'poison-damage' => 38,
+		'holy-damage' => 39,
+		'arcane-damage' => 40,
+		'lightning-damage' => 41,
+		'fire-damage' => 42,
 	);
 	protected static $_limits = array(
 		array(
 			'types' => 'axe|ceremonial-knife|hand-crossbow|dagger|fist-weapon|mace|mighty-weapon|spear|sword|wand',
-			'values' => array(350, 350, 350, 350, 0, 2878, 959, 64, 3, 0, 0, 24, 0, 0, 18, 50, 0, 100, 11, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+			'values' => array(350, 350, 350, 350, 0, 2878, 959, 64, 3, 0, 0, 24, 0, 0, 18, 50, 0, 100, 11, 352, 447, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1),
 		),
 		array(
 		  'types' => '2h-mace|2h-axe|bow|daibo|crossbow|2h-mighty|polearm|staff|2h-sword',
@@ -156,6 +164,21 @@ class D3Up_Tool_MaxStat
 	 }
 	 return static::$_instance;
 	}
+	static public function getArray() {
+	  $return = array();
+	  foreach(static::$_limits as $data) {
+	    $keys = explode("|", $data['types']);
+	    foreach($keys as $key) {
+        $return[$key] = array();
+	      foreach($data['values'] as $idx => $value) {
+	        $name = array_search($idx, static::$_statMap);
+	        $return[$key][$name] = $value; 
+          
+	      }
+	    }
+	  }
+	  return $return;
+	}
 	public static function calcStat($stat, $value, $type, $asArray = false) {
     // var_dump($stat, $value, $type);
     if(!in_array($type, static::$_typeMap)) {
@@ -196,7 +219,9 @@ class D3Up_Tool_MaxStat
 				if(!in_array($key, array_keys(static::$_statMap))) {
 					continue;
 				}
-				$perfect = static::$_limits[static::$_typeMap[$item->type]]['values'][static::$_statMap[$key]];
+				if(isset(static::$_typeMap[$item->type])) {
+  				$perfect = static::$_limits[static::$_typeMap[$item->type]]['values'][static::$_statMap[$key]];				  
+				}
 				if($perfect == 0) {
 					// var_dump($item->type, $key); exit;
 				} else {

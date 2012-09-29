@@ -134,4 +134,7 @@ class IndexController extends D3Up_Controller_Action {
 		echo "done";
 		exit;
 	}
+	public function maxStatsAction() {
+	  
+	}
 }

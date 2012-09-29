@@ -9,7 +9,9 @@ class AjaxController extends D3Up_Controller_Action
 {
   public function compareAction() {
     $this->view->params = $params = $this->getRequest()->getParams();
-    // var_dump($params); exit;
+    if(isset($params['dump'])) {
+      var_dump($params); exit;      
+    }
     // Get our Build
     $id = (int) $params['build'];
     $build = $this->view->build = Epic_Mongo::db('build')->fetchOne(array("id" => $id));    
@@ -38,9 +40,8 @@ class AjaxController extends D3Up_Controller_Action
 				);
 			}			
 		}
-		foreach(explode(", ", $params['stats']) as $v) {
-			$parts = explode(" ", $v);
-      // var_dump($parts); 
+		foreach(explode(",", $params['stats']) as $v) {
+			$parts = explode(" ", trim($v));
       if(count($parts) > 1) {
        	$name = array_search($parts[1], $this->_statMap);
         // var_dump($name);
@@ -63,17 +64,20 @@ class AjaxController extends D3Up_Controller_Action
     // exit;
 		if(isset($params['meta'])) {
 		 	$parts = explode(",", $params['meta']);
+      // var_dump($parts); 
 		 	if($item->sockets) {
 		 	  $newSockets = array();
 		 	  for($i = 0; $i < count($item->sockets); $i ++) {
 		 	    $socket = array_pop($parts);
 		 	    $p = explode(" ", $socket);
+		 	    array_push($parts, $socket);
 		 	    if(count($p) > 1) {
       			$name = array_search($p[1], $this->_statMap);
       			$match = array($name, (int) $p[0]);
   		 	    foreach($this->_gemMap as $slug => $gem) {
   		 	      foreach($gem as $stat => $value) {
   		 	        if(is_array($value) && $match == $value) {
+  		 	          array_pop($parts);
                   $newSockets[] = $slug;
   		 	        }
   		 	      }
@@ -104,19 +108,23 @@ class AjaxController extends D3Up_Controller_Action
 
     			}
     		}
+        // var_dump($parts);
         if(isset($parts[1])) {
+          // var_dump($parts); 
+    		  
           if(in_array($item->type, array('axe','ceremonial-knife','hand-crossbow','dagger','fist-weapon','mace','mighty-weapon','spear','sword','wand','2h-mace','2h-axe','bow','daibo','crossbow','2h-mighty','polearm','staff','2h-sword'))) {
     				$item->stats += array(
-    					'speed' => $parts[1],
+    					'speed' => (float) $parts[1],
     				);
     			} elseif(in_array($item->type, array('shield'))) {
     				$item->stats += array(
-    					'block-chance' => $parts[1],
+    					'block-chance' => (float) $parts[1],
     				);
     			}
         } 
 		 	}
 		}
+    // var_dump($item->export()); exit;
 		$query = array(
 		  'type' => $item->type,
 		  'stats' => $item->stats,
@@ -317,7 +325,7 @@ class AjaxController extends D3Up_Controller_Action
 		'plus-fire-damage' => "FireD%",
 		'plus-holy-damage' => "HolyD%",
 		'plus-lightning-damage' => "LtnD%",
-		'plus-poison-damage' => "PoisonD",
+		'plus-poison-damage' => "PoisonD%",
 		'arcane-damage' => "ArcD",
 		'cold-damage' => "ColdD",
 		'fire-damage' => "FireD",

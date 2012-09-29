@@ -820,6 +820,8 @@ BuildCalculator.prototype = {
 			mathA = ((mhMinDamage + mhMaxDamage) / 2 + (ohMinDamage + ohMaxDamage) / 2 + (bnEleDamage * 2)) / 2;
 			mathM = (1 + this.bonuses['plus-damage']);
 			rendered['dps'] = mathS * mathC * mathR * mathA * mathM;			
+			rendered['dps-speed-mh'] = Math.round(rendered['dps-speed'].mh * (1 + 0.15 + atkSpeedInc + this.bonuses['plus-attack-speed']) * 100) / 100;
+			rendered['dps-speed-oh'] = Math.round(rendered['dps-speed'].oh * (1 + 0.15 + atkSpeedInc + this.bonuses['plus-attack-speed'])  * 100) / 100;
 			rendered['dps-speed-display'] = Math.round(rendered['dps-speed'].mh * (1 + 0.15 + atkSpeedInc + this.bonuses['plus-attack-speed']) * 100) / 100 + " MH<br/>" + Math.round(rendered['dps-speed'].oh * (1 + 0.15 + atkSpeedInc + this.bonuses['plus-attack-speed'])  * 100) / 100 + " OH";
 			// d3up.log(mathS, mathC, mathR, mathA, mathM, rendered['dps'], "dw", rendered);
 		} else {
@@ -1796,7 +1798,8 @@ BuildCalculator.prototype = {
 					'physical-resist': 'Physical Res', 
 					'critical-hit': 'Crit Hit', 
 					'critical-hit-damage': 'Crit Hit Dmg',
-					'dps-speed-display': 'Attk/Sec',
+					'dps-speed-mh': 'MH Attk/Sec',
+					'dps-speed-oh': 'oh Attk/Sec',
 					'ehp-block': 'EHP w/ Block',
 					'ehp-dodge': 'EHP w/ Dodge',
 					'block-amount': 'Block', 
