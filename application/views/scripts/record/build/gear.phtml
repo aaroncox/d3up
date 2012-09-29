@@ -67,9 +67,9 @@
                 <?
                   // Special If to create armor row
                   $armor = $this->record->equipment[$slot]->stats['armor'];
-                  if(isset($this->record->equipment[$slot]->attrs['armor'])) {
-                    $armor += $this->record->equipment[$slot]->attrs['armor'];
-                  }
+                  // if(isset($this->record->equipment[$slot]->attrs['armor'])) {
+                  //   $armor += $this->record->equipment[$slot]->attrs['armor'];
+                  // }
                 ?>
                 <tr class='item-rating item-rating-armor item-rating-filter' data-attr="armor">
                   <td>Armor</td>
