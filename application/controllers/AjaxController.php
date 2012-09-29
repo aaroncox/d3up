@@ -9,9 +9,6 @@ class AjaxController extends D3Up_Controller_Action
 {
   public function compareAction() {
     $this->view->params = $params = $this->getRequest()->getParams();
-    if(isset($params['dump'])) {
-      var_dump($params); exit;      
-    }
     // Get our Build
     $id = (int) $params['build'];
     $build = $this->view->build = Epic_Mongo::db('build')->fetchOne(array("id" => $id));    
@@ -134,6 +131,11 @@ class AjaxController extends D3Up_Controller_Action
 		);
 		// Has this user scanned this item?
     $test = Epic_Mongo::db('item')->fetchOne($query);
+    if(isset($params['dump'])) {
+      echo "<pre>"; 
+      var_dump($params, $item->export(), "Existing Items: " . (bool) $test); exit;      
+    }
+    
     if($test) {
       // Just use it instead...
       $this->view->item = $item = $test;
