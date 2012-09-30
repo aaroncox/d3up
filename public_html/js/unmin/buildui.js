@@ -7,16 +7,20 @@ $(function() {
       atabs = $("#tabs-render > div");
   atabs.hide();
   tabs.children("#gear").show();
-  controls.bind('click',function(){
-    // Hide All Tabs
-    atabs.hide();
-    // Remove the Current CSS Class
-    controls.removeClass('current');
-    // Find the Tab you turned on and show it
-    tabs.find($(this).attr("data-tab")).show();
-    // Add the Current Class to the new Tab
-    $(this).addClass('current'); 
-  });
+	controls.each(function() {
+		if(!$(this).is(".saveStats")) {
+		  $(this).bind('click',function(){
+		    // Hide All Tabs
+		    atabs.hide();
+		    // Remove the Current CSS Class
+		    controls.removeClass('current');
+		    // Find the Tab you turned on and show it
+		    tabs.find($(this).attr("data-tab")).show();
+		    // Add the Current Class to the new Tab
+		    $(this).addClass('current'); 			
+		  });		
+		}
+	});
 
   // ------------------------------
   // Statistics Show/Hide
@@ -667,4 +671,33 @@ $(function() {
       elem2.css("color", $.Color( "red" ).lightness(0.5).transition($.Color( "green" ).lightness(0.5), percent));
     } 
   });    
+
+	var saveStatsButton = $(".saveStats");
+	saveStatsButton.attr("data-name", "Manual Stats Save");
+	saveStatsButton.attr("data-tooltip", "Manually save the stats from the right (stats) panel of your build to the database.<br/><br/>This happens automatically on a skill change or item change, but if for some reason you're stats aren't updating, hit this.");
+	saveStatsButton.bindSkilltip();
+	saveStatsButton.bind('click', function() {
+		var stats = d3up.builds.build.getStats();
+		$.ajax({
+			data: {
+				a: 'skills',
+				actives: _.keys(d3up.builds.build.getSkills().actives),
+				passives: _.keys(d3up.builds.build.getSkills().passives),
+				stats: {
+					dps: stats.dps,
+					ehp: stats.ehp
+				},
+			},
+			success: function() {
+				$($("<div style='padding: 20px'/>").html("Saved!")).dialog({
+					modal: true,
+					buttons: {
+						Ok: function() {
+							$( this ).dialog( "close" );
+						}
+					}
+				});
+			}
+		});
+	});
 });
