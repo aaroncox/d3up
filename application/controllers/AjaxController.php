@@ -65,6 +65,7 @@ class AjaxController extends D3Up_Controller_Action
 		 	if($item->sockets) {
 		 	  $newSockets = array();
 		 	  for($i = 0; $i < count($item->sockets); $i ++) {
+		 	    $match = false;
 		 	    $socket = array_pop($parts);
 		 	    $p = explode(" ", $socket);
 		 	    array_push($parts, $socket);
@@ -74,12 +75,16 @@ class AjaxController extends D3Up_Controller_Action
   		 	    foreach($this->_gemMap as $slug => $gem) {
   		 	      foreach($gem as $stat => $value) {
   		 	        if(is_array($value) && $match == $value) {
+  		 	          $match = true;
   		 	          array_pop($parts);
                   $newSockets[] = $slug;
   		 	        }
   		 	      }
   		 	    }		 	      
 		 	    }
+		 	    if(!$match) {
+		 	      $newSockets[] = "";
+ 		 	    }
 		 	  }
 		 	  $item->sockets = $newSockets;
 		 	}

@@ -183,7 +183,7 @@
       
       build.run();
       buildCompare.run();
-      <? if($_GET['debug'] == 'true'): ?>
+      <? if(isset($_GET['debug']) && $_GET['debug'] == 'true'): ?>
       console.log(build, buildCompare);
       <? endif ?>
       
