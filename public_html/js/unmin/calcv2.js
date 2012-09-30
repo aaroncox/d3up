@@ -22,7 +22,7 @@ BuildCalculator.prototype = {
 	companionSkills: [],    // What companion skills are active?
 	enabledSkills: [],			// What actives/passives are conditional and enabled?
 	// Options
-	vsLevel: 60,
+	vsLevel: 63,
 	level: 0,
 	paragon: 0,
 	// Flags
