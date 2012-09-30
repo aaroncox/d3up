@@ -219,7 +219,7 @@ class D3Up_Tool_MaxStat
 				if(!in_array($key, array_keys(static::$_statMap))) {
 					continue;
 				}
-				if(isset(static::$_typeMap[$item->type])) {
+				if(isset(static::$_typeMap[$item->type]) && isset(static::$_statMap[$key])) {
   				$perfect = static::$_limits[static::$_typeMap[$item->type]]['values'][static::$_statMap[$key]];				  
 				}
 				if($perfect == 0) {

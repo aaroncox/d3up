@@ -799,17 +799,17 @@ BuildCalculator.prototype = {
     // d3up.log(this.attrs);		
 		var mathS, mathC, mathR, mathA, mathM;
 		if(this.isDuelWielding) {
-		  if(this.attrs['plus-aps']) {
-  			rendered['dps-speed'] = {
-  				mh: Math.floor((this.attrs['speed'] + (this.attrs['plus-aps'] / 2)) * 1024) / 1024,
-  				oh: Math.floor((this.attrs['speed-oh'] + (this.attrs['plus-aps'] / 2)) * 1024) / 1024
-  			};
-      } else {
+		  // if(this.attrs['plus-aps']) {
+		  //   			rendered['dps-speed'] = {
+		  //   				mh: Math.floor((this.attrs['speed'] + (this.attrs['plus-aps'] / 2)) * 1024) / 1024,
+		  //   				oh: Math.floor((this.attrs['speed-oh'] + (this.attrs['plus-aps'] / 2)) * 1024) / 1024
+		  //   			};
+		  //       } else {
   			rendered['dps-speed'] = {
   				mh: Math.floor(this.attrs['speed'] * 1024) / 1024,
   				oh: Math.floor(this.attrs['speed-oh'] * 1024) / 1024
   			};
-      }
+      // }
 			
 			// d3up.log(mhMinDamage, mhMaxDamage, ohMinDamage, ohMaxDamage, bnMinDamage, bnMaxDamage);
 			// d3up.log(this.attrs['speed'], this.attrs['speed-oh']);
@@ -825,11 +825,11 @@ BuildCalculator.prototype = {
 			rendered['dps-speed-display'] = Math.round(rendered['dps-speed'].mh * (1 + 0.15 + atkSpeedInc + this.bonuses['plus-attack-speed']) * 100) / 100 + " MH<br/>" + Math.round(rendered['dps-speed'].oh * (1 + 0.15 + atkSpeedInc + this.bonuses['plus-attack-speed'])  * 100) / 100 + " OH";
 			// d3up.log(mathS, mathC, mathR, mathA, mathM, rendered['dps'], "dw", rendered);
 		} else {
-			if(this.attrs['plus-aps']) {
-        rendered['dps-speed'] = Math.floor((this.attrs['speed'] + this.attrs['plus-aps']) * 1024) / 1024;
-      } else {
+			// if(this.attrs['plus-aps']) {
+			//         rendered['dps-speed'] = Math.floor((this.attrs['speed'] + this.attrs['plus-aps']) * 1024) / 1024;
+			//       } else {
   			rendered['dps-speed'] = Math.floor(this.attrs['speed'] * 1024) / 1024;        
-      }
+      // }
 			mathS = 1 + this.attrs[this.attrs.primary] * 0.01;
 			mathC = 1 + (this.attrs['critical-hit'] * 0.01) * (this.attrs['critical-hit-damage'] * 0.01);
 			mathR = rendered['dps-speed'] * (1 + atkSpeedInc + this.bonuses['plus-attack-speed']);
