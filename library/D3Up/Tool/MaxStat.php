@@ -7,7 +7,7 @@
  **/
 class D3Up_Tool_MaxStat
 {
-	protected static $_statMap = array(
+	public static $_statMap = array(
 		// Stats
 		'dexterity' => 0,
 		'intelligence' => 1,

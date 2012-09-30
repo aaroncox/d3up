@@ -50,7 +50,7 @@ class ItemController extends D3Up_Controller_Action
 		} else {
 			$sort['_created'] = -1;
 		}
-		$items = Epic_Mongo::db('item')->fetchAll($query, $sort); 
+    $items = Epic_Mongo::db('item')->fetchAll($query, $sort, 300); 
 		$paginator = Zend_Paginator::factory($items);
 		$paginator->setCurrentPageNumber($this->getRequest()->getParam('page', 1))->setItemCountPerPage(20)->setPageRange(3);
 		$this->view->items = $paginator;
