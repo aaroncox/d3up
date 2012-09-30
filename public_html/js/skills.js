@@ -1803,10 +1803,10 @@ var activeSkills = {
 		'impale~c': {
 			name: 'Impale - Chemical Burn',
 			desc: 'Impale a target for 265% weapon damage.',
-			rune: 'Your target will also Bleed for 125% weapon damage as Physical over 2 seconds.',
+			rune: 'Your target will also Bleed for 220% weapon damage as Physical over 2 seconds.',
 			effect: {
 				'cost-hatred': 25,
-				'weapon-damage': 390,
+				'weapon-damage': 465,
 				'weapon-damage-for': 2
 			},
 		},
