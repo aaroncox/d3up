@@ -42,7 +42,9 @@ $.fn.bindTooltip = function() {
 			if(item.stats['block-chance'] > 0 && item.type == 'shield') {
 				// Add the Block Values
 				itemExtraPercent.html(item.stats['block-chance'] + " <span class='stat-helper'>Chance to Block</span>");
-				itemExtraRange.html(item.stats['block-amount']['min'] + "-" + item.stats['block-amount']['max'] + " <span class='stat-helper'>Block Amount</span>");					
+				if(item.stats['block-amount']) {
+					itemExtraRange.html(item.stats['block-amount']['min'] + "-" + item.stats['block-amount']['max'] + " <span class='stat-helper'>Block Amount</span>");					
+				}
 			} 
 		}
 		// Is this a weapon?
