@@ -39,14 +39,13 @@
     $url = '?';
     foreach($this->params as $key => $param) {
       if($key == 'battletag') {
-        $param = $param;
+        $param = urlencode($param);
       }
       $url .= "&".$key."=".$param;
     } 
-    $url = urlencode($url);
     ?>
     <div style='text-align: center'>
-      <p><a onclick="window.external.OpenLink('http://d3up.com/ajax/compare/<?= $url ?>')">Open Compare in Browser</a></p>
+      <p><a onclick="window.external.OpenLink('http://d3up.com/ajax/compare/<?= $url ?>')">Open Compare in Browser</p>
       <p>Having Problems with this Compare?</p>
       <p>Report it and include <a onclick="window.external.OpenLink('http://d3up.com/ajax/compare/<?= $url ?>')">this link</a></p>
     </div>
