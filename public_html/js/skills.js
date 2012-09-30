@@ -6,7 +6,7 @@ var passives = {
 		'pound-of-flesh': {
 			'desc': 'Increases the chance of finding a health globe by <span class="skill-highlight">25%</span> and you gain <span class="skill-highlight">100%</span> additional Life from health globes.',
 			'effect': {
-				'health-globes': 1,
+				'health-globes': 1
 			}
 		},
 		'ruthless': {
@@ -19,7 +19,7 @@ var passives = {
 		'nerves-of-steel': {
 			'desc': 'Your Armor is increased by <span class="skill-highlight">100%</span> of your Vitality.',
 			'effect': {
-				'vitality-to-armor': 1,
+				'vitality-to-armor': 1
 			}
 		},
 		'weapons-master': {
@@ -193,14 +193,14 @@ var passives = {
 		},
 		'near-death-experience': {
 			'desc': 'When receiving fatal damage, you are instead restored to <span class="skill-highlight">35%</span> of maximum Life and <span class="skill-highlight">35%</span> Spirit.'
-		},
+		}
 	},
 	'wizard': {
 		'blur': {
 			'desc': 'Decreases melee damage taken by <span class="skill-highlight">20%</span>.',
 			'effect': {
 				'melee-reduce': 0.20
-			},
+			}
 		},
 		'power-hungry': {
 			'desc': 'Gain <span class="skill-highlight">30</span> Arcane Power whenever you are healed by a health globe.'
@@ -339,7 +339,7 @@ var passives = {
 		},
 		'ballistics': {
 			'desc': 'Damage from rockets increased by <span class="skill-highlight">50%</span>. '
-		},
+		}
 	},
 	'witch-doctor': {
 		'circle-of-life': {
@@ -362,8 +362,8 @@ var passives = {
 			'effect': {
 			  'stackable': {
 		      'limit': 5,
-			    'plus-intelligence-percent': 10,
-			  },
+			    'plus-intelligence-percent': 10
+			  }
 			}
 		},
 		'bad-medicine': {
@@ -401,9 +401,9 @@ var passives = {
 		},
 		'tribal-rites': {
 			'desc': 'The cooldowns of your Fetish Army, Big Bad Voodoo, Hex, Gargantuan, Summon Zombie Dogs and Mass Confusion abilities are reduced by <span class="skill-highlight">25%</span>.'
-		},
+		}
 	}
-}
+};
 var activeSkills = {
 	'barbarian': {
 		'bash': {
@@ -412,8 +412,8 @@ var activeSkills = {
 			effect: {
 				'chance-knockback': 20,
 				'generate-fury': 8,
-				'weapon-damage': 165,
-			},
+				'weapon-damage': 165
+			}
 		},
 		'bash~a': {
 			name: 'Bash - Onslaught',
@@ -421,8 +421,8 @@ var activeSkills = {
 			rune: 'Add 2 reverberations that cause 25% weapon damage per strike. Removes the chance for Knockback.',
 			effect: {
 				'generate-fury': 8,
-				'weapon-damage': 215,
-			},
+				'weapon-damage': 215
+			}
 		},
 		'bash~b': {
 			name: 'Bash - Punish',
@@ -433,10 +433,10 @@ var activeSkills = {
 				'generate-fury': 8,
 				'stackable': {
 				  'limit': 3, 
-					'plus-damage': 8,
+					'plus-damage': 8
 				},
-				'weapon-damage': 165,
-			},
+				'weapon-damage': 165
+			}
 		},
 		'bash~c': {
 			name: 'Bash - Clobber',
@@ -445,8 +445,8 @@ var activeSkills = {
 			effect: {
 				'generate-fury': 8,
 				'chance-stun': 70,
-				'weapon-damage': 165,
-			},
+				'weapon-damage': 165
+			}
 		},
 		'bash~d': {
 			name: 'Bash - Instigation',
@@ -455,8 +455,8 @@ var activeSkills = {
 			effect: {
 				'chance-knockback': 20,
 				'generate-fury': 12,
-				'weapon-damage': 165,
-			},
+				'weapon-damage': 165
+			}
 		},
 		'bash~e': {
 			name: 'Bash - Pulverize',
@@ -465,8 +465,8 @@ var activeSkills = {
 			effect: {
 				'chance-knockback': 20,
 				'generate-fury': 8,
-				'weapon-damage': 203,
-			},
+				'weapon-damage': 203
+			}
 		},
 		'hammer-of-the-ancients': {
 			name: 'Hammer of the Ancients',
@@ -474,8 +474,8 @@ var activeSkills = {
 			effect: {
 				'cost-fury': 20,
 				'weapon-damage': 325,
-				'plus-critical-hit-this': 5,
-			},
+				'plus-critical-hit-this': 5
+			}
 		},
 		'hammer-of-the-ancients~a': {
 			name: 'Hammer of the Ancients - Smash',
@@ -484,8 +484,8 @@ var activeSkills = {
 			effect: {
 				'cost-fury': 20,
 				'plus-critical-hit-this': 5,
-				'weapon-damage': 406,
-			},
+				'weapon-damage': 406
+			}
 		},
 		'hammer-of-the-ancients~b': {
 			name: 'Hammer of the Ancients - Rolling Thunder',
@@ -494,8 +494,8 @@ var activeSkills = {
 			effect: {
 				'cost-fury': 20,
 				'plus-critical-hit-this': 5,
-				'weapon-damage': 275,
-			},
+				'weapon-damage': 275
+			}
 		},
 		'hammer-of-the-ancients~c': {
 			name: 'Hammer of the Ancients - The Devil\'s Anvil',
@@ -504,8 +504,8 @@ var activeSkills = {
 			effect: {
 				'cost-fury': 20,
 				'weapon-damage': 325,
-				'plus-critical-hit-this': 5,
-			},
+				'plus-critical-hit-this': 5
+			}
 		},
 		'hammer-of-the-ancients~d': {
 			name: 'Hammer of the Ancients - Birthright',
@@ -514,8 +514,8 @@ var activeSkills = {
 			effect: {
 				'cost-fury': 20,
 				'weapon-damage': 325,
-				'plus-critical-hit-this': 5,
-			},
+				'plus-critical-hit-this': 5
+			}
 		},
 		'hammer-of-the-ancients~e': {
 			name: 'Hammer of the Ancients - Thunderstrike',
@@ -524,16 +524,16 @@ var activeSkills = {
 			effect: {
 				'cost-fury': 20,
 				'weapon-damage': 325,
-				'plus-critical-hit-this': 5,
-			},
+				'plus-critical-hit-this': 5
+			}
 		},
 		'cleave': {
 			name: 'Cleave',
 			desc: 'Swing your weapon in a wide arc to deal 140% weapon damage to all enemies caught in the swing.',
 			effect: {
 				'generate-fury': 5,
-				'weapon-damage': 140,
-			},
+				'weapon-damage': 140
+			}
 		},
 		'cleave~a': {
 			name: 'Cleave - Broad Sweep',
@@ -541,8 +541,8 @@ var activeSkills = {
 			rune: 'Increase damage to 175% weapon damage.',
 			effect: {
 				'generate-fury': 5,
-				'weapon-damage': 175,
-			},
+				'weapon-damage': 175
+			}
 		},
 		'cleave~b': {
 			name: 'Cleave - Gathering Storm',
@@ -550,8 +550,8 @@ var activeSkills = {
 			rune: 'Enemies cleaved have their movement speed reduced by 80% for 1 second.',
 			effect: {
 				'generate-fury': 5,
-				'weapon-damage': 140,
-			},
+				'weapon-damage': 140
+			}
 		},
 		'cleave~c': {
 			name: 'Cleave - Scattering Blast',
@@ -559,8 +559,8 @@ var activeSkills = {
 			rune: 'On Critical Hits, knock enemies back 9 yards and inflict 60% weapon damage to enemies where they land.',
 			effect: {
 				'generate-fury': 5,
-				'weapon-damage': 140,
-			},
+				'weapon-damage': 140
+			}
 		},
 		'cleave~d': {
 			name: 'Cleave - Reaping Swing',
@@ -568,8 +568,8 @@ var activeSkills = {
 			rune: 'Generate 3 additional Fury per enemy hit.',
 			effect: {
 				'generate-fury': 8,
-				'weapon-damage': 140,
-			},
+				'weapon-damage': 140
+			}
 		},
 		'cleave~e': {
 			name: 'Cleave - Rupture',
@@ -577,16 +577,16 @@ var activeSkills = {
 			rune: 'Enemies slain by Cleave explode, causing 85% weapon damage to all other enemies within 8 yards.',
 			effect: {
 				'generate-fury': 5,
-				'weapon-damage': 140,
-			},
+				'weapon-damage': 140
+			}
 		},
 		'ground-stomp': {
 			name: 'Ground Stomp',
 			desc: 'Smash the ground, stunning all enemies within 12 yards for 4 seconds.',
 			effect: {
 				'generate-fury': 15,
-				'cooldown': 12,
-			},
+				'cooldown': 12
+			}
 		},
 		'ground-stomp~a': {
 			name: 'Ground Stomp - Trembling Stomp',
@@ -595,8 +595,8 @@ var activeSkills = {
 			effect: {
 				'generate-fury': 15,
 				'cooldown': 12,
-				'weapon-damage': 76,
-			},
+				'weapon-damage': 76
+			}
 		},
 		'ground-stomp~b': {
 			name: 'Ground Stomp - Wrenching Smash',
@@ -604,8 +604,8 @@ var activeSkills = {
 			rune: 'Increase the area of effect to 24 yards. Enemies are pulled closer before the strike lands.',
 			effect: {
 				'generate-fury': 15,
-				'cooldown': 12,
-			},
+				'cooldown': 12
+			}
 		},
 		'ground-stomp~c': {
 			name: 'Ground Stomp - Avalanche',
@@ -613,8 +613,8 @@ var activeSkills = {
 			rune: 'Enemies are knocked back 9 yards and inflict 55% weapon damage to enemies in the landing area.',
 			effect: {
 				'generate-fury': 15,
-				'cooldown': 12,
-			},
+				'cooldown': 12
+			}
 		},
 		'ground-stomp~d': {
 			name: 'Ground Stomp - Foot of the Mountain',
