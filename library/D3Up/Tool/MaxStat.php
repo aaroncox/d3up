@@ -220,7 +220,9 @@ class D3Up_Tool_MaxStat
 					continue;
 				}
 				if(isset(static::$_typeMap[$item->type]) && isset(static::$_statMap[$key])) {
-  				$perfect = static::$_limits[static::$_typeMap[$item->type]]['values'][static::$_statMap[$key]];				  
+				  if(isset(static::$_limits[static::$_typeMap[$item->type]]['values'][static::$_statMap[$key]])) {
+    				$perfect = static::$_limits[static::$_typeMap[$item->type]]['values'][static::$_statMap[$key]];				  				    
+				  }
 				}
 				if($perfect == 0) {
 					// var_dump($item->type, $key); exit;

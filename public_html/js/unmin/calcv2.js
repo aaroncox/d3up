@@ -1161,6 +1161,11 @@ BuildCalculator.prototype = {
 								if(value < 1) {
 									value = value * 100;
 								}
+								switch(stat) {
+									case "plus-attack-speed":
+										this.attrs['attack-speed-incs'] += value;															
+										break;
+								}
                 if(_.indexOf(['melee-reduce', 'range-reduce', 'elite-reduce'], stat) >= 0) {
                   if(typeof(this.attrs[stat + "-incs"]) == "undefined") {
                     this.attrs[stat + "-incs"] = [];
