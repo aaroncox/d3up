@@ -73,7 +73,7 @@
     <li>Dual Wield Bonus: <span>15</span>%</li>
   </ul>
   <pre>R = ((MH Speed + OH Speed) / 2) * (1 + DW Bonus + % Increases);</pre>
-  <pre>R = (<span data-display='long-round' data-value='dps-speed-mh'></span> + <span data-display='long-round' data-value='dps-speed-oh'></span>) / 2 * (1 + 0.15 + <span data-display='long-round' data-value='attack-speed-incs'></span>)</pre>
+  <pre>R = (<span data-display='long-round' data-value='dps-speed-mh'></span> + <span data-display='long-round' data-value='dps-speed-oh'></span>) / 2 * (1 + 0.15 + (<span data-display='long-round' data-value='attack-speed-incs'></span> * 0.01))</pre>
   <pre>R = <span data-display='long-round' data-value='scram-r'></span></pre>
   <? else: ?>
   <ul>
