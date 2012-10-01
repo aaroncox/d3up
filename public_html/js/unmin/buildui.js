@@ -6,10 +6,14 @@ $(function() {
       tabs = $("#tabs-render"),
       atabs = $("#tabs-render > div");
   atabs.hide();
-  tabs.children("#dps-math").show();
+  tabs.children("#gear").show();
+	if(window.location.hash) {
+		atabs.hide();
+		tabs.find(window.location.hash).show();
+	}
 	controls.each(function() {
 		if(!$(this).is(".saveStats")) {
-		  $(this).bind('click',function(){
+		  $(this).bind('click',function(e){
 		    // Hide All Tabs
 		    atabs.hide();
 		    // Remove the Current CSS Class
@@ -18,8 +22,26 @@ $(function() {
 		    tabs.find($(this).attr("data-tab")).show();
 		    // Add the Current Class to the new Tab
 		    $(this).addClass('current'); 			
+				// Set the Hash in the URL
+				var parts = window.location.toString().split("#");
+				if(history.pushState) {
+			    history.pushState(null, null, $(this).attr("data-tab"));
+				} else {
+			    location.hash = $(this).attr("data-tab");
+				}
 		  });		
 		}
+	});
+	$(window).bind( "hashchange", function(e) {
+		// Hide All Tabs
+    atabs.hide();
+    // Remove the Current CSS Class
+    controls.removeClass('current');
+    // Find the Tab you turned on and show it
+    tabs.find(window.location.hash).show();
+    // Add the Current Class to the new Tab
+		// Haven't figured this out...
+    // controls.find("[data-tab='" + window.location.hash + "']").addClass('current'); 			
 	});
 
   // ------------------------------
