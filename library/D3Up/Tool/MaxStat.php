@@ -227,8 +227,10 @@ class D3Up_Tool_MaxStat
 				if($perfect == 0) {
 					// var_dump($item->type, $key); exit;
 				} else {
-					$rating = round($value / $perfect * 100, 1);					
-					$ratings[$key] = $rating;
+          if(!is_array($value)) {
+  					$rating = round($value / $perfect * 100, 1);					
+  					$ratings[$key] = $rating;            
+          }
 				}
 			}			
 		}
