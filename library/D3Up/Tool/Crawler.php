@@ -31,16 +31,16 @@ class D3Up_Tool_Crawler
 
 	static public function get($url) {
     // --- With Proxy
-    $aContext = array(
-        'http' => array(
-            'proxy' => 'tcp://192.168.1.7:8888',
-            'request_fulluri' => true,
-        ),
-    );
-    $cxContext = stream_context_create($aContext);
-    $body = file_get_contents($url, false, $cxContext);
+    // $aContext = array(
+    //     'http' => array(
+    //         'proxy' => 'tcp://192.168.1.7:8888',
+    //         'request_fulluri' => true,
+    //     ),
+    // );
+    // $cxContext = stream_context_create($aContext);
+    // $body = file_get_contents($url, false, $cxContext);
     // --- No Proxy
-    // $body = file_get_contents($url);
+    $body = file_get_contents($url);
 
     // No response from BNet? Let the user know
     if(!$body) {
