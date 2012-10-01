@@ -851,7 +851,7 @@ BuildCalculator.prototype = {
 			rendered['dps'] = mathS * mathC * mathR * mathA * mathM;			
 			rendered['dps-speed-mh'] = rendered['dps-speed'].mh;
 			rendered['dps-speed-oh'] = rendered['dps-speed'].oh;
-			console.log(mathA, rendered['dps-speed'], (1 + 0.15 + atkSpeedInc + this.bonuses['plus-attack-speed']));
+			// console.log(mathA, rendered['dps-speed'], (1 + 0.15 + atkSpeedInc + this.bonuses['plus-attack-speed']));
 			// rendered['dps-speed-mh'] = Math.round(rendered['dps-speed'].mh * (1 + 0.15 + atkSpeedInc + this.bonuses['plus-attack-speed']) * 100) / 100;
 			// rendered['dps-speed-oh'] = Math.round(rendered['dps-speed'].oh * (1 + 0.15 + atkSpeedInc + this.bonuses['plus-attack-speed'])  * 100) / 100;
 			rendered['dps-speed-display'] = Math.round(rendered['dps-speed'].mh * (1 + 0.15 + atkSpeedInc + this.bonuses['plus-attack-speed']) * 1000) / 1000 + " MH<br/>" + Math.round(rendered['dps-speed'].oh * (1 + 0.15 + atkSpeedInc + this.bonuses['plus-attack-speed'])  * 1000) / 1000 + " OH";
@@ -875,7 +875,7 @@ BuildCalculator.prototype = {
 			// rendered['dps'] = (((mhMinDamage + mhMaxDamage) / 2 + bnAvgDamage) * rendered['dps-speed']) * (1 + atkSpeedInc) * (this.attrs[this.attrs.primary] / 100 + 1) * 1 * ((this.attrs['critical-hit'] / 100) * (this.attrs['critical-hit-damage']/100) + 1);
 			rendered['dps-speed-display'] = Math.round(mathR * 100) / 100;
 		}
-		console.log(mathA);
+		// console.log(mathA);
 		rendered['scram-s'] = mathS;
 		rendered['scram-c'] = mathC;
 		rendered['scram-r'] = mathR;

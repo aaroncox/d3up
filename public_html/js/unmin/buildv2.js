@@ -108,7 +108,7 @@
 						value = 0;
 					} 
 					value = Math.round(value * 10000) / 10000;
-					console.log("long");
+					// console.log("long");
           stat.prepend(prefix + value + suffix);					
 				} else {
 	        if(isNaN(parseFloat(value)) && value) {

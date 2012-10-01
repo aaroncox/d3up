@@ -28,11 +28,11 @@
       <? if(!$this->record->_createdBy->id || ($profile && $profile->id === $this->record->_createdBy->id)): ?>
       <li><a data-tab="#sync" class="button">Battle.net Sync</a></li>
       <? endif ?>
-      <li><a data-tab="#dps-math" class='button'>DPS Math</a></li>
       <? if($this->myBuild): ?>
       <li><a class="button" href="/user/items">My Items</a></li>
       <li><a class='saveStats button' href="#">Save Stats to DB</a></li>
       <? endif ?>
+      <li><a data-tab="#dps-math" class='button'>DPS Calculations</a></li>
       <!-- <li><a data-tab="#suggestions" class="button">Suggestions</a></li>
       <li><a data-tab="#share" class="button">Share</a></li> -->
     </ul>
