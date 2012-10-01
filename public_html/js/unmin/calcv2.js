@@ -828,18 +828,11 @@ BuildCalculator.prototype = {
     // d3up.log(this.attrs);		
 		var mathS, mathC, mathR, mathA, mathM;
 		if(this.isDuelWielding) {
-		  // if(this.attrs['plus-aps']) {
-		  //   			rendered['dps-speed'] = {
-		  //   				mh: Math.floor((this.attrs['speed'] + (this.attrs['plus-aps'] / 2)) * 1024) / 1024,
-		  //   				oh: Math.floor((this.attrs['speed-oh'] + (this.attrs['plus-aps'] / 2)) * 1024) / 1024
-		  //   			};
-		  //       } else {
-  			rendered['dps-speed'] = {
-  				mh: this.attrs['speed'],
-  				oh: this.attrs['speed-oh']
-  			};
-      // }
-			
+ 			rendered['dps-speed'] = {
+ 				mh: this.attrs['speed'],
+ 				oh: this.attrs['speed-oh']
+ 			};
+			// console.log("speed during calc: ", this.attrs['speed'], this.attrs['speed-oh']);
 			// d3up.log(mhMinDamage, mhMaxDamage, ohMinDamage, ohMaxDamage, bnMinDamage, bnMaxDamage);
 			// d3up.log(this.attrs['speed'], this.attrs['speed-oh']);
 			// d3up.log(rendered['dps-speed'].mh, rendered['dps-speed'].oh);
@@ -1443,6 +1436,19 @@ BuildCalculator.prototype = {
 								break;
 						}
 						break;
+					case "plus-aps":
+						// Add the Bonus to whichever weapon this isn't on...
+						if(slot == "mainhand") {
+							if(this.attrs['speed-oh']) {
+								this.attrs['speed-oh'] -= parseFloat(av);								
+							}
+						}
+						if(slot == "offhand") {
+							if(this.attrs['speed']) {
+								this.attrs['speed'] -= parseFloat(av);
+							}
+						}
+						break;
 					case "attack-speed":
 						switch(json.type) {
 							case "extra":
@@ -1503,10 +1509,10 @@ BuildCalculator.prototype = {
 				switch(ak) {
 					case "speed":
 						if(slot == "mainhand") {
-							this.attrs[ak] = 0;
+							this.attrs[ak] -= av;
 						}
 						if(slot == "offhand") {
-							this.attrs['speed-oh'] = 0;
+							this.attrs['speed-oh'] -= av;
 						}
 						break;
 					case "arcane-damage":
@@ -1562,12 +1568,22 @@ BuildCalculator.prototype = {
 				switch(ak) {
 					case "speed":
 						if(slot == "mainhand") {
-							this.attrs[ak] = parseFloat(av);
+							if(this.attrs[ak]) {
+								this.attrs[ak] += parseFloat(av);																
+							} else {
+								this.attrs[ak] = parseFloat(av);								
+							}
 						}
 						if(slot == "offhand") {
-							// console.log("adding dw", ak, av);
+							// console.log("adding offhand", ak, av);
 							this.isDuelWielding = true;
-							this.attrs['speed-oh'] = parseFloat(av);
+							// console.log("before: ", this.attrs['speed-oh']);
+							if(this.attrs['speed-oh']) {
+								this.attrs['speed-oh'] += parseFloat(av);																
+							} else {
+								this.attrs['speed-oh'] = parseFloat(av);								
+							}
+							// console.log("after: ", this.attrs['speed-oh']);
 						}
 						break;
 					case "damage":
@@ -1747,6 +1763,26 @@ BuildCalculator.prototype = {
                   this.attrs[slot + "-plus-damage"] = parseFloat(av);
   						  }
 								break;
+						}
+						break;
+					case "plus-aps":
+						// console.log("adding aps");
+						// Add the Bonus to whichever weapon this isn't on...
+						if(slot == "mainhand") {
+							// console.log("found aps on mh, adding oh: ", this.attrs['speed-oh'], av);
+							if(this.attrs['speed-oh']) {
+								this.attrs['speed-oh'] += parseFloat(av);								
+							} else {
+								this.attrs['speed-oh'] = parseFloat(av);								
+							}
+							// console.log("oh speed now", this.attrs['speed-oh']);
+						}
+						if(slot == "offhand") {
+							if(this.attrs['speed']) {
+								this.attrs['speed'] += parseFloat(av);
+							} else {
+								this.attrs['speed'] = parseFloat(av);								
+							}
 						}
 						break;
 					case "attack-speed":
