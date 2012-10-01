@@ -31,6 +31,7 @@
       <? if(!$this->record->_createdBy->id || ($profile && $profile->id === $this->record->_createdBy->id)): ?>
       <li><a data-tab="#sync" class="button">Battle.net Sync</a></li>
       <? endif ?>
+      <li><a data-tab="#dps-math" class='button'>DPS Math</a></li>
       <? if($this->myBuild): ?>
       <li><a class="button" href="/user/items">My Items</a></li>
       <li><a class='saveStats button' href="#">Save Stats to DB</a></li>
@@ -49,6 +50,7 @@
       <? if(!$this->record->_createdBy->id || ($profile && $profile->id === $this->record->_createdBy->id)): ?>
       <div id="sync"><?= $this->render("./record/build/sync.phtml") ?></div>
       <? endif ?>
+      <div id="dps-math"><?= $this->render("./record/build/math-dps.phtml") ?></div>
       <!-- <div id="suggestions"><?= $this->render("./record/build/suggestions.phtml") ?></div>
       <div id="share"><?= $this->render("./record/build/share.phtml") ?></div> -->
     </div>
@@ -147,6 +149,7 @@
       d3up.compare = compare;
       // Render build to Statistics Panels
       build.renderTo($("#statistics"));
+      build.renderTo($("#dps-math"));
       // Render build to a few of the Gear tabs
       build.renderTo($("#gear"));
       // Render the Skills and Data to the Header

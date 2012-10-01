@@ -1,0 +1,98 @@
+<?
+  $isDW = false; 
+  if($this->record->equipment['offhand'] && $this->record->equipment['offhand']->id) {
+    // var_dump($this->record->equipment['offhand']->type, explode("|", "axe|ceremonial-knife|hand-crossbow|dagger|fist-weapon|mace|mighty-weapon|spear|sword|wand|2h-mace|2h-axe|bow|daibo|crossbow|2h-mighty|polearm|staff|2h-sword"));
+    if(in_array($this->record->equipment['offhand']->type, explode("|", "axe|ceremonial-knife|hand-crossbow|dagger|fist-weapon|mace|mighty-weapon|spear|sword|wand|2h-mace|2h-axe|bow|daibo|crossbow|2h-mighty|polearm|staff|2h-sword"))) {
+      $isDW = true;
+    }
+  }
+  
+?>
+<style type="text/css" media="screen">
+  div#tabs-render.content-page .math {
+    font-size: 14px;
+    padding: 5px 10px;
+  }
+  div#tabs-render.content-page .math pre {
+    padding: 10px;
+    color: #fff;
+    background: #333;
+    font-family: monospace;
+  }
+  div#tabs-render.content-page .math h4 {
+    border-bottom: 1px solid #B18135;
+    color: #B18135;
+  }
+  div#tabs-render.content-page .math span {
+    color: lime;
+  }
+</style>
+<h5>Gear / Items</h5>
+<div class="page math" id="dps-math">
+  <p>In an effort to improve the calculator, this page outlines all of the steps to calculate this builds DPS. Please feel free to check it over and submit any corrections!</p>
+  <h4>SCRAM Basics</h4>
+  <p>The basis of the calculations uses the SCRAM method, as follows:</p>
+  <ul>
+    <li>S = Primary Attribute Bonus</li>
+    <li>C = Critical Hit and Critical Hit Damage</li>
+    <li>R = Attacks per Second</li>
+    <li>A = Average Hit</li>
+    <li>M = Damage Modifiers</li>
+  </ul>
+  <p>Once you have all of these numbers defined, your DPS is equal to:</p>
+  <pre>DPS = S * C * R * A * M</pre>
+  <p>Over the course of the rest of this panel, we will be using the stats from this build in our calculations.</p>
+  <h4>Calculating "S"</h4>
+  <p>The <span data-value='hero-class'>C</span> uses <span data-value="primary">X</span> as it's primary stat and this build has a total of <span data-display='long-round' data-value="primary-stat">Y</span> <span data-value="primary">X</span> including all gear and levels.</p>
+  <pre>S = 1 + (<span data-value='primary'></span> * 0.01)</pre>
+  <pre>S = 1 + (<span data-display='long-round' data-value='primary-stat'></span> * 0.01)</pre>
+  <pre>S = <span data-display='long-round' data-value='scram-s'></span></pre>
+  <h4>Calculating "C"</h4>
+  <p>"C" is a combination of your Critical Hit Chance as well as your Critical Hit Damage. By multiplying the increase in damage by the chance to critically hit, we come up with C.</p>
+  <pre>C = 1 + (<span>crit chance</span> * 0.01) * (<span>crit damage</span> * 0.01)</pre>
+  <pre>C = 1 + (<span data-display='long-round' data-value='critical-hit'></span>% * 0.01) * (<span data-display='long-round' data-value='critical-hit-damage'></span>% * 0.01)</pre>
+  <pre>C = <span data-display='long-round' data-value='scram-c'></span></pre>
+  <h4>Calculating "R"</h4>
+  <p>"R" is the rate at which you attack, including all attack speed bonuses.</p>
+  <? if($isDW): ?>
+  <p>When dual-wielding, you also gain a +15% Increase to your attack speed.</p>
+  <pre>R = ((MH Speed + OH Speed) / 2) * (1 + DW Bonus + % Increases);</pre>
+  <pre>R = (<span data-display='long-round' data-value='dps-speed-mh'></span> + <span data-display='long-round' data-value='dps-speed-oh'></span>) / 2 * (1 + 0.15 + <span data-display='long-round' data-value='attack-speed-incs'></span>)</pre>
+  <pre>R = <span data-display='long-round' data-value='scram-r'></span></pre>
+  <? else: ?>
+  <pre>R = Weapon Speed * (1 + % Increases);</pre>
+  <pre>R = <span data-display='long-round' data-value='dps-speed-mh'></span> * (1 + (<span data-display='long-round' data-value='attack-speed-incs'></span> * 0.01))</pre>
+  <pre>R = <span data-display='long-round' data-value='scram-r'></span></pre>
+  <? endif ?>
+  <h4>Calculating "A"</h4>
+  <p>"A" is your average hit, this is where most of the DPS issues come into play involving +% Elemental Damage or +% Damage.</p>
+  <? if($isDW): ?>
+  <pre>
+MH Min = (MH Weapon Min + Bonus Min)
+MH Max = (MH Weapon Max + Bonus Max)
+OH Min = (OH Weapon Min + Bonus Min)
+OH Max = (OH Weapon Max + Bonus Max)
+A = (MH Min + MH Max + OH Min + OH Max) / 4</pre>
+<pre>
+MH Min = (<span data-display='long-round' data-value='dps-mh-min'></span> + <span data-display='long-round' data-value='plus-min-damage'></span>) = <span data-display='long-round' data-value='dps-mh-min-total'></span>
+MH Max = (<span data-display='long-round' data-value='dps-mh-max'></span> + <span data-display='long-round' data-value='plus-max-damage'></span>) = <span data-display='long-round' data-value='dps-mh-max-total'></span>
+OH Min = (<span data-display='long-round' data-value='dps-oh-min'></span> + <span data-display='long-round' data-value='plus-min-damage'></span>) = <span data-display='long-round' data-value='dps-oh-min-total'></span>
+OH Max = (<span data-display='long-round' data-value='dps-oh-max'></span> + <span data-display='long-round' data-value='plus-max-damage'></span>) = <span data-display='long-round' data-value='dps-oh-max-total'></span>
+A = (<span data-display='long-round' data-value='dps-mh-min-total'></span> + <span data-display='long-round' data-value='dps-mh-max-total'></span>) / 2
+A = <span data-display='long-round' data-value='dps-mh-avg'></span></pre>
+  <? else: ?>
+<pre>Min = (Weapon Min + Bonus Min)
+Max = (Weapon Max + Bonus Max)
+A = (Min + Max) / 2</pre>
+<pre>Min = (<span data-display='long-round' data-value='dps-mh-min'></span> + <span data-display='long-round' data-value='plus-min-damage'></span>) = <span data-display='long-round' data-value='dps-mh-min-total'></span>
+Max = (<span data-display='long-round' data-value='dps-mh-max'></span> + <span data-display='long-round' data-value='plus-max-damage'></span>) = <span data-display='long-round' data-value='dps-mh-max-total'></span>
+A = (<span data-display='long-round' data-value='dps-mh-min-total'></span> + <span data-display='long-round' data-value='dps-mh-max-total'></span>) / 2
+A = <span data-display='long-round' data-value='dps-mh-avg'></span></pre>
+  <? endif ?>
+  <h4>Calculating "M"</h4>
+  <p>"M" is the total bonus damage from all of your passives and abilities.</p>
+  <pre>M = 1 + <span data-value='bonus-damage'></span></pre>
+  <h4>Totaling it all up...</h4>
+  <pre>DPS = <span data-display='long-round' data-value='scram-s'></span> * <span data-display='long-round' data-value='scram-c'></span> * <span data-display='long-round' data-value='scram-r'></span> * <span data-display='long-round' data-value='scram-a'></span> * <span data-display='long-round' data-value='scram-m'></span></pre>
+  <pre>DPS = <span data-display='long-round' data-value='dps'></span></pre>
+</div>

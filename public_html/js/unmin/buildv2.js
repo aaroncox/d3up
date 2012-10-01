@@ -103,6 +103,13 @@
 					value = Math.round(value * 100) / 100;
           value = value.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,");          
 					stat.prepend(value);
+				} else if(type == 'long-round') {
+					if(typeof(value) == 'undefined') {
+						value = 0;
+					} 
+					value = Math.round(value * 10000) / 10000;
+					console.log("long");
+          stat.prepend(prefix + value + suffix);					
 				} else {
 	        if(isNaN(parseFloat(value)) && value) {
 						stat.prepend(prefix + value + suffix);

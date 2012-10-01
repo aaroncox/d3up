@@ -119,7 +119,7 @@ BuildCalculator.prototype = {
 			this.attrs['plus-gold-find'] += 3 * this.paragon;
 			this.attrs['vitality'] += 2 * this.paragon;
 		}
-		this.heroClass = newClass;
+		this.attrs['hero-class'] = this.heroClass = newClass;
 	},
 	getClass: function() {
 		return this.heroClass;
@@ -717,11 +717,13 @@ BuildCalculator.prototype = {
 				bnAvgDamage = 0; 
 
 		if(this.attrs['damage']) {
-			mhMinDamage = this.attrs['damage'].min;
-			mhMaxDamage = this.attrs['damage'].max;
+			rendered['dps-mh-min'] = mhMinDamage = this.attrs['damage'].min;
+			rendered['dps-mh-max'] = mhMaxDamage = this.attrs['damage'].max;			
 			if(this.attrs['damage-oh']) {
 				ohMinDamage = this.attrs['damage-oh'].min;
 				ohMaxDamage = this.attrs['damage-oh'].max;
+				rendered['dps-oh-min'] = mhMinDamage = this.attrs['damage-oh'].min;
+				rendered['dps-oh-max'] = mhMaxDamage = this.attrs['damage-oh'].max;			
 			}
 		}
 		// Remove the +% Damage Bonus if it exists
@@ -738,17 +740,26 @@ BuildCalculator.prototype = {
     //     d3up.log("Min/Max Damage Bonuses: " + this.attrs['min-damage'] + " - " + this.attrs['max-damage']);
 		// Add the Bonus Damage to the values without +% Damage
     if(this.attrs['max-damage']) {
-     mhMaxDamage += this.attrs['max-damage']; // / (1 - (this.attrs['mainhand-plus-damage'] * 0.01));      
-     if(ohMaxDamage) {
-       ohMaxDamage += this.attrs['max-damage'];              
-     }
+			rendered['plus-max-damage'] = this.attrs['max-damage'];
+			mhMaxDamage += this.attrs['max-damage']; // / (1 - (this.attrs['mainhand-plus-damage'] * 0.01));      
+			if(ohMaxDamage) {
+				ohMaxDamage += this.attrs['max-damage'];              
+			}
     }
     if(this.attrs['min-damage']) {
-     mhMinDamage += this.attrs['min-damage']; // / (1 - (this.attrs['mainhand-plus-damage'] * 0.01));        
-     if(ohMinDamage) {
-       ohMinDamage += this.attrs['min-damage'];              
-     }
+			rendered['plus-min-damage'] = this.attrs['min-damage'];
+      mhMinDamage += this.attrs['min-damage']; // / (1 - (this.attrs['mainhand-plus-damage'] * 0.01));        
+      if(ohMinDamage) {
+        ohMinDamage += this.attrs['min-damage'];              
+      }
     }
+		rendered['dps-mh-min-total'] = mhMinDamage;
+		rendered['dps-mh-max-total'] = mhMaxDamage;
+		if(ohMinDamage && ohMaxDamage) {
+			rendered['dps-oh-min-total'] = ohMinDamage;
+			rendered['dps-oh-max-total'] = ohMaxDamage;
+		}
+		rendered['dps-mh-avg'] = ((mhMinDamage + mhMaxDamage) / 2);
     // d3up.log("MH Min/Max after +Min/Max: ", mhMinDamage, mhMaxDamage);
 		// Determine Bonus Damage from Elemental Damage Bonuses (without the +% Damage added)
     // if(bnElePercent > 0 && this.attrs.mhRealDamage) {
@@ -806,8 +817,8 @@ BuildCalculator.prototype = {
 		  //   			};
 		  //       } else {
   			rendered['dps-speed'] = {
-  				mh: Math.floor(this.attrs['speed'] * 1024) / 1024,
-  				oh: Math.floor(this.attrs['speed-oh'] * 1024) / 1024
+  				mh: this.attrs['speed'],
+  				oh: this.attrs['speed-oh']
   			};
       // }
 			
@@ -828,11 +839,13 @@ BuildCalculator.prototype = {
 			// if(this.attrs['plus-aps']) {
 			//         rendered['dps-speed'] = Math.floor((this.attrs['speed'] + this.attrs['plus-aps']) * 1024) / 1024;
 			//       } else {
-  			rendered['dps-speed'] = Math.floor(this.attrs['speed'] * 1024) / 1024;        
+  			// rendered['dps-speed'] = Math.floor(this.attrs['speed'] * 1024) / 1024;        
+  			rendered['dps-speed-mh'] = this.attrs['speed'];        
       // }
 			mathS = 1 + this.attrs[this.attrs.primary] * 0.01;
 			mathC = 1 + (this.attrs['critical-hit'] * 0.01) * (this.attrs['critical-hit-damage'] * 0.01);
-			mathR = rendered['dps-speed'] * (1 + atkSpeedInc + this.bonuses['plus-attack-speed']);
+			mathR = rendered['dps-speed-mh'] * (1 + atkSpeedInc + this.bonuses['plus-attack-speed']);
+			// console.log(rendered['dps-speed'], atkSpeedInc, this.bonuses['plus-attack-speed']);
 			mathA = ((mhMinDamage + mhMaxDamage) / 2) + bnEleDamage;
 			mathM = (1 + this.bonuses['plus-damage']);
 			rendered['dps'] = mathS * mathC * mathR * mathA * mathM;		
@@ -841,6 +854,12 @@ BuildCalculator.prototype = {
 			// rendered['dps'] = (((mhMinDamage + mhMaxDamage) / 2 + bnAvgDamage) * rendered['dps-speed']) * (1 + atkSpeedInc) * (this.attrs[this.attrs.primary] / 100 + 1) * 1 * ((this.attrs['critical-hit'] / 100) * (this.attrs['critical-hit-damage']/100) + 1);
 			rendered['dps-speed-display'] = Math.round(mathR * 100) / 100;
 		}
+		rendered['scram-s'] = mathS;
+		rendered['scram-c'] = mathC;
+		rendered['scram-r'] = mathR;
+		rendered['scram-a'] = mathA;
+		rendered['scram-m'] = mathM;
+		rendered['bonus-damage'] = this.bonuses['plus-damage'];
 		// Add any bonus damage onto the damage calculation
 		// if(this.bonuses['plus-damage']) {
 			// d3up.log(this.bonuses['plus-damage']);
@@ -1214,6 +1233,8 @@ BuildCalculator.prototype = {
 				gearEhp = this.calcGearEhp(defenses, ehp),
 				dps = this.calcOffense(), 
 				skills = this.calcSkills();
+		this.attrs['primary-stat'] = this.attrs[this.attrs['primary']];
+		
 		// Add all of our calculated values into the values object for returning
     // d3up.log("----");
 		_.extend(this.values, defenses, ehp, gearEhp, dps, skills);		

@@ -6,7 +6,7 @@ $(function() {
       tabs = $("#tabs-render"),
       atabs = $("#tabs-render > div");
   atabs.hide();
-  tabs.children("#gear").show();
+  tabs.children("#dps-math").show();
 	controls.each(function() {
 		if(!$(this).is(".saveStats")) {
 		  $(this).bind('click',function(){
