@@ -7425,7 +7425,7 @@ var setBonuses = {
 			4: {
 				'plus-gold-find': 0.15,
 				'plus-magic-find': 0.15,
-				'elite-damage': 0.07
+				'elite-reduce': 0.07
 			}
 		}
 	},

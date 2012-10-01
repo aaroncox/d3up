@@ -12,6 +12,11 @@
   div#tabs-render.content-page .math {
     font-size: 14px;
     padding: 5px 10px;
+    font-family: verdana;
+  }
+  div#tabs-render.content-page .math ul li ul {
+    margin: 5px;
+    padding-left: 10px;
   }
   div#tabs-render.content-page .math pre {
     padding: 10px;
@@ -49,6 +54,10 @@
   <pre>S = <span data-display='long-round' data-value='scram-s'></span></pre>
   <h4>Calculating "C"</h4>
   <p>"C" is a combination of your Critical Hit Chance as well as your Critical Hit Damage. By multiplying the increase in damage by the chance to critically hit, we come up with C.</p>
+  <ul>
+    <li>Critical Hit Chance: <span data-value="critical-hit"></span>%</li>
+    <li>Critical Hit Damage: <span data-value="critical-hit-damage"></span>%</li>
+  </ul>
   <pre>C = 1 + (<span>crit chance</span> * 0.01) * (<span>crit damage</span> * 0.01)</pre>
   <pre>C = 1 + (<span data-display='long-round' data-value='critical-hit'></span>% * 0.01) * (<span data-display='long-round' data-value='critical-hit-damage'></span>% * 0.01)</pre>
   <pre>C = <span data-display='long-round' data-value='scram-c'></span></pre>
@@ -56,10 +65,20 @@
   <p>"R" is the rate at which you attack, including all attack speed bonuses.</p>
   <? if($isDW): ?>
   <p>When dual-wielding, you also gain a +15% Increase to your attack speed.</p>
+  <ul>
+    <li>Mainhand Speed: <span data-display='long-round' data-value='dps-speed-mh'></span> attacks per second</li>
+    <li>Offhand Speed: <span data-display='long-round' data-value='dps-speed-oh'></span> attacks per second</li>
+    <li>+% Attack Speed: <span data-display='long-round' data-value='attack-speed-incs'></span>%</li>
+    <li>Dual Wield Bonus: <span>15</span>%</li>
+  </ul>
   <pre>R = ((MH Speed + OH Speed) / 2) * (1 + DW Bonus + % Increases);</pre>
   <pre>R = (<span data-display='long-round' data-value='dps-speed-mh'></span> + <span data-display='long-round' data-value='dps-speed-oh'></span>) / 2 * (1 + 0.15 + <span data-display='long-round' data-value='attack-speed-incs'></span>)</pre>
   <pre>R = <span data-display='long-round' data-value='scram-r'></span></pre>
   <? else: ?>
+  <ul>
+    <li>Mainhand Speed: <span data-display='long-round' data-value='dps-speed-mh'> attacks per second</span></li>
+    <li>+% Attack Speed: <span data-display='long-round' data-value='attack-speed-incs'></span>%</li>
+  </ul>
   <pre>R = Weapon Speed * (1 + % Increases);</pre>
   <pre>R = <span data-display='long-round' data-value='dps-speed-mh'></span> * (1 + (<span data-display='long-round' data-value='attack-speed-incs'></span> * 0.01))</pre>
   <pre>R = <span data-display='long-round' data-value='scram-r'></span></pre>
@@ -67,32 +86,81 @@
   <h4>Calculating "A"</h4>
   <p>"A" is your average hit, this is where most of the DPS issues come into play involving +% Elemental Damage or +% Damage.</p>
   <? if($isDW): ?>
-  <pre>
+  <ul>
+    <li><span data-display-item="mainhand"></span>
+      <ul>
+        <li>Total Damage: <span data-display='long-round' data-value='dps-mh-min'></span> - <span data-display='long-round' data-value='dps-mh-max'></span></li>
+        <li>Weapon Damage: <span data-display='long-round' data-value='dps-mh-real-min'></span> - <span data-display='long-round' data-value='dps-mh-real-max'></span></li>
+      </ul>
+    </li>
+    <li><span data-display-item="offhand"></span>
+      <ul>
+        <li>Total Damage: <span data-display='long-round' data-value='dps-oh-min'></span> - <span data-display='long-round' data-value='dps-oh-max'></span></li>
+        <li>Weapon Damage: <span data-display='long-round' data-value='dps-oh-real-min'></span> - <span data-display='long-round' data-value='dps-oh-real-max'></span></li>
+      </ul>
+    </li>
+    <li>Minimum Damage: +<span data-display='long-round' data-value='min-damage'></span></li>
+    <li>Maximum Damage: +<span data-display='long-round' data-value='max-damage'></span></li>
+    <li>+% Elemental Damage: <span data-display='long-round' data-value='bonus-elemental-percent'></span>%</li>
+  </ul>
+  <p>+% Elemental Damage appears to use the Minimum Damage values from your weapons, WITHOUT the +Elemental Damage affixes (+X-Y Fire/Lightning/Etc Damage). To calculate +% Elemental Damage, <a href="http://us.battle.net/d3/en/forum/topic/6413025317#13">according to this post</a>, we need to do the following...</p>
+  <pre>MH Damage = (MH Real Min Damage + Bonus Min Damage)
+OH Damage = (OH Real Min Damage + Bonus Min Damage)
+Bonus Damage = (MH Damage + OH Damage) * Bonus Ele %</pre>
+  <p>Plugging in the numbers, we get:</p>
+  <pre>MH Damage = (<span data-display='long-round' data-value='dps-mh-real-min'></span> + <span data-display='long-round' data-value='min-damage'></span>)
+OH Damage = (<span data-display='long-round' data-value='dps-oh-real-min'></span> + <span data-display='long-round' data-value='min-damage'></span>)
+Elemental Damage = (<span data-value='dps-mh-real-min-bonus'></span> + <span data-value='dps-oh-real-min-bonus'></span>) * (<span data-value='bonus-elemental-percent'></span> * 0.01)
+Elemental Damage = <span data-value='bonus-elemental-damage'></span></pre>
+<p>Now, for the math to determine actual average damage, which is as follows.</p>
+<pre>
 MH Min = (MH Weapon Min + Bonus Min)
 MH Max = (MH Weapon Max + Bonus Max)
 OH Min = (OH Weapon Min + Bonus Min)
 OH Max = (OH Weapon Max + Bonus Max)
-A = (MH Min + MH Max + OH Min + OH Max) / 4</pre>
+A = ((MH Min + MH Max) / 2 + (OH Min + OH Max) / 2) + Elemental Damage</pre>
+<p>Plug in this build's numbers...</p>
 <pre>
 MH Min = (<span data-display='long-round' data-value='dps-mh-min'></span> + <span data-display='long-round' data-value='plus-min-damage'></span>) = <span data-display='long-round' data-value='dps-mh-min-total'></span>
 MH Max = (<span data-display='long-round' data-value='dps-mh-max'></span> + <span data-display='long-round' data-value='plus-max-damage'></span>) = <span data-display='long-round' data-value='dps-mh-max-total'></span>
 OH Min = (<span data-display='long-round' data-value='dps-oh-min'></span> + <span data-display='long-round' data-value='plus-min-damage'></span>) = <span data-display='long-round' data-value='dps-oh-min-total'></span>
 OH Max = (<span data-display='long-round' data-value='dps-oh-max'></span> + <span data-display='long-round' data-value='plus-max-damage'></span>) = <span data-display='long-round' data-value='dps-oh-max-total'></span>
-A = (<span data-display='long-round' data-value='dps-mh-min-total'></span> + <span data-display='long-round' data-value='dps-mh-max-total'></span>) / 2
-A = <span data-display='long-round' data-value='dps-mh-avg'></span></pre>
+
+MH Avg = (<span data-display='long-round' data-value='dps-mh-min-total'></span> + <span data-display='long-round' data-value='dps-mh-max-total'></span>) / 2 = <span data-display='long-round' data-value='dps-mh-avg'></span>
+OH Avg = (<span data-display='long-round' data-value='dps-oh-min-total'></span> + <span data-display='long-round' data-value='dps-oh-max-total'></span>) / 2 = <span data-display='long-round' data-value='dps-oh-avg'></span>
+
+A = (<span data-display='long-round' data-value='dps-mh-avg'></span> + <span data-display='long-round' data-value='dps-oh-avg'></span>) / 2 + <span data-value='bonus-elemental-damage'></span>
+A = <span data-display='long-round' data-value='scram-a'></span></pre>
   <? else: ?>
+  <ul>
+    <li><span data-display-item="mainhand"></span>
+      <ul>
+        <li>Total Damage: <span data-display='long-round' data-value='dps-mh-min'></span> - <span data-display='long-round' data-value='dps-mh-max'></span></li>
+        <li>Weapon Damage: <span data-display='long-round' data-value='dps-mh-real-min'></span> - <span data-display='long-round' data-value='dps-mh-real-max'></span></li>
+      </ul>
+    </li>    
+    <li>Min Damage: +<span data-display='long-round' data-value='min-damage'></span></li>
+    <li>Max Damage: +<span data-display='long-round' data-value='max-damage'></span></li>
+    <li>+% Elemental Damage: <span data-display='long-round' data-value='bonus-elemental-percent'></span>%</li>
+  </ul>  
+  <p>+% Elemental Damage is calculated </p>
 <pre>Min = (Weapon Min + Bonus Min)
 Max = (Weapon Max + Bonus Max)
 A = (Min + Max) / 2</pre>
 <pre>Min = (<span data-display='long-round' data-value='dps-mh-min'></span> + <span data-display='long-round' data-value='plus-min-damage'></span>) = <span data-display='long-round' data-value='dps-mh-min-total'></span>
 Max = (<span data-display='long-round' data-value='dps-mh-max'></span> + <span data-display='long-round' data-value='plus-max-damage'></span>) = <span data-display='long-round' data-value='dps-mh-max-total'></span>
 A = (<span data-display='long-round' data-value='dps-mh-min-total'></span> + <span data-display='long-round' data-value='dps-mh-max-total'></span>) / 2
-A = <span data-display='long-round' data-value='dps-mh-avg'></span></pre>
+A = <span data-display='long-round' data-value='scram-a'></span></pre>
   <? endif ?>
   <h4>Calculating "M"</h4>
   <p>"M" is the total bonus damage from all of your passives and abilities.</p>
   <pre>M = 1 + <span data-value='bonus-damage'></span></pre>
   <h4>Totaling it all up...</h4>
+  <p>Now we just take the last number from each of the above sections and multiply them together!</p>
+  <pre>DPS = S * C * R * A * M</pre>
   <pre>DPS = <span data-display='long-round' data-value='scram-s'></span> * <span data-display='long-round' data-value='scram-c'></span> * <span data-display='long-round' data-value='scram-r'></span> * <span data-display='long-round' data-value='scram-a'></span> * <span data-display='long-round' data-value='scram-m'></span></pre>
   <pre>DPS = <span data-display='long-round' data-value='dps'></span></pre>
+  <h4>Help improve this!</h4>
+  <p>This isn't a perfect system, I've build it based on a number of different forum posts and blogs written about how the DPS is calculated on the Character Sheet. If you see something incorrect, please correct me (<a href="mailto:aaron.cox@greymass.com">aaron.cox@greymass.com</a>)! I want this calculator to be as precise as possible, which is the main reason I'm exposing how the math is done.</p>
+  <p>Feel free to use these calculations in your applications, spreadsheets or websites!</p>
 </div>

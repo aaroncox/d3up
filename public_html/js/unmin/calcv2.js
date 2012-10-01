@@ -711,6 +711,8 @@ BuildCalculator.prototype = {
 				ohMinDamage = 0,
 				ohMaxDamage = 0,
 				bnMinDamage = 0,
+				mhAvgDamage = 0,
+				ohAvgDamage = 0,
 				bnMaxDamage = 0,
 				bnEleDamage = 0,
 				bnElePercent = 0,
@@ -718,12 +720,14 @@ BuildCalculator.prototype = {
 
 		if(this.attrs['damage']) {
 			rendered['dps-mh-min'] = mhMinDamage = this.attrs['damage'].min;
-			rendered['dps-mh-max'] = mhMaxDamage = this.attrs['damage'].max;			
+			rendered['dps-mh-max'] = mhMaxDamage = this.attrs['damage'].max;		
+			rendered['dps-mh-avg'] = mhAvgDamage = (mhMinDamage + mhMaxDamage) / 2;				
 			if(this.attrs['damage-oh']) {
 				ohMinDamage = this.attrs['damage-oh'].min;
 				ohMaxDamage = this.attrs['damage-oh'].max;
-				rendered['dps-oh-min'] = mhMinDamage = this.attrs['damage-oh'].min;
-				rendered['dps-oh-max'] = mhMaxDamage = this.attrs['damage-oh'].max;			
+				rendered['dps-oh-min'] = ohMinDamage = this.attrs['damage-oh'].min;
+				rendered['dps-oh-max'] = ohMaxDamage = this.attrs['damage-oh'].max;			
+				rendered['dps-oh-avg'] = ohAvgDamage = (ohMinDamage + ohMaxDamage) / 2;
 			}
 		}
 		// Remove the +% Damage Bonus if it exists
@@ -797,6 +801,18 @@ BuildCalculator.prototype = {
 				bnElePercent += this.attrs[v];
 			}
 		}, this);
+		if(this.attrs.mhRealDamage) {
+			rendered['dps-mh-real-min'] = this.attrs.mhRealDamage.min;
+			rendered['dps-mh-real-max'] = this.attrs.mhRealDamage.max;
+			rendered['dps-mh-real-min-bonus'] = this.attrs.mhRealDamage.min + bnMinDamage;
+			rendered['dps-mh-real-max-bonus'] = this.attrs.mhRealDamage.max + bnMaxDamage;
+		}
+		if(this.attrs.ohRealDamage) {
+			rendered['dps-oh-real-min'] = this.attrs.ohRealDamage.min;
+			rendered['dps-oh-real-max'] = this.attrs.ohRealDamage.max;
+			rendered['dps-oh-real-min-bonus'] = this.attrs.ohRealDamage.min + bnMinDamage;
+			rendered['dps-oh-real-max-bonus'] = this.attrs.ohRealDamage.max + bnMaxDamage;
+		}
 		// Determine Bonus Damage from Elemental Damage Bonuses
 		if(bnElePercent > 0 && this.attrs.mhRealDamage) {
 			if(this.isDuelWielding) {
@@ -805,6 +821,8 @@ BuildCalculator.prototype = {
 				bnEleDamage += (this.attrs.mhRealDamage.min + bnMinDamage) * (bnElePercent / 100);
 			}
 		}
+		rendered['bonus-elemental-damage'] = bnEleDamage;
+		rendered['bonus-elemental-percent'] = bnElePercent;
     // console.log(this.attrs.mhRealDamage.min, bnMinDamage, bnElePercent, bnEleDamage);
 		// Are we duel wielding?
     // d3up.log(this.attrs);		
@@ -827,13 +845,16 @@ BuildCalculator.prototype = {
 			// d3up.log(rendered['dps-speed'].mh, rendered['dps-speed'].oh);
 			mathS = 1 + this.attrs[this.attrs.primary] * 0.01;
 			mathC = 1 + (this.attrs['critical-hit'] * 0.01) * (this.attrs['critical-hit-damage'] * 0.01);
-			mathR = (rendered['dps-speed'].mh + rendered['dps-speed'].oh) / 2 * (1 + atkSpeedInc + 0.15 + this.bonuses['plus-attack-speed']);
-			mathA = ((mhMinDamage + mhMaxDamage) / 2 + (ohMinDamage + ohMaxDamage) / 2 + (bnEleDamage * 2)) / 2;
+			mathR = ((rendered['dps-speed'].mh * (1 + atkSpeedInc + 0.15 + this.bonuses['plus-attack-speed'])) + (rendered['dps-speed'].oh * (1 + atkSpeedInc + 0.15 + this.bonuses['plus-attack-speed']))) / 2;
+			mathA = (mhAvgDamage + ohAvgDamage) / 2 + bnEleDamage;
 			mathM = (1 + this.bonuses['plus-damage']);
 			rendered['dps'] = mathS * mathC * mathR * mathA * mathM;			
-			rendered['dps-speed-mh'] = Math.round(rendered['dps-speed'].mh * (1 + 0.15 + atkSpeedInc + this.bonuses['plus-attack-speed']) * 100) / 100;
-			rendered['dps-speed-oh'] = Math.round(rendered['dps-speed'].oh * (1 + 0.15 + atkSpeedInc + this.bonuses['plus-attack-speed'])  * 100) / 100;
-			rendered['dps-speed-display'] = Math.round(rendered['dps-speed'].mh * (1 + 0.15 + atkSpeedInc + this.bonuses['plus-attack-speed']) * 100) / 100 + " MH<br/>" + Math.round(rendered['dps-speed'].oh * (1 + 0.15 + atkSpeedInc + this.bonuses['plus-attack-speed'])  * 100) / 100 + " OH";
+			rendered['dps-speed-mh'] = rendered['dps-speed'].mh;
+			rendered['dps-speed-oh'] = rendered['dps-speed'].oh;
+			console.log(mathA, rendered['dps-speed'], (1 + 0.15 + atkSpeedInc + this.bonuses['plus-attack-speed']));
+			// rendered['dps-speed-mh'] = Math.round(rendered['dps-speed'].mh * (1 + 0.15 + atkSpeedInc + this.bonuses['plus-attack-speed']) * 100) / 100;
+			// rendered['dps-speed-oh'] = Math.round(rendered['dps-speed'].oh * (1 + 0.15 + atkSpeedInc + this.bonuses['plus-attack-speed'])  * 100) / 100;
+			rendered['dps-speed-display'] = Math.round(rendered['dps-speed'].mh * (1 + 0.15 + atkSpeedInc + this.bonuses['plus-attack-speed']) * 1000) / 1000 + " MH<br/>" + Math.round(rendered['dps-speed'].oh * (1 + 0.15 + atkSpeedInc + this.bonuses['plus-attack-speed'])  * 1000) / 1000 + " OH";
 			// d3up.log(mathS, mathC, mathR, mathA, mathM, rendered['dps'], "dw", rendered);
 		} else {
 			// if(this.attrs['plus-aps']) {
@@ -854,6 +875,7 @@ BuildCalculator.prototype = {
 			// rendered['dps'] = (((mhMinDamage + mhMaxDamage) / 2 + bnAvgDamage) * rendered['dps-speed']) * (1 + atkSpeedInc) * (this.attrs[this.attrs.primary] / 100 + 1) * 1 * ((this.attrs['critical-hit'] / 100) * (this.attrs['critical-hit-damage']/100) + 1);
 			rendered['dps-speed-display'] = Math.round(mathR * 100) / 100;
 		}
+		console.log(mathA);
 		rendered['scram-s'] = mathS;
 		rendered['scram-c'] = mathC;
 		rendered['scram-r'] = mathR;
@@ -932,10 +954,10 @@ BuildCalculator.prototype = {
     // d3up.log(mhOnly);
 		if(this.isDuelWielding && !mhOnly) {
 			rendered['dps-speed'] = {
-				// mh: this.attrs['speed'],
-				// oh: this.attrs['speed-oh'],
-				mh: Math.floor(this.attrs['speed'] * 1024) / 1024,
-				oh: Math.floor(this.attrs['speed-oh'] * 1024) / 1024
+				mh: this.attrs['speed'],
+				oh: this.attrs['speed-oh'],
+				// mh: Math.floor(this.attrs['speed'] * 1024) / 1024,
+				// oh: Math.floor(this.attrs['speed-oh'] * 1024) / 1024
 			};
 			mathS = 1 + this.attrs[this.attrs.primary] * 0.01;
 			mathA = ((mhMinDamage + mhMaxDamage) / 2 + (ohMinDamage + ohMaxDamage) / 2 + bnMinDamage + bnMaxDamage) / 2;
@@ -1626,10 +1648,11 @@ BuildCalculator.prototype = {
 									min: this.attrs['damage']['min'] - av.min,
 									max: this.attrs['damage']['max'] - av.max,
 								};
-							} else {
-								this.stats['ohRealDamage'] = {
-									min: this.attrs['damage']['min'] - av.min,
-									max: this.attrs['damage']['max'] - av.max,
+							} 
+							if(slot == "offhand") {
+								this.attrs['ohRealDamage'] = {
+									min: this.attrs['damage-oh']['min'] - av.min,
+									max: this.attrs['damage-oh']['max'] - av.max,
 								};								
 							}
 						}
@@ -1825,7 +1848,7 @@ BuildCalculator.prototype = {
 					'critical-hit': 'Crit Hit', 
 					'critical-hit-damage': 'Crit Hit Dmg',
 					'dps-speed-mh': 'MH Attk/Sec',
-					'dps-speed-oh': 'oh Attk/Sec',
+					'dps-speed-oh': 'OH Attk/Sec',
 					'ehp-block': 'EHP w/ Block',
 					'ehp-dodge': 'EHP w/ Dodge',
 					'block-amount': 'Block', 

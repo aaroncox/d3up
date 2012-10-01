@@ -125,7 +125,16 @@
 	        }					
 				}
       });
+			this.renderItems(elem);
     },
+		renderItems: function(elem) {
+			var build = this;
+			elem.find("*[data-display-item]").each(function() {
+				var slot = $(this).data('display-item'),
+						item = build.gear[slot];
+				$(this).html(build.calc.getItemLink(item));
+			});
+		},
     renderSkillsTo: function(elem) {
       // If we've called render before run, then run it before the render
       if(!this.stats.strength) {

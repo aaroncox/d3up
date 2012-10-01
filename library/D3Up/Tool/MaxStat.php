@@ -214,6 +214,7 @@ class D3Up_Tool_MaxStat
 		}
 		$idx = array_search($item->type, array_flip(static::$_typeMap));
 		$ratings = array();
+		$perfect = false;
 		if($item->attrs) {
 			foreach($item->attrs as $key => $value) {
 				if(!in_array($key, array_keys(static::$_statMap))) {
@@ -224,7 +225,7 @@ class D3Up_Tool_MaxStat
     				$perfect = static::$_limits[static::$_typeMap[$item->type]]['values'][static::$_statMap[$key]];				  				    
 				  }
 				}
-				if($perfect == 0) {
+				if(!$perfect) {
 					// var_dump($item->type, $key); exit;
 				} else {
           if(!is_array($value)) {
