@@ -150,4 +150,4 @@ function checkTooltip() {
 }
 $(function() {
 	$("a").each(checkTooltip);	
-})
+});

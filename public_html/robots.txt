@@ -1,0 +1,13 @@
+User-agent: *
+Disallow: /user/*
+Disallow: /ajax/*
+Disallow: /concept/*
+Disallow: /error/*
+Disallow: /b/*/delete
+Disallow: /b/*/edit
+Disallow: /b/*/copy
+Disallow: /b/*/resync
+Disallow: /b/*/crawl
+Disallow: /i/*/copy
+Disallow: /i/*/delete
+Disallow: /i/*/edit
