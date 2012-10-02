@@ -721,13 +721,12 @@ BuildCalculator.prototype = {
 		if(this.attrs['damage']) {
 			rendered['dps-mh-min'] = mhMinDamage = this.attrs['damage'].min;
 			rendered['dps-mh-max'] = mhMaxDamage = this.attrs['damage'].max;		
-			rendered['dps-mh-avg'] = mhAvgDamage = (mhMinDamage + mhMaxDamage) / 2;				
 			if(this.attrs['damage-oh']) {
 				ohMinDamage = this.attrs['damage-oh'].min;
 				ohMaxDamage = this.attrs['damage-oh'].max;
 				rendered['dps-oh-min'] = ohMinDamage = this.attrs['damage-oh'].min;
 				rendered['dps-oh-max'] = ohMaxDamage = this.attrs['damage-oh'].max;			
-				rendered['dps-oh-avg'] = ohAvgDamage = (ohMinDamage + ohMaxDamage) / 2;
+				// rendered['dps-oh-avg'] = ohAvgDamage = (ohMinDamage + ohMaxDamage) / 2;
 			}
 		}
 		// Remove the +% Damage Bonus if it exists
@@ -757,13 +756,17 @@ BuildCalculator.prototype = {
         ohMinDamage += this.attrs['min-damage'];              
       }
     }
+		// Calculate Averages
+		rendered['dps-mh-avg'] = mhAvgDamage = (mhMinDamage + mhMaxDamage) / 2;				
+		rendered['dps-oh-avg'] = ohAvgDamage = (ohMinDamage + ohMaxDamage) / 2;
+		
 		rendered['dps-mh-min-total'] = mhMinDamage;
 		rendered['dps-mh-max-total'] = mhMaxDamage;
 		if(ohMinDamage && ohMaxDamage) {
 			rendered['dps-oh-min-total'] = ohMinDamage;
 			rendered['dps-oh-max-total'] = ohMaxDamage;
 		}
-		rendered['dps-mh-avg'] = ((mhMinDamage + mhMaxDamage) / 2);
+		// rendered['dps-mh-avg'] = ((mhMinDamage + mhMaxDamage) / 2);
     // d3up.log("MH Min/Max after +Min/Max: ", mhMinDamage, mhMaxDamage);
 		// Determine Bonus Damage from Elemental Damage Bonuses (without the +% Damage added)
     // if(bnElePercent > 0 && this.attrs.mhRealDamage) {
@@ -861,7 +864,7 @@ BuildCalculator.prototype = {
 			mathC = 1 + (this.attrs['critical-hit'] * 0.01) * (this.attrs['critical-hit-damage'] * 0.01);
 			mathR = rendered['dps-speed-mh'] * (1 + atkSpeedInc + this.bonuses['plus-attack-speed']);
 			// console.log(rendered['dps-speed'], atkSpeedInc, this.bonuses['plus-attack-speed']);
-			mathA = ((mhMinDamage + mhMaxDamage) / 2) + bnEleDamage;
+			mathA = mhAvgDamage + bnEleDamage;
 			mathM = (1 + this.bonuses['plus-damage']);
 			rendered['dps'] = mathS * mathC * mathR * mathA * mathM;		
       // d3up.log(mhMinDamage, mhMaxDamage, bnMinDamage, bnMaxDamage);
