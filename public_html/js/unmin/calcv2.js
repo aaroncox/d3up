@@ -816,11 +816,12 @@ BuildCalculator.prototype = {
 		// Determine Bonus Damage from Elemental Damage Bonuses
 		if(bnElePercent > 0 && this.attrs.mhRealDamage) {
 			if(this.isDuelWielding) {
-				bnEleDamage += ((this.attrs.mhRealDamage.min + bnMinDamage) + (this.attrs.ohRealDamage.min + bnMinDamage)) / 2 * (bnElePercent / 100) * 2;
+				bnEleDamage += ((this.attrs.mhRealDamage.min + bnMinDamage) + (this.attrs.ohRealDamage.min + bnMinDamage)) / 2 * (bnElePercent / 100);
 			} else {
-				bnEleDamage += (this.attrs.mhRealDamage.min + bnMinDamage) * (bnElePercent / 100) * 2;
+				bnEleDamage += (this.attrs.mhRealDamage.min + bnMinDamage) * (bnElePercent / 100);
 			}
 		}
+		// console.log(this.attrs.mhRealDamage.min, bnMinDamage, bnEleDamage);
 		rendered['bonus-elemental-damage'] = bnEleDamage;
 		rendered['bonus-elemental-percent'] = bnElePercent;
     // console.log(this.attrs.mhRealDamage.min, bnMinDamage, bnElePercent, bnEleDamage);
