@@ -526,6 +526,7 @@
     setSkills: function(skills) {
       var build = this;
       $.each(skills, function(type, data) {
+				build.skills[type] = {};
         $.each(data, function(idx, slug) {
 					if(slug) {
 					  switch(type) {
