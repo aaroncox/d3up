@@ -202,9 +202,11 @@ class D3Up_Form_Record_Item extends Epic_Form
 				'attributes' => array_keys($attrs),
 				'sockets' => $sockets,
 			));			
+		  $this->setButtons(array("save" => "Save Item"));		
+		} else {
+		  $this->setButtons(array("save" => "Create Item"));		
 		}
 
-		$this->setButtons(array("save" => "Create Item"));		
 	}
 	
 	public function save() {

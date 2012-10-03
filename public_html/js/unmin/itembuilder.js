@@ -5,31 +5,6 @@ function ItemBuilder() {
 }
 
 ItemBuilder.prototype = {
-	// Storage for the Item data
-	item: {
-		name: null,								// Name of the Item
-		type: null,								// Type of Item
-		typeName: null, 					// Cleaned Name of Item Type
-		quality: null,						// Quality of Item
-		attrs: {},								// Storage for Attributes
-		stats: {},								// Storage for Stats
-		sockets: {},							// Storage for what's in the Sockets
-		socketCount: 0,						// Storage for the # of Sockets
-		setBonus: null						// Storage for which set this item is part of
-	},
-	changeCallback: false,			// Fires anytime anything changes
-	headerElements: [],					// Any additional elements to append to the header					
-	footerElements: [],					// Any additional elements to append to the footer
-	attrsSelected: [],					// The attributes that have already been selected, to avoid removing/adding additional
-	// Bunch of Selectors for Elements used by the Builder
-	nameInput: null,				 		// Selector for the Name Input
-	qualitySelect: null,		 		// Selector for the Quality 
-	attributeSelect: null,	 		// Selector for the Attribute Selector
-	itemTypeSelect: null,		 		// Selector for the Item's Type
-	socketSelect: null, 				// Selector for the number of sockets
-	// Storage for jQuery Objects in the preview
-	preview: {},
-	itemPreview: null,			 		// Selector for the Item's Preview
 	// Item Class <-> Type Mappings
 	itemClass: {
 		"none": ["amulet", "ring", "mojo", "source", "quiver"],
@@ -834,6 +809,7 @@ ItemBuilder.prototype = {
 	},
 	// Create the Item Preview
 	init: function() {
+		this.preview = {};
 		// Bind the Selects/Inputs on the page
 		this.bindNameInput();
 		this.bindQualitySelect();

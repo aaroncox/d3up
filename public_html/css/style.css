@@ -2143,7 +2143,8 @@ div.toc.section {
 	line-height: 1.2em	
 }
 .d3up-table.d3bit-scanned td.name {
-	width: auto;
+	max-width: 200px;
+	width: 200px;
 }
 .d3bit-scanned .item-stat .value {
 	font-size: 1em;
