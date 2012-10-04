@@ -942,11 +942,11 @@ BuildCalculator.prototype = {
 			}
 		}, this);
 		// Determine Bonus Damage from Elemental Damage Bonuses
-		if(bnElePercent > 0) {
+		if(bnElePercent > 0 && this.attrs.mhRealDamage) {
 			if(this.isDuelWielding) {
-				bnEleDamage += ((this.attrs.mhRealDamage.min + bnMinDamage) + (this.attrs.ohRealDamage.min + bnMinDamage)) / 2 * 2;
+				bnEleDamage += ((this.attrs.mhRealDamage.min + bnMinDamage) + (this.attrs.ohRealDamage.min + bnMinDamage)) / 2 * (bnElePercent / 100);
 			} else {
-				bnEleDamage += (this.attrs.mhRealDamage.min + bnMinDamage) * 2;
+				bnEleDamage += (this.attrs.mhRealDamage.min + bnMinDamage) * (bnElePercent / 100);
 			}
 		}
 		// d3up.log(this.attrs.mhRealDamage.min, bnMinDamage, bnEleDamage);
@@ -983,7 +983,7 @@ BuildCalculator.prototype = {
 		}
 		dps = Math.round(((dLow + dHigh) / 2) * mathR * mathC);
 		// d3up.log(atkSpeedInc);
-    // d3up.log(dLow, dHigh, dps, mathR, mathC);
+    // d3up.log(dLow, dHigh, dps, mathR, mathC, bnEleDamage);
 		hit = Math.round(((dLow + dHigh) / 2) * mathC);
 		if(duration) {
 		  if(isStatic) {
