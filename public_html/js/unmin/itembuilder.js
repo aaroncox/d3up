@@ -816,6 +816,12 @@ ItemBuilder.prototype = {
 		this.bindItemTypeSelect();
 		this.bindAttributeSelect();
 		this.bindSocketSelect();
+		if(!this.item) {
+			this.item = {
+				attrs: {},
+				stats: {},
+			};
+		}
 		// Create the Item Preview Area
 		this.initPreview();
 	}, 
