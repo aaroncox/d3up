@@ -848,6 +848,8 @@ BuildCalculator.prototype = {
 			rendered['dps'] = mathS * mathC * mathR * mathA * mathM;			
 			rendered['dps-speed-mh'] = rendered['dps-speed'].mh;
 			rendered['dps-speed-oh'] = rendered['dps-speed'].oh;
+			rendered['scram-a-mh'] = (mhAvgDamage + bnEleDamage) * mathS * mathM;
+			rendered['scram-a-oh'] = (ohAvgDamage + bnEleDamage) * mathS * mathM;
 			// console.log(mathA, rendered['dps-speed'], (1 + 0.15 + atkSpeedInc + this.bonuses['plus-attack-speed']));
 			// rendered['dps-speed-mh'] = Math.round(rendered['dps-speed'].mh * (1 + 0.15 + atkSpeedInc + this.bonuses['plus-attack-speed']) * 100) / 100;
 			// rendered['dps-speed-oh'] = Math.round(rendered['dps-speed'].oh * (1 + 0.15 + atkSpeedInc + this.bonuses['plus-attack-speed'])  * 100) / 100;
@@ -870,6 +872,7 @@ BuildCalculator.prototype = {
       // d3up.log(mhMinDamage, mhMaxDamage, bnMinDamage, bnMaxDamage);
       // d3up.log(mathS, mathC, mathR, mathA, mathM, rendered['dps'], "1w");
 			// rendered['dps'] = (((mhMinDamage + mhMaxDamage) / 2 + bnAvgDamage) * rendered['dps-speed']) * (1 + atkSpeedInc) * (this.attrs[this.attrs.primary] / 100 + 1) * 1 * ((this.attrs['critical-hit'] / 100) * (this.attrs['critical-hit-damage']/100) + 1);
+			rendered['scram-a-mh'] = mathA * mathM * mathS;
 			rendered['dps-speed-display'] = Math.round(mathR * 100) / 100;
 		}
 		// console.log(mathA);
@@ -957,9 +960,9 @@ BuildCalculator.prototype = {
 				// oh: Math.floor(this.attrs['speed-oh'] * 1024) / 1024
 			};
 			mathS = 1 + this.attrs[this.attrs.primary] * 0.01;
-			mathA = ((mhMinDamage + mhMaxDamage) / 2 + (ohMinDamage + ohMaxDamage) / 2 + bnMinDamage + bnMaxDamage) / 2;
-			mathAl = ((mhMinDamage + bnMinDamage + bnEleDamage) + (ohMinDamage + bnMinDamage + bnEleDamage)) / 2;
-			mathAh = ((mhMaxDamage + bnMaxDamage + bnEleDamage) + (ohMaxDamage + bnMaxDamage + bnEleDamage)) / 2;
+			mathA = ((mhMinDamage + mhMaxDamage) / 2 + bnMaxDamage) + ((ohMinDamage + ohMaxDamage) / 2 + bnMinDamage) / 2;
+			mathAl = ((mhMinDamage + bnMinDamage) / 2 + bnEleDamage) + (ohMinDamage + bnMinDamage) / 2 + bnEleDamage;
+			mathAh = ((mhMaxDamage + bnMaxDamage) / 2 + bnEleDamage) + (ohMaxDamage + bnMaxDamage) / 2 + bnEleDamage;
 			mathM = (1 + this.bonuses['plus-damage']);
 			mathR = (rendered['dps-speed'].mh + rendered['dps-speed'].oh) / 2 * (1 + atkSpeedInc + 0.15 + this.bonuses['plus-attack-speed']);
 			mathC = 1 + (this.attrs['critical-hit'] * 0.01) * (this.attrs['critical-hit-damage'] * 0.01);
@@ -971,12 +974,12 @@ BuildCalculator.prototype = {
 			mathS = 1 + this.attrs[this.attrs.primary] * 0.01;
 			mathC = 1 + (this.attrs['critical-hit'] * 0.01) * (this.attrs['critical-hit-damage'] * 0.01);
 			mathR = rendered['dps-speed'] * (1 + atkSpeedInc + this.bonuses['plus-attack-speed']);
-			mathAl = (mhMinDamage + bnMinDamage + bnEleDamage);
-			mathAh = (mhMaxDamage + bnMaxDamage + bnEleDamage);
+			mathAl = (mhMinDamage + bnMinDamage) / 2 + bnEleDamage;
+			mathAh = (mhMaxDamage + bnMaxDamage) / 2 + bnEleDamage;
 			mathM = (1 + this.bonuses['plus-damage']);
 			dLow = mathS * mathAl * mathM * mathE;
 			dHigh = mathS * mathAh * mathM * mathE;
-			mhAvg = mathS * ((mathAl + mathAh) / 4) * mathM * mathE;
+			mhAvg = mathS * ((mathAl + mathAh) / 2) * mathM * mathE;
 		}
 		dps = Math.round(((dLow + dHigh) / 2) * mathR * mathC);
 		// d3up.log(atkSpeedInc);
