@@ -1,9 +1,15 @@
-<div class='featured title-block' data-class="<?= $this->featured->class ?: 'all' ?>">
-	<h5 style='color: #B18135'>Featured Guide</h5>
-	<h2><?= $this->guideLink($this->featured) ?></h2>
-	<h3><?= $this->featured->description ?></h3>
-	<div class="section-preview">
-		<strong>Sections:</strong>
-		<?= $this->sectionPreview($this->featured, 6) ?>
-	</div>
+<div class='featured-guides page'>
+  <h5 style='color: #B18135'>Featured Guides</h5>
+  <? foreach($this->featured as $featured): ?>
+  <div class='featured title-block'>
+    <h5><?= ucwords(str_replace("-", " ", $featured->class?:"General")) ?> Guide</h5>
+  	<h2><?= $this->guideLink($featured) ?></h2>
+  	<h3><?= $featured->description ?></h3>
+  	<div class="section-preview">
+  		<strong>Sections:</strong>
+  		<?= $this->sectionPreview($featured, 6) ?>
+  	</div>
+  </div>
+  <? endforeach ?>
+  <a class='button' href='guides' style="margin: 10px 30px">View All Guides</a>
 </div>

@@ -2,8 +2,16 @@
 $this->headTitle("Diablo 3 Guides"); 
 ?>
 <div id="guides" class="content-page">
-  <?= $this->render("./index/widgets/guides-featured.phtml") ?>
-	<div class="guide-filters">
+  <div class='featured title-block' data-class="<?= $this->featuredSingle->class ?: 'all' ?>">
+    <h5><?= ucwords(str_replace("-", " ", $this->featuredSingle->class?:"General")) ?> Guide</h5>
+  	<h2><?= $this->guideLink($this->featuredSingle) ?></h2>
+  	<h3><?= $this->featuredSingle->description ?></h3>
+  	<div class="section-preview">
+  		<strong>Sections:</strong>
+  		<?= $this->sectionPreview($this->featuredSingle, 6) ?>
+  	</div>
+  </div>	
+  <div class="guide-filters">
 		<select id="guide-filter-type" class='guide-filter' data-placeholder="Filter by Type">
 			<option <?= ($this->filterType == '') ? 'selected="selected"' : '' ?> value="">All Topics</option>			
 			<option <?= ($this->filterType == 'general') ? 'selected="selected"' : '' ?> value="general">General Guide</option>

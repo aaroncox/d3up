@@ -612,8 +612,22 @@ dd:has(:focus) .chzn-container {
   margin: 0 0 10px;
 */
 }
+.featured-guides {
+	background: #222;	
+}
+.home .featured-guides .featured h5,
+.home .featured-guides .featured h3,
+.home .featured-guides .featured h2,
+.home .featured-guides .featured {
+	background: #111	;
+}
+.video-intro h5,
+.featured-guides h5 {
+	margin: 0;
+	padding: 10px 20px;
+}
 .notifications,
-.featured,
+/*.featured,*/
 .build-header {
 	border: 1px solid #333;
 	text-shadow: 1px 2px 2px #000;
@@ -1346,7 +1360,7 @@ div.title-block h2 {
 	padding-top: 10px;
 }
 .home div.title-block h2 {
-  padding-top: 0;
+  padding-top: 0px;
   font-size: 1em;
 }
 #build div.title-block h5 {

@@ -16,7 +16,8 @@ class IndexController extends D3Up_Controller_Action {
 		$fQuery = array(
 			'id' => $this->view->featuredGuide
 		);
-		$this->view->featured = $featured = Epic_Mongo::db('guide')->fetchOne($fQuery);
+		
+		$this->view->featured = $featured = Epic_Mongo::db('guide')->fetchAll($fQuery);
     $query = array(
       'private' => array('$ne' => true),
       'stats.dps' => array('$exists' => true),
