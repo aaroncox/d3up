@@ -140,19 +140,20 @@
              vsRow = $("<td colspan='10'>").append(oldLink, " vs ", newLink);
         var table = $("<table class='statistics-table' id='compare-table'/>"),
             head = $("<thead>").append(h4, vsRow);
-            headers = $("<tr>").append("<th>Stat</th><th>Diff</th><th>Old</th><th>New</th>"),
+            headers = $("<tr>").append("<th>Stat</th><th>Diff</th><th>%</th><th>Old</th><th>New</th>"),
             body = $("<tbody>").append(headers);
         table.append(head, body);
         $.each(diff, function(k,v) {
          var data = v.split("|"),
-             diffVal = data[1],
+             diffVal = Math.round(data[1] * 10)/10,
              diffName = data[0],
              row = $("<tr/>"), 
              oldStats = build.getStats()
              newStats = buildCompare.getStats();
          row.append($("<td/>").html(diffName));
-         var oldStat = Math.round(oldStats[k] * 100) / 100,
-             newStat = Math.round(newStats[k] * 100) / 100;
+         var oldStat = Math.round(oldStats[k] * 10) / 10,
+             newStat = Math.round(newStats[k] * 10) / 10,
+             change = Math.round(100 - (newStat / oldStat * 100)) * -1;
          if(oldStat > 99999) {
            oldStat = Math.round(oldStat / 10) / 100 + "k";
          }
@@ -161,10 +162,12 @@
          }
          if(diffVal > 0) {
            row.append($("<td class='diff'/>").html("+"+diffVal).addClass("pos"));
+           row.append($("<td class='per pos'/>").html(change + "%"));       
            row.append($("<td class='neg'/>").html(oldStat));
            row.append($("<td class='pos'/>").html(newStat));       
          } else {
            row.append($("<td class='diff'/>").html(diffVal).addClass("neg"));
+           row.append($("<td class='per neg'/>").html(change + "%"));       
            row.append($("<td class='pos'/>").html(oldStat));
            row.append($("<td class='neg'/>").html(newStat));       
          }

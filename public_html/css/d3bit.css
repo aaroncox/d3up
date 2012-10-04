@@ -52,7 +52,9 @@ body {
   width: 343px;
 }
 .d3bit-card table th {
-  padding: 5px;
+  padding: 1px 5px;
+	border-top: 1px solid #333;
+	border-bottom: 1px solid #333;
 }
 .d3bit-card table td {
   text-align: center;
@@ -109,12 +111,18 @@ a:hover .ui-button-text {
 #compare-table .compare-overview {
   border-top: 1px solid #333;
 }
+#compare-table {
+	border-spacing: 0px;
+	
+}
 #compare-table tbody {
   border-top: 1px solid #333;
 }
-#compare-table .diff {
+#compare-table .per {
 	border-right: 1px solid #333;
-	border-left: 1px solid #333;
+}
+#compare-table .diff {
+	border-left: 1px solid #333;	
 }
 #compare-table tr,
 #compare-table td {
@@ -123,6 +131,9 @@ a:hover .ui-button-text {
 }
 #compare-table tbody tr {
   font-size: 10px;
+}
+#compare-table tbody tr:nth-child(2n) {
+	background: #1a1a1a;
 }
 #compare-table thead tr td {
   font-size: 11px;
