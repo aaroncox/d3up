@@ -856,8 +856,10 @@ BuildCalculator.prototype = {
 			rendered['dps'] = mathS * mathC * mathR * mathA * mathM;			
 			rendered['dps-speed-mh'] = rendered['dps-speed'].mh;
 			rendered['dps-speed-oh'] = rendered['dps-speed'].oh;
-			rendered['scram-a-mh'] = (mhAvgDamage + bnEleDamage) * mathS * mathM * mathC;
-			rendered['scram-a-oh'] = (ohAvgDamage + bnEleDamage) * mathS * mathM * mathC;
+			rendered['scram-a-mh'] = (mhAvgDamage + (this.attrs.mhRealDamage.min + bnMinDamage) * 2 * (bnElePercent / 100)) * mathS * mathM * mathC;
+			rendered['scram-a-oh'] = (ohAvgDamage + (this.attrs.ohRealDamage.min + bnMinDamage) * 2 * (bnElePercent / 100)) * mathS * mathM * mathC;
+			// console.log(this.bonuses);
+			// console.log(mhAvgDamage, bnEleDamage, mathS, mathM, mathC);
 			// console.log(mathA, rendered['dps-speed'], (1 + 0.15 + atkSpeedInc + this.bonuses['plus-attack-speed']));
 			// rendered['dps-speed-mh'] = Math.round(rendered['dps-speed'].mh * (1 + 0.15 + atkSpeedInc + this.bonuses['plus-attack-speed']) * 100) / 100;
 			// rendered['dps-speed-oh'] = Math.round(rendered['dps-speed'].oh * (1 + 0.15 + atkSpeedInc + this.bonuses['plus-attack-speed'])  * 100) / 100;
