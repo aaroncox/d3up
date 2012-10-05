@@ -266,7 +266,7 @@ class D3Up_Tool_Crawler
 		'mk-cyclone-strike' => 'Reduces resource cost of Cyclone Strike by [v] Spirit',
 		'mk-deadly-reach' => 'Increases Deadly Reach damage by [v]%',
 		'mk-exploding-palm' => 'Increases Exploding Palm damage by [v]%',
-		'mk-fists-of-thunder' => 'Increases Fist of Thunder damage by [v]%',
+		'mk-fists-of-thunder' => 'Increases Fists of Thunder damage by [v]%',
 		'mk-sweeping-wind' => 'Increases Sweeping Wind damage by [v]%',
 		'mk-way-of-the-hundred-fists' => 'Increases Way of the Hundred Fists damage by [v]%',
 		'mk-lashing-tail-kick' => 'Reduces resource cost of Lashing Tail Kick by [v] Spirit',
@@ -382,16 +382,18 @@ class D3Up_Tool_Crawler
 		
 	}     
 	
-	static public function crawl($build, $user, $character) {
-		$character = (int) $character;
+	static public function crawl($build) {
+		$character = (int) $build->_characterId;
+		$battletag = $build->_characterBt;
+		$region = $build->_characterRg;
 		$results = explode("/", $build->profileUrl);
-		if(!$user->battletag) {
+		if(!$battletag) {
 			throw new Exception("You must have a battletag setup in your user profile to use the import feature.");
 		}
 		if(!$character || !is_int($character)) {
 			throw new Exception("You've reached this page in error, please use the copy button on your build page.");
 		}
-		$url = self::$profileUrl[$user->region] . str_replace("#", "-", $user->battletag) . "/hero/" . $character;
+		$url = self::$profileUrl[$region] . str_replace("#", "-", $battletag) . "/hero/" . $character;
 		$profile = static::get($url);
 		$status = array();
 		$skills = array();
@@ -412,9 +414,9 @@ class D3Up_Tool_Crawler
 		}
     // }
 		foreach ($profile['items'] as $slot => $gear) {
-			// if($slot != "offHand") {
-			// 	continue;
-			// }
+      // if($slot != "helm") {
+      //   continue;
+      // }
 			// Explode the Tooltip Params
 			$parts = explode("/", $gear['tooltipParams']);
 			// Build the URL
