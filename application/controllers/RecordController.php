@@ -309,10 +309,10 @@ class RecordController extends D3Up_Controller_Action
 			if($record->_createdBy->createReference() == $profile->createReference()) {
 				$this->view->characters = D3Up_Tool_Crawler::getInstance()->getCharacters($profile);
 				if($character = $this->getRequest()->getParam("character")) {			
-					$this->view->status = D3Up_Tool_Crawler::getInstance()->crawl($record, $profile, $character);
 					$record->_characterId = $character;
 					$record->_characterBt = $profile->battletag;
 					$record->_characterRg = $profile->region;
+					$this->view->status = D3Up_Tool_Crawler::getInstance()->crawl($record, $profile, $character);
 					$record->crawlCount++;
 					$record->save();
 				}
