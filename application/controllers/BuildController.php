@@ -88,13 +88,15 @@ class BuildController extends D3Up_Controller_Action
 					$fakeProfile = Epic_Mongo::newDoc('profile');
 					$fakeProfile->region = $region;
 					$fakeProfile->battletag = $battletag;
-					D3Up_Tool_Crawler::getInstance()->crawl($build, $fakeProfile, $character);					
+					$build->_characterId = $character;
 					$build->_characterBt = $fakeProfile->battletag;
 					$build->_characterRg = $fakeProfile->region;
+					D3Up_Tool_Crawler::getInstance()->crawl($build, $fakeProfile, $character);					
 				} else {
-					D3Up_Tool_Crawler::getInstance()->crawl($build, $profile, $character);															
+					$build->_characterId = $character;
 					$build->_characterBt = $profile->battletag;
 					$build->_characterRg = $profile->region;
+					D3Up_Tool_Crawler::getInstance()->crawl($build, $profile, $character);															
 				}
 				$build->_characterId = $character;
 				$build->_lastCrawl = time();
