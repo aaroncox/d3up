@@ -54,6 +54,7 @@ class D3Up_Tool_Attributes
 		'lightning-damage' => '+[v] Lightning Damage',
 		'poison-damage' => '+[v] Poison Damage',
 		'elite-damage' => 'Increases Damage against Elites by [v]%',
+		'demon-damage' => '+[v]% Damage to Demons',
 		// Elemental Skill Bonuses
 		'plus-arcane-damage-skills' => 'Arcane skills deal [v]% more damage',
 		'plus-cold-damage-skills' => 'Cold skills deal [v]% more damage',
