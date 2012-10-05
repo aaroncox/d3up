@@ -3165,7 +3165,7 @@ var activeSkills = {
 			effect: {
 				'cost-spirit': 10,
 				'cooldown': 15,
-				'plus-damage-conditional': 30
+				'plus-holy-damage-conditional': 30
 			},
 		},
 		'blinding-flash~b': {
@@ -4106,6 +4106,7 @@ var activeSkills = {
 			effect: {
 				'cost-spirit': 50,
 				'plus-damage': 12,
+				'plus-damage-3sec': 12
 			},
 		},
 		'mantra-of-conviction~a': {
@@ -4115,6 +4116,7 @@ var activeSkills = {
 			effect: {
 				'cost-spirit': 50,
 				'plus-damage': 24,
+				'plus-damage-3sec': 24
 			},
 		},
 		'mantra-of-conviction~b': {
@@ -4124,6 +4126,7 @@ var activeSkills = {
 			effect: {
 				'cost-spirit': 50,
 				'plus-damage': 12,
+				'plus-damage-3sec': 12
 			},
 		},
 		'mantra-of-conviction~c': {
@@ -4133,6 +4136,7 @@ var activeSkills = {
 			effect: {
 				'cost-spirit': 50,
 				'plus-damage': 12,
+				'plus-damage-3sec': 12
 			},
 		},
 		'mantra-of-conviction~d': {
@@ -4142,6 +4146,7 @@ var activeSkills = {
 			effect: {
 				'cost-spirit': 50,
 				'plus-damage': 12,
+				'plus-damage-3sec': 12
 			},
 		},
 		'mantra-of-conviction~e': {
@@ -4151,6 +4156,7 @@ var activeSkills = {
 			effect: {
 				'cost-spirit': 50,
 				'plus-damage': 12,
+				'plus-damage-3sec': 12
 			},
 		},
 	},

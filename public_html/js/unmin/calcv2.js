@@ -197,11 +197,21 @@ BuildCalculator.prototype = {
 			case "plus-attack-speed-this":
         this.bonuses[i] += e;
 			  break;
+			case "plus-damage-3sec":
+				this.bonuses[ 'plus-damage-3sec' ] = e;
+				break;
 			case "weapon-damage":
 			case "generate-fury":
 			case "limit":
 			  // Do Nothing
 			  break;
+			case "plus-holy-damage":
+				if(this.attrs['plus-holy-damage']) {
+					this.attrs['plus-holy-damage'] += e;					
+				} else {
+					this.attrs['plus-holy-damage'] = e;
+				}
+				break;
 			case "percent-non-physical":
 			case "plus-life":
 			case "plus-life-regen":
@@ -250,6 +260,9 @@ BuildCalculator.prototype = {
 							this.applyEnabledSkill(total, 'plus-damage');
 						}, this);
 						break;
+					case "plus-holy-damage-conditional":
+						this.applyEnabledSkill(e, 'plus-holy-damage');
+						break;
 					case "plus-damage-conditional":
 						this.applyEnabledSkill(e, 'plus-damage');
 						break;
@@ -270,10 +283,6 @@ BuildCalculator.prototype = {
 		var effects = {
 			sharpshooter: function( value ) {
 				this.bonuses[ 'sharpshooter' ] = true;
-				// TODO
-				// mathDpsSpecialName = 'Sharpshooter';
-				// mathDpsSpecial = (((mathDamage.min + mathDamage.max) / 2 + mathDamageAdd) * this.attrs['speed']) * mathSpeedAdditive * (primaryAttr / 100 + 1) * 1 * ((100 / 100) * (mathCriticalHitDamage/100)+ 1);
-				// mathDpsSpecial = Math.round(mathDps * 100) / 100;
 			}
 		};
 		// d3up.log(reverse);
@@ -798,9 +807,9 @@ BuildCalculator.prototype = {
 		}
 		// console.log(this.attrs['attack-speed-incs']);
 		// Elemental Damage Bonuses
+		// console.log(this.attrs);
 		_.each(['plus-fire-damage', 'plus-arcane-damage', 'plus-poison-damage', 'plus-cold-damage', 'plus-lightning-damage', 'plus-holy-damage'], function(v,k) {
 			if(_.has(this.attrs, v)) {
-        // console.log(this.attrs[v]);
 				bnElePercent += this.attrs[v];
 			}
 		}, this);
@@ -824,7 +833,6 @@ BuildCalculator.prototype = {
 				bnEleDamage += (this.attrs.mhRealDamage.min + bnMinDamage) * (bnElePercent / 100);
 			}
 		}
-		// console.log(this.attrs.mhRealDamage.min, bnMinDamage, bnEleDamage);
 		rendered['bonus-elemental-damage'] = bnEleDamage;
 		rendered['bonus-elemental-percent'] = bnElePercent;
     // console.log(this.attrs.mhRealDamage.min, bnMinDamage, bnElePercent, bnEleDamage);
@@ -1051,6 +1059,7 @@ BuildCalculator.prototype = {
 							bonuses['3rd-hit-damage'] = e;
 							break;
 						case "plus-intelligence-conditional":
+						case "plus-holy-damage-conditional":
 						case "plus-damage-conditional":
 						case "plus-life-conditional":
 						case "non-physical-conditional":
@@ -1140,6 +1149,7 @@ BuildCalculator.prototype = {
 						case "damage-reduce-conditional":
 						case "non-physical-conditional":
 						case "plus-damage-conditional":
+						case "plus-holy-damage-conditional":
 							activate = true;
 							break;
 						case "stackable":
@@ -1274,6 +1284,13 @@ BuildCalculator.prototype = {
 		// } else {
 		// 	this.values['dps-speedTotal'] = Math.round(this.values['dps-speed'] * (1 + this.values['dps-addAttackSpeed']) * 100)/100;
 		// }
+		if(this.bonuses['plus-damage-3sec']) {
+			var oldBonus = this.bonuses["plus-damage"];
+			this.bonuses['plus-damage'] += (this.bonuses['plus-damage-3sec']) / 100;
+			var tempDps = this.calcOffense();
+			this.values['3sec-dps'] = tempDps.dps;
+			this.bonuses['plus-damage'] = oldBonus;
+		}
 		if(this.bonuses['sharpshooter']) {
 			var oldCrit = this.attrs['critical-hit'];
 			this.attrs['critical-hit'] = 100;
