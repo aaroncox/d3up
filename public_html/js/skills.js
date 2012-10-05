@@ -4105,8 +4105,7 @@ var activeSkills = {
 			desc: 'Recite a Mantra that causes all enemies within 20 yards of you to take 12% additional damage. The Mantra lasts 3 minutes.  For 3 seconds after activation, the effect is increased to 24% additional damage.  This is a Mantra. You can only have one Mantra active at a time.',
 			effect: {
 				'cost-spirit': 50,
-				'plus-damage': 12,
-				'plus-damage-3sec': 12
+				'plus-damage': 24,
 			},
 		},
 		'mantra-of-conviction~a': {
@@ -4115,8 +4114,7 @@ var activeSkills = {
 			rune: 'Increases the strength of Mantra of Conviction so that enemies take 24% additional damage and 48% for the first 3 seconds.',
 			effect: {
 				'cost-spirit': 50,
-				'plus-damage': 24,
-				'plus-damage-3sec': 24
+				'plus-damage': 48,
 			},
 		},
 		'mantra-of-conviction~b': {
@@ -4125,8 +4123,7 @@ var activeSkills = {
 			rune: 'Enemies affected by Mantra of Conviction take 12% weapon damage per second as Holy.',
 			effect: {
 				'cost-spirit': 50,
-				'plus-damage': 12,
-				'plus-damage-3sec': 12
+				'plus-damage': 24,
 			},
 		},
 		'mantra-of-conviction~c': {
@@ -4135,8 +4132,7 @@ var activeSkills = {
 			rune: 'Slows the movement of enemies within 20 yards by 30%.',
 			effect: {
 				'cost-spirit': 50,
-				'plus-damage': 12,
-				'plus-damage-3sec': 12
+				'plus-damage': 24,
 			},
 		},
 		'mantra-of-conviction~d': {
@@ -4145,8 +4141,7 @@ var activeSkills = {
 			rune: 'You and your allies have a 30% chance to be healed for 279.09 - 341.11 Life when using melee attacks on an enemy under the effects of Mantra of Conviction.',
 			effect: {
 				'cost-spirit': 50,
-				'plus-damage': 12,
-				'plus-damage-3sec': 12
+				'plus-damage': 24,
 			},
 		},
 		'mantra-of-conviction~e': {
@@ -4155,8 +4150,7 @@ var activeSkills = {
 			rune: 'Enemies affected by Mantra of Conviction deal 10% less damage.',
 			effect: {
 				'cost-spirit': 50,
-				'plus-damage': 12,
-				'plus-damage-3sec': 12
+				'plus-damage': 24,
 			},
 		},
 	},
