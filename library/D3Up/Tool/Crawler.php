@@ -383,7 +383,7 @@ class D3Up_Tool_Crawler
 		
 	}     
 	
-	static public function crawl($build) {
+	static public function crawl($build, $user = false) {
 		$character = (int) $build->_characterId;
 		$battletag = $build->_characterBt;
 		$region = $build->_characterRg;
@@ -402,16 +402,21 @@ class D3Up_Tool_Crawler
     // echo "<pre>"; var_dump($url, $profile); exit;
     // if(isset($profile['skills'])) {      
 		foreach($profile['skills']['active'] as $idx => $skill) {
-			$current = $skill['skill']['slug'];
-			if(isset($skill['rune'])) {
-				$parts = explode("-", $skill['rune']['slug']);
-				$parts = array_reverse($parts);
-				$current .= "~" . $parts[0];
-			}
-			$skills[$idx] = $current;
+      // var_dump($skill); exit;
+		  if(isset($skill['skill'])) {
+  			$current = $skill['skill']['slug'];
+  			if(isset($skill['rune'])) {
+  				$parts = explode("-", $skill['rune']['slug']);
+  				$parts = array_reverse($parts);
+  				$current .= "~" . $parts[0];
+  			}
+  			$skills[$idx] = $current;		    
+		  }
 		}
 		foreach($profile['skills']['passive'] as $skill) {
-			$passives[] = $skill['skill']['slug'];			
+		  if(isset($skill['skill'])) {
+		    $passives[] = $skill['skill']['slug'];					    
+		  }
 		}
     // }
 		foreach ($profile['items'] as $slot => $gear) {

@@ -96,7 +96,7 @@ class BuildController extends D3Up_Controller_Action
 					$build->_characterId = $character;
 					$build->_characterBt = $profile->battletag;
 					$build->_characterRg = $profile->region;
-					D3Up_Tool_Crawler::getInstance()->crawl($build, $profile, $character);															
+					D3Up_Tool_Crawler::getInstance()->crawl($build);															
 				}
 				$build->_characterId = $character;
 				$build->_lastCrawl = time();
