@@ -138,4 +138,7 @@ class IndexController extends D3Up_Controller_Action {
 	public function maxStatsAction() {
 	  
 	}
+	public function d3ownAction() {
+	  
+	}
 }
