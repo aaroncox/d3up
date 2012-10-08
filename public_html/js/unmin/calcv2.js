@@ -260,14 +260,31 @@ BuildCalculator.prototype = {
 							this.applyEnabledSkill(total, 'plus-damage');
 						}, this);
 						break;
+					// Monk damage sure is fucked up.
 					case "plus-holy-damage-conditional":
-						this.applyEnabledSkill(e, 'plus-holy-damage');
+						var mhSpeed = this.attrs['speed'],
+								ohSpeed = false,
+								ias = this.attrs['attack-speed-incs'],
+								incs = 1 + (ias / 100);
+						if(this.attrs['speed-oh']) {
+							ohSpeed = this.attrs['speed-oh'];
+						}
+						if(this.attrs['speed-oh']) {
+							incs += 0.15;
+						}
+						if(this.bonuses['plus-attack-speed'] && this.bonuses['plus-attack-speed'] > 0) {
+							incs += this.bonuses['plus-attack-speed'];
+						}
+						console.log(incs);
+						var	actualSpeedMH = mhSpeed * incs,
+								actualSpeedOH = ohSpeed * incs;
+						this.bonuses['monk-fitl-mh'] = e * actualSpeedMH;
+						this.bonuses['monk-fitl-oh'] = e * actualSpeedOH;
+						console.log(actualSpeedMH, actualSpeedOH, this.bonuses['monk-fitl-mh'], this.bonuses['monk-fitl-oh']);
+						// this.applyEnabledSkill(strangeDamage, 'plus-holy-damage');
 						break;
 					case "plus-damage-conditional":
 						this.applyEnabledSkill(e, 'plus-damage');
-						break;
-					case "non-physical-conditional":
-						this.applyEnabledSkill(e, 'percent-non-physical');
 						break;
 					case "damage-reduce-conditional":
 						this.applyEnabledSkill(e, 'plus-damage-reduce');
@@ -328,6 +345,9 @@ BuildCalculator.prototype = {
 								this.attrs[effect] = value * 100;
 							}
 							break;
+						case "reduce-non-physical":
+							this.applyEnabledSkill(value, 'percent-non-physical');
+							break;					
 						case "damage-reduce":
 							// mathDamageReduce = mathDamageReduce * (1 + value);
 							break;
@@ -813,6 +833,19 @@ BuildCalculator.prototype = {
 				bnElePercent += this.attrs[v];
 			}
 		}, this);
+		if(this.bonuses['monk-fitl-mh']) {
+			if(this.bonuses['monk-fitl-oh']) {
+				console.log(bnElePercent);
+				bnElePercent += (this.bonuses['monk-fitl-mh'] + this.bonuses['monk-fitl-oh']) / 2;
+				console.log(bnElePercent);				
+			} else {
+				console.log(bnElePercent);
+				bnElePercent += this.bonuses['monk-fitl-mh'];
+				console.log(bnElePercent);
+			}
+		}
+
+		
 		if(this.attrs.mhRealDamage) {
 			rendered['dps-mh-real-min'] = this.attrs.mhRealDamage.min;
 			rendered['dps-mh-real-max'] = this.attrs.mhRealDamage.max;
@@ -1064,7 +1097,6 @@ BuildCalculator.prototype = {
 						case "plus-holy-damage-conditional":
 						case "plus-damage-conditional":
 						case "plus-life-conditional":
-						case "non-physical-conditional":
 						case "damage-reduce-conditional":
 						case "plus-crit-hit":
 						case "plus-life":
@@ -1149,7 +1181,6 @@ BuildCalculator.prototype = {
 					switch(i) {
 						case "spirit-combo-strike":
 						case "damage-reduce-conditional":
-						case "non-physical-conditional":
 						case "plus-damage-conditional":
 						case "plus-holy-damage-conditional":
 							activate = true;

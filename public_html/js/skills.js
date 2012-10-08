@@ -82,7 +82,7 @@ var passives = {
 		'superstition': {
 			'desc': 'Reduces all non-Physical damage by <span class="skill-highlight">20%</span>. Whenever you take damage from a ranged or elemental attack, you have a chance to gain <span class="skill-highlight">3</span> Fury.',
 			'effect': {
-				'non-physical-conditional': 20
+				'reduce-non-physical': 20
 			}
 		},
 		'tough-as-nails': {
@@ -6943,10 +6943,9 @@ var activeSkills = {
 	  },
 	  'frenzy-shrine': {
 	    name: 'Frenzy Shrine',
-	    desc: 'Increases attack speed by <span class="skill-highlight">25%</span> and critical hit damage by <span class="skill-highlight">25%</span>.',
+	    desc: 'Increases attack speed by <span class="skill-highlight">25%</span>.',
 	    effect: {
 	      'plus-attack-speed': 25,
-	      'critical-hit-damage': 25
 	    }
 	  },
 	}
