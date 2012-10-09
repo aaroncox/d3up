@@ -669,23 +669,25 @@ ItemBuilder.prototype = {
 						input = "<input type='text' value='" + v + "' name='" + k + "' tabindex='100'>", 
 						hidden = "<input type='hidden' value='true' name='" + k + "' tabindex='100'>",
 						helper = builder.skillText[k];
-				if(helper.search("VVV") >= 0) {
-					helper = helper.replace(/VVV/, input);										
-				} else {
-					helper = helper + hidden;
-				}
-				container.append(helper);
-				if(_.indexOf(['minmax-damage', 'arcane-damage', 'cold-damage', 'fire-damage', 'holy-damage', 'lightning-damage', 'poison-damage'], k) >= 0) {
-					if(v == 0) {
-						container.find("input").val("0-0").addClass("minmax");
+				if(helper) {					
+					if(helper.search("VVV") >= 0) {
+						helper = helper.replace(/VVV/, input);										
 					} else {
-						container.find("input").val(v.min + "-" + v.max).addClass("minmax");
+						helper = helper + hidden;
 					}
+					container.append(helper);
+					if(_.indexOf(['minmax-damage', 'arcane-damage', 'cold-damage', 'fire-damage', 'holy-damage', 'lightning-damage', 'poison-damage'], k) >= 0) {
+						if(v == 0) {
+							container.find("input").val("0-0").addClass("minmax");
+						} else {
+							container.find("input").val(v.min + "-" + v.max).addClass("minmax");
+						}
+					}
+					container.find("input").keyup(function() { 
+						builder.updateAttribute($(this).attr("name"), $(this).val());
+					});
+					builder.preview.attrs.append($("<li id='input-" + k + "'>").html(container));				
 				}
-				container.find("input").keyup(function() { 
-					builder.updateAttribute($(this).attr("name"), $(this).val());
-				});
-				builder.preview.attrs.append($("<li id='input-" + k + "'>").html(container));				
 			}
 		}, this);
 		// Add stats relevant to the Item's Class
