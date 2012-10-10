@@ -162,6 +162,7 @@ ItemBuilder.prototype = {
 		'wd-spirit-barrage': 'Increases Spirit Barrage damage by VVV%',
 		'wd-wall-of-zombies': 'Reduces cooldown of Wall of Zombies by VVV Seconds',
 		'wd-zombie-charger': 'Reduces resource cost of Zombie Charger by VVV Mana',
+		'wd-gargantuan': 'Reduces cooldown of Gargantuan by VVV seconds',
 		// Wizard
 		'ap-on-crit': 'Critical Hits grant VVV Arcane Power',
 		'ap-max': '+VVV Maximum Arcane Power',
