@@ -586,6 +586,7 @@ class D3Up_Tool_Crawler
 			}
 		}
 		$build->paragon = (int) $profile['paragonLevel'];
+		$build->level = (int) $profile['level'];
 		$build->actives = $skills;
 		$build->passives = $passives;
 		$build->save();
