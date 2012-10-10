@@ -76,48 +76,37 @@ BuildCalculator.prototype = {
 	},
 	setClass: function(newClass) {
 		// Set Base stats based on class
+		var intMult = 1,
+				strMult = 1,
+				dexMult = 1,
+				vitMult = 2;
 		switch(newClass) {
 			case "wizard":
 			case "witch-doctor":
+				intMult = 3;
 				this.attrs['primary'] = 'intelligence';
-				this.attrs['strength'] += 67;
-				this.attrs['dexterity'] += 67;
-				this.attrs['intelligence'] += 187;
-				if(this.paragon) {
-					this.attrs['strength'] += 1 * this.paragon;
-					this.attrs['dexterity'] += 1 * this.paragon;
-					this.attrs['intelligence'] += 3 * this.paragon;
-				}
 				break;
 			case "barbarian":
+				strMult = 3;
 				this.attrs['primary'] = 'strength';
-				this.attrs['strength'] += 187;
-				this.attrs['dexterity'] += 67;
-				this.attrs['intelligence'] += 67;
-				if(this.paragon) {
-					this.attrs['strength'] += 3 * this.paragon;
-					this.attrs['dexterity'] += 1 * this.paragon;
-					this.attrs['intelligence'] += 1 * this.paragon;
-				}
 				break;
 			case "demon-hunter":
 			case "monk":
+				dexMult = 3;
 				this.attrs['primary'] = 'dexterity';
-				this.attrs['strength'] += 67;
-				this.attrs['dexterity'] += 187;
-				this.attrs['intelligence'] += 67;
-				if(this.paragon) {
-					this.attrs['strength'] += 1 * this.paragon;
-					this.attrs['dexterity'] += 3 * this.paragon;
-					this.attrs['intelligence'] += 1 * this.paragon;
-				}
 				break;
 		}
-		this.attrs['vitality'] += 127; // Grant base vitality to all classes
+		this.attrs['strength'] += 7 + strMult * this.level;
+		this.attrs['dexterity'] += 7 + dexMult * this.level;
+		this.attrs['intelligence'] += 7 + intMult * this.level;
+		this.attrs['vitality'] += 7 + vitMult * this.level;
 		if(this.paragon) {
+			this.attrs['strength'] += strMult * this.paragon;
+			this.attrs['dexterity'] += dexMult * this.paragon;
+			this.attrs['intelligence'] += intMult * this.paragon;
 			this.attrs['plus-magic-find'] += 3 * this.paragon;
 			this.attrs['plus-gold-find'] += 3 * this.paragon;
-			this.attrs['vitality'] += 2 * this.paragon;
+			this.attrs['vitality'] += vitMult * this.paragon;
 		}
 		this.attrs['hero-class'] = this.heroClass = newClass;
 	},
@@ -150,6 +139,9 @@ BuildCalculator.prototype = {
 	},
 	setVsLevel: function(level) {
 		this.vsLevel = level;
+	},
+	setLevel: function(level) {
+		this.level = level;
 	},
 	setParagonLevel: function(level) {
 		this.paragon = level;
@@ -1230,6 +1222,7 @@ BuildCalculator.prototype = {
 
     // If we have meta, set it
     if(build.meta) {
+			this.setLevel(build.meta.level);
       this.setParagonLevel(build.meta.paragon);
       this.setClass(build.meta.heroClass);      
     }
