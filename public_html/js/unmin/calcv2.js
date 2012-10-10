@@ -323,12 +323,19 @@ BuildCalculator.prototype = {
 						effects[ effect ].call( this, value, effect )
 					} else
 					switch(effect) {
+						case "melee-reduce":
+					  case "elite-reduce":
+					  case "range-reduce":
+					    if(!this.attrs[effect + '-incs']) {
+					      this.attrs[effect + '-incs'] = [];
+					    }
+				      this.attrs[effect + '-incs'].push(value * 100);
+					    break;
 						case "flatten-resists":
 							// this.attrs['resist-all'] = highest;
 							// d3up.log(this.attrs['resist-all'], highest, this.attrs['resist-all'] + highest);
 							this.bonuses['flatten-resists'] = true;
 							break;
-						case "melee-reduce":
 						case "plus-movement-speed":
 						case "max-spirit":
 						case "max-hatred":
