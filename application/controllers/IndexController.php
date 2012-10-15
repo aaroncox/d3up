@@ -141,4 +141,11 @@ class IndexController extends D3Up_Controller_Action {
 	public function d3ownAction() {
 	  
 	}
+	public function userEmailLowerAction() {
+		foreach(Epic_Mongo::db('user')->fetchAll() as $user) {
+			$user->email = strtolower($user->email);
+			$user->save();
+		}
+		echo "Done"; exit;
+	}
 }
