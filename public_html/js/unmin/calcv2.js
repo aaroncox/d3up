@@ -244,7 +244,7 @@ BuildCalculator.prototype = {
 						break;
 					case "spirit-combo-strike":
 						_.each(this.activeSkills, function(s, i){
-							var aSkill = activeSkills['monk'][i],
+							var aSkill = d3up.gameData.actives['monk'][i],
 									total = 0;
 							if(aSkill.effect && aSkill.effect['generate-spirit']) {
 								total += 8;
@@ -859,11 +859,9 @@ BuildCalculator.prototype = {
 		}
 		// Determine Bonus Damage from Elemental Damage Bonuses
 		if(bnElePercent > 0 && this.attrs.mhRealDamage) {
+			mhAvgDamage += (this.attrs.mhRealDamage.min + this.attrs.mhRealDamage.max) / 2 * (bnElePercent / 100);
 			if(this.isDuelWielding) {
-				bnEleDamage += ((this.attrs.mhRealDamage.min + bnMinDamage) + (this.attrs.ohRealDamage.min + bnMinDamage)) / 2 * (bnElePercent / 100);
-			} else {
-				bnEleDamage += (this.attrs.mhRealDamage.min + bnMinDamage) * (bnElePercent / 100);
-				// console.log(this.bonuses, bnMaxDamage, this.attrs.mhRealDamage.min, this.attrs.mhRealDamage.max, atkSpeedInc, bnMinDamage, bnElePercent, bnEleDamage);
+				ohAvgDamage += (this.attrs.ohRealDamage.min + this.attrs.ohRealDamage.max) / 2 * (bnElePercent / 100);
 			}
 		}
 		rendered['bonus-elemental-damage'] = bnEleDamage;
@@ -884,7 +882,7 @@ BuildCalculator.prototype = {
 			mathS = 1 + this.attrs[this.attrs.primary] * 0.01;
 			mathC = 1 + (this.attrs['critical-hit'] * 0.01) * (this.attrs['critical-hit-damage'] * 0.01);
 			mathR = ((rendered['dps-speed'].mh * (1 + atkSpeedInc + 0.15 + this.bonuses['plus-attack-speed'])) + (rendered['dps-speed'].oh * (1 + atkSpeedInc + 0.15 + this.bonuses['plus-attack-speed']))) / 2;
-			mathA = (mhAvgDamage + ohAvgDamage) / 2 + bnEleDamage;
+			mathA = (mhAvgDamage + ohAvgDamage) / 2;
 			mathM = (1 + this.bonuses['plus-damage']);
 			rendered['dps'] = mathS * mathC * mathR * mathA * mathM;			
 			rendered['dps-speed-mh'] = rendered['dps-speed'].mh;
@@ -914,7 +912,7 @@ BuildCalculator.prototype = {
 			mathC = 1 + (this.attrs['critical-hit'] * 0.01) * (this.attrs['critical-hit-damage'] * 0.01);
 			mathR = rendered['dps-speed-mh'] * (1 + atkSpeedInc + this.bonuses['plus-attack-speed']);
 			// console.log(rendered['dps-speed'], atkSpeedInc, this.bonuses['plus-attack-speed']);
-			mathA = mhAvgDamage + bnEleDamage;
+			mathA = mhAvgDamage;
 			mathM = (1 + this.bonuses['plus-damage']);
 			rendered['dps'] = mathS * mathC * mathR * mathA * mathM;		
       // d3up.log(mhMinDamage, mhMaxDamage, bnMinDamage, bnMaxDamage);
@@ -1245,8 +1243,8 @@ BuildCalculator.prototype = {
 	applySetBonuses: function() {
 		_.each(this.sets, function(v,k) {
 			if(v > 1) {
-				if(setBonuses[k]) {
-					_.each(setBonuses[k].effect, function(list, amount) {
+				if(d3up.gameData.sets[k]) {
+					_.each(d3up.gameData.sets[k].effect, function(list, amount) {
 						if(v >= amount) {
 							_.each(list, function(value, stat) {
 								if(value < 1) {
@@ -1343,6 +1341,8 @@ BuildCalculator.prototype = {
 		// Some Wackyness to calculate DPS contributions per piece
     _.each(this.gear, function(g, i) {
      var item = i;
+			// console.log("removing", g, i);
+
      // Unset the Item from the stats
      this.removeItem(i);
      // Don't deal with MH/OH atm
@@ -1357,6 +1357,7 @@ BuildCalculator.prototype = {
    			 this.values['dps-gear-total'] += this.values['dps-' + i];
        // }
      // }
+			// console.log("parsing", g, i);
      // Readd the Item to the set
      this.parseItem(g, i);
     }, this);
@@ -1414,6 +1415,7 @@ BuildCalculator.prototype = {
 			// d3up.log("-1 for " + slot);
 			this.sets[json.set]--;
 		}
+		// console.log(json.type);
 		if(json.attrs) {
 			_.each(json.attrs, function(av, ak) {
 				if(typeof(av) != 'object' && isNaN(parseFloat(av))) {
@@ -1432,11 +1434,12 @@ BuildCalculator.prototype = {
 							this.attrs[ak] -= parseFloat(av);
 						}
 						break;
-					// case "plus-block":
-					// 	if(json.type != 'shield') {
-					// 		this.attrs[ak] -= parseFloat(av);
-					// 	}
-					// 	break;
+					case "plus-block":
+						if(json.type != 'shield') {
+							console.log("removing block from", json.type);
+							this.attrs[ak] -= parseFloat(av);
+						}
+						break;
 					case "minmax-damage":
 						switch(json.type) {
 							case "extra":
@@ -1748,6 +1751,7 @@ BuildCalculator.prototype = {
 						break;
 					case "plus-block":
 						if(json.type != 'shield') {
+							console.log("adding block", json.type);
 							if(this.attrs[ak]) {
 								this.attrs[ak] += parseFloat(av);
 							} else {

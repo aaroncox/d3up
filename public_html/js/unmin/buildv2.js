@@ -156,13 +156,13 @@
 				if(type == "misc-buffs") {
 					ordered = {};
 					$.each(['misc-buffs'], function(k, v) {
-						var buffs = activeSkills[v];
+						var buffs = d3up.gameData.actives[v];
 						$.each(buffs, function(idx, skill) {
 							if(skill.effect) {
 								ordered[idx] = {
 									slug: idx,
 									isBuff: true,
-									data: activeSkills[v][idx]
+									data: d3up.gameData.actives[v][idx]
 								};														
 							}
 						});
@@ -290,7 +290,7 @@
 											if(!isBuff) {
 		                    d3up.builds[k].skills.enabled[name] = build.skills[type][name];                      												
 											} else {
-	                      d3up.builds[k].skills.enabled[name] = activeSkills[type][name];                      												
+	                      d3up.builds[k].skills.enabled[name] = d3up.gameData.actives[type][name];                      												
 											}
                       // console.log("applying [" + name + "] to build id#" + k);
                       // console.log("enabled", d3up.builds[k].skills.enabled, $(this));
@@ -366,8 +366,8 @@
 							if(build.skills.passives[slug]) {
 								$this.append($("<tr>").append($("<td colspan='2' class='skill-description'>").append(build.skills.passives[slug].desc)));
 							}
-							if(activeSkills['misc-buffs'][slug]) {
-								$this.append($("<tr>").append($("<td colspan='2' class='skill-description'>").append(activeSkills['misc-buffs'][slug].desc)));
+							if(d3up.gameData.actives['misc-buffs'][slug]) {
+								$this.append($("<tr>").append($("<td colspan='2' class='skill-description'>").append(d3up.gameData.actives['misc-buffs'][slug].desc)));
 							}
               break;
             default:
@@ -532,13 +532,13 @@
 					if(slug) {
 					  switch(type) {
 	            case "passives":
-	              build.skills[type][slug] = passives[build.meta.heroClass][slug];
+	              build.skills[type][slug] = d3up.gameData.passives[build.meta.heroClass][slug];
 								if(build.skills[type][slug]) {
 									build.skills[type][slug].order = idx;									
 								}
 	              break;
 	            case "actives":
-	              build.skills[type][slug] = activeSkills[build.meta.heroClass][slug];
+	              build.skills[type][slug] = d3up.gameData.actives[build.meta.heroClass][slug];
 								if(build.skills[type][slug]) {
 									build.skills[type][slug].order = idx;									
 								}

@@ -586,7 +586,7 @@ $(function() {
 				heroClass = build.meta.heroClass, 
 				skills = _.keys(build.getSkills().passives);
 		select.append("<option value=''>None</option>");
-		$.each(passives[heroClass], function(slug, data) {
+		$.each(d3up.gameData.passives[heroClass], function(slug, data) {
 			var option = $("<option value='" + slug + "'>").html(slug.replace(/\-/g, " ").capitalize()),
 					idx = v;
 			if(skills[idx] && skills[idx] == slug) {
@@ -614,7 +614,7 @@ $(function() {
 				heroClass = build.meta.heroClass, 
 				skills = _.keys(build.getSkills().actives);
 		select.append("<option value=''>None</option>");
-		$.each(activeSkills[heroClass], function(slug, data) {
+		$.each(d3up.gameData.actives[heroClass], function(slug, data) {
 			var option = $("<option value='" + slug + "'>").html(data.name),
 					idx = v;
 			if(skills[idx] && skills[idx] == slug) {

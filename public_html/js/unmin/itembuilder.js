@@ -632,7 +632,7 @@ ItemBuilder.prototype = {
 			if(!this.preview.sockets.find("#socket"+i).length) {
 				var select = $("<select name='socket" + i + "' id='socket" + i + "' tabindex='150'>");
 				select.append($("<option value=''>Socket #" + i + ": Empty</option>"));
-				_.each(gems, function(v,k) {
+				_.each(d3up.gameData.gems, function(v,k) {
 					var option = $("<option>"),
 							idx = 3; // Default to 3 for most items
 					// Is this a helm?
@@ -876,7 +876,7 @@ ItemBuilder.prototype = {
 	},
 	getBonusHtml: function(setBonus) {
 		var bonuses = $("<ul class='bonuses'>"),
-				bonus = setBonuses[setBonus];
+				bonus = d3up.gameData.sets[setBonus];
 		if(!bonus) {
 			return '';
 		}

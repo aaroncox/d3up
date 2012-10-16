@@ -274,9 +274,9 @@ $(function() {
 			var $this = this;
 			$(".skill-data li[data-skill]").each(function() {
 				var skillName = $(this).data("skill"), 
-						skill = activeSkills[$this.heroClass][skillName];
+						skill = d3up.gameData.actives[$this.heroClass][skillName];
 				if(!skill) {
-					skill = passives[$this.heroClass][skillName];
+					skill = d3up.gameData.passives[$this.heroClass][skillName];
 				}
 				var	id = $(this).parent().parent().parent().attr("data-section"),
 						skillId = $(this).data("id"),
@@ -461,10 +461,10 @@ $(function() {
 				// Append a Null value for selecting
 				picker.append("<option value=''>None Selected</option>");						
 				// Foreach of the skills, add it to the select
-				var options = activeSkills[this.heroClass];
+				var options = d3up.gameData.actives[this.heroClass];
 				switch(type) {
 					case "passives":
-						options = passives[this.heroClass];
+						options = d3up.gameData.passives[this.heroClass];
 						break;
 					default:
 						break;
