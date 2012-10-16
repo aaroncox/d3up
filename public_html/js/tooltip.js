@@ -140,7 +140,7 @@ $.fn.bindSkilltip = function() {
 		};
 		tooltip.appendTo("body").position(position);
 	}).mouseout(function() {
-		// tooltip.empty();
+		tooltip.empty();
 	});
 }
 function checkTooltip() {
