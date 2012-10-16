@@ -87,6 +87,7 @@
 }
 .d3-item .item ul {
 	font-size: 16px;
+	margin: 0;
 }
 .d3-item .item ul.attrs li {
 	padding: 1px 15px;

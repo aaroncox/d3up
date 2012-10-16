@@ -50,7 +50,7 @@
 								{
 									"caseOf": "mighty|2h-mighty",
 									'effect': {
-								
+
 									}
 								}																		
 							]
@@ -64,7 +64,7 @@
 					}
 				},
 				'inspiring-presence': {
-					'desc': 'The duration of your shouts is doubled. After using a shout you regenerate <span class="skill-highlight">2%</span> of your maximum Life per second for <span class="skill-highlight">60</span> seconds.'
+					'desc': 'The duration of your shouts is doubled. After using a shout you regenerate <span class="skill-highlight">1%</span> of your maximum Life per second for <span class="skill-highlight">60</span> seconds.'
 				},
 				'bloodthirst': {
 					'desc': 'Gain <span class="skill-highlight">3%</span> of all damage done as Life.',
@@ -73,7 +73,7 @@
 					}
 				},
 				'animosity': {
-					'desc': 'Increases Fury generation by <span class="skill-highlight">20%</span> and maximum Fury is increased by <span class="skill-highlight">20</span>.',
+					'desc': 'Increases Fury generation by <span class="skill-highlight">10%</span> and maximum Fury is increased by <span class="skill-highlight">20</span>.',
 					'effect': {
 						'max-fury': 20
 					}
@@ -107,7 +107,7 @@
 					}
 				},
 				'unforgiving': {
-					'desc': 'You no longer degenerate Fury. Instead, you gain <span class="skill-highlight">2</span> Fury every <span class="skill-highlight">1</span> seconds.'
+					'desc': 'You no longer degenerate Fury. Instead, you gain <span class="skill-highlight">1</span> Fury every <span class="skill-highlight">2</span> seconds.'
 				},
 				'boon-of-bulkathos': {
 						'desc': 'The cooldown on your Earthquake, Call of the Ancients, and Wrath of the Berserker skills is reduced by <span class="skill-highlight">30</span> seconds.'
@@ -121,7 +121,7 @@
 					}
 				},
 				'resolve': {
-					'desc': 'Damage you deal reduces enemy damage by <span class="skill-highlight">20%</span> for <span class="skill-highlight">2.5</span> seconds.'
+					'desc': 'Damage you deal reduces enemy damage by <span class="skill-highlight">25%</span> for <span class="skill-highlight">2.5</span> seconds.'
 				},
 				'exalted-soul': {
 					'desc': 'Increases maximum Spirit by <span class="skill-highlight">100</span>.',
@@ -138,7 +138,7 @@
 				'seize-the-initiative': {
 					'desc': 'Your Armor is increased by <span class="skill-highlight">100%</span> of your Dexterity.',
 					'effect': {
-						'dexterity-to-armor': 0.5
+						'dexterity-to-armor': 1
 					}
 				},
 				'the-guardians-path': {
@@ -170,10 +170,10 @@
 					}
 				},
 				'pacifism': {
-					'desc': 'While you are under a Stun, Immobilize, Fear or Charm effect, all damage taken is reduced by <span class="skill-highlight">75%</span>.'
+					'desc': 'While you are under a Stun, Fear or Charm effect, all damage taken is reduced by <span class="skill-highlight">75%</span>.'
 				},
 				'beacon-of-ytar': {
-					'desc': 'Reduces all cooldowns by <span class="skill-highlight">20%</span>.'
+					'desc': 'Reduces all cooldowns by <span class="skill-highlight">15%</span>.'
 				},
 				'guiding-light': {
 					'desc': 'Whenever you use a direct heal skill on another player you and the other player deal <span class="skill-highlight">16%</span> more damage for <span class="skill-highlight">15</span> seconds.'
@@ -252,7 +252,7 @@
 					'desc': 'When you deal damage with a Signature spell you may gain a Flash of Insight. After 5 Flashes of Insight, your next non-Signature spell deals <span class="skill-highlight">75%</span> additional damage. The following skills are Signature spells:<ul><li>Magic Missile</li><li>Shock Pulse</li><li>Spectral Blade</li><li>Electrocute</li></ul>'
 				},
 				'unstable-anomaly': {
-					'desc': 'When reduced below <span class="skill-highlight">30%</span> Life, you are healed back up to 45% of your maximum life. You also release a shockwave that knocks all enemies back and slows them by 60% for 3 seconds. This effect cannot occur more than once every 60 seconds.'
+					'desc': 'When reduced below <span class="skill-highlight">20%</span> Life, release a shockwave that knocks all enemies back. This effect cannot occur more than once every 60 seconds.'
 				}
 			},
 			'demon-hunter': {
@@ -260,7 +260,7 @@
 					'desc': 'Whenever you use Vault, Smoke Screen, or backflip with Evasive Fire you gain <span class="skill-highlight">60%</span> movement speed for <span class="skill-highlight">2</span> seconds.'
 				},
 				'thrill-of-the-hunt': {
-					'desc': 'Every <span class="skill-highlight">7</span> seconds, your next Hatred spender will immobilize all targets hit by it for <span class="skill-highlight">2</span> seconds. Enemies can only be rooted once every 7 seconds.'
+					'desc': 'Every <span class="skill-highlight">10</span> seconds, your next bow attack will immobilize your target for <span class="skill-highlight">3</span> seconds.'
 				},
 				'vengeance': {
 					'desc': 'Your maximum Hatred is increased by <span class="skill-highlight">25</span>. In addition, gain <span class="skill-highlight">20</span> Hatred and <span class="skill-highlight">2</span> Discipline whenever you are healed by a health globe.',
@@ -319,18 +319,13 @@
 					}
 				},
 				'numbing-traps': {
-					'desc': 'Enemies hit by Fan of Knives, Spike Trap, Grenades, Sentry Turret and Caltrops have their damage reduced by <span class="skill-highlight">20%</span> for <span class="skill-highlight">3</span> seconds.'
+					'desc': 'Enemies hit by Fan of Knives, Spike Trap, and Caltrops have their damage reduced by <span class="skill-highlight">25%</span> for <span class="skill-highlight">3</span> seconds.'
 				},
 				'perfectionist': {
-					'desc': 'Reduces the Discipline cost of all skills by <span class="skill-highlight">10%</span>. Also increases Life, Armor and Resistances by 10%',
-					'effect': {
-						'plus-life': 10,
-						'plus-armor': 10,
-						'plus-resist-all': 10,
-					}
+					'desc': 'Reduces the Discipline cost of all skills by <span class="skill-highlight">10%</span>.'
 				},
 				'custom-engineering': {
-					'desc': 'The duration of your Caltrops, Marked for Death, Spike Trap, and Sentry is increased by <span class="skill-highlight">100%</span>, allows for a 3rd Sentry Turret and increases the maximum number of Spike Traps allowed to 6.'
+					'desc': 'The duration of your Caltrops, Marked for Death, Spike Trap, and Sentry is increased by <span class="skill-highlight">100%</span>.'
 				},
 				'grenadier': {
 					'desc': 'Increases Hatred generated from Grenades by <span class="skill-highlight">2</span> and reduces the Hatred cost of Cluster Arrow by <span class="skill-highlight">10</span>. Upon death, you drop a giant grenade that explodes for <span class="skill-highlight">450%</span> weapon damage as Fire.'
@@ -352,7 +347,7 @@
 				'jungle-fortitude': {
 					'desc': 'Reduces all damage taken by you and your pets by <span class="skill-highlight">20%</span>.',
 					'effect': {
-						'damage-reduce': 0.15
+						'damage-reduce': 0.20
 					}
 				},
 				'spiritual-attunement': {
@@ -474,7 +469,7 @@
 				},
 				'hammer-of-the-ancients': {
 					name: 'Hammer of the Ancients',
-					desc: 'Call forth a massive hammer to smash enemies directly in front of you for 325% weapon damage. For every 5 fury a player has, Hammer of the Ancients has a 1% increased Critical Hit chance.',
+					desc: 'Call forth a massive hammer to smash enemies directly in front of you for 325% weapon damage. Hammer of the Ancients has a 5% increased Critical Hit Chance.',
 					effect: {
 						'cost-fury': 20,
 						'weapon-damage': 325,
@@ -483,7 +478,7 @@
 				},
 				'hammer-of-the-ancients~a': {
 					name: 'Hammer of the Ancients - Smash',
-					desc: 'Call forth a massive hammer to smash enemies directly in front of you for 325% weapon damage. For every 5 fury a player has, Hammer of the Ancients has a 1% increased Critical Hit chance.',
+					desc: 'Call forth a massive hammer to smash enemies directly in front of you for 325% weapon damage. Hammer of the Ancients has a 5% increased Critical Hit Chance.',
 					rune: 'Strike a smaller area for 406% weapon damage.',
 					effect: {
 						'cost-fury': 20,
@@ -493,7 +488,7 @@
 				},
 				'hammer-of-the-ancients~b': {
 					name: 'Hammer of the Ancients - Rolling Thunder',
-					desc: 'Call forth a massive hammer to smash enemies directly in front of you for 325% weapon damage. For every 5 fury a player has, Hammer of the Ancients has a 1% increased Critical Hit chance.',
+					desc: 'Call forth a massive hammer to smash enemies directly in front of you for 325% weapon damage. Hammer of the Ancients has a 5% increased Critical Hit Chance.',
 					rune: 'Create a shockwave that deals 275% weapon damage to all enemies within 22 yards in front of you.',
 					effect: {
 						'cost-fury': 20,
@@ -503,8 +498,8 @@
 				},
 				'hammer-of-the-ancients~c': {
 					name: 'Hammer of the Ancients - The Devil\'s Anvil',
-					desc: 'Call forth a massive hammer to smash enemies directly in front of you for 325% weapon damage. For every 5 fury a player has, Hammer of the Ancients has a 1% increased Critical Hit chance.',
-					rune: 'Create a tremor at the point of impact for 2 seconds that slows the movement speed of enemies by 80%.',
+					desc: 'Call forth a massive hammer to smash enemies directly in front of you for 325% weapon damage. Hammer of the Ancients has a 5% increased Critical Hit Chance.',
+					rune: 'Create a tremor at the point of impact for 2 seconds that slows the movement speed of enemies by 60%.',
 					effect: {
 						'cost-fury': 20,
 						'weapon-damage': 325,
@@ -513,7 +508,7 @@
 				},
 				'hammer-of-the-ancients~d': {
 					name: 'Hammer of the Ancients - Birthright',
-					desc: 'Call forth a massive hammer to smash enemies directly in front of you for 325% weapon damage. For every 5 fury a player has, Hammer of the Ancients has a 1% increased Critical Hit chance.',
+					desc: 'Call forth a massive hammer to smash enemies directly in front of you for 325% weapon damage. Hammer of the Ancients has a 5% increased Critical Hit Chance.',
 					rune: 'Critical Hits have a 10% chance to cause enemies to drop treasure or health globes.',
 					effect: {
 						'cost-fury': 20,
@@ -523,7 +518,7 @@
 				},
 				'hammer-of-the-ancients~e': {
 					name: 'Hammer of the Ancients - Thunderstrike',
-					desc: 'Call forth a massive hammer to smash enemies directly in front of you for 325% weapon damage. For every 5 fury a player has, Hammer of the Ancients has a 1% increased Critical Hit chance.',
+					desc: 'Call forth a massive hammer to smash enemies directly in front of you for 325% weapon damage. Hammer of the Ancients has a 5% increased Critical Hit Chance.',
 					rune: 'Whenever you kill an enemy with Hammer of the Ancients every other enemy within 10 yards is stunned for 3 seconds.',
 					effect: {
 						'cost-fury': 20,
@@ -676,7 +671,7 @@
 				'rend~c': {
 					name: 'Rend - Mutilate',
 					desc: 'A sweeping strike causes all nearby enemies to Bleed for 700% weapon damage as Physical over 5 seconds.',
-					rune: 'Enemies effected by rend have their movement speed slowed by 60%.',
+					rune: 'Increase bleeding duration to 7 seconds.',
 					effect: {
 						'cost-fury': 20,
 						'weapon-damage': 700,
@@ -752,7 +747,7 @@
 				'leap~d': {
 					name: 'Leap - Iron Impact',
 					desc: 'Leap into the air, dealing 85% weapon damage to all enemies within 8 yards of your destination and slowing their movement speed by 60% for 3 seconds.',
-					rune: 'Gain 100% additional Armor for each enemy hit for 3 seconds after landing.',
+					rune: 'Gain 300% additional Armor for 4 seconds after landing.',
 					effect: {
 						'generate-fury': 15,
 						'cooldown': 10,
@@ -1122,7 +1117,7 @@
 					desc: 'Shout with great ferocity, reducing damage done by enemies within 25 yards by 20% for 15 seconds.',
 					effect: {
 						'generate-fury': 15,
-						'cooldown': 10,
+						'cooldown': 15,
 						'plus-damage-reduce': 20,
 					},
 				},
@@ -1132,7 +1127,7 @@
 					rune: 'Affected enemies are also taunted to attack you for 3 seconds.',
 					effect: {
 						'generate-fury': 15,
-						'cooldown': 10,
+						'cooldown': 15,
 						'plus-damage-reduce': 20,
 					},
 				},
@@ -1142,17 +1137,17 @@
 					rune: 'Affected enemies also have their movement speed reduced by 30%.',
 					effect: {
 						'generate-fury': 15,
-						'cooldown': 10,
+						'cooldown': 15,
 						'plus-damage-reduce': 20,
 					},
 				},
 				'threatening-shout~c': {
 					name: 'Threatening Shout - Grim Harvest',
 					desc: 'Shout with great ferocity, reducing damage done by enemies within 25 yards by 20% for 15 seconds.',
-					rune: 'Enemies are badly shaken and have a 15% chance to drop additional treasure or health globes.',
+					rune: 'Enemies are badly shaken and have a 15% chance to drop additional treasure.',
 					effect: {
 						'generate-fury': 15,
-						'cooldown': 10,
+						'cooldown': 15,
 						'plus-damage-reduce': 20,
 					},
 				},
@@ -1162,7 +1157,7 @@
 					rune: 'Affected enemies also have their attack speed reduced by 15% for 5 seconds.',
 					effect: {
 						'generate-fury': 15,
-						'cooldown': 10,
+						'cooldown': 15,
 						'plus-damage-reduce': 20,
 					},
 				},
@@ -1172,7 +1167,7 @@
 					rune: 'Enemies are severely demoralized. Each enemy has a 35% chance to flee for 2.5 seconds.',
 					effect: {
 						'generate-fury': 15,
-						'cooldown': 10,
+						'cooldown': 15,
 						'plus-damage-reduce': 20,
 					},
 				},
@@ -1244,7 +1239,7 @@
 					name: 'Whirlwind',
 					desc: 'Deliver multiple attacks to everything in your path for 145% weapon damage.',
 					effect: {
-						'cost-fury': 10,
+						'cost-fury': 16,
 						'weapon-damage': 145,
 					},
 				},
@@ -1253,7 +1248,7 @@
 					desc: 'Deliver multiple attacks to everything in your path for 145% weapon damage.',
 					rune: 'Turns Whirlwind into a torrent of magma that inflicts 188% weapon damage as Fire.',
 					effect: {
-						'cost-fury': 10,
+						'cost-fury': 16,
 						'weapon-damage': 188,
 					},
 				},
@@ -1262,7 +1257,7 @@
 					desc: 'Deliver multiple attacks to everything in your path for 145% weapon damage.',
 					rune: 'Generate harsh tornadoes that inflict 40% weapon damage to enemies in their path.',
 					effect: {
-						'cost-fury': 10,
+						'cost-fury': 16,
 						'weapon-damage': 145,
 					},
 				},
@@ -1271,7 +1266,7 @@
 					desc: 'Deliver multiple attacks to everything in your path for 145% weapon damage.',
 					rune: 'Allows you to move at your movement speed while using Whirlwind.',
 					effect: {
-						'cost-fury': 10,
+						'cost-fury': 16,
 						'weapon-damage': 145,
 					},
 				},
@@ -1280,16 +1275,16 @@
 					desc: 'Deliver multiple attacks to everything in your path for 145% weapon damage.',
 					rune: 'Gain 1 Fury for every enemy struck.',
 					effect: {
-						'cost-fury': 10,
+						'cost-fury': 16,
 						'weapon-damage': 145,
 					},
 				},
 				'whirlwind~e': {
 					name: 'Whirlwind - Blood Funnel',
 					desc: 'Deliver multiple attacks to everything in your path for 145% weapon damage.',
-					rune: 'Critical Hits restore 2% of your maximum Life.',
+					rune: 'Critical Hits restore 1% of your maximum Life.',
 					effect: {
-						'cost-fury': 10,
+						'cost-fury': 16,
 						'weapon-damage': 145,
 					},
 				},
@@ -1409,7 +1404,7 @@
 				},
 				'battle-rage': {
 					name: 'Battle Rage',
-					desc: 'Enter a rage which increases damage by 15% and Critical Hit Chance by 3% for 120 seconds.',
+					desc: 'Enter a rage which increases damage by 15% and Critical Hit Chance by 3% for 30 seconds.',
 					effect: {
 						'cost-fury': 20,
 						'plus-crit-hit': 3,
@@ -1418,7 +1413,7 @@
 				},
 				'battle-rage~a': {
 					name: 'Battle Rage - Marauder\'s Rage',
-					desc: 'Enter a rage which increases damage by 15% and Critical Hit Chance by 3% for 120 seconds.',
+					desc: 'Enter a rage which increases damage by 15% and Critical Hit Chance by 3% for 30 seconds.',
 					rune: 'Increase damage bonus to 30%.',
 					effect: {
 						'cost-fury': 20,
@@ -1428,7 +1423,7 @@
 				},
 				'battle-rage~b': {
 					name: 'Battle Rage - Ferocity',
-					desc: 'Enter a rage which increases damage by 15% and Critical Hit Chance by 3% for 120 seconds.',
+					desc: 'Enter a rage which increases damage by 15% and Critical Hit Chance by 3% for 30 seconds.',
 					rune: 'While under the effects of Battle Rage, Critical Hits have a chance to increase the duration of Battle Rage by 2 seconds.',
 					effect: {
 						'cost-fury': 20,
@@ -1438,7 +1433,7 @@
 				},
 				'battle-rage~c': {
 					name: 'Battle Rage - Swords to Ploughshares',
-					desc: 'Enter a rage which increases damage by 15% and Critical Hit Chance by 3% for 120 seconds.',
+					desc: 'Enter a rage which increases damage by 15% and Critical Hit Chance by 3% for 30 seconds.',
 					rune: 'While under the effects of Battle Rage, Critical Hits have up to a 5% chance to cause enemies to drop additional health globes.',
 					effect: {
 						'cost-fury': 20,
@@ -1448,7 +1443,7 @@
 				},
 				'battle-rage~d': {
 					name: 'Battle Rage - Into the Fray',
-					desc: 'Enter a rage which increases damage by 15% and Critical Hit Chance by 3% for 120 seconds.',
+					desc: 'Enter a rage which increases damage by 15% and Critical Hit Chance by 3% for 30 seconds.',
 					rune: 'While under the effects of Battle Rage, Critical Hits have a chance to generate 15 additional Fury.',
 					effect: {
 						'cost-fury': 20,
@@ -1458,7 +1453,7 @@
 				},
 				'battle-rage~e': {
 					name: 'Battle Rage - Bloodshed',
-					desc: 'Enter a rage which increases damage by 15% and Critical Hit Chance by 3% for 120 seconds.',
+					desc: 'Enter a rage which increases damage by 15% and Critical Hit Chance by 3% for 30 seconds.',
 					rune: 'While under the effects of Battle Rage, Critical Hits have a chance to cause an explosion of blood dealing 20% of the damage done to all other nearby enemies.',
 					effect: {
 						'cost-fury': 20,
@@ -1529,7 +1524,7 @@
 					name: 'Overpower',
 					desc: 'Deal 165% weapon damage to all targets within 9 yards. Landing a Critical Hit has a chance to lower the cooldown by 1 second.',
 					effect: {
-						'cooldown': 12,
+						'cooldown': 15,
 						'weapon-damage': 165,
 					},
 				},
@@ -1538,7 +1533,7 @@
 					desc: 'Deal 165% weapon damage to all targets within 9 yards. Landing a Critical Hit has a chance to lower the cooldown by 1 second.',
 					rune: 'Your Critical Hit Chance is increased by 10% for 6 seconds.',
 					effect: {
-						'cooldown': 12,
+						'cooldown': 15,
 						'weapon-damage': 165,
 						'plus-crit-hit': 10,
 					},
@@ -1548,7 +1543,7 @@
 					desc: 'Deal 165% weapon damage to all targets within 9 yards. Landing a Critical Hit has a chance to lower the cooldown by 1 second.',
 					rune: 'Throw up to 3 axes at nearby enemies which inflict 50% weapon damage each.',
 					effect: {
-						'cooldown': 12,
+						'cooldown': 15,
 						'weapon-damage': 165,
 					},
 				},
@@ -1557,7 +1552,7 @@
 					desc: 'Deal 165% weapon damage to all targets within 9 yards. Landing a Critical Hit has a chance to lower the cooldown by 1 second.',
 					rune: 'Heal 8% of your maximum Life for every enemy hit.',
 					effect: {
-						'cooldown': 12,
+						'cooldown': 15,
 						'weapon-damage': 165,
 					},
 				},
@@ -1566,7 +1561,7 @@
 					desc: 'Deal 165% weapon damage to all targets within 9 yards. Landing a Critical Hit has a chance to lower the cooldown by 1 second.',
 					rune: 'Generate 12 Fury for each enemy hit by Overpower.',
 					effect: {
-						'cooldown': 12,
+						'cooldown': 15,
 						'weapon-damage': 165,
 					},
 				},
@@ -1575,7 +1570,7 @@
 					desc: 'Deal 165% weapon damage to all targets within 9 yards. Landing a Critical Hit has a chance to lower the cooldown by 1 second.',
 					rune: 'Redirect 35% of incoming melee and ranged damage for 4 seconds after Overpower is activated.',
 					effect: {
-						'cooldown': 12,
+						'cooldown': 15,
 						'weapon-damage': 165,
 					},
 				},
@@ -1583,8 +1578,8 @@
 					name: 'War Cry',
 					desc: 'Unleash a rallying cry to increase Armor for you and all allies within 50 yards by 20% for 60 seconds.',
 					effect: {
-						'generate-fury': 20,
-						'cooldown': 20,
+						'generate-fury': 30,
+						'cooldown': 30,
 						'plus-armor': 20,
 					},
 				},
@@ -1593,8 +1588,8 @@
 					desc: 'Unleash a rallying cry to increase Armor for you and all allies within 50 yards by 20% for 60 seconds.',
 					rune: 'Increases the Armor bonus to 40%.',
 					effect: {
-						'generate-fury': 20,
-						'cooldown': 20,
+						'generate-fury': 30,
+						'cooldown': 30,
 						'plus-armor': 40,
 					},
 				},
@@ -1603,8 +1598,8 @@
 					desc: 'Unleash a rallying cry to increase Armor for you and all allies within 50 yards by 20% for 60 seconds.',
 					rune: 'War Cry also grants a 15% bonus to Dodge Chance.',
 					effect: {
-						'generate-fury': 20,
-						'cooldown': 20,
+						'generate-fury': 30,
+						'cooldown': 30,
 						'plus-dodge': 15,
 						'plus-armor': 20,
 					},
@@ -1612,11 +1607,11 @@
 				'war-cry~c': {
 					name: 'War Cry - Impunity',
 					desc: 'Unleash a rallying cry to increase Armor for you and all allies within 50 yards by 20% for 60 seconds.',
-					rune: 'All of your resistances are increased by 20% while affected by War Cry.',
+					rune: 'All of your resistances are increased by 50% while affected by War Cry.',
 					effect: {
-						'generate-fury': 20,
-						'cooldown': 20,
-						'plus-resist-all': 20,
+						'generate-fury': 30,
+						'cooldown': 30,
+						'plus-resist-all': 50,
 						'plus-armor': 20,
 					},
 				},
@@ -1625,9 +1620,9 @@
 					desc: 'Unleash a rallying cry to increase Armor for you and all allies within 50 yards by 20% for 60 seconds.',
 					rune: 'Increases Fury gained to 60.',
 					effect: {
-						'cooldown': 20,
+						'cooldown': 30,
 						'plus-armor': 20,
-						'generate-fury': 40,
+						'generate-fury': 60,
 					},
 				},
 				'war-cry~e': {
@@ -1636,7 +1631,7 @@
 					rune: 'Increases maximum Life by 10% and regenerates 310.1 Life per second while affected by War Cry.',
 					effect: {
 						'generate-fury': 30,
-						'cooldown': 20,
+						'cooldown': 30,
 						'plus-armor': 20,
 						'plus-life': 10,
 						'plus-life-regen': 310.1,
@@ -2056,17 +2051,19 @@
 				'vault~a': {
 					name: 'Vault - Trail of Cinders',
 					desc: 'Tumble acrobatically 35 yards.',
-					rune: 'Leave a trail of fire in your wake that inflicts 300% weapon damage as Fire over 3 seconds.',
+					rune: 'Leave a trail of fire in your wake that inflicts 1500% weapon damage as Fire over 3 seconds.',
 					effect: {
 						'cost-discipline': 8,
-						'weapon-damage': 300,
+						'weapon-damage': 1500,
 						'weapon-damage-for': 3
 					},
 				},
 				'vault~b': {
 					name: 'Vault - Acrobatics',
 					desc: 'Tumble acrobatically 35 yards.',
-					rune: 'Removes the Discipline cost but adds a 10 second cooldown.',
+					rune: 'Removes the Discipline cost but adds a 15 second cooldown.',
+					effect: {
+					},
 				},
 				'vault~c': {
 					name: 'Vault - Action Shot',
@@ -2095,7 +2092,7 @@
 				},
 				'bola-shot': {
 					name: 'Bola Shot',
-					desc: 'Shoot out an explosive bola that wraps itself around its target. After 1 second, the bola explodes dealing 160% weapon damage as Fire to the target and an additional 110% weapon damage as Fire to all other targets within 14 yards.',
+					desc: 'Shoot out an explosive bola that wraps itself around its target. After 1 second, the bola explodes dealing 160% weapon damage as Fire to the target and an additional 110% weapon damage as Fire to all other targets within 7 yards.',
 					effect: {
 						'generate-hatred': 3,
 						'weapon-damage': 160,
@@ -2103,8 +2100,8 @@
 				},
 				'bola-shot~a': {
 					name: 'Bola Shot - Volatile Explosives',
-					desc: 'Shoot out an explosive bola that wraps itself around its target. After 1 second, the bola explodes dealing 160% weapon damage as Fire to the target and an additional 110% weapon damage as Fire to all other targets within 14 yards.',
-					rune: 'Increase the explosion radius to 20 yards.',
+					desc: 'Shoot out an explosive bola that wraps itself around its target. After 1 second, the bola explodes dealing 160% weapon damage as Fire to the target and an additional 110% weapon damage as Fire to all other targets within 7 yards.',
+					rune: 'Increase the explosion radius to 14 yards.',
 					effect: {
 						'generate-hatred': 3,
 						'weapon-damage': 160,
@@ -2112,7 +2109,7 @@
 				},
 				'bola-shot~b': {
 					name: 'Bola Shot - Acid Strike',
-					desc: 'Shoot out an explosive bola that wraps itself around its target. After 1 second, the bola explodes dealing 160% weapon damage as Fire to the target and an additional 110% weapon damage as Fire to all other targets within 14 yards.',
+					desc: 'Shoot out an explosive bola that wraps itself around its target. After 1 second, the bola explodes dealing 160% weapon damage as Fire to the target and an additional 110% weapon damage as Fire to all other targets within 7 yards.',
 					rune: 'Shoot 3 bolas that each deal 160% weapon damage as Poison. The bolas no longer explode for area damage to nearby targets.',
 					effect: {
 						'generate-hatred': 3,
@@ -2121,7 +2118,7 @@
 				},
 				'bola-shot~c': {
 					name: 'Bola Shot - Thunder Ball',
-					desc: 'Shoot out an explosive bola that wraps itself around its target. After 1 second, the bola explodes dealing 160% weapon damage as Fire to the target and an additional 110% weapon damage as Fire to all other targets within 14 yards.',
+					desc: 'Shoot out an explosive bola that wraps itself around its target. After 1 second, the bola explodes dealing 160% weapon damage as Fire to the target and an additional 110% weapon damage as Fire to all other targets within 7 yards.',
 					rune: 'When the bola explodes, it deals 160% weapon damage as Lightning and has a 35% chance to Stun the primary target for 1.5 seconds.',
 					effect: {
 						'generate-hatred': 3,
@@ -2131,7 +2128,7 @@
 				},
 				'bola-shot~d': {
 					name: 'Bola Shot - Bitter Pill',
-					desc: 'Shoot out an explosive bola that wraps itself around its target. After 1 second, the bola explodes dealing 160% weapon damage as Fire to the target and an additional 110% weapon damage as Fire to all other targets within 14 yards.',
+					desc: 'Shoot out an explosive bola that wraps itself around its target. After 1 second, the bola explodes dealing 160% weapon damage as Fire to the target and an additional 110% weapon damage as Fire to all other targets within 7 yards.',
 					rune: 'When the bola explodes, you have a 15% chance to gain 2 Discipline.',
 					effect: {
 						'generate-hatred': 3,
@@ -2140,7 +2137,7 @@
 				},
 				'bola-shot~e': {
 					name: 'Bola Shot - Imminent Doom',
-					desc: 'Shoot out an explosive bola that wraps itself around its target. After 1 second, the bola explodes dealing 160% weapon damage as Fire to the target and an additional 110% weapon damage as Fire to all other targets within 14 yards.',
+					desc: 'Shoot out an explosive bola that wraps itself around its target. After 1 second, the bola explodes dealing 160% weapon damage as Fire to the target and an additional 110% weapon damage as Fire to all other targets within 7 yards.',
 					rune: 'Augment the bola to deal 216% weapon damage as Arcane to the target and 154% weapon damage as Arcane to all other targets within 7 yards, but increases the explosion delay to 2 seconds.',
 					effect: {
 						'generate-hatred': 3,
@@ -2262,14 +2259,13 @@
 					},
 				},
 				'evasive-fire~a': {
-					name: 'Evasive Fire - Hardened',
+					name: 'Evasive Fire - Shrapnel',
 					desc: 'Shoot for 130% weapon damage. If an enemy is in front of you at close range, you will also backflip away 15 yards.',
-					rune: 'After using Evasive Fire, you no longer backflip away, but instead gain 25% Armor for 3 seconds.',
+					rune: 'Shoot exploding bolts that also deal 30% weapon damage as Fire to all enemies within 6 yards of the primary target.',
 					effect: {
 						'cost-discipline': 4,
 						'generate-hatred': 4,
 						'weapon-damage': 160,
-						'plus-armor': 25,
 					},
 				},
 				'evasive-fire~b': {
@@ -2285,7 +2281,7 @@
 				'evasive-fire~c': {
 					name: 'Evasive Fire - Parting Gift',
 					desc: 'Shoot for 130% weapon damage. If an enemy is in front of you at close range, you will also backflip away 15 yards.',
-					rune: 'Whenever a backflip is triggered, leave a poison bomb behind that explodes for 55% weapon damage as Poison in a 12 yard radius after 0.6 seconds. Turns Evasive Fire into Poison damage.',
+					rune: 'Whenever a backflip is triggered, leave a poison bomb behind that explodes for 45% weapon damage as Poison in a 12 yard radius after 1.2 seconds. Turns Evasive Fire into Poison damage.',
 					effect: {
 						'cost-discipline': 4,
 						'generate-hatred': 4,
@@ -2368,56 +2364,56 @@
 				},
 				'shadow-power': {
 					name: 'Shadow Power',
-					desc: 'Draw in the power of the shadows, gaining 15% of all damage done as Life for 5 seconds.',
+					desc: 'Draw in the power of the shadows, gaining 20% of all damage done as Life for 3 seconds.',
 					effect: {
 						'cost-discipline': 14,
-						'life-steal': 15,
+						'life-steal': 20,
 					},
 				},
 				'shadow-power~a': {
 					name: 'Shadow Power - Night Bane',
-					desc: 'Draw in the power of the shadows, gaining 15% of all damage done as Life for 5 seconds.',
+					desc: 'Draw in the power of the shadows, gaining 20% of all damage done as Life for 3 seconds.',
 					rune: 'Gain an additional 4 Hatred per second while Shadow Power is active.',
 					effect: {
 						'cost-discipline': 14,
-						'life-steal': 15,
+						'life-steal': 20,
 					},
 				},
 				'shadow-power~b': {
 					name: 'Shadow Power - Shadow Glide',
-					desc: 'Draw in the power of the shadows, gaining 15% of all damage done as Life for 5 seconds.',
-					rune: 'Gain 30% bonus to movement speed while Shadow Power is active.',
+					desc: 'Draw in the power of the shadows, gaining 20% of all damage done as Life for 3 seconds.',
+					rune: 'Gain 40% bonus to movement speed while Shadow Power is active.',
 					effect: {
 						'cost-discipline': 14,
-						'life-steal': 15,
+						'life-steal': 20,
 					},
 				},
 				'shadow-power~c': {
 					name: 'Shadow Power - Gloom',
-					desc: 'Draw in the power of the shadows, gaining 15% of all damage done as Life for 5 seconds.',
-					rune: 'Reduce incoming damage by 35% while Shadow Power is active.',
+					desc: 'Draw in the power of the shadows, gaining 20% of all damage done as Life for 3 seconds.',
+					rune: 'Reduce incoming damage by 65% while Shadow Power is active.',
 					effect: {
 						'cost-discipline': 14,
-						'plus-damage-reduce': 35,
-						'life-steal': 15,
+						'plus-damage-reduce': 65,
+						'life-steal': 20,
 					},
 				},
 				'shadow-power~d': {
 					name: 'Shadow Power - Well of Darkness',
-					desc: 'Draw in the power of the shadows, gaining 15% of all damage done as Life for 5 seconds.',
+					desc: 'Draw in the power of the shadows, gaining 20% of all damage done as Life for 3 seconds.',
 					rune: 'Decreases the Discipline cost to 12.',
 					effect: {
-						'life-steal': 15,
+						'life-steal': 20,
 						'cost-discipline': 12,
 					},
 				},
 				'shadow-power~e': {
 					name: 'Shadow Power - Blood Moon',
-					desc: 'Draw in the power of the shadows, gaining 15% of all damage done as Life for 5 seconds.',
-					rune: 'Increases damage done as Life to 25%.',
+					desc: 'Draw in the power of the shadows, gaining 20% of all damage done as Life for 3 seconds.',
+					rune: 'Increases damage done as Life to 30%.',
 					effect: {
 						'cost-discipline': 14,
-						'life-steal': 25,
+						'life-steal': 30,
 					},
 				},
 				'fan-of-knives': {
@@ -2498,9 +2494,9 @@
 					},
 				},
 				'spike-trap~b': {
-					name: 'Spike Trap - Echoing Blast',
+					name: 'Spike Trap - Bandolier',
 					desc: 'Lay a trap that arms after 1.2 seconds and triggers when an enemy approaches. The trap does 275% weapon damage to all enemies within 8 yards.  You can have a maximum of 3 Spike Traps active at one time.',
-					rune: 'Each spike trap now has 3 charges which can be triggered once every second. Traps also now deal poison damage.',
+					rune: 'Increase the maximum number of traps that can be out simultaneously to 6.',
 					effect: {
 						'cost-hatred': 30,
 						'weapon-damage': 275,
@@ -2509,7 +2505,7 @@
 				'spike-trap~c': {
 					name: 'Spike Trap - Sticky Trap',
 					desc: 'Lay a trap that arms after 1.2 seconds and triggers when an enemy approaches. The trap does 275% weapon damage to all enemies within 8 yards.  You can have a maximum of 3 Spike Traps active at one time.',
-					rune: 'Plant a bomb on an enemy rather than on the ground. If the target dies within 30 seconds, the bomb explodes dealing 404% weapon damage to all enemies within 16 yards.',
+					rune: 'Plant a bomb on an enemy rather than on the ground. If the target dies within 30 seconds, the bomb explodes dealing 404% weapon damage to all enemies within 8 yards.',
 					effect: {
 						'cost-hatred': 30,
 						'weapon-damage': 679,
@@ -2535,113 +2531,113 @@
 				},
 				'companion': {
 					name: 'Companion',
-					desc: 'Summon a raven companion. Your raven companion will periodically peck at enemies for 38% of your weapon damage as Physical.',
+					desc: 'Summon a raven companion. Your raven companion will periodically peck at enemies for 30% of your weapon damage as Physical.',
 					effect: {
-						'cooldown': 30,
 						'cost-discipline': 10,
-						'weapon-damage': 38,
+						'weapon-damage': 30,
 					},
 				},
 				'companion~a': {
 					name: 'Companion - Spider Companion',
-					desc: 'Summon a raven companion. Your raven companion will periodically peck at enemies for 38% of your weapon damage as Physical.',
+					desc: 'Summon a raven companion. Your raven companion will periodically peck at enemies for 30% of your weapon damage as Physical.',
 					rune: 'Summon a spider instead of a raven. The spider\'s attacks also Slow the movement of enemies by 60% for 2 seconds.',
 					effect: {
-						'cooldown': 30,
 						'cost-discipline': 10,
-						'weapon-damage': 38,
+						'weapon-damage': 30,
 					},
 				},
 				'companion~b': {
 					name: 'Companion - Boar Companion',
-					desc: 'Summon a raven companion. Your raven companion will periodically peck at enemies for 38% of your weapon damage as Physical.',
+					desc: 'Summon a raven companion. Your raven companion will periodically peck at enemies for 30% of your weapon damage as Physical.',
 					rune: 'Summon a boar instead of a raven. The boar\'s attacks hit all enemies in an area.',
 					effect: {
-						'cooldown': 30,
 						'cost-discipline': 10,
-						'weapon-damage': 38,
+						'weapon-damage': 30,
 					},
 				},
 				'companion~c': {
 					name: 'Companion - Wolf Companion',
-					desc: 'Summon a raven companion. Your raven companion will periodically peck at enemies for 38% of your weapon damage as Physical.',
-					rune: 'Summon a wolf for 25 seconds instead of a raven. The wolf attacks for 94% of your weapon damage as Physical.',
+					desc: 'Summon a raven companion. Your raven companion will periodically peck at enemies for 30% of your weapon damage as Physical.',
+					rune: 'Summon a wolf for 25 seconds instead of a raven. The wolf attacks for 0% of your weapon damage as Physical.',
 					effect: {
-						'cooldown': 30,
 						'cost-discipline': 10,
-						'weapon-damage': 94,
+						'weapon-damage': 30,
 					},
 				},
 				'companion~d': {
 					name: 'Companion - Bat Companion',
-					desc: 'Summon a raven companion. Your raven companion will periodically peck at enemies for 38% of your weapon damage as Physical.',
+					desc: 'Summon a raven companion. Your raven companion will periodically peck at enemies for 30% of your weapon damage as Physical.',
 					rune: 'Summon a bat instead of a raven. The bat grants you 3 Hatred per second.',
 					effect: {
-						'cooldown': 30,
 						'cost-discipline': 10,
-						'weapon-damage': 38,
+						'weapon-damage': 30,
 					},
 				},
 				'companion~e': {
 					name: 'Companion - Ferret Companion',
-					desc: 'Summon a raven companion. Your raven companion will periodically peck at enemies for 38% of your weapon damage as Physical.',
+					desc: 'Summon a raven companion. Your raven companion will periodically peck at enemies for 30% of your weapon damage as Physical.',
 					rune: 'Summon ferrets instead of a raven. The ferrets collect gold for you and increase gold found on monsters by 10%.',
 					effect: {
-						'cooldown': 30,
 						'cost-discipline': 10,
-						'weapon-damage': 38,
+						'weapon-damage': 30,
 					},
 				},
 				'strafe': {
 					name: 'Strafe',
-					desc: 'Shoot at random nearby enemies for 156% weapon damage while moving at 75% of normal movement speed.',
+					desc: 'Shoot at random nearby enemies for 156% weapon damage while moving at 65% of normal movement speed.',
 					effect: {
-						'cost-hatred': 12,
+						'cost-hatred': 15,
 						'weapon-damage': 156,
 					},
 				},
 				'strafe~a': {
 					name: 'Strafe - Demolition',
-					desc: 'Shoot at random nearby enemies for 156% weapon damage while moving at 75% of normal movement speed.',
+					desc: 'Shoot at random nearby enemies for 156% weapon damage while moving at 65% of normal movement speed.',
 					rune: 'Throw out bouncy grenades that explode for 187% weapon damage to targets within 9 yards.',
 					effect: {
-						'cost-hatred': 12,
+						'cost-hatred': 15,
 						'weapon-damage': 187,
 					},
 				},
 				'strafe~b': {
-					name: 'Strafe - Emberstrafe',
-					desc: 'Shoot at random nearby enemies for 156% weapon damage while moving at 75% of normal movement speed.',
-					rune: 'Strafe leaves behind a fire trail that deals 65% weapon damage per second for 2 seconds.',
+					name: 'Strafe - Equilibrium',
+					desc: 'Shoot at random nearby enemies for 156% weapon damage while moving at 65% of normal movement speed.',
+					rune: 'Increases your attack speed by 20% when using Strafe.',
 					effect: {
-						'cost-hatred': 12,
+						'cost-hatred': 15,
 						'weapon-damage': 156,
+						'stack': {
+							'plus-attack-speed-this': {
+								'limit': 5,
+								'value': 20,
+							},
+						},
 					},
 				},
 				'strafe~c': {
 					name: 'Strafe - Rocket Storm',
-					desc: 'Shoot at random nearby enemies for 156% weapon damage while moving at 75% of normal movement speed.',
+					desc: 'Shoot at random nearby enemies for 156% weapon damage while moving at 65% of normal movement speed.',
 					rune: 'In addition to regular firing, fire off homing rockets for 60% weapon damage as Fire.',
 					effect: {
-						'cost-hatred': 12,
+						'cost-hatred': 15,
 						'weapon-damage': 216,
 					},
 				},
 				'strafe~d': {
 					name: 'Strafe - Drifting Shadow',
-					desc: 'Shoot at random nearby enemies for 156% weapon damage while moving at 75% of normal movement speed.',
+					desc: 'Shoot at random nearby enemies for 156% weapon damage while moving at 65% of normal movement speed.',
 					rune: 'Movement speed increased to 100% of normal running speed while strafing.',
 					effect: {
-						'cost-hatred': 12,
+						'cost-hatred': 15,
 						'weapon-damage': 156,
 					},
 				},
 				'strafe~e': {
 					name: 'Strafe - Stinging Steel',
-					desc: 'Shoot at random nearby enemies for 156% weapon damage while moving at 75% of normal movement speed.',
+					desc: 'Shoot at random nearby enemies for 156% weapon damage while moving at 65% of normal movement speed.',
 					rune: 'Throw out knives rather than arrows that do an extra 100% damage on successful Critical Hits.',
 					effect: {
-						'cost-hatred': 12,
+						'cost-hatred': 15,
 						'weapon-damage': 156,
 						'plus-crit-hit-damage': 100,
 					},
@@ -2811,60 +2807,54 @@
 					name: 'Sentry',
 					desc: 'Drop a turret on the ground. The turret begins firing at nearby enemies for 55%  weapon damage. Lasts 30 seconds.',
 					effect: {
-						'cooldown': 8,
-						'cost-discipline': 30,
-						'weapon-damage': 175,
+						'cost-discipline': 10,
+						'weapon-damage': 55,
 					},
 				},
 				'sentry~a': {
 					name: 'Sentry - Chain of Torment',
-					desc: 'Drop a turret on the ground. The turret begins firing at nearby enemies for 175% weapon damage. Lasts 30 seconds.',
-					rune: 'Create a tether between you and the Sentry that does 125% weapon damage every second to every enemy it touches.',
+					desc: 'Drop a turret on the ground. The turret begins firing at nearby enemies for 55% weapon damage. Lasts 30 seconds.',
+					rune: 'Create a tether between you and the Sentry that does 80% weapon damage every second to every enemy it touches.',
 					effect: {
-						'cooldown': 8,
-						'cost-discipline': 30,
-						'weapon-damage': 175,
+						'cost-discipline': 10,
+						'weapon-damage': 55,
 					},
 				},
 				'sentry~b': {
 					name: 'Sentry - Vigilant Watcher',
-					desc: 'Drop a turret on the ground. The turret begins firing at nearby enemies for 175% weapon damage. Lasts 30 seconds.',
-					rune: 'Decreases the cooldown of Sentry by 2 seconds.',
+					desc: 'Drop a turret on the ground. The turret begins firing at nearby enemies for 55% weapon damage. Lasts 30 seconds.',
+					rune: 'Increases duration of the turret to 40 seconds.',
 					effect: {
-						'cooldown': 6,
-						'cost-discipline': 30,
-						'weapon-damage': 175,
+						'cost-discipline': 10,
+						'weapon-damage': 55,
 					},
 				},
 				'sentry~c': {
 					name: 'Sentry - Spitfire Turret',
-					desc: 'Drop a turret on the ground. The turret begins firing at nearby enemies for 175% weapon damage. Lasts 30 seconds.',
-					rune: 'The turret will also fire homing rockets aimed at random nearby targets for 30% weapon damage as Fire.',
+					desc: 'Drop a turret on the ground. The turret begins firing at nearby enemies for 55% weapon damage. Lasts 30 seconds.',
+					rune: 'The turret will also fire homing rockets aimed at random nearby targets for 8% weapon damage as Fire.',
 					effect: {
-						'cooldown': 8,
-						'cost-discipline': 30,
-						'weapon-damage': 55,
+						'cost-discipline': 10,
+						'weapon-damage': 63,
 					},
 				},
 				'sentry~d': {
 					name: 'Sentry - Aid Station',
-					desc: 'Drop a turret on the ground. The turret begins firing at nearby enemies for 175% weapon damage. Lasts 30 seconds.',
+					desc: 'Drop a turret on the ground. The turret begins firing at nearby enemies for 55% weapon damage. Lasts 30 seconds.',
 					rune: 'Heals nearby allies for 1% of their maximum Life per second.',
 					effect: {
-						'cooldown': 8,
-						'cost-discipline': 30,
-						'weapon-damage': 175,
+						'cost-discipline': 10,
+						'weapon-damage': 55,
 					},
 				},
 				'sentry~e': {
 					name: 'Sentry - Guardian Turret',
-					desc: 'Drop a turret on the ground. The turret begins firing at nearby enemies for 175% weapon damage. Lasts 30 seconds.',
+					desc: 'Drop a turret on the ground. The turret begins firing at nearby enemies for 55% weapon damage. Lasts 30 seconds.',
 					rune: 'The turret also creates a shield that reduces damage taken by allies by 15%.',
 					effect: {
-						'cooldown': 8,
-						'cost-discipline': 30,
+						'cost-discipline': 10,
 						'plus-damage-reduce': 15,
-						'weapon-damage': 175,
+						'weapon-damage': 55,
 					},
 				},
 				'cluster-arrow': {
@@ -3306,7 +3296,7 @@
 				'breath-of-heaven~d': {
 					name: 'Breath of Heaven - Infused with Light',
 					desc: 'A blast of divine energy heals you and all allies within 12 yards for 6201.94 - 7442.33 Life.',
-					rune: 'Gain 8 additional Spirit from Spirit generating attacks for 5 seconds after using Breath of Heaven.',
+					rune: 'Gain 6 additional Spirit from Spirit generating attacks for 5 seconds after using Breath of Heaven.',
 					effect: {
 						'cost-spirit': 25,
 						'cooldown': 15,
@@ -3808,7 +3798,7 @@
 				'mantra-of-evasion~d': {
 					name: 'Mantra of Evasion - Wind through the Reeds',
 					desc: 'Recite a Mantra that grants you and your allies within 40 yards a 15% chance to dodge attacks for 3 minutes.  For 3 seconds after activation, a second effect grants an additional 15% chance to dodge attacks.  This is a Mantra. You can only have one Mantra active at a time.',
-					rune: 'Mantra of Evasion also increases movement speed by 8%.',
+					rune: 'Mantra of Evasion also increases movement speed by 5%.',
 					effect: {
 						'cost-spirit': 50,
 						'plus-dodge': 15,
@@ -4431,7 +4421,7 @@
 					name: 'Firebats',
 					desc: 'Call forth a swarm of fiery bats to burn enemies in front of you for 180% weapon damage as Fire.',
 					effect: {
-						'cost-mana': 98,
+						'cost-mana': 122.5,
 						'weapon-damage': 180,
 					},
 				},
@@ -4440,7 +4430,7 @@
 					desc: 'Call forth a swarm of fiery bats to burn enemies in front of you for 180% weapon damage as Fire.',
 					rune: 'Summon fewer but larger bats that travel up to 40 yards and hit for 220% weapon damage as Fire.',
 					effect: {
-						'cost-mana': 98,
+						'cost-mana': 122.5,
 						'weapon-damage': 220,
 					},
 				},
@@ -4449,7 +4439,7 @@
 					desc: 'Call forth a swarm of fiery bats to burn enemies in front of you for 180% weapon damage as Fire.',
 					rune: 'Rapidly summon bats that seek out nearby enemies for 350% weapon damage as Fire.',
 					effect: {
-						'cost-mana': 98,
+						'cost-mana': 122.5,
 						'weapon-damage': 350,
 					},
 				},
@@ -4458,7 +4448,7 @@
 					desc: 'Call forth a swarm of fiery bats to burn enemies in front of you for 180% weapon damage as Fire.',
 					rune: 'Diseased bats fly towards the enemy and infect them. Damage is slow at first, but can increase over time to a maximum of 270% weapon damage as Poison.',
 					effect: {
-						'cost-mana': 98,
+						'cost-mana': 122.5,
 						'weapon-damage': 270,
 					},
 				},
@@ -4467,7 +4457,7 @@
 					desc: 'Call forth a swarm of fiery bats to burn enemies in front of you for 180% weapon damage as Fire.',
 					rune: 'Gain 3% of damage done by the bats as Life.',
 					effect: {
-						'cost-mana': 98,
+						'cost-mana': 122.5,
 						'weapon-damage': 150,
 					},
 				},
@@ -4476,7 +4466,7 @@
 					desc: 'Call forth a swarm of fiery bats to burn enemies in front of you for 180% weapon damage as Fire.',
 					rune: 'Call forth a swirl of bats that damage nearby enemies for 195% weapon damage as Fire. The damage of the bats increases by 20% every second, up to a maximum of 100%.',
 					effect: {
-						'cost-mana': 98,
+						'cost-mana': 122.5,
 						'weapon-damage': 345,
 					},
 				},
@@ -4668,7 +4658,7 @@
 				},
 				'haunt': {
 					name: 'Haunt',
-					desc: 'Haunt an enemy with a spirit, dealing 575% weapon damage as Arcane over 6 seconds. If the target dies, the spirit will haunt another nearby enemy.',
+					desc: 'Haunt an enemy with a spirit, dealing 575% weapon damage as Arcane over 12 seconds. If the target dies, the spirit will haunt another nearby enemy.',
 					effect: {
 						'cost-mana': 98,
 						'weapon-damage': 575,
@@ -4677,7 +4667,7 @@
 				},
 				'haunt~a': {
 					name: 'Haunt - Consuming Spirit',
-					desc: 'Haunt an enemy with a spirit, dealing 575% weapon damage as Arcane over 6 seconds. If the target dies, the spirit will haunt another nearby enemy.',
+					desc: 'Haunt an enemy with a spirit, dealing 575% weapon damage as Arcane over 12 seconds. If the target dies, the spirit will haunt another nearby enemy.',
 					rune: 'The spirit returns 155.05 Life per second.',
 					effect: {
 						'cost-mana': 98,
@@ -4687,7 +4677,7 @@
 				},
 				'haunt~b': {
 					name: 'Haunt - Lingering Spirit',
-					desc: 'Haunt an enemy with a spirit, dealing 575% weapon damage as Arcane over 6 seconds. If the target dies, the spirit will haunt another nearby enemy.',
+					desc: 'Haunt an enemy with a spirit, dealing 575% weapon damage as Arcane over 12 seconds. If the target dies, the spirit will haunt another nearby enemy.',
 					rune: 'If there are no targets left, the spirit will linger for up to 10 seconds looking for new enemies.',
 					effect: {
 						'cost-mana': 98,
@@ -4697,7 +4687,7 @@
 				},
 				'haunt~c': {
 					name: 'Haunt - Grasping Spirit',
-					desc: 'Haunt an enemy with a spirit, dealing 575% weapon damage as Arcane over 6 seconds. If the target dies, the spirit will haunt another nearby enemy.',
+					desc: 'Haunt an enemy with a spirit, dealing 575% weapon damage as Arcane over 12 seconds. If the target dies, the spirit will haunt another nearby enemy.',
 					rune: 'Slow the movement of haunted targets by 30%.',
 					effect: {
 						'cost-mana': 98,
@@ -4707,7 +4697,7 @@
 				},
 				'haunt~d': {
 					name: 'Haunt - Draining Spirit',
-					desc: 'Haunt an enemy with a spirit, dealing 575% weapon damage as Arcane over 6 seconds. If the target dies, the spirit will haunt another nearby enemy.',
+					desc: 'Haunt an enemy with a spirit, dealing 575% weapon damage as Arcane over 12 seconds. If the target dies, the spirit will haunt another nearby enemy.',
 					rune: 'The spirit returns 10.21 Mana per second.',
 					effect: {
 						'cost-mana': 98,
@@ -4717,11 +4707,11 @@
 				},
 				'haunt~e': {
 					name: 'Haunt - Resentful Spirit',
-					desc: 'Haunt an enemy with a spirit, dealing 575% weapon damage as Arcane over 6 seconds. If the target dies, the spirit will haunt another nearby enemy.',
-					rune: 'Summon a vengeful spirit that does 383% weapon damage as Arcane over 2 seconds.',
+					desc: 'Haunt an enemy with a spirit, dealing 575% weapon damage as Arcane over 12 seconds. If the target dies, the spirit will haunt another nearby enemy.',
+					rune: 'Summon a vengeful spirit that does 288% weapon damage as Arcane over 2 seconds.',
 					effect: {
 						'cost-mana': 98,
-						'weapon-damage': 383,
+						'weapon-damage': 288,
 						'weapon-damage-for': 2,
 					},
 				},
@@ -5333,7 +5323,7 @@
 					desc: 'Raise a line of zombies from the ground that attacks nearby enemies for 800% weapon damage as Physical over 5 seconds.',
 					effect: {
 						'cost-mana': 102.9,
-						'cooldown': 20,
+						'cooldown': 25,
 						'weapon-damage': 800,
 						'weapon-damage-for': 5,
 					},
@@ -5344,7 +5334,7 @@
 					rune: 'Up to 3.3333333333333 zombies will emerge from the ground and attack nearby enemies for 25% of your weapon damage as Physical per attack.',
 					effect: {
 						'cost-mana': 102.9,
-						'cooldown': 20,
+						'cooldown': 25,
 						'weapon-damage': 800,
 						'weapon-damage-for': 5,
 					},
@@ -5355,7 +5345,7 @@
 					rune: 'Increases the width of the Wall of Zombies.',
 					effect: {
 						'cost-mana': 102.9,
-						'cooldown': 20,
+						'cooldown': 25,
 						'weapon-damage': 800,
 						'weapon-damage-for': 5,
 					},
@@ -5366,7 +5356,7 @@
 					rune: 'Zombies crawl out of the ground and run in all directions, dealing 445% weapon damage as Physical to nearby enemies.',
 					effect: {
 						'cost-mana': 102.9,
-						'cooldown': 20,
+						'cooldown': 25,
 						'weapon-damage': 800,
 						'weapon-damage-for': 5,
 					},
@@ -5377,7 +5367,7 @@
 					rune: 'Your Wall of Zombies will Slow the movement of enemies by 60% for 5 seconds.',
 					effect: {
 						'cost-mana': 102.9,
-						'cooldown': 20,
+						'cooldown': 25,
 						'weapon-damage': 800,
 						'weapon-damage-for': 5,
 					},
@@ -5385,10 +5375,10 @@
 				'wall-of-zombies~e': {
 					name: 'Wall of Zombies - Pile On',
 					desc: 'Raise a line of zombies from the ground that attacks nearby enemies for 800% weapon damage as Physical over 5 seconds.',
-					rune: 'Summon a tower of zombies that falls over, dealing 500% weapon damage as Physical to any enemies it hits and knocks them back.',
+					rune: 'Summon a tower of zombies that falls over, dealing 765% weapon damage as Physical to any enemies it hits and knocks them back.',
 					effect: {
 						'cost-mana': 102.9,
-						'cooldown': 10,
+						'cooldown': 25,
 						'weapon-damage': 765,
 					},
 				},
@@ -5449,101 +5439,101 @@
 			'wizard': {
 				'magic-missile': {
 					name: 'Magic Missile',
-					desc: 'Launch a missile of magic energy, causing 125% weapon damage as Arcane.',
+					desc: 'Launch a missile of magic energy, causing 110% weapon damage as Arcane.',
 					effect: {
-						'weapon-damage': 125,
+						'weapon-damage': 110,
 					},
 				},
 				'magic-missile~a': {
 					name: 'Magic Missile - Charged Blast',
-					desc: 'Launch a missile of magic energy, causing 125% weapon damage as Arcane.',
-					rune: 'Increases the damage of Magic Missile to 162% weapon damage as Arcane.',
+					desc: 'Launch a missile of magic energy, causing 110% weapon damage as Arcane.',
+					rune: 'Increases the damage of Magic Missile to 143% weapon damage as Arcane.',
 					effect: {
-						'weapon-damage': 162,
+						'weapon-damage': 143,
 					},
 				},
 				'magic-missile~b': {
 					name: 'Magic Missile - Split',
-					desc: 'Launch a missile of magic energy, causing 125% weapon damage as Arcane.',
-					rune: 'Fire 3 missiles that each deal 56% weapon damage as Arcane.',
+					desc: 'Launch a missile of magic energy, causing 110% weapon damage as Arcane.',
+					rune: 'Fire 3 missiles that each deal 50% weapon damage as Arcane.',
 					effect: {
-						'weapon-damage': 56,
+						'weapon-damage': 150,
 					},
 				},
 				'magic-missile~c': {
 					name: 'Magic Missile - Penetrating Blast',
-					desc: 'Launch a missile of magic energy, causing 125% weapon damage as Arcane.',
-					rune: 'Missiles have a 100% chance to pierce through their target and hit additional enemies.',
+					desc: 'Launch a missile of magic energy, causing 110% weapon damage as Arcane.',
+					rune: 'Missiles have a 70% chance to pierce through their target and hit additional enemies.',
 					effect: {
-						'weapon-damage': 125,
+						'weapon-damage': 110,
 					},
 				},
 				'magic-missile~d': {
 					name: 'Magic Missile - Attunement',
-					desc: 'Launch a missile of magic energy, causing 125% weapon damage as Arcane.',
+					desc: 'Launch a missile of magic energy, causing 110% weapon damage as Arcane.',
 					rune: 'Whenever Magic Missile hits a target you gain 4 Arcane Power.',
 					effect: {
-						'weapon-damage': 125,
+						'weapon-damage': 110,
 					},
 				},
 				'magic-missile~e': {
 					name: 'Magic Missile - Seeker',
-					desc: 'Launch a missile of magic energy, causing 125% weapon damage as Arcane.',
-					rune: 'Missiles track the nearest enemy and their damage is increased to 138% weapon damage as Arcane.',
+					desc: 'Launch a missile of magic energy, causing 110% weapon damage as Arcane.',
+					rune: 'Missiles track the nearest enemy and their damage is increased to 121% weapon damage as Arcane.',
 					effect: {
-						'weapon-damage': 138,
+						'weapon-damage': 121,
 					},
 				},
 				'ray-of-frost': {
 					name: 'Ray of Frost',
-					desc: 'Project a beam of frozen ice that blasts 215% weapon damage as Cold to the first enemy it hits, slowing the target\'s movement by 60% for 4 seconds.',
+					desc: 'Project a beam of frozen ice that blasts 215% weapon damage as Cold to the first enemy it hits, slowing the target\'s movement by 30% for 3 seconds.',
 					effect: {
-						'cost-arcane-power': 16,
+						'cost-arcane-power': 20,
 						'weapon-damage': 215,
 					},
 				},
 				'ray-of-frost~a': {
 					name: 'Ray of Frost - Snow Blast',
-					desc: 'Project a beam of frozen ice that blasts 215% weapon damage as Cold to the first enemy it hits, slowing the target\'s movement by 60% for 4 seconds.',
+					desc: 'Project a beam of frozen ice that blasts 215% weapon damage as Cold to the first enemy it hits, slowing the target\'s movement by 30% for 3 seconds.',
 					rune: 'Using continuously on a single target increases damage over 1.5 seconds to inflict a maximum of 280% weapon damage as Cold.',
 					effect: {
-						'cost-arcane-power': 16,
+						'cost-arcane-power': 20,
 						'weapon-damage': 280,
 					},
 				},
 				'ray-of-frost~b': {
 					name: 'Ray of Frost - Sleet Storm',
-					desc: 'Project a beam of frozen ice that blasts 215% weapon damage as Cold to the first enemy it hits, slowing the target\'s movement by 60% for 4 seconds.',
-					rune: 'Create a swirling storm around you, dealing 280% weapon damage as Cold to all enemies caught within it.',
+					desc: 'Project a beam of frozen ice that blasts 215% weapon damage as Cold to the first enemy it hits, slowing the target\'s movement by 30% for 3 seconds.',
+					rune: 'Create a swirling storm around you, dealing 215% weapon damage as Cold to all enemies caught within it.',
 					effect: {
-						'cost-arcane-power': 16,
+						'cost-arcane-power': 20,
 						'weapon-damage': 215,
 					},
 				},
 				'ray-of-frost~c': {
 					name: 'Ray of Frost - Numb',
-					desc: 'Project a beam of frozen ice that blasts 215% weapon damage as Cold to the first enemy it hits, slowing the target\'s movement by 60% for 4 seconds.',
-					rune: 'Increase the amount the target\'s movement is slowed to 80% for 3 seconds.',
+					desc: 'Project a beam of frozen ice that blasts 215% weapon damage as Cold to the first enemy it hits, slowing the target\'s movement by 30% for 3 seconds.',
+					rune: 'Increase the amount the target\'s movement is slowed to 60% for 3 seconds.',
 					effect: {
-						'cost-arcane-power': 16,
+						'cost-arcane-power': 20,
 						'weapon-damage': 215,
 					},
 				},
 				'ray-of-frost~d': {
 					name: 'Ray of Frost - Cold Blood',
-					desc: 'Project a beam of frozen ice that blasts 215% weapon damage as Cold to the first enemy it hits, slowing the target\'s movement by 60% for 4 seconds.',
-					rune: 'Reduce casting cost to 10 Arcane Power.',
+					desc: 'Project a beam of frozen ice that blasts 215% weapon damage as Cold to the first enemy it hits, slowing the target\'s movement by 30% for 3 seconds.',
+					rune: 'Reduce casting cost to 0 Arcane Power.',
 					effect: {
-						'cost-arcane-power': 10,
+						'cost-arcane-power': 20,
 						'weapon-damage': 215,
 					},
 				},
 				'ray-of-frost~e': {
 					name: 'Ray of Frost - Black Ice',
-					desc: 'Project a beam of frozen ice that blasts 215% weapon damage as Cold to the first enemy it hits, slowing the target\'s movement by 60% for 4 seconds.',
-					rune: 'Enemies killed with Ray of Frost leave behind a patch of ice that deals 387% weapon damage as Cold to enemies moving through it over 3 seconds.',
+					desc: 'Project a beam of frozen ice that blasts 215% weapon damage as Cold to the first enemy it hits, slowing the target\'s movement by 30% for 3 seconds.',
+					rune: 'Enemies killed with Ray of Frost leave behind a patch of ice that deals 195% weapon damage as Cold to enemies moving through it over 3 seconds.',
 					effect: {
-						'cost-arcane-power': 16,
+						'cost-arcane-power': 20,
 						'weapon-damage': 410,
 					},
 				},
@@ -5751,7 +5741,7 @@
 					desc: 'Discharge a wave of pure energy that repels projectiles and knocks back nearby enemies. This also slows the movement of enemies by 60% and deals 200% weapon damage as Physical.',
 					effect: {
 						'cost-arcane-power': 25,
-						'cooldown': 12,
+						'cooldown': 15,
 						'weapon-damage': 200,
 					},
 				},
@@ -5761,7 +5751,7 @@
 					rune: 'Increases damage to 260% weapon damage as Physical, but reduces Knockback.',
 					effect: {
 						'cost-arcane-power': 25,
-						'cooldown': 12,
+						'cooldown': 15,
 						'weapon-damage': 260,
 					},
 				},
@@ -5771,7 +5761,7 @@
 					rune: 'Enemies hit have a 40% chance to cause a smaller Wave of Force that deals 100% weapon damage as Physical and knocks back enemies caught in its wake.',
 					effect: {
 						'cost-arcane-power': 25,
-						'cooldown': 12,
+						'cooldown': 15,
 						'weapon-damage': 300,
 					},
 				},
@@ -5781,7 +5771,7 @@
 					rune: 'Enemies caught in the Wave of Force have a 100% chance to be randomly teleported.',
 					effect: {
 						'cost-arcane-power': 25,
-						'cooldown': 12,
+						'cooldown': 15,
 						'weapon-damage': 200,
 					},
 				},
@@ -5791,7 +5781,7 @@
 					rune: 'Reduce casting cost to 0 Arcane Power and the cooldown is reduced to 12 seconds.',
 					effect: {
 						'cost-arcane-power': 25,
-						'cooldown': 9,
+						'cooldown': 15,
 						'weapon-damage': 200,
 					},
 				},
@@ -5801,55 +5791,55 @@
 					rune: 'Increases the distance enemies are knocked back and Stuns all affected enemies for 2 seconds.',
 					effect: {
 						'cost-arcane-power': 25,
-						'cooldown': 12,
+						'cooldown': 15,
 						'weapon-damage': 200,
 					},
 				},
 				'spectral-blade': {
 					name: 'Spectral Blade',
-					desc: 'Summon a spectral blade that strikes all enemies in your path for 165% weapon damage.',
+					desc: 'Summon a spectral blade that strikes all enemies in your path for 135% weapon damage.',
 					effect: {
-						'weapon-damage': 165,
+						'weapon-damage': 135,
 					},
 				},
 				'spectral-blade~a': {
 					name: 'Spectral Blade - Deep Cuts',
-					desc: 'Summon a spectral blade that strikes all enemies in your path for 165% weapon damage.',
-					rune: 'Enemies hit by the blade will Bleed for an additional 45% weapon damage over 3 seconds.',
+					desc: 'Summon a spectral blade that strikes all enemies in your path for 135% weapon damage.',
+					rune: 'Enemies hit by the blade will Bleed for an additional 35% weapon damage over 3 seconds.',
 					effect: {
-						'weapon-damage': 165,
+						'weapon-damage': 170,
 					},
 				},
 				'spectral-blade~b': {
 					name: 'Spectral Blade - Thrown Blade',
-					desc: 'Summon a spectral blade that strikes all enemies in your path for 165% weapon damage.',
+					desc: 'Summon a spectral blade that strikes all enemies in your path for 135% weapon damage.',
 					rune: 'Extends the reach of Spectral Blade to 20 yards.',
 					effect: {
-						'weapon-damage': 165,
+						'weapon-damage': 135,
 					},
 				},
 				'spectral-blade~c': {
 					name: 'Spectral Blade - Impactful Blades',
-					desc: 'Summon a spectral blade that strikes all enemies in your path for 165% weapon damage.',
+					desc: 'Summon a spectral blade that strikes all enemies in your path for 135% weapon damage.',
 					rune: 'Hits have a 5% chance to cause Knockback and Slow the movement of enemies by 60% for 1 second.',
 					effect: {
-						'weapon-damage': 165,
+						'weapon-damage': 135,
 					},
 				},
 				'spectral-blade~d': {
 					name: 'Spectral Blade - Siphoning Blade',
-					desc: 'Summon a spectral blade that strikes all enemies in your path for 165% weapon damage.',
+					desc: 'Summon a spectral blade that strikes all enemies in your path for 135% weapon damage.',
 					rune: 'Every enemy hit grants 3 Arcane Power.',
 					effect: {
-						'weapon-damage': 165,
+						'weapon-damage': 135,
 					},
 				},
 				'spectral-blade~e': {
 					name: 'Spectral Blade - Healing Blades',
-					desc: 'Summon a spectral blade that strikes all enemies in your path for 165% weapon damage.',
-					rune: 'Every enemy hit heals you for 5% of the damage done.',
+					desc: 'Summon a spectral blade that strikes all enemies in your path for 135% weapon damage.',
+					rune: 'Whenever the blades do critical damage, you are healed for 8% of the damage done.',
 					effect: {
-						'weapon-damage': 165,
+						'weapon-damage': 135,
 					},
 				},
 				'arcane-torrent': {
@@ -5966,14 +5956,14 @@
 				},
 				'ice-armor': {
 					name: 'Ice Armor',
-					desc: 'Surround yourself in a barrier of ice. Reduces Melee Damage by 12% and melee attackers are either Chilled or Frozen for 2 seconds. Lasts 120 seconds.  This is an Armor spell. Only one Armor spell can be active at a time.',
+					desc: 'Surround yourself in a barrier of ice. Melee attackers are either Chilled or Frozen for 2 seconds. Lasts 120 seconds.  This is an Armor spell. Only one Armor spell can be active at a time.',
 					effect: {
 						'cost-arcane-power': 25,
 					},
 				},
 				'ice-armor~a': {
 					name: 'Ice Armor - Jagged Ice',
-					desc: 'Surround yourself in a barrier of ice. Reduces Melee Damage by 12% and melee attackers are either Chilled or Frozen for 2 seconds. Lasts 120 seconds.  This is an Armor spell. Only one Armor spell can be active at a time.',
+					desc: 'Surround yourself in a barrier of ice. Melee attackers are either Chilled or Frozen for 2 seconds. Lasts 120 seconds.  This is an Armor spell. Only one Armor spell can be active at a time.',
 					rune: 'Melee attackers also take 130% weapon damage as Cold.',
 					effect: {
 						'cost-arcane-power': 25,
@@ -5982,7 +5972,7 @@
 				},
 				'ice-armor~b': {
 					name: 'Ice Armor - Chilling Aura',
-					desc: 'Surround yourself in a barrier of ice. Reduces Melee Damage by 12% and melee attackers are either Chilled or Frozen for 2 seconds. Lasts 120 seconds.  This is an Armor spell. Only one Armor spell can be active at a time.',
+					desc: 'Surround yourself in a barrier of ice. Melee attackers are either Chilled or Frozen for 2 seconds. Lasts 120 seconds.  This is an Armor spell. Only one Armor spell can be active at a time.',
 					rune: 'Lower the temperature of the air around you. Nearby enemies are chilled, slowing their movement speed by 30%.',
 					effect: {
 						'cost-arcane-power': 25,
@@ -5990,7 +5980,7 @@
 				},
 				'ice-armor~c': {
 					name: 'Ice Armor - Frozen Storm',
-					desc: 'Surround yourself in a barrier of ice. Reduces Melee Damage by 12% and melee attackers are either Chilled or Frozen for 2 seconds. Lasts 120 seconds.  This is an Armor spell. Only one Armor spell can be active at a time.',
+					desc: 'Surround yourself in a barrier of ice. Melee attackers are either Chilled or Frozen for 2 seconds. Lasts 120 seconds.  This is an Armor spell. Only one Armor spell can be active at a time.',
 					rune: 'A whirling storm of ice builds around you that deals 30% weapon damage as Cold over 3 seconds after casting Ice Armor.',
 					effect: {
 						'cost-arcane-power': 25,
@@ -6000,19 +5990,19 @@
 				},
 				'ice-armor~d': {
 					name: 'Ice Armor - Crystallize',
-					desc: 'Surround yourself in a barrier of ice. Reduces Melee Damage by 12% and melee attackers are either Chilled or Frozen for 2 seconds. Lasts 120 seconds.  This is an Armor spell. Only one Armor spell can be active at a time.',
-					rune: 'Whenever you are struck by a melee attack, your Armor is increased by 20% for 30 seconds. This effect can stack up to 3 times.',
+					desc: 'Surround yourself in a barrier of ice. Melee attackers are either Chilled or Frozen for 2 seconds. Lasts 120 seconds.  This is an Armor spell. Only one Armor spell can be active at a time.',
+					rune: 'Whenever you are struck by a melee attack, your Armor is increased by 30% for 30 seconds. This effect can stack up to 3 times.',
 					effect: {
 						'cost-arcane-power': 25,
 						'stackable': {
 						  'limit': 3,
-							'plus-armor': 20,
+							'plus-armor': 30,
 						},
 					},
 				},
 				'ice-armor~e': {
 					name: 'Ice Armor - Ice Reflect',
-					desc: 'Surround yourself in a barrier of ice. Reduces Melee Damage by 12% and melee attackers are either Chilled or Frozen for 2 seconds. Lasts 120 seconds.  This is an Armor spell. Only one Armor spell can be active at a time.',
+					desc: 'Surround yourself in a barrier of ice. Melee attackers are either Chilled or Frozen for 2 seconds. Lasts 120 seconds.  This is an Armor spell. Only one Armor spell can be active at a time.',
 					rune: 'Melee attacks have a 25% chance to create a Frost Nova centered on the attacker, dealing 75% weapon damage as Cold.',
 					effect: {
 						'cost-arcane-power': 25,
@@ -6067,104 +6057,104 @@
 				},
 				'slow-time': {
 					name: 'Slow Time',
-					desc: 'Invoke a bubble of warped time and space for 8 seconds, reducing enemy attack speed by 20% and movement speed by 60%. This bubble also slows the movement of enemy projectiles by 90%.',
+					desc: 'Invoke a bubble of warped time and space for 8 seconds, reducing enemy attack speed by 20% and movement speed by 30%. This bubble also slows the movement of enemy projectiles by 90%.',
 					effect: {
-						'cooldown': 15,
+						'cooldown': 20,
 					},
 				},
 				'slow-time~a': {
 					name: 'Slow Time - Time Warp',
-					desc: 'Invoke a bubble of warped time and space for 8 seconds, reducing enemy attack speed by 20% and movement speed by 60%. This bubble also slows the movement of enemy projectiles by 90%.',
+					desc: 'Invoke a bubble of warped time and space for 8 seconds, reducing enemy attack speed by 20% and movement speed by 30%. This bubble also slows the movement of enemy projectiles by 90%.',
 					rune: 'Enemies caught in the bubble of warped time take 20% more damage.',
 					effect: {
-						'cooldown': 15,
+						'cooldown': 20,
 						'plus-damage': 20,
 					},
 				},
 				'slow-time~b': {
 					name: 'Slow Time - Miasma',
-					desc: 'Invoke a bubble of warped time and space for 8 seconds, reducing enemy attack speed by 20% and movement speed by 60%. This bubble also slows the movement of enemy projectiles by 90%.',
+					desc: 'Invoke a bubble of warped time and space for 8 seconds, reducing enemy attack speed by 20% and movement speed by 30%. This bubble also slows the movement of enemy projectiles by 90%.',
 					rune: 'Slow Time effects cling to enemies for 3 seconds after they have left the bubble.',
 					effect: {
-						'cooldown': 15,
+						'cooldown': 20,
 					},
 				},
 				'slow-time~c': {
 					name: 'Slow Time - Time Shell',
-					desc: 'Invoke a bubble of warped time and space for 8 seconds, reducing enemy attack speed by 20% and movement speed by 60%. This bubble also slows the movement of enemy projectiles by 90%.',
-					rune: 'Increases the potency of the movement speed reduction to 80%.',
+					desc: 'Invoke a bubble of warped time and space for 8 seconds, reducing enemy attack speed by 20% and movement speed by 30%. This bubble also slows the movement of enemy projectiles by 90%.',
+					rune: 'Reduces the area Slow Time affects to 10 yards, but increases the potency of the movement speed reduction to 80%.',
 					effect: {
-						'cooldown': 15,
+						'cooldown': 20,
 					},
 				},
 				'slow-time~d': {
 					name: 'Slow Time - Perpetuity',
-					desc: 'Invoke a bubble of warped time and space for 8 seconds, reducing enemy attack speed by 20% and movement speed by 60%. This bubble also slows the movement of enemy projectiles by 90%.',
-					rune: 'Reduces the cooldown of Slow Time to 12 seconds.',
+					desc: 'Invoke a bubble of warped time and space for 8 seconds, reducing enemy attack speed by 20% and movement speed by 30%. This bubble also slows the movement of enemy projectiles by 90%.',
+					rune: 'Reduces the cooldown of Slow Time to 16 seconds.',
 					effect: {
-						'cooldown': 12,
+						'cooldown': 20,
 					},
 				},
 				'slow-time~e': {
 					name: 'Slow Time - Stretch Time',
-					desc: 'Invoke a bubble of warped time and space for 8 seconds, reducing enemy attack speed by 20% and movement speed by 60%. This bubble also slows the movement of enemy projectiles by 90%.',
+					desc: 'Invoke a bubble of warped time and space for 8 seconds, reducing enemy attack speed by 20% and movement speed by 30%. This bubble also slows the movement of enemy projectiles by 90%.',
 					rune: 'Time is sped up for any allies standing in the area, increasing their attack speed by 10%.',
 					effect: {
-						'cooldown': 15,
+						'cooldown': 20,
 						'plus-attack-speed': 10,
 					},
 				},
 				'storm-armor': {
 					name: 'Storm Armor',
-					desc: 'Bathe yourself in electrical energy, occasionally shocking nearby enemies for 100% weapon damage as Lightning. Lasts 120 seconds.  This is an Armor spell. Only one Armor spell can be active at a time.',
+					desc: 'Bathe yourself in electrical energy, shocking ranged and melee attackers for 70% weapon damage as Lightning. Lasts 120 seconds.  This is an Armor spell. Only one Armor spell can be active at a time.',
 					effect: {
 						'cost-arcane-power': 25,
-						'weapon-damage': 100,
+						'weapon-damage': 70,
 					},
 				},
 				'storm-armor~a': {
-					name: 'Storm Armor - Thunder Storm',
-					desc: 'Bathe yourself in electrical energy, occasionally shocking nearby enemies for 100% weapon damage as Lightning. Lasts 120 seconds.  This is an Armor spell. Only one Armor spell can be active at a time.',
-					rune: 'Increase the damage of the shock to 130% weapon damage as Lightning.',
+					name: 'Storm Armor - Strike Back',
+					desc: 'Bathe yourself in electrical energy, shocking ranged and melee attackers for 70% weapon damage as Lightning. Lasts 120 seconds.  This is an Armor spell. Only one Armor spell can be active at a time.',
+					rune: 'Increase the damage of the shock to 91% weapon damage as Lightning.',
 					effect: {
 						'cost-arcane-power': 25,
-						'weapon-damage': 130,
+						'weapon-damage': 91,
 					},
 				},
 				'storm-armor~b': {
 					name: 'Storm Armor - Scramble',
-					desc: 'Bathe yourself in electrical energy, occasionally shocking nearby enemies for 100% weapon damage as Lightning. Lasts 120 seconds.  This is an Armor spell. Only one Armor spell can be active at a time.',
+					desc: 'Bathe yourself in electrical energy, shocking ranged and melee attackers for 70% weapon damage as Lightning. Lasts 120 seconds.  This is an Armor spell. Only one Armor spell can be active at a time.',
 					rune: 'Increases your movement speed by 25% for 3 seconds whenever you are hit by melee or ranged attacks.',
 					effect: {
 						'cost-arcane-power': 25,
-						'weapon-damage': 100,
+						'weapon-damage': 70,
 					},
 				},
 				'storm-armor~c': {
 					name: 'Storm Armor - Reactive Armor',
-					desc: 'Bathe yourself in electrical energy, occasionally shocking nearby enemies for 100% weapon damage as Lightning. Lasts 120 seconds.  This is an Armor spell. Only one Armor spell can be active at a time.',
-					rune: 'Whenever you are hit, you have a chance to be enveloped with a lightning shield for 6 seconds that shocks nearby enemies for 70% weapon damage as Lightning.',
+					desc: 'Bathe yourself in electrical energy, shocking ranged and melee attackers for 70% weapon damage as Lightning. Lasts 120 seconds.  This is an Armor spell. Only one Armor spell can be active at a time.',
+					rune: 'Whenever you are hit, you have a chance to be enveloped with a lightning shield for 6 seconds that shocks nearby enemies for 50% weapon damage as Lightning.',
 					effect: {
 						'cost-arcane-power': 25,
-						'weapon-damage': 100,
+						'weapon-damage': 120,
 					},
 				},
 				'storm-armor~d': {
 					name: 'Storm Armor - Power of the Storm',
-					desc: 'Bathe yourself in electrical energy, occasionally shocking nearby enemies for 100% weapon damage as Lightning. Lasts 120 seconds.  This is an Armor spell. Only one Armor spell can be active at a time.',
+					desc: 'Bathe yourself in electrical energy, shocking ranged and melee attackers for 70% weapon damage as Lightning. Lasts 120 seconds.  This is an Armor spell. Only one Armor spell can be active at a time.',
 					rune: 'Reduce the Arcane Power cost of all skills by 3 while Storm Armor is active.',
 					effect: {
 						'cost-arcane-power': 25,
-						'weapon-damage': 100,
+						'weapon-damage': 70,
 					},
 				},
 				'storm-armor~e': {
 					name: 'Storm Armor - Shocking Aspect',
-					desc: 'Bathe yourself in electrical energy, occasionally shocking nearby enemies for 100% weapon damage as Lightning. Lasts 120 seconds.  This is an Armor spell. Only one Armor spell can be active at a time.',
+					desc: 'Bathe yourself in electrical energy, shocking ranged and melee attackers for 70% weapon damage as Lightning. Lasts 120 seconds.  This is an Armor spell. Only one Armor spell can be active at a time.',
 					rune: 'Critical Hits have a chance to electrocute a nearby enemy for 35% weapon damage as Lightning.',
 					effect: {
 						'cost-arcane-power': 25,
-						'weapon-damage': 100,
+						'weapon-damage': 105,
 					},
 				},
 				'explosive-blast': {
@@ -6341,55 +6331,55 @@
 				},
 				'disintegrate': {
 					name: 'Disintegrate',
-					desc: 'Thrust a beam of pure energy forward, dealing 170% weapon damage as Arcane and disintegrating enemies it kills.',
+					desc: 'Thrust a beam of pure energy forward, dealing 155% weapon damage as Arcane and disintegrating enemies it kills.',
 					effect: {
-						'cost-arcane-power': 18,
-						'weapon-damage': 170,
+						'cost-arcane-power': 20,
+						'weapon-damage': 155,
 					},
 				},
 				'disintegrate~a': {
 					name: 'Disintegrate - Intensify',
-					desc: 'Thrust a beam of pure energy forward, dealing 170% weapon damage as Arcane and disintegrating enemies it kills.',
-					rune: 'Damage increases slowly over time to inflict a maximum of 221% weapon damage as Arcane.',
+					desc: 'Thrust a beam of pure energy forward, dealing 155% weapon damage as Arcane and disintegrating enemies it kills.',
+					rune: 'Damage increases slowly over time to inflict a maximum of 201.5% weapon damage as Arcane.',
 					effect: {
-						'cost-arcane-power': 18,
-						'weapon-damage': 221,
+						'cost-arcane-power': 20,
+						'weapon-damage': 201.5,
 					},
 				},
 				'disintegrate~b': {
 					name: 'Disintegrate - Convergence',
-					desc: 'Thrust a beam of pure energy forward, dealing 170% weapon damage as Arcane and disintegrating enemies it kills.',
+					desc: 'Thrust a beam of pure energy forward, dealing 155% weapon damage as Arcane and disintegrating enemies it kills.',
 					rune: 'Increase the width of the beam allowing it to hit more enemies.',
 					effect: {
-						'cost-arcane-power': 18,
-						'weapon-damage': 170,
+						'cost-arcane-power': 20,
+						'weapon-damage': 155,
 					},
 				},
 				'disintegrate~c': {
 					name: 'Disintegrate - Entropy',
-					desc: 'Thrust a beam of pure energy forward, dealing 170% weapon damage as Arcane and disintegrating enemies it kills.',
-					rune: 'The beam fractures into a short-ranged cone that deals 196% weapon damage as Arcane.',
+					desc: 'Thrust a beam of pure energy forward, dealing 155% weapon damage as Arcane and disintegrating enemies it kills.',
+					rune: 'The beam fractures into a short-ranged cone that deals 178.25% weapon damage as Arcane.',
 					effect: {
-						'cost-arcane-power': 18,
-						'weapon-damage': 196,
+						'cost-arcane-power': 20,
+						'weapon-damage': 178.25,
 					},
 				},
 				'disintegrate~d': {
 					name: 'Disintegrate - Chaos Nexus',
-					desc: 'Thrust a beam of pure energy forward, dealing 170% weapon damage as Arcane and disintegrating enemies it kills.',
-					rune: 'When casting the beam you become charged with energy that spits out at nearby enemies doing 44% weapon damage as Arcane.',
+					desc: 'Thrust a beam of pure energy forward, dealing 155% weapon damage as Arcane and disintegrating enemies it kills.',
+					rune: 'When casting the beam you become charged with energy that spits out at nearby enemies doing 40% weapon damage as Arcane.',
 					effect: {
-						'cost-arcane-power': 18,
-						'weapon-damage': 170,
+						'cost-arcane-power': 20,
+						'weapon-damage': 155,
 					},
 				},
 				'disintegrate~e': {
 					name: 'Disintegrate - Volatility',
-					desc: 'Thrust a beam of pure energy forward, dealing 170% weapon damage as Arcane and disintegrating enemies it kills.',
+					desc: 'Thrust a beam of pure energy forward, dealing 155% weapon damage as Arcane and disintegrating enemies it kills.',
 					rune: 'Enemies killed by the beam have a 35% chance to explode causing 395% weapon damage as Arcane to all enemies within 8 yards.',
 					effect: {
-						'cost-arcane-power': 18,
-						'weapon-damage': 170,
+						'cost-arcane-power': 20,
+						'weapon-damage': 155,
 					},
 				},
 				'familiar': {
@@ -6420,9 +6410,9 @@
 					},
 				},
 				'familiar~c': {
-					name: 'Familiar - Vigoron',
+					name: 'Familiar - Dartling',
 					desc: 'Summon a companion that will attack your targets for 20% weapon damage as Arcane. This companion cannot be targeted or damaged by enemies and lasts for 5 minutes',
-					rune: 'While the Familiar is active, you regenerate life every second.',
+					rune: 'Summon a lightning Familiar whose projectiles have a 100% chance to pierce through enemies.',
 					effect: {
 						'cost-arcane-power': 20,
 						'weapon-damage': 20,
@@ -6440,7 +6430,7 @@
 				'familiar~e': {
 					name: 'Familiar - Ancient Guardian',
 					desc: 'Summon a companion that will attack your targets for 20% weapon damage as Arcane. This companion cannot be targeted or damaged by enemies and lasts for 5 minutes',
-					rune: 'Summon a protective Familiar. When you are below 50% Life the Familiar will fully absorb damage from 1 attack every 6 seconds.',
+					rune: 'Summon a protective Familiar. When you are below 35% Life the Familiar will fully absorb damage from 1 attack every 6 seconds.',
 					effect: {
 						'cost-arcane-power': 20,
 						'weapon-damage': 20,
@@ -6552,7 +6542,7 @@
 					name: 'Meteor',
 					desc: 'Summon an immense Meteor that plummets from the sky, causing 260% weapon damage as Fire to all enemies it crashes into. The ground it hits is scorched with molten fire that deals 60% weapon damage as Fire over 3 seconds.',
 					effect: {
-						'cost-arcane-power': 50,
+						'cost-arcane-power': 60,
 						'weapon-damage': 260,
 					},
 				},
@@ -6561,7 +6551,7 @@
 					desc: 'Summon an immense Meteor that plummets from the sky, causing 260% weapon damage as Fire to all enemies it crashes into. The ground it hits is scorched with molten fire that deals 60% weapon damage as Fire over 3 seconds.',
 					rune: 'Increases the damage of the Meteor impact to 260% weapon damage as Fire and the molten fire to 78% weapon damage as Fire over 3 seconds.',
 					effect: {
-						'cost-arcane-power': 50,
+						'cost-arcane-power': 60,
 						'weapon-damage': 390,
 					},
 				},
@@ -6570,7 +6560,7 @@
 					desc: 'Summon an immense Meteor that plummets from the sky, causing 260% weapon damage as Fire to all enemies it crashes into. The ground it hits is scorched with molten fire that deals 60% weapon damage as Fire over 3 seconds.',
 					rune: 'Unleash a volley of 7 smaller Meteors that each strike for 104% weapon damage as Fire.',
 					effect: {
-						'cost-arcane-power': 50,
+						'cost-arcane-power': 60,
 						'weapon-damage': 728,
 					},
 				},
@@ -6579,7 +6569,7 @@
 					desc: 'Summon an immense Meteor that plummets from the sky, causing 260% weapon damage as Fire to all enemies it crashes into. The ground it hits is scorched with molten fire that deals 60% weapon damage as Fire over 3 seconds.',
 					rune: 'Transforms the Meteor to ice that deals 312% weapon damage as Cold. The impact site is covered in a freezing mist that deals 72% weapon damage as Cold and Slows enemy movement by 60% over 3 seconds.',
 					effect: {
-						'cost-arcane-power': 50,
+						'cost-arcane-power': 60,
 						'weapon-damage': 312,
 					},
 				},
@@ -6588,7 +6578,7 @@
 					desc: 'Summon an immense Meteor that plummets from the sky, causing 260% weapon damage as Fire to all enemies it crashes into. The ground it hits is scorched with molten fire that deals 60% weapon damage as Fire over 3 seconds.',
 					rune: 'Reduces the casting cost of Meteor to 35 Arcane Power and the damage type to Arcane.',
 					effect: {
-						'cost-arcane-power': 50,
+						'cost-arcane-power': 60,
 						'weapon-damage': 260,
 					},
 				},
@@ -6597,7 +6587,7 @@
 					desc: 'Summon an immense Meteor that plummets from the sky, causing 260% weapon damage as Fire to all enemies it crashes into. The ground it hits is scorched with molten fire that deals 60% weapon damage as Fire over 3 seconds.',
 					rune: 'If the initial impact of the Meteor causes a Critical Hit, the molten fire duration is increased to 8 seconds.',
 					effect: {
-						'cost-arcane-power': 50,
+						'cost-arcane-power': 60,
 						'weapon-damage': 260,
 					},
 				},
@@ -6605,7 +6595,7 @@
 					name: 'Blizzard',
 					desc: 'Call down shards of ice to pelt an area, dealing 210% weapon damage as Cold to all enemies in the area over 6 seconds. Multiple casts in the same area do not stack.',
 					effect: {
-						'cost-arcane-power': 40,
+						'cost-arcane-power': 45,
 						'weapon-damage': 210,
 						'weapon-damage-for': 6,
 					},
@@ -6615,7 +6605,7 @@
 					desc: 'Call down shards of ice to pelt an area, dealing 210% weapon damage as Cold to all enemies in the area over 6 seconds. Multiple casts in the same area do not stack.',
 					rune: 'Increases the duration of Blizzard to deal 280% weapon damage as Cold over 8 seconds.',
 					effect: {
-						'cost-arcane-power': 40,
+						'cost-arcane-power': 45,
 						'weapon-damage': 280,
 						'weapon-damage-for': 8,
 					},
@@ -6625,7 +6615,7 @@
 					desc: 'Call down shards of ice to pelt an area, dealing 210% weapon damage as Cold to all enemies in the area over 6 seconds. Multiple casts in the same area do not stack.',
 					rune: 'Increases the size of Blizzard to cover 22 yards, dealing 210% weapon damage as Cold over 6 seconds.',
 					effect: {
-						'cost-arcane-power': 40,
+						'cost-arcane-power': 45,
 						'weapon-damage': 210,
 						'weapon-damage-for': 12,
 					},
@@ -6635,7 +6625,7 @@
 					desc: 'Call down shards of ice to pelt an area, dealing 210% weapon damage as Cold to all enemies in the area over 6 seconds. Multiple casts in the same area do not stack.',
 					rune: 'After the Blizzard ends, the ground is covered in a low lying mist for 3 seconds that Slows the movement speed of enemies by 60%.',
 					effect: {
-						'cost-arcane-power': 40,
+						'cost-arcane-power': 45,
 						'weapon-damage': 210,
 						'weapon-damage-for': 6,
 					},
@@ -6645,7 +6635,7 @@
 					desc: 'Call down shards of ice to pelt an area, dealing 210% weapon damage as Cold to all enemies in the area over 6 seconds. Multiple casts in the same area do not stack.',
 					rune: 'Reduces the casting cost of Blizzard to 20 Arcane Power.',
 					effect: {
-						'cost-arcane-power': 20,
+						'cost-arcane-power': 45,
 						'weapon-damage': 210,
 						'weapon-damage-for': 6,
 					},
@@ -6655,14 +6645,14 @@
 					desc: 'Call down shards of ice to pelt an area, dealing 210% weapon damage as Cold to all enemies in the area over 6 seconds. Multiple casts in the same area do not stack.',
 					rune: 'Enemies caught in the Blizzard have a 20% chance to be Frozen for 3 seconds.',
 					effect: {
-						'cost-arcane-power': 40,
+						'cost-arcane-power': 45,
 						'weapon-damage': 210,
 						'weapon-damage-for': 6,
 					},
 				},
 				'energy-armor': {
 					name: 'Energy Armor',
-					desc: 'Focus your energies, increasing your Armor by 35% but decreasing your maximum Arcane Power by 20. Lasts 120 seconds.  This is an Armor spell. Only one Armor spell can be active at a time.',
+					desc: 'Focus your energies, increasing your Armor by 65% but decreasing your maximum Arcane Power by 20. Lasts 120 seconds.  This is an Armor spell. Only one Armor spell can be active at a time.',
 					effect: {
 						'cost-arcane-power': 25,
 						'plus-armor': 65,
@@ -6670,17 +6660,17 @@
 				},
 				'energy-armor~a': {
 					name: 'Energy Armor - Prismatic Armor',
-					desc: 'Focus your energies, increasing your Armor by 35% but decreasing your maximum Arcane Power by 20. Lasts 120 seconds.  This is an Armor spell. Only one Armor spell can be active at a time.',
-					rune: 'Increases all of your resistances by 25% while Energy Armor is active.',
+					desc: 'Focus your energies, increasing your Armor by 65% but decreasing your maximum Arcane Power by 20. Lasts 120 seconds.  This is an Armor spell. Only one Armor spell can be active at a time.',
+					rune: 'Increases all of your resistances by 40% while Energy Armor is active.',
 					effect: {
 						'cost-arcane-power': 25,
-						'plus-resist-all': 25,
+						'plus-resist-all': 40,
 						'plus-armor': 65,
 					},
 				},
 				'energy-armor~b': {
 					name: 'Energy Armor - Energy Tap',
-					desc: 'Focus your energies, increasing your Armor by 35% but decreasing your maximum Arcane Power by 20. Lasts 120 seconds.  This is an Armor spell. Only one Armor spell can be active at a time.',
+					desc: 'Focus your energies, increasing your Armor by 65% but decreasing your maximum Arcane Power by 20. Lasts 120 seconds.  This is an Armor spell. Only one Armor spell can be active at a time.',
 					rune: 'Rather than decreasing your maximum Arcane Power, Energy Armor increases it by 20 while it is active.',
 					effect: {
 						'cost-arcane-power': 25,
@@ -6689,7 +6679,7 @@
 				},
 				'energy-armor~c': {
 					name: 'Energy Armor - Force Armor',
-					desc: 'Focus your energies, increasing your Armor by 35% but decreasing your maximum Arcane Power by 20. Lasts 120 seconds.  This is an Armor spell. Only one Armor spell can be active at a time.',
+					desc: 'Focus your energies, increasing your Armor by 65% but decreasing your maximum Arcane Power by 20. Lasts 120 seconds.  This is an Armor spell. Only one Armor spell can be active at a time.',
 					rune: 'While Energy Armor is active, incoming attacks that would deal more than 35% of your maximum Life are reduced to deal 35% of your maximum Life instead.',
 					effect: {
 						'cost-arcane-power': 25,
@@ -6698,7 +6688,7 @@
 				},
 				'energy-armor~d': {
 					name: 'Energy Armor - Absorption',
-					desc: 'Focus your energies, increasing your Armor by 35% but decreasing your maximum Arcane Power by 20. Lasts 120 seconds.  This is an Armor spell. Only one Armor spell can be active at a time.',
+					desc: 'Focus your energies, increasing your Armor by 65% but decreasing your maximum Arcane Power by 20. Lasts 120 seconds.  This is an Armor spell. Only one Armor spell can be active at a time.',
 					rune: 'You have a chance to gain 4 Arcane Power whenever you are hit by a ranged or melee attack.',
 					effect: {
 						'cost-arcane-power': 25,
@@ -6707,7 +6697,7 @@
 				},
 				'energy-armor~e': {
 					name: 'Energy Armor - Pinpoint Barrier',
-					desc: 'Focus your energies, increasing your Armor by 35% but decreasing your maximum Arcane Power by 20. Lasts 120 seconds.  This is an Armor spell. Only one Armor spell can be active at a time.',
+					desc: 'Focus your energies, increasing your Armor by 65% but decreasing your maximum Arcane Power by 20. Lasts 120 seconds.  This is an Armor spell. Only one Armor spell can be active at a time.',
 					rune: 'Increases your chance to critically hit by 5% while Energy Armor is active.',
 					effect: {
 						'cost-arcane-power': 25,
@@ -6806,9 +6796,9 @@
 				},
 				'powered-armor': {
 					name: 'Powered Armor',
-					desc: 'Enchantress buffs herself and her allies, increasing Armor by <span class="skill-highlight">5%</span>. Attackers are slowed by <span class="skill-highlight">30%</span> for <span class="skill-highlight">3</span> seconds.',
+					desc: 'Enchantress buffs herself and her allies, increasing Armor by <span class="skill-highlight">15%</span>. Attackers are slowed by <span class="skill-highlight">30%</span> for <span class="skill-highlight">3</span> seconds.',
 					effect: {
-						'plus-armor': 5,
+						'plus-armor': 15,
 					},
 				},
 				'disorient': {
@@ -6879,7 +6869,7 @@
 				},
 				'inspire': {
 					name: 'Inspire',
-					desc: 'Increase resource generation for all allies that the Templar is following. <ul><li>Mana: <span class="skill-highlight">4</span> per second.</li><li>Arcane Power: <span class="skill-highlight">0.5</span> per second.</li><li>Hatred: <span class="skill-highlight">1</span> per second.</li><li>Fury: <span class="skill-highlight">8%</span> generated.</li><li>Spirit: <span class="skill-highlight">12%</span> generated.</li></ul>',
+					desc: 'Increase resource generation for all allies that the Templar is following. <ul><li>Mana: <span class="skill-highlight">2</span> per second.</li><li>Arcane Power: <span class="skill-highlight">0.5</span> per second.</li><li>Hatred: <span class="skill-highlight">1</span> per second.</li><li>Fury: <span class="skill-highlight">8%</span> generated.</li><li>Spirit: <span class="skill-highlight">12%</span> generated.</li></ul>',
 				},
 				'guardian': {
 					name: 'Guardian',
@@ -6931,7 +6921,7 @@
 				},
 				'hysteria': {
 					name: 'Hysteria',
-					desc: 'Whenever you or the Scoundrel land a Critical Hit, you both will go into hysterics, increasing all damage done by <span class="skill-highlight">10%</span> for <span class="skill-highlight">3</span> seconds. This effect cannot occur more than once every 5 seconds.',
+					desc: 'Whenever you or the Scoundrel land a Critical Hit, you both will go into hysterics, increasing all damage done by <span class="skill-highlight">10%</span> for <span class="skill-highlight">3</span> seconds. This effect cannot occur more than once every 6 seconds.',
 					'effect': {
 		        'plus-damage-conditional': 10
 					}
@@ -7370,7 +7360,7 @@
 					}
 				}
 			},
-			'bulkathoss-glory': {
+			'bul-kathoss-glory': {
 				name: 'Bul-Kathos\'s Glory',
 				effect: {
 					2: {
@@ -7380,7 +7370,7 @@
 					}
 				}
 			},
-			'bulkathoss-children': {
+			'bul-kathoss-children': {
 				name: 'Bul-Kathos\'s Children',
 				effect: {
 					2: {
