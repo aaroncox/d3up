@@ -9,12 +9,12 @@ class D3Up_Controller_Action extends Epic_Controller_Action
 {
 	public function preDispatch() {
 	  $this->view->featuredGuide = array('$in' => array(
+	   88, // General
 	   30, // Monk
 	   19, // DH
 	   11, // Barb
 	   59, // Wizard
 	   9, // WD
-	   88, // General
 	  ));
 		$this->view->profile = $profile = D3Up_Auth::getInstance()->getProfile();
 		$this->view->navRecentNews = Epic_Mongo::db('update')->fetchAll(array(), array("_created" => -1), 5);
