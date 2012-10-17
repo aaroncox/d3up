@@ -45,7 +45,7 @@ ItemBuilder.prototype = {
 		'thorns': 'Melee attackers take VVV damage per hit',
 		// Offense
 		'attack-speed': 'Attack speed increased by VVV%',
-		'plus-attack-speed': 'Attack speed increased by VVV%',
+		// 'plus-attack-speed': 'Attack speed increased by VVV%',
 		'plus-aps': '+VVV Attacks per Second',
 		'critical-hit': 'Critical Hit Chance increased by VVV%',
 		'critical-hit-damage': 'Critical Hit Damage increased by VVV%',
