@@ -143,6 +143,7 @@ class D3Up_Tool_Attributes
 		'wd-spirit-barrage' => 'Increases Spirit Barrage damage by [v]%',
 		'wd-wall-of-zombies' => 'Reduces cooldown of Wall of Zombies by [v] Seconds',
 		'wd-zombie-charger' => 'Reduces resource cost of Zombie Charger by [v] Mana',
+		'wd-gargantuan' => 'Reduces cooldown of Gargantuan by [v] seconds',
 		// Wizard
 		'ap-on-crit' => 'Critical Hits grant [v] Arcane Power',
 		'ap-max' => '+[v] Maximum Arcane Power',
