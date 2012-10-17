@@ -4943,7 +4943,7 @@
 					rune: 'Gain 44 Mana every time Spirit Barrage hits.',
 					effect: {
 						'cost-mana': 107.8,
-						'weapon-damage': 190,
+						'weapon-damage': 230,
 					},
 				},
 				'spirit-barrage~e': {
