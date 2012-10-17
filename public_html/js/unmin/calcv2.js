@@ -859,9 +859,9 @@ BuildCalculator.prototype = {
 		}
 		// Determine Bonus Damage from Elemental Damage Bonuses
 		if(bnElePercent > 0 && this.attrs.mhRealDamage) {
-			mhAvgDamage += (this.attrs.mhRealDamage.min + this.attrs.mhRealDamage.max) / 2 * (bnElePercent / 100);
+			mhAvgDamage += (this.attrs.mhRealDamage.min + bnMinDamage + this.attrs.mhRealDamage.max + bnMaxDamage) / 2 * (bnElePercent / 100);
 			if(this.isDuelWielding) {
-				ohAvgDamage += (this.attrs.ohRealDamage.min + this.attrs.ohRealDamage.max) / 2 * (bnElePercent / 100);
+				ohAvgDamage += (this.attrs.ohRealDamage.min + bnMinDamage + this.attrs.ohRealDamage.max + bnMaxDamage) / 2 * (bnElePercent / 100);
 			}
 		}
 		rendered['bonus-elemental-damage'] = bnEleDamage;
@@ -872,8 +872,8 @@ BuildCalculator.prototype = {
 		var mathS, mathC, mathR, mathA, mathM;
 		if(this.isDuelWielding) {
  			rendered['dps-speed'] = {
- 				mh: this.attrs['speed'],
- 				oh: this.attrs['speed-oh']
+ 				mh: Math.floor(this.attrs['speed'] * 1024) / 1024,
+ 				oh: Math.floor(this.attrs['speed-oh'] * 1024) / 1024
  			};
 			// console.log("speed during calc: ", this.attrs['speed'], this.attrs['speed-oh']);
 			// d3up.log(mhMinDamage, mhMaxDamage, ohMinDamage, ohMaxDamage, bnMinDamage, bnMaxDamage);
@@ -900,8 +900,8 @@ BuildCalculator.prototype = {
 			// if(this.attrs['plus-aps']) {
 			//         rendered['dps-speed'] = Math.floor((this.attrs['speed'] + this.attrs['plus-aps']) * 1024) / 1024;
 			//       } else {
-  			// rendered['dps-speed-mh'] = Math.floor(this.attrs['speed'] * 1024) / 1024;        
-  			rendered['dps-speed-mh'] = this.attrs['speed'];        
+  			rendered['dps-speed-mh'] = Math.floor(this.attrs['speed'] * 1024) / 1024;        
+  			// rendered['dps-speed-mh'] = this.attrs['speed'];        
       // }
 			// console.log("mathS", this.attrs[this.attrs.primary]);
 			// console.log("mathC", this.attrs['critical-hit'] * 0.01, this.attrs['critical-hit-damage'] * 0.01)

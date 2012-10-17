@@ -326,6 +326,11 @@ class RecordController extends D3Up_Controller_Action
 	public function resyncAction() {
 		$record = $this->getRecord();
 		$profile = D3Up_Auth::getInstance()->getProfile();
+		// For me so I can sync anyone in dev.
+		if(APPLICATION_ENV === 'development') {
+			D3Up_Tool_Crawler::getInstance()->crawl($record, $record->_createdBy, $record->_characterId);		  
+  		$this->_redirect("/b/" . $record->id ."?resync=true");
+		}
 		if(!$record->_characterId) {
 			throw new Exception("[ID] This build isn't attached to a Battle.net Profile");
 		}
