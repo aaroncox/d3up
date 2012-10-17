@@ -350,7 +350,7 @@
 					'desc': 'Whenever an enemy dies within <span class="skill-highlight">12</span> yards, there is a <span class="skill-highlight">30%</span> chance that a Zombie Dog will automatically emerge. The range of this effect is increased by items that increase your gold pickup radius.'
 				},
 				'jungle-fortitude': {
-					'desc': 'Reduces all damage taken by you and your pets by <span class="skill-highlight">20%</span>.',
+					'desc': 'Reduces all damage taken by you and your pets by <span class="skill-highlight">15%</span>.',
 					'effect': {
 						'damage-reduce': 0.15
 					}
