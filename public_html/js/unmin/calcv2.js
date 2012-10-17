@@ -553,6 +553,7 @@ BuildCalculator.prototype = {
 		// Block Chance
 		// Formula: ( Block Chance + Plus Block Chance )
 		rendered['block-chance'] = this.attrs['block-chance'] + this.attrs['plus-block'];
+		// console.log(rendered['block-chance'], this.attrs['block-chance'], this.attrs['plus-block']);
 		// ----------------------------------
 		// Block Value
 		if(this.attrs['block-amount']) {
@@ -1303,11 +1304,13 @@ BuildCalculator.prototype = {
 				gearEhp = this.calcGearEhp(defenses, ehp),
 				dps = this.calcOffense(), 
 				skills = this.calcSkills();
+
 		this.attrs['primary-stat'] = this.attrs[this.attrs['primary']];
 		
 		// Add all of our calculated values into the values object for returning
     // d3up.log("----");
 		_.extend(this.values, defenses, ehp, gearEhp, dps, skills);		
+		// console.log("Block @ ", this.attrs['block-chance']);
 		// ----------------------------------
 		// Define Offensive Statistics before Passives so we can add to them
 		// ----------------------------------
@@ -1435,10 +1438,12 @@ BuildCalculator.prototype = {
 						}
 						break;
 					case "plus-block":
+						// console.log(json.type);
 						if(json.type != 'shield') {
-							console.log("removing block from", json.type);
+							// console.log("removing block from", json.type);
 							this.attrs[ak] -= parseFloat(av);
 						}
+						// console.log("----");
 						break;
 					case "minmax-damage":
 						switch(json.type) {
@@ -1675,6 +1680,9 @@ BuildCalculator.prototype = {
 							};
 						}							
 						break;
+					case "block-chance":
+						this.attrs['block-chance'] = av;
+						break;
 					case "block-value":
 					case "block-amount":
 						this.isDuelWielding = false;
@@ -1749,15 +1757,18 @@ BuildCalculator.prototype = {
 							}
 						}
 						break;
+					case "block-chance":
 					case "plus-block":
+						// console.log(json.type);
 						if(json.type != 'shield') {
-							console.log("adding block", json.type);
+							// console.log("adding block", json.type);
 							if(this.attrs[ak]) {
 								this.attrs[ak] += parseFloat(av);
 							} else {
 								this.attrs[ak] = parseFloat(av);
 							}									
 						}
+						// console.log("----");
 						break;
 					case "minmax-damage":
 						switch(json.type) {
