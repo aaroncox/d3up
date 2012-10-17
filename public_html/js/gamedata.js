@@ -136,7 +136,7 @@
 					'desc': 'Duration of all Mantras increased by <span class="skill-highlight">7</span> minutes. While one of your Mantras is active you gain <span class="skill-highlight">2</span> Spirit every second.'
 				},
 				'seize-the-initiative': {
-					'desc': 'Your Armor is increased by <span class="skill-highlight">100%</span> of your Dexterity.',
+					'desc': 'Your Armor is increased by <span class="skill-highlight">50%</span> of your Dexterity.',
 					'effect': {
 						'dexterity-to-armor': 0.5
 					}
