@@ -324,9 +324,9 @@
 				'perfectionist': {
 					'desc': 'Reduces the Discipline cost of all skills by <span class="skill-highlight">10%</span>. Also increases Life, Armor and Resistances by 10%',
 					'effect': {
-						'plus-life': 10,
-						'plus-armor': 10,
-						'plus-resist-all': 10,
+						'plus-life': 0.10,
+						'plus-armor': 0.10,
+						'plus-resist-all': 0.10,
 					}
 				},
 				'custom-engineering': {
@@ -1184,6 +1184,7 @@
 						'cooldown': 120,
 						'weapon-damage': 2000,
 						'weapon-damage-for': 8,
+						'weapon-damage-type': 'fire',
 					},
 				},
 				'earthquake~a': {
@@ -1195,6 +1196,7 @@
 						'cooldown': 120,
 						'weapon-damage': 2000,
 						'weapon-damage-for': 8,
+						'weapon-damage-type': 'fire',
 					},
 				},
 				'earthquake~b': {
@@ -1206,6 +1208,7 @@
 						'cooldown': 120,
 						'weapon-damage': 2000,
 						'weapon-damage-for': 8,
+						'weapon-damage-type': 'fire',
 					},
 				},
 				'earthquake~c': {
@@ -1217,6 +1220,7 @@
 						'cooldown': 120,
 						'weapon-damage': 2000,
 						'weapon-damage-for': 8,
+						'weapon-damage-type': 'cold',
 					},
 				},
 				'earthquake~d': {
@@ -1226,6 +1230,7 @@
 					effect: {
 						'weapon-damage': 2000,
 						'weapon-damage-for': 8,
+						'weapon-damage-type': 'fire',
 						'cooldown': 105,
 					},
 				},
@@ -1238,6 +1243,7 @@
 						'cooldown': 120,
 						'weapon-damage': 2000,
 						'weapon-damage-for': 8,
+						'weapon-damage-type': 'fire',
 					},
 				},
 				'whirlwind': {
@@ -1255,6 +1261,7 @@
 					effect: {
 						'cost-fury': 10,
 						'weapon-damage': 188,
+						'weapon-damage-type': 'fire',
 					},
 				},
 				'whirlwind~b': {
@@ -1866,7 +1873,8 @@
 					effect: {
 						'generate-hatred': 3,
 						'weapon-damage': 160,
-						'weapon-damage-for': 2
+						'weapon-damage-for': 2,
+						'weapon-damage-type': 'lightning',
 					},
 				},
 				'entangling-shot~d': {
@@ -1952,6 +1960,7 @@
 					effect: {
 						'cost-hatred': 20,
 						'weapon-damage': 345,
+						'weapon-damage-type': 'fire',
 					},
 				},
 				'rapid-fire~b': {
@@ -1985,6 +1994,7 @@
 					effect: {
 						'weapon-damage': 276,
 						'cost-hatred': 5,
+						'weapon-damage-type': 'fire',
 					},
 				},
 				'rapid-fire~e': {
@@ -2060,7 +2070,8 @@
 					effect: {
 						'cost-discipline': 8,
 						'weapon-damage': 300,
-						'weapon-damage-for': 3
+						'weapon-damage-for': 3,
+						'weapon-damage-type': 'fire',
 					},
 				},
 				'vault~b': {
@@ -2099,6 +2110,7 @@
 					effect: {
 						'generate-hatred': 3,
 						'weapon-damage': 160,
+						'weapon-damage-type': 'fire',
 					},
 				},
 				'bola-shot~a': {
@@ -2108,6 +2120,7 @@
 					effect: {
 						'generate-hatred': 3,
 						'weapon-damage': 160,
+						'weapon-damage-type': 'fire',
 					},
 				},
 				'bola-shot~b': {
@@ -2117,6 +2130,7 @@
 					effect: {
 						'generate-hatred': 3,
 						'weapon-damage': 160,
+						'weapon-damage-type': 'poison',
 					},
 				},
 				'bola-shot~c': {
@@ -2127,6 +2141,7 @@
 						'generate-hatred': 3,
 						'chance-stun': 35,
 						'weapon-damage': 160,
+						'weapon-damage-type': 'lightning',
 					},
 				},
 				'bola-shot~d': {
@@ -2136,6 +2151,7 @@
 					effect: {
 						'generate-hatred': 3,
 						'weapon-damage': 160,
+						'weapon-damage-type': 'fire',
 					},
 				},
 				'bola-shot~e': {
@@ -2145,6 +2161,7 @@
 					effect: {
 						'generate-hatred': 3,
 						'weapon-damage': 216,
+						'weapon-damage-type': 'arcane',
 					},
 				},
 				'chakram': {
@@ -2176,6 +2193,7 @@
 					effect: {
 						'cost-hatred': 10,
 						'weapon-damage': 230,
+						'weapon-damage-type': 'lightning',
 					},
 				},
 				'chakram~c': {
@@ -2185,6 +2203,7 @@
 					effect: {
 						'cost-hatred': 10,
 						'weapon-damage': 230,
+						'weapon-damage-type': 'poison',
 					},
 				},
 				'chakram~d': {
@@ -2194,6 +2213,7 @@
 					effect: {
 						'cost-hatred': 10,
 						'weapon-damage': 187,
+						'weapon-damage-type': 'arcane',
 					},
 				},
 				'chakram~e': {
