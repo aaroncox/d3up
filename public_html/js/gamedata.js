@@ -6685,7 +6685,7 @@
 					desc: 'Focus your energies, increasing your Armor by 35% but decreasing your maximum Arcane Power by 20. Lasts 120 seconds.  This is an Armor spell. Only one Armor spell can be active at a time.',
 					effect: {
 						'cost-arcane-power': 25,
-						'plus-armor': 65,
+						'plus-armor': 35,
 					},
 				},
 				'energy-armor~a': {
@@ -6695,7 +6695,7 @@
 					effect: {
 						'cost-arcane-power': 25,
 						'plus-resist-all': 25,
-						'plus-armor': 65,
+						'plus-armor': 35,
 					},
 				},
 				'energy-armor~b': {
@@ -6704,7 +6704,7 @@
 					rune: 'Rather than decreasing your maximum Arcane Power, Energy Armor increases it by 20 while it is active.',
 					effect: {
 						'cost-arcane-power': 25,
-						'plus-armor': 65,
+						'plus-armor': 35,
 					},
 				},
 				'energy-armor~c': {
@@ -6713,7 +6713,7 @@
 					rune: 'While Energy Armor is active, incoming attacks that would deal more than 35% of your maximum Life are reduced to deal 35% of your maximum Life instead.',
 					effect: {
 						'cost-arcane-power': 25,
-						'plus-armor': 65,
+						'plus-armor': 35,
 					},
 				},
 				'energy-armor~d': {
@@ -6722,7 +6722,7 @@
 					rune: 'You have a chance to gain 4 Arcane Power whenever you are hit by a ranged or melee attack.',
 					effect: {
 						'cost-arcane-power': 25,
-						'plus-armor': 65,
+						'plus-armor': 35,
 					},
 				},
 				'energy-armor~e': {
@@ -6732,7 +6732,7 @@
 					effect: {
 						'cost-arcane-power': 25,
 						'plus-crit-hit': 5,
-						'plus-armor': 65,
+						'plus-armor': 35,
 					},
 				},
 				'archon': {
