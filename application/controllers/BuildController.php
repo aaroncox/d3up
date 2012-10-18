@@ -76,13 +76,17 @@ class BuildController extends D3Up_Controller_Action
 		// Create a new Build
 		$build = Epic_Mongo::newDoc('build');
 		$form = $this->view->form = $build->getEditForm();
+		$battletag = null;
 		if($this->getRequest()->isPost()) {
 			$result = $form->process($this->getRequest()->getParams());
-			$battletag = $this->getRequest()->getParam('battletag') ?:$profile->battletag;
-			if($result && $battletag) {
-				$build = Epic_Mongo::db('build')->find($result['upserted']);
-				$region = $this->getRequest()->getParam('region');
+			if($profile) {				
+				$battletag = $this->getRequest()->getParam('battletag') ?: $profile->battletag;
+			}
+			$build = Epic_Mongo::db('build')->find($result['upserted']);
+			// var_dump($battletag, $this->getRequest()->getParams()); exit;
+			if($result && $battletag && ($this->getRequest()->getParam('character-id') || $this->getRequest()->getParam('character-id-manual'))) {
 				$character = $this->getRequest()->getParam('character-id', null);
+				$region = $this->getRequest()->getParam('region');
 				if($character == "") {
 					$character = $this->getRequest()->getParam('character-id-manual', null);
 					$fakeProfile = Epic_Mongo::newDoc('profile');
