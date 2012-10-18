@@ -990,11 +990,11 @@ BuildCalculator.prototype = {
 			}
 		}, this);
 		// Determine Bonus Damage from Elemental Damage Bonuses
+		// Determine Bonus Damage from Elemental Damage Bonuses
 		if(bnElePercent > 0 && this.attrs.mhRealDamage) {
+			bnEleDamage += (this.attrs.mhRealDamage.min + bnMinDamage + this.attrs.mhRealDamage.max + bnMaxDamage) / 2 * (bnElePercent / 100);
 			if(this.isDuelWielding) {
-				bnEleDamage += ((this.attrs.mhRealDamage.min + bnMinDamage) + (this.attrs.ohRealDamage.min + bnMinDamage)) / 2 * (bnElePercent / 100);
-			} else {
-				bnEleDamage += (this.attrs.mhRealDamage.min + bnMinDamage) * (bnElePercent / 100);
+				bnEleDamage += (this.attrs.ohRealDamage.min + bnMinDamage + this.attrs.ohRealDamage.max + bnMaxDamage) / 2 * (bnElePercent / 100);
 			}
 		}
 		// d3up.log(this.attrs.mhRealDamage.min, bnMinDamage, bnEleDamage);
@@ -1009,8 +1009,8 @@ BuildCalculator.prototype = {
 			};
 			mathS = 1 + this.attrs[this.attrs.primary] * 0.01;
 			mathA = ((mhMinDamage + mhMaxDamage) / 2 + bnMaxDamage) + ((ohMinDamage + ohMaxDamage) / 2 + bnMinDamage) / 2;
-			mathAl = ((mhMinDamage + bnMinDamage) / 2 + bnEleDamage) + (ohMinDamage + bnMinDamage) / 2 + bnEleDamage;
-			mathAh = ((mhMaxDamage + bnMaxDamage) / 2 + bnEleDamage) + (ohMaxDamage + bnMaxDamage) / 2 + bnEleDamage;
+			mathAl = ((mhMinDamage + bnMinDamage) + bnEleDamage) + ((ohMinDamage + bnMinDamage) + bnEleDamage);
+			mathAh = ((mhMaxDamage + bnMaxDamage) + bnEleDamage) + ((ohMaxDamage + bnMaxDamage) + bnEleDamage);
 			mathM = (1 + this.bonuses['plus-damage']);
 			mathR = (rendered['dps-speed'].mh + rendered['dps-speed'].oh) / 2 * (1 + atkSpeedInc + 0.15 + this.bonuses['plus-attack-speed']);
 			mathC = 1 + (this.attrs['critical-hit'] * 0.01) * (this.attrs['critical-hit-damage'] * 0.01);
@@ -1022,16 +1022,17 @@ BuildCalculator.prototype = {
 			mathS = 1 + this.attrs[this.attrs.primary] * 0.01;
 			mathC = 1 + (this.attrs['critical-hit'] * 0.01) * (this.attrs['critical-hit-damage'] * 0.01);
 			mathR = rendered['dps-speed'] * (1 + atkSpeedInc + this.bonuses['plus-attack-speed']);
-			mathAl = (mhMinDamage + bnMinDamage) / 2 + bnEleDamage;
-			mathAh = (mhMaxDamage + bnMaxDamage) / 2 + bnEleDamage;
+			mathAl = ((mhMinDamage + bnMinDamage) + bnEleDamage);
+			mathAh = ((mhMaxDamage + bnMaxDamage) + bnEleDamage);
 			mathM = (1 + this.bonuses['plus-damage']);
 			dLow = mathS * mathAl * mathM * mathE;
 			dHigh = mathS * mathAh * mathM * mathE;
 			mhAvg = mathS * ((mathAl + mathAh) / 2) * mathM * mathE;
 		}
+		// console.log(options.skill.name, dLow, dHigh);
 		dps = Math.round(((dLow + dHigh) / 2) * mathR * mathC);
 		// d3up.log(atkSpeedInc);
-    // d3up.log(dLow, dHigh, dps, mathR, mathC, bnEleDamage);
+    // d3up.log(options.skill, dLow, dHigh, dps, mathR, mathC, bnEleDamage);
 		hit = Math.round(((dLow + dHigh) / 2) * mathC);
 		if(duration) {
 		  if(isStatic) {
