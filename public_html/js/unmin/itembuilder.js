@@ -316,13 +316,13 @@ ItemBuilder.prototype = {
 				select = $("<select id='setBonus' name='setBonus'>");
 		dt.html("Which set is this a part of?");
 		select.append("<option value=''>Select a Set</option>");
-		var keys = Object.keys(setBonuses),
+		var keys = Object.keys(d3up.gameData.sets),
 		    i, len = keys.length;
 		keys.sort();
 		for (i = 0; i < len; i++)
 		{
 			k = keys[i];
-			v = setBonuses[k];
+			v = d3up.gameData.sets[k];
 			var option = $("<option>");
 			option.val(k);
 			option.html(v.name);
