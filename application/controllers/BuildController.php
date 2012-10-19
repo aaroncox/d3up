@@ -79,11 +79,11 @@ class BuildController extends D3Up_Controller_Action
 		$battletag = null;
 		if($this->getRequest()->isPost()) {
 			$result = $form->process($this->getRequest()->getParams());
+			$battletag = $this->getRequest()->getParam('battletag');
 			if($profile) {				
 				$battletag = $this->getRequest()->getParam('battletag') ?: $profile->battletag;
 			}
 			$build = Epic_Mongo::db('build')->find($result['upserted']);
-			// var_dump($battletag, $this->getRequest()->getParams()); exit;
 			if($result && $battletag && ($this->getRequest()->getParam('character-id') || $this->getRequest()->getParam('character-id-manual'))) {
 				$character = $this->getRequest()->getParam('character-id', null);
 				$region = $this->getRequest()->getParam('region');
