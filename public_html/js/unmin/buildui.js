@@ -93,8 +93,7 @@ $(function() {
 	  compareResults.find(".overview-" + itemSlot).remove();
 		// console.log(itemRow.find(".equipped a"));
 		if(itemRow.find(".equipped a[data-json]").length == 0) {
-			alert("You can't simulate on an item that doesn't exist!");
-			return false;
+			itemRow.find(".equipped a").attr("data-json", "{name: 'Simulated Item'}");
 		}
 		if($("." + compareRowName).length) {
 		  $("." + compareRowName).remove();
@@ -255,13 +254,19 @@ $(function() {
 		// }
 	});
 	function updateDiff(inst, noHeader) {
-		var itemSlot = inst.slot;
+		var itemSlot = inst.slot,
+				compareTo = d3up.builds.compare.getItem(itemSlot);
     compareResultsHeader.find(".overview-" + itemSlot).remove();
+		if(!compareTo) {
+			compareTo = {
+				name: 'No Item'
+			};
+		}
 		if(!noHeader) {
 			var overviewTr = $("<tr class='compare-overview overview-" + itemSlot + "'>"),
 		      overviewTd = $("<td colspan='10'>"), 
 		      newItemLink = $("<a>").append("Simulated Item"),				
-		      oldItemLink = $("<a>").append(d3up.builds.compare.getItem(itemSlot).name);
+		      oldItemLink = $("<a>").append(compareTo.name);
 				  overviewTd.append(oldItemLink, " vs ", newItemLink);
 		  compareResultsHeader.append(overviewTr.append(overviewTd));			
 		}
