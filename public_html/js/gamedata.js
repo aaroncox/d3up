@@ -1123,7 +1123,7 @@
 					effect: {
 						'generate-fury': 15,
 						'cooldown': 10,
-						'plus-damage-reduce': 20,
+						'damage-reduce-conditional': 20,
 					},
 				},
 				'threatening-shout~a': {
@@ -1133,7 +1133,7 @@
 					effect: {
 						'generate-fury': 15,
 						'cooldown': 10,
-						'plus-damage-reduce': 20,
+						'damage-reduce-conditional': 20,
 					},
 				},
 				'threatening-shout~b': {
@@ -1143,7 +1143,7 @@
 					effect: {
 						'generate-fury': 15,
 						'cooldown': 10,
-						'plus-damage-reduce': 20,
+						'damage-reduce-conditional': 20,
 					},
 				},
 				'threatening-shout~c': {
@@ -1153,7 +1153,7 @@
 					effect: {
 						'generate-fury': 15,
 						'cooldown': 10,
-						'plus-damage-reduce': 20,
+						'damage-reduce-conditional': 20,
 					},
 				},
 				'threatening-shout~d': {
@@ -1163,7 +1163,7 @@
 					effect: {
 						'generate-fury': 15,
 						'cooldown': 10,
-						'plus-damage-reduce': 20,
+						'damage-reduce-conditional': 20,
 					},
 				},
 				'threatening-shout~e': {
@@ -1173,7 +1173,7 @@
 					effect: {
 						'generate-fury': 15,
 						'cooldown': 10,
-						'plus-damage-reduce': 20,
+						'damage-reduce-conditional': 20,
 					},
 				},
 				'earthquake': {
@@ -1364,7 +1364,7 @@
 					desc: 'Reduces all damage taken by 65% for 5 seconds.',
 					effect: {
 						'cooldown': 30,
-						'plus-damage-reduce': 65,
+						'damage-reduce-conditional': 65,
 					},
 				},
 				'ignore-pain~a': {
@@ -1373,7 +1373,7 @@
 					rune: 'Reflects 50% of ignored damage back at the enemy.',
 					effect: {
 						'cooldown': 30,
-						'plus-damage-reduce': 65,
+						'damage-reduce-conditional': 65,
 					},
 				},
 				'ignore-pain~b': {
@@ -1382,7 +1382,7 @@
 					rune: 'Increases duration to 7 seconds.',
 					effect: {
 						'cooldown': 30,
-						'plus-damage-reduce': 65,
+						'damage-reduce-conditional': 65,
 					},
 				},
 				'ignore-pain~c': {
@@ -1391,7 +1391,7 @@
 					rune: 'Extend the effect to nearby allies, reducing damage taken by 65% for 5 seconds.',
 					effect: {
 						'cooldown': 30,
-						'plus-damage-reduce': 65,
+						'damage-reduce-conditional': 65,
 					},
 				},
 				'ignore-pain~d': {
@@ -1400,7 +1400,7 @@
 					rune: 'When activated, Knockback all enemies within 12 yards and deal 50% weapon damage to them.',
 					effect: {
 						'cooldown': 30,
-						'plus-damage-reduce': 65,
+						'damage-reduce-conditional': 65,
 						'weapon-damage': 50,
 					},
 				},
@@ -1410,7 +1410,7 @@
 					rune: 'While Ignore Pain is active, gain 20% of all damage dealt as Life.',
 					effect: {
 						'cooldown': 30,
-						'plus-damage-reduce': 65,
+						'damage-reduce-conditional': 65,
 						'life-steal': 20,
 					},
 				},
@@ -1584,7 +1584,7 @@
 					effect: {
 						'cooldown': 12,
 						'weapon-damage': 165,
-						'plus-damage-reduce': 35,
+						'damage-reduce-conditional': 35,
 					},
 				},
 				'war-cry': {
@@ -2419,7 +2419,7 @@
 					rune: 'Reduce incoming damage by 35% while Shadow Power is active.',
 					effect: {
 						'cost-discipline': 14,
-						'plus-damage-reduce': 35,
+						'damage-reduce-conditional': 35,
 						'life-steal': 15,
 					},
 				},
@@ -2884,7 +2884,7 @@
 					effect: {
 						'cooldown': 8,
 						'cost-discipline': 30,
-						'plus-damage-reduce': 15,
+						'damage-reduce-conditional': 15,
 						'weapon-damage': 175,
 					},
 				},
