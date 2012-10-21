@@ -254,10 +254,12 @@ BuildCalculator.prototype = {
 						break;
 					// Monk damage sure is fucked up.
 					case "plus-holy-damage-conditional":
-						var mhSpeed = this.attrs['speed'],
-								mhDamageMin = this.attrs.mhRealDamage.min,
-								bnDamageMin = this.attrs['min-damage'];
-						this.bonuses['monk-fitl-bonus'] = (mhDamageMin + bnDamageMin) * 2 * 0.3 * mhSpeed;
+						// ---------
+						// var mhSpeed = this.attrs['speed'],
+						// 		mhDamageMin = this.attrs.mhRealDamage.min,
+						// 		bnDamageMin = this.attrs['min-damage'];
+						// this.bonuses['monk-fitl-bonus'] = (mhDamageMin + bnDamageMin) * 2 * 0.3 * mhSpeed;
+						// ---------
 						// var mhSpeed = this.attrs['speed'],
 						// 		ohSpeed = false,
 						// 		ias = this.attrs['attack-speed-incs'],
@@ -278,7 +280,9 @@ BuildCalculator.prototype = {
 						// this.bonuses['monk-fitl-oh'] = e * actualSpeedOH;
 						// console.log(actualSpeedMH, actualSpeedOH, this.bonuses['monk-fitl-mh'], this.bonuses['monk-fitl-oh']);
 						// this.applyEnabledSkill(strangeDamage, 'plus-holy-damage');
-						break;
+						// ---------
+						// break;
+						// ---------
 					case "plus-damage-conditional":
 						this.applyEnabledSkill(e, 'plus-damage');
 						break;
