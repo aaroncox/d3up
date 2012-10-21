@@ -1584,6 +1584,7 @@
 					effect: {
 						'cooldown': 12,
 						'weapon-damage': 165,
+						'plus-damage-reduce': 35,
 					},
 				},
 				'war-cry': {
