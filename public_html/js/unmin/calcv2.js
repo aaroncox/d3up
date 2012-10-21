@@ -999,7 +999,6 @@ BuildCalculator.prototype = {
 		}
 		// d3up.log(this.attrs.mhRealDamage.min, bnMinDamage, bnEleDamage);
 		// Are we duel wielding?
-    // d3up.log(mhOnly);
 		if(this.isDuelWielding && !mhOnly) {
 			rendered['dps-speed'] = {
 				mh: this.attrs['speed'],
@@ -1014,6 +1013,16 @@ BuildCalculator.prototype = {
 			mathM = (1 + this.bonuses['plus-damage']);
 			mathR = (rendered['dps-speed'].mh + rendered['dps-speed'].oh) / 2 * (1 + atkSpeedInc + 0.15 + this.bonuses['plus-attack-speed']);
 			mathC = 1 + (this.attrs['critical-hit'] * 0.01) * (this.attrs['critical-hit-damage'] * 0.01);
+			if(skill.effect['weapon-damage-type']) {
+				var dmgType = skill.effect['weapon-damage-type'],
+						dmgAttr = 'plus-' + dmgType + '-damage-skills';
+				// console.log(dmgAttr, this.attrs);
+				// console.log(mathE, this.attrs[dmgAttr]);
+				if(this.attrs[dmgAttr]) {
+					mathM += this.attrs[dmgAttr] * 0.01;
+				}
+				// console.log(mathE, this.attrs[dmgAttr]);
+			}
 			dLow = mathS * mathAl * mathM * mathE;
 			dHigh = mathS * mathAh * mathM * mathE;
 			// d3up.log(mathS, mathAl, mathAh, mathM, dLow, dHigh, mathE);
@@ -1025,6 +1034,16 @@ BuildCalculator.prototype = {
 			mathAl = ((mhMinDamage + bnMinDamage) + bnEleDamage);
 			mathAh = ((mhMaxDamage + bnMaxDamage) + bnEleDamage);
 			mathM = (1 + this.bonuses['plus-damage']);
+			if(skill.effect['weapon-damage-type']) {
+				var dmgType = skill.effect['weapon-damage-type'],
+						dmgAttr = 'plus-' + dmgType + '-damage-skills';
+				// console.log(dmgAttr, this.attrs);
+				// console.log(mathE, this.attrs[dmgAttr]);
+				if(this.attrs[dmgAttr]) {
+					mathM += this.attrs[dmgAttr] * 0.01;
+				}
+				// console.log(mathE, this.attrs[dmgAttr]);
+			}
 			dLow = mathS * mathAl * mathM * mathE;
 			dHigh = mathS * mathAh * mathM * mathE;
 			mhAvg = mathS * ((mathAl + mathAh) / 2) * mathM * mathE;
