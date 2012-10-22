@@ -5519,6 +5519,7 @@
 					name: 'Ray of Frost',
 					desc: 'Project a beam of frozen ice that blasts 215% weapon damage as Cold to the first enemy it hits, slowing the target\'s movement by 60% for 4 seconds.',
 					effect: {
+						'weapon-damage-type': 'cold',
 						'cost-arcane-power': 16,
 						'weapon-damage': 215,
 					},
@@ -5528,6 +5529,7 @@
 					desc: 'Project a beam of frozen ice that blasts 215% weapon damage as Cold to the first enemy it hits, slowing the target\'s movement by 60% for 4 seconds.',
 					rune: 'Using continuously on a single target increases damage over 1.5 seconds to inflict a maximum of 280% weapon damage as Cold.',
 					effect: {
+						'weapon-damage-type': 'cold',
 						'cost-arcane-power': 16,
 						'weapon-damage': 280,
 					},
@@ -5537,6 +5539,7 @@
 					desc: 'Project a beam of frozen ice that blasts 215% weapon damage as Cold to the first enemy it hits, slowing the target\'s movement by 60% for 4 seconds.',
 					rune: 'Create a swirling storm around you, dealing 280% weapon damage as Cold to all enemies caught within it.',
 					effect: {
+						'weapon-damage-type': 'cold',
 						'cost-arcane-power': 16,
 						'weapon-damage': 215,
 					},
@@ -5546,6 +5549,7 @@
 					desc: 'Project a beam of frozen ice that blasts 215% weapon damage as Cold to the first enemy it hits, slowing the target\'s movement by 60% for 4 seconds.',
 					rune: 'Increase the amount the target\'s movement is slowed to 80% for 3 seconds.',
 					effect: {
+						'weapon-damage-type': 'cold',
 						'cost-arcane-power': 16,
 						'weapon-damage': 215,
 					},
@@ -5555,6 +5559,7 @@
 					desc: 'Project a beam of frozen ice that blasts 215% weapon damage as Cold to the first enemy it hits, slowing the target\'s movement by 60% for 4 seconds.',
 					rune: 'Reduce casting cost to 10 Arcane Power.',
 					effect: {
+						'weapon-damage-type': 'cold',
 						'cost-arcane-power': 10,
 						'weapon-damage': 215,
 					},
@@ -5564,6 +5569,7 @@
 					desc: 'Project a beam of frozen ice that blasts 215% weapon damage as Cold to the first enemy it hits, slowing the target\'s movement by 60% for 4 seconds.',
 					rune: 'Enemies killed with Ray of Frost leave behind a patch of ice that deals 387% weapon damage as Cold to enemies moving through it over 3 seconds.',
 					effect: {
+						'weapon-damage-type': 'cold',
 						'cost-arcane-power': 16,
 						'weapon-damage': 410,
 					},
@@ -6629,6 +6635,7 @@
 						'cost-arcane-power': 40,
 						'weapon-damage': 210,
 						'weapon-damage-for': 6,
+						'weapon-damage-type': 'cold',
 					},
 				},
 				'blizzard~a': {
@@ -6639,6 +6646,7 @@
 						'cost-arcane-power': 40,
 						'weapon-damage': 280,
 						'weapon-damage-for': 8,
+						'weapon-damage-type': 'cold',
 					},
 				},
 				'blizzard~b': {
@@ -6649,6 +6657,7 @@
 						'cost-arcane-power': 40,
 						'weapon-damage': 210,
 						'weapon-damage-for': 12,
+						'weapon-damage-type': 'cold',
 					},
 				},
 				'blizzard~c': {
@@ -6659,6 +6668,7 @@
 						'cost-arcane-power': 40,
 						'weapon-damage': 210,
 						'weapon-damage-for': 6,
+						'weapon-damage-type': 'cold',
 					},
 				},
 				'blizzard~d': {
@@ -6669,6 +6679,7 @@
 						'cost-arcane-power': 20,
 						'weapon-damage': 210,
 						'weapon-damage-for': 6,
+						'weapon-damage-type': 'cold',
 					},
 				},
 				'blizzard~e': {
@@ -6679,6 +6690,7 @@
 						'cost-arcane-power': 40,
 						'weapon-damage': 210,
 						'weapon-damage-for': 6,
+						'weapon-damage-type': 'cold',
 					},
 				},
 				'energy-armor': {

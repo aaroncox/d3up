@@ -254,12 +254,12 @@ BuildCalculator.prototype = {
 						break;
 					// Monk damage sure is fucked up.
 					case "plus-holy-damage-conditional":
-						// ---------
-						// var mhSpeed = this.attrs['speed'],
-						// 		mhDamageMin = this.attrs.mhRealDamage.min,
-						// 		bnDamageMin = this.attrs['min-damage'];
-						// this.bonuses['monk-fitl-bonus'] = (mhDamageMin + bnDamageMin) * 2 * 0.3 * mhSpeed;
-						// ---------
+						var mhSpeed = this.attrs['speed'],
+								mhDamageMin = this.attrs.mhRealDamage.min,
+								bnDamageMin = this.attrs['min-damage'],
+								mhDamageMax = this.attrs.mhRealDamage.max,
+								bnDamageMax = this.attrs['max-damage'];
+						this.bonuses['monk-fitl-bonus'] = (mhDamageMin + bnDamageMin + mhDamageMax + bnDamageMax) * 2 * 0.3 * mhSpeed;
 						// var mhSpeed = this.attrs['speed'],
 						// 		ohSpeed = false,
 						// 		ias = this.attrs['attack-speed-incs'],
@@ -280,9 +280,7 @@ BuildCalculator.prototype = {
 						// this.bonuses['monk-fitl-oh'] = e * actualSpeedOH;
 						// console.log(actualSpeedMH, actualSpeedOH, this.bonuses['monk-fitl-mh'], this.bonuses['monk-fitl-oh']);
 						// this.applyEnabledSkill(strangeDamage, 'plus-holy-damage');
-						// ---------
-						// break;
-						// ---------
+						break;
 					case "plus-damage-conditional":
 						this.applyEnabledSkill(e, 'plus-damage');
 						break;
@@ -859,14 +857,18 @@ BuildCalculator.prototype = {
 			rendered['dps-oh-real-min-bonus'] = this.attrs.ohRealDamage.min + bnMinDamage;
 			rendered['dps-oh-real-max-bonus'] = this.attrs.ohRealDamage.max + bnMaxDamage;
 		}
-		if(this.bonuses['monk-fitl-bonus']) {
-			bnEleDamage += this.bonuses['monk-fitl-bonus'];
-		}
 		// Determine Bonus Damage from Elemental Damage Bonuses
 		if(bnElePercent > 0 && this.attrs.mhRealDamage) {
 			mhAvgDamage += (this.attrs.mhRealDamage.min + bnMinDamage + this.attrs.mhRealDamage.max + bnMaxDamage) / 2 * (bnElePercent / 100);
 			if(this.isDuelWielding) {
 				ohAvgDamage += (this.attrs.ohRealDamage.min + bnMinDamage + this.attrs.ohRealDamage.max + bnMaxDamage) / 2 * (bnElePercent / 100);
+			}
+		}
+		if(this.bonuses['monk-fitl-bonus']) {
+			console.log("hi", this.bonuses['monk-fitl-bonus']);
+			mhAvgDamage += this.bonuses['monk-fitl-bonus'];
+			if(this.isDuelWielding) {
+				ohAvgDamage += this.bonuses['monk-fitl-bonus'];
 			}
 		}
 		rendered['bonus-elemental-damage'] = bnEleDamage;
