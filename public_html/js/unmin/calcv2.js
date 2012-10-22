@@ -865,7 +865,6 @@ BuildCalculator.prototype = {
 			}
 		}
 		if(this.bonuses['monk-fitl-bonus']) {
-			console.log("hi", this.bonuses['monk-fitl-bonus']);
 			mhAvgDamage += this.bonuses['monk-fitl-bonus'];
 			if(this.isDuelWielding) {
 				ohAvgDamage += this.bonuses['monk-fitl-bonus'];
