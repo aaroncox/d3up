@@ -714,7 +714,12 @@ BuildCalculator.prototype = {
 			'pt-vitality': {'vitality': 1},
 			'pt-plus-life': {'plus-life': 1},
 			'pt-intelligence': {'intelligence': 1},
-			'pt-strength': {'strength': 1}
+			'pt-strength': {'strength': 1},
+			'pt-dexterity': {'dexterity': 1},
+			'pt-block': {'plus-block': 1},
+			'pt-melee-reduce': {'melee-reduce': 1},
+			'pt-range-reduce': {'range-reduce': 1},
+			'pt-elite-reduce': {'elite-reduce': 1}
 		};
 		_.each(incs, function(v, k) {
 			var item = {};
@@ -734,7 +739,26 @@ BuildCalculator.prototype = {
 			var tDefenses = this.calcDefenses(),
 					tEhp = this.calcEffectiveHealth(tDefenses);
 			// Calculate the Difference in EHP without the item
-			rendered['ehp-' + k] = tEhp['ehp'] - ehp.ehp;				
+			switch(k) {
+				case "pt-dexterity":
+					rendered['ehp-' + k] = (tEhp['ehp-dodge'] - ehp['ehp-dodge']);								
+					break;
+				case "pt-block":
+					rendered['ehp-' + k] = (tEhp['ehp-block'] - ehp['ehp-block']);								
+					break;
+				case "pt-melee-reduce":
+					rendered['ehp-' + k] = (tEhp['ehp-melee'] - ehp['ehp-melee']);
+					break;
+				case "pt-range-reduce":
+					rendered['ehp-' + k] = (tEhp['ehp-range'] - ehp['ehp-range']);
+					break;
+				case "pt-elite-reduce":
+					rendered['ehp-' + k] = (tEhp['ehp-elite'] - ehp['ehp-elite']);
+					break;
+				default:
+					rendered['ehp-' + k] = tEhp['ehp'] - ehp.ehp;				
+					break;
+			}
 			// Re-add the Item to the gear set
 			this.removeItem('extra');
 		}, this);
@@ -1396,7 +1420,8 @@ BuildCalculator.prototype = {
      'pt-critical-hit-damage': {'critical-hit-damage': 1},
      'pt-min-damage': {'min-damage': 1},
      'pt-max-damage': {'max-damage': 1},
-     'pt-attack-speed': {'attack-speed': 1}
+     'pt-attack-speed': {'attack-speed': 1},
+		 'pt-elemental-damage': {'plus-holy-damage': 1}
     };
     _.each(incs, function(v, k) {
      var item = {};
