@@ -396,7 +396,7 @@ BuildCalculator.prototype = {
 													if(reverse == true) {
 														eff = -eff;
 													}
-													this.bonuses['plus-dodge'].push(eff);
+													this.bonuses['plus-dodge'].pop(eff);
 													break;
 											}
 										}, this);
@@ -597,6 +597,8 @@ BuildCalculator.prototype = {
 			});
 			rendered['dodge-chance'] = (1 - percentage) * 100;
 		}
+		// console.log(rendered['dodge-chance'], this.bonuses['plus-dodge']);
+		
 		// Return the Values for Defenses
 		return rendered;
 	},
