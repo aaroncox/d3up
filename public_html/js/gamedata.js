@@ -6656,7 +6656,7 @@
 					effect: {
 						'cost-arcane-power': 40,
 						'weapon-damage': 210,
-						'weapon-damage-for': 12,
+						'weapon-damage-for': 6,
 						'weapon-damage-type': 'cold',
 					},
 				},
@@ -6863,7 +6863,7 @@
 					name: 'Focused Mind',
 					desc: 'An aura that increases attack speed by <span class="skill-highlight">3%</span> for allies within 40 yards.',
 					effect: {
-						'plus-attack-speed': 3,
+						'plus-aps': 0.03,
 					},
 				},
 				'mass-control': {

@@ -228,6 +228,14 @@ BuildCalculator.prototype = {
       // d3up.log(v,k);
 			_.each(v.effect, function(e,i) {
 				switch(i) {
+					case "plus-aps":
+						if(this.attrs['speed']) {
+							this.attrs['speed'] += e;
+						}
+						if(this.attrs['speed-oh']) {
+							this.attrs['speed-oh'] += e;
+						}
+						break;
 				  case "stackable":
 					  _.each(e, function(se, si) {
               // console.log(v.stacks + " stacks");
@@ -904,8 +912,10 @@ BuildCalculator.prototype = {
 		var mathS, mathC, mathR, mathA, mathM;
 		if(this.isDuelWielding) {
  			rendered['dps-speed'] = {
- 				mh: Math.floor(this.attrs['speed'] * 1024) / 1024,
- 				oh: Math.floor(this.attrs['speed-oh'] * 1024) / 1024
+ 				// mh: Math.floor(this.attrs['speed'] * 1024) / 1024,
+ 				// oh: Math.floor(this.attrs['speed-oh'] * 1024) / 1024
+ 				mh: this.attrs['speed'],
+ 				oh: this.attrs['speed-oh']
  			};
 			// console.log("speed during calc: ", this.attrs['speed'], this.attrs['speed-oh']);
 			// d3up.log(mhMinDamage, mhMaxDamage, ohMinDamage, ohMaxDamage, bnMinDamage, bnMaxDamage);
@@ -913,7 +923,9 @@ BuildCalculator.prototype = {
 			// d3up.log(rendered['dps-speed'].mh, rendered['dps-speed'].oh);
 			mathS = 1 + this.attrs[this.attrs.primary] * 0.01;
 			mathC = 1 + (this.attrs['critical-hit'] * 0.01) * (this.attrs['critical-hit-damage'] * 0.01);
-			mathR = ((rendered['dps-speed'].mh * (1 + atkSpeedInc + 0.15 + this.bonuses['plus-attack-speed'])) + (rendered['dps-speed'].oh * (1 + atkSpeedInc + 0.15 + this.bonuses['plus-attack-speed']))) / 2;
+			var mhAPS = rendered['dps-speed'].mh * (1 + atkSpeedInc + 0.15 + this.bonuses['plus-attack-speed']),
+					ohAPS = rendered['dps-speed'].oh * (1 + atkSpeedInc + 0.15 + this.bonuses['plus-attack-speed']);
+			mathR = 2 / (1 / mhAPS + 1 / ohAPS);
 			mathA = (mhAvgDamage + ohAvgDamage) / 2;
 			mathM = (1 + this.bonuses['plus-damage']);
 			rendered['dps'] = mathS * mathC * mathR * mathA * mathM;			
