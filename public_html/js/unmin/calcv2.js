@@ -268,13 +268,25 @@ BuildCalculator.prototype = {
 						break;
 					// Monk damage sure is fucked up.
 					case "plus-holy-damage-conditional":
-						var mhSpeed = this.attrs['speed'];
-						if(this.attrs.mhRealDamage) {
-							var mhDamageMin = this.attrs.mhRealDamage.min,
+						var mhSpeed = this.attrs['speed'],
+								ohSpeed = this.attrs['speed-oh'],
+								atkSpeedInc = 0;
+						if(this.attrs['attack-speed-incs']) {
+							atkSpeedInc = this.attrs['attack-speed-incs'] / 100;
+						}
+ 						mhSpeed *= (1 + atkSpeedInc + 0.15 + this.bonuses['plus-attack-speed']);
+ 						ohSpeed *= (1 + atkSpeedInc + 0.15 + this.bonuses['plus-attack-speed']);
+						if(this.attrs.damage) {
+							var mhDamageMin = this.attrs.damage.min,
 									bnDamageMin = this.attrs['min-damage'],
-									mhDamageMax = this.attrs.mhRealDamage.max,
+									mhDamageMax = this.attrs.damage.max,
 									bnDamageMax = this.attrs['max-damage'];							
-									this.bonuses['monk-fitl-bonus'] = (mhDamageMin + bnDamageMin + mhDamageMax + bnDamageMax) * 2 * 0.3 * mhSpeed;
+									this.bonuses['monk-fitl-bonus'] = this.bonuses['monk-fitl-bonus-mh'] = (mhDamageMin + bnDamageMin + mhDamageMax + bnDamageMax) * 0.3 * mhSpeed;
+									if(this.attrs['damage-oh']) {
+										var ohDamageMin = this.attrs['damage-oh'].min,
+												ohDamageMax = this.attrs['damage-oh'].max;
+										this.bonuses['monk-fitl-bonus-oh'] = (ohDamageMin + bnDamageMin + ohDamageMax + bnDamageMax) * 0.3 * ohSpeed;
+									}
 						}
 						// var mhSpeed = this.attrs['speed'],
 						// 		ohSpeed = false,
@@ -901,9 +913,9 @@ BuildCalculator.prototype = {
 		}
 		if(this.bonuses['monk-fitl-bonus']) {
 			mhAvgDamage += this.bonuses['monk-fitl-bonus'];
-			if(this.isDuelWielding) {
-				ohAvgDamage += this.bonuses['monk-fitl-bonus'];
-			}
+			// if(this.isDuelWielding) {
+			// 	ohAvgDamage += this.bonuses['monk-fitl-bonus'];
+			// }
 		}
 		// Determine Bonus Damage from Elemental Damage Bonuses
 		if(bnElePercent > 0 && this.attrs.mhRealDamage) {
@@ -945,6 +957,7 @@ BuildCalculator.prototype = {
 			if(this.attrs.ohRealDamage) {
 				rendered['scram-a-oh'] = (ohAvgDamage + (this.attrs.ohRealDamage.min + bnMinDamage) * 2 * (bnElePercent / 100)) * mathS * mathM * mathC;				
 			}
+			// console.log(mathS, mathC, mathR, mathA, mathM);
 			// console.log(this.bonuses);
 			// console.log(mhAvgDamage, bnEleDamage, mathS, mathM, mathC);
 			// console.log(mathA, rendered['dps-speed'], (1 + 0.15 + atkSpeedInc + this.bonuses['plus-attack-speed']));
