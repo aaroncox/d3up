@@ -6000,6 +6000,7 @@
 					desc: 'Surround yourself in a barrier of ice. Reduces Melee Damage by 12% and melee attackers are either Chilled or Frozen for 2 seconds. Lasts 120 seconds.  This is an Armor spell. Only one Armor spell can be active at a time.',
 					effect: {
 						'cost-arcane-power': 25,
+						'plus-melee-reduce': 0.12,
 					},
 				},
 				'ice-armor~a': {
@@ -6009,6 +6010,7 @@
 					effect: {
 						'cost-arcane-power': 25,
 						'weapon-damage': 130,
+						'plus-melee-reduce': 0.12,
 					},
 				},
 				'ice-armor~b': {
@@ -6017,6 +6019,7 @@
 					rune: 'Lower the temperature of the air around you. Nearby enemies are chilled, slowing their movement speed by 30%.',
 					effect: {
 						'cost-arcane-power': 25,
+						'plus-melee-reduce': 0.12,
 					},
 				},
 				'ice-armor~c': {
@@ -6027,6 +6030,7 @@
 						'cost-arcane-power': 25,
 						'weapon-damage': 30,
 						'weapon-damage-for': 3,
+						'plus-melee-reduce': 0.12,
 					},
 				},
 				'ice-armor~d': {
@@ -6035,6 +6039,7 @@
 					rune: 'Whenever you are struck by a melee attack, your Armor is increased by 20% for 30 seconds. This effect can stack up to 3 times.',
 					effect: {
 						'cost-arcane-power': 25,
+						'plus-melee-reduce': 0.12,
 						'stackable': {
 						  'limit': 3,
 							'plus-armor': 20,
@@ -6046,6 +6051,7 @@
 					desc: 'Surround yourself in a barrier of ice. Reduces Melee Damage by 12% and melee attackers are either Chilled or Frozen for 2 seconds. Lasts 120 seconds.  This is an Armor spell. Only one Armor spell can be active at a time.',
 					rune: 'Melee attacks have a 25% chance to create a Frost Nova centered on the attacker, dealing 75% weapon damage as Cold.',
 					effect: {
+						'plus-melee-reduce': 0.12,
 						'cost-arcane-power': 25,
 					},
 				},

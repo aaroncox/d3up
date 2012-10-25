@@ -180,6 +180,12 @@ BuildCalculator.prototype = {
 				var value = e / 100;
 				this.bonuses['plus-dodge'].push(value);
 				break;
+			case "plus-melee-reduce":
+		    if(!this.attrs['melee-reduce-incs']) {
+		      this.attrs['melee-reduce-incs'] = [];
+		    }
+	      this.attrs['melee-reduce-incs'].push(e * 100);
+				break;
 			case "plus-crit-hit":
 				this.attrs['critical-hit'] += e;
 				break;
@@ -1175,6 +1181,7 @@ BuildCalculator.prototype = {
 						case "plus-crit-hit":
 						case "plus-life":
 						case "plus-attack-speed":
+						case "plus-melee-reduce":
 						case "plus-damage":
 						case "plus-armor":
 						case "plus-resist-all":
