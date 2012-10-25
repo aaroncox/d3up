@@ -3650,6 +3650,10 @@
 					effect: {
 						'generate-spirit': 8,
 						'weapon-damage': 140,
+						'stackable': {
+				      'limit': 3,
+							'plus-attack-speed': 5,
+					  }
 					},
 				},
 				'way-of-the-hundred-fists~d': {
