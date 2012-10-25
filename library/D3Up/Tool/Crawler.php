@@ -41,7 +41,6 @@ class D3Up_Tool_Crawler
     // $body = file_get_contents($url, false, $cxContext);
     // --- No Proxy
     $body = file_get_contents($url);
-
     // No response from BNet? Let the user know
     if(!$body) {
       throw new Exception("There was an error communicating with the Blizzard API. We attempted to access data at the following URL: <p><a href='".$url."'>".$url."</a></p>Please try again in a few moments to see if that resolves the problem, otherwise feel free to email me at <a href='mailto:aaron.cox@greymass.com'>aaron.cox@greymass.com</a>.");
@@ -585,6 +584,7 @@ class D3Up_Tool_Crawler
 				);
 			}
 		}
+		$build->hardcore = (bool) $profile['hardcore'];
 		$build->paragon = (int) $profile['paragonLevel'];
 		$build->level = (int) $profile['level'];
 		$build->actives = $skills;

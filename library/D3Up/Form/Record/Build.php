@@ -79,6 +79,11 @@ class D3Up_Form_Record_Build extends Epic_Form
 				new Zend_Validate_Between(array('min' => 0, 'max' => 100))
 			)
 		));
+
+		$this->addElement("checkbox", "hardcore", array(
+			'label' => 'Hardcore?',
+		));
+
 		
 		$this->addElement("checkbox", "private", array(
 			'label' => 'Private?',
@@ -105,6 +110,7 @@ class D3Up_Form_Record_Build extends Epic_Form
 			'private' => $build->private,
 			'level' => $build->level ?: 60,
 			'paragon' => $build->paragon,
+			'hardcore' => $build->hardcore,
 			'profileUrl' => $build->profileUrl,
 		));
 		
@@ -133,6 +139,8 @@ class D3Up_Form_Record_Build extends Epic_Form
 		$build->level = (int) $this->level->getValue();
 		// Set the Paragon Level
 		$build->paragon = (int) $this->paragon->getValue();
+		// Set if it's hardcore
+		$build->hardcore = (bool) $this->hardcore->getValue();
 		// Set the Profile URL
 		// $build->profileUrl = $this->profileUrl->getValue();
 		// Set privacy

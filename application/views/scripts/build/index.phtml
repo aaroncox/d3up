@@ -7,6 +7,8 @@
 			<a class="button" id="advSearch">Advanced Search</a>
 		</div>
 		<div class="controls chosen">
+			Hardcore Only
+			<input id="isHardcore" type="checkbox" <?= ($this->isHardcore) ? "checked='checked'" : "" ?>/>
 			<select id="classSelect" data-placeholder="Filter by Class">
 				<option value=""></option>
 				<option value="">All Classes</option>
@@ -48,6 +50,7 @@
 				advSearchPanel = $("#advSearchPanel"),
 				advSkillSearch = $("#advSkillSearch"),
 				advPassiveSearch = $("#advPassiveSearch"),
+				isHardcoreCheckbox = $("#isHardcore"),
 				classSelect = $("#classSelect");
 		advSearch.click(function() {
 			if(advSearchPanel.is(":visible")) {
@@ -87,10 +90,12 @@
 		advSkillSearch.bind('change', searchBuilds);
 		advPassiveSearch.bind('change', searchBuilds);
 		classSelect.bind('change', searchBuilds);
+		isHardcoreCheckbox.bind('change', searchBuilds);
 		function searchBuilds() {
 			var skills = advSkillSearch.val(),
 					passives = advPassiveSearch.val(), 
-					heroClass = classSelect.val();
+					heroClass = classSelect.val(),
+					isHardcore = isHardcoreCheckbox.is(":checked");
 			if(skills && skills.length) {
 				skills = skills.join("|");
 			}
@@ -102,6 +107,7 @@
 					skills: skills,
 					passives: passives,
 					class: heroClass,
+					isHardcore: isHardcore,
 				},
 				success: function(data) {
 					var content = $(data);

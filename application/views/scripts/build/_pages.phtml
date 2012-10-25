@@ -13,6 +13,9 @@
 	if($this->selectedPassives) {
 		$params .= "&passives=".$this->selectedPassives;
 	}
+	if($this->isHardcore) {
+		$params .= "&isHardcore=".$this->isHardcore;
+	}
 ?>
 <div id="build-pagination" style="text-align: right">
 	<!-- Previous page link -->

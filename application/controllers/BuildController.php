@@ -54,6 +54,12 @@ class BuildController extends D3Up_Controller_Action
 				$this->view->hasGuide = $query['guideIsPublished'] = true;
 			}
 		}
+		if($isHardcore = $this->getRequest()->getParam("isHardcore")) {
+			if($isHardcore == "true") {
+				$this->view->isHardcore = $query['hardcore'] = true;
+			} 
+		}
+		// var_dump($query); exit;
 		$builds = Epic_Mongo::db('build')->fetchAll($query, $sort);	
 		$paginator = Zend_Paginator::factory($builds);
 		$paginator->setCurrentPageNumber($this->getRequest()->getParam('page', 1))->setItemCountPerPage(15)->setPageRange(3);
