@@ -52,24 +52,28 @@
 				<th>Actions</th>
 			</thead>
 			<tbody>
-				<? foreach($this->characters as $character): ?>
-				<tr class='build-row'>
-					<td class="icon"><img src="/images/<?= $character['class'] ?>.png"/></td>
-					<td><?= $character['name'] ?></td>
-					<td><?= ucwords(str_replace("-", " ", $character['class'])) ?></td>
-					<td>Level <?= $character['level'] ?></td>
-					<td>
-						<? if($character['hardcore']): ?>
-							Hardcore
-						<? else: ?>
-							Softcore
-						<? endif ?>
-					</td>
-					<td>
-						<a href="?character=<?= $character['id'] ?>" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only"><span class="ui-button-text">Copy into Build</span></a>
-					</td>
-				</tr>
-				<? endforeach ?>
+				<? if($this->characters): ?>
+					<? foreach($this->characters as $character): ?>
+					<tr class='build-row'>
+						<td class="icon"><img src="/images/<?= $character['class'] ?>.png"/></td>
+						<td><?= $character['name'] ?></td>
+						<td><?= ucwords(str_replace("-", " ", $character['class'])) ?></td>
+						<td>Level <?= $character['level'] ?></td>
+						<td>
+							<? if($character['hardcore']): ?>
+								Hardcore
+							<? else: ?>
+								Softcore
+							<? endif ?>
+						</td>
+						<td>
+							<a href="?character=<?= $character['id'] ?>" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only"><span class="ui-button-text">Copy into Build</span></a>
+						</td>
+					</tr>
+					<? endforeach ?>
+				<? else: ?>
+					<tr><td colspan='10'><h3 style='color: #f00'>We cannot find any characters associated to your battletag. Please edit your profile and ensure your battletag is entered correctly.</h3></td></tr>
+				<? endif ?>
 			</tbody>
 		</table>
 	</div>
