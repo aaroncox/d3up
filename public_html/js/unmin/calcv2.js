@@ -262,12 +262,14 @@ BuildCalculator.prototype = {
 						break;
 					// Monk damage sure is fucked up.
 					case "plus-holy-damage-conditional":
-						var mhSpeed = this.attrs['speed'],
-								mhDamageMin = this.attrs.mhRealDamage.min,
-								bnDamageMin = this.attrs['min-damage'],
-								mhDamageMax = this.attrs.mhRealDamage.max,
-								bnDamageMax = this.attrs['max-damage'];
-						this.bonuses['monk-fitl-bonus'] = (mhDamageMin + bnDamageMin + mhDamageMax + bnDamageMax) * 2 * 0.3 * mhSpeed;
+						var mhSpeed = this.attrs['speed'];
+						if(this.attrs.mhRealDamage) {
+							var mhDamageMin = this.attrs.mhRealDamage.min,
+									bnDamageMin = this.attrs['min-damage'],
+									mhDamageMax = this.attrs.mhRealDamage.max,
+									bnDamageMax = this.attrs['max-damage'];							
+									this.bonuses['monk-fitl-bonus'] = (mhDamageMin + bnDamageMin + mhDamageMax + bnDamageMax) * 2 * 0.3 * mhSpeed;
+						}
 						// var mhSpeed = this.attrs['speed'],
 						// 		ohSpeed = false,
 						// 		ias = this.attrs['attack-speed-incs'],
@@ -931,8 +933,12 @@ BuildCalculator.prototype = {
 			rendered['dps'] = mathS * mathC * mathR * mathA * mathM;			
 			rendered['dps-speed-mh'] = rendered['dps-speed'].mh;
 			rendered['dps-speed-oh'] = rendered['dps-speed'].oh;
-			rendered['scram-a-mh'] = (mhAvgDamage + (this.attrs.mhRealDamage.min + bnMinDamage) * 2 * (bnElePercent / 100)) * mathS * mathM * mathC;
-			rendered['scram-a-oh'] = (ohAvgDamage + (this.attrs.ohRealDamage.min + bnMinDamage) * 2 * (bnElePercent / 100)) * mathS * mathM * mathC;
+			if(this.attrs.mhRealDamage) {
+				rendered['scram-a-mh'] = (mhAvgDamage + (this.attrs.mhRealDamage.min + bnMinDamage) * 2 * (bnElePercent / 100)) * mathS * mathM * mathC;				
+			}
+			if(this.attrs.ohRealDamage) {
+				rendered['scram-a-oh'] = (ohAvgDamage + (this.attrs.ohRealDamage.min + bnMinDamage) * 2 * (bnElePercent / 100)) * mathS * mathM * mathC;				
+			}
 			// console.log(this.bonuses);
 			// console.log(mhAvgDamage, bnEleDamage, mathS, mathM, mathC);
 			// console.log(mathA, rendered['dps-speed'], (1 + 0.15 + atkSpeedInc + this.bonuses['plus-attack-speed']));
