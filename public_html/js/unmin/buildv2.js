@@ -464,7 +464,7 @@
 					wrap = $("<span class='skill-highlight'>").append(v); 
 			switch(k) {
 				default:
-					if(this.builder.skillText[k]) {
+					if(this.builder.skillText[k] && wrap[0]) {
 						effect = this.builder.skillText[k].replace("VVV", wrap[0].outerHTML);						
 					}
 					break;
