@@ -43,29 +43,32 @@
 			<li><a href="#tab-similar">Similar</a></li>
 			<li><a href="#tab-share">Share this Item</a></li>
 		</ul>
-		<div id="tab-similar">
-			<h3 class="table-header" style='margin-bottom: 20px'>Search Attributes</h3>
-			<select data-placeholder="Which attributes?" id="similar-attributes" multiple="multiple" style="width: 390px">
-				<? foreach(D3Up_View_Helper_DisplayItem::getAttributeMap() as $key => $value): ?>
-					<option value="<?= $key ?>" <?= (in_array($key, array_keys($this->record->attrs->export()))) ? "selected='selected'" : "" ?>><?= str_replace('[v]', "", $value) ?></option>
-				<? endforeach?>
-			</select>
-			<h3 class="table-header"style='margin-top: 20px'>Search Results</h3>
-			<table id="similar-items" class="d3up-table">
-				<tbody>
-					<? if(count($this->similar) > 0): ?>
-						<? foreach($this->similar as $item): ?>
-						<tr class='item-row'>
-							<td><?= $this->itemLink($item) ?></td>
+		<div id="tab-similar"> 
+			<h3 style="color: #f00; text-align: center">Current Disabled</h3>
+			<div class='ui-state-disabled'>
+				<h3 class="table-header" style='margin-bottom: 20px'>Search Attributes</h3>
+				<select data-placeholder="Which attributes?" id="similar-attributes" multiple="multiple" style="width: 390px">
+					<? foreach(D3Up_View_Helper_DisplayItem::getAttributeMap() as $key => $value): ?>
+						<option value="<?= $key ?>" <?= (in_array($key, array_keys($this->record->attrs->export()))) ? "selected='selected'" : "" ?>><?= str_replace('[v]', "", $value) ?></option>
+					<? endforeach?>
+				</select>
+				<h3 class="table-header"style='margin-top: 20px'>Search Results</h3>
+				<table id="similar-items" class="d3up-table">
+					<tbody>
+						<? if(count($this->similar) > 0): ?>
+							<? foreach($this->similar as $item): ?>
+							<tr class='item-row'>
+								<td><?= $this->itemLink($item) ?></td>
+							</tr>
+							<? endforeach ?>
+						<? else: ?>
+						<tr>
+							<td>No similar items found</td>
 						</tr>
-						<? endforeach ?>
-					<? else: ?>
-					<tr>
-						<td>No similar items found</td>
-					</tr>
-					<? endif ?>
-				</tbody>
-			</table>
+						<? endif ?>
+					</tbody>
+				</table>
+			</div>
 		</div>
 		<div id="tab-share">		
 			<p style='text-align: center'>

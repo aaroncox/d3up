@@ -214,7 +214,7 @@ class RecordController extends D3Up_Controller_Action
 		// Count a View
 		$record->viewCounter();
 		if($record->_type == 'item') {
-			$this->getSimilarItems();
+			// $this->getSimilarItems();
 		}
 		// if($record->_type == "build") {
 			// Get all the comments and the comment form
