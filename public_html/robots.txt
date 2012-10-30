@@ -11,3 +11,5 @@ Disallow: /b/*/crawl
 Disallow: /i/*/copy
 Disallow: /i/*/delete
 Disallow: /i/*/edit
+Disallow: /i/*
+Disallow: /item/*

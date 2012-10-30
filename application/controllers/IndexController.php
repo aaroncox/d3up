@@ -24,14 +24,14 @@ class IndexController extends D3Up_Controller_Action {
       'stats.ehp' => array('$exists' => true),
       '_original' => array('$exists' => false),
     );
-    $this->view->builds = Epic_Mongo::db('build')->fetchAll($query, $sort, 10); 
+    // $this->view->builds = Epic_Mongo::db('build')->fetchAll($query, $sort, 10); 
     
-    $this->view->counts = array(
-      'guides' => count(Epic_Mongo::db("guide")->fetchAll(array('published' => true))),
-      'builds' => count(Epic_Mongo::db("build")->fetchAll()),
-      'items' => count(Epic_Mongo::db("item")->fetchAll()),
-      'sales' => count(Epic_Mongo::db("sale")->fetchAll()),
-    );
+    // $this->view->counts = array(
+    //   'guides' => count(Epic_Mongo::db("guide")->fetchAll(array('published' => true))),
+    //   'builds' => count(Epic_Mongo::db("build")->fetchAll()),
+    //   'items' => count(Epic_Mongo::db("item")->fetchAll()),
+    //   'sales' => count(Epic_Mongo::db("sale")->fetchAll()),
+    // );
     
     // var_dump($this->view->builds->export()); exit;
 		// $query = array(
