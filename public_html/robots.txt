@@ -13,3 +13,6 @@ Disallow: /i/*/delete
 Disallow: /i/*/edit
 Disallow: /i/*
 Disallow: /item/*
+
+User-agent: Yandex
+Disallow: /
