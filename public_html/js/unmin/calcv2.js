@@ -688,7 +688,7 @@ BuildCalculator.prototype = {
 		// EHP Calculation by Damage Type
 		// Formula: ( Life / (Percentage Damage Taken * Modifier ) )
 		// ----------------------------------
-		rendered['ehp-dodge'] = defenses.life / ( rendered.damageTaken * ( 1 - defenses['dodge-chance'] / 100));
+		rendered['ehp-dodge'] = rendered['ehp-block-dodge'] = defenses.life / ( rendered.damageTaken * ( 1 - defenses['dodge-chance'] / 100));
 		rendered['ehp-melee'] = defenses.life / ( rendered.damageTaken * ( 1 - defenses['percent-melee-reduce'] ));
 		rendered['ehp-range'] = defenses.life / ( rendered.damageTaken * ( 1 - defenses['percent-range-reduce'] ));
 		rendered['ehp-elite'] = defenses.life / ( rendered.damageTaken * ( 1 - defenses['percent-elite-reduce'] ));
@@ -696,13 +696,15 @@ BuildCalculator.prototype = {
 		// EHP Block Calculation 
 		// Formula: 
 		// ----------------------------------
+		rendered['ehp-block'] = rendered['ehp'];
 		if(defenses['block-chance'] && defenses['block-amount']) {
 			var hit = 70000,
 					taken = rendered.damageTaken * hit,
 					reduced = (defenses['block-chance'] / 100 * defenses['block-amount']),
 					change = taken / (taken - reduced);
 			// console.log(defenses['block-amount']);
-			rendered['ehp-block'] = ( rendered['ehp-dodge']  * change );
+			rendered['ehp-block'] = ( rendered['ehp']  * change );
+			rendered['ehp-block-dodge'] = ( rendered['ehp-dodge']  * change );
 			if(rendered['ehp-block'] < 0) {
 				rendered['ehp-block'] = "Invulnerable";
 			}
@@ -919,7 +921,8 @@ BuildCalculator.prototype = {
 		}
 		// Determine Bonus Damage from Elemental Damage Bonuses
 		if(bnElePercent > 0 && this.attrs.mhRealDamage) {
-			mhAvgDamage += (this.attrs.mhRealDamage.min + bnMinDamage + this.attrs.mhRealDamage.max + bnMaxDamage) / 2 * (bnElePercent / 100);
+			bnEleDamage = (this.attrs.mhRealDamage.min + bnMinDamage + this.attrs.mhRealDamage.max + bnMaxDamage) / 2 * (bnElePercent / 100);
+			mhAvgDamage += bnEleDamage;
 			if(this.isDuelWielding) {
 				ohAvgDamage += (this.attrs.ohRealDamage.min + bnMinDamage + this.attrs.ohRealDamage.max + bnMaxDamage) / 2 * (bnElePercent / 100);
 			}
@@ -2061,6 +2064,9 @@ BuildCalculator.prototype = {
 					'total-armor-reduction': 'Armor DmgReduce', 
 					'total-resist-reduction': 'Resist DmgReduce',
 					'total-damage-reduction': 'Total DmgReduce',
+					'attack-speed-incs': '+% Attack Speed',
+					'dps-speed-mh': 'MH AtkSpeed',
+					'dps-speed-oh': 'OH AtkSpeed',
 				};
     // console.log(s1, s2);
 		_.each(s1, function(val, key) {

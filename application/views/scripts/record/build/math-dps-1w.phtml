@@ -1,0 +1,32 @@
+<ul>
+  <li><span data-display-item="mainhand"></span>
+    <ul>
+      <li>Total Damage: <span data-display='long-round' data-value='dps-mh-min'></span> - <span data-display='long-round' data-value='dps-mh-max'></span></li>
+      <li>Real Weapon Damage: <span data-display='long-round' data-value='dps-mh-real-min'></span> - <span data-display='long-round' data-value='dps-mh-real-max'></span></li>
+    </ul>
+  </li>
+  <li>Minimum Damage: +<span data-display='long-round' data-value='min-damage'></span></li>
+  <li>Maximum Damage: +<span data-display='long-round' data-value='max-damage'></span></li>
+  <li>+% Elemental Damage: <span data-display='long-round' data-value='bonus-elemental-percent'></span>%</li>
+</ul>
+<p>+% Elemental Damage appears to use the Minimum Damage values from your weapons, WITHOUT the +Elemental Damage affixes (+X-Y Fire/Lightning/Etc Damage). This is the value we are using called 'Real Weapon Damage'.</p>
+<p>To calculate +% Elemental Damage, we need to do the following...</p>
+<pre>Bonus Damage = (MH Real Min Damage + MH Real Max Damage + Bonus Min Damage + Bonus Max Damage) * Bonus Ele %</pre>
+<p>Plugging in the numbers, we get:</p>
+<pre>(<span data-display='long-round' data-value='dps-mh-real-min'></span> + <span data-display='long-round' data-value='min-damage'></span> + <span data-display='long-round' data-value='dps-mh-real-max'></span> + <span data-display='long-round' data-value='max-damage'></span>) / 2 * (<span data-value='bonus-elemental-percent'></span> * 0.01)
+Bonus Damage = <span data-value='bonus-elemental-damage'></span></pre>
+<p>Now, for the math to determine actual average damage, which is as follows.</p>
+<pre>
+MH Min = (MH Weapon Min + Bonus Min)
+MH Max = (MH Weapon Max + Bonus Max)
+MH Avg = ((MH Min + MH Max) / 2 
+A = MH Avg + Elemental Damage</pre>
+<p>Plug in this build's numbers...</p>
+<pre>
+MH Min = (<span data-display='long-round' data-value='dps-mh-min'></span> + <span data-display='long-round' data-value='plus-min-damage'></span>) = <span data-display='long-round' data-value='dps-mh-min-total'></span>
+MH Max = (<span data-display='long-round' data-value='dps-mh-max'></span> + <span data-display='long-round' data-value='plus-max-damage'></span>) = <span data-display='long-round' data-value='dps-mh-max-total'></span>
+
+MH Avg = (<span data-display='long-round' data-value='dps-mh-min-total'></span> + <span data-display='long-round' data-value='dps-mh-max-total'></span>) / 2 = <span data-display='long-round' data-value='dps-mh-avg'></span>
+
+A = <span data-display='long-round' data-value='dps-mh-avg'></span> + <span data-value='bonus-elemental-damage'></span>
+A = <span data-display='long-round' data-value='scram-a'></span></pre>
