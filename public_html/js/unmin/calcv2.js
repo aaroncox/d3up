@@ -329,6 +329,7 @@ BuildCalculator.prototype = {
 			}
 		};
 		// d3up.log(reverse);
+		effects[ "plus-life" ] =
 		effects[ "plus-thorns" ] =
 		effects[ "plus-armor" ] =
 		effects[ "plus-resist-all" ] =
@@ -340,7 +341,7 @@ BuildCalculator.prototype = {
 		  if(!v) {
 		    return false;
 		  }
-      // console.log(v);
+      // console.log(v, k);
 			// if(passives[this.class][v] && typeof passives[this.class][v]['effect'] != "undefined") {
 			if(v.effect) {
 				// d3up.log(k,v);
