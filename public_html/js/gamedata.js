@@ -2576,11 +2576,13 @@
 				'companion~b': {
 					name: 'Companion - Boar Companion',
 					desc: 'Summon a raven companion. Your raven companion will periodically peck at enemies for 38% of your weapon damage as Physical.',
-					rune: 'Summon a boar instead of a raven. The boar\'s attacks hit all enemies in an area.',
+					rune: 'Summon a boar instead of a raven. The boar increases your Life regeneration by 155 per second. In addition the boar increases your resistances to all damage types by 15%.',
 					effect: {
 						'cooldown': 30,
 						'cost-discipline': 10,
 						'weapon-damage': 38,
+						'plus-life-regen': 155,
+						'plus-resist-all': 15,
 					},
 				},
 				'companion~c': {
