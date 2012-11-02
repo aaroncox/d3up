@@ -620,11 +620,11 @@ BuildCalculator.prototype = {
 		// Formula: Base Dodge * Bonus Dodge 1 * Bonus Dodge 2 ... etc
 		// ----------------------------------
 		if(this.bonuses['plus-dodge'].length) {
-			var percentage = rendered['dodge-chance'] / 100;
 			_.each(this.bonuses['plus-dodge'], function(v) {
+				var percentage = rendered['dodge-chance'] / 100;
 				percentage = (1 - percentage) * (1 - v);
+				rendered['dodge-chance'] = (1 - percentage) * 100;
 			});
-			rendered['dodge-chance'] = (1 - percentage) * 100;
 		}
 		// console.log(rendered['dodge-chance'], this.bonuses['plus-dodge']);
 		
