@@ -259,6 +259,7 @@ class D3Up_Tool_Crawler
 		'dh-hungering-arrow' => 'Increases Hungering Arrow damage by [v]%',
 		'dh-multishot' => 'Increases Critical Hit Chance of Multishot by [v]%',
 		'dh-rapid-fire' => 'Increases Critical Hit Chance of Rapid Fire by [v]%',
+		'dh-cluster-arrow' => 'Reduces resource cost of Cluster Arrow by [v] Hatred',
 		// Monk
 		'spirit-spent-life' => 'Gain [v] Life per Spirit Spent',
 		'spirit-regen' => 'Increases Spirit Regeneration by [v] per Second',
