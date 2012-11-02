@@ -852,8 +852,8 @@ BuildCalculator.prototype = {
       }
     }
 		// Calculate Averages
-		rendered['dps-mh-avg'] = mhAvgDamage = (mhMinDamage + mhMaxDamage) / 2;				
-		rendered['dps-oh-avg'] = ohAvgDamage = (ohMinDamage + ohMaxDamage) / 2;
+		mhAvgDamage = (mhMinDamage + mhMaxDamage) / 2;				
+		ohAvgDamage = (ohMinDamage + ohMaxDamage) / 2;
 		
 		rendered['dps-mh-min-total'] = mhMinDamage;
 		rendered['dps-mh-max-total'] = mhMaxDamage;
@@ -925,9 +925,13 @@ BuildCalculator.prototype = {
 			bnEleDamage = (this.attrs.mhRealDamage.min + bnMinDamage + this.attrs.mhRealDamage.max + bnMaxDamage) / 2 * (bnElePercent / 100);
 			mhAvgDamage += bnEleDamage;
 			if(this.isDuelWielding) {
-				ohAvgDamage += (this.attrs.ohRealDamage.min + bnMinDamage + this.attrs.ohRealDamage.max + bnMaxDamage) / 2 * (bnElePercent / 100);
+				bnEleDamageOh = (this.attrs.ohRealDamage.min + bnMinDamage + this.attrs.ohRealDamage.max + bnMaxDamage) / 2 * (bnElePercent / 100);
+				ohAvgDamage += bnEleDamageOh;
+				rendered['bonus-elemental-damage-oh'] = bnEleDamageOh;
 			}
 		}
+		rendered['dps-mh-avg'] = mhAvgDamage;
+		rendered['dps-oh-avg'] = ohAvgDamage;
 		rendered['bonus-elemental-damage'] = bnEleDamage;
 		rendered['bonus-elemental-percent'] = bnElePercent;
     // console.log(this.attrs.mhRealDamage.min, bnMinDamage, bnElePercent, bnEleDamage);
