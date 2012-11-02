@@ -210,9 +210,15 @@ BuildCalculator.prototype = {
 					this.attrs['plus-holy-damage'] = e;
 				}
 				break;
+			case "plus-life-regen":
+				if(this.attrs['life-regen']) {
+					this.attrs['life-regen'] += e;					
+				} else {
+					this.attrs['life-regen'] = e;
+				}
+				break;
 			case "percent-non-physical":
 			case "plus-life":
-			case "plus-life-regen":
 			case "plus-damage-reduce":
 			case "plus-resist-all":
 			case "plus-attack-speed":
