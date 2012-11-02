@@ -282,7 +282,7 @@ class D3Up_Tool_Crawler
 		'wd-firebats' => 'Reduces resource cost of Firebats by [v] Mana',
 		'wd-zombie-dogs' => 'Reduces cooldown of Summon Zombie Dogs by [v] Seconds',
 		'wd-plague-of-toads' => 'Increases Plague of Toads damage by [v]%',
-		'wd-poison-darts' => 'Increaeses Poison Darts damage by [v]%',
+		'wd-poison-darts' => 'Increases Poison Darts damage by [v]%',
 		'wd-spirit-barrage' => 'Increases Spirit Barrage damage by [v]%',
 		'wd-wall-of-zombies' => 'Reduces cooldown of Wall of Zombies by [v] Seconds',
 		'wd-zombie-charger' => 'Reduces resource cost of Zombie Charger by [v] Mana',

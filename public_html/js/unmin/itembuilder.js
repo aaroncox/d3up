@@ -159,7 +159,7 @@ ItemBuilder.prototype = {
 		'wd-firebats': 'Reduces resource cost of Firebats by VVV Mana',
 		'wd-zombie-dogs': 'Reduces cooldown of Summon Zombie Dogs by VVV Seconds',
 		'wd-plague-of-toads': 'Increases Plague of Toads damage by VVV%',
-		'wd-poison-darts': 'Increaeses Poison Darts damage by VVV%',
+		'wd-poison-darts': 'Increases Poison Darts damage by VVV%',
 		'wd-spirit-barrage': 'Increases Spirit Barrage damage by VVV%',
 		'wd-wall-of-zombies': 'Reduces cooldown of Wall of Zombies by VVV Seconds',
 		'wd-zombie-charger': 'Reduces resource cost of Zombie Charger by VVV Mana',
