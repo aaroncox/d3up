@@ -2064,6 +2064,7 @@ BuildCalculator.prototype = {
 					'dps-speed-oh': 'OH Attk/Sec',
 					'ehp-block': 'EHP w/ Block',
 					'ehp-dodge': 'EHP w/ Dodge',
+					'ehp-block-dodge': 'EHP w/ Block+Dodge',
 					'block-amount': 'Block', 
 					'block-chance': '%Block',
 					'total-armor-reduction': 'Armor DmgReduce', 
