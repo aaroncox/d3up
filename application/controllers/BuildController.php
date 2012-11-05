@@ -75,7 +75,7 @@ class BuildController extends D3Up_Controller_Action
 			$this->view->characters = D3Up_Tool_Crawler::getInstance()->getCharacters($profile);
 		}
 		if(!$this->getRequest()->getParam('character-id') && !$this->getRequest()->getParam('character-id-manual') && $this->getRequest()->getParam('region') && $this->getRequest()->getParam('battletag')) {
-			$tag = $this->getRequest()->getParam('battletag');
+			$tag = str_replace(" ", "", $this->getRequest()->getParam('battletag'));
 			$region = $this->getRequest()->getParam('region');
 			echo json_encode(D3Up_Tool_Crawler::getCharactersByTag($tag, (int) $region)); exit;
 		}
@@ -85,9 +85,9 @@ class BuildController extends D3Up_Controller_Action
 		$battletag = null;
 		if($this->getRequest()->isPost()) {
 			$result = $form->process($this->getRequest()->getParams());
-			$battletag = $this->getRequest()->getParam('battletag');
+			$battletag = str_replace(" ", "", $this->getRequest()->getParam('battletag'));
 			if($profile) {				
-				$battletag = $this->getRequest()->getParam('battletag') ?: $profile->battletag;
+				$battletag = str_replace(" ", "", $this->getRequest()->getParam('battletag')) ?: str_replace(" ", "", $profile->battletag);
 			}
 			$build = Epic_Mongo::db('build')->find($result['upserted']);
 			if($result && $battletag && ($this->getRequest()->getParam('character-id') || $this->getRequest()->getParam('character-id-manual'))) {
