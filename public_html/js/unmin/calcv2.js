@@ -284,15 +284,22 @@ BuildCalculator.prototype = {
  						ohSpeed *= (1 + atkSpeedInc + 0.15 + this.bonuses['plus-attack-speed']);
 						if(this.attrs.damage) {
 							var mhDamageMin = this.attrs.damage.min,
-									bnDamageMin = this.attrs['min-damage'],
 									mhDamageMax = this.attrs.damage.max,
-									bnDamageMax = this.attrs['max-damage'];							
-									this.bonuses['monk-fitl-bonus'] = this.bonuses['monk-fitl-bonus-mh'] = (mhDamageMin + bnDamageMin + mhDamageMax + bnDamageMax) * 0.3 * mhSpeed;
-									if(this.attrs['damage-oh']) {
-										var ohDamageMin = this.attrs['damage-oh'].min,
-												ohDamageMax = this.attrs['damage-oh'].max;
-										this.bonuses['monk-fitl-bonus-oh'] = (ohDamageMin + bnDamageMin + ohDamageMax + bnDamageMax) * 0.3 * ohSpeed;
-									}
+									bnDamageMin = 0,
+									bnDamageMax = 0;
+							if(this.attrs['min-damage']) {
+								bnDamageMin = this.attrs['min-damage'];
+							}
+							if(this.attrs['max-damage']) {
+								bnDamageMax = this.attrs['max-damage'];							
+							}
+							this.bonuses['monk-fitl-bonus'] = (mhDamageMin + bnDamageMin + mhDamageMax + bnDamageMax) * 0.3 * mhSpeed;
+							this.bonuses['monk-fitl-bonus-mh'] = this.bonuses['monk-fitl-bonus'];
+							if(this.attrs['damage-oh']) {
+								var ohDamageMin = this.attrs['damage-oh'].min,
+										ohDamageMax = this.attrs['damage-oh'].max;
+								this.bonuses['monk-fitl-bonus-oh'] = (ohDamageMin + bnDamageMin + ohDamageMax + bnDamageMax) * 0.3 * ohSpeed;
+							}
 						}
 						// var mhSpeed = this.attrs['speed'],
 						// 		ohSpeed = false,
