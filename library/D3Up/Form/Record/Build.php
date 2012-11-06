@@ -66,6 +66,20 @@ class D3Up_Form_Record_Build extends Epic_Form
 			'tabindex' => 10,
 		));
 
+		$this->addElement("select", "class", array(
+			'required' => true,
+			'label' => 'What class is this build?',
+			'multiOptions' => array(
+				null => '',
+				'barbarian' => 'Barbarian',
+				'demon-hunter' => 'Demon Hunter',
+				'monk' => 'Monk',
+				'witch-doctor' => 'Witch Doctor',
+				'wizard' => 'Wizard',
+			),
+			'tabindex' => 30,
+		));
+
 		$this->addElement("text", "level", array(
 			'label' => 'Character Level',
 			'validators' => array(
@@ -82,27 +96,21 @@ class D3Up_Form_Record_Build extends Epic_Form
 
 		$this->addElement("checkbox", "hardcore", array(
 			'label' => 'Hardcore?',
-		));
-
+		));		
 		
 		$this->addElement("checkbox", "private", array(
 			'label' => 'Private?',
 			'tabindex' => 25,
 		));
-
-		$this->addElement("select", "class", array(
-			'required' => true,
-			'label' => 'What class is this build?',
-			'multiOptions' => array(
-				null => '',
-				'barbarian' => 'Barbarian',
-				'demon-hunter' => 'Demon Hunter',
-				'monk' => 'Monk',
-				'witch-doctor' => 'Witch Doctor',
-				'wizard' => 'Wizard',
-			),
-			'tabindex' => 30,
-		));
+		
+		$profile = Epic_Auth::getInstance()->getProfile();
+		if($profile && $profile->_twitchUser) {
+			$this->addElement("checkbox", "twitch", array(
+				'label' => 'Enabled Twitch.tv?',
+				'description' => 'Do you want to enable your Twitch.tv Stream on this build?',
+				'tabindex' => 25,
+			));
+		}
 		
 		$this->setDefaults(array(
 			'name' => $build->name,
@@ -110,6 +118,7 @@ class D3Up_Form_Record_Build extends Epic_Form
 			'private' => $build->private,
 			'level' => $build->level ?: 60,
 			'paragon' => $build->paragon,
+			'twitch' => $build->_twitchEnabled,
 			'hardcore' => $build->hardcore,
 			'profileUrl' => $build->profileUrl,
 		));
@@ -141,6 +150,7 @@ class D3Up_Form_Record_Build extends Epic_Form
 		$build->paragon = (int) $this->paragon->getValue();
 		// Set if it's hardcore
 		$build->hardcore = (bool) $this->hardcore->getValue();
+		// Do we show the TwitchTV stream of the user on this build?
 		// Set the Profile URL
 		// $build->profileUrl = $this->profileUrl->getValue();
 		// Set privacy
@@ -148,6 +158,10 @@ class D3Up_Form_Record_Build extends Epic_Form
 		// Do we have a user creating this? If so, add it.
 		if($profile = Epic_Auth::getInstance()->getProfile()) {
 			$build->_createdBy = $profile;
+			if($profile->_twitchUser) {
+				$enabled = (bool) $this->twitch->getValue();
+				$build->_twitchEnabled = $enabled;
+			}
 		}
 		// Return the Build
 		return $build->save();

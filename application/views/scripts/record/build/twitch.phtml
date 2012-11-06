@@ -1,0 +1,16 @@
+<div class="content-page">
+		<? if($this->record->_twitchOnline): ?>
+		<div class="page ui-helper-clearfix" style="padding: 5px 2px; height: 410px">
+			<object type="application/x-shockwave-flash" height="400" width="640" id="live_embed_player_flash" data="http://www.twitch.tv/widgets/live_embed_player.swf?channel=<?= $this->record->_createdBy->_twitchUser ?>" bgcolor="#000000"><param name="allowFullScreen" value="true" /><param name="allowScriptAccess" value="always" /><param name="allowNetworking" value="all" /><param name="movie" value="http://www.twitch.tv/widgets/live_embed_player.swf" /><param name="flashvars" value="hostname=www.twitch.tv&channel=<?= $this->record->_createdBy->_twitchUser ?>&auto_play=true&start_volume=25" /></object>
+			<div style="float: right; height: 400px">
+				<iframe frameborder="0" scrolling="no" id="chat_embed" src="http://twitch.tv/chat/embed?channel=<?= $this->record->_createdBy->_twitchUser ?>&amp;popout_chat=true" height="400" width="300"></iframe>
+			</div>
+		</div>
+		<? else: ?>
+		<div class="page ui-helper-clearfix" style="padding: 10px">
+			<a href="http://twitch.tv"><img src="/images/twitch.png" style="height: 60px; float: left;"/></a>
+			<h2 style="margin: 0 10px 0 160px"><a href="http://twitch.tv">Twitch.tv</a> User <a href="http://twitch.tv/<?= $this->record->_createdBy->_twitchUser ?>"><?= $this->record->_createdBy->_twitchUser ?></a> is Offline</h2>
+			<p style="margin: 0 10px 0 160px">This user's Twitch.tv stream is currently offline. Last seen online: <?= $this->timeAgo($this->record->_twitchLastSeen) ?>, Last Checked: <?= $this->timeAgo($this->record->_twitchLastCheck - 300) ?></p>
+		</div>
+		<? endif ?>
+</div>

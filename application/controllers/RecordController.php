@@ -203,6 +203,30 @@ class RecordController extends D3Up_Controller_Action
   		$this->view->similar = $items;
 		}
 	}
+	public function checkTwitch() {
+		$record = $this->getRecord();
+		$ttl = 60 * 5; // 5 Minutes
+		// echo "S: ".$record->_twitchLastCheck."<br/>";
+		// echo "C: ".(time())."<br/>";
+		// Lets only check to see if they are online every 5 minutes
+		if($record->_twitchLastCheck < time()) {
+			// echo "Checking Online Status";
+			// Make request to see if the user is online
+			$channelName = strtolower($record->_createdBy->_twitchUser);
+			$json_array = json_decode(file_get_contents("https://api.twitch.tv/kraken/streams/$channelName"), true);
+			// If they are online, update the timestamp on their record
+			$record->_twitchLastCheck = time() + $ttl;
+			if($json_array['stream']['name'] == "live_user_$channelName") {
+				$record->_twitchOnline = true;
+				$record->_twitchLastSeen = time();
+			} else {
+				$record->_twitchOnline = false;
+			}
+			$record->save();
+		}
+		// exit;
+	}
+	
 	public function viewAction() {
 		$record = $this->getRecord();
 		if($record->_type == "build") {
@@ -210,6 +234,9 @@ class RecordController extends D3Up_Controller_Action
 		  $this->view->editForm->setAction("/build/edit/id/" . $record->id);
 			$this->checkVote();
 			$this->view->resync = $this->getRequest()->getParam("resync");
+			if($record->_twitchEnabled && $record->_createdBy->_twitchUser) {
+				$this->checkTwitch();
+			}
 		}
 		// Count a View
 		$record->viewCounter();

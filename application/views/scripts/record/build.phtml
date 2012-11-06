@@ -9,6 +9,9 @@
 ?>
 <div id="build">
   <?= $this->render("./record/build/header.phtml") ?>
+	<? if($this->record->_createdBy->_twitchUser && $this->record->_twitchEnabled): ?>
+		<?= $this->render("./record/build/twitch.phtml") ?>
+	<? endif ?>
 	<div id="character" class="ui-helper-clearfix" data-id="<?= $this->record->id ?>" data-class="<?= $this->record->class ?>" <? if($this->myBuild) { echo "data-owner='true'"; } ?>>
 	  <? if($this->resync): ?>
 	  <div class="notifications">

@@ -438,4 +438,83 @@ class UserController extends D3Up_Controller_Action
       $this->_redirect('/user/items');
 		}
 	}
+	private function twitchPost($url, $fields) {
+		$fields_string = "";
+		foreach($fields as $key=>$value) { 
+			$fields_string .= $key.'='.urlencode($value).'&'; 
+		}
+		rtrim($fields_string, '&');
+
+		$crl = curl_init();
+		$timeout = 5;
+
+		curl_setopt($crl, CURLOPT_URL,$url);
+		curl_setopt($crl,CURLOPT_POST, count($fields));
+		curl_setopt($crl,CURLOPT_POSTFIELDS, $fields_string);
+
+		curl_setopt ($crl, CURLOPT_RETURNTRANSFER, 1);
+		curl_setopt ($crl, CURLOPT_CONNECTTIMEOUT, $timeout);
+		$ret = curl_exec($crl);
+		curl_close($crl);
+		return $ret;
+	}
+	private function twitchGet($url, $profile) {
+		$crl = curl_init();
+		$timeout = 5;
+		$url = $url."?oauth_token=".$profile->_twitchToken;
+		curl_setopt ($crl, CURLOPT_URL,$url);
+		curl_setopt ($crl, CURLOPT_RETURNTRANSFER, 1);
+		curl_setopt ($crl, CURLOPT_CONNECTTIMEOUT, $timeout);
+		$ret = curl_exec($crl);
+		curl_close($crl);
+		return json_decode($ret);
+	}
+	public function twitchAction() {
+		$this->view->profile = $profile = D3Up_Auth::getInstance()->getProfile();
+		if($profile) {
+			if($error = $this->getRequest()->getParam("error_description")) {
+				$this->view->error = $error;
+			}
+			if($profile->_twitchToken) {
+				$this->view->success = true;
+			}
+			if($remove = $this->getRequest()->getParam("remove")) {
+				$profile->_twitchToken = null;
+				$profile->_twitchScope = null;
+				$profile->_twitchUser = null;
+				$profile->_twitchChannel = null;
+				$profile->save();
+				$this->_redirect("/user/twitch");
+			}
+			// User clicks the Connect Button
+			if($this->getRequest()->getParam("connect")) {
+				$this->_redirect("https://api.twitch.tv/kraken/oauth2/authorize?response_type=code&client_id=ideefmvd76e23wava6zux4tl3ntqlhd&redirect_uri=http://local.d3up.com/user/twitch&scope=user_read channel_read");
+			}
+			if($code = $this->getRequest()->getParam("code")) {
+				$scope = $this->getRequest()->getParam("scope");
+				$params = array(
+					'client_id' => 'ideefmvd76e23wava6zux4tl3ntqlhd',
+					'client_secret' => 'nedy7gkrl6aqhy2op0z2jd285ky1278',
+					'grant_type' => 'authorization_code',
+					'redirect_uri' => 'http://local.d3up.com/user/twitch',
+					'code' => $code,
+				);
+				$results = json_decode($this->twitchPost("https://api.twitch.tv/kraken/oauth2/token", $params));
+				if(isset($results->access_token)) {
+					$profile->_twitchToken = $results->access_token;
+					$profile->_twitchScope = $results->scope;
+					$user = $this->twitchGet('https://api.twitch.tv/kraken/user', $profile);
+					$profile->_twitchUser = $user->display_name;
+					$channel = $this->twitchGet('https://api.twitch.tv/kraken/channel', $profile);
+					$profile->_twitchChannel = $channel->url;
+					$profile->save();
+					$this->_redirect("/user/twitch");
+				}
+			}			
+		} else {
+			if($this->getRequest()->getParam("connect")) {
+				throw new Exception("You must be logged into your D3Up account before proceeding.");
+			}
+		}
+	}
 } // END class UserController extends Epic_Controller_Action

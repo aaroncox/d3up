@@ -121,7 +121,7 @@ class D3Up_Mongo_Record_Item extends Epic_Mongo_Document_Record
 			}			
 		}
 		$quality = '';
-		if(isset($export['quality'])) {
+		if(isset($export['quality']) && isset($helper->_qualityMap[$export['quality']])) {
 		  $quality = $helper->_qualityMap[$export['quality']];
 		}
 		$type = '';
