@@ -274,33 +274,7 @@ BuildCalculator.prototype = {
 						break;
 					// Monk damage sure is fucked up.
 					case "plus-holy-damage-conditional":
-						var mhSpeed = this.attrs['speed'],
-								ohSpeed = this.attrs['speed-oh'],
-								atkSpeedInc = 0;
-						if(this.attrs['attack-speed-incs']) {
-							atkSpeedInc = this.attrs['attack-speed-incs'] / 100;
-						}
- 						mhSpeed *= (1 + atkSpeedInc + 0.15 + this.bonuses['plus-attack-speed']);
- 						ohSpeed *= (1 + atkSpeedInc + 0.15 + this.bonuses['plus-attack-speed']);
-						if(this.attrs.damage) {
-							var mhDamageMin = this.attrs.damage.min,
-									mhDamageMax = this.attrs.damage.max,
-									bnDamageMin = 0,
-									bnDamageMax = 0;
-							if(this.attrs['min-damage']) {
-								bnDamageMin = this.attrs['min-damage'];
-							}
-							if(this.attrs['max-damage']) {
-								bnDamageMax = this.attrs['max-damage'];							
-							}
-							this.bonuses['monk-fitl-bonus'] = (mhDamageMin + bnDamageMin + mhDamageMax + bnDamageMax) * 0.3 * mhSpeed;
-							this.bonuses['monk-fitl-bonus-mh'] = this.bonuses['monk-fitl-bonus'];
-							if(this.attrs['damage-oh']) {
-								var ohDamageMin = this.attrs['damage-oh'].min,
-										ohDamageMax = this.attrs['damage-oh'].max;
-								this.bonuses['monk-fitl-bonus-oh'] = (ohDamageMin + bnDamageMin + ohDamageMax + bnDamageMax) * 0.3 * ohSpeed;
-							}
-						}
+						this.bonuses['monk-fitl-bonus'] = true;
 						// var mhSpeed = this.attrs['speed'],
 						// 		ohSpeed = false,
 						// 		ias = this.attrs['attack-speed-incs'],
@@ -334,6 +308,35 @@ BuildCalculator.prototype = {
 				}
 			}, this);
 		}, this);
+	},
+	calcFITL: function(bnEleDamage) {
+		var mhSpeed = this.attrs['speed'],
+				ohSpeed = this.attrs['speed-oh'],
+				atkSpeedInc = 0;
+		if(this.attrs['attack-speed-incs']) {
+			atkSpeedInc = this.attrs['attack-speed-incs'] / 100;
+		}
+		mhSpeed *= (1 + atkSpeedInc + 0.15 + this.bonuses['plus-attack-speed']);
+		ohSpeed *= (1 + atkSpeedInc + 0.15 + this.bonuses['plus-attack-speed']);
+		if(this.attrs.damage) {
+			var mhDamageMin = this.attrs.damage.min,
+					mhDamageMax = this.attrs.damage.max,
+					bnDamageMin = 0,
+					bnDamageMax = 0;
+			if(this.attrs['min-damage']) {
+				bnDamageMin = this.attrs['min-damage'];
+			}
+			if(this.attrs['max-damage']) {
+				bnDamageMax = this.attrs['max-damage'];							
+			}
+ 			return (mhDamageMin + bnDamageMin + mhDamageMax + bnDamageMax + bnEleDamage * 2) * 0.3 * mhSpeed;
+			// this.bonuses['monk-fitl-bonus-mh'] = this.bonuses['monk-fitl-bonus'];
+			// if(this.attrs['damage-oh']) {
+			// 	var ohDamageMin = this.attrs['damage-oh'].min,
+			// 			ohDamageMax = this.attrs['damage-oh'].max;
+			// 	this.bonuses['monk-fitl-bonus-oh'] = (ohDamageMin + bnDamageMin + ohDamageMax + bnDamageMax) * 0.3 * ohSpeed;
+			// }
+		}
 	},
 	applyPassives: function(reverse) {
 		var effects = {
@@ -927,12 +930,6 @@ BuildCalculator.prototype = {
 			rendered['dps-oh-real-min-bonus'] = this.attrs.ohRealDamage.min + bnMinDamage;
 			rendered['dps-oh-real-max-bonus'] = this.attrs.ohRealDamage.max + bnMaxDamage;
 		}
-		if(this.bonuses['monk-fitl-bonus']) {
-			mhAvgDamage += this.bonuses['monk-fitl-bonus'];
-			// if(this.isDuelWielding) {
-			// 	ohAvgDamage += this.bonuses['monk-fitl-bonus'];
-			// }
-		}
 		// Determine Bonus Damage from Elemental Damage Bonuses
 		if(bnElePercent > 0 && this.attrs.mhRealDamage) {
 			bnEleDamage = (this.attrs.mhRealDamage.min + bnMinDamage + this.attrs.mhRealDamage.max + bnMaxDamage) / 2 * (bnElePercent / 100);
@@ -943,6 +940,14 @@ BuildCalculator.prototype = {
 				rendered['bonus-elemental-damage-oh'] = bnEleDamageOh;
 			}
 		}
+		// Add in Monk FITL if needed
+		if(this.bonuses['monk-fitl-bonus']) {
+			mhAvgDamage += this.calcFITL(bnEleDamage);
+			// if(this.isDuelWielding) {
+			// 	ohAvgDamage += this.bonuses['monk-fitl-bonus'];
+			// }
+		}
+		
 		rendered['dps-mh-avg'] = mhAvgDamage;
 		rendered['dps-oh-avg'] = ohAvgDamage;
 		rendered['bonus-elemental-damage'] = bnEleDamage;
