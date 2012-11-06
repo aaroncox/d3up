@@ -488,7 +488,7 @@ class UserController extends D3Up_Controller_Action
 			}
 			// User clicks the Connect Button
 			if($this->getRequest()->getParam("connect")) {
-				$this->_redirect("https://api.twitch.tv/kraken/oauth2/authorize?response_type=code&client_id=ideefmvd76e23wava6zux4tl3ntqlhd&redirect_uri=http://local.d3up.com/user/twitch&scope=user_read channel_read");
+				$this->_redirect("https://api.twitch.tv/kraken/oauth2/authorize?response_type=code&client_id=ideefmvd76e23wava6zux4tl3ntqlhd&redirect_uri=http://d3up.com/user/twitch&scope=user_read channel_read");
 			}
 			if($code = $this->getRequest()->getParam("code")) {
 				$scope = $this->getRequest()->getParam("scope");
@@ -496,7 +496,7 @@ class UserController extends D3Up_Controller_Action
 					'client_id' => 'ideefmvd76e23wava6zux4tl3ntqlhd',
 					'client_secret' => 'nedy7gkrl6aqhy2op0z2jd285ky1278',
 					'grant_type' => 'authorization_code',
-					'redirect_uri' => 'http://local.d3up.com/user/twitch',
+					'redirect_uri' => 'http://d3up.com/user/twitch',
 					'code' => $code,
 				);
 				$results = json_decode($this->twitchPost("https://api.twitch.tv/kraken/oauth2/token", $params));
