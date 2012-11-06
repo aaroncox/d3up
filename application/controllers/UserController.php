@@ -494,7 +494,7 @@ class UserController extends D3Up_Controller_Action
 				$scope = $this->getRequest()->getParam("scope");
 				$params = array(
 					'client_id' => 'ideefmvd76e23wava6zux4tl3ntqlhd',
-					'client_secret' => 'nedy7gkrl6aqhy2op0z2jd285ky1278',
+					'client_secret' => 'dilk84dqejbte3l7gyljj9yv4rbqnmh',
 					'grant_type' => 'authorization_code',
 					'redirect_uri' => 'http://d3up.com/user/twitch',
 					'code' => $code,
