@@ -476,6 +476,12 @@ ItemBuilder.prototype = {
 	// Update the Value of an Attribute
 	updateAttribute: function(name, value) {
 		switch(name) {
+			case "fire-damage":
+			case "cold-damage":
+			case "holy-damage":
+			case "poison-damage":
+			case "lightning-damage":
+			case "arcane-damage":
 			case "minmax-damage":
 				var parts = value.split("-");
 				this.item.attrs[name] = {
@@ -487,7 +493,6 @@ ItemBuilder.prototype = {
 				this.item.attrs[name] = parseFloat(value);
 				break;
 		}
-		// console.log(name, value);
 		if(this.changeCallback) {
 			this.changeCallback(this);
 		}
