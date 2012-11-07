@@ -31,16 +31,16 @@ class D3Up_Tool_Crawler
 
 	static public function get($url) {
     // --- With Proxy
-    // $aContext = array(
-    //     'http' => array(
-    //         'proxy' => 'tcp://192.168.1.7:8888',
-    //         'request_fulluri' => true,
-    //     ),
-    // );
-    // $cxContext = stream_context_create($aContext);
-    // $body = file_get_contents($url, false, $cxContext);
+    $aContext = array(
+        'http' => array(
+            'proxy' => 'tcp://192.168.1.7:8888',
+            'request_fulluri' => true,
+        ),
+    );
+    $cxContext = stream_context_create($aContext);
+    $body = file_get_contents($url, false, $cxContext);
     // --- No Proxy
-    $body = file_get_contents($url);
+    // $body = file_get_contents($url);
     // No response from BNet? Let the user know
     if(!$body) {
       throw new Exception("There was an error communicating with the Blizzard API. We attempted to access data at the following URL: <p><a href='".$url."'>".$url."</a></p>Please try again in a few moments to see if that resolves the problem, otherwise feel free to email me at <a href='mailto:aaron.cox@greymass.com'>aaron.cox@greymass.com</a>.");
@@ -225,6 +225,7 @@ class D3Up_Tool_Crawler
 		'plus-pickup-radius' => 'Increases Gold and Health pickup by [v] yards',
 		'plus-experience' => 'Monster kills grant +[v] experience',
 		'plus-experience-percent' => 'Increased Experience Rewarded per Kill by [v]%',
+		'plus-experience-bonus' => 'Increases Bonus Experience by [v]%',
 		'plus-gold-find' => '+[v]% Extra Gold from Monsters',
 		'plus-magic-find' => '[v]% Better Chance of finding Magical Items',
 		'health-globes' => 'Health Globes grant +[v] Life',

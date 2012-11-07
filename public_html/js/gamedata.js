@@ -7695,6 +7695,7 @@ td['plus-movement'] = '+VVV% Movement Speed';
 td['plus-pickup-radius'] = 'Increases Gold and Health pickup by VVV yards';
 td['plus-experience'] = 'Monster kills grant +VVV experience';
 td['plus-experience-percent'] = 'Increased Experience Rewarded per Kill by VVV%';
+td['plus-experience-bonus'] = 'Increases Bonus Experience by VVV%';
 td['plus-gold-find'] = '+VVV% Extra Gold from Monsters';
 td['plus-magic-find'] = 'VVV% Better Chance of finding Magic Items';
 td['health-globes'] = 'Health Globes grant +VVV Life';

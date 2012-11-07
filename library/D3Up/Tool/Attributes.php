@@ -82,6 +82,7 @@ class D3Up_Tool_Attributes
 		'plus-pickup-radius' => 'Increases Gold and Health pickup by [v] yards',
 		'plus-experience' => 'Monster kills grant +[v] experience',
 		'plus-experience-percent' => 'Increased Experience Rewarded per Kill by [v]%',
+		'plus-experience-bonus' => 'Increases Bonus Experience by [v]%',
 		'plus-gold-find' => '+[v]% Extra Gold from Monsters',
 		'plus-magic-find' => '[v]% Better Chance of finding Magic Items',
 		'health-globes' => 'Health Globes grant +[v] Life',
