@@ -845,7 +845,7 @@ class D3Up_Tool_MaxStat
 				0,      // melee-reduce
 				0,      // range-reduce
 				0,      // elite-reduce
-				1454,   // thorns
+				2544,   // thorns
 				0,      // cc-reduce
 				80,     // resist-all
 				60,     // physical-resist
