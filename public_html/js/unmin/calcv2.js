@@ -345,7 +345,6 @@ BuildCalculator.prototype = {
 			}
 		};
 		// d3up.log(reverse);
-		effects[ "plus-life" ] =
 		effects[ "plus-thorns" ] =
 		effects[ "plus-armor" ] =
 		effects[ "plus-resist-all" ] =
@@ -383,6 +382,7 @@ BuildCalculator.prototype = {
 							// d3up.log(this.attrs['resist-all'], highest, this.attrs['resist-all'] + highest);
 							this.bonuses['flatten-resists'] = true;
 							break;
+						case "plus-life":
 						case "plus-movement-speed":
 						case "max-spirit":
 						case "max-hatred":
