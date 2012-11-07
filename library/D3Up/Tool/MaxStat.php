@@ -805,13 +805,13 @@ class D3Up_Tool_MaxStat
 				0,      // elite-reduce
 				979,    // thorns
 				14,     // cc-reduce
-				70,     // resist-all
-				50,     // physical-resist
-				50,     // cold-resist
-				50,     // fire-resist
-				50,     // lightning-resist
-				50,     // poison-resist
-				50,     // arcane-resist
+				80,     // resist-all
+				60,     // physical-resist
+				60,     // cold-resist
+				60,     // fire-resist
+				60,     // lightning-resist
+				60,     // poison-resist
+				60,     // arcane-resist
 				12,      // plus-life
 				1,			// sockets
 			),        
