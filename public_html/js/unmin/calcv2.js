@@ -1516,6 +1516,11 @@ BuildCalculator.prototype = {
     }, this);
 		// Append Attributes into the values
 		this.values = _.extend(this.attrs, this.values);
+		// Do we have a text area to dump to?
+		var textarea = $("#json-data");
+		if(textarea) {
+			textarea.html(JSON.stringify(this.values));
+		}
 		// Return the values
 		return this.values;
 	},
