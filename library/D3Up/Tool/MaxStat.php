@@ -62,79 +62,801 @@ class D3Up_Tool_MaxStat
 	protected static $_limits = array(
 		array(
 			'types' => 'axe|ceremonial-knife|hand-crossbow|dagger|fist-weapon|mace|mighty-weapon|spear|sword|wand',
-			'values' => array(350, 350, 350, 350, 0, 2878, 959, 64, 3, 0, 0, 24, 0, 0, 18, 50, 0, 100, 11, 352, 447, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1),
+			'values' => array(
+				350,		// dexterity
+				350,    // intelligence
+				350,    // strength
+				350,    // vitality
+				0,      // life-regen
+				2878,   // life-kill
+				959,    // life-hit
+				64,     // spirit-spent-life
+				3,      // life-steal
+				0,      // plus-magic-find
+				0,      // plus-gold-find
+				24,     // plus-experience
+				0,      // plus-movement
+				0,      // plus-pickup-radius
+				18,     // level-reduce
+				50,     // plus-damage
+				0,      // critical-hit
+				100,    // critical-hit-damage
+				11,     // attack-speed
+				352,    // min-damage
+				447,    // max-damage
+				0,      // armor
+				0,      // plus-block
+				0,      // melee-reduce
+				0,      // range-reduce
+				0,      // elite-reduce
+				0,      // thorns
+				0,      // cc-reduce
+				0,      // resist-all
+				0,      // physical-resist
+				0,      // cold-resist
+				0,      // fire-resist
+				0,      // lightning-resist
+				0,      // poison-resist
+				0,      // arcane-resist
+				0,      // plus-life
+				1       // sockets
+			),
 		),
 		array(
 		  'types' => '2h-mace|2h-axe|bow|daibo|crossbow|2h-mighty|polearm|staff|2h-sword',
-		  'values' => array(595,595,595,595,0,5756,1918,0,6,0,0,0,0,0,18,50,0,200,11,478,611,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0),
+		  'values' => array(
+				595,		// dexterity
+				595,    // intelligence
+				595,    // strength
+				595,    // vitality
+				0,      // life-regen
+				5756,   // life-kill
+				1918,   // life-hit
+				0,      // spirit-spent-life
+				6,      // life-steal
+				0,      // plus-magic-find
+				0,      // plus-gold-find
+				0,      // plus-experience
+				0,      // plus-movement
+				0,      // plus-pickup-radius
+				18,     // level-reduce
+				50,     // plus-damage
+				0,      // critical-hit
+				200,    // critical-hit-damage
+				11,     // attack-speed
+				478,    // min-damage
+				611,    // max-damage
+				0,      // armor
+				0,      // plus-block
+				0,      // melee-reduce
+				0,      // range-reduce
+				0,      // elite-reduce
+				0,      // thorns
+				0,      // cc-reduce
+				0,      // resist-all
+				0,      // physical-resist
+				0,      // cold-resist
+				0,      // fire-resist
+				0,      // lightning-resist
+				0,      // poison-resist
+				0,      // arcane-resist
+				0,      // plus-life
+				1,			// sockets
+			),        
 		),
 		array(
 			'types' => 'mojo|source|quiver',
-			'values' => array(301, 301, 301, 301, 234, 0, 0, 0, 0, 18, 20, 24, 0, 0, 0, 0, 8.5, 0, 15, 0, 0, 0, 0, 0, 0, 0, 979, 0, 0, 0, 0, 0, 0, 0, 0, 9),
+			'values' => array(
+				301,		// dexterity
+				301,    // intelligence
+				301,    // strength
+				301,    // vitality
+				234,    // life-regen
+				0,      // life-kill
+				0,      // life-hit
+				0,      // spirit-spent-life
+				0,      // life-steal
+				18,     // plus-magic-find
+				20,     // plus-gold-find
+				24,     // plus-experience
+				0,      // plus-movement
+				0,      // plus-pickup-radius
+				0,      // level-reduce
+				0,      // plus-damage
+				10,    // critical-hit
+				0,      // critical-hit-damage
+				15,     // attack-speed
+				0,      // min-damage
+				0,      // max-damage
+				0,      // armor
+				0,      // plus-block
+				0,      // melee-reduce
+				0,      // range-reduce
+				0,      // elite-reduce
+				979,    // thorns
+				0,      // cc-reduce
+				0,      // resist-all
+				0,      // physical-resist
+				0,      // cold-resist
+				0,      // fire-resist
+				0,      // lightning-resist
+				0,      // poison-resist
+				0,      // arcane-resist
+				12,      // plus-life
+				1,			// sockets
+			),        
 		),
 		array(
 			'types' => 'shield',
-			'values' => array(350, 350, 350, 350, 234, 0, 0, 0, 0, 20, 20, 24, 0, 0, 0, 0, 10, 0, 15, 0, 0, 397, 9, 6, 6, 7, 2544, 14, 80, 60, 60, 60, 60, 60, 60, 16),
-		),
+			'values' => array(
+				350,		// dexterity
+				350,		// intelligence
+				350,    // strength
+				350,    // vitality
+				234,    // life-regen
+				0,      // life-kill
+				0,      // life-hit
+				0,      // spirit-spent-life
+				0,      // life-steal
+				20,     // plus-magic-find
+				20,     // plus-gold-find
+				24,     // plus-experience
+				0,      // plus-movement
+				0,      // plus-pickup-radius
+				0,      // level-reduce
+				0,      // plus-damage
+				10,     // critical-hit
+				0,      // critical-hit-damage
+				15,     // attack-speed
+				0,      // min-damage
+				0,      // max-damage
+				397,    // armor
+				9,      // plus-block
+				6,      // melee-reduce
+				6,      // range-reduce
+				7,      // elite-reduce
+				2544,   // thorns
+				14,     // cc-reduce
+				80,     // resist-all
+				60,     // physical-resist
+				60,     // cold-resist
+				60,     // fire-resist
+				60,     // lightning-resist
+				60,     // poison-resist
+				60,     // arcane-resist
+				16,			// plus-life
+				1       // sockets
+			),        
+		),          
 		array(
 			'types' => 'spirit-stone',
-			'values' => array(258, 178, 178, 178, 234, 0, 0, 30, 0, 18, 20, 24, 0, 7, 16, 0, 4.5, 0, 0, 0, 0, 397, 0, 0, 0, 0, 1454, 14, 70, 50, 50, 50, 50, 50, 50, 9),
+			'values' => array(
+				300,		// dexterity
+				200,    // intelligence
+				200,    // strength
+				200,    // vitality
+				234,    // life-regen
+				0,      // life-kill
+				0,      // life-hit
+				30,     // spirit-spent-life
+				0,      // life-steal
+				18,     // plus-magic-find
+				20,     // plus-gold-find
+				24,     // plus-experience
+				0,      // plus-movement
+				7,      // plus-pickup-radius
+				16,     // level-reduce
+				0,      // plus-damage
+				6,    // critical-hit
+				0,      // critical-hit-damage
+				0,      // attack-speed
+				0,      // min-damage
+				0,      // max-damage
+				397,    // armor
+				0,      // plus-block
+				0,      // melee-reduce
+				0,      // range-reduce
+				0,      // elite-reduce
+				1454,   // thorns
+				14,     // cc-reduce
+				70,     // resist-all
+				50,     // physical-resist
+				50,     // cold-resist
+				50,     // fire-resist
+				50,     // lightning-resist
+				50,     // poison-resist
+				50,     // arcane-resist
+				12,      // plus-life
+				1,			// sockets
+			),        
 		),
 		array(
 			'types' => 'voodoo-mask',
-			'values' => array(178, 258, 178, 178, 234, 0, 0, 0, 0, 18, 20, 24, 0, 7, 16, 0, 4.5, 0, 0, 0, 0, 397, 0, 0, 0, 0, 1454, 14, 70, 50, 50, 50, 50, 50, 50, 9),
-			),
+			'values' => array(
+				200,		// dexterity
+				300,		// intelligence
+				200,    // strength
+				200,    // vitality
+				234,    // life-regen
+				0,      // life-kill
+				0,      // life-hit
+				0,      // spirit-spent-life
+				0,      // life-steal
+				18,     // plus-magic-find
+				20,     // plus-gold-find
+				24,     // plus-experience
+				0,      // plus-movement
+				7,      // plus-pickup-radius
+				16,     // level-reduce
+				0,      // plus-damage
+				6,    // critical-hit
+				0,      // critical-hit-damage
+				0,      // attack-speed
+				0,      // min-damage
+				0,      // max-damage
+				397,    // armor
+				0,      // plus-block
+				0,      // melee-reduce
+				0,      // range-reduce
+				0,      // elite-reduce
+				1454,   // thorns
+				14,     // cc-reduce
+				70,     // resist-all
+				50,     // physical-resist
+				50,     // cold-resist
+				50,     // fire-resist
+				50,     // lightning-resist
+				50,     // poison-resist
+				50,     // arcane-resist
+				12,      // plus-life
+				1,			// sockets
+			),        
+		),          
 		array(
 			'types' => 'wizard-hat',
-			'values' => array(178, 258, 178, 178, 234, 0, 0, 0, 0, 18, 20, 24, 0, 7, 16, 0, 4.5, 0, 0, 0, 0, 397, 0, 0, 0, 0, 1454, 14, 70, 50, 50, 50, 50, 50, 50, 9),
+			'values' => array(
+				200,		// dexterity
+				300,    // intelligence
+				200,    // strength
+				200,    // vitality
+				234,    // life-regen
+				0,      // life-kill
+				0,      // life-hit
+				0,      // spirit-spent-life
+				0,      // life-steal
+				18,     // plus-magic-find
+				20,     // plus-gold-find
+				24,     // plus-experience
+				0,      // plus-movement
+				7,      // plus-pickup-radius
+				16,     // level-reduce
+				0,      // plus-damage
+				6,    // critical-hit
+				0,      // critical-hit-damage
+				0,      // attack-speed
+				0,      // min-damage
+				0,      // max-damage
+				397,    // armor
+				0,      // plus-block
+				0,      // melee-reduce
+				0,      // range-reduce
+				0,      // elite-reduce
+				1454,   // thorns
+				14,     // cc-reduce
+				70,     // resist-all
+				50,     // physical-resist
+				50,     // cold-resist
+				50,     // fire-resist
+				50,     // lightning-resist
+				50,     // poison-resist
+				50,     // arcane-resist
+				12,      // plus-life
+				1,			// sockets
+			),        
 		),
 		array(
 			'types' => 'cloak',
-			'values' => array(178, 178, 178, 258, 410, 0, 0, 0, 0, 18, 20, 24, 0, 7, 16, 0, 0, 0, 0, 0, 0, 397, 0, 0, 6, 0, 2544, 0, 70, 50, 50, 50, 50, 50, 50, 9),
+			'values' => array(
+				200,		// dexterity
+				200,    // intelligence
+				200,    // strength
+				300,    // vitality
+				410,    // life-regen
+				0,      // life-kill
+				0,      // life-hit
+				0,      // spirit-spent-life
+				0,      // life-steal
+				18,     // plus-magic-find
+				20,     // plus-gold-find
+				24,     // plus-experience
+				0,      // plus-movement
+				7,      // plus-pickup-radius
+				16,     // level-reduce
+				0,      // plus-damage
+				0,      // critical-hit
+				0,      // critical-hit-damage
+				0,      // attack-speed
+				0,      // min-damage
+				0,      // max-damage
+				397,    // armor
+				0,      // plus-block
+				0,      // melee-reduce
+				6,      // range-reduce
+				0,      // elite-reduce
+				2544,   // thorns
+				0,      // cc-reduce
+				70,     // resist-all
+				50,     // physical-resist
+				50,     // cold-resist
+				50,     // fire-resist
+				50,     // lightning-resist
+				50,     // poison-resist
+				50,     // arcane-resist
+				12,      // plus-life
+				1,			// sockets
+			),        
 		),
 		array(
 			'types' => 'mighty-belt',
-			'values' => array(178, 178, 258, 178, 234, 0, 0, 0, 3, 18, 20, 24, 0, 7, 16, 0, 0, 0, 0, 0, 0, 265, 0, 0, 0, 0, 2544, 0, 70, 50, 50, 50, 50, 50, 50, 9),
+			'values' => array(
+				200,		// dexterity
+				200,    // intelligence
+				300,    // strength
+				200,    // vitality
+				234,    // life-regen
+				0,      // life-kill
+				0,      // life-hit
+				0,      // spirit-spent-life
+				3,      // life-steal
+				18,     // plus-magic-find
+				20,     // plus-gold-find
+				24,     // plus-experience
+				0,      // plus-movement
+				7,      // plus-pickup-radius
+				16,     // level-reduce
+				0,      // plus-damage
+				0,      // critical-hit
+				0,      // critical-hit-damage
+				0,      // attack-speed
+				0,      // min-damage
+				0,      // max-damage
+				265,    // armor
+				0,      // plus-block
+				0,      // melee-reduce
+				0,      // range-reduce
+				0,      // elite-reduce
+				2544,   // thorns
+				0,      // cc-reduce
+				70,     // resist-all
+				50,     // physical-resist
+				50,     // cold-resist
+				50,     // fire-resist
+				50,     // lightning-resist
+				50,     // poison-resist
+				50,     // arcane-resist
+				12,      // plus-life
+				1,			// sockets
+			),        
 		),
 		array(
-			'types' => 'helm' ,
-			'values' => array(200,300,200,200, 342, 0, 0, 0, 0, 20, 25, 24, 0, 7, 18, 0, 6, 0, 0, 0, 0, 397, 0, 0, 0, 0, 1454, 14, 80, 60, 60, 60, 60, 60, 60, 12),
+			'types' => 'helm',
+			'values' => array(
+				200,		// dexterity
+				300,    // intelligence
+				200,    // strength
+				200,    // vitality
+				342,    // life-regen
+				0,      // life-kill
+				0,      // life-hit
+				0,      // spirit-spent-life
+				0,      // life-steal
+				20,     // plus-magic-find
+				25,     // plus-gold-find
+				24,     // plus-experience
+				0,      // plus-movement
+				7,      // plus-pickup-radius
+				18,     // level-reduce
+				0,      // plus-damage
+				6,      // critical-hit
+				0,      // critical-hit-damage
+				0,      // attack-speed
+				0,      // min-damage
+				0,      // max-damage
+				397,    // armor
+				0,      // plus-block
+				0,      // melee-reduce
+				0,      // range-reduce
+				0,      // elite-reduce
+				1454,   // thorns
+				14,     // cc-reduce
+				80,     // resist-all
+				60,     // physical-resist
+				60,     // cold-resist
+				60,     // fire-resist
+				60,     // lightning-resist
+				60,     // poison-resist
+				60,     // arcane-resist
+				12,     // plus-life
+				1,			// sockets
+			),        
 		),
 		array(
 			'types' => 'belt',
-			'values' => array(200, 200, 300, 200, 342, 0, 0, 0, 0, 20, 25, 24, 0, 7, 18, 0, 0, 0, 0, 0, 0, 265, 0, 0, 0, 0, 2544, 0, 80, 60, 60, 60, 60, 60, 60, 12),
+			'values' => array(
+				200,		// dexterity
+				200,    // intelligence
+				300,    // strength
+				200,    // vitality
+				342,    // life-regen
+				0,      // life-kill
+				0,      // life-hit
+				0,      // spirit-spent-life
+				0,      // life-steal
+				20,     // plus-magic-find
+				25,     // plus-gold-find
+				24,     // plus-experience
+				0,      // plus-movement
+				7,      // plus-pickup-radius
+				18,     // level-reduce
+				0,      // plus-damage
+				0,      // critical-hit
+				0,      // critical-hit-damage
+				0,      // attack-speed
+				0,      // min-damage
+				0,      // max-damage
+				265,    // armor
+				0,      // plus-block
+				0,      // melee-reduce
+				0,      // range-reduce
+				0,      // elite-reduce
+				2544,   // thorns
+				0,      // cc-reduce
+				80,     // resist-all
+				60,     // physical-resist
+				60,     // cold-resist
+				60,     // fire-resist
+				60,     // lightning-resist
+				60,     // poison-resist
+				60,     // arcane-resist
+				12,     // plus-life
+				0,			// sockets
+			),        
 		),
 		array(
 			'types' => 'amulet',
-			'values' => array(302, 302, 302, 302, 410, 1971, 657, 0, 0, 40, 40, 24, 0, 0, 0, 0, 8.5, 65, 9, 27, 27, 360, 0, 4, 4, 0, 1712, 14, 70, 50, 50, 50, 50, 50, 50, 14),
+			'values' => array(
+				350,		// dexterity
+				350,    // intelligence
+				350,    // strength
+				350,    // vitality
+				499,    // life-regen
+				2878,   // life-kill
+				959,    // life-hit
+				0,      // spirit-spent-life
+				0,      // life-steal
+				45,     // plus-magic-find
+				50,     // plus-gold-find
+				24,     // plus-experience
+				0,      // plus-movement
+				0,      // plus-pickup-radius
+				0,      // level-reduce
+				0,      // plus-damage
+				10,     // critical-hit
+				100,    // critical-hit-damage
+				9,      // attack-speed
+				27,     // min-damage
+				27,     // max-damage
+				397,    // armor
+				0,      // plus-block
+				6,      // melee-reduce
+				6,      // range-reduce
+				0,      // elite-reduce
+				1712,   // thorns
+				14,     // cc-reduce
+				80,     // resist-all
+				60,     // physical-resist
+				60,     // cold-resist
+				60,     // fire-resist
+				60,     // lightning-resist
+				60,     // poison-resist
+				60,     // arcane-resist
+				16,     // plus-life
+				1,			// sockets
+			),        
 		),
 		array(
 			'types' => 'boots',
-			'values' => array(300, 200, 200, 200, 342, 0, 0, 0, 0, 20, 25, 24, 12, 7, 18, 0, 0, 0, 0, 0, 0, 265, 0, 0, 0, 0, 1454, 0, 80, 60, 60, 60, 60, 60, 60, 0),
+			'values' => array(
+				300,		// dexterity
+				200,    // intelligence
+				200,    // strength
+				200,    // vitality
+				342,    // life-regen
+				0,      // life-kill
+				0,      // life-hit
+				0,      // spirit-spent-life
+				0,      // life-steal
+				20,     // plus-magic-find
+				25,     // plus-gold-find
+				24,     // plus-experience
+				12,     // plus-movement
+				7,      // plus-pickup-radius
+				18,     // level-reduce
+				0,      // plus-damage
+				0,      // critical-hit
+				0,      // critical-hit-damage
+				0,      // attack-speed
+				0,      // min-damage
+				0,      // max-damage
+				265,    // armor
+				0,      // plus-block
+				0,      // melee-reduce
+				0,      // range-reduce
+				0,      // elite-reduce
+				1454,   // thorns
+				0,      // cc-reduce
+				80,     // resist-all
+				60,     // physical-resist
+				60,     // cold-resist
+				60,     // fire-resist
+				60,     // lightning-resist
+				60,     // poison-resist
+				60,     // arcane-resist
+				0,      // plus-life
+				0,			// sockets
+			),        
 		),
 		array(
 			'types' => 'bracers',
-			'values' => array(200, 200, 200, 200, 342, 0, 0, 0, 0, 20, 25, 24, 0, 7, 18, 0, 6, 0, 0, 0, 0, 265, 0, 6, 6, 0, 1454, 0, 80, 60, 60, 60, 60, 60, 60, 0),
+			'values' => array(
+				200,		// dexterity
+				200,    // intelligence
+				200,    // strength
+				200,    // vitality
+				342,    // life-regen
+				0,      // life-kill
+				0,      // life-hit
+				0,      // spirit-spent-life
+				0,      // life-steal
+				20,     // plus-magic-find
+				25,     // plus-gold-find
+				24,     // plus-experience
+				0,      // plus-movement
+				7,      // plus-pickup-radius
+				18,     // level-reduce
+				0,      // plus-damage
+				6,      // critical-hit
+				0,      // critical-hit-damage
+				0,      // attack-speed
+				0,      // min-damage
+				0,      // max-damage
+				265,    // armor
+				0,      // plus-block
+				6,      // melee-reduce
+				6,      // range-reduce
+				0,      // elite-reduce
+				1454,   // thorns
+				0,      // cc-reduce
+				80,     // resist-all
+				60,     // physical-resist
+				60,     // cold-resist
+				60,     // fire-resist
+				60,     // lightning-resist
+				60,     // poison-resist
+				60,     // arcane-resist
+				0,      // plus-life
+				0,			// sockets
+			),        
 		),
 		array(
 			'types' => 'chest',
-			'values' => array(200, 200, 200, 300, 599, 0, 0, 0, 0, 20, 25, 24, 0, 7, 18, 0, 0, 0, 0, 0, 0, 397, 0, 6, 6, 7, 2544, 0, 80, 60, 60, 60, 60, 60, 60, 12),
+			'values' => array(
+				200,		// dexterity
+				200,    // intelligence
+				200,    // strength
+				300,    // vitality
+				599,    // life-regen
+				0,      // life-kill
+				0,      // life-hit
+				0,      // spirit-spent-life
+				0,      // life-steal
+				20,     // plus-magic-find
+				25,     // plus-gold-find
+				24,     // plus-experience
+				0,      // plus-movement
+				7,      // plus-pickup-radius
+				18,     // level-reduce
+				0,      // plus-damage
+				0,      // critical-hit
+				0,      // critical-hit-damage
+				0,      // attack-speed
+				0,      // min-damage
+				0,      // max-damage
+				397,    // armor
+				0,      // plus-block
+				6,      // melee-reduce
+				6,      // range-reduce
+				7,      // elite-reduce
+				2544,   // thorns
+				0,      // cc-reduce
+				80,     // resist-all
+				60,     // physical-resist
+				60,     // cold-resist
+				60,     // fire-resist
+				60,     // lightning-resist
+				60,     // poison-resist
+				60,     // arcane-resist
+				12,     // plus-life
+				3,			// sockets
+			),        
 		),
 		array(
 			'types' => 'gloves',
-			'values' => array(300, 300, 200, 200, 342, 0, 0, 0, 0, 20, 25, 24, 0, 7, 18, 0, 10, 50, 9, 0, 0, 265, 0, 0, 0, 0, 1454, 0, 80, 60, 60, 60, 60, 60, 60, 0),
+			'values' => array(
+				300,		// dexterity
+				300,    // intelligence
+				200,    // strength
+				200,    // vitality
+				342,    // life-regen
+				0,      // life-kill
+				0,      // life-hit
+				0,      // spirit-spent-life
+				0,      // life-steal
+				20,     // plus-magic-find
+				25,     // plus-gold-find
+				24,     // plus-experience
+				0,      // plus-movement
+				7,      // plus-pickup-radius
+				18,     // level-reduce
+				0,      // plus-damage
+				10,     // critical-hit
+				50,     // critical-hit-damage
+				9,      // attack-speed
+				0,      // min-damage
+				0,      // max-damage
+				265,    // armor
+				0,      // plus-block
+				0,      // melee-reduce
+				0,      // range-reduce
+				0,      // elite-reduce
+				1454,   // thorns
+				0,      // cc-reduce
+				80,     // resist-all
+				60,     // physical-resist
+				60,     // cold-resist
+				60,     // fire-resist
+				60,     // lightning-resist
+				60,     // poison-resist
+				60,     // arcane-resist
+				0,      // plus-life
+				0,			// sockets
+			),        
 		),
 		array(
 			'types' => 'pants',
-			'values' => array(200, 200, 200, 300, 342, 0, 0, 0, 0, 20, 25, 24, 0, 7, 18, 0, 0, 0, 0, 0, 0, 397, 0, 0, 0, 0, 1454, 0, 80, 60, 60, 60, 60, 60, 60, 0),
+			'values' => array(
+				200,		// dexterity
+				200,    // intelligence
+				200,    // strength
+				300,    // vitality
+				342,    // life-regen
+				0,      // life-kill
+				0,      // life-hit
+				0,      // spirit-spent-life
+				0,      // life-steal
+				20,     // plus-magic-find
+				25,     // plus-gold-find
+				24,     // plus-experience
+				0,      // plus-movement
+				7,      // plus-pickup-radius
+				18,     // level-reduce
+				0,      // plus-damage
+				0,      // critical-hit
+				0,      // critical-hit-damage
+				0,      // attack-speed
+				0,      // min-damage
+				0,      // max-damage
+				397,    // armor
+				0,      // plus-block
+				0,      // melee-reduce
+				0,      // range-reduce
+				0,      // elite-reduce
+				1454,   // thorns
+				0,      // cc-reduce
+				80,     // resist-all
+				60,     // physical-resist
+				60,     // cold-resist
+				60,     // fire-resist
+				60,     // lightning-resist
+				60,     // poison-resist
+				60,     // arcane-resist
+				0,      // plus-life
+				2,			// sockets
+			),        
 		),
 		array(
 			'types' => 'ring',
-			'values' => array(178, 178, 178, 178, 234, 985, 328, 0, 0, 18, 20, 222, 0, 0, 0, 0, 4.5, 34, 9, 36, 86, 240, 0, 0, 0, 0, 979, 14, 70, 50, 50, 50, 50, 50, 50, 9),
+			'values' => array(
+				200,		// dexterity
+				200,    // intelligence
+				200,    // strength
+				200,    // vitality
+				342,    // life-regen
+				1439,    // life-kill
+				479,    // life-hit
+				0,      // spirit-spent-life
+				0,      // life-steal
+				20,     // plus-magic-find
+				25,     // plus-gold-find
+				22,    	// plus-experience
+				0,      // plus-movement
+				0,      // plus-pickup-radius
+				0,      // level-reduce
+				0,      // plus-damage
+				6,    	// critical-hit
+				50,     // critical-hit-damage
+				9,      // attack-speed
+				36,     // min-damage
+				86,     // max-damage
+				240,    // armor
+				0,      // plus-block
+				0,      // melee-reduce
+				0,      // range-reduce
+				0,      // elite-reduce
+				979,    // thorns
+				14,     // cc-reduce
+				70,     // resist-all
+				50,     // physical-resist
+				50,     // cold-resist
+				50,     // fire-resist
+				50,     // lightning-resist
+				50,     // poison-resist
+				50,     // arcane-resist
+				12,      // plus-life
+				1,			// sockets
+			),        
 		),
 		array(
 			'types' => 'shoulders',
-			'values' => array(200, 200, 300, 200, 342, 0, 0, 0, 0, 20, 25, 24, 0, 7, 18, 0, 0, 0, 0, 0, 0, 265, 0, 0, 0, 0, 1454, 0, 80, 60, 60, 60, 60, 60, 60, 12),
+			'values' => array(
+				200,		// dexterity
+				200,    // intelligence
+				300,    // strength
+				200,    // vitality
+				342,    // life-regen
+				0,      // life-kill
+				0,      // life-hit
+				0,      // spirit-spent-life
+				0,      // life-steal
+				20,     // plus-magic-find
+				25,     // plus-gold-find
+				24,     // plus-experience
+				0,      // plus-movement
+				7,      // plus-pickup-radius
+				18,     // level-reduce
+				0,      // plus-damage
+				0,      // critical-hit
+				0,      // critical-hit-damage
+				0,      // attack-speed
+				0,      // min-damage
+				0,      // max-damage
+				265,    // armor
+				0,      // plus-block
+				0,      // melee-reduce
+				0,      // range-reduce
+				0,      // elite-reduce
+				1454,   // thorns
+				0,      // cc-reduce
+				80,     // resist-all
+				60,     // physical-resist
+				60,     // cold-resist
+				60,     // fire-resist
+				60,     // lightning-resist
+				60,     // poison-resist
+				60,     // arcane-resist
+				12,     // plus-life
+				0,			// sockets
+			),        
 		)
 	);
 	private static $_typeMap = array();

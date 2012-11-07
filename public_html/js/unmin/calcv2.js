@@ -411,8 +411,6 @@ BuildCalculator.prototype = {
 							break;							
 						case "dexterity-to-armor":								
 							this.attrs['armor'] = this.attrs['armor'] + (this.attrs['dexterity'] * value);
-							// mathReduction = mathArmor / (50 * vsLevel + mathArmor);
-							// mathDamageReduce = (Math.round(mathReduction * 100 * 100)/100);
 							break;
 						case "vitality-to-armor":
 							this.attrs['armor'] = this.attrs['armor'] + (this.attrs['vitality'] * value);

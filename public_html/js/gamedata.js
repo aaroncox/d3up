@@ -7265,7 +7265,7 @@
 				}
 			},
 			'blackthornes-armor': {
-				name: 'Blackthorne\'s ReArmorgalia',
+				name: 'Blackthorne\'s Armor',
 				effect: {
 					2: {
 						'vitality': 100
