@@ -176,7 +176,10 @@
 					'desc': 'Reduces all cooldowns by <span class="skill-highlight">20%</span>.'
 				},
 				'guiding-light': {
-					'desc': 'Whenever you use a direct heal skill on another player you and the other player deal <span class="skill-highlight">16%</span> more damage for <span class="skill-highlight">15</span> seconds.'
+					'desc': 'Whenever you use a direct heal skill on another player you and the other player deal <span class="skill-highlight">16%</span> more damage for <span class="skill-highlight">15</span> seconds.',
+					'effect': {
+						'plus-damage-conditional': 15
+					}
 				},
 				'one-with-everything': {
 					'desc': 'Your resistance to all elements is equal to your highest elemental resistance.',
