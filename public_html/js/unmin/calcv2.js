@@ -1153,7 +1153,7 @@ BuildCalculator.prototype = {
         rendered['total-damage-norm'] = tNorm;
         rendered['per-tick-crit'] = Math.round(tCrit / (duration * 2)); 
         rendered['total-damage-crit'] = tCrit; 
-        d3up.log(rendered, mhAvg, tNorm, duration);
+        // d3up.log(rendered, mhAvg, tNorm, duration);
 		  } else {
   			// dps = Math.round(((dLow + dHigh) / 2 ) * mathC * 100)/100;
   			rendered['per-tick'] = Math.round(hit / duration);
