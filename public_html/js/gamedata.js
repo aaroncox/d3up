@@ -4765,6 +4765,10 @@
 					rune: 'Each sacrificed Zombie Dog increases your damage by 5% for 30 seconds.',
 					effect: {
 						'weapon-damage': 275,
+						'stackable': {
+						  'limit': 3,
+							'plus-damage': 5,
+						},
 					},
 				},
 				'sacrifice~b': {
