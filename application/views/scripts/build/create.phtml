@@ -35,7 +35,7 @@
 								<select name='character-id' id="characters">
 									<option value=''>Select a Character...</option>
 									<? foreach($this->characters as $k => $v): ?>
-										<option data-name="<?= $v['name'] ?>" data-paragon="<?= $v['paragonLevel'] ?>" data-class="<?= $v['class'] ?>" value='<?= $v['id'] ?>'>[<?= $v['level'] ?>] <?= $v['name']?> - <?= ucwords(str_replace("-", " ", $v['class'])) ?>
+										<option data-name="<?= $v['name'] ?>" data-hardcore="<?= $v['hardcore'] ?>" data-paragon="<?= $v['paragonLevel'] ?>" data-class="<?= $v['class'] ?>" value='<?= $v['id'] ?>'>[<?= ($v['hardcore']) ? "HC" : "SC" ?>][<?= $v['level'] ?>] <?= $v['name']?> - <?= ucwords(str_replace("-", " ", $v['class'])) ?>
 									<? endforeach ?>
 								</select>
 							</div>
@@ -90,6 +90,7 @@
 			<?= $this->form->name ?>
 			<?= $this->form->class ?>
 			<?= $this->form->paragon ?>
+			<?= $this->form->hardcore ?>
 		</div>
 		<div class='form-buttons'>
 			<?= $this->form->save ?>
@@ -138,12 +139,19 @@
 					} else {
 						charListManual.empty().append("<option value=''>Select a Character...</option>");
 						$.each(data, function(k,v) {
-							var option = $("<option>");
+							var option = $("<option>"),
+									hcLabel = '';
 							option.val(v.id);
+							if(v.hardcore) {
+								hcLabel = 'HC';
+							} else {
+								hcLabel = 'SC';
+							}
+							option.attr("data-hardcore", v.hardcore);
 							option.attr("data-class", v.class);
 							option.attr("data-name", v.name);
 							option.attr("data-paragon", v.paragonLevel);
-							option.html("[" + v.level + "] " + v.name + " - " + v.class.replace(/-/g, ' ').capitalize());
+							option.html("[" + hcLabel + "][" + v.level + "] " + v.name + " - " + v.class.replace(/-/g, ' ').capitalize());
 							charListManual.append(option);
 						});
 					}
@@ -158,10 +166,17 @@
 			var name = $(this).find(":selected").attr("data-name"),
 	        paragon = $(this).find(":selected").attr("data-paragon"),
 					cls = $(this).find(":selected").attr("data-class"), 
-					clsPick = $("#class-element select").find("option[value=" + cls + "]");
+					clsPick = $("#class-element select").find("option[value=" + cls + "]"),
+					isHardcore = $(this).find(":selected").attr("data-hardcore"),
+					hardcore = $("#hardcore");
 			$("#class-element select").find("option").each(function() {
 				$(this).removeAttr("selected");
 			})
+			if(isHardcore == "true") {
+				hardcore.attr("checked", "checked");
+			} else {
+				hardcore.attr("checked", false);
+			}
 			$("#name-element input").attr("value", name);
 			clsPick.attr("selected", "selected");
 			$("#paragon-element input").attr("value", paragon);
@@ -170,10 +185,17 @@
 			var name = $(this).find(":selected").attr("data-name"),
 			    paragon = $(this).find(":selected").attr("data-paragon"),
 					cls = $(this).find(":selected").attr("data-class"), 
-					clsPick = $("#class-element select").find("option[value=" + cls + "]");
+					clsPick = $("#class-element select").find("option[value=" + cls + "]"),
+					isHardcore = $(this).find(":selected").attr("data-hardcore"),
+					hardcore = $("#hardcore");
 			$("#class-element select").find("option").each(function() {
 				$(this).removeAttr("selected");
-			})
+			});
+			if(isHardcore == "true") {
+				hardcore.attr("checked", "checked");
+			} else {
+				hardcore.attr("checked", false);
+			}
 			$("#name-element input").attr("value", name);
 			clsPick.attr("selected", "selected");
 			$("#paragon-element input").attr("value", paragon);
