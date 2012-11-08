@@ -9,8 +9,8 @@
 		<? else: ?>
 		<div class="page ui-helper-clearfix" style="padding: 10px">
 			<a href="http://twitch.tv"><img src="/images/twitch.png" style="height: 60px; float: left;"/></a>
-			<h2 style="margin: 0 10px 0 160px"><a href="http://twitch.tv">Twitch.tv</a> User <a href="http://twitch.tv/<?= $this->record->_createdBy->_twitchUser ?>"><?= $this->record->_createdBy->_twitchUser ?></a> is Offline</h2>
-			<p style="margin: 0 10px 0 160px">This user's Twitch.tv stream is currently offline. Last seen online: <?= $this->timeAgo($this->record->_twitchLastSeen) ?>, Last Checked: <?= $this->timeAgo($this->record->_twitchLastCheck - 300) ?></p>
+			<h2 style="margin: 0 10px 0 160px"><a href="http://twitch.tv">Twitch</a> User <a href="http://twitch.tv/<?= $this->record->_createdBy->_twitchUser ?>"><?= $this->record->_createdBy->_twitchUser ?></a> is Offline</h2>
+			<p style="margin: 0 10px 0 160px">This user's Twitch stream is currently offline. Last seen online: <?= $this->timeAgo($this->record->_twitchLastSeen) ?: 'Never' ?>, Last Checked: <?= $this->timeAgo($this->record->_twitchLastCheck - 300) ?></p>
 		</div>
 		<? endif ?>
 </div>

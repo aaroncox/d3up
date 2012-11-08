@@ -103,7 +103,7 @@ ItemBuilder.prototype = {
 		'plus-experience-bonus': 'Increases Bonus Experience by VVV%',
 		'plus-gold-find': '+VVV% Extra Gold from Monsters',
 		'plus-magic-find': 'VVV% Better Chance of finding Magic Items',
-		'health-globes': 'Health Globes grant +VVV Life',
+		'health-globes': 'Health Globes and Potions Grant +VVV Life',
 		'level-reduce': 'Level Requirement reduced by VVV',
 		'indestructible': 'Ignores durability loss',
 		// Barbarian

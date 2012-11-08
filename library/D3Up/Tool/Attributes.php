@@ -85,7 +85,7 @@ class D3Up_Tool_Attributes
 		'plus-experience-bonus' => 'Increases Bonus Experience by [v]%',
 		'plus-gold-find' => '+[v]% Extra Gold from Monsters',
 		'plus-magic-find' => '[v]% Better Chance of finding Magic Items',
-		'health-globes' => 'Health Globes grant +[v] Life',
+		'health-globes' => 'Health Globes and Potions Grant +[v] Life',
 		'life-steal' => '[v]% of Damage Dealt is Converted to Life',
 		'life-kill' => '+[v] Life after each Kill',
 		'life-hit' => 'Each hit adds +[v] Life',

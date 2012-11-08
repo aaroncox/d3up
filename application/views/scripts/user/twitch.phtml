@@ -1,33 +1,33 @@
 <div class="content-page">
   <div class='page ui-helper-clearfix'>
 		<a href="http://twitch.tv"><img src="/images/twitch.png" style="float: right; margin: 40px 20px"/></a>
-		<h2>Integrate your Twitch.tv stream with D3Up.com</h2>
+		<h2>Integrate your Twitch stream with D3Up.com</h2>
 		<? if($this->error): ?>
 			<div class="notifications" style="width: 600px">
-	      <strong>Twitch.tv Error</strong>: <?= $this->error ?>
+	      <strong>Twitch Error</strong>: <?= $this->error ?>
 		  </div>
 		<? endif ?>
 		<? if($this->success == true): ?>
-			<p>Your Twitch.tv account information is as follows...</p>
+			<p>Your Twitch account information is as follows...</p>
 			<?= $this->render("/user/twitch_status.phtml") ?>
 			<h2>Your next steps!</h2>
 			<p>Your twitch stream won't appear on any of your builds until you tell it to. To enable your stream on your build, simply:</p>
 			<ul>
 				<li>Visit the Build you wish to stream on.</li>
 				<li>Click the 'Edit' in the left column.</li>
-				<li>Check the "Enable Twitch.tv" box.</li>
+				<li>Check the "Enable Twitch" box.</li>
 				<li>Save</li>
 			</ul>
 			<p>You can check and uncheck this box at will to enable and disable your stream. The stream and chatbox will only appear if you are currently streaming (D3Up checks every 5 minutes for your online status).</p>
 		<? else: ?>
-			<p>What's <a href="http://twitch.tv">Twitch.tv</a> you say? Well... let me tell you.</p>
-			<p>Twitch.tv is an amazing community of gamers. It's composed of people who stream themselves playing their favorite games and their audience of gaming fans. You can chat, watch the games being played, and interact with the gamers streaming.</p>
-			<h3>So what's D3Up have to do with Twitch.tv?</h3>
-			<p>A lot of Twitch.tv users promote the character builds they are playing by providing a link to their D3Up page. My thought is, why not let users watch your stream while viewing your build on D3Up?</p>
-			<p>By connecting your Twitch.tv account with D3Up, you'll be able to do the following:</p>
+			<p>What's <a href="http://twitch.tv">Twitch</a> you say? Well... let me tell you.</p>
+			<p>Twitch is an amazing community of gamers. It's composed of people who stream themselves playing their favorite games and their audience of gaming fans. You can chat, watch the games being played, and interact with the gamers streaming.</p>
+			<h3>So what's D3Up have to do with Twitch?</h3>
+			<p>A lot of Twitch users promote the character builds they are playing by providing a link to their D3Up page. My thought is, why not let users watch your stream while viewing your build on D3Up?</p>
+			<p>By connecting your Twitch account with D3Up, you'll be able to do the following:</p>
 			<ul>
-				<li>Add your Twitch.tv Stream to your Build.</li>
-				<li>Add the Twitch.tv Chat Box to your Build.</li>
+				<li>Add your Twitch Stream to your Build.</li>
+				<li>Add the Twitch Chat Box to your Build.</li>
 				<li>(more coming soon)</li>
 			</ul>
 			<p>Want to get started? Click the button below!</p>
