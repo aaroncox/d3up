@@ -81,6 +81,9 @@
 				<div class="dropdown_2columns">
 					<div class="col_2">
 						<ul class="dropdown_links">
+							<? if($this->profile): ?>
+								<li><a class="button" href="/user/items">My Items</a></li>
+							<? endif ?>
 							<li><a href="/user/shop">My Shop</a></li>
 							<li><a href="/item/sales-history">Sales History</a></li>
 							<li><a href="/item">All Items</a>
