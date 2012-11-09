@@ -20,7 +20,15 @@
 	  <? endif ?>
     <ul id="tabs">
       <li class='divider'>Build</li>
+			<? if($this->record->description && strlen($this->record->description) > 2 && $this->record->_defaultToDescription): ?>
+			<li><a data-tab="#information" class="button current">Information</a></a></li>
+      <li><a data-tab="#gear" class="button">Gear</a></a></li>
+			<? else: ?>
       <li><a data-tab="#gear" class="button current">Gear</a></a></li>
+				<? if(strlen($this->record->description) > 2): ?>
+				<li><a data-tab="#information" class="button">Information</a></a></li>
+				<? endif ?>
+			<? endif ?>
       <li><a data-tab="#skills" class="button">Skills</a></li>
       <li><a data-tab="#passives" class="button">Passives</a></li>
       <li><a data-tab="#buffs" class="button">Buffs</a></li>
@@ -41,6 +49,7 @@
       <li><a data-tab="#share" class="button">Share</a></li> -->
     </ul>
     <div id="tabs-render" class="content-page">
+      <div id="information"><?= $this->render("./record/build/description.phtml") ?></div>
       <div id="gear"><?= $this->render("./record/build/gear.phtml") ?></div>
       <div id="skills"><?= $this->render("./record/build/skills.phtml") ?></div>
       <div id="passives"><?= $this->render("./record/build/passives.phtml") ?></div>

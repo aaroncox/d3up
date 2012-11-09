@@ -112,9 +112,26 @@ class D3Up_Form_Record_Build extends Epic_Form
 			));
 		}
 		
+		$this->addElement("markdown", "description", array(
+			'required' => false,
+			'label' => 'Build Information',
+			'filters' => array('StripTags'),
+			'tabindex' => 30,
+			'rows' => 10,
+			'cols' => 40,
+		));
+		
+		$this->addElement("checkbox", "defaultToDescription", array(
+			'label' => 'Default Tab as Build Information?',
+			'description' => 'This will make the build information be the first thing shown when users visit your build.',
+			'tabindex' => 25,
+		));
+		
+		
 		$this->setDefaults(array(
 			'name' => $build->name,
-			'description' => $build->description,
+			'description' => $build->descriptionSource,
+			'defaultToDescription' => $build->_defaultToDescription,
 			'private' => $build->private,
 			'level' => $build->level ?: 60,
 			'paragon' => $build->paragon,
@@ -150,6 +167,11 @@ class D3Up_Form_Record_Build extends Epic_Form
 		$build->paragon = (int) $this->paragon->getValue();
 		// Set if it's hardcore
 		$build->hardcore = (bool) $this->hardcore->getValue();
+		// Should we default to the builds description?
+		$build->_defaultToDescription = (bool) $this->defaultToDescription->getValue();
+		// Set the builds Description
+		$build->description = $this->description->getRenderedValue();
+		$build->descriptionSource = $this->description->getValue();
 		// Do we show the TwitchTV stream of the user on this build?
 		// Set the Profile URL
 		// $build->profileUrl = $this->profileUrl->getValue();
