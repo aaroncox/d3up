@@ -4769,7 +4769,7 @@
 					effect: {
 						'weapon-damage': 275,
 						'stackable': {
-						  'limit': 3,
+						  'limit': 4,
 							'plus-damage': 5,
 						},
 					},
