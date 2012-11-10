@@ -42,7 +42,8 @@ class AjaxController extends D3Up_Controller_Action
       if(count($parts) > 1) {
        	$name = array_search($parts[1], $this->_statMap);
         // var_dump($name);
-  			if($name) {
+  			if($name) {				
+	
   			  if($name == "sockets") {
   		      $sockets = array();
   		      $total = (int) $parts[0];
@@ -50,6 +51,14 @@ class AjaxController extends D3Up_Controller_Action
               $sockets[] = "";
             }
             $item->sockets = $sockets;
+					} else if(in_array($name, array("poison-damage", "lightning-damage", "arcane-damage", "holy-damage", "fire-damage", "cold-damage"))) {
+						$pieces = explode("-", $parts[0]);
+						if(count($pieces) > 1) {
+							$item->attrs->$name = array(
+								'min' => $pieces[0],
+								'max' => $pieces[1]
+							);							
+						}
   			  } else {
     				$item->attrs->$name = (float) $parts[0];							    
   			  }
@@ -228,7 +237,7 @@ class AjaxController extends D3Up_Controller_Action
 			$parts = explode(" ", $v);
 			$name = array_search($parts[1], $this->_statMap);
 			if($name) {
-				$item->attrs->$name = (float) $parts[0];				
+				$item->attrs->$name = (float) $parts[0];									
 			}
 		}
 		$item->save();
