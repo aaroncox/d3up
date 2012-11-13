@@ -191,6 +191,7 @@ class ItemController extends D3Up_Controller_Action
 			$query = array(
 				'_createdBy' => $profile->createReference(),
 				'type' => array('$in' => $acceptable),
+				'_d3bit' => array('$ne' => true),
 			);
 			$items = Epic_Mongo::db('item')->fetchAll($query, array("name" => 1));
 			$data = array();
