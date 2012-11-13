@@ -1854,9 +1854,11 @@ div.toc.section {
 #compare-table tbody {
   border-top: 1px solid #333;
 }
-#compare-table .diff {
+#compare-table .per {
 	border-right: 1px solid #333;
-	border-left: 1px solid #333;
+}
+#compare-table .diff {
+	border-left: 1px solid #333;	
 }
 #compare-table tr,
 #compare-table td {
