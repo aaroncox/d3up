@@ -9,4 +9,5 @@ if (!Object.create) {
     };
 }
 $(function() {
+	$("#irc-chat").bindSkilltip();
 });
