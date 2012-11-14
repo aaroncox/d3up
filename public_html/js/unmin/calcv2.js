@@ -375,7 +375,18 @@ BuildCalculator.prototype = {
 					    if(!this.attrs[effect + '-incs']) {
 					      this.attrs[effect + '-incs'] = [];
 					    }
-				      this.attrs[effect + '-incs'].push(value * 100);
+							if(reverse == true) {
+								value = -value;
+								_.each(this.attrs[effect + '-incs'], function(v,k) {
+									var removed = false;
+									if(v == value * 100 && !removed) {
+										this.attrs[effect + '-incs'][k] = 0;
+										removed = true;
+									}
+								}, this);
+							} else {
+					      this.attrs[effect + '-incs'].push(value * 100);								
+							}
 					    break;
 						case "flatten-resists":
 							// this.attrs['resist-all'] = highest;
