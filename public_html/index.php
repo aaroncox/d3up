@@ -12,6 +12,8 @@ set_include_path(implode(PATH_SEPARATOR, array(
     get_include_path(),
 )));
 
+require_once APPLICATION_PATH . '/Ratchetio.php';
+
 /** Epic_Application */
 require_once 'Epic/Application.php';  
 
