@@ -126,10 +126,13 @@
 				</td>
 				<td class='name'>
 					<? 
-					$per = round($sale['value'] / $this->data['totals']['value'][$this->type] * 100);
-					$exp = 0;
-					if($sale['value']) {
-						$exp = round($sale['expenses'] / $sale['value'] * 100);					
+					$per = "~";
+					if($this->data['totals']['value'][$this->type]) {
+						$per = round($sale['value'] / $this->data['totals']['value'][$this->type] * 100);
+						$exp = 0;
+						if($sale['value']) {
+							$exp = round($sale['expenses'] / $sale['value'] * 100);					
+						}						
 					}
 					?>
 					<div class="bar" style="width: <?= $per ?>%"><?= $per ?>%</div> 
