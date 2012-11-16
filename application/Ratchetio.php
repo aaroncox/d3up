@@ -99,7 +99,7 @@ class RatchetioNotifier {
 
         // fill in missing values in error_sample_rates
         $levels = array(E_WARNING, E_NOTICE, E_USER_ERROR, E_USER_WARNING,
-            E_USER_NOTICE, E_STRICT, E_RECOVERABLE_ERROR);
+            E_USER_NOTICE, E_RECOVERABLE_ERROR);
 
         // PHP 5.3.0
         if (defined('E_DEPRECATED')) {
