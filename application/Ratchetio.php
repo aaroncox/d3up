@@ -255,6 +255,7 @@ class RatchetioNotifier {
             case 8192:
                 $level = 'info';
                 $constant = 'E_DEPRECATED';
+								return;
                 break;
             case 16384:
                 $level = 'info';
