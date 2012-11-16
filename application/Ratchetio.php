@@ -246,6 +246,7 @@ class RatchetioNotifier {
             case 2048:
                 $level = 'info';
                 $constant = 'E_STRICT';
+								return;
                 break;
             case 4096:
                 $level = 'error';
