@@ -343,16 +343,18 @@
 	</div>
 	<? if($profile): ?>
 	<div id="my-builds">
-		<? foreach($builds as $build): ?>
-		<div class="build-parent" id="build-<?= $build->id ?>" data-class="<?= $build->class ?>">
-			<div class="build-items">
-				<? foreach($build->equipment as $slot => $gear):?>
-					<span class="<?= $slot ?>" data-slot="<?= $slot ?>"><?= $this->itemLink($gear) ?></span>
-				<? endforeach ?>
+		<? if(count($builds)): ?>
+			<? foreach($builds as $build): ?>
+			<div class="build-parent" id="build-<?= $build->id ?>" data-class="<?= $build->class ?>">
+				<div class="build-items">
+					<? foreach($build->equipment as $slot => $gear):?>
+						<span class="<?= $slot ?>" data-slot="<?= $slot ?>"><?= $this->itemLink($gear) ?></span>
+					<? endforeach ?>
+				</div>
+				<div class="build-passives" data-json='<?= ($build->passives)?json_encode($build->passives->export()):"" ?>'></div>
 			</div>
-			<div class="build-passives" data-json='<?= ($build->passives)?json_encode($build->passives->export()):"" ?>'></div>
-		</div>
-		<? endforeach ?>
+			<? endforeach ?>
+		<? endif ?>
 	</div>
 	<? endif ?>
 
