@@ -56,85 +56,87 @@
 		</tr>
 	</thead>
 	<tbody>
-		<? foreach($this->data['dates'][$this->type] as $date => $sale): ?>
-		<tr class="item-row">
-			<td class='data'>
-				<div class='item-stat'>
-					<span class='value'><?= date("Y-m-d", $date) ?></span>
-					<span class='stat'><?= date("l", $date) ?></span>
-				</div>
-			</td>
-			<td class='data'>
-				<div class='item-stat'>
-					<span class='value pos'><?= $sale['sales'] ?></span>
-					<span class='stat'>Sales</span>
-				</div>
-			</td>
-			<td class='data'>
-				<div class='item-stat'>
-					<span class='value neg'><?= $sale['failed'] ?></span>
-					<span class='stat'>Failed Auctions</span>
-				</div>
-			</td>
-			<td class='data'>
-				<div class='item-stat'>
-					<span class='value'>
-						<img src="/images/<?= $this->type ?>.png"> 
-						<? if($this->type == "ah"): ?>
-							<?= $this->prettyStat($sale['value'] / 0.85) ?>
-						<? endif ?>
-						<? if($this->type == "rmah"): ?>
-							<?= $this->prettyStat($sale['value'] + $sale['sales']) ?>
-						<? endif ?>
-					</span>
-					<span class="stat">
-						<?= $this->prettyStat($sale['value']) ?> after AH cut
-					</span>
-				</div>
-			</td>
-			<td class='data'>
-				<div class='item-stat'>
-					<span class='value'>
-						<img src="/images/<?= $this->type ?>.png"> 
-						<? if($sale['value'] > 0 && $sale['sales'] > 0): ?>
+		<? if(isset($this->data['dates']) && isset($this->data['dates'][$this->type])): ?>
+			<? foreach($this->data['dates'][$this->type] as $date => $sale): ?>
+			<tr class="item-row">
+				<td class='data'>
+					<div class='item-stat'>
+						<span class='value'><?= date("Y-m-d", $date) ?></span>
+						<span class='stat'><?= date("l", $date) ?></span>
+					</div>
+				</td>
+				<td class='data'>
+					<div class='item-stat'>
+						<span class='value pos'><?= $sale['sales'] ?></span>
+						<span class='stat'>Sales</span>
+					</div>
+				</td>
+				<td class='data'>
+					<div class='item-stat'>
+						<span class='value neg'><?= $sale['failed'] ?></span>
+						<span class='stat'>Failed Auctions</span>
+					</div>
+				</td>
+				<td class='data'>
+					<div class='item-stat'>
+						<span class='value'>
+							<img src="/images/<?= $this->type ?>.png"> 
 							<? if($this->type == "ah"): ?>
-								<?= $this->prettyStat(round(($sale['value'] / $sale['sales']), 1) / 0.85) ?>
-							<? endif; ?>
+								<?= $this->prettyStat($sale['value'] / 0.85) ?>
+							<? endif ?>
 							<? if($this->type == "rmah"): ?>
-								<?= $this->prettyStat(round(($sale['value'] / $sale['sales']), 1)) ?>
-							<? endif; ?>
-						<? else: ?>
-							~
-						<? endif ?>
-					</span>
-					<span class="stat">
-						<? if($sale['value'] > 0 && $sale['sales'] > 0): ?>
-							<?= $this->prettyStat(round(($sale['value'] / $sale['sales']), 1)) ?> after AH cut
-						<? else: ?>
-							~
-						<? endif ?>
-					</span>
-				</div>
-			</td>
-			<td class='data'>
-				<div class='item-stat'>
-					<span class='value'>
-						<?= $this->prettyStat($sale['expenses']) ?>
-					</span>
-				</div>
-			</td>
-			<td class='name'>
-				<? 
-				$per = round($sale['value'] / $this->data['totals']['value'][$this->type] * 100);
-				$exp = 0;
-				if($sale['value']) {
-					$exp = round($sale['expenses'] / $sale['value'] * 100);					
-				}
-				?>
-				<div class="bar" style="width: <?= $per ?>%"><?= $per ?>%</div> 
-				<!-- <div class="bar bar-neg" style="width: <?= $exp ?>%"><?= $exp ?>%</div> -->
-			</td>
-		</tr>
-		<? endforeach ?>
+								<?= $this->prettyStat($sale['value'] + $sale['sales']) ?>
+							<? endif ?>
+						</span>
+						<span class="stat">
+							<?= $this->prettyStat($sale['value']) ?> after AH cut
+						</span>
+					</div>
+				</td>
+				<td class='data'>
+					<div class='item-stat'>
+						<span class='value'>
+							<img src="/images/<?= $this->type ?>.png"> 
+							<? if($sale['value'] > 0 && $sale['sales'] > 0): ?>
+								<? if($this->type == "ah"): ?>
+									<?= $this->prettyStat(round(($sale['value'] / $sale['sales']), 1) / 0.85) ?>
+								<? endif; ?>
+								<? if($this->type == "rmah"): ?>
+									<?= $this->prettyStat(round(($sale['value'] / $sale['sales']), 1)) ?>
+								<? endif; ?>
+							<? else: ?>
+								~
+							<? endif ?>
+						</span>
+						<span class="stat">
+							<? if($sale['value'] > 0 && $sale['sales'] > 0): ?>
+								<?= $this->prettyStat(round(($sale['value'] / $sale['sales']), 1)) ?> after AH cut
+							<? else: ?>
+								~
+							<? endif ?>
+						</span>
+					</div>
+				</td>
+				<td class='data'>
+					<div class='item-stat'>
+						<span class='value'>
+							<?= $this->prettyStat($sale['expenses']) ?>
+						</span>
+					</div>
+				</td>
+				<td class='name'>
+					<? 
+					$per = round($sale['value'] / $this->data['totals']['value'][$this->type] * 100);
+					$exp = 0;
+					if($sale['value']) {
+						$exp = round($sale['expenses'] / $sale['value'] * 100);					
+					}
+					?>
+					<div class="bar" style="width: <?= $per ?>%"><?= $per ?>%</div> 
+					<!-- <div class="bar bar-neg" style="width: <?= $exp ?>%"><?= $exp ?>%</div> -->
+				</td>
+			</tr>
+			<? endforeach ?>
+		<? endif ?>
 	</tbody>
 </table>
