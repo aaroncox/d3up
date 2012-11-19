@@ -261,6 +261,7 @@ class D3Up_Tool_Crawler
 		'dh-multishot' => 'Increases Critical Hit Chance of Multishot by [v]%',
 		'dh-rapid-fire' => 'Increases Critical Hit Chance of Rapid Fire by [v]%',
 		'dh-cluster-arrow' => 'Reduces resource cost of Cluster Arrow by [v] Hatred',
+		'dh-strafe' => 'Increases Critical Hit Chance of Strafe by [v]%',
 		// Monk
 		'spirit-spent-life' => 'Gain [v] Life per Spirit Spent',
 		'spirit-regen' => 'Increases Spirit Regeneration by [v] per Second',
@@ -422,9 +423,10 @@ class D3Up_Tool_Crawler
 		}
     // }
 		foreach ($profile['items'] as $slot => $gear) {
-      // if($slot != "helm") {
-      //   continue;
-      // }
+			// var_dump($slot);
+			//       if($slot != "torso") {
+			//         continue;
+			//       }
 			// Explode the Tooltip Params
 			$parts = explode("/", $gear['tooltipParams']);
 			// Build the URL
@@ -527,6 +529,7 @@ class D3Up_Tool_Crawler
 					}
 				}
 			}
+			
 			// What slot is it in?
 			$slot = static::$_slotMap[$slot];			
 			// Add Attributes to the Item and Query

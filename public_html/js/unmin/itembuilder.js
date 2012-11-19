@@ -136,6 +136,7 @@ ItemBuilder.prototype = {
 		'dh-multishot': 'Increases Critical Hit Chance of Multishot by VVV%',
 		'dh-rapid-fire': 'Increases Critical Hit Chance of Rapid Fire by VVV%',
 		'dh-cluster-arrow': 'Reduces resource cost of Cluster Arrow by VVV Hatred',
+		'dh-strafe': 'Increases Critical Hit Chance of Strafe by VVV%',
 		// Monk
 		'spirit-spent-life': 'Gain VVV per Spirit Spent',
 		'spirit-regen': 'Increases Spirit Regeneration by VVV per Second',

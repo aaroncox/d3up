@@ -7710,6 +7710,7 @@ td['dh-hungering-arrow'] = 'Increases Hungering Arrow damage by VVV%';
 td['dh-multishot'] = 'Increases Critical Hit Chance of Multishot by VVV%';
 td['dh-rapid-fire'] = 'Increases Critical Hit Chance of Rapid Fire by VVV%';
 td['dh-cluster-arrow'] = 'Reduces resource cost of Cluster Arrow by VVV Hatred';
+td['dh-strafe'] = 'Increases Critical Hit Chance of Strafe by VVV%';
 td['spirit-spent-life'] = 'Gain VVV Life per Spirit Spent';
 td['spirit-regen'] = 'Increases Spirit Regeneration by VVV per Second';
 td['mk-crippling-wave'] = 'Increases Crippling Wave damage by VVV%';
