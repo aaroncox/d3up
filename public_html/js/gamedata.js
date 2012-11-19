@@ -7130,13 +7130,13 @@
 				name: 'Tal Rasha\'s Wrappings',
 				effect: {
 					2: {
-						'plus-fire-damage': 0.03
+						'plus-fire-damage-skills': 0.03
 					},
 					3: {
-						'plus-lightning-damage': 0.03
+						'plus-lightning-damage-skills': 0.03
 					},
 					4: {
-						'plus-cold-damage': 0.03
+						'plus-cold-damage-skills': 0.03
 					}
 				}
 			},
@@ -7144,13 +7144,13 @@
 				name: 'Tal Rasha\'s Sacrifice',
 				effect: {
 					2: {
-						'plus-fire-damage': 0.03
+						'plus-fire-damage-skills': 0.03
 					},
 					3: {
-						'plus-lightning-damage': 0.03
+						'plus-lightning-damage-skills': 0.03
 					},
 					4: {
-						'plus-cold-damage': 0.03,
+						'plus-cold-damage-skills': 0.03,
 						'ap-regen': 2
 					}
 				}
