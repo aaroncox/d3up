@@ -446,6 +446,10 @@
 					label = "Critical Hit";
 					value = i;
 					break;
+				case "bonusText":
+					label = "Gear Bonus";
+					value = i;
+					break;
 				case "critical-hit-tick":
 					label = "Per Tick Crit";
 					value = i;

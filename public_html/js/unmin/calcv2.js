@@ -1064,6 +1064,7 @@ BuildCalculator.prototype = {
 				bnAvgDamage = 0,
 				bnEleDamage = 0,
 				bnElePercent = 0,
+				critHit = this.attrs['critical-hit'],
 				mathE = skill.effect['weapon-damage'],
 				hasCooldown = (skill.effect['cooldown']) ? true : false; 
 		if(this.attrs['damage']) {
@@ -1084,7 +1085,44 @@ BuildCalculator.prototype = {
 		if(this.attrs['min-damage']) {
 			bnMinDamage = this.attrs['min-damage'];				
 		}
-		// d3up.log(this.attrs);
+		
+		// Do we modify the damage or crit at all?
+		var shortName = false;
+		switch(this.heroClass) {
+			case "barbarian":
+				shortName = 'bb';
+				break;
+			case "demon-hunter":
+				shortName = 'dh';
+				break;
+			case "monk":
+				shortName = 'mk';
+				break;
+			case "witch-doctor":
+				shortName = 'wd';
+				break;
+			case "wizard":
+				shortName = 'wz';
+				break;
+		}
+		if(shortName) {
+			if(this.attrs[shortName + '-' + options.skillName]) {
+				var bonusValue = this.attrs[shortName + '-' + options.skillName],
+						bonusText = td[shortName + '-' + options.skillName];
+				if(bonusText.search(/cost/i) >= 0) {
+					// console.log("Resource cost reduction");
+				} else if(bonusText.search(/critical hit/i) >= 0) {
+					// console.log("Crit Hit increase");
+					critHit += bonusValue;
+					bonusText = "<span class='skill-highlight'>+" + bonusValue + "%</span> Crit";
+				} else if(bonusText.search(/damage/i) >= 0) {					
+					// console.log("Damage buff");
+					mathE += bonusValue;
+					bonusText = "<span class='skill-highlight'>+" + bonusValue + "%</span> Damage";
+				}
+			}
+		}
+		
 		bnAvgDamage = (bnMinDamage + bnMaxDamage) / 2;
 		// Convert mathE to a percentage
 		mathE = mathE / 100;
@@ -1120,7 +1158,7 @@ BuildCalculator.prototype = {
 					ohAPS = rendered['dps-speed'].oh * (1 + atkSpeedInc + 0.15 + this.bonuses['plus-attack-speed']);
 			mathR = 2 / (1 / mhAPS + 1 / ohAPS);
 			// mathR = (rendered['dps-speed'].mh + rendered['dps-speed'].oh) / 2 * (1 + atkSpeedInc + 0.15 + this.bonuses['plus-attack-speed']);
-			mathC = 1 + (this.attrs['critical-hit'] * 0.01) * (this.attrs['critical-hit-damage'] * 0.01);
+			mathC = 1 + (critHit * 0.01) * (this.attrs['critical-hit-damage'] * 0.01);
 			if(skill.effect['weapon-damage-type']) {
 				var dmgType = skill.effect['weapon-damage-type'],
 						dmgAttr = 'plus-' + dmgType + '-damage-skills';
@@ -1137,7 +1175,7 @@ BuildCalculator.prototype = {
 		} else {
 			rendered['dps-speed'] = Math.floor(this.attrs['speed'] * 1024) / 1024;
 			mathS = 1 + this.attrs[this.attrs.primary] * 0.01;
-			mathC = 1 + (this.attrs['critical-hit'] * 0.01) * (this.attrs['critical-hit-damage'] * 0.01);
+			mathC = 1 + (critHit * 0.01) * (this.attrs['critical-hit-damage'] * 0.01);
 			mathR = rendered['dps-speed'] * (1 + atkSpeedInc + this.bonuses['plus-attack-speed']);
 			mathAl = ((mhMinDamage + bnMinDamage) + bnEleDamage);
 			mathAh = ((mhMaxDamage + bnMaxDamage) + bnEleDamage);
@@ -1201,6 +1239,10 @@ BuildCalculator.prototype = {
   		  rendered['critical-hit-3rd'] = Math.round((1 + (this.bonuses['pierce-bonus'] / 100) * 2) * dLow * (1+ (this.attrs['critical-hit-damage'] * 0.01))) + " - " + Math.round((1 + (this.bonuses['pierce-bonus'] / 100) * 2) * dHigh * (1 + (this.attrs['critical-hit-damage'] * 0.01)));
   		}
 		}
+		// If we have any bonuses, add em in
+		if(bonusText) {
+			rendered['bonusText'] = bonusText;
+		}
     // d3up.log(rendered);
     return rendered;
 	},
@@ -1260,6 +1302,7 @@ BuildCalculator.prototype = {
 							bonuses["plus-critical-hit"] = e;
 							break;
 						case "weapon-damage":
+							options.skillName = k.split("~")[0];
 							options.skill = v; // Pass in the whole skill
 							break;
 						case "weapon-damage-for":
