@@ -64,7 +64,10 @@
 					}
 				},
 				'inspiring-presence': {
-					'desc': 'The duration of your shouts is doubled. After using a shout you regenerate <span class="skill-highlight">2%</span> of your maximum Life per second for <span class="skill-highlight">60</span> seconds.'
+					'desc': 'The duration of your shouts is doubled. After using a shout you regenerate <span class="skill-highlight">2%</span> of your maximum Life per second for <span class="skill-highlight">60</span> seconds.',
+					'effect': {
+						'plus-percent-life-regen': 2
+					}
 				},
 				'bloodthirst': {
 					'desc': 'Gain <span class="skill-highlight">3%</span> of all damage done as Life.',

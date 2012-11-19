@@ -72,6 +72,7 @@ BuildCalculator.prototype = {
 			'3rd-hit-damage': false, // Keep disabled unless it's set
 			'percent-non-physical' : 0, // Percentage to reduce non-physical damage (ie superstition)
 			'plus-attack-speed-this': 0,
+			'plus-percent-life-regen': 0,
 		};
 	},
 	setClass: function(newClass) {
@@ -295,6 +296,9 @@ BuildCalculator.prototype = {
 						// this.bonuses['monk-fitl-oh'] = e * actualSpeedOH;
 						// console.log(actualSpeedMH, actualSpeedOH, this.bonuses['monk-fitl-mh'], this.bonuses['monk-fitl-oh']);
 						// this.applyEnabledSkill(strangeDamage, 'plus-holy-damage');
+						break;
+					case "plus-percent-life-regen":
+						this.bonuses['plus-percent-life-regen'] = e;
 						break;
 					case "plus-damage-conditional":
 						this.applyEnabledSkill(e, 'plus-damage');
@@ -532,6 +536,14 @@ BuildCalculator.prototype = {
 		// Formula : Life + ( Life * ( Plus Life / 100 ) )
 		// ----------------------------------		
 		rendered.life += (rendered.life * ((this.attrs['plus-life'] + this.bonuses['plus-life'] * 100) / 100));
+		// ----------------------------------
+		// Inspiring Presense - Barbarian Passive w/ +% Life Regen based on Max Life
+		// Formula : Life * (Regen * 0.01)
+		// ----------------------------------		
+		rendered['life-regen'] = this.attrs['life-regen'];
+		if(this.bonuses['plus-percent-life-regen']) {
+			rendered['life-regen'] += rendered.life * (this.bonuses['plus-percent-life-regen'] * 0.01);
+		}
 		// ----------------------------------
 		// Armor
 		// Formula: ( Armor + Strength ) * ( Bonus Armor Percentage )
@@ -1360,6 +1372,7 @@ BuildCalculator.prototype = {
 						case "damage-reduce-conditional":
 						case "plus-damage-conditional":
 						case "plus-holy-damage-conditional":
+						case "plus-percent-life-regen":
 							activate = true;
 							break;
 						case "stackable":
