@@ -989,10 +989,10 @@ BuildCalculator.prototype = {
 			rendered['dps-speed-mh'] = rendered['dps-speed'].mh;
 			rendered['dps-speed-oh'] = rendered['dps-speed'].oh;
 			if(this.attrs.mhRealDamage) {
-				rendered['scram-a-mh'] = (mhAvgDamage + (this.attrs.mhRealDamage.min + bnMinDamage) * 2 * (bnElePercent / 100)) * mathS * mathM * mathC;				
+				rendered['scram-a-mh'] = mhAvgDamage * mathS * mathM * mathC;				
 			}
 			if(this.attrs.ohRealDamage) {
-				rendered['scram-a-oh'] = (ohAvgDamage + (this.attrs.ohRealDamage.min + bnMinDamage) * 2 * (bnElePercent / 100)) * mathS * mathM * mathC;				
+				rendered['scram-a-oh'] = ohAvgDamage * mathS * mathM * mathC;				
 			}
 			// console.log(mathS, mathC, mathR, mathA, mathM);
 			// console.log(this.bonuses);
