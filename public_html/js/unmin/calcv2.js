@@ -1078,6 +1078,7 @@ BuildCalculator.prototype = {
 				bnEleDamage = 0,
 				bnElePercent = 0,
 				critHit = this.attrs['critical-hit'],
+				critHitDmg = this.attrs['critical-hit-damage'],
 				mathE = skill.effect['weapon-damage'],
 				hasCooldown = (skill.effect['cooldown']) ? true : false; 
 		if(this.attrs['damage']) {
@@ -1136,6 +1137,11 @@ BuildCalculator.prototype = {
 			}
 		}
 		
+		// Does this skill get bonus crit hit damage?
+		if(skill.effect && skill.effect['plus-crit-hit-damage']) {
+			critHitDmg += skill.effect['plus-crit-hit-damage'];
+		}
+		
 		bnAvgDamage = (bnMinDamage + bnMaxDamage) / 2;
 		// Convert mathE to a percentage
 		mathE = mathE / 100;
@@ -1171,7 +1177,7 @@ BuildCalculator.prototype = {
 					ohAPS = rendered['dps-speed'].oh * (1 + atkSpeedInc + 0.15 + this.bonuses['plus-attack-speed']);
 			mathR = 2 / (1 / mhAPS + 1 / ohAPS);
 			// mathR = (rendered['dps-speed'].mh + rendered['dps-speed'].oh) / 2 * (1 + atkSpeedInc + 0.15 + this.bonuses['plus-attack-speed']);
-			mathC = 1 + (critHit * 0.01) * (this.attrs['critical-hit-damage'] * 0.01);
+			mathC = 1 + (critHit * 0.01) * (critHitDmg * 0.01);
 			if(skill.effect['weapon-damage-type']) {
 				var dmgType = skill.effect['weapon-damage-type'],
 						dmgAttr = 'plus-' + dmgType + '-damage-skills';
@@ -1188,7 +1194,7 @@ BuildCalculator.prototype = {
 		} else {
 			rendered['dps-speed'] = Math.floor(this.attrs['speed'] * 1024) / 1024;
 			mathS = 1 + this.attrs[this.attrs.primary] * 0.01;
-			mathC = 1 + (critHit * 0.01) * (this.attrs['critical-hit-damage'] * 0.01);
+			mathC = 1 + (critHit * 0.01) * (critHitDmg * 0.01);
 			mathR = rendered['dps-speed'] * (1 + atkSpeedInc + this.bonuses['plus-attack-speed']);
 			mathAl = ((mhMinDamage + bnMinDamage) + bnEleDamage);
 			mathAh = ((mhMaxDamage + bnMaxDamage) + bnEleDamage);
@@ -1215,7 +1221,7 @@ BuildCalculator.prototype = {
 		if(duration) {
 		  if(isStatic) {
 		    var tNorm = Math.round(mhAvg),
-		        tCrit = Math.round(mhAvg * (this.attrs['critical-hit-damage'] * 0.01 + 1)); 
+		        tCrit = Math.round(mhAvg * (critHitDmg * 0.01 + 1)); 
         rendered['per-tick-norm'] = Math.round(tNorm / (duration * 2)); 
         rendered['total-damage-norm'] = tNorm;
         rendered['per-tick-crit'] = Math.round(tCrit / (duration * 2)); 
@@ -1226,14 +1232,14 @@ BuildCalculator.prototype = {
   			rendered['per-tick'] = Math.round(hit / duration);
   			rendered['total-damage'] = rendered['per-tick'] * duration;
   			rendered['damage-tick'] = Math.round(dLow / duration) + " - " + Math.round(dHigh / duration);
-  			rendered['critical-hit-tick'] = Math.round(dLow / duration * (1 + (this.attrs['critical-hit-damage'] * 0.01))) + " - " + Math.round(dHigh / duration * (1 + (this.attrs['critical-hit-damage'] * 0.01)));
+  			rendered['critical-hit-tick'] = Math.round(dLow / duration * (1 + (critHitDmg * 0.01))) + " - " + Math.round(dHigh / duration * (1 + (critHitDmg * 0.01)));
 		  }
 		} else if(tickModifier) {
 			rendered['dps'] = dps;							
 			rendered['ticks'] = tickModifier;
 			rendered['average-hit'] = hit / 4;			
 			rendered['damage'] = Math.round(dLow / tickModifier) + " - " + Math.round(dHigh / tickModifier);
-			rendered['critical-hit'] = Math.round(dLow * (1 + (this.attrs['critical-hit-damage'] * 0.01)) / tickModifier) + " - " + Math.round(dHigh * (1 + (this.attrs['critical-hit-damage'] * 0.01)) / tickModifier);
+			rendered['critical-hit'] = Math.round(dLow * (1 + (critHitDmg * 0.01)) / tickModifier) + " - " + Math.round(dHigh * (1 + (critHitDmg * 0.01)) / tickModifier);
 			
 		} else {
 			if(!hasCooldown) {
@@ -1251,12 +1257,12 @@ BuildCalculator.prototype = {
 			}
 			// d3up.log(dLow, dHigh);
 			rendered['damage'] = Math.round(dLow) + " - " + Math.round(dHigh);
-			rendered['critical-hit'] = Math.round(dLow * (1+ (this.attrs['critical-hit-damage'] * 0.01))) + " - " + Math.round(dHigh * (1 + (this.attrs['critical-hit-damage'] * 0.01)));
+			rendered['critical-hit'] = Math.round(dLow * (1+ (critHitDmg * 0.01))) + " - " + Math.round(dHigh * (1 + (critHitDmg * 0.01)));
 			if(this.bonuses['pierce-bonus']) {
   		  rendered['damage-2nd'] = Math.round((1 + (this.bonuses['pierce-bonus'] / 100)) * dLow) + " - " + Math.round((1 + (this.bonuses['pierce-bonus'] / 100)) * dHigh);
-  		  rendered['critical-hit-2nd'] = Math.round((1 + (this.bonuses['pierce-bonus'] / 100)) * dLow * (1+ (this.attrs['critical-hit-damage'] * 0.01))) + " - " + Math.round((1 + (this.bonuses['pierce-bonus'] / 100)) * dHigh * (1 + (this.attrs['critical-hit-damage'] * 0.01)));
+  		  rendered['critical-hit-2nd'] = Math.round((1 + (this.bonuses['pierce-bonus'] / 100)) * dLow * (1+ (critHitDmg * 0.01))) + " - " + Math.round((1 + (this.bonuses['pierce-bonus'] / 100)) * dHigh * (1 + (critHitDmg * 0.01)));
   		  rendered['damage-3rd'] = Math.round((1 + (this.bonuses['pierce-bonus'] / 100) * 2) * dLow) + " - " + Math.round((1 + (this.bonuses['pierce-bonus'] / 100) * 2) * dHigh);
-  		  rendered['critical-hit-3rd'] = Math.round((1 + (this.bonuses['pierce-bonus'] / 100) * 2) * dLow * (1+ (this.attrs['critical-hit-damage'] * 0.01))) + " - " + Math.round((1 + (this.bonuses['pierce-bonus'] / 100) * 2) * dHigh * (1 + (this.attrs['critical-hit-damage'] * 0.01)));
+  		  rendered['critical-hit-3rd'] = Math.round((1 + (this.bonuses['pierce-bonus'] / 100) * 2) * dLow * (1+ (critHitDmg * 0.01))) + " - " + Math.round((1 + (this.bonuses['pierce-bonus'] / 100) * 2) * dHigh * (1 + (critHitDmg * 0.01)));
   		}
 		}
 		// If we have any bonuses, add em in
