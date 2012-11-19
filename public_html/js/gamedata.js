@@ -3858,12 +3858,7 @@
 					desc: 'Surround yourself in a vortex that continuously deals 15% weapon damage to all enemies within 10 yards. The vortex lasts 6 seconds and is refreshed each time you strike an enemy with a melee attack. Landing a Critical Hit has a chance to increase the vortex effect up to 2 times for a total of 45% weapon damage to nearby enemies.',
 					effect: {
 						'cost-spirit': 75,
-						'stack': {
-							'weapon-damage': {
-								'limit': 3,
-								'value': 15,
-							},
-						},
+						'weapon-damage': 45,
 					},
 				},
 				'sweeping-wind~a': {
@@ -3872,12 +3867,7 @@
 					rune: 'Intensify the vortex, increasing the damage per stack to 20% weapon damage. This increases the damage with 3 stacks to 60% weapon damage.',
 					effect: {
 						'cost-spirit': 75,
-						'stack': {
-							'weapon-damage': {
-								'limit': 3,
-								'value': 20,
-							},
-						},
+						'weapon-damage': 60,
 					},
 				},
 				'sweeping-wind~b': {
@@ -3886,12 +3876,7 @@
 					rune: 'Increases the radius of the vortex to 14 yards and changes the damage dealt to Fire.',
 					effect: {
 						'cost-spirit': 75,
-						'stack': {
-							'weapon-damage': {
-								'limit': 3,
-								'value': 15,
-							},
-						},
+						'weapon-damage': 45,
 					},
 				},
 				'sweeping-wind~c': {
@@ -3900,12 +3885,7 @@
 					rune: 'While your vortex is at the maximum stack count, Critical Hits have a chance to spawn a lightning tornado that periodically electrocutes nearby enemies for 20% weapon damage as Lightning. Each spawned lightning tornado lasts 3 seconds.',
 					effect: {
 						'cost-spirit': 75,
-						'stack': {
-							'weapon-damage': {
-								'limit': 3,
-								'value': 15,
-							},
-						},
+						'weapon-damage': 45,
 					},
 				},
 				'sweeping-wind~d': {
@@ -3914,12 +3894,7 @@
 					rune: 'As long as your vortex is at the maximum stack count, you gain 3 Spirit per second.',
 					effect: {
 						'cost-spirit': 75,
-						'stack': {
-							'weapon-damage': {
-								'limit': 3,
-								'value': 15,
-							},
-						},
+						'weapon-damage': 45,
 					},
 				},
 				'sweeping-wind~e': {
@@ -3928,12 +3903,7 @@
 					rune: 'Increases the duration of the vortex to 20 seconds.',
 					effect: {
 						'cost-spirit': 75,
-						'stack': {
-							'weapon-damage': {
-								'limit': 3,
-								'value': 15,
-							},
-						},
+						'weapon-damage': 45,
 					},
 				},
 				'mantra-of-retribution': {
