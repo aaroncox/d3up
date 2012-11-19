@@ -1063,7 +1063,8 @@ BuildCalculator.prototype = {
 	  var skill = options.skill, 
 	      duration = options.duration, 
 	      mhOnly = options.mhOnly, 
-	      isStatic = options.isStatic;
+	      isStatic = options.isStatic,
+				tickModifier = options.tickModifier;
 	  
 		var rendered = {}, // Storage for Rendered Statistics
 				atkSpeedInc = 0,
@@ -1227,6 +1228,13 @@ BuildCalculator.prototype = {
   			rendered['damage-tick'] = Math.round(dLow / duration) + " - " + Math.round(dHigh / duration);
   			rendered['critical-hit-tick'] = Math.round(dLow / duration * (1 + (this.attrs['critical-hit-damage'] * 0.01))) + " - " + Math.round(dHigh / duration * (1 + (this.attrs['critical-hit-damage'] * 0.01)));
 		  }
+		} else if(tickModifier) {
+			rendered['dps'] = dps;							
+			rendered['ticks'] = tickModifier;
+			rendered['average-hit'] = hit / 4;			
+			rendered['damage'] = Math.round(dLow / tickModifier) + " - " + Math.round(dHigh / tickModifier);
+			rendered['critical-hit'] = Math.round(dLow * (1 + (this.attrs['critical-hit-damage'] * 0.01)) / tickModifier) + " - " + Math.round(dHigh * (1 + (this.attrs['critical-hit-damage'] * 0.01)) / tickModifier);
+			
 		} else {
 			if(!hasCooldown) {
 				rendered['dps'] = dps;							
@@ -1317,6 +1325,9 @@ BuildCalculator.prototype = {
 							options.skillName = k.split("~")[0];
 							options.skill = v; // Pass in the whole skill
 							break;
+						case "tick-modifier":
+							options.tickModifier = e;
+							break;
 						case "weapon-damage-for":
 							options.duration = e; // Pass in duration
 							break;
@@ -1340,7 +1351,6 @@ BuildCalculator.prototype = {
 				}, this);
 				
 			  rendered[k] = this.calcSAME(options);					
-
 				// Remove the Skills Bonuses
 				_.each(bonuses, function(val,b) {
 					this.removeBonus(b, val);

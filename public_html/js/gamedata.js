@@ -2627,6 +2627,7 @@
 					effect: {
 						'cost-hatred': 12,
 						'weapon-damage': 156,
+						'tick-modifier': 4,
 					},
 				},
 				'strafe~a': {
@@ -2645,6 +2646,7 @@
 					effect: {
 						'cost-hatred': 12,
 						'weapon-damage': 156,
+						'tick-modifier': 4,
 					},
 				},
 				'strafe~c': {
@@ -2653,7 +2655,8 @@
 					rune: 'In addition to regular firing, fire off homing rockets for 60% weapon damage as Fire.',
 					effect: {
 						'cost-hatred': 12,
-						'weapon-damage': 216,
+						'weapon-damage': 156,
+						'tick-modifier': 4,
 					},
 				},
 				'strafe~d': {
@@ -2663,6 +2666,7 @@
 					effect: {
 						'cost-hatred': 12,
 						'weapon-damage': 156,
+						'tick-modifier': 4,
 					},
 				},
 				'strafe~e': {
@@ -2672,6 +2676,7 @@
 					effect: {
 						'cost-hatred': 12,
 						'weapon-damage': 156,
+						'tick-modifier': 4,
 						'plus-crit-hit-damage': 100,
 					},
 				},
