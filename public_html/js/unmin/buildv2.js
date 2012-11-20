@@ -360,6 +360,9 @@
 											effectTable.append(build.renderEffectData(k, v));																					
 										});
 									}
+									if(build.skills.actives[slug].procRate) {
+										effectTable.append(build.renderEffectData('procRate', Math.round(build.skills.actives[slug].procRate * 1000) / 10));																					
+									}
 								}
 								$this.append($("<tr>").append($("<td>").append(skillTable), $("<td>").append(effectTable)));
 							}
