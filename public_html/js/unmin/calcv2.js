@@ -1281,11 +1281,11 @@ BuildCalculator.prototype = {
   		  rendered['critical-hit-3rd'] = Math.round((1 + (this.bonuses['pierce-bonus'] / 100) * 2) * dLow * (1+ (critHitDmg * 0.01))) + " - " + Math.round((1 + (this.bonuses['pierce-bonus'] / 100) * 2) * dHigh * (1 + (critHitDmg * 0.01)));
   		}
 		}
-		if(this.attrs['life-steal']) {
+		if(this.attrs['life-steal'] && options.skill.procRate > 0) {
 			rendered['average-life-steal'] = Math.round(this.attrs['life-steal'] * hit  * 0.2) / 100;
 			rendered['lps-life-steal'] = mathR * rendered['average-life-steal'];
 		}
-		if(this.attrs['life-hit']) {
+		if(this.attrs['life-hit'] && options.skill.procRate > 0) {
 			if(options.skill.procRate3rd) {
 				var normHit = this.attrs['life-hit'] * options.skill.procRate, 
 						thirdHit = this.attrs['life-hit'] * options.skill.procRate3rd;
