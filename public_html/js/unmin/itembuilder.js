@@ -241,10 +241,10 @@ ItemBuilder.prototype = {
 		'leg-demons-flight': 'Chance to reflect projectiles when you are hit by enemies.',
 		'leg-the-murlocket': 'Call forth a creature from the depths.',
 		// Skill Descriptions
-		'generate-fury': 'Generates VVV Fury',
-		'weapon-damage': 'Deals VVV% Weapon Damage',
+		'generate-fury': 'Generate: VVV Fury',
+		'weapon-damage': 'Weapon Damage: VVV%',
 		'cost-fury': 'Cost: VVV Fury',
-		'weapon-damage-for': 'Deals damage over VVV seconds',
+		'weapon-damage-for': 'DoT Duration: VVV sec',
 		'plus-crit-hit': '+VVV% Critical Hit Chance',
 		'cooldown': 'Cooldown: VVV seconds',
 		'plus-resist-all': '+VVV Resist All',
