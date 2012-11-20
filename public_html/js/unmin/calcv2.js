@@ -1279,8 +1279,15 @@ BuildCalculator.prototype = {
 			rendered['lps-life-steal'] = mathR * rendered['average-life-steal'];
 		}
 		if(this.attrs['life-hit']) {
-			rendered['average-life-hit'] 	 = Math.round(this.attrs['life-hit'] * options.skill.procRate * 100) / 100;
-			rendered['lps-life-hit'] = mathR * rendered['average-life-hit'];
+			if(options.skill.procRate3rd) {
+				var normHit = this.attrs['life-hit'] * options.skill.procRate, 
+						thirdHit = this.attrs['life-hit'] * options.skill.procRate3rd;
+				rendered['average-life-hit'] = Math.round((normHit + normHit + thirdHit) / 3 * 100) / 100;
+				rendered['lps-life-hit'] = mathR * rendered['average-life-hit'];		
+			} else {
+				rendered['average-life-hit'] = Math.round(this.attrs['life-hit'] * options.skill.procRate * 100) / 100;
+				rendered['lps-life-hit'] = mathR * rendered['average-life-hit'];								
+			}
 		}
 		if(rendered['lps-life-steal'] && rendered['lps-life-hit']) {
 			rendered['lps-average'] = Math.round((rendered['lps-life-steal'] + rendered['lps-life-hit']) * 100) / 100;
