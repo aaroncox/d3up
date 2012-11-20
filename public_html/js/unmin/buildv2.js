@@ -457,10 +457,22 @@
 					label = "Per Tick Crit";
 					value = i;
 					break;
+				case "average-life-steal":
+					label = "Life Steal/Hit Avg";
+					value = i;
+					break;
+				case "average-life-hit":
+					label = "Life on Hit/Hit Avg";
+					value = i;
+					break;
+				case "lps-average":
+					label = "LPS (LS + LoH)";
+					value = i;
+					break;
 			}
 			if(label && value) {
 				row.append($("<td>").html(label));
-				row.append($("<td>").html(i))
+				row.append($("<td>").html(value))
 				return row;
 			}
 			return false;

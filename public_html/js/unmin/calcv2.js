@@ -1159,6 +1159,14 @@ BuildCalculator.prototype = {
 				bnEleDamage += (this.attrs.ohRealDamage.min + bnMinDamage + this.attrs.ohRealDamage.max + bnMaxDamage) / 2 * (bnElePercent / 100);
 			}
 		}
+		
+		// Add in Monk FITL if needed
+		if(this.bonuses['monk-fitl-bonus']) {
+			var fitlBonus = this.calcFITL(bnEleDamage) / 2
+			mhMinDamage += fitlBonus;
+			mhMaxDamage += fitlBonus;
+		}
+		
 		// d3up.log(this.attrs.mhRealDamage.min, bnMinDamage, bnEleDamage);
 		// Are we duel wielding?
 		if(this.isDuelWielding && !mhOnly) {
@@ -1213,6 +1221,7 @@ BuildCalculator.prototype = {
 			dHigh = mathS * mathAh * mathM * mathE;
 			mhAvg = mathS * ((mathAl + mathAh) / 2) * mathM * mathE;
 		}
+		
 		// console.log(options.skill.name, dLow, dHigh);
 		dps = Math.round(((dLow + dHigh) / 2) * mathR * mathC);
 		// d3up.log(atkSpeedInc);
@@ -1264,6 +1273,17 @@ BuildCalculator.prototype = {
   		  rendered['damage-3rd'] = Math.round((1 + (this.bonuses['pierce-bonus'] / 100) * 2) * dLow) + " - " + Math.round((1 + (this.bonuses['pierce-bonus'] / 100) * 2) * dHigh);
   		  rendered['critical-hit-3rd'] = Math.round((1 + (this.bonuses['pierce-bonus'] / 100) * 2) * dLow * (1+ (critHitDmg * 0.01))) + " - " + Math.round((1 + (this.bonuses['pierce-bonus'] / 100) * 2) * dHigh * (1 + (critHitDmg * 0.01)));
   		}
+		}
+		if(this.attrs['life-steal']) {
+			rendered['average-life-steal'] = Math.round(this.attrs['life-steal'] * hit  * 0.2) / 100;
+			rendered['lps-life-steal'] = mathR * rendered['average-life-steal'];
+		}
+		if(this.attrs['life-hit']) {
+			rendered['average-life-hit'] 	 = Math.round(this.attrs['life-hit'] * options.skill.procRate * 100) / 100;
+			rendered['lps-life-hit'] = mathR * rendered['average-life-hit'];
+		}
+		if(rendered['lps-life-steal'] && rendered['lps-life-hit']) {
+			rendered['lps-average'] = Math.round((rendered['lps-life-steal'] + rendered['lps-life-hit']) * 100) / 100;
 		}
 		// If we have any bonuses, add em in
 		if(bonusText) {
