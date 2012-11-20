@@ -241,6 +241,8 @@ class D3Up_Tool_Crawler
 		'bb-rend' => 'Reduces resource cost of Rend by [v] Fury',
 		'bb-revenge' => 'Increases Critical Hit Chance of Revenge by [v]%',
 		'bb-weapon-throw' => 'Reduces resource cost of Weapon Throw by [v] Fury',
+		'bb-weapon-throw-dmg' => 'Increases Weapon Throw damage by [v]%',
+		'bb-ancient-spear-dmg' => 'Increases Ancient Spear damage by [v]%',
 		'bb-hammer-of-the-ancients' => 'Reduces resource cost of Hammer of the Ancients by [v] Fury',
 		'bb-whirlwind' => 'Increases Critical Hit Chance of Whirlwind by [v]%',
 		'bb-overpower' => 'Increases Critical Hit Chance of Overpower by [v]%',

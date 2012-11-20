@@ -3318,7 +3318,7 @@
 					effect: {
 						'generate-spirit': 6,
 						'weapon-damage': 110,
-						'3rd-hit': 35,
+						// '3rd-hit': 35,
 					},
 				},
 				'fists-of-thunder~b': {
@@ -8403,6 +8403,8 @@ td['bb-hammer-of-the-ancients'] = 'Reduces resource cost of Hammer of the Ancien
 td['bb-whirlwind'] = 'Increases Critical Hit Chance of Whirlwind by VVV%';
 td['bb-overpower'] = 'Increases Critical Hit Chance of Overpower by VVV%';
 td['bb-seismic-slam'] = 'Increases Critical Hit Chance of Seismic Slam by VVV%';
+td['bb-weapon-throw-dmg'] = 'Increases Weapon Throw damage by [v]%';
+td['bb-ancient-spear-dmg'] = 'Increases Ancient Spear damage by [v]%';
 td['fury-max'] = '+VVV Maximum Fury';
 td['hatred-regen'] = 'Increases Hatred Regeneration by VVV per Second';
 td['max-discipline'] = '+VVV Maximum Discipline';

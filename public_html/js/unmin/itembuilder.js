@@ -120,6 +120,8 @@ ItemBuilder.prototype = {
 		'bb-whirlwind': 'Increases Critical Hit Chance of Whirlwind by VVV%',
 		'bb-overpower': 'Increases Critical Hit Chance of Overpower by VVV%',
 		'bb-seismic-slam': 'Increases Critical Hit Chance of Seismic Slam by VVV%',
+		'bb-weapon-throw-dmg': 'Increases Weapon Throw damage by [v]%',
+		'bb-ancient-spear-dmg': 'Increases Ancient Spear damage by [v]%',
 		// Demon Hunter
 		'hatred-regen': 'Increases Hatred Regeneration by VVV per Second',
 		'max-discipline': '+VVV Maximum Discipline',

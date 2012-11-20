@@ -1120,16 +1120,23 @@ BuildCalculator.prototype = {
 				break;
 		}
 		if(shortName) {
-			if(this.attrs[shortName + '-' + options.skillName]) {
-				var bonusValue = this.attrs[shortName + '-' + options.skillName],
+			var attributeName = shortName + '-' + options.skillName,
+					attributeTip = false;
+			if(this.attrs[shortName + '-' + options.skillName + '-dmg']) {
+				attributeTip = shortName + '-' + options.skillName + '-dmg';
+			} else if(this.attrs[shortName + '-' + options.skillName]) {
+				attributeTip = shortName + '-' + options.skillName;
+			}
+			if(attributeTip) {
+				var bonusValue = this.attrs[attributeTip],
 						bonusText = '';
-				if(td[shortName + '-' + options.skillName].search(/cost/i) >= 0) {
+				if(td[attributeTip].search(/cost/i) >= 0) {
 					// console.log("Resource cost reduction");
-				} else if(bonusText.search(/critical hit/i) >= 0) {
+				} else if(td[attributeTip].search(/critical hit/i) >= 0) {
 					// console.log("Crit Hit increase");
 					critHit += bonusValue;
 					bonusText = "<span class='skill-highlight'>+" + bonusValue + "%</span> Crit";
-				} else if(bonusText.search(/damage/i) >= 0) {					
+				} else if(td[attributeTip].search(/damage/i) >= 0) {					
 					// console.log("Damage buff");
 					mathE += bonusValue;
 					bonusText = "<span class='skill-highlight'>+" + bonusValue + "%</span> Damage";

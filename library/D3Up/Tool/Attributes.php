@@ -102,6 +102,8 @@ class D3Up_Tool_Attributes
 		'bb-whirlwind' => 'Increases Critical Hit Chance of Whirlwind by [v]%',
 		'bb-overpower' => 'Increases Critical Hit Chance of Overpower by [v]%',
 		'bb-seismic-slam' => 'Increases Critical Hit Chance of Seismic Slam by [v]%',
+		'bb-weapon-throw-dmg' => 'Increases Weapon Throw damage by [v]%',
+		'bb-ancient-spear-dmg' => 'Increases Ancient Spear damage by [v]%',
 		'fury-max' => '+[v] Maximum Fury',
 		// Demon Hunter
 		'hatred-regen' => 'Increases Hatred Regeneration by [v] per Second',
