@@ -1122,8 +1122,8 @@ BuildCalculator.prototype = {
 		if(shortName) {
 			if(this.attrs[shortName + '-' + options.skillName]) {
 				var bonusValue = this.attrs[shortName + '-' + options.skillName],
-						bonusText = td[shortName + '-' + options.skillName];
-				if(bonusText.search(/cost/i) >= 0) {
+						bonusText = '';
+				if(td[shortName + '-' + options.skillName].search(/cost/i) >= 0) {
 					// console.log("Resource cost reduction");
 				} else if(bonusText.search(/critical hit/i) >= 0) {
 					// console.log("Crit Hit increase");
