@@ -81,7 +81,7 @@ ItemBuilder.prototype = {
 		'elite-damage': 'Increases Damage against Elites by VVV%',
 		'demon-damage': '+VVV% Damage to Demons',
 		// Procs
-		'procRate': 'VVV% Chance to Trigger Procs',
+		'procRate': 'Proc Coefficient: VVV%',
 		'chance-bleed': 'VVV% chance to inflict Bleed for VVV damage over 5 seconds',
 		'chance-blind': 'VVV% chance to Blind on Hit',
 		'chance-chill': 'VVV% chance to Chill on Hit',
