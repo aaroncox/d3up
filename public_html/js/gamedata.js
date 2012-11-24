@@ -48,9 +48,9 @@
 									}
 								},
 								{
-									"caseOf": "mighty|2h-mighty",
+									"caseOf": "mighty|2h-mighty|mighty-weapon",
 									'effect': {
-								
+										'proc-generate-fury': 3,
 									}
 								}																		
 							]
@@ -113,7 +113,10 @@
 					}
 				},
 				'unforgiving': {
-					'desc': 'You no longer degenerate Fury. Instead, you gain <span class="skill-highlight">2</span> Fury every <span class="skill-highlight">1</span> seconds.'
+					'desc': 'You no longer degenerate Fury. Instead, you gain <span class="skill-highlight">2</span> Fury every <span class="skill-highlight">1</span> seconds.',
+					'effect': {
+						'generate-fury-second': 2
+					}
 				},
 				'boon-of-bulkathos': {
 						'desc': 'The cooldown on your Earthquake, Call of the Ancients, and Wrath of the Berserker skills is reduced by <span class="skill-highlight">30</span> seconds.'
@@ -1574,7 +1577,7 @@
 					rune: 'While under the effects of Battle Rage, Critical Hits have a chance to generate 15 additional Fury.',
 					procRate: 0,
 					procEffect: {
-						'generate-fury': 15,
+						'generate-fury-crit': 15,
 					},
 					effect: {
 						'cost-fury': 20,

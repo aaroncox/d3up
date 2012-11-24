@@ -243,11 +243,11 @@ BuildCalculator.prototype = {
 			if(v.procEffect) {
 				_.each(v.procEffect, function(e,i) {
 					switch(i) {
-						case "generate-fury":
-							if(this.bonuses['proc-generate-fury']) {
-								this.bonuses['proc-generate-fury'] += e;
+						case "generate-fury-crit":
+							if(this.bonuses['proc-generate-fury-crit']) {
+								this.bonuses['proc-generate-fury-crit'] += e;
 							} else {
-								this.bonuses['proc-generate-fury'] = e;								
+								this.bonuses['proc-generate-fury-crit'] = e;								
 							}
 							break;
 					}
@@ -416,6 +416,7 @@ BuildCalculator.prototype = {
 					      this.attrs[effect + '-incs'].push(value * 100);								
 							}
 					    break;
+						case "proc-generate-fury":
 						case "generate-fury-second":
 							this.bonuses[effect] += value;
 							break;
@@ -524,6 +525,14 @@ BuildCalculator.prototype = {
 													case "critical-hit":
 														this.attrs['critical-hit'] = this.attrs['critical-hit'] + (eff * 100);														
 														// d3up.log("up ch" , this.attrs['critical-hit'], eff);
+														break;
+													case "proc-generate-fury":
+													// console.log(eff);
+														if(this.bonuses['proc-generate-fury']) {
+															this.bonuses['proc-generate-fury'] += eff;															
+														} else {
+															this.bonuses['proc-generate-fury'] = eff;
+														}
 														break;
 													default:
 													 	// d3up.log("Unhandled Switch: " + e + " [" + eff + "]");
@@ -1334,12 +1343,19 @@ BuildCalculator.prototype = {
 			if(options.skill.effect && options.skill.effect[v]) {
 				generate += options.skill.effect[v];
 			}
+			// console.log(options.skillName);
 			// This is battlerage, uses crits
 			if(v == "generate-fury" && this.bonuses['proc-generate-fury']) {
-				generate += this.bonuses['proc-generate-fury'] * (critHit * 0.01) * options.skill.procRate;
+				generate += this.bonuses['proc-generate-fury'] * options.skill.procRate;
+				// console.log("weapons master", this.bonuses['proc-generate-fury'], options.skill.procRate, generate);
+			}
+			if(v == "generate-fury" && this.bonuses['proc-generate-fury-crit']) {
+				generate += this.bonuses['proc-generate-fury-crit'] * (critHit * 0.01) * options.skill.procRate;
+				// console.log("battlerage", this.bonuses['proc-generate-fury-crit'], options.skill.procRate, critHit, generate);
 			}
 			if(v == "generate-fury" && this.bonuses['proc-generate-fury-throw'] && options.skillName == "weapon-throw") {
 				generate += this.bonuses['proc-generate-fury-throw'] * (critHit * 0.01) * options.skill.procRate;
+				// console.log("no escape", this.bonuses['proc-generate-fury-throw'], options.skill.procRate, critHit, generate);
 			}
 			// Generate the Resource Display
 			if(generate) {
