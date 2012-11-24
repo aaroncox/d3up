@@ -1570,6 +1570,9 @@
 					desc: 'Enter a rage which increases damage by 15% and Critical Hit Chance by 3% for 120 seconds.',
 					rune: 'While under the effects of Battle Rage, Critical Hits have a chance to generate 15 additional Fury.',
 					procRate: 0,
+					procEffect: {
+						'generate-fury': 15,
+					},
 					effect: {
 						'cost-fury': 20,
 						'plus-crit-hit': 3,

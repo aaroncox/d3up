@@ -466,8 +466,26 @@
 					value = i;
 					break;
 				case "lps-average":
-					label = "LPS (LS + LoH)";
+					label = "LPS (APS*(LoH+LS))";
 					value = i;
+					break;
+				case "rps":
+					_.each(i, function(v,k) {
+						switch(k) {
+							case "fury":
+								label = "Fury Generation";
+								value = v + " fury/sec";
+								break;
+							case "spirit":
+								label = "Spirit Generation";
+								value = v + " spirit/sec";
+								break;
+							case "hatred":
+								label = "Hatred Generation";
+								value = v + " hatred/sec";
+								break;
+						}
+					});
 					break;
 			}
 			if(label && value) {

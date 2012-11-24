@@ -73,6 +73,7 @@ BuildCalculator.prototype = {
 			'percent-non-physical' : 0, // Percentage to reduce non-physical damage (ie superstition)
 			'plus-attack-speed-this': 0,
 			'plus-percent-life-regen': 0,
+			'proc-generate-fury': 0,
 		};
 	},
 	setClass: function(newClass) {
@@ -238,7 +239,19 @@ BuildCalculator.prototype = {
 	applyEnabledSkills: function() {
     // console.log(this.enabledSkills);
 		_.each(this.enabledSkills, function(v,k) {
-      // d3up.log(v,k);
+			if(v.procEffect) {
+				_.each(v.procEffect, function(e,i) {
+					switch(i) {
+						case "generate-fury":
+							if(this.bonuses['proc-generate-fury']) {
+								this.bonuses['proc-generate-fury'] += e;
+							} else {
+								this.bonuses['proc-generate-fury'] = e;								
+							}
+							break;
+					}
+				}, this);
+			}
 			_.each(v.effect, function(e,i) {
 				switch(i) {
 					case "plus-aps":
@@ -1299,6 +1312,36 @@ BuildCalculator.prototype = {
 		if(rendered['lps-life-steal'] && rendered['lps-life-hit']) {
 			rendered['lps-average'] = Math.round((rendered['lps-life-steal'] + rendered['lps-life-hit']) * 100) / 100;
 		}
+		// Does this skill generate anything for us?
+		_.each(['generate-fury', 'generate-hatred', 'generate-spirit'], function(v,k) {
+			// console.log(k,v,options.skill);
+			var resource = v.split("-")[1],
+					generate = 0;
+			if(options.skill.effect && options.skill.effect[v]) {
+				generate += options.skill.effect[v];
+			}
+			// This is battlerage, uses crits
+			if(v == "generate-fury" && this.bonuses['proc-generate-fury']) {
+				generate += this.bonuses['proc-generate-fury'] * (critHit * 0.01) * options.skill.procRate;
+			}
+
+			// Generate the Resource Display
+			if(generate) {
+				if(!rendered['rps']) {
+					rendered['rps'] = {};
+				}
+				if(duration) {
+					rendered['rps'][resource] = Math.round(generate * 2 * 100) / 100;
+				} else {
+					rendered['rps'][resource] = Math.round(generate * mathR * 100) / 100;					
+				}
+			}
+
+		}, this);
+		// console.log(rendered['rps']);
+		// if(option.skill.effect[])
+		
+		
 		// If we have any bonuses, add em in
 		if(bonusText) {
 			rendered['bonusText'] = bonusText;
@@ -1523,6 +1566,13 @@ BuildCalculator.prototype = {
       }
     }, this);
 	},
+	calcLifeRegen: function(dps, skills) {
+		var rendered = {}; // Storage for Rendered Statistics
+		rendered['inc-ls'] = dps.dps / 100 * 0.2;
+		// console.log(dps, skills);
+		// console.log(rendered);
+		return rendered;
+	},
 	run: function() {
 		// Apply all of the passive bonuses into the this.bonuses array for use in the math below
 		this.applyPassives();
@@ -1538,13 +1588,14 @@ BuildCalculator.prototype = {
 		 		ehp = this.calcEffectiveHealth(defenses), 
 				gearEhp = this.calcGearEhp(defenses, ehp),
 				dps = this.calcOffense(), 
-				skills = this.calcSkills();
+				skills = this.calcSkills(),
+				lifeRegen = this.calcLifeRegen(dps, skills);
 
 		this.attrs['primary-stat'] = this.attrs[this.attrs['primary']];
 		
 		// Add all of our calculated values into the values object for returning
     // d3up.log("----");
-		_.extend(this.values, defenses, ehp, gearEhp, dps, skills);		
+		_.extend(this.values, defenses, ehp, gearEhp, dps, skills, lifeRegen);		
 		// console.log("Block @ ", this.attrs['block-chance']);
 		// ----------------------------------
 		// Define Offensive Statistics before Passives so we can add to them
