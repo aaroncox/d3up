@@ -74,6 +74,7 @@ BuildCalculator.prototype = {
 			'plus-attack-speed-this': 0,
 			'plus-percent-life-regen': 0,
 			'proc-generate-fury': 0,
+			'generate-fury-second': 0
 		};
 	},
 	setClass: function(newClass) {
@@ -415,6 +416,9 @@ BuildCalculator.prototype = {
 					      this.attrs[effect + '-incs'].push(value * 100);								
 							}
 					    break;
+						case "generate-fury-second":
+							this.bonuses[effect] += value;
+							break;
 						case "flatten-resists":
 							// this.attrs['resist-all'] = highest;
 							// d3up.log(this.attrs['resist-all'], highest, this.attrs['resist-all'] + highest);
@@ -1347,6 +1351,10 @@ BuildCalculator.prototype = {
 				} else {
 					rendered['rps'][resource] = Math.round(generate * mathR * 100) / 100;					
 				}
+			}
+			// Unforgiving Passive
+			if(generate && v == "generate-fury" && this.bonuses['generate-fury-second']) {
+				rendered['rps'][resource] += this.bonuses['generate-fury-second'];
 			}
 
 		}, this);
