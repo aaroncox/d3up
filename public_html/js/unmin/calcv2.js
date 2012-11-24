@@ -373,6 +373,16 @@ BuildCalculator.prototype = {
 		  if(!v) {
 		    return false;
 		  }
+			if(v.procEffect) {
+				_.each(v.procEffect, function(e,i) {
+					switch(i) {
+						case "generate-fury-throw":
+							this.bonuses['proc-generate-fury-throw'] = e;								
+							break;
+					}
+				}, this);
+			}
+		
       // console.log(v, k);
 			// if(passives[this.class][v] && typeof passives[this.class][v]['effect'] != "undefined") {
 			if(v.effect) {
@@ -1324,7 +1334,9 @@ BuildCalculator.prototype = {
 			if(v == "generate-fury" && this.bonuses['proc-generate-fury']) {
 				generate += this.bonuses['proc-generate-fury'] * (critHit * 0.01) * options.skill.procRate;
 			}
-
+			if(v == "generate-fury" && this.bonuses['proc-generate-fury-throw'] && options.skillName == "weapon-throw") {
+				generate += this.bonuses['proc-generate-fury-throw'] * (critHit * 0.01) * options.skill.procRate;
+			}
 			// Generate the Resource Display
 			if(generate) {
 				if(!rendered['rps']) {
