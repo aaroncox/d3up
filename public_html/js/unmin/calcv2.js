@@ -1119,21 +1119,47 @@ BuildCalculator.prototype = {
 				hasCooldown = (skill.effect['cooldown']) ? true : false; 
 		if(this.attrs['damage']) {
 			mhMinDamage = this.attrs['damage'].min;
-			mhMaxDamage = this.attrs['damage'].max;
+			mhMaxDamage = this.attrs['damage'].max;		
 			if(this.attrs['damage-oh']) {
 				ohMinDamage = this.attrs['damage-oh'].min;
 				ohMaxDamage = this.attrs['damage-oh'].max;
 			}
 		}
-		if(this.attrs['attack-speed-incs']) {
-			atkSpeedInc = this.attrs['attack-speed-incs'] / 100;
-		}
-		// Calculate the Average and Min/Max Bonus Damage from other items
 		if(this.attrs['max-damage']) {
-			bnMaxDamage = this.attrs['max-damage'];			
+			mhMaxDamage += this.attrs['max-damage']; // / (1 - (this.attrs['mainhand-plus-damage'] * 0.01));      
+			if(ohMaxDamage) {
+				ohMaxDamage += this.attrs['max-damage'];              
+			}
 		}
 		if(this.attrs['min-damage']) {
-			bnMinDamage = this.attrs['min-damage'];				
+		  mhMinDamage += this.attrs['min-damage']; // / (1 - (this.attrs['mainhand-plus-damage'] * 0.01));        
+		  if(ohMinDamage) {
+		    ohMinDamage += this.attrs['min-damage'];              
+		  }
+		}
+		// Calculate Averages
+		mhAvgDamage = (mhMinDamage + mhMaxDamage) / 2;				
+		ohAvgDamage = (ohMinDamage + ohMaxDamage) / 2;
+		
+		// Elemental Damage Bonuses
+		_.each(['plus-fire-damage', 'plus-arcane-damage', 'plus-poison-damage', 'plus-cold-damage', 'plus-lightning-damage', 'plus-holy-damage'], function(v,k) {
+			if(_.has(this.attrs, v)) {
+				bnElePercent += this.attrs[v];
+			}
+		}, this);
+
+		// Determine Bonus Damage from Elemental Damage Bonuses
+		if(bnElePercent > 0 && this.attrs.mhRealDamage) {
+			bnEleDamage = (this.attrs.mhRealDamage.min + bnMinDamage + this.attrs.mhRealDamage.max + bnMaxDamage) / 2 * (bnElePercent / 100);
+			mhAvgDamage += bnEleDamage;
+			if(this.isDuelWielding) {
+				bnEleDamageOh = (this.attrs.ohRealDamage.min + bnMinDamage + this.attrs.ohRealDamage.max + bnMaxDamage) / 2 * (bnElePercent / 100);
+				ohAvgDamage += bnEleDamageOh;
+			}
+		}
+		// Any additional attacks
+		if(this.attrs['attack-speed-incs']) {
+			atkSpeedInc = this.attrs['attack-speed-incs'] / 100;
 		}
 		
 		// Do we modify the damage or crit at all?
@@ -1185,30 +1211,13 @@ BuildCalculator.prototype = {
 			critHitDmg += skill.effect['plus-crit-hit-damage'];
 		}
 		
-		bnAvgDamage = (bnMinDamage + bnMaxDamage) / 2;
 		// Convert mathE to a percentage
 		mathE = mathE / 100;
-		// Elemental Damage Bonuses
-		_.each(['plus-fire-damage', 'plus-arcane-damage', 'plus-poison-damage', 'plus-cold-damage', 'plus-lightning-damage', 'plus-holy-damage'], function(v,k) {
-			if(_.has(this.attrs, v)) {
-				bnElePercent += this.attrs[v];
-			}
-		}, this);
-		// Determine Bonus Damage from Elemental Damage Bonuses
-		// Determine Bonus Damage from Elemental Damage Bonuses
-		if(bnElePercent > 0 && this.attrs.mhRealDamage) {
-			bnEleDamage += (this.attrs.mhRealDamage.min + bnMinDamage + this.attrs.mhRealDamage.max + bnMaxDamage) / 2 * (bnElePercent / 100);
-			if(this.isDuelWielding) {
-				bnEleDamage += (this.attrs.ohRealDamage.min + bnMinDamage + this.attrs.ohRealDamage.max + bnMaxDamage) / 2 * (bnElePercent / 100);
-			}
-		}
-		
-		// Add in Monk FITL if needed
+
 		if(this.bonuses['monk-fitl-bonus']) {
-			var fitlBonus = this.calcFITL(bnEleDamage) / 2
-			mhMinDamage += fitlBonus;
-			mhMaxDamage += fitlBonus;
+			mhAvgDamage += this.calcFITL(bnEleDamage);
 		}
+
 		
 		// d3up.log(this.attrs.mhRealDamage.min, bnMinDamage, bnEleDamage);
 		// Are we duel wielding?
@@ -1220,9 +1229,9 @@ BuildCalculator.prototype = {
 				// oh: Math.floor(this.attrs['speed-oh'] * 1024) / 1024
 			};
 			mathS = 1 + this.attrs[this.attrs.primary] * 0.01;
-			mathA = ((mhMinDamage + mhMaxDamage) / 2 + bnMaxDamage) + ((ohMinDamage + ohMaxDamage) / 2 + bnMinDamage) / 2;
-			mathAl = ((mhMinDamage + bnMinDamage) + bnEleDamage) + ((ohMinDamage + bnMinDamage) + bnEleDamage);
-			mathAh = ((mhMaxDamage + bnMaxDamage) + bnEleDamage) + ((ohMaxDamage + bnMaxDamage) + bnEleDamage);
+			mathA = (mhAvgDamage + ohAvgDamage) / 2;
+			mathAl = (mhMinDamage + ohMinDamage) / 2;
+			mathAh = (mhMaxDamage + ohMaxDamage) / 2;
 			mathM = (1 + this.bonuses['plus-damage']);
 			var mhAPS = rendered['dps-speed'].mh * (1 + atkSpeedInc + 0.15 + this.bonuses['plus-attack-speed']),
 					ohAPS = rendered['dps-speed'].oh * (1 + atkSpeedInc + 0.15 + this.bonuses['plus-attack-speed']);
@@ -1239,6 +1248,7 @@ BuildCalculator.prototype = {
 				}
 				// console.log(mathE, this.attrs[dmgAttr]);
 			}
+			// console.log(critHit, critHitDmg);
 			dLow = mathS * mathAl * mathM * mathE;
 			dHigh = mathS * mathAh * mathM * mathE;
 			// d3up.log(mathS, mathAl, mathAh, mathM, dLow, dHigh, mathE);
@@ -1247,8 +1257,8 @@ BuildCalculator.prototype = {
 			mathS = 1 + this.attrs[this.attrs.primary] * 0.01;
 			mathC = 1 + (critHit * 0.01) * (critHitDmg * 0.01);
 			mathR = rendered['dps-speed'] * (1 + atkSpeedInc + this.bonuses['plus-attack-speed']);
-			mathAl = ((mhMinDamage + bnMinDamage) + bnEleDamage);
-			mathAh = ((mhMaxDamage + bnMaxDamage) + bnEleDamage);
+			mathAl = mhMinDamage;
+			mathAh = mhMaxDamage;
 			mathM = (1 + this.bonuses['plus-damage']);
 			if(skill.effect['weapon-damage-type']) {
 				var dmgType = skill.effect['weapon-damage-type'],
