@@ -1196,16 +1196,18 @@ BuildCalculator.prototype = {
 			if(attributeTip) {
 				var bonusValue = this.attrs[attributeTip],
 						bonusText = '';
-				if(td[attributeTip].search(/cost/i) >= 0) {
-					// console.log("Resource cost reduction");
-				} else if(td[attributeTip].search(/critical hit/i) >= 0) {
-					// console.log("Crit Hit increase");
-					critHit += bonusValue;
-					bonusText = "<span class='skill-highlight'>+" + bonusValue + "%</span> Crit";
-				} else if(td[attributeTip].search(/damage/i) >= 0) {					
-					// console.log("Damage buff");
-					mathE += bonusValue;
-					bonusText = "<span class='skill-highlight'>+" + bonusValue + "%</span> Damage";
+				if(td[attributeTip]) {
+					if(td[attributeTip].search(/cost/i) >= 0) {
+						// console.log("Resource cost reduction");
+					} else if(td[attributeTip].search(/critical hit/i) >= 0) {
+						// console.log("Crit Hit increase");
+						critHit += bonusValue;
+						bonusText = "<span class='skill-highlight'>+" + bonusValue + "%</span> Crit";
+					} else if(td[attributeTip].search(/damage/i) >= 0) {					
+						// console.log("Damage buff");
+						mathE += bonusValue;
+						bonusText = "<span class='skill-highlight'>+" + bonusValue + "%</span> Damage";
+					}					
 				}
 			}
 		}
