@@ -762,6 +762,7 @@ BuildCalculator.prototype = {
 		// EHP Calculation by Damage Type
 		// Formula: ( Life / (Percentage Damage Taken * Modifier ) )
 		// ----------------------------------
+
 		rendered['ehp-dodge'] = rendered['ehp-block-dodge'] = defenses.life / ( rendered.damageTaken * ( 1 - defenses['dodge-chance'] / 100));
 		rendered['ehp-melee'] = defenses.life / ( rendered.damageTaken * ( 1 - defenses['percent-melee-reduce'] ));
 		rendered['ehp-range'] = defenses.life / ( rendered.damageTaken * ( 1 - defenses['percent-range-reduce'] ));
@@ -782,6 +783,9 @@ BuildCalculator.prototype = {
 			if(rendered['ehp-block'] < 0) {
 				rendered['ehp-block'] = "Invulnerable";
 			}
+		}
+		if(rendered['ehp-block-dodge'] < 0) {
+			rendered['ehp-block'] = "Invulnerable";
 		}
 		
 		// Return the Values for EHP
