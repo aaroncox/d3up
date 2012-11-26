@@ -337,6 +337,7 @@ class AjaxController extends D3Up_Controller_Action
 		'min-damage' => "MinD",
 		'max-damage' => "MaxD",
 		'minmax-damage' => "Dmg",
+		'plus-aps' => 'APS',
 		// Elemental Damage 
 		'plus-arcane-damage' => "ArcD%",
 		'plus-cold-damage' => "ColdD%",
