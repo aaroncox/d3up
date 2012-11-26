@@ -2302,3 +2302,12 @@ div#statistics {
 .stats-table td.hl-ehp .value {
   font-weight: bold;
 }
+#skill-catalog .statistics-table th,
+#skill-catalog .statistics-table td {
+	width: auto;
+	text-align: right;
+}
+#skill-catalog .statistics-table th {
+	font-size: 12px;
+	color: #B18135;
+}

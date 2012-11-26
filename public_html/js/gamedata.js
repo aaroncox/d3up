@@ -1034,6 +1034,7 @@
 					desc: 'Revenge has a 15% chance to become active each time you are hit.  Inflict 220% weapon damage to all nearby enemies. You heal 5% of your maximum Life for each enemy hit.',
 					procRate: 0.333,
 					effect: {
+						'cooldown': 1,
 						'weapon-damage': 220,
 					},
 				},
@@ -1043,6 +1044,7 @@
 					rune: 'Increase damage to 286% weapon damage.',
 					procRate: 0.333,
 					effect: {
+						'cooldown': 1,
 						'weapon-damage': 286,
 					},
 				},
@@ -1052,6 +1054,7 @@
 					rune: 'Increases the chance Revenge will become active to 30% each time you are hit by an attack.',
 					procRate: 0.333,
 					effect: {
+						'cooldown': 1,
 						'weapon-damage': 220,
 					},
 				},
@@ -1061,6 +1064,7 @@
 					rune: 'Knocks enemies back 24 yards whenever Revenge is used.',
 					procRate: 0.333,
 					effect: {
+						'cooldown': 1,
 						'weapon-damage': 220,
 					},
 				},
@@ -1070,6 +1074,7 @@
 					rune: 'Gain 5 Fury and heal for 8% of your maximum Life for each enemy hit.',
 					procRate: 0.333,
 					effect: {
+						'cooldown': 1,
 						'generate-fury': 5,
 						'weapon-damage': 220,
 					},
@@ -1080,6 +1085,7 @@
 					rune: 'After using Revenge, your Critical Hit Chance is increased by 10% for 12 seconds.',
 					procRate: 0.333,
 					effect: {
+						'cooldown': 1,
 						'weapon-damage': 220,
 						'plus-crit-hit': 10,
 					},

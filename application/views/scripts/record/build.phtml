@@ -44,6 +44,7 @@
       <li><a class='saveStats button' href="#">Save Stats to DB</a></li>
       <li><a data-tab="#json" class='button'>JSON Data</a></li>
       <? endif ?>
+      <li><a data-tab="#skill-catalog" class="button">Skill Catalog</a></li>
       <li><a data-tab="#dps-math" class='button'>DPS Calculations</a></li>
       <!-- <li><a data-tab="#suggestions" class="button">Suggestions</a></li>
       <li><a data-tab="#share" class="button">Share</a></li> -->
@@ -62,6 +63,7 @@
       <div id="json"><?= $this->render("./record/build/json.phtml") ?></div>
       <? endif ?>
       <div id="dps-math"><?= $this->render("./record/build/math-dps.phtml") ?></div>
+			<div id="skill-catalog"><?= $this->render("./record/build/skill-catalog.phtml") ?></div>
       <!-- <div id="suggestions"><?= $this->render("./record/build/suggestions.phtml") ?></div>
       <div id="share"><?= $this->render("./record/build/share.phtml") ?></div> -->
     </div>
@@ -169,6 +171,7 @@
       build.renderSkillsTo($("#skills"));
       build.renderSkillsTo($("#passives"));
       build.renderSkillsTo($("#buffs"));
+      build.renderSkillCatalog($("#skill-catalog"));
 	  });
   </script>
   <script type="text/javascript" src="/js/unmin/buildui.js"></script>	

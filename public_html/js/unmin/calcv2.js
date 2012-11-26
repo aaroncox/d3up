@@ -1401,109 +1401,115 @@ BuildCalculator.prototype = {
     // d3up.log(rendered);
     return rendered;
 	},
+	calcSkill: function(k, v) {
+		var rendered = {},
+				options = {},
+		    calcDot = false,
+				calcSame = false,
+				calcStatic = false,
+				activate = false,
+				stackable = false,
+				calcMhOnly = false,
+				bonuses = {};
+				// d3up.log(k,v);
+		if(v && v.effect) {
+			_.each(v.effect, function(e,i) {
+				switch(i) {
+				  case "pierce-bonus":
+						bonuses[i] = e;
+				    break;
+					case "3rd-hit":
+						bonuses['3rd-hit-damage'] = e;
+						break;
+					case "plus-intelligence-conditional":
+					case "plus-holy-damage-conditional":
+					case "plus-damage-conditional":
+					case "plus-life-conditional":
+					case "damage-reduce-conditional":
+					case "plus-crit-hit":
+					case "plus-life":
+					case "plus-attack-speed":
+					case "plus-melee-reduce":
+					case "plus-damage":
+					case "plus-armor":
+					case "plus-resist-all":
+					case "plus-dodge":
+						activate = true;
+						break;
+					case "stackable":
+					  stackable = e.limit;
+						activate = true;
+            _.each(e, function(se, si) {
+              switch(si) {
+                case "plus-attack-speed-this":
+                  if(bonuses['plus-attack-speed']) {
+                    bonuses["plus-attack-speed"] += this.bonuses['plus-attack-speed-this'] / 100;
+                  } else {
+                    bonuses["plus-attack-speed"] = this.bonuses['plus-attack-speed-this'] / 100;                      
+                  }
+                  break;
+              }
+            }, this);
+						break;
+					case "plus-critical-hit-this":
+						bonuses["plus-critical-hit"] = e;
+						break;
+					case "weapon-damage":
+						options.skillName = k.split("~")[0];
+						options.skill = v; // Pass in the whole skill
+						break;
+					case "tick-modifier":
+						options.tickModifier = e;
+						break;
+					case "weapon-damage-for":
+						options.duration = e; // Pass in duration
+						break;
+					case "weapon-damage-mh":
+					  options.mhOnly = true;
+					  break;
+					case "weapon-damage-static":
+            options.isStatic = true;
+					  break;
+					default:
+            // d3up.log("not supported ",e,i);
+						break;
+
+				}
+			}, this);	
+		}
+		if(options.skill) {
+			// Add the Skills Bonuses
+			_.each(bonuses, function(val,b) {
+				this.addBonus(b, val);
+			}, this);
+			
+		  rendered[k] = this.calcSAME(options);					
+			// Remove the Skills Bonuses
+			_.each(bonuses, function(val,b) {
+				this.removeBonus(b, val);
+			}, this);
+		}
+		if(activate) {
+			if(!rendered[k]) {
+				rendered[k] = {};
+			}
+			rendered[k].activate = true;
+		}
+		if(stackable) {
+			if(!rendered[k]) {
+				rendered[k] = {};
+			}
+			rendered[k].stackable = stackable;
+		}
+		return rendered;
+	},
 	calcSkills: function() {
 		var rendered = {};
-		// d3up.log(this.activeSkills);
+		// Calculate Skill data for Actives
 		_.each(this.activeSkills, function(v,k) {
-			var options = {},
-			    calcDot = false,
-					calcSame = false,
-					calcStatic = false,
-					activate = false,
-					stackable = false,
-					calcMhOnly = false,
-					bonuses = {};
-					// d3up.log(k,v);
-			if(v && v.effect) {
-				_.each(v.effect, function(e,i) {
-					switch(i) {
-					  case "pierce-bonus":
-  						bonuses[i] = e;
-					    break;
-						case "3rd-hit":
-							bonuses['3rd-hit-damage'] = e;
-							break;
-						case "plus-intelligence-conditional":
-						case "plus-holy-damage-conditional":
-						case "plus-damage-conditional":
-						case "plus-life-conditional":
-						case "damage-reduce-conditional":
-						case "plus-crit-hit":
-						case "plus-life":
-						case "plus-attack-speed":
-						case "plus-melee-reduce":
-						case "plus-damage":
-						case "plus-armor":
-						case "plus-resist-all":
-						case "plus-dodge":
-							activate = true;
-							break;
-						case "stackable":
-						  stackable = e.limit;
-							activate = true;
-              _.each(e, function(se, si) {
-                switch(si) {
-                  case "plus-attack-speed-this":
-                    if(bonuses['plus-attack-speed']) {
-                      bonuses["plus-attack-speed"] += this.bonuses['plus-attack-speed-this'] / 100;
-                    } else {
-                      bonuses["plus-attack-speed"] = this.bonuses['plus-attack-speed-this'] / 100;                      
-                    }
-                    break;
-                }
-              }, this);
-							break;
-						case "plus-critical-hit-this":
-							bonuses["plus-critical-hit"] = e;
-							break;
-						case "weapon-damage":
-							options.skillName = k.split("~")[0];
-							options.skill = v; // Pass in the whole skill
-							break;
-						case "tick-modifier":
-							options.tickModifier = e;
-							break;
-						case "weapon-damage-for":
-							options.duration = e; // Pass in duration
-							break;
-						case "weapon-damage-mh":
-						  options.mhOnly = true;
-						  break;
-						case "weapon-damage-static":
-              options.isStatic = true;
-						  break;
-						default:
-              // d3up.log("not supported ",e,i);
-							break;
-
-					}
-				}, this);	
-			}
-			if(options.skill) {
-				// Add the Skills Bonuses
-				_.each(bonuses, function(val,b) {
-					this.addBonus(b, val);
-				}, this);
-				
-			  rendered[k] = this.calcSAME(options);					
-				// Remove the Skills Bonuses
-				_.each(bonuses, function(val,b) {
-					this.removeBonus(b, val);
-				}, this);
-			}
-			if(activate) {
-				if(!rendered[k]) {
-					rendered[k] = {};
-				}
-				rendered[k].activate = true;
-			}
-			if(stackable) {
-				if(!rendered[k]) {
-					rendered[k] = {};
-				}
-				rendered[k].stackable = stackable;
-			}
+			_.extend(rendered, this.calcSkill(k,v));		
 		}, this);
+		// Calculate Skill data for Passives
 		_.each(this.passiveSkills, function(v,k) {
 			var	activate = false,
 			    stackable = false,
@@ -1545,6 +1551,16 @@ BuildCalculator.prototype = {
 		}, this);
 		// d3up.log(rendered);
 		return {skillData: rendered};
+	},
+	calcAllSkills: function() {
+		var rendered = {};
+		// Calculate Skill data for All Skills
+		_.each(d3up.gameData.actives[this.heroClass], function(v,k) {
+			// console.log(v,k);
+			_.extend(rendered, this.calcSkill(k,v));		
+		}, this);
+		// console.log(rendered);
+		return {allSkillData: rendered};
 	},
 	setBuild: function(build) {
 	  // Refresh this to an empty build
@@ -1641,13 +1657,14 @@ BuildCalculator.prototype = {
 				gearEhp = this.calcGearEhp(defenses, ehp),
 				dps = this.calcOffense(), 
 				skills = this.calcSkills(),
+				allSkills = this.calcAllSkills(),
 				lifeRegen = this.calcLifeRegen(dps, skills);
 
 		this.attrs['primary-stat'] = this.attrs[this.attrs['primary']];
 		
 		// Add all of our calculated values into the values object for returning
     // d3up.log("----");
-		_.extend(this.values, defenses, ehp, gearEhp, dps, skills, lifeRegen);		
+		_.extend(this.values, defenses, ehp, gearEhp, dps, skills, allSkills, lifeRegen);		
 		// console.log("Block @ ", this.attrs['block-chance']);
 		// ----------------------------------
 		// Define Offensive Statistics before Passives so we can add to them

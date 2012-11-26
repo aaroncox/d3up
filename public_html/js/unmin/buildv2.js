@@ -16,6 +16,7 @@
     slots: ['helm', 'shoulders', 'amulet', 'chest', 'gloves', 'bracers', 'belt', 'pants', 'ring1', 'ring2', 'boots', 'mainhand', 'offhand'],
     elems: {},
 		skillElems: {},
+		skillCatalog: {},
     init: function(data) {
       this.calc = new d3up.BuildCalculator;
 			this.builder = new d3up.ItemBuilder;
@@ -58,6 +59,10 @@
       // Loop through all Skill Elements previously used and re-render
       $.each(this.skillElems, function(k,v) {
         build.renderSkillsTo(v);
+      });
+      // Loop through the Skill Catalog used and re-render
+      $.each(this.skillCatalog, function(k,v) {
+        build.renderSkillCatalog(v);
       });
     },
     renderTo: function(elem) {
@@ -134,6 +139,49 @@
 				var slot = $(this).data('display-item'),
 						item = build.gear[slot];
 				$(this).html(build.calc.getItemLink(item));
+			});
+		},
+		renderSkillCatalog: function(elem) {
+      // If we've called render before run, then run it before the render
+      if(!this.stats.strength) {
+        this.run();
+      }
+      this.skillCatalog[elem.selector] = elem;
+      var build = this,
+          compare = d3up.buildCompare,
+          elements = elem.find("*[data-skill-type]");
+			elements.each(function() {
+				// Remove Existing Elements
+        $(this).empty();
+        
+				var table = $(this), 
+						res = "Res";
+				switch(build.meta.heroClass) {
+					case "barbarian":
+						res = "Fury";
+						break;
+					case "demon-hunter":
+						res = "Hatred";
+						break;
+					case "monk":
+						res = "Spirit";
+						break;
+				}
+				table.prepend("<tr><th>Skill</th><th>DPS</th><th>Life/Sec</th><th>" + res + "/Sec</th></tr>");
+				_.each(build.stats.allSkillData, function(v,k) {
+					if(v.dps) {
+						var skill = d3up.gameData.actives[build.meta.heroClass][k],
+								name = $("<td>").append(skill.name),
+								dps = $("<td>").append(v.dps.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,")),
+								lps = $("<td>").append(Math.round(v['lps-average'] * 10) / 10),
+								rps = $("<td>").append(" "),
+								row = $("<tr>").append(name, dps, lps, rps);
+						_.each(v.rps, function(v, i) {
+							rps.append(Math.round(v * 10) / 10);
+						});
+						table.append(row);						
+					}
+				}, this);
 			});
 		},
     renderSkillsTo: function(elem) {
