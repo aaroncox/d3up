@@ -1349,7 +1349,14 @@ BuildCalculator.prototype = {
 			}
 		}
 		if(rendered['lps-life-steal'] || rendered['lps-life-hit']) {
-			rendered['lps-average'] = Math.round((rendered['lps-life-steal'] + rendered['lps-life-hit']) * 100) / 100;
+			var total = 0;
+			if(rendered['lps-life-steal']) {
+				total += rendered['lps-life-steal'];
+			}
+			if(rendered['lps-life-hit']) {
+				total += rendered['lps-life-hit'];
+			}
+			rendered['lps-average'] = Math.round(total * 100) / 100;
 		}
 		// Does this skill generate anything for us?
 		_.each(['generate-fury', 'generate-hatred', 'generate-spirit'], function(v,k) {
