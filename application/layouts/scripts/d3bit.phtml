@@ -12,24 +12,38 @@
 			->appendFile("/js/gamedata.js")
 			->appendFile("/js/unmin/buildv2.js")
 			->appendFile("/js/unmin/calcv2.js")
+			->appendFile("/js/unmin/compare.js")
 			->appendFile("/js/unmin/itembuilder.js")
 	?>
 </head>
 <body>
   <div class="d3bit-card">
-    <div class="logo"><img src="http://d3up.com/images/logo.jpg"></div>
-    <h3><a href="#" onclick="window.external.OpenLink('http://d3up.com')">D3Up.com</a> Item Comparision</h3>
-    <p>Using Build: <a href="#" onclick="window.external.OpenLink('http://d3up.com/b/<?= $this->build->id ?>')"><?= $this->build->name ?></a></p>
-    <select class="compare-slot">
-      <? foreach($this->slots as $slot): ?>
-        <option value='<?=$slot?>'><?= $slot ?></option>
-      <? endforeach ?>
-    </select>
+		<table class="statistics-table" id="compare-table">
+		  <thead>
+		    <tr class='header '>
+					<th colspan='10' class="button">
+				    <select class="compare-slot">
+				      <? foreach($this->slots as $slot): ?>
+				        <option value='<?=$slot?>'><?= $slot ?></option>
+				      <? endforeach ?>
+				    </select>
+				    <p>Using Build: <a href="#" onclick="window.external.OpenLink('http://d3up.com/b/<?= $this->build->id ?>')"><?= $this->build->name ?></a></p>		    	
+		    	</th>
+				</tr>
+		  </thead>
+		  <tbody>
+				<tr>
+					<td colspan='10'>
+						<h3>Error: Couldn't load.</h3>
+			    	<div id="warning-browser">
+			    		<strong>Notice</strong>: If your computer has IE8, please upgrade to IE9/10. It may resolve this problem.
+			    	</div>
+		    	</td>
+				</tr>
+		  </tbody>
+		</table>
+
     <div class="compare-diff" style="clear:both">
-      <h3>Error: Couldn't load.</h3>
-    	<div id="warning-browser">
-    		<strong>Notice</strong>: If your computer has IE8, please upgrade to IE9/10. It may resolve this problem.
-    	</div>
     </div>
     <div class='controls'>
       <div id='simulate-item'>
@@ -77,8 +91,14 @@
             gear: gear, 
             skills: skills,
             meta: meta
-          });
+          }),
+					compare = new d3up.Compare;
       
+      d3up.builds = {
+        build: build,
+        compare: buildCompare
+      };
+      d3up.compare = compare;
       // Set the Name Field
       // builder.setNameInput($("#name"));
       // Set the Quality Selector
@@ -126,61 +146,65 @@
         buildCompare.run();
         // console.log(build, buildCompare);
         var diff = build.diffWith(buildCompare);
-        // Table Rendering
-        $(".compare-diff").empty();
-        var h4 = $('<tr class="header "><th colspan="10" class="button">Comparison Results</th></tr>'),
-            oldLink = build.calc.getD3BitItemLink(build.calc.getItem(slotToReplace));
-        if(!build.calc.getItem(slotToReplace).name) {
-          oldLink = "Nothing (" + slotToReplace + ")";
-        }
-        if(ohRemoved) {
-          oldLink.append(" + ", build.calc.getD3BitItemLink(build.calc.getItem('offhand')));
-        }
-        var newLink = buildCompare.calc.getD3BitItemLink(buildCompare.calc.getItem(slotToReplace)),
-             vsRow = $("<td colspan='10'>").append(oldLink, " vs ", newLink);
-        var table = $("<table class='statistics-table' id='compare-table'/>"),
-            head = $("<thead>").append(h4, vsRow);
-            headers = $("<tr>").append("<th>Stat</th><th>Diff</th><th>%</th><th>Old</th><th>New</th>"),
-            body = $("<tbody>").append(headers);
-        table.append(head, body);
-        $.each(diff, function(k,v) {
-         var data = v.split("|"),
-             diffVal = Math.round(data[1] * 10)/10,
-             diffName = data[0],
-             row = $("<tr/>"), 
-             oldStats = build.getStats()
-             newStats = buildCompare.getStats();
-         row.append($("<td/>").html(diffName));
-         var oldStat = Math.round(oldStats[k] * 10) / 10,
-             newStat = Math.round(newStats[k] * 10) / 10,
-             change = Math.round(100 - (newStat / oldStat * 100)) * -1;
-         if(oldStat > 99999) {
-           oldStat = Math.round(oldStat / 10) / 100 + "k";
-         }
-         if(newStat > 99999) {
-           newStat = Math.round(newStat / 10) / 100 + "k";
-         }
-         if(diffVal > 0) {
-           row.append($("<td class='diff'/>").html("+"+diffVal).addClass("pos"));
-           row.append($("<td class='per pos'/>").html(change + "%"));       
-           row.append($("<td class='neg'/>").html(oldStat));
-           row.append($("<td class='pos'/>").html(newStat));       
-         } else {
-           row.append($("<td class='diff'/>").html(diffVal).addClass("neg"));
-           row.append($("<td class='per neg'/>").html(change + "%"));       
-           row.append($("<td class='pos'/>").html(oldStat));
-           row.append($("<td class='neg'/>").html(newStat));       
-         }
-         body.append(row);
-        });
-        // table.append("<tr><td colspan='10'><span class='pos'>Green = Increase</span> / <span class='neg'>Red = Decrease</span></td></tr>");
-        // } else {
-        //   table.append("<tr><td colspan='10' style='text-align: center; font-weight: bold;'>These items are identical.</td></tr>");
-        // }
-        // items.find("div a").each(function() {
-        //   $(this).bindTooltip();
-        // });     
-        $(".compare-diff").append(table);
+
+				$("#compare-table > tbody").replaceWith(compare.table(diff, 'compare'));
+		            // 
+		            // 
+		            // // Table Rendering
+		            // $(".compare-diff").empty();
+		            // var h4 = $('<tr class="header "><th colspan="10" class="button">Comparison Results</th></tr>'),
+		            //     oldLink = build.calc.getD3BitItemLink(build.calc.getItem(slotToReplace));
+		            // if(!build.calc.getItem(slotToReplace).name) {
+		            //   oldLink = "Nothing (" + slotToReplace + ")";
+		            // }
+		            // if(ohRemoved) {
+		            //   oldLink.append(" + ", build.calc.getD3BitItemLink(build.calc.getItem('offhand')));
+		            // }
+		            // var newLink = buildCompare.calc.getD3BitItemLink(buildCompare.calc.getItem(slotToReplace)),
+		            //      vsRow = $("<td colspan='10'>").append(oldLink, " vs ", newLink);
+		            // var table = $("<table class='statistics-table' id='compare-table'/>"),
+		            //     head = $("<thead>").append(h4, vsRow);
+		            //     headers = $("<tr>").append("<th>Stat</th><th>Diff</th><th>%</th><th>Old</th><th>New</th>"),
+		            //     body = $("<tbody>").append(headers);
+		            // table.append(head, body);
+		            // $.each(diff, function(k,v) {
+		            //  var data = v.split("|"),
+		            //      diffVal = Math.round(data[1] * 10)/10,
+		            //      diffName = data[0],
+		            //      row = $("<tr/>"), 
+		            //      oldStats = build.getStats()
+		            //      newStats = buildCompare.getStats();
+		            //  row.append($("<td/>").html(diffName));
+		            //  var oldStat = Math.round(oldStats[k] * 10) / 10,
+		            //      newStat = Math.round(newStats[k] * 10) / 10,
+		            //      change = Math.round(100 - (newStat / oldStat * 100)) * -1;
+		            //  if(oldStat > 99999) {
+		            //    oldStat = Math.round(oldStat / 10) / 100 + "k";
+		            //  }
+		            //  if(newStat > 99999) {
+		            //    newStat = Math.round(newStat / 10) / 100 + "k";
+		            //  }
+		            //  if(diffVal > 0) {
+		            //    row.append($("<td class='diff'/>").html("+"+diffVal).addClass("pos"));
+		            //    row.append($("<td class='per pos'/>").html(change + "%"));       
+		            //    row.append($("<td class='neg'/>").html(oldStat));
+		            //    row.append($("<td class='pos'/>").html(newStat));       
+		            //  } else {
+		            //    row.append($("<td class='diff'/>").html(diffVal).addClass("neg"));
+		            //    row.append($("<td class='per neg'/>").html(change + "%"));       
+		            //    row.append($("<td class='pos'/>").html(oldStat));
+		            //    row.append($("<td class='neg'/>").html(newStat));       
+		            //  }
+		            //  body.append(row);
+		            // });
+		            // // table.append("<tr><td colspan='10'><span class='pos'>Green = Increase</span> / <span class='neg'>Red = Decrease</span></td></tr>");
+		            // // } else {
+		            // //   table.append("<tr><td colspan='10' style='text-align: center; font-weight: bold;'>These items are identical.</td></tr>");
+		            // // }
+		            // // items.find("div a").each(function() {
+		            // //   $(this).bindTooltip();
+		            // // });     
+		            // $(".compare-diff").append(table);
         // console.log('diff');
       }
       

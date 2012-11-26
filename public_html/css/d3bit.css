@@ -48,8 +48,8 @@ body {
 .d3bit-card table {
   background: #111;
   border: 1px solid #333;
-  margin: 0 5px 5px;
-  width: 343px;
+  margin: 0;
+  width: 348px;
 }
 .d3bit-card table th {
   padding: 1px 5px;
@@ -246,8 +246,7 @@ a:hover .ui-button-text {
 }
 .compare-slot {
 	float: right;
-	margin: 0;
-	margin-right: 5px;
+	margin: 6px 6px 6px 0;
 }
 /* jScroll Pane */
 .jspContainer{overflow:hidden;position:relative}.jspPane{position:absolute}.jspVerticalBar{position:absolute;top:0;right:0;width:10px;height:100%;background:red}.jspHorizontalBar{position:absolute;bottom:0;left:0;width:100%;height:0px;background:red}.jspVerticalBar *,.jspHorizontalBar *{margin:0;padding:0}.jspCap{display:none}.jspHorizontalBar .jspCap{float:left}.jspTrack{background:#dde;position:relative}.jspDrag{background:#bbd;position:relative;top:0;left:0;cursor:pointer}.jspHorizontalBar .jspTrack,.jspHorizontalBar .jspDrag{float:left;height:100%}.jspArrow{background:#50506d;text-indent:-20000px;display:block;cursor:pointer}.jspArrow.jspDisabled{cursor:default;background:#80808d}.jspVerticalBar .jspArrow{height:10px}.jspHorizontalBar .jspArrow{width:10px;float:left;height:100%}.jspVerticalBar .jspArrow:focus{outline:0}.jspCorner{background:#eeeef4;float:left;height:100%}* html .jspCorner{margin:0 -3px 0 0}
@@ -261,4 +260,41 @@ a:hover .ui-button-text {
   width: 10px !important;
   opacity: 0.4;
   background-color: #222
+}
+.d3bit-card .stats-table {
+  width: 100%;
+	margin: 0;
+	border: 0;
+}
+.stats-table td.hl-ehp, 
+.stats-table td.hl-dps {
+  text-shadow: 2px 2px 2px #111;
+  font-size: 18px;
+  color: #ececec;
+  padding: 5px;
+}
+.stats-table td.hl-dps .value {
+  color: #F50;
+} 
+.stats-table td.hl-ehp .value {
+  color: #5F0;
+}   
+.stats-table td.hl-dps .value,
+.stats-table td.hl-ehp .value {
+  font-weight: bold;
+}
+.item-stat {
+	font-size: 16px;
+	text-align: center;
+	line-height: 1.25em;
+}
+.item-stat .value {
+	line-height: 1.5em;
+	font-size: 1.2em;
+	display: block;
+}
+.item-stat .stat {
+	display: block; 
+	font-size: 0.6em;
+	line-height: 1.5em;
 }

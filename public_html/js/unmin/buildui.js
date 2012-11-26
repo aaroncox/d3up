@@ -290,7 +290,7 @@ $(function() {
     compareResults.show();
 		// console.log("diff", diff);
     // Append the Diff Table to the Compare Table
-    $("#compare-table tbody").replaceWith(d3up.compare.table(diff, 'compare'));
+    $("#compare-table > tbody").replaceWith(d3up.compare.table(diff, 'compare'));
 	}
   changeButton.click(function() {
     var builder = _.clone(new d3up.ItemBuilder, true),

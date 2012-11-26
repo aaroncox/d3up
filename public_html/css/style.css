@@ -1855,10 +1855,10 @@ div.toc.section {
   border-top: 1px solid #333;
 }
 #compare-table .per {
-	border-right: 1px solid #333;
 }
 #compare-table .diff {
 	border-left: 1px solid #333;	
+	border-right: 1px solid #333;
 }
 #compare-table tr,
 #compare-table td {
@@ -1868,11 +1868,24 @@ div.toc.section {
 #compare-table tbody tr {
   font-size: 10px;
 }
+#compare-table tbody tr:nth-child(2n) {
+	background-color: #1f1f1f;
+}
 #compare-table thead tr td {
   font-size: 11px;
 }
 #compare-table tbody tr td {
   font-size: 12px;
+}
+#compare-table tbody tr td .stats-table tbody tr td {
+	font-size: 16px;
+}
+#compare-table tbody tr td .stats-table td.hl-dps, 
+#compare-table tbody tr td .stats-table td.hl-ehp {
+	font-size: 18px;
+}
+#compare-table tbody .stats-table td {
+	width: 50%;
 }
 #my-items .item-row .gear-controls {
 	width: 100px;
@@ -2265,4 +2278,27 @@ div#statistics {
 .simulate-row .chzn-container {
 	font-size: 11px;
 	line-height: 12px;
+}
+.stats-table {
+  width: 285px;
+  margin: 10px auto 10px;
+  border: 1px solid #333;
+  background: #222;
+}
+.stats-table td.hl-ehp, 
+.stats-table td.hl-dps {
+  text-shadow: 2px 2px 2px #111;
+  font-size: 18px;
+  color: #ececec;
+  padding: 5px;
+}
+.stats-table td.hl-dps .value {
+  color: #F50;
+} 
+.stats-table td.hl-ehp .value {
+  color: #5F0;
+}   
+.stats-table td.hl-dps .value,
+.stats-table td.hl-ehp .value {
+  font-weight: bold;
 }

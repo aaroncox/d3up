@@ -2280,6 +2280,8 @@ BuildCalculator.prototype = {
 					'ap-on-crit': 'AP/Crit', 
 					'plus-block': '+Block', 
 					'dps': 'DPS', 
+					'dps-elites': 'DPS vs Elites',
+					'dps-demons': 'DPS vs Demons',
 					'ehp': 'EHP', 
 					'life': 'HP',
 					'intelligence': 'Int', 
