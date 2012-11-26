@@ -170,7 +170,7 @@
 				table.prepend("<tr><th>Skill</th><th>DPS</th><th>Life/Sec</th><th>" + res + "/Sec</th></tr>");
 				_.each(build.stats.allSkillData, function(v,k) {
 					if(v.dps) {
-						d3up.log(v);
+						// d3up.log(v);
 						var skill = d3up.gameData.actives[build.meta.heroClass][k],
 								name = $("<td>").append(skill.name),
 								dps = $("<td>").append(v.dps.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,")),
