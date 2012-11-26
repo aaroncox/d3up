@@ -7261,7 +7261,7 @@
 				'meteor': {
 					name: 'Meteor',
 					desc: 'Summon an immense Meteor that plummets from the sky, causing 260% weapon damage as Fire to all enemies it crashes into. The ground it hits is scorched with molten fire that deals 60% weapon damage as Fire over 3 seconds.',
-					procRate: 0.25, // DOT PC 0.125
+					procRate: 0.125, // DOT PC 0.125
 					effect: {
 						'cost-arcane-power': 50,
 						'weapon-damage': 260,
@@ -7271,7 +7271,7 @@
 					name: 'Meteor - Molten Impact',
 					desc: 'Summon an immense Meteor that plummets from the sky, causing 260% weapon damage as Fire to all enemies it crashes into. The ground it hits is scorched with molten fire that deals 60% weapon damage as Fire over 3 seconds.',
 					rune: 'Increases the damage of the Meteor impact to 260% weapon damage as Fire and the molten fire to 78% weapon damage as Fire over 3 seconds.',
-					procRate: 0.25, // DOT PC 0.125
+					procRate: 0.125, // DOT PC 0.125
 					effect: {
 						'cost-arcane-power': 50,
 						'weapon-damage': 390,
@@ -7281,7 +7281,7 @@
 					name: 'Meteor - Meteor Shower',
 					desc: 'Summon an immense Meteor that plummets from the sky, causing 260% weapon damage as Fire to all enemies it crashes into. The ground it hits is scorched with molten fire that deals 60% weapon damage as Fire over 3 seconds.',
 					rune: 'Unleash a volley of 7 smaller Meteors that each strike for 104% weapon damage as Fire.',
-					procRate: 0.1, // DOT PC 0.05
+					procRate: 0.05, // DOT PC 0.05
 					effect: {
 						'cost-arcane-power': 50,
 						'weapon-damage': 728,
@@ -7291,7 +7291,7 @@
 					name: 'Meteor - Comet',
 					desc: 'Summon an immense Meteor that plummets from the sky, causing 260% weapon damage as Fire to all enemies it crashes into. The ground it hits is scorched with molten fire that deals 60% weapon damage as Fire over 3 seconds.',
 					rune: 'Transforms the Meteor to ice that deals 312% weapon damage as Cold. The impact site is covered in a freezing mist that deals 72% weapon damage as Cold and Slows enemy movement by 60% over 3 seconds.',
-					procRate: 0.25, // DOT PC 0.125
+					procRate: 0.125, // DOT PC 0.125
 					effect: {
 						'cost-arcane-power': 50,
 						'weapon-damage': 312,
@@ -7301,7 +7301,7 @@
 					name: 'Meteor - Star Pact',
 					desc: 'Summon an immense Meteor that plummets from the sky, causing 260% weapon damage as Fire to all enemies it crashes into. The ground it hits is scorched with molten fire that deals 60% weapon damage as Fire over 3 seconds.',
 					rune: 'Reduces the casting cost of Meteor to 35 Arcane Power and the damage type to Arcane.',
-					procRate: 0.212, // DOT PC 0.106
+					procRate: 0.10625, // DOT PC 0.106
 					effect: {
 						'cost-arcane-power': 50,
 						'weapon-damage': 260,
@@ -7311,7 +7311,7 @@
 					name: 'Meteor - Liquefy',
 					desc: 'Summon an immense Meteor that plummets from the sky, causing 260% weapon damage as Fire to all enemies it crashes into. The ground it hits is scorched with molten fire that deals 60% weapon damage as Fire over 3 seconds.',
 					rune: 'If the initial impact of the Meteor causes a Critical Hit, the molten fire duration is increased to 8 seconds.',
-					procRate: 0.212, // DOT PC 0.106
+					procRate: 0.10625, // DOT PC 0.106
 					effect: {
 						'cost-arcane-power': 50,
 						'weapon-damage': 260,
