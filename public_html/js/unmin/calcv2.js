@@ -1348,7 +1348,7 @@ BuildCalculator.prototype = {
 				rendered['lps-life-hit'] = mathR * rendered['average-life-hit'];								
 			}
 		}
-		if(rendered['lps-life-steal'] && rendered['lps-life-hit']) {
+		if(rendered['lps-life-steal'] || rendered['lps-life-hit']) {
 			rendered['lps-average'] = Math.round((rendered['lps-life-steal'] + rendered['lps-life-hit']) * 100) / 100;
 		}
 		// Does this skill generate anything for us?
