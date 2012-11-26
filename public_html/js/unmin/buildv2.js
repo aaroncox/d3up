@@ -563,6 +563,7 @@
     },
     setSkills: function(skills) {
       var build = this;
+			build.skills['enabled'] = {};
       $.each(skills, function(type, data) {
 				build.skills[type] = {};
         $.each(data, function(idx, slug) {

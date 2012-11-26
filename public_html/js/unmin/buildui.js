@@ -608,8 +608,13 @@ $(function() {
 			$.each(d3up.builds, function(k) {
 				skills[id] = skill;
 				d3up.builds[k].setSkills({passives: skills});
+				d3up.builds[k].run();
 		  });
 	    d3up.builds.build.renderSkillsTo($("#passives"));
+	    d3up.builds.build.renderSkillsTo($("#build-header"));
+	    $.each(d3up.builds, function(k) {
+        d3up.builds[k].renderAgain();
+      });
 		});
 	});
 	// Create the Selects for actives
@@ -638,6 +643,10 @@ $(function() {
 				d3up.builds[k].run();
 		  });
 	    d3up.builds.build.renderSkillsTo($("#skills"));
+	    d3up.builds.build.renderSkillsTo($("#build-header"));
+	    $.each(d3up.builds, function(k) {
+        d3up.builds[k].renderAgain();
+      });
 		});
 	});
 	// Append Save Buttons
