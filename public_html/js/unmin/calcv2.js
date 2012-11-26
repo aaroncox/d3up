@@ -785,7 +785,7 @@ BuildCalculator.prototype = {
 			}
 		}
 		if(rendered['ehp-block-dodge'] < 0) {
-			rendered['ehp-block'] = "Invulnerable";
+			rendered['ehp-block-dodge'] = "Invulnerable";
 		}
 		
 		// Return the Values for EHP
