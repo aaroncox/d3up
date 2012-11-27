@@ -4342,6 +4342,7 @@
 					procRate: 0,
 					effect: {
 						'cost-spirit': 50,
+						'plus-attack-speed': 8,
 					},
 				},
 				'mantra-of-retribution~c': {
