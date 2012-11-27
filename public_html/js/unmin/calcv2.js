@@ -1275,6 +1275,7 @@ BuildCalculator.prototype = {
 			// console.log(critHit, critHitDmg);
 			dLow = mathS * mathAl * mathM * mathE;
 			dHigh = mathS * mathAh * mathM * mathE;
+			dAvg = mathS * mathA * mathM * mathE;
 			// d3up.log(mathS, mathAl, mathAh, mathM, dLow, dHigh, mathE);
 		} else {
 			rendered['dps-speed'] = Math.floor(this.attrs['speed'] * 1024) / 1024;
@@ -1297,13 +1298,14 @@ BuildCalculator.prototype = {
 			}
 			dLow = mathS * mathAl * mathM * mathE;
 			dHigh = mathS * mathAh * mathM * mathE;
-			mhAvg = mathS * ((mathAl + mathAh) / 2) * mathM * mathE;
+			dAvg = mathS * mathA * mathM * mathE;
+			mhAvg = mathS * mathA * mathM * mathE;
 		}
 		// console.log(options.skill.name, dLow, dHigh);
-		dps = Math.round(((dLow + dHigh) / 2) * mathR * mathC);
+		dps = Math.round(dAvg * mathR * mathC);
 		// d3up.log(atkSpeedInc);
     // d3up.log(options.skill, dLow, dHigh, dps, mathR, mathC, bnEleDamage);
-		hit = Math.round(((dLow + dHigh) / 2) * mathC);
+		hit = Math.round(mathS * mathA * mathM * mathE * mathC);
 		if(duration) {
 		  if(isStatic) {
 		    var tNorm = Math.round(mhAvg),
