@@ -146,11 +146,11 @@ class CliController extends Epic_Controller_Action
 	}
 	public function lowertagsAction() {
 		$i = 0;
-		$guides = Epic_Mongo::db('guide')->fetchAll();
+		$guides = Epic_Mongo::db("build")->fetchAll();
 		$adapter = new Zend_ProgressBar_Adapter_Console();
-		$bar = new Zend_ProgressBar($adapter, 0, count($guides));
+		$bar = new Zend_ProgressBar($adapter, 0, count($builds));
 		
-		foreach(Epic_Mongo::db("build")->fetchAll() as $build) {
+		foreach($builds as $build) {
 			$build->_characterBt = strtolower($build->_characterBt);
 			$build->save();
 			$i++;
