@@ -143,6 +143,15 @@ class BuildController extends D3Up_Controller_Action
 			'private' => array('$ne' => true),
 			'_createdBy' => array('$exists' => true)
 		);
+		$this->view->region = $region = $this->getRequest()->getParam("rg");
+		if($region) {
+			$regions = array(
+				1 => 'us',
+				2 => 'eu',
+				3 => 'kr'
+			);
+			$query['_characterRg'] = (string) array_search($region, $regions);
+		}
 		$sort = array(
 			'_lastCrawl' => -1,
 		);
