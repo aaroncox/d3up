@@ -972,7 +972,7 @@ BuildCalculator.prototype = {
     //   }
     // }, this);
     // d3up.log("MH Min/Max after adding +Ele Damage: ", mhMinDamage, mhMaxDamage);
-		rendered['attack-speed-incs'] = this.attrs['attack-speed-incs'];
+		rendered['attack-speed-incs'] = this.attrs['attack-speed-incs'] + (this.bonuses['plus-attack-speed'] * 100);
 		if(this.attrs['attack-speed-incs']) {
 			atkSpeedInc = this.attrs['attack-speed-incs'] / 100;
 		}
