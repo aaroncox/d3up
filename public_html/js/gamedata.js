@@ -296,7 +296,7 @@
 					'desc': 'Critical Hits have a chance to restore <span class="skill-highlight">1</span> Discipline.'
 				},
 				'brooding': {
-					'desc': 'As long as you have not taken damage in the last <span class="skill-highlight">3</span> seconds you gain <span class="skill-highlight">1%</span> of your maximum Life per second.',
+					'desc': 'You gain <span class="skill-highlight">1%</span> of your maximum Life per second.',
 					'effect': {
 						'plus-percent-life-regen': 1
 					}
