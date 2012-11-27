@@ -3335,7 +3335,7 @@
 					procRate3rd: 0.75,
 					effect: {
 						'generate-spirit': 6,
-						'weapon-damage': 110,
+						'weapon-damage': 145,
 						// '3rd-hit': 35,
 					},
 				},
