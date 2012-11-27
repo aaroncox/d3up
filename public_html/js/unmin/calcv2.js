@@ -1026,7 +1026,10 @@ BuildCalculator.prototype = {
 		// Are we duel wielding?
     // d3up.log(this.attrs);		
 		var mathS, mathC, mathR, mathA, mathM;
+		rendered['attack-speed-incs-dw'] = " ";
 		if(this.isDuelWielding) {
+			// Add to the Display Number
+			rendered['attack-speed-incs-dw'] = " (+15% DW)";
  			rendered['dps-speed'] = {
  				// mh: Math.floor(this.attrs['speed'] * 1024) / 1024,
  				// oh: Math.floor(this.attrs['speed-oh'] * 1024) / 1024
