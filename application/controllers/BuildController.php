@@ -148,11 +148,4 @@ class BuildController extends D3Up_Controller_Action
 		);
 		$this->view->builds = Epic_Mongo::db("build")->fetchAll($query, $sort);
 	}
-	public function fixtagsAction() {
-		foreach(Epic_Mongo::db("build")->fetchAll() as $build) {
-			$build->_characterBt = strtolower($build->_characterBt);
-			$build->save();
-		}
-		echo "done"; exit;
-	}
 } // END class HeroController extends Epic_Controller_Action

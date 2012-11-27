@@ -144,4 +144,19 @@ class CliController extends Epic_Controller_Action
 		}
 		echo "Converted ".count($guides)." guides"; exit;
 	}
+	public function lowertagsAction() {
+		$i = 0;
+		$guides = Epic_Mongo::db('guide')->fetchAll();
+		$adapter = new Zend_ProgressBar_Adapter_Console();
+		$bar = new Zend_ProgressBar($adapter, 0, count($guides));
+		
+		foreach(Epic_Mongo::db("build")->fetchAll() as $build) {
+			$build->_characterBt = strtolower($build->_characterBt);
+			$build->save();
+			$i++;
+			$bar->update($i);	
+		}
+		echo "done"; exit;
+		
+	}
 } // END class AdminController extends Epic_Controller_Action
