@@ -245,6 +245,7 @@ ItemBuilder.prototype = {
 		// Skill Descriptions
 		'generate-fury': 'Generate: VVV Fury',
 		'weapon-damage': 'Weapon Damage: VVV%',
+		'weapon-damage-type': 'Damage Type: VVV',
 		'cost-fury': 'Cost: VVV Fury',
 		'weapon-damage-for': 'DoT Duration: VVV sec',
 		'plus-crit-hit': '+VVV% Critical Hit Chance',
