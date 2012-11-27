@@ -337,7 +337,7 @@ class RecordController extends D3Up_Controller_Action
 				$this->view->characters = D3Up_Tool_Crawler::getInstance()->getCharacters($profile);
 				if($character = $this->getRequest()->getParam("character")) {			
 					$record->_characterId = $character;
-					$record->_characterBt = $profile->battletag;
+					$record->_characterBt = strtolower($profile->battletag);
 					$record->_characterRg = $profile->region;
 					$this->view->status = D3Up_Tool_Crawler::getInstance()->crawl($record, $profile, $character);
 					$record->crawlCount++;
@@ -386,7 +386,7 @@ class RecordController extends D3Up_Controller_Action
   		}
   		$fakeProfile = Epic_Mongo::newDoc('profile');
   		$fakeProfile->region = $record->_characterRg;
-  		$fakeProfile->battletag = $record->_characterBt;
+  		$fakeProfile->battletag = strtolower($record->_characterBt);
   		D3Up_Tool_Crawler::getInstance()->crawl($record, $fakeProfile, $record->_characterId);		  
 		}
 		$record->crawlCount++;

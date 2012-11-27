@@ -99,12 +99,12 @@ class BuildController extends D3Up_Controller_Action
 					$fakeProfile->region = $region;
 					$fakeProfile->battletag = $battletag;
 					$build->_characterId = $character;
-					$build->_characterBt = $fakeProfile->battletag;
+					$build->_characterBt = strtolower($fakeProfile->battletag);
 					$build->_characterRg = $fakeProfile->region;
 					D3Up_Tool_Crawler::getInstance()->crawl($build, $fakeProfile, $character);					
 				} else {
 					$build->_characterId = $character;
-					$build->_characterBt = $profile->battletag;
+					$build->_characterBt = strtolower($profile->battletag);
 					$build->_characterRg = $profile->region;
 					D3Up_Tool_Crawler::getInstance()->crawl($build);															
 				}
@@ -139,7 +139,7 @@ class BuildController extends D3Up_Controller_Action
 	public function taglistAction() {
 		$this->view->battletag = $battletag = str_replace("-", "#", $this->getRequest()->getParam("bt"));
 		$query = array(
-			'_characterBt' => new MongoRegex("/".$battletag."/i"),
+			'_characterBt' => $battletag,
 			'private' => array('$ne' => true),
 			'_createdBy' => array('$exists' => true)
 		);
@@ -147,5 +147,12 @@ class BuildController extends D3Up_Controller_Action
 			'_lastCrawl' => -1,
 		);
 		$this->view->builds = Epic_Mongo::db("build")->fetchAll($query, $sort);
+	}
+	public function fixtagsAction() {
+		foreach(Epic_Mongo::db("build")->fetchAll() as $build) {
+			$build->_characterBt = strtolower($build->_characterBt);
+			$build->save();
+		}
+		echo "done"; exit;
 	}
 } // END class HeroController extends Epic_Controller_Action
