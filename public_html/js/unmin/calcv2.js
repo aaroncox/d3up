@@ -983,7 +983,8 @@ BuildCalculator.prototype = {
 			}
 		}, this);
 
-		// fitl
+		rendered['dps-mh-avg-woele'] = mhAvgDamage;
+		rendered['dps-oh-avg-woele'] = ohAvgDamage;
 		
 		if(this.attrs.mhRealDamage) {
 			rendered['dps-mh-real-min'] = this.attrs.mhRealDamage.min;
