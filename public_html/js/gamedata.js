@@ -8347,6 +8347,7 @@ td['cc-reduce'] = 'Reduces the duration of control impairing effects by VVV%';
 td['elite-reduce'] = 'Reduces damage from elites by VVV%';
 td['melee-reduce'] = 'Reduces damage from melee attacks by VVV%';
 td['range-reduce'] = 'Reduces damage from ranged attacks by VVV%';
+td['cold-reduce'] = 'Reduces damage from Cold attacks by VVV%.';
 td['arcane-resist'] = '+VVV Arcane Resistance';
 td['cold-resist'] = '+VVV Cold Resistance';
 td['fire-resist'] = '+VVV Fire Resistance';

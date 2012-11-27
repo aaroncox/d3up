@@ -23,6 +23,7 @@ class D3Up_Tool_Attributes
 		'elite-reduce' => 'Reduces damage from elites by [v]%',
 		'melee-reduce' => 'Reduces damage from melee attacks by [v]%',
 		'range-reduce' => 'Reduces damage from ranged attacks by [v]%',
+		'cold-reduce' => 'Reduces damage from Cold attacks by [v]%.',
 		'arcane-resist' => '+[v] Arcane Resistance',
 		'cold-resist' => '+[v] Cold Resistance',
 		'fire-resist' => '+[v] Fire Resistance',

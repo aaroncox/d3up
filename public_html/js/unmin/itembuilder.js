@@ -33,6 +33,7 @@ ItemBuilder.prototype = {
 		'elite-reduce': 'Reduces damage from elites by VVV%',
 		'melee-reduce': 'Reduces damage from melee attacks by VVV%',
 		'range-reduce': 'Reduces damage from ranged attacks by VVV%',
+		'cold-reduce': 'Reduces damage from Cold attacks by VVV%.',
 		// Shield Attributes
 		'plus-block': '+VVV% Chance to Block',
 		// Resistances

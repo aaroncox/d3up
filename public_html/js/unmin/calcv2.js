@@ -55,6 +55,7 @@ BuildCalculator.prototype = {
 			'melee-reduce': 0,
 			'range-reduce': 0,
 			'elite-reduce': 0,
+			'cold-reduce': 0,
 			'resist-all': 0,
 			'plus-gold-find': 0,
 			'plus-magic-find': 0,
@@ -646,7 +647,7 @@ BuildCalculator.prototype = {
 		// ----------------------------------
 		// VS Type Resistances
 		// ----------------------------------
-		_.each(['melee-reduce', 'range-reduce', 'elite-reduce'], function(v,k) {
+		_.each(['melee-reduce', 'range-reduce', 'elite-reduce', 'cold-reduce'], function(v,k) {
 		  var temp = 1;
 		  _.each(this.attrs[v + '-incs'], function(val, idx) {
 		    temp = temp * (1 - val / 100);
@@ -728,7 +729,7 @@ BuildCalculator.prototype = {
 			// Formula: ( Life / ( 1 - Percentage Armor Reduction ) * ( 1 - Percentage Individual Resist ) * (1 - 30% Melee Damage Reduction ) )
 			// ----------------------------------
 			rendered['ehp-physical'] 	= defenses.life / ( ( 1 - defenses.armorReduction ) * ( 1 - defenses['percent-resist-physical']	) * (1 - 0.3) );
-			rendered['ehp-cold'] 			= defenses.life / ( ( 1 - defenses.armorReduction ) * ( 1 - defenses['percent-resist-cold'] 		) * (1 - this.bonuses['percent-non-physical']) * (1 - 0.3) );
+			rendered['ehp-cold'] 			= defenses.life / ( ( 1 - defenses.armorReduction ) * ( 1 - defenses['percent-resist-cold'] 		) * (1 - this.bonuses['percent-non-physical']) * (1 - defenses['percent-cold-reduce']) * (1 - 0.3) );
 			rendered['ehp-fire'] 			= defenses.life / ( ( 1 - defenses.armorReduction ) * ( 1 - defenses['percent-resist-fire'] 		) * (1 - this.bonuses['percent-non-physical']) * (1 - 0.3) );
 			rendered['ehp-lightning']	= defenses.life / ( ( 1 - defenses.armorReduction ) * ( 1 - defenses['percent-resist-lightning'])	* (1 - this.bonuses['percent-non-physical']) * (1 - 0.3) );
 			rendered['ehp-poison'] 		= defenses.life / ( ( 1 - defenses.armorReduction ) * ( 1 - defenses['percent-resist-poison']		) * (1 - this.bonuses['percent-non-physical']) * (1 - 0.3) );
@@ -744,7 +745,7 @@ BuildCalculator.prototype = {
 			// Formula: ( Life / ( 1 - Percentage Armor Reduction ) * ( 1 - Percentage Individual Resist ) )
 			// ----------------------------------
 			rendered['ehp-physical'] 	= defenses.life / ( ( 1 - defenses.armorReduction ) * ( 1 - defenses['percent-resist-physical'] ) );
-			rendered['ehp-cold'] 			= defenses.life / ( ( 1 - defenses.armorReduction ) * ( 1 - defenses['percent-resist-cold'] ) );
+			rendered['ehp-cold'] 			= defenses.life / ( ( 1 - defenses.armorReduction ) * ( 1 - defenses['percent-resist-cold'] ) * ( 1 - defenses['percent-cold-reduce'] ) );
 			rendered['ehp-fire'] 			= defenses.life / ( ( 1 - defenses.armorReduction ) * ( 1 - defenses['percent-resist-fire'] ) ) ;
 			rendered['ehp-lightning']	= defenses.life / ( ( 1 - defenses.armorReduction ) * ( 1 - defenses['percent-resist-lightning'] ) );
 			rendered['ehp-poison'] 		= defenses.life / ( ( 1 - defenses.armorReduction ) * ( 1 - defenses['percent-resist-poison'] ) );
@@ -1609,7 +1610,7 @@ BuildCalculator.prototype = {
 										this.attrs['attack-speed-incs'] += value;															
 										break;
 								}
-                if(_.indexOf(['melee-reduce', 'range-reduce', 'elite-reduce'], stat) >= 0) {
+                if(_.indexOf(['melee-reduce', 'range-reduce', 'elite-reduce', 'cold-reduce'], stat) >= 0) {
                   if(typeof(this.attrs[stat + "-incs"]) == "undefined") {
                     this.attrs[stat + "-incs"] = [];
   								}
@@ -1793,6 +1794,7 @@ BuildCalculator.prototype = {
 					av = 0;
 				}
 				switch(ak) {
+					case "cold-reduce":
 				  case "melee-reduce":
 				  case "elite-reduce":
 				  case "range-reduce":
@@ -2086,6 +2088,7 @@ BuildCalculator.prototype = {
 					av = 0;
 				}
 				switch(ak) {
+					case "cold-reduce":
 				  case "melee-reduce":
 				  case "elite-reduce":
 				  case "range-reduce":
