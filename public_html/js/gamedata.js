@@ -3378,6 +3378,7 @@
 					effect: {
 						'generate-spirit': 6,
 						'weapon-damage': 110,
+						'plus-dodge': 20,
 					},
 				},
 				'lashing-tail-kick': {
