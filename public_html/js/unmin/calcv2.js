@@ -578,7 +578,9 @@ BuildCalculator.prototype = {
 		// ----------------------------------		
 		rendered.life += (rendered.life * ((this.attrs['plus-life'] + this.bonuses['plus-life'] * 100) / 100));
 		// ----------------------------------
-		// Inspiring Presense - Barbarian Passive w/ +% Life Regen based on Max Life
+		// Passive sw/ +% Life Regen based on Max Life
+		// Barbarian - Inspiring Presense
+		// Demon Hunter - Brooding
 		// Formula : Life * (Regen * 0.01)
 		// ----------------------------------		
 		rendered['life-regen'] = this.attrs['life-regen'];
@@ -1137,12 +1139,14 @@ BuildCalculator.prototype = {
 			}
 		}
 		if(this.attrs['max-damage']) {
+			bnMaxDamage = this.attrs['max-damage'];
 			mhMaxDamage += this.attrs['max-damage']; // / (1 - (this.attrs['mainhand-plus-damage'] * 0.01));      
 			if(ohMaxDamage) {
 				ohMaxDamage += this.attrs['max-damage'];              
 			}
 		}
 		if(this.attrs['min-damage']) {
+			bnMinDamage = this.attrs['min-damage'];
 		  mhMinDamage += this.attrs['min-damage']; // / (1 - (this.attrs['mainhand-plus-damage'] * 0.01));        
 		  if(ohMinDamage) {
 		    ohMinDamage += this.attrs['min-damage'];              
@@ -1163,9 +1167,13 @@ BuildCalculator.prototype = {
 		if(bnElePercent > 0 && this.attrs.mhRealDamage) {
 			bnEleDamage = (this.attrs.mhRealDamage.min + bnMinDamage + this.attrs.mhRealDamage.max + bnMaxDamage) / 2 * (bnElePercent / 100);
 			mhAvgDamage += bnEleDamage;
+			mhMinDamage += bnEleDamage;
+			mhMaxDamage += bnEleDamage;
 			if(this.isDuelWielding) {
 				bnEleDamageOh = (this.attrs.ohRealDamage.min + bnMinDamage + this.attrs.ohRealDamage.max + bnMaxDamage) / 2 * (bnElePercent / 100);
 				ohAvgDamage += bnEleDamageOh;
+				ohMinDamage += bnEleDamage;
+				ohMaxDamage += bnEleDamage;
 			}
 		}
 		// Any additional attacks
@@ -1270,6 +1278,7 @@ BuildCalculator.prototype = {
 			mathS = 1 + this.attrs[this.attrs.primary] * 0.01;
 			mathC = 1 + (critHit * 0.01) * (critHitDmg * 0.01);
 			mathR = rendered['dps-speed'] * (1 + atkSpeedInc + this.bonuses['plus-attack-speed']);
+			mathA = mhAvgDamage;
 			mathAl = mhMinDamage;
 			mathAh = mhMaxDamage;
 			mathM = (1 + this.bonuses['plus-damage']);
@@ -1287,7 +1296,6 @@ BuildCalculator.prototype = {
 			dHigh = mathS * mathAh * mathM * mathE;
 			mhAvg = mathS * ((mathAl + mathAh) / 2) * mathM * mathE;
 		}
-		
 		// console.log(options.skill.name, dLow, dHigh);
 		dps = Math.round(((dLow + dHigh) / 2) * mathR * mathC);
 		// d3up.log(atkSpeedInc);
