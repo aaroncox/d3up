@@ -298,7 +298,7 @@
 				'brooding': {
 					'desc': 'You gain <span class="skill-highlight">1%</span> of your maximum Life per second.',
 					'effect': {
-						'plus-percent-life-regen': 1
+						'plus-percent-life-regen-passive': 1
 					}
 				},
 				'hot-pursuit': {

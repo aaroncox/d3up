@@ -74,6 +74,7 @@ BuildCalculator.prototype = {
 			'percent-non-physical' : 0, // Percentage to reduce non-physical damage (ie superstition)
 			'plus-attack-speed-this': 0,
 			'plus-percent-life-regen': 0,
+			'plus-percent-life-regen-passive': 0,
 			'proc-generate-fury': 0,
 			'generate-fury-second': 0
 		};
@@ -417,6 +418,9 @@ BuildCalculator.prototype = {
 					      this.attrs[effect + '-incs'].push(value * 100);								
 							}
 					    break;
+						case "plus-percent-life-regen-passive":
+							this.bonuses['plus-percent-life-regen'] = value;
+							break;
 						case "proc-generate-fury":
 						case "generate-fury-second":
 							this.bonuses[effect] += value;
