@@ -83,6 +83,7 @@ ItemBuilder.prototype = {
 		'demon-damage': '+VVV% Damage to Demons',
 		// Procs
 		'procRate': 'Proc Coefficient: VVV%',
+		'monkHaste': 'Generator IAS Bonus: VVV%',
 		'chance-bleed': 'VVV% chance to inflict Bleed for VVV damage over 5 seconds',
 		'chance-blind': 'VVV% chance to Blind on Hit',
 		'chance-chill': 'VVV% chance to Chill on Hit',

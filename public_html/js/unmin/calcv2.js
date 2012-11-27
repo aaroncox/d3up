@@ -1338,7 +1338,11 @@ BuildCalculator.prototype = {
 						d3High = mathS * mathAh * (mathM + (this.bonuses['3rd-hit-damage'] / 100)) * mathE,
 						hit3 = Math.round(((d3Low + d3High) / 2 ) * mathC),
 						dmgCycle = (((dLow + dHigh) / 2) + ((dLow + dHigh) / 2) + ((d3Low + d3High) / 2)) / 3;
-				rendered['dps'] = Math.round(dmgCycle * mathR * mathC);
+				var bonusHaste = 1;
+				if(options.skill.monkHaste) {
+					bonusHaste = options.skill.monkHaste;
+				}
+				rendered['dps'] = Math.round(dmgCycle * mathR * mathC * bonusHaste);
  				rendered['3rd-hit'] = hit3;
 			}
 			// d3up.log(dLow, dHigh);

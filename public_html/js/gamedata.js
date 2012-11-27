@@ -3322,6 +3322,7 @@
 					desc: 'Unleash a series of extremely fast punches that deal 110% weapon damage as Lightning. Every third hit deals damage to all enemies in front of you and knocks them back a short distance. Generates Spirit faster than other Spirit-generating skills due to the high attack speed.',
 					procRate: 1,
 					procRate3rd: 0.75,
+					monkHaste: 1.5,
 					effect: {
 						'generate-spirit': 6,
 						'weapon-damage': 110,
@@ -3333,6 +3334,7 @@
 					rune: 'Teleport to the target and release an electric shockwave with every punch that hits all enemies within 6 yards of your primary target for 35% weapon damage as Lightning.',
 					procRate: 1.5,
 					procRate3rd: 0.75,
+					monkHaste: 1.5,
 					effect: {
 						'generate-spirit': 6,
 						'weapon-damage': 145,
@@ -3345,6 +3347,7 @@
 					rune: 'Every third punch releases chain lightning instead of knocking enemies back.  Each lightning strike inflicts 73% weapon damage as Lightning.',
 					procRate: 1,
 					procRate3rd: 0.75,
+					monkHaste: 1.5,
 					effect: {
 						'generate-spirit': 6,
 						'weapon-damage': 110,
@@ -3356,6 +3359,7 @@
 					rune: 'Your primary target is charged with static electricity for 5 seconds and takes 37% weapon damage as Lightning when you attack other enemies with Fists of Thunder.',
 					procRate: 1,
 					procRate3rd: 0.75,
+					monkHaste: 1.5,
 					effect: {
 						'generate-spirit': 6,
 						'weapon-damage': 110,
@@ -3367,6 +3371,7 @@
 					rune: 'Critical Hits generate an additional 15 Spirit.',
 					procRate: 1,
 					procRate3rd: 0.75,
+					monkHaste: 1.5,
 					effect: {
 						'generate-spirit': 6,
 						'weapon-damage': 110,
@@ -3378,6 +3383,7 @@
 					rune: 'Increases your chance to Dodge by 16% for 2 seconds.',
 					procRate: 1,
 					procRate3rd: 0.75,
+					monkHaste: 1.5,
 					effect: {
 						'generate-spirit': 6,
 						'weapon-damage': 110,
@@ -3443,12 +3449,13 @@
 						'chance-stun': 50,
 						'weapon-damage': 235,
 					},
-				},
+				},				
 				'deadly-reach': {
 					name: 'Deadly Reach',
 					desc: 'Project lines of pure force over a short distance for 110% weapon damage. Every third hit extends 25 yards.',
 					procRate: 0.85,
 					procRate3rd: 0.75,
+					monkHaste: 1.333,
 					effect: {
 						'generate-spirit': 6,
 						'weapon-damage': 110,
@@ -3460,6 +3467,7 @@
 					rune: 'The third strike increases the damage of all attacks by 18% for 30 seconds.',
 					procRate: 0.85,
 					procRate3rd: 0.75,
+					monkHaste: 1.333,
 					effect: {
 						'generate-spirit': 6,
 						'weapon-damage': 110,
@@ -3472,6 +3480,7 @@
 					rune: 'Increases the area of effect of the second and third strikes.',
 					procRate: 0.85,
 					procRate3rd: 0.5,
+					monkHaste: 1.333,
 					effect: {
 						'generate-spirit': 6,
 						'weapon-damage': 110,
@@ -3483,6 +3492,7 @@
 					rune: 'The third strike is replaced with an attack that will hit up to 6 nearby enemies within 15 yards for 170% weapon damage as Lightning.',
 					procRate: 0.85,
 					procRate3rd: 0.35,
+					monkHaste: 1.333,
 					effect: {
 						'generate-spirit': 6,
 						'weapon-damage': 110,
@@ -3495,6 +3505,7 @@
 					rune: 'Critical Hits generate an additional 10 Spirit.',
 					procRate: 0.85,
 					procRate3rd: 0.75,
+					monkHaste: 1.333,
 					effect: {
 						'generate-spirit': 6,
 						'weapon-damage': 110,
@@ -3506,6 +3517,7 @@
 					rune: 'The third strike increases your Armor by 50% for 4 seconds.',
 					procRate: 0.85,
 					procRate3rd: 0.75,
+					monkHaste: 1.333,
 					effect: {
 						'generate-spirit': 6,
 						'weapon-damage': 110,
@@ -3756,6 +3768,7 @@
 					name: 'Crippling Wave',
 					desc: 'Unleash a series of large sweeping attacks that cause 110% weapon damage to all enemies in front of you. Every third hit damages all enemies around you and dazes them, slowing their movement speed by 30% and attack speed by 20% for 3 seconds.',
 					procRate: 0.75,
+					monkHaste: 1.166,
 					effect: {
 						'generate-spirit': 7,
 						'weapon-damage': 110,
@@ -3767,6 +3780,7 @@
 					rune: 'Increase damage to 143% weapon damage.',
 					procRate: 0.75,
 					procRate3rd: 0.5,
+					monkHaste: 1.166,
 					effect: {
 						'generate-spirit': 7,
 						'weapon-damage': 143,
@@ -3778,6 +3792,7 @@
 					rune: 'The range of Crippling Wave\'s third strike is increased to 17 yards and the effect of the movement speed reduction is increased to 60%.',
 					procRate: 0.75,
 					procRate3rd: 0.35,
+					monkHaste: 1.166,
 					effect: {
 						'generate-spirit': 7,
 						'weapon-damage': 110,
@@ -3789,6 +3804,7 @@
 					rune: 'Enemies hit by Crippling Wave inflict 20% less damage for 3 seconds.',
 					procRate: 0.75,
 					procRate3rd: 0.5,
+					monkHaste: 1.166,
 					effect: {
 						'generate-spirit': 7,
 						'weapon-damage': 110,
@@ -3800,6 +3816,7 @@
 					rune: 'Critical Hits generate an additional 5 Spirit.',
 					procRate: 0.75,
 					procRate3rd: 0.5,
+					monkHaste: 1.166,
 					effect: {
 						'generate-spirit': 7,
 						'weapon-damage': 110,
@@ -3811,6 +3828,7 @@
 					rune: 'Enemies hit by Crippling Wave take 10% additional damage from all attacks for 3 seconds.',
 					procRate: 0.75,
 					procRate3rd: 0.5,
+					monkHaste: 1.166,
 					effect: {
 						'generate-spirit': 7,
 						'weapon-damage': 110,
@@ -4006,6 +4024,7 @@
 					desc: 'Unleash a rapid series of punches that strikes enemies for 140% weapon damage.',
 					procRate: 0.75,
 					// 2nd + 3rd: 0.09 + 0.5
+					monkHaste: 1.125,
 					effect: {
 						'generate-spirit': 8,
 						'weapon-damage': 140,
@@ -4016,6 +4035,7 @@
 					desc: 'Unleash a rapid series of punches that strikes enemies for 140% weapon damage.',
 					rune: 'Affected targets will take an additional 100% weapon damage per second as Holy for 5 seconds. Also adds a short dash to the first strike.',
 					procRate: 1.5,
+					monkHaste: 1.125,
 					// 2nd + 3rd: 0.18 + 1
 					effect: {
 						'generate-spirit': 8,
@@ -4028,6 +4048,7 @@
 					desc: 'Unleash a rapid series of punches that strikes enemies for 140% weapon damage.',
 					rune: 'Increases the number of hits in the second strike from 7 to 10.',
 					procRate: 0.75,
+					monkHaste: 1.125,
 					// 2nd + 3rd: 0.09 + 0.5
 					effect: {
 						'generate-spirit': 8,
@@ -4039,6 +4060,7 @@
 					desc: 'Unleash a rapid series of punches that strikes enemies for 140% weapon damage.',
 					rune: 'Critical Hits increase your attack speed and movement speed by 5% for 5 seconds. This effect can stack up to 3 times.',
 					procRate: 0.75,
+					monkHaste: 1.125,
 					// 2nd + 3rd: 0.09 + 0.5
 					effect: {
 						'generate-spirit': 8,
@@ -4054,6 +4076,7 @@
 					desc: 'Unleash a rapid series of punches that strikes enemies for 140% weapon damage.',
 					rune: 'Every activation of the skill has a 15% chance to generate 15 additional Spirit.',
 					procRate: 0.75,
+					monkHaste: 1.125,
 					// 2nd + 3rd: 0.09 + 0.5
 					effect: {
 						'generate-spirit': 8,
@@ -4065,6 +4088,7 @@
 					desc: 'Unleash a rapid series of punches that strikes enemies for 140% weapon damage.',
 					rune: 'The third strike generates a wave of wind that deals 250% weapon damage as Physical to enemies directly ahead of you.',
 					procRate: 0.75,
+					monkHaste: 1.125,
 					// 2nd + 3rd: 0.09 + 0.5
 					effect: {
 						'generate-spirit': 8,

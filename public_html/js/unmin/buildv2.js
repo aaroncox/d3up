@@ -412,6 +412,9 @@
 									if(build.skills.actives[slug].procRate) {
 										effectTable.append(build.renderEffectData('procRate', Math.round(build.skills.actives[slug].procRate * 1000) / 10));																					
 									}
+									if(build.skills.actives[slug].monkHaste) {
+										effectTable.append(build.renderEffectData('monkHaste', build.skills.actives[slug].monkHaste * 100));	
+									}
 								}
 								$this.append($("<tr>").append($("<td>").append(skillTable), $("<td>").append(effectTable)));
 							}
