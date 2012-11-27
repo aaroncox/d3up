@@ -1242,6 +1242,12 @@ BuildCalculator.prototype = {
 			mhAvgDamage += this.calcFITL(bnEleDamage);
 		}
 
+		// Monks have bonus hidden attack speed
+		var bonusHaste = 1;
+		if(options.skill.monkHaste) {
+			bonusHaste = options.skill.monkHaste;
+			rendered['dps'] = Math.round(rendered['dps'] * bonusHaste);
+		}
 		
 		// d3up.log(this.attrs.mhRealDamage.min, bnMinDamage, bnEleDamage);
 		// Are we duel wielding?
@@ -1257,8 +1263,8 @@ BuildCalculator.prototype = {
 			mathAl = (mhMinDamage + ohMinDamage) / 2;
 			mathAh = (mhMaxDamage + ohMaxDamage) / 2;
 			mathM = (1 + this.bonuses['plus-damage']);
-			var mhAPS = rendered['dps-speed'].mh * (1 + atkSpeedInc + 0.15 + this.bonuses['plus-attack-speed']),
-					ohAPS = rendered['dps-speed'].oh * (1 + atkSpeedInc + 0.15 + this.bonuses['plus-attack-speed']);
+			var mhAPS = rendered['dps-speed'].mh * (1 + atkSpeedInc + 0.15 + this.bonuses['plus-attack-speed']) * bonusHaste,
+					ohAPS = rendered['dps-speed'].oh * (1 + atkSpeedInc + 0.15 + this.bonuses['plus-attack-speed']) * bonusHaste;
 			mathR = 2 / (1 / mhAPS + 1 / ohAPS);
 			// mathR = (rendered['dps-speed'].mh + rendered['dps-speed'].oh) / 2 * (1 + atkSpeedInc + 0.15 + this.bonuses['plus-attack-speed']);
 			mathC = 1 + (critHit * 0.01) * (critHitDmg * 0.01);
@@ -1281,7 +1287,7 @@ BuildCalculator.prototype = {
 			rendered['dps-speed'] = Math.floor(this.attrs['speed'] * 1024) / 1024;
 			mathS = 1 + this.attrs[this.attrs.primary] * 0.01;
 			mathC = 1 + (critHit * 0.01) * (critHitDmg * 0.01);
-			mathR = rendered['dps-speed'] * (1 + atkSpeedInc + this.bonuses['plus-attack-speed']);
+			mathR = rendered['dps-speed'] * (1 + atkSpeedInc + this.bonuses['plus-attack-speed']) * bonusHaste;
 			mathA = mhAvgDamage;
 			mathAl = mhMinDamage;
 			mathAh = mhMaxDamage;
@@ -1340,12 +1346,7 @@ BuildCalculator.prototype = {
 						d3High = mathS * mathAh * (mathM + (this.bonuses['3rd-hit-damage'] / 100)) * mathE,
 						hit3 = Math.round(((d3Low + d3High) / 2 ) * mathC),
 						dmgCycle = (((dLow + dHigh) / 2) + ((dLow + dHigh) / 2) + ((d3Low + d3High) / 2)) / 3;
-				var bonusHaste = 1;
  				rendered['3rd-hit'] = hit3;
-			}
-			if(options.skill.monkHaste) {
-				bonusHaste = options.skill.monkHaste;
-				rendered['dps'] = Math.round(rendered['dps'] * bonusHaste);
 			}
 			// d3up.log(dLow, dHigh);
 			rendered['damage'] = Math.round(dLow) + " - " + Math.round(dHigh);
