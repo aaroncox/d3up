@@ -136,4 +136,16 @@ class BuildController extends D3Up_Controller_Action
 			}
 		}		
 	}
+	public function taglistAction() {
+		$this->view->battletag = $battletag = str_replace("-", "#", $this->getRequest()->getParam("bt"));
+		$query = array(
+			'_characterBt' => new MongoRegex("/".$battletag."/i"),
+			'private' => array('$ne' => true),
+			'_createdBy' => array('$exists' => true)
+		);
+		$sort = array(
+			'_lastCrawl' => -1,
+		);
+		$this->view->builds = Epic_Mongo::db("build")->fetchAll($query, $sort);
+	}
 } // END class HeroController extends Epic_Controller_Action

@@ -1,0 +1,11 @@
+<?
+	$this->headTitle($this->battletag . ' - Character Builds'); 
+?>
+<div class="recent-builds content-page">			
+	<div class="page">
+		<h2 class="ui-table-header"><?= $this->battletag ?> - Character Builds</h2>
+	</div>	
+	<table id="all-builds" class="d3up-table">
+    <?= $this->render("build/_build-table.phtml") ?>
+	</table>
+</div>

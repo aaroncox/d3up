@@ -9,7 +9,7 @@
  * @package undocumented class
  **/
 class D3Up_Mongo_Schema extends Epic_Mongo_Schema {
-	protected $_version = 13;
+	protected $_version = 14;
   	protected $_tag = 'd3up';
 	protected $_classMap = array(
 		'record' => array(
@@ -102,6 +102,9 @@ class D3Up_Mongo_Schema extends Epic_Mongo_Schema {
 			  foreach(D3Up_Tool_MaxStat::$_statMap as $key => $val) {
 			    $db->execute("db.records.ensureIndex({'attrs." . $key . "': 1})");
 			  }
+			case 13:
+				$db->execute('db.records.ensureIndex({_characterBt: 1, private: 1, _createdBy: 1, _type: 1})');
+				
 				// $db->execute('db.users.insert({id: 1, name: "admin", username: "admin", password: "'.md5('admin').'", _access: "admin", _type: "user"})');
 				// $db->execute('db.sequences.insert({"id" : "user", "sequence" : 1 })');
 			// case 0:
