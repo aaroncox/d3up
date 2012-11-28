@@ -235,7 +235,7 @@ class D3Up_Form_Record_Item extends Epic_Form
 			$item->sockets = null;
 		}
 		// Determine and set Item Specific Values (Armor vs Weapons)
-		var_dump($this->_allData);
+		// var_dump($this->_allData);
 		switch($this->itemType->getValue()) {
 			case "shield":
 				$stats = array(
