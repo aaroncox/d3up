@@ -950,7 +950,7 @@ class D3Up_Tool_MaxStat
 				if(!$perfect) {
 					// var_dump($item->type, $key); exit;
 				} else {
-          if(!is_array($value)) {
+          if(!is_array($value) && !is_object($value)) {
   					$rating = round($value / $perfect * 100, 1);					
   					$ratings[$key] = $rating;            
           }
