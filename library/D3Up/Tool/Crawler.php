@@ -605,6 +605,9 @@ class D3Up_Tool_Crawler
 		$url = self::$profileUrl[$region] . strtolower(str_replace("#", "-", $tag)) . "/index";
     // var_dump($url); exit;
 		$data = self::get($url);
+		if(!isset($data['heroes'])) {
+			return null;
+		}
 		return $data['heroes'];		
 	}
 	
