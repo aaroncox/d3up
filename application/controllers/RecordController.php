@@ -300,9 +300,11 @@ class RecordController extends D3Up_Controller_Action
   							$record->equipment[$slot] = $item;
   							$record->equipmentCount = count($record->equipment); 
 							}
+							$stats = array();
 							foreach($this->getRequest()->getParam('stats') as $k => $v) {
-								$record->stats->$k = floatVal($v);
+ 								$stats[$k] = floatVal($v);
 							}
+							$record->stats = $stats;
 							$this->getResponse()->setHeader('Content-type', 'application/json');
 							echo json_encode($record->save()); exit;
 							break;
