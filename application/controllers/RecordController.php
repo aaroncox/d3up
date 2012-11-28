@@ -159,10 +159,12 @@ class RecordController extends D3Up_Controller_Action
 		$this->getResponse()->setHeader('Content-type', 'application/json');
 		$data = array();
 		$helper = new D3Up_View_Helper_PrettyStat();
-		foreach($items as $item) {
-			$data[$item->id] = array(
-				'item' => $item->cleanExport()
-			);
+		if($items && count($items) > 0) {
+			foreach($items as $item) {
+				$data[$item->id] = array(
+					'item' => $item->cleanExport()
+				);
+			}			
 		}
 		echo json_encode($data); exit;
 	}
