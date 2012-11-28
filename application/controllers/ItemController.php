@@ -8,6 +8,8 @@
 class ItemController extends D3Up_Controller_Action
 {
 	public function indexAction() {
+		throw new Exception("This crappy ItemDB portion of the site is being phased out. If you actually used it to look up items, let me know exactly what you were using it for and I'll try to develop new features to accommodate the needs!");
+		
 		$query = array();
 		if($slot = $this->getRequest()->getParam('slot')) {
 			$possible = D3Up_Mongo_Record_Item::$slotTypeMap;
@@ -60,6 +62,8 @@ class ItemController extends D3Up_Controller_Action
 		}
 	}
 	public function pricerAction() {
+		throw new Exception("This crappy ItemDB portion of the site is being phased out. If you actually used it to look up items, let me know exactly what you were using it for and I'll try to develop new features to accommodate the needs!");
+		
 		if($type = $this->getRequest()->getParam('type')) {
 			$query = array(
 				'item.type' => $type,
@@ -203,6 +207,8 @@ class ItemController extends D3Up_Controller_Action
 		return json_encode(array(''));
 	}
 	public function salesHistoryAction() {
+		throw new Exception("This crappy ItemDB portion of the site is being phased out. If you actually used it to look up items, let me know exactly what you were using it for and I'll try to develop new features to accommodate the needs!");
+		
 		$query = array();
 		if($slot = $this->getRequest()->getParam('slot')) {
 			$possible = D3Up_Mongo_Record_Item::$slotTypeMap;
@@ -258,6 +264,8 @@ class ItemController extends D3Up_Controller_Action
 		}		
 	}
 	public function bazaarAction() {
+		throw new Exception("This crappy ItemDB portion of the site is being phased out. If you actually used it to look up items, let me know exactly what you were using it for and I'll try to develop new features to accommodate the needs!");
+		
 		$query = array();
 		if($slot = $this->getRequest()->getParam('slot')) {
 			$possible = D3Up_Mongo_Record_Item::$slotTypeMap;
