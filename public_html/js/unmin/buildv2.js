@@ -101,7 +101,7 @@
               break;
           }
         }
-				var hiddenVals = ['sharpshooter-dps', 'dps-elites', 'scram-a-mh', 'scram-a-oh', '3sec-dps'];
+				var hiddenVals = ['sharpshooter-dps', 'dps-demon', 'dps-elites', 'scram-a-mh', 'scram-a-oh', '3sec-dps'];
 				if(id == 'dps-speed-display') {
 					stat.prepend(prefix + value + suffix);
 				} else if(_.indexOf(hiddenVals, id) >= 0 && parseFloat(value)) { 

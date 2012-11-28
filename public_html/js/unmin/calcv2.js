@@ -1108,7 +1108,9 @@ BuildCalculator.prototype = {
 		if(this.attrs['elite-damage']) {
 			rendered['dps-elites'] = Math.round(rendered['dps'] * (1 + (this.attrs['elite-damage'] / 100)) * 100) / 100;
 		}
-
+		if(this.attrs['demon-damage']) {
+			rendered['dps-demon'] = Math.round(rendered['dps'] * (1 + (this.attrs['demon-damage'] / 100)) * 100) / 100;
+		}
 		return rendered;
 	},
 	calcSAME: function(options) {
@@ -2339,7 +2341,7 @@ BuildCalculator.prototype = {
 					'plus-block': '+Block', 
 					'dps': 'DPS', 
 					'dps-elites': 'DPS vs Elites',
-					'dps-demons': 'DPS vs Demons',
+					'dps-demon': 'DPS vs Demons',
 					'ehp': 'EHP', 
 					'life': 'HP',
 					'intelligence': 'Int', 
