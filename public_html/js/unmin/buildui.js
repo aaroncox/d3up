@@ -460,7 +460,7 @@ $(function() {
       // Show the results table
       compareResults.show();
       // Append the Diff Table to the Compare Table
-      $("#compare-table tbody").replaceWith(d3up.compare.table(diff, 'compare'));
+      $("#compare-table > tbody").replaceWith(d3up.compare.table(diff, 'compare'));
 		});
     compareRow.append(compareTd.append(compareTable));
     itemRow.after(compareRow);
