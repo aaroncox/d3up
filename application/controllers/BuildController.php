@@ -112,7 +112,9 @@ class BuildController extends D3Up_Controller_Action
 				$build->_lastCrawl = time();
 				$build->save();
 			}
-			$this->_redirect("/b/".$build->id);				
+			if($build) {
+				$this->_redirect("/b/".$build->id);								
+			}
 		}
 	}
 	public function editAction() {
