@@ -447,6 +447,7 @@ BuildCalculator.prototype = {
 							this.applyEnabledSkill(value, 'percent-non-physical');
 							break;					
 						case "damage-reduce":
+						  this.bonuses['plus-damage-reduce'] += value;
 							// mathDamageReduce = mathDamageReduce * (1 + value);
 							break;
 						case "health-globes":

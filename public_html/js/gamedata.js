@@ -367,7 +367,7 @@
 				'jungle-fortitude': {
 					'desc': 'Reduces all damage taken by you and your pets by <span class="skill-highlight">15%</span>.',
 					'effect': {
-						'damage-reduce': 0.15
+						'plus-damage-reduce': 0.15
 					}
 				},
 				'spiritual-attunement': {
