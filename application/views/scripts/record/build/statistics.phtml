@@ -62,7 +62,7 @@
 	  <tr style='display: none'><td>Average Hit</td><td data-value='scram-a-mh'></td></tr>
 	  <tr><td>Damage Range</td><td><span data-value='mh-min-damage' data-type"round-1"></span> - <span data-value='mh-max-damage' data-type"round-1"></span></td></tr>
 	  <tr><td>Crit Hit Range</td><td><span data-value='mh-min-damage-crit' data-type"round-1"></span> - <span data-value='mh-max-damage-crit' data-type"round-1"></span></td></tr>
-		<? if(isset($this->record->equipment['offhand'])): ?>
+		<? if(isset($this->record->equipment['offhand']) && $this->record->equipment['offhand']->id): ?>
 		<tr><th colspan="2">OH: <?= $this->itemLink($this->record->equipment['offhand']) ?></th></tr>
 	  <tr style='display: none'><td>Average Hit</td><td data-value='scram-a-oh'></td></tr>
 		<tr><td>Damage Range</td><td><span data-value='oh-min-damage' data-type"round-1"></span> - <span data-value='oh-max-damage' data-type"round-1"></span></td></tr>
