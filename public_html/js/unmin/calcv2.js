@@ -1034,14 +1034,15 @@ BuildCalculator.prototype = {
     // d3up.log(this.attrs);		
 		var mathS, mathC, mathR, mathA, mathM;
 		rendered['attack-speed-incs-dw'] = " ";
+    // console.log(this.attrs['speed']);
 		if(this.isDuelWielding) {
 			// Add to the Display Number
 			rendered['attack-speed-incs-dw'] = " (+15% DW)";
  			rendered['dps-speed'] = {
- 				// mh: Math.floor(this.attrs['speed'] * 1024) / 1024,
- 				// oh: Math.floor(this.attrs['speed-oh'] * 1024) / 1024
- 				mh: this.attrs['speed'],
- 				oh: this.attrs['speed-oh']
+        // mh: Math.floor(this.attrs['speed'] * 1024) / 1024,
+        // oh: Math.floor(this.attrs['speed-oh'] * 1024) / 1024
+        mh: this.attrs['speed'],
+        oh: this.attrs['speed-oh']
  			};
 			// console.log("speed during calc: ", this.attrs['speed'], this.attrs['speed-oh']);
 			// d3up.log(mhMinDamage, mhMaxDamage, ohMinDamage, ohMaxDamage, bnMinDamage, bnMaxDamage);
@@ -1051,6 +1052,7 @@ BuildCalculator.prototype = {
 			mathC = 1 + (this.attrs['critical-hit'] * 0.01) * (this.attrs['critical-hit-damage'] * 0.01);
 			var mhAPS = rendered['dps-speed'].mh * (1 + atkSpeedInc + 0.15 + this.bonuses['plus-attack-speed']),
 					ohAPS = rendered['dps-speed'].oh * (1 + atkSpeedInc + 0.15 + this.bonuses['plus-attack-speed']);
+      // console.log(mhAPS);
 			rendered['aps-mh'] = mhAPS;
 			rendered['aps-oh'] = ohAPS;					
 			mathR = 2 / (1 / mhAPS + 1 / ohAPS);
@@ -1071,7 +1073,7 @@ BuildCalculator.prototype = {
 			// console.log(mathA, rendered['dps-speed'], (1 + 0.15 + atkSpeedInc + this.bonuses['plus-attack-speed']));
 			// rendered['dps-speed-mh'] = Math.round(rendered['dps-speed'].mh * (1 + 0.15 + atkSpeedInc + this.bonuses['plus-attack-speed']) * 100) / 100;
 			// rendered['dps-speed-oh'] = Math.round(rendered['dps-speed'].oh * (1 + 0.15 + atkSpeedInc + this.bonuses['plus-attack-speed'])  * 100) / 100;
-			rendered['dps-speed-display'] = Math.round(rendered['dps-speed'].mh * (1 + 0.15 + atkSpeedInc + this.bonuses['plus-attack-speed']) * 1000) / 1000 + " MH<br/>" + Math.round(rendered['dps-speed'].oh * (1 + 0.15 + atkSpeedInc + this.bonuses['plus-attack-speed'])  * 1000) / 1000 + " OH";
+			rendered['dps-speed-display'] = Math.round(rendered['dps-speed'].mh * (1 + 0.15 + atkSpeedInc + this.bonuses['plus-attack-speed']) * 100000) / 100000 + " MH<br/>" + Math.round(rendered['dps-speed'].oh * (1 + 0.15 + atkSpeedInc + this.bonuses['plus-attack-speed'])  * 100000) / 100000 + " OH";
 			// d3up.log(mathS, mathC, mathR, mathA, mathM, rendered['dps'], "dw", rendered);
 		} else {
 			// if(this.attrs['plus-aps']) {

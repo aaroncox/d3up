@@ -79,7 +79,7 @@ class D3Up_Mongo_Record_Item extends Epic_Mongo_Document_Record
 		// Round down a few numbers
 		if(isset($export['stats'])) {
 			if(isset($export['stats']['speed'])) {
-				$export['stats']['speed'] = round($export['stats']['speed'], 2);
+				$export['stats']['speed'] = round($export['stats']['speed'], 10);
 			}
 			if(isset($export['stats']['dps'])) {
 				$export['stats']['dps'] = round($export['stats']['dps'], 2);
