@@ -1833,6 +1833,12 @@ div.toc.section {
   padding: 2px 5px;
   font-size: 14px;
 }
+.statistics-table > tbody > tr > th:first-child {
+  color: #ececec;
+  font-size: 14px;
+  text-align: center;
+  background: #222;
+}
 .statistics-table > thead > tr > td:first-child, 
 .statistics-table > tbody > tr > td:first-child {
   width: 60%;

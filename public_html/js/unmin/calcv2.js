@@ -769,7 +769,6 @@ BuildCalculator.prototype = {
 		// EHP Calculation by Damage Type
 		// Formula: ( Life / (Percentage Damage Taken * Modifier ) )
 		// ----------------------------------
-
 		rendered['ehp-dodge'] = rendered['ehp-block-dodge'] = defenses.life / ( rendered.damageTaken * ( 1 - defenses['dodge-chance'] / 100));
 		rendered['ehp-melee'] = defenses.life / ( rendered.damageTaken * ( 1 - defenses['percent-melee-reduce'] ));
 		rendered['ehp-range'] = defenses.life / ( rendered.damageTaken * ( 1 - defenses['percent-range-reduce'] ));
@@ -881,6 +880,14 @@ BuildCalculator.prototype = {
 		}, this);
 		// Return rendered EHP Gear values
 		return rendered;
+	},
+	tickRate: function(speed) {
+	  //Tick frame length = (20 / aps); rounded down to the nearest whole number
+    // Number of tornado ticks = (180 / frame length); rounded up to the nearest whole number
+    // Ticks per second = (60 / frame length)
+    var frames = Math.floor(20 / speed),
+        ticks = (60 / frames);
+    return ticks;
 	},
 	calcOffense: function() {
 		var rendered = {}, // Storage for Rendered Statistics
@@ -1087,7 +1094,7 @@ BuildCalculator.prototype = {
 			rendered['dps'] = mathS * mathC * mathR * mathA * mathM;		
       // d3up.log(mhMinDamage, mhMaxDamage, bnMinDamage, bnMaxDamage);
       // d3up.log(mathS, mathC, mathR, mathA, mathM, rendered['dps'], "1w");
-			// rendered['dps'] = (((mhMinDamage + mhMaxDamage) / 2 + bnAvgDamage) * rendered['dps-speed']) * (1 + atkSpeedInc) * (this.attrs[this.attrs.primary] / 100 + 1) * 1 * ((this.attrs['critical-hit'] / 100) * (this.attrs['critical-hit-damage']/100) + 1);
+			// rendered['dps'] = (((mhMinDamage + mhMaxDamage) / 2 + bnAvgDamage) * rendered['dps-speed']) * (1 + atkSpeedInc) * (this.attrs[this.attrs.primary] / 100 + 1) * 1 * ((this.attrs['critical-hit'] / 100) * (this.attrs['critical-hit-damage']/100) + 1);			
 			rendered['scram-a-mh'] = mathA * mathM * mathS * mathC;
 			// console.log(this.attrs['speed'], atkSpeedInc, this.bonuses['plus-attack-speed'], mathR);
 			rendered['dps-speed-display'] = Math.round(mathR * 100) / 100;
@@ -1099,6 +1106,31 @@ BuildCalculator.prototype = {
 		rendered['scram-a'] = mathA;
 		rendered['scram-m'] = mathM;
 		rendered['bonus-damage'] = this.bonuses['plus-damage'];
+		
+		rendered['mh-min-damage'] = mathS * mhMinDamage * mathM;
+		rendered['mh-max-damage'] = mathS * mhMaxDamage * mathM;
+		rendered['mh-min-damage-crit'] = rendered['mh-min-damage'] * (1 + (this.attrs['critical-hit-damage'] * 0.01));
+		rendered['mh-max-damage-crit'] = rendered['mh-max-damage'] * (1 + (this.attrs['critical-hit-damage'] * 0.01));
+    if(this.isDuelWielding) {
+  		rendered['oh-min-damage'] = mathS * ohMinDamage * mathM;
+  		rendered['oh-max-damage'] = mathS * ohMaxDamage * mathM;
+  		rendered['oh-min-damage-crit'] = rendered['oh-min-damage'] * (1 + (this.attrs['critical-hit-damage'] * 0.01));
+  		rendered['oh-max-damage-crit'] = rendered['oh-max-damage'] * (1 + (this.attrs['critical-hit-damage'] * 0.01));
+    }
+
+    _.each(this.activeSkills, function(v,k) {
+      var parts = k.split("~");
+      if(parts[0] == 'whirlwind') {
+        if(this.isDuelWielding) {
+          // = ((0.7 * 43977.33) + (0.4833 * (43977.33 + 38764.61) / 2)) * 6
+          rendered['tdps'] = ((0.7 * rendered['scram-a-mh']) + (0.4833 * (rendered['scram-a-mh'] + rendered['scram-a-oh']) / 2)) * this.tickRate(mathR);
+        } else {
+          // 2H Tdps = [(.7 *M) + (.4833 * M) ]* t = 1.1833*m*t
+          rendered['tdps'] = ((0.7 * rendered['scram-a-mh']) + (0.4833 * rendered['scram-a-mh'])) * this.tickRate(mathR);
+        }
+      }
+    }, this);
+    
 		// Add any bonus damage onto the damage calculation
 		// if(this.bonuses['plus-damage']) {
 			// d3up.log(this.bonuses['plus-damage']);
@@ -1675,6 +1707,31 @@ BuildCalculator.prototype = {
 		// console.log(rendered);
 		return rendered;
 	},
+	calcBES: function(defenses, ehp, dps) {
+    // BES - Battle efficiency score: 
+    /* { 
+        (
+          Tdps * 
+          [ehp^(1/1.02)] * 
+          [MS ^ (1/1.15)] * 
+          (1+ [ls/25] ) * 
+          (1+ [((t^(1/1.05)) *.05 ] ) * 
+          (1+ [loh/5500] ) 
+        ) 
+        / 500,000
+       } 
+    */
+    var besEhp = ehp['ehp'] ^ (1/1.02),
+        besMs = this.attrs['plus-movement'] ^ (1/1.15),
+        besLs = 1 + (this.attrs['life-steal'] / 25),
+        //        (1 + [((t                               ^ ( 1 / 1.05 )) * 0.05 ] )
+        besTicks = 1 + (((this.tickRate( dps['scram-r'] ) ^ ( 1 / 1.05 )) * 0.05 )) ,
+        besLoH = 1 + (this.attrs['life-hit'] / 5500),
+        bes = (dps['tdps'] * besEhp * besMs * besLs * besLoH) / 500000;
+    return {bes: bes};
+    console.log(dps['scram-r'], this.tickRate( dps['scram-r']), bes, besMs, besLs, besTicks, besLoH, this.attrs);
+	  console.log(defenses, ehp, dps);
+	},
 	run: function() {
 		// Apply all of the passive bonuses into the this.bonuses array for use in the math below
 		this.applyPassives();
@@ -1698,7 +1755,7 @@ BuildCalculator.prototype = {
 		
 		// Add all of our calculated values into the values object for returning
     // d3up.log("----");
-		_.extend(this.values, defenses, ehp, gearEhp, dps, skills, allSkills, lifeRegen);		
+		_.extend(this.values, defenses, ehp, gearEhp, dps, skills, allSkills, lifeRegen, this.calcBES(defenses, ehp, dps));		
 		// console.log("Block @ ", this.attrs['block-chance']);
 		// ----------------------------------
 		// Define Offensive Statistics before Passives so we can add to them
@@ -2328,53 +2385,55 @@ BuildCalculator.prototype = {
 	diff: function(s1, s2, allowAll) {
 		var diff = {},
 				allowed = {
-					'ap-max': 'Max AP', 
-					'plus-movement': '+Movement', 
-					'plus-magic-find': '+Magic Find', 
-					'plus-gold-find': '+Gold Find', 
-					'resist-all': 'Resist All',
-					'thorns': 'Thorns', 
-					'life-hit': 'Life/Hit', 
-					'life-steal': 'Life/Steal', 
-					'life-regen': 'Life/Regen',
-					'ap-on-crit': 'AP/Crit', 
-					'plus-block': '+Block', 
-					'dps': 'DPS', 
-					'dps-elites': 'DPS vs Elites',
-					'dps-demon': 'DPS vs Demons',
-					'ehp': 'EHP', 
-					'life': 'HP',
-					'intelligence': 'Int', 
-					'vitality': 'Vit', 
-					'dexterity': 'Dex', 
-					'strength': 'Str', 
-					'dodgePercent': 'Dodge', 
-					'blockChance': 'Block %', 
 					'allResist': 'All Resists', 
-					'lifeTotal': 'Life', 
-					'plus-life': '+Life', 
-					'armor': 'Armor', 
-					'cold-resist': 'Cold Res', 
-					'lightning-resist': 'Lightning Res', 
-					'fire-resist': 'Fire Res', 
+					'ap-max': 'Max AP', 
+					'ap-on-crit': 'AP/Crit', 
 					'arcane-resist': 'Arcane Res', 
-					'poison-resist': 'Poison Res', 
-					'physical-resist': 'Physical Res', 
-					'critical-hit': 'Crit Hit', 
-					'critical-hit-damage': 'Crit Hit Dmg',
-					'dps-speed-mh': 'MH Attk/Sec',
-					'dps-speed-oh': 'OH Attk/Sec',
-					'ehp-block': 'EHP w/ Block',
-					'ehp-dodge': 'EHP w/ Dodge',
-					'ehp-block-dodge': 'EHP w/ Block+Dodge',
+					'armor': 'Armor', 
+					'attack-speed-incs': '+% Attack Speed',
 					'block-amount': 'Block', 
 					'block-chance': '%Block',
-					'total-armor-reduction': 'Armor DmgReduce', 
-					'total-resist-reduction': 'Resist DmgReduce',
-					'total-damage-reduction': 'Total DmgReduce',
-					'attack-speed-incs': '+% Attack Speed',
+					'blockChance': 'Block %', 
+					'cold-resist': 'Cold Res', 
+					'critical-hit': 'Crit Hit', 
+					'critical-hit-damage': 'Crit Hit Dmg',
+					'dexterity': 'Dex', 
+					'dodgePercent': 'Dodge', 
+					'dps': 'DPS', 
+					'dps-demon': 'DPS vs Demons',
+					'dps-elites': 'DPS vs Elites',
 					'dps-speed-mh': 'MH AtkSpeed',
+					'dps-speed-mh': 'MH Attk/Sec',
 					'dps-speed-oh': 'OH AtkSpeed',
+					'dps-speed-oh': 'OH Attk/Sec',
+					'ehp': 'EHP', 
+					'ehp-block': 'EHP w/ Block',
+					'ehp-block-dodge': 'EHP w/ Block+Dodge',
+					'ehp-dodge': 'EHP w/ Dodge',
+					'fire-resist': 'Fire Res', 
+					'intelligence': 'Int', 
+					'life': 'HP',
+					'life-hit': 'Life/Hit', 
+					'life-regen': 'Life/Regen',
+					'life-steal': 'Life/Steal', 
+					'lifeTotal': 'Life', 
+					'lightning-resist': 'Lightning Res', 
+					'physical-resist': 'Physical Res', 
+					'plus-block': '+Block', 
+					'plus-gold-find': '+Gold Find', 
+					'plus-life': '+Life', 
+					'plus-magic-find': '+Magic Find', 
+					'plus-movement': '+Movement', 
+					'poison-resist': 'Poison Res', 
+					'resist-all': 'Resist All',
+					'sharpshooter-dps': 'Sharpshooter DPS', 
+					'strength': 'Str', 
+					'tdps': 'tDPS',
+					'thorns': 'Thorns', 
+					'total-armor-reduction': 'Armor DmgReduce', 
+					'total-damage-reduction': 'Total DmgReduce',
+					'total-resist-reduction': 'Resist DmgReduce',
+					'vitality': 'Vit', 
 				};
     // console.log(s1, s2);
 		_.each(s1, function(val, key) {

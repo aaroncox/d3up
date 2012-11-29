@@ -38,6 +38,8 @@
   </thead>
   <tbody>
     <tr><td>DPS</td><td data-value='dps'></td></tr>
+    <tr style='display: none'><td>tDPS</td><td data-value='tdps'></td></tr>
+    <tr style='display: none'><td>BES</td><td data-value='bes'></td></tr>
     <tr style='display: none'><td>Sharpshooter DPS</td><td data-value='sharpshooter-dps'></td></tr>
     <tr style='display: none'><td>3-second DPS</td><td data-value='3sec-dps'></td></tr>
     <tr style='display: none'><td>DPS vs Elites</td><td data-value='dps-elites'></td></tr>
@@ -50,6 +52,25 @@
     <tr style='display: none'><td>OH Weapon Damage</td><td data-value='scram-a-oh'></td></tr>
   </tbody>
 </table>
+<? if(isset($this->record->equipment['mainhand'])): ?>
+<table class="statistics-table collapsed" id="stats-offense-range">
+  <thead>
+    <tr class='header '><th colspan='10' class="button"><span class='ui-icon-plusthick ui-icon'></span>Damage Ranges</th></tr>
+  </thead>
+	<tbody>
+		<tr><th colspan="2">MH: <?= $this->itemLink($this->record->equipment['mainhand']) ?></th></tr>
+	  <tr style='display: none'><td>Average Hit</td><td data-value='scram-a-mh'></td></tr>
+	  <tr><td>Damage Range</td><td><span data-value='mh-min-damage' data-type"round-1"></span> - <span data-value='mh-max-damage' data-type"round-1"></span></td></tr>
+	  <tr><td>Crit Hit Range</td><td><span data-value='mh-min-damage-crit' data-type"round-1"></span> - <span data-value='mh-max-damage-crit' data-type"round-1"></span></td></tr>
+		<? if(isset($this->record->equipment['offhand'])): ?>
+		<tr><th colspan="2">OH: <?= $this->itemLink($this->record->equipment['offhand']) ?></th></tr>
+	  <tr style='display: none'><td>Average Hit</td><td data-value='scram-a-oh'></td></tr>
+		<tr><td>Damage Range</td><td><span data-value='oh-min-damage' data-type"round-1"></span> - <span data-value='oh-max-damage' data-type"round-1"></span></td></tr>
+		<tr><td>Crit Hit Range</td><td><span data-value='oh-min-damage-crit' data-type"round-1"></span> - <span data-value='oh-max-damage-crit' data-type"round-1"></span></td></tr>
+		<? endif ?>
+	</tbody>
+</table>
+<? endif; ?>
 <!-- <table class="statistics-table" id="stats-offense">
   <thead>
     <tr class='header '><th colspan='10' class="button"><span class='ui-icon-minusthick ui-icon'></span>Life Steal/Hit Information</th></tr>

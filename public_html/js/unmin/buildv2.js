@@ -96,12 +96,15 @@
               stat.append($("<p>").append(Math.round(value / build.stats['ehp-gear-total'] * 1000) / 10, "%"));
               stat.css("color", $.Color( "#570" ).transition($.Color( "#5F0" ), ((value / build.stats['ehp']) * 4))); 
               break;
+            case "round-1":
+              value = Math.round(value * 10) / 10;
+              break;
             default:
               // console.log("Unknown Formatter: " + type);
               break;
           }
         }
-				var hiddenVals = ['sharpshooter-dps', 'dps-demon', 'dps-elites', 'scram-a-mh', 'scram-a-oh', '3sec-dps'];
+				var hiddenVals = ['sharpshooter-dps', 'dps-demon', 'tdps', 'dps-elites', 'scram-a-mh', 'scram-a-oh', '3sec-dps'];
 				if(id == 'dps-speed-display') {
 					stat.prepend(prefix + value + suffix);
 				} else if(_.indexOf(hiddenVals, id) >= 0 && parseFloat(value)) { 
