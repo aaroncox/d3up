@@ -104,14 +104,17 @@
               break;
           }
         }
-				var hiddenVals = ['sharpshooter-dps', 'dps-demon', 'tdps', 'dps-elites', 'scram-a-mh', 'scram-a-oh', '3sec-dps'];
+				var hiddenVals = ['sharpshooter-dps', 'dps-demon', 'tdps', 'tickRate', 'dps-elites', 'scram-a-mh', 'scram-a-oh', '3sec-dps'];
 				if(id == 'dps-speed-display') {
 					stat.prepend(prefix + value + suffix);
 				} else if(_.indexOf(hiddenVals, id) >= 0 && parseFloat(value)) { 
 					stat.parent().show();
 					value = Math.round(value * 100) / 100;
           value = value.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,");          
-					stat.prepend(value);
+          if(id == 'tickRate') {
+            suffix = " ticks/sec";
+          }
+					stat.prepend(prefix + value + suffix);
 				} else if(type == 'long-round') {
 					if(typeof(value) == 'undefined') {
 						value = 0;

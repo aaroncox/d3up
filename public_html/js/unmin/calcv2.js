@@ -1131,6 +1131,7 @@ BuildCalculator.prototype = {
           // 2H Tdps = [(.7 *M) + (.4833 * M) ]* t = 1.1833*m*t
           rendered['tdps'] = ((0.7 * rendered['scram-a-mh']) + (0.4833 * rendered['scram-a-mh'])) * this.tickRate(mathR);
         }
+        rendered['tickRate'] = this.tickRate(mathR);
       }
     }, this);
     
