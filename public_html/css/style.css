@@ -2317,3 +2317,10 @@ div#statistics {
 	font-size: 12px;
 	color: #B18135;
 }
+.simulate-select {
+  
+}
+.simulate-select select {
+  width: 30%;
+  margin: 0 5px;
+}

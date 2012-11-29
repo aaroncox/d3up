@@ -318,7 +318,7 @@ ItemBuilder.prototype = {
 		this.item.setBonus = null;
 		this.preview.setBonus.empty();
 	},
-	addSetBonusSelect: function() {
+	addSetBonusSelect: function(target) {
 		var builder = this,
 				dt = $("<dt id='setBonus-label'>"),
 				dd = $("<dd id='setBonus-element'>"),
@@ -345,7 +345,38 @@ ItemBuilder.prototype = {
 			builder.updatePreview();
 		});
 		dd.html(select);
-		this.qualitySelect.parent().after(dt, dd);
+		this.qualitySelect.parent().after(dt, dd);		  
+	},
+	// Set the Item Set selector
+	setSetBonusSelect: function(element) {
+	  this.itemSetBonusSelect = element;
+	},
+	bindSetBonusSelect: function() {
+	  var selector = this.itemSetBonusSelect,
+				builder = this;
+		if(selector) {
+		  selector.append("<option value=''>Select a Set</option>");
+  		var keys = Object.keys(d3up.gameData.sets),
+  		    i, len = keys.length;
+  		keys.sort();
+  		for (i = 0; i < len; i++)
+  		{
+  			k = keys[i];
+  			v = d3up.gameData.sets[k];
+  			var option = $("<option>");
+  			option.val(k);
+  			option.html(v.name);
+  			if(this.item.setBonus && this.item.setBonus == k) {
+  				option.attr("selected", "selected");
+  			}
+  			selector.append(option);
+  		}
+		  selector.bind('change', function() {
+  			builder.item.setBonus = $(this).val();
+  			builder.item.set = $(this).val();
+  			builder.updatePreview();
+  		});
+	  }
 	},
 	// Set the Item Type selector
 	setItemTypeSelect: function(element) {
@@ -833,6 +864,7 @@ ItemBuilder.prototype = {
 		this.bindItemTypeSelect();
 		this.bindAttributeSelect();
 		this.bindSocketSelect();
+	  this.bindSetBonusSelect();
 		if(!this.item) {
 			this.item = {
 				attrs: {},
@@ -870,6 +902,13 @@ ItemBuilder.prototype = {
 			}, this);			
 			// Adjust the Set
 			this.item.setBonus = item.set;
+			if(this.item.setBonus) {
+        this.itemSetBonusSelect.find("option").each(function() {
+          if(item.set == $(this).val()) {
+            $(this).attr("selected", "selected");
+          }
+        });
+			}
 		}
 		// Update the Fields
 		if(this.qualitySelect) {

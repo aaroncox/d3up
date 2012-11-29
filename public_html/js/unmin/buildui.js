@@ -152,6 +152,7 @@ $(function() {
 				itemType = $("<select name='itemType' id='itemType' data-placeholder='What type of item is this?'><option value='' label=''></option><option value='amulet' label='Amulet'>Amulet</option><option value='belt' label='Belt'>Belt</option><option value='boots' label='Boots'>Boots</option><option value='bracers' label='Bracers'>Bracers</option><option value='chest' label='Chest Armor'>Chest Armor</option><option value='cloak' label='Cloak'>Cloak</option><option value='gloves' label='Gloves'>Gloves</option><option value='helm' label='Helm'>Helm</option><option value='pants' label='Pants'>Pants</option><option value='mighty-belt' label='Mighty Belt'>Mighty Belt</option><option value='ring' label='Ring'>Ring</option><option value='shoulders' label='Shoulders'>Shoulders</option><option value='spirit-stone' label='Spirit Stone'>Spirit Stone</option><option value='voodoo-mask' label='Voodoo Mask'>Voodoo Mask</option><option value='wizard-hat' label='Wizard Hat'>Wizard Hat</option><option value='2h-mace' label='Two-Handed Mace'>Two-Handed Mace</option><option value='2h-axe' label='Two-Handed Axe'>Two-Handed Axe</option><option value='bow' label='Bow'>Bow</option><option value='daibo' label='Daibo'>Daibo</option><option value='crossbow' label='Crossbow'>Crossbow</option><option value='2h-mighty' label='Two-Handed Mighty Weapon'>Two-Handed Mighty Weapon</option><option value='polearm' label='Polearm'>Polearm</option><option value='staff' label='Staff'>Staff</option><option value='2h-sword' label='Two-Handed Sword'>Two-Handed Sword</option><option value='axe' label='Axe'>Axe</option><option value='ceremonial-knife' label='Ceremonial Knife'>Ceremonial Knife</option><option value='hand-crossbow' label='Hand Crossbow'>Hand Crossbow</option><option value='dagger' label='Dagger'>Dagger</option><option value='fist-weapon' label='Fist Weapon'>Fist Weapon</option><option value='mace' label='Mace'>Mace</option><option value='mighty-weapon' label='Mighty Weapon'>Mighty Weapon</option><option value='spear' label='Spear'>Spear</option><option value='sword' label='Sword' selected='selected'>Sword</option><option value='wand' label='Wand'>Wand</option><option value='mojo' label='Mojo'>Mojo</option><option value='source' label='Source'>Source</option><option value='quiver' label='Quiver'>Quiver</option><option value='shield' label='Shield'>Shield</option></select>"),
 				itemSockets = $("<select name='sockets' id='sockets'><option value='' label='0 Sockets' selected='selected'>0 Sockets</option><option value='1' label='1 Socket'>1 Socket</option><option value='2' label='2 Sockets'>2 Sockets</option><option value='3' label='3 Sockets'>3 Sockets</option></select>"),
 				itemSet = $("<select name='itemSet' id='itemSet'></select>"),
+				selectContainer = $("<div class='simulate-select'>").append(itemType, itemSockets, itemSet);
 				// it = Item Template
 				itName = $('<p>').append(itemSlot.capitalize(), ' Simulation'),
 				itStatPrime = $('<p class="stats stats-primary">').append('<span class="big-stat"></span><span class="stat-helper"></span>'),
@@ -170,7 +171,7 @@ $(function() {
 			option.html(v.replace("VVV", ""));
 			itemAttrs.append(option);
 		});
-		simulateToTd.append(itemAttrs, itemType, itemSockets, it);
+		simulateToTd.append(itemAttrs, selectContainer, it);
 		if(d3up.builds.compare.getItem(itemSlot)) {
 			itemType.find("option[value=" + d3up.builds.compare.getItem(itemSlot).type + "]").attr("selected", "selected");
 			if(d3up.builds.compare.getItem(itemSlot).sockets) {
@@ -205,6 +206,8 @@ $(function() {
 		builder.setAttributeSelect(itemAttrs);
 		// Set the Socket selector
 		builder.setSocketSelect(itemSockets);
+    // Set the Set Bonus selector
+    builder.setSetBonusSelect(itemSet);		
 		// Set the Item Preview
 		builder.setItemPreview(it);
 		// Initialize the Item Builder
@@ -271,6 +274,8 @@ $(function() {
 				  overviewTd.append(oldItemLink, " vs ", newItemLink);
 		  compareResultsHeader.append(overviewTr.append(overviewTd));			
 		}
+		// Remove the old item
+		d3up.builds.compare.calc.removeItem(itemSlot);
 	  // Set the Proper Item
     d3up.builds.compare.setItem(itemSlot, inst.getItem());
     // Loop through All Builds and render them again.
