@@ -1,0 +1,105 @@
+General
+===
+- Removed the ItemDB portion of the site for now.			
+- Skill Catalog - All builds now have an experimental "Skill Catalog", which gives a brief overview of all of your DPS skills.
+- When changing skills/passives	all of your enabled skills/passives will be disabled until you activate them again. This is to prevent a bug where you could activate a skill then change that skill and the benefits of that skill would remain.
+- Corrected Duel-Wield math that has probably be incorrect for a long time.
+- Reduced the time of crawls for registered users to 2 minutes.
+- Added a favicon!
+
+Statistics (Sidebar)
+===
+- Added IAS to the Damage Stats (along with bonuses from DW).
+- Added DPS vs Demons to Statistics.			
+- Arcane/Holy EHP no longer displays Poison EHP.	
+- Fix to attack speed display.	
+- Added "Damage Range" section showing the true damage of your weapons. 	
+
+Skills Tab
+===
+- Massive improvements to many skills in the "Skills" tab on all builds.
+- Skills now show damage types and proc coefficients.
+- Any bonuses from Items that affect a specific skills DPS are now factored into the Skills Damage display.
+- Added estimated "Resources per Second" (RPS) for each skill estimating the amount of resources that the skill will return. 
+- Added average "Life Steal" per hit.
+- Added estimated "Life on Hit" value using the proc coefficient.
+- Added experimental "Life per Second" (LPS) for each skill estimating the amount of life returned from all life regen stats against a single target (LoH, LS & Life Regen). 
+
+Barbarian 
+===
+- Whirlwind/RltW - Added tDPS (Tornado DPS) based on [this thread](http://us.battle.net/d3/en/forum/topic/6864416737).
+- Whirlwind/RltW - Added Tick Rate to statistics sidebar for how often your Tornado's "Tick"
+- Weapons Master fury generation is now included in the RPS on skills.
+- Unforgiving and No Escape are now included in the RPS on skills.
+- Battle Rage - Into the Fray is now included in the RPS on skills.	
+
+Demon Hunter
+===
+- Brooding now works.
+- Strafe modified to show 4 ticks instead of 1 big tick.			
+- +% Crit to Strafe: Now will scan from armory imports and adds bonus crit in the skills panel.
+
+Monk
+===
+- Fists of Thunder - Thunder Clap - Fixed damage calculations.
+- Monk skills gain bonus IAS for spirit generators (hidden values).
+- Fists of Thunder - Lightning Flash - Can now be activated.
+- Sweeping Winds - Added damage calculations (Calculates based on 3 stacks)
+
+Witch Doctor
+===
+- Jungle Fortitude - Now will affect your damage reduction.			
+- Zombie Dogs - Life Link - Now can be activated for 10% damage reduction.			
+
+
+Wizard
+===
+- Fixed Meteor proc coefficients.	
+- Tal Rasha's Set Bonus fixed so it's are +% Damage to Skills and not +% Elemental Damage.		
+
+Item Simulation / Compare
+===
+- Added a percentage change to the "Diff" window.
+- Fix for disappearing compare window.			
+- Added larger EHP/DPS numbers to the compares.			
+- You can now change the set the item belongs to in the simulate
+
+
+Up'd to 4 dogs.
+Added build info to all builds.
+Removed log
+Fixed static damage
+Changed crawl time to 2 minutes.
+Updates complete!
+Letting people know i'll be restarting services.
+Guiding Light damage buff.
+Provoke the Pack now has a stackable damage boost.
+Added HC/SC to the character importer.
+Twitch brand updates and fix to Health Globes to add Potions to it.
+Fixed rings
+Few more fixes.
+Fix to a bunch of max stats.
+Fix to plus-life not showing on sidebar.
+Fixed craler
+Bonus Experience.
+JSON dump
+Updated Secret
+Fix URL callback for Twitch.tv.
+Twitch.tv Integration.
+Changed FitL to account for bonus elemental damage on top of it's native damage.
+Updated for simulating on elemental damages.
+Remove all spaces from battletags
+Fix for having 0 min/max damage bonus with FITL.
+Fix to boar companion
+Fixed spelling of Increases on Poison Darts
+Added resource cost of cluster arrow reduction affix.
+Life Regen fix
+Block/Dodge should show up in compares.
+Fix to dodge.
+Fixed DPS Math for DW
+Total Damage reduction
+Fix to plus-life on passives.
+Fix to DPS Math calculations and added EHP w/ Block + Dodge.
+No more yandex!
+Similar Items is off for performance.
+Few things to speed things up.
