@@ -15,6 +15,13 @@ Statistics (Sidebar)
 - Fix to attack speed display.	
 - Added "Damage Range" section showing the true damage of your weapons. 	
 
+Item Simulation / Compare
+===
+- Added a percentage change to the "Diff" window.
+- Fix for disappearing compare window.			
+- Added larger EHP/DPS numbers to the compares.			
+- You can now change the set the item belongs to in the simulate
+
 Skills Tab
 ===
 - Massive improvements to many skills in the "Skills" tab on all builds.
@@ -51,18 +58,10 @@ Witch Doctor
 - Jungle Fortitude - Now will affect your damage reduction.			
 - Zombie Dogs - Life Link - Now can be activated for 10% damage reduction.			
 
-
 Wizard
 ===
 - Fixed Meteor proc coefficients.	
 - Tal Rasha's Set Bonus fixed so it's are +% Damage to Skills and not +% Elemental Damage.		
-
-Item Simulation / Compare
-===
-- Added a percentage change to the "Diff" window.
-- Fix for disappearing compare window.			
-- Added larger EHP/DPS numbers to the compares.			
-- You can now change the set the item belongs to in the simulate
 
 
 Up'd to 4 dogs.

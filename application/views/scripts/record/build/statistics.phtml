@@ -53,7 +53,7 @@
     <tr style='display: none'><td>OH Weapon Damage</td><td data-value='scram-a-oh'></td></tr>
   </tbody>
 </table>
-<? if(isset($this->record->equipment['mainhand'])): ?>
+<? if(isset($this->record->equipment['mainhand']) && $this->record->equipment['mainhand']->id): ?>
 <table class="statistics-table collapsed" id="stats-offense-range">
   <thead>
     <tr class='header '><th colspan='10' class="button"><span class='ui-icon-plusthick ui-icon'></span>Damage Ranges</th></tr>
