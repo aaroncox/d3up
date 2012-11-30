@@ -767,6 +767,11 @@ BuildCalculator.prototype = {
 		// ----------------------------------
 		rendered['ehp'] = defenses.life / rendered.damageTaken;		
 		// ----------------------------------
+		// HP to EHP Ratio Calculation 
+		// Formula: ( EHP / Life)
+		// ----------------------------------
+		rendered['hp-ehp-ratio'] = "1:" + Math.round(rendered['ehp'] / defenses.life * 100) / 100;
+		// ----------------------------------
 		// EHP Calculation by Damage Type
 		// Formula: ( Life / (Percentage Damage Taken * Modifier ) )
 		// ----------------------------------
