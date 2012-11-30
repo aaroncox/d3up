@@ -63,8 +63,8 @@
   					diffName = data[0],
   					row = $("<tr/>");
   			row.append($("<td/>").html(diffName));
-  			var oldStat = Math.round(build.stats[k] * 10) / 10,
-  					newStat = Math.round(compare.stats[k] * 10) / 10,
+  			var oldStat = Math.round(build.stats[k] * 100) / 100,
+  					newStat = Math.round(compare.stats[k] * 100) / 100,
 						change = Math.round(100 - (newStat / oldStat * 100)) * -1;				
   			if(oldStat > 9999) {
   				oldStat = Math.round(oldStat / 100) / 10 + "k";
