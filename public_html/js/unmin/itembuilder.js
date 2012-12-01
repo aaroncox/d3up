@@ -902,7 +902,7 @@ ItemBuilder.prototype = {
 			}, this);			
 			// Adjust the Set
 			this.item.setBonus = item.set;
-			if(this.item.setBonus) {
+			if(this.item.setBonus && this.itemSetBonusSelect) {
         this.itemSetBonusSelect.find("option").each(function() {
           if(item.set == $(this).val()) {
             $(this).attr("selected", "selected");
