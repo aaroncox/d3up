@@ -1385,10 +1385,18 @@ BuildCalculator.prototype = {
 			rendered['critical-hit'] = Math.round(dLow * (1 + (critHitDmg * 0.01)) / tickModifier) + " - " + Math.round(dHigh * (1 + (critHitDmg * 0.01)) / tickModifier);
 			
 		} else {
+			rendered['average-hit'] = hit;			
 			if(!hasCooldown) {
 				rendered['dps'] = dps;							
+			} else {
+			  var tempAPS = mathR;
+			  if(tempAPS < 1) {
+			    tempAPS = 1;
+			  }
+        rendered['average-hit'] = hit * tempAPS;
+        dLow = dLow * tempAPS;
+        dHigh = dHigh * tempAPS;
 			}
-			rendered['average-hit'] = hit;			
   		// Does this get a 3rd hit bonus? (Monks)
 			if(this.bonuses['3rd-hit-damage']) {
 				var d3Low = mathS * mathAl * (mathM + (this.bonuses['3rd-hit-damage'] / 100)) * mathE,
