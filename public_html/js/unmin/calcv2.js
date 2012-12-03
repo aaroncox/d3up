@@ -1389,13 +1389,17 @@ BuildCalculator.prototype = {
 			if(!hasCooldown) {
 				rendered['dps'] = dps;							
 			} else {
-			  var tempAPS = mathR;
-			  if(tempAPS < 1) {
-			    tempAPS = 1;
+			  var speed = 0;
+			  if(this.attrs['speed']) {
+			    speed += this.attrs['speed'];
+			  } 
+			  if(this.attrs['speed-oh']) {
+			    speed += this.attrs['speed-oh'];
+			    speed / 2;
 			  }
-        rendered['average-hit'] = hit * tempAPS;
-        dLow = dLow * tempAPS;
-        dHigh = dHigh * tempAPS;
+        rendered['average-hit'] = hit * speed;
+        dLow = dLow * speed;
+        dHigh = dHigh * speed;
 			}
   		// Does this get a 3rd hit bonus? (Monks)
 			if(this.bonuses['3rd-hit-damage']) {
