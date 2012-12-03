@@ -28,6 +28,35 @@ class D3Up_Mongo_Record_Build extends Epic_Mongo_Document_Record
 	}
 	
 	public function cleanExport() {
-		return array();
+		$export = $this->export(); 
+		$toRemove = array(
+			'_id', 
+			'_characterBt', 
+			'_characterRg', 
+			'_characterId', 
+			'_created', 
+			'_createdBy',
+			'_defaultToDescription',
+			'_lastCrawl',
+		  '_twitchChannel',
+		  '_twitchEnabled',
+		  '_twitchLastCheck',
+		  '_twitchLastSeen',
+		  '_twitchOnline',
+		  '_twitchUser',
+		  '_type',
+			'crawlCount',
+			'equipment',
+			'description',
+			'descriptionSource',
+			'equipmentCount',
+			'private',
+			'profileUrl',
+			'views',
+		);
+		foreach($toRemove as $remove) {
+			unset($export[$remove]);
+		}
+		return $export;
 	}
 } // END class D3Up_Mongo_Record_Hero extends Epic_Mongo_Document_Record

@@ -1,0 +1,187 @@
+<?
+	$profile = Epic_Auth::getInstance()->getProfile();
+	$this->headTitle($this->record->name); 
+	$this->headTitle(ucwords(str_replace("-", " ", $this->record->class))); 
+	$this->myBuild = $myBuild = false;
+	if($profile && $this->record->_createdBy && $profile->createReference() == $this->record->_createdBy->createReference()) {
+		$this->myBuild = $myBuild = true;
+	}	
+?>
+<div id="build">
+	<div id="character" class="ui-helper-clearfix" data-id="<?= $this->record->id ?>" data-class="<?= $this->record->class ?>" <? if($this->myBuild) { echo "data-owner='true'"; } ?>>
+	  <div class="notifications">
+			<h2>One Moment...</h2>
+      <p>Your profile has been resyncronized, you will be redirected to your build in a moment.</p>
+			<p>If you aren't redirected, please <a href="/b/<?= $this->record->id ?>">click here</a>.</p>
+	  </div>
+    <ul id="tabs" style="display: none">
+      <li class='divider'>Build</li>
+			<? if($this->record->description && strlen($this->record->description) > 2 && $this->record->_defaultToDescription): ?>
+			<li><a data-tab="#information" class="button current">Information</a></a></li>
+      <li><a data-tab="#gear" class="button">Gear</a></a></li>
+			<? else: ?>
+      <li><a data-tab="#gear" class="button current">Gear</a></a></li>
+				<? if(strlen($this->record->description) > 2): ?>
+				<li><a data-tab="#information" class="button">Information</a></a></li>
+				<? endif ?>
+			<? endif ?>
+      <li><a data-tab="#skills" class="button">Skills</a></li>
+      <li><a data-tab="#passives" class="button">Passives</a></li>
+      <li><a data-tab="#buffs" class="button">Buffs</a></li>
+      <? if($this->myBuild): ?>
+      <li><a data-tab="#edit" class="button">Edit</a></li>
+      <? endif ?>
+      <li class='divider'>Tools</li>
+      <? if(!$this->record->_createdBy->id || ($profile && $profile->id === $this->record->_createdBy->id)): ?>
+      <li><a data-tab="#sync" class="button">Battle.net Sync</a></li>
+      <? endif ?>
+      <? if($this->myBuild): ?>
+      <li><a class="button" href="/user/items">My Items</a></li>
+      <li><a class='saveStats button' href="#">Save Stats to DB</a></li>
+      <li><a data-tab="#json" class='button'>JSON Data</a></li>
+      <? endif ?>
+      <li><a data-tab="#skill-catalog" class="button">Skill Catalog</a></li>
+      <li><a data-tab="#dps-math" class='button'>DPS Calculations</a></li>
+      <!-- <li><a data-tab="#suggestions" class="button">Suggestions</a></li>
+      <li><a data-tab="#share" class="button">Share</a></li> -->
+    </ul>
+    <div id="tabs-render" class="content-page" style="display: none">
+      <div id="information"><?= $this->render("./record/build/description.phtml") ?></div>
+      <div id="gear"><?= $this->render("./record/build/gear.phtml") ?></div>
+      <div id="skills"><?= $this->render("./record/build/skills.phtml") ?></div>
+      <div id="passives"><?= $this->render("./record/build/passives.phtml") ?></div>
+      <div id="buffs"><?= $this->render("./record/build/buffs.phtml") ?></div>
+      <? if($this->myBuild): ?>
+      <div id="edit"><?= $this->render("./record/build/edit.phtml") ?></div>
+      <? endif ?>
+      <? if(!$this->record->_createdBy->id || ($profile && $profile->id === $this->record->_createdBy->id)): ?>
+      <div id="sync"><?= $this->render("./record/build/sync.phtml") ?></div>
+      <div id="json"><?= $this->render("./record/build/json.phtml") ?></div>
+      <? endif ?>
+      <div id="dps-math"><?= $this->render("./record/build/math-dps.phtml") ?></div>
+			<div id="skill-catalog"><?= $this->render("./record/build/skill-catalog.phtml") ?></div>
+      <!-- <div id="suggestions"><?= $this->render("./record/build/suggestions.phtml") ?></div>
+      <div id="share"><?= $this->render("./record/build/share.phtml") ?></div> -->
+    </div>
+    <div id="statistics" class="inline-flow" style="display: none">
+      <?= $this->render("record/build/statistics.phtml") ?>
+    </div>
+  </div>
+  <div id="gear-change" title="Select an Item">
+		<p>Listed below are all of the items you've created that would fit into this equipment slot.</p>
+		<p>Please choose which item you'd like to equip.</p>
+		<fieldset>
+			<select name="available" id="available-gear">
+			</select>
+		</fieldset>
+		</form>
+	</div>
+	<script type="text/javascript" charset="utf-8">
+	 	<? if($this->alreadyVoted): ?>
+ 		var voted = '<?= $this->alreadyVoted ?>';
+ 		<? else: ?>
+ 		var voted = false;
+ 		<? endif ?>
+ 		<? if($profile): ?>
+ 		var isLoggedIn = true;
+ 		<? else: ?>
+ 		var isLoggedIn = false;
+ 		<? endif ?>
+ 	</script>
+	</script>
+	<script type="text/javascript" src="/js/unmin/compare.js"></script>	
+	<script type="text/javascript" src="/js/unmin/buildv2.js"></script>	
+  <script type="text/javascript">
+    // ------------------------------
+    // Legacy Code, Needs Revamped Eventually
+    // ------------------------------
+    $(function() {
+  		var bonusCounter = {};
+  		$(".equipped a").each(function() {
+  			var json = $(this).data("json");
+  			if(json && json.set) {
+  				if(!bonusCounter[json.set]) {
+  					bonusCounter[json.set] = 0;
+  				}
+  				bonusCounter[json.set]++;
+  			}
+  		});
+  		$(".equipped a").each(function() {
+  			var json = $(this).data("json");
+  			if(json && json.set) {
+  				$(this).attr("data-set-count", bonusCounter[json.set]);
+  				$(this).bindTooltip();
+  			}
+  		});      
+    });
+  </script>
+	<script type="text/javascript">
+	  $(function() {
+	    // ------------------------------
+      // BuildV2 Scripts for This Page
+      // ------------------------------
+      var skills = {
+            actives: <?= json_encode(($this->record->actives instanceOf Shanty_Mongo_Document) ? $this->record->actives->export() : array()); ?>,
+            passives: <?= json_encode(($this->record->passives instanceOf Shanty_Mongo_Document) ? $this->record->passives->export() : array()); ?>
+          },
+          gearSlots = $("#build-gear .equipped"),
+          gear = gearSlots.find("a[data-json]"),
+          meta = {
+            level: '<?= $this->record->level ?>',
+            paragon: '<?= $this->record->paragon ?>',
+            heroClass: '<?= $this->record->class ?>'
+          },
+          build = new d3up.Build({
+            gear: gear, 
+            skills: skills,
+            meta: meta
+          }),
+          buildCompare = new d3up.Build({
+            gear: gear, 
+            skills: skills,
+            meta: meta
+          }),
+          buildSimulate = new d3up.Build({
+            gear: gear, 
+            skills: skills,
+            meta: meta
+          }),
+          buildEmpty = new d3up.Build, 
+          compare = new d3up.Compare;
+      buildCompare.run();
+      // Store these so that BuildUI.js can get to em
+      d3up.builds = {
+        build: build,
+        compare: buildCompare,
+        simulate: buildSimulate
+      };
+      d3up.compare = compare;
+      // Render build to Statistics Panels
+      build.renderTo($("#statistics"));
+      build.renderTo($("#dps-math"));
+      // Render build to a few of the Gear tabs
+      build.renderTo($("#gear"));
+      // Render the Skills and Data to the Header
+      build.renderSkillsTo($("#build-header"));
+      // Render the Skills into the Skills Tab
+      build.renderSkillsTo($("#skills"));
+      build.renderSkillsTo($("#passives"));
+      build.renderSkillsTo($("#buffs"));
+      build.renderSkillCatalog($("#skill-catalog"));
+			delete build.stats.allSkillData;
+			$.ajax({
+				url: '/b/' + <?= $this->record->id ?> + '/update-stats',
+				cache: false,
+				data: {
+					stats: build.stats
+				},
+				type: 'post',
+				dataType: 'json',
+				success: function(data) {
+					window.location = "/b/" + <?= $this->record->id ?>;
+				}
+			});
+	  });
+  </script>
+  <script type="text/javascript" src="/js/unmin/buildui.js"></script>	
+</div>

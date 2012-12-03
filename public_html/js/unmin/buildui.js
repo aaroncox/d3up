@@ -728,16 +728,14 @@ $(function() {
 	saveStatsButton.bind('click', function() {
 		var stats = d3up.builds.build.getStats();
 		$.ajax({
+			url: '/b/' + $("#character").data("id") + '/update-stats',
+			cache: false,
 			data: {
-				a: 'skills',
-				actives: _.keys(d3up.builds.build.getSkills().actives),
-				passives: _.keys(d3up.builds.build.getSkills().passives),
-				stats: {
-					dps: stats.dps,
-					ehp: stats.ehp
-				},
+				stats: stats
 			},
-			success: function() {
+			type: 'post',
+			dataType: 'json',
+			success: function(data) {
 				$($("<div style='padding: 20px'/>").html("Saved!")).dialog({
 					modal: true,
 					buttons: {

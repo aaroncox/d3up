@@ -360,7 +360,7 @@ class RecordController extends D3Up_Controller_Action
 		// For me so I can sync anyone in dev.
 		if(APPLICATION_ENV === 'development') {
 			D3Up_Tool_Crawler::getInstance()->crawl($record, $record->_createdBy, $record->_characterId);		  
-  		$this->_redirect("/b/" . $record->id ."?resync=true");
+  		// $this->_redirect("/b/" . $record->id ."?resync=true");
 		}
 		if(!$record->_characterId) {
 			throw new Exception("[ID] This build isn't attached to a Battle.net Profile");
@@ -372,31 +372,31 @@ class RecordController extends D3Up_Controller_Action
 			throw new Exception("[RG] This build isn't attached to a Battle.net Profile");
 		}
 		if($record->_createdBy && $profile && $profile->id == $record->_createdBy->id) {
-  		if(time() <= $record->_lastCrawl + 60 * 2) {
-        throw new Exception("Profiles may only be crawled once every 2 minutes. This profile has been updated too recently to be updated again, try again later!");
-  		}
-  		if(!$record->_characterRg || !$record->_characterBt || !$record->_characterId) {
-    		$this->_redirect("/b/" . $record->id ."/crawl");
-  		}
-  		if(!$record->_createdBy->region) {
-  		  throw new Exception("You do not have the 'Region' field filled out on your profile! Click <a href='/user/edit'>edit profile</a> and choose your region");
-  		}
-  		D3Up_Tool_Crawler::getInstance()->crawl($record, $record->_createdBy, $record->_characterId);		  
-  	} elseif($record->_createdBy->id) {
+			if(time() <= $record->_lastCrawl + 60 * 2) {
+			   throw new Exception("Profiles may only be crawled once every 2 minutes. This profile has been updated too recently to be updated again, try again later!");
+			}
+			if(!$record->_characterRg || !$record->_characterBt || !$record->_characterId) {
+				$this->_redirect("/b/" . $record->id ."/crawl");
+			}
+			if(!$record->_createdBy->region) {
+			 throw new Exception("You do not have the 'Region' field filled out on your profile! Click <a href='/user/edit'>edit profile</a> and choose your region");
+			}
+			D3Up_Tool_Crawler::getInstance()->crawl($record, $record->_createdBy, $record->_characterId);		  
+		} elseif($record->_createdBy->id) {
 			throw new Exception("This isn't an anonymous build, someone owns this build and you cannot sync it from Battle.net.");
 		} else {
-  		if(time() <= $record->_lastCrawl + 60 * 60 * 1) {
-  			throw new Exception("Anonymous Profiles may only be crawled once every hour. This profile has been updated too recently to be updated again, try again later!");
-  		}
-  		$fakeProfile = Epic_Mongo::newDoc('profile');
-  		$fakeProfile->region = $record->_characterRg;
-  		$fakeProfile->battletag = strtolower($record->_characterBt);
-  		D3Up_Tool_Crawler::getInstance()->crawl($record, $fakeProfile, $record->_characterId);		  
+	 		if(time() <= $record->_lastCrawl + 60 * 60 * 1) {
+	 			throw new Exception("Anonymous Profiles may only be crawled once every hour. This profile has been updated too recently to be updated again, try again later!");
+	 		}
+	 		$fakeProfile = Epic_Mongo::newDoc('profile');
+	 		$fakeProfile->region = $record->_characterRg;
+	 		$fakeProfile->battletag = strtolower($record->_characterBt);
+	 		D3Up_Tool_Crawler::getInstance()->crawl($record, $fakeProfile, $record->_characterId);		  
 		}
 		$record->crawlCount++;
 		$record->_lastCrawl = time();
 		$record->save();
-		$this->_redirect("/b/" . $record->id ."?resync=true");
+		// $this->_redirect("/b/" . $record->id ."?resync=true");
 	}
 	public function convertAction() {
 	  $record = $this->getRecord();
@@ -407,5 +407,15 @@ class RecordController extends D3Up_Controller_Action
 	public function jsonAction() {
 		$record = $this->getRecord();
 		echo json_encode($record->cleanExport()); exit;
+	}
+	public function updateStatsAction() {
+		$record = $this->getRecord();
+		if($record->_type == 'build' && $record->_createdBy && $profile = Epic_Auth::getInstance()->getProfile()) {		
+			if($record->_createdBy->createReference() == $profile->createReference()) {			
+				$record->stats = $this->getRequest()->getParam('stats');
+				$record->save();
+			}
+		}
+		echo json_encode(array("status" => "ok")); exit;
 	}
 } // END class RecordController extends Epic_Controller_Action
