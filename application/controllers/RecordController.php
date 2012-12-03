@@ -404,4 +404,8 @@ class RecordController extends D3Up_Controller_Action
 	  $record->save();
 	  $this->_redirect('/user/items');
 	}
+	public function jsonAction() {
+		$record = $this->getRecord();
+		echo json_encode($record->cleanExport()); exit;
+	}
 } // END class RecordController extends Epic_Controller_Action

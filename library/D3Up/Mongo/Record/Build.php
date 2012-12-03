@@ -26,4 +26,8 @@ class D3Up_Mongo_Record_Build extends Epic_Mongo_Document_Record
 			$this->save();
 		}
 	}
+	
+	public function cleanExport() {
+		return array();
+	}
 } // END class D3Up_Mongo_Record_Hero extends Epic_Mongo_Document_Record
