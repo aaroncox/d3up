@@ -405,6 +405,7 @@ class RecordController extends D3Up_Controller_Action
 	  $this->_redirect('/user/items');
 	}
 	public function jsonAction() {
+		header('Content-type: application/json');
 		$record = $this->getRecord();
 		echo json_encode($record->cleanExport()); exit;
 	}
