@@ -185,6 +185,12 @@ BuildCalculator.prototype = {
 				var value = e / 100;
 				this.bonuses['plus-dodge'].push(value);
 				break;
+			case "plus-range-reduce":
+  	    if(!this.attrs['range-reduce-incs']) {
+  	      this.attrs['range-reduce-incs'] = [];
+  	    }
+        this.attrs['range-reduce-incs'].push(e * 100);
+  			break;
 			case "plus-melee-reduce":
 		    if(!this.attrs['melee-reduce-incs']) {
 		      this.attrs['melee-reduce-incs'] = [];
@@ -1761,7 +1767,6 @@ BuildCalculator.prototype = {
 				lifeRegen = this.calcLifeRegen(dps, skills);
 
 		this.attrs['primary-stat'] = this.attrs[this.attrs['primary']];
-		
 		// Add all of our calculated values into the values object for returning
     // d3up.log("----");
 		_.extend(this.values, defenses, ehp, gearEhp, dps, skills, allSkills, lifeRegen, this.calcBES(defenses, ehp, dps));		

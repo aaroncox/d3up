@@ -7589,12 +7589,12 @@
 						'plus-armor': 5,
 					},
 				},
-				'disorient': {
-					name: 'Disorient',
-					desc: 'Cast a flash of Confusion on a group of enemies in an area, causing them to stumble around disoriented for 2 seconds.',
-		      // effect: {
-		        // 'cooldown': 45,
-		      // },
+				'missile-ward': {
+					name: 'Missile Ward',
+					desc: 'Buffs you and the Enchantress, reducing damage from ranged attacks by <span class="skill-highlight">6%</span>.',
+          effect: {
+						'plus-range-reduce': 0.06
+          },
 				},
 				'erosion': {
 					name: 'Erosion',
