@@ -6995,11 +6995,12 @@
 				'magic-weapon~e': {
 					name: 'Magic Weapon - Blood Magic',
 					desc: 'Imbue your weapon with magical energy, granting it 10% increased damage. Lasts 5 minutes',
-					rune: 'Attacks recover 2% of damage caused as Life.',
+					rune: 'Attacks recover 1.5% of damage caused as Life.',
 					procRate: 0,
 					effect: {
 						'cost-arcane-power': 25,
 						'plus-damage': 10,
+						'plus-life-steal': 1.5,
 					},
 				},
 				'hydra': {

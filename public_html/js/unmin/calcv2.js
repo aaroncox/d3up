@@ -228,6 +228,13 @@ BuildCalculator.prototype = {
 					this.attrs['life-regen'] = e;
 				}
 				break;
+			case "plus-life-steal":
+  			if(this.attrs['life-steal']) {
+  				this.attrs['life-steal'] += e;					
+  			} else {
+  				this.attrs['life-steal'] = e;
+  			}
+			  break;
 			case "percent-non-physical":
 			case "plus-life":
 			case "plus-damage-reduce":
