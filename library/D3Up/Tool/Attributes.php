@@ -111,7 +111,7 @@ class D3Up_Tool_Attributes
 		'max-discipline' => '+[v] Maximum Discipline',
 		'dh-chakram' => 'Reduces resource cost of Chakram by [v] Hatred',
 		'dh-evasive-fire' => 'Increases Evasive Fire damage by [v]%',
-		'dh-grenades' => 'Increases Grenades Damage by [V]%',
+		'dh-grenades' => 'Increases Grenades Damage by [v]%',
 		'dh-impale' => 'Reduces resource cost of Impale by [v] Hatred',
 		'dh-spike-trap' => 'Increases Spike Trap damage by [v]%',
 		'dh-bola-shot' => 'Increases Bola Shot damage by [v]%',

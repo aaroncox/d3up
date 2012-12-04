@@ -254,7 +254,7 @@ class D3Up_Tool_Crawler
 		'max-discipline' => '+[v] Maximum Discipline',
 		'dh-chakram' => 'Reduces resource cost of Chakram by [v] Hatred',
 		'dh-evasive-fire' => 'Increases Evasive Fire damage by [v]%',
-		'dh-grenades' => 'Increases Grenades Damage by [V]%',
+		'dh-grenades' => 'Increases Grenades Damage by [v]%',
 		'dh-impale' => 'Reduces resource cost of Impale by [v] Hatred',
 		'dh-spike-trap' => 'Increases Spike Trap damage by [v]%',
 		'dh-bola-shot' => 'Increases Bola Shot damage by [v]%',
@@ -427,15 +427,17 @@ class D3Up_Tool_Crawler
     // }
 		foreach ($profile['items'] as $slot => $gear) {
 			// var_dump($slot);
-			      // if($slot != "feet") {
-			      //   continue;
-			      // }
+			//       if($slot != "torso") {
+			//         continue;
+			//       }
+			// exit;
 			// Explode the Tooltip Params
 			$parts = explode("/", $gear['tooltipParams']);
 			// Build the URL
 			$itemUrl = static::$dataUrl . $parts[1];
 			// Get the JSON
 			$data = static::get($itemUrl);
+			// var_dump($data, $itemUrl); exit;
 			// Get the Type
 			$dirtyType = str_replace("generic", "", strtolower($data['type']['id']));
 			if(!isset(static::$_dirtyTypes[$dirtyType])) {
@@ -592,6 +594,7 @@ class D3Up_Tool_Crawler
 				);
 			}
 		}
+		// exit;
 		$build->hardcore = (bool) $profile['hardcore'];
 		$build->paragon = (int) $profile['paragonLevel'];
 		$build->level = (int) $profile['level'];
