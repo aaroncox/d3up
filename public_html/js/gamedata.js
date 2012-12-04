@@ -2582,6 +2582,7 @@
 					effect: {
 						'generate-hatred': 3,
 						'weapon-damage': 111,
+						'tick-modifier': 3,
 					},
 				},
 				'grenades~c': {
