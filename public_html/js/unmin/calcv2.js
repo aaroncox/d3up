@@ -1368,7 +1368,7 @@ BuildCalculator.prototype = {
 		// d3up.log(atkSpeedInc);
     // d3up.log(options.skill, dLow, dHigh, dps, mathR, mathC, bnEleDamage);
 		hit = Math.round(mathS * mathA * mathM * mathE * mathC);
-		console.log(hit, mathS, mathA, mathM, mathE, mathC);
+    // console.log(hit, mathS, mathA, mathM, mathE, mathC);
 		if(duration) {
 		  if(isStatic) {
 		    var tNorm = Math.round(mhAvg),
@@ -1388,7 +1388,7 @@ BuildCalculator.prototype = {
 		} else if(tickModifier) {
 			rendered['dps'] = dps;							
 			rendered['ticks'] = tickModifier;
-			rendered['average-hit'] = hit / tickModifier;			
+			rendered['average-hit'] = Math.round(hit / tickModifier * 100) / 100;			
 			rendered['damage'] = Math.round(dLow / tickModifier) + " - " + Math.round(dHigh / tickModifier);
 			rendered['critical-hit'] = Math.round(dLow * (1 + (critHitDmg * 0.01)) / tickModifier) + " - " + Math.round(dHigh * (1 + (critHitDmg * 0.01)) / tickModifier);
 			
