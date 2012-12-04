@@ -1392,7 +1392,7 @@ BuildCalculator.prototype = {
 			rendered['critical-hit'] = Math.round(dLow * (1 + (critHitDmg * 0.01)) / tickModifier) + " - " + Math.round(dHigh * (1 + (critHitDmg * 0.01)) / tickModifier);
 			
 		} else {
-			rendered['average-hit'] = hit;			
+			rendered['average-hit'] = Math.round(hit * 100) / 100;			
 			if(!hasCooldown) {
 				rendered['dps'] = dps;							
 			} else {
@@ -1404,7 +1404,7 @@ BuildCalculator.prototype = {
 			    speed += this.attrs['speed-oh'];
 			    speed / 2;
 			  }
-        rendered['average-hit'] = hit * speed;
+        rendered['average-hit'] = Math.round(hit * speed * 100) / 100;
         dLow = dLow * speed;
         dHigh = dHigh * speed;
 			}
