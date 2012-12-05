@@ -141,7 +141,7 @@ class BuildController extends D3Up_Controller_Action
 	public function taglistAction() {
 		$this->view->battletag = $battletag = str_replace("-", "#", $this->getRequest()->getParam("bt"));
 		$query = array(
-			'battletag' => $battletag
+			'battletag' => new MongoRegex("/".$battletag."/i")
 		);
 		$users = Epic_Mongo::db("user")->fetchAll($query);
 		if($users) {
