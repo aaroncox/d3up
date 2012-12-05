@@ -561,6 +561,8 @@
 				default:
 					if(this.builder.skillText[k] && wrap[0]) {
 						effect = this.builder.skillText[k].replace("VVV", wrap[0].outerHTML);						
+					} else {
+            // d3up.log("Unknown Effect: " + k);
 					}
 					break;
 			}

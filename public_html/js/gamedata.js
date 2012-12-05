@@ -1534,7 +1534,7 @@
 					effect: {
 						'cooldown': 30,
 						'damage-reduce-conditional': 65,
-						'life-steal': 20,
+						'plus-life-steal': 20,
 					},
 				},
 				'battle-rage': {
@@ -2622,7 +2622,7 @@
 					procRate: 0,
 					effect: {
 						'cost-discipline': 14,
-						'life-steal': 15,
+						'plus-life-steal': 15,
 					},
 				},
 				'shadow-power~a': {
@@ -2632,7 +2632,7 @@
 					procRate: 0,
 					effect: {
 						'cost-discipline': 14,
-						'life-steal': 15,
+						'plus-life-steal': 15,
 					},
 				},
 				'shadow-power~b': {
@@ -2642,7 +2642,7 @@
 					procRate: 0,
 					effect: {
 						'cost-discipline': 14,
-						'life-steal': 15,
+						'plus-life-steal': 15,
 					},
 				},
 				'shadow-power~c': {
@@ -2653,7 +2653,7 @@
 					effect: {
 						'cost-discipline': 14,
 						'damage-reduce-conditional': 35,
-						'life-steal': 15,
+						'plus-life-steal': 15,
 					},
 				},
 				'shadow-power~d': {
@@ -2662,7 +2662,7 @@
 					rune: 'Decreases the Discipline cost to 12.',
 					procRate: 0,
 					effect: {
-						'life-steal': 15,
+						'plus-life-steal': 15,
 						'cost-discipline': 12,
 					},
 				},
@@ -2673,7 +2673,7 @@
 					procRate: 0,
 					effect: {
 						'cost-discipline': 14,
-						'life-steal': 25,
+						'plus-life-steal': 25,
 					},
 				},
 				'fan-of-knives': {
@@ -3049,7 +3049,7 @@
 					procRate: 0,
 					effect: {
 						'cost-discipline': 3,
-						'life-steal': 1,
+						'plus-life-steal': 1,
 						'plus-damage': 12,
 					},
 				},

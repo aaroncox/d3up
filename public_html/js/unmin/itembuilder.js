@@ -246,9 +246,16 @@ ItemBuilder.prototype = {
 		'leg-the-murlocket': 'Call forth a creature from the depths.',
 		// Skill Descriptions
 		'generate-fury': 'Generate: VVV Fury',
+		'generate-hatred': 'Generate: VVV Hatred',
+		'generate-spirit': 'Generate: VVV Spirit',
+		'cost-fury': 'Cost: VVV Fury',
+		'cost-hatred': 'Cost: VVV Hatred',
+		'cost-discipline': 'Cost: VVV Discipline',
+		'cost-arcane-power': 'Cost: VVV Arcane Power',
+		'cost-spirit': 'Cost: VVV Spirit',
+		'cost-mana': 'Cost: VVV Mana',
 		'weapon-damage': 'Weapon Damage: VVV%',
 		'weapon-damage-type': 'Damage Type: VVV',
-		'cost-fury': 'Cost: VVV Fury',
 		'weapon-damage-for': 'DoT Duration: VVV sec',
 		'plus-crit-hit': '+VVV% Critical Hit Chance',
 		'cooldown': 'Cooldown: VVV seconds',
@@ -256,6 +263,8 @@ ItemBuilder.prototype = {
 		'plus-armor': '+VVV% Armor',
 		'plus-dodge': '+VVV% Dodge',
 		'plus-movement-speed': '+VVV% Movement Speed',
+		'plus-life-steal': '+VVV% Life Steal',
+		'damage-reduce-conditional': 'VVV% Damage Reduction',
 	},
 	// Set the Name input 
 	setNameInput: function(element) {
