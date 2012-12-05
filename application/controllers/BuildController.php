@@ -141,19 +141,16 @@ class BuildController extends D3Up_Controller_Action
 	public function taglistAction() {
 		$this->view->battletag = $battletag = str_replace("-", "#", $this->getRequest()->getParam("bt"));
 		$query = array(
-			'_characterBt' => $battletag,
-			'private' => array('$ne' => true),
-			'_createdBy' => array('$exists' => true)
+			'battletag' => $battletag
 		);
-		$this->view->region = $region = $this->getRequest()->getParam("rg");
-		if($region) {
-			$regions = array(
-				1 => 'us',
-				2 => 'eu',
-				3 => 'kr'
-			);
-			$query['_characterRg'] = (string) array_search($region, $regions);
+		$users = Epic_Mongo::db("user")->fetchAll($query);
+		$query = array(
+			'$or' => array()
+		);
+		foreach($users as $user) {
+			$query['$or'][]['_createdBy'] = $user->createReference();
 		}
+		// var_dump($query); exit;
 		$sort = array(
 			'_lastCrawl' => -1,
 		);
