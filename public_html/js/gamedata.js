@@ -1510,6 +1510,7 @@
 					desc: 'Reduces all damage taken by 65% for 5 seconds.',
 					rune: 'Extend the effect to nearby allies, reducing damage taken by 65% for 5 seconds.',
 					procRate: 0,
+					groupBuff: true,
 					effect: {
 						'cooldown': 30,
 						'damage-reduce-conditional': 65,
@@ -1735,6 +1736,7 @@
 					name: 'War Cry',
 					desc: 'Unleash a rallying cry to increase Armor for you and all allies within 50 yards by 20% for 60 seconds.',
 					procRate: 0,
+					groupBuff: true,
 					effect: {
 						'generate-fury': 20,
 						'cooldown': 20,
@@ -1746,6 +1748,7 @@
 					desc: 'Unleash a rallying cry to increase Armor for you and all allies within 50 yards by 20% for 60 seconds.',
 					rune: 'Increases the Armor bonus to 40%.',
 					procRate: 0,
+					groupBuff: true,
 					effect: {
 						'generate-fury': 20,
 						'cooldown': 20,
@@ -1757,6 +1760,7 @@
 					desc: 'Unleash a rallying cry to increase Armor for you and all allies within 50 yards by 20% for 60 seconds.',
 					rune: 'War Cry also grants a 15% bonus to Dodge Chance.',
 					procRate: 0,
+					groupBuff: true,
 					effect: {
 						'generate-fury': 20,
 						'cooldown': 20,
@@ -1769,6 +1773,7 @@
 					desc: 'Unleash a rallying cry to increase Armor for you and all allies within 50 yards by 20% for 60 seconds.',
 					rune: 'All of your resistances are increased by 20% while affected by War Cry.',
 					procRate: 0,
+					groupBuff: true,
 					effect: {
 						'generate-fury': 20,
 						'cooldown': 20,
@@ -1781,6 +1786,7 @@
 					desc: 'Unleash a rallying cry to increase Armor for you and all allies within 50 yards by 20% for 60 seconds.',
 					rune: 'Increases Fury gained to 60.',
 					procRate: 0,
+					groupBuff: true,
 					effect: {
 						'cooldown': 20,
 						'plus-armor': 20,
@@ -1791,7 +1797,9 @@
 					name: 'War Cry - Invigorate',
 					desc: 'Unleash a rallying cry to increase Armor for you and all allies within 50 yards by 20% for 60 seconds.',
 					rune: 'Increases maximum Life by 10% and regenerates 310.1 Life per second while affected by War Cry.',
+					groupBuff: true,
 					procRate: 0,
+					groupBuff: true,
 					effect: {
 						'generate-fury': 30,
 						'cooldown': 20,
@@ -3160,10 +3168,12 @@
 					desc: 'Drop a turret on the ground. The turret begins firing at nearby enemies for 175% weapon damage. Lasts 30 seconds.',
 					rune: 'Heals nearby allies for 1% of their maximum Life per second.',
 					procRate: 0,
+					groupBuff: true,
 					effect: {
 						'cooldown': 8,
 						'cost-discipline': 30,
 						'weapon-damage': 175,
+						'plus-percent-life-regen': 1,
 					},
 				},
 				'sentry~e': {
@@ -3171,6 +3181,7 @@
 					desc: 'Drop a turret on the ground. The turret begins firing at nearby enemies for 175% weapon damage. Lasts 30 seconds.',
 					rune: 'The turret also creates a shield that reduces damage taken by allies by 15%.',
 					procRate: 0,
+					groupBuff: true,
 					effect: {
 						'cooldown': 8,
 						'cost-discipline': 30,
@@ -4231,6 +4242,7 @@
 					name: 'Mantra of Evasion',
 					desc: 'Recite a Mantra that grants you and your allies within 40 yards a 15% chance to dodge attacks for 3 minutes.  For 3 seconds after activation, a second effect grants an additional 15% chance to dodge attacks.  This is a Mantra. You can only have one Mantra active at a time.',
 					procRate: 0,
+					groupBuff: true,
 					effect: {
 						'cost-spirit': 50,
 						'plus-dodge': 15,
@@ -4241,6 +4253,7 @@
 					desc: 'Recite a Mantra that grants you and your allies within 40 yards a 15% chance to dodge attacks for 3 minutes.  For 3 seconds after activation, a second effect grants an additional 15% chance to dodge attacks.  This is a Mantra. You can only have one Mantra active at a time.',
 					rune: 'Successfully dodging an attack has a chance to create a burst of flame dealing 35% weapon damage as Fire to all nearby enemies.',
 					procRate: 0,
+					groupBuff: true,
 					effect: {
 						'cost-spirit': 50,
 						'weapon-damage': 35,
@@ -4252,6 +4265,7 @@
 					desc: 'Recite a Mantra that grants you and your allies within 40 yards a 15% chance to dodge attacks for 3 minutes.  For 3 seconds after activation, a second effect grants an additional 15% chance to dodge attacks.  This is a Mantra. You can only have one Mantra active at a time.',
 					rune: 'Mantra of Evasion also reduces the duration of all control impairing effects like Slow or Frozen by 20%.',
 					procRate: 0,
+					groupBuff: true,
 					effect: {
 						'cost-spirit': 50,
 						'plus-dodge': 15,
@@ -4262,6 +4276,7 @@
 					desc: 'Recite a Mantra that grants you and your allies within 40 yards a 15% chance to dodge attacks for 3 minutes.  For 3 seconds after activation, a second effect grants an additional 15% chance to dodge attacks.  This is a Mantra. You can only have one Mantra active at a time.',
 					rune: 'Mantra of Evasion also increases Armor by 20%.',
 					procRate: 0,
+					groupBuff: true,
 					effect: {
 						'cost-spirit': 50,
 						'plus-dodge': 15,
@@ -4273,6 +4288,7 @@
 					desc: 'Recite a Mantra that grants you and your allies within 40 yards a 15% chance to dodge attacks for 3 minutes.  For 3 seconds after activation, a second effect grants an additional 15% chance to dodge attacks.  This is a Mantra. You can only have one Mantra active at a time.',
 					rune: 'Mantra of Evasion also increases movement speed by 8%.',
 					procRate: 0,
+					groupBuff: true,
 					effect: {
 						'cost-spirit': 50,
 						'plus-dodge': 15,
@@ -4283,6 +4299,7 @@
 					desc: 'Recite a Mantra that grants you and your allies within 40 yards a 15% chance to dodge attacks for 3 minutes.  For 3 seconds after activation, a second effect grants an additional 15% chance to dodge attacks.  This is a Mantra. You can only have one Mantra active at a time.',
 					rune: 'When you or an ally under the effect of Mantra of Evasion is reduced below 25% Life, a shield of protection forms around that target, reducing damage taken by 80% for 3 seconds.   Each target can be protected at most once every 90 seconds by this effect.',
 					procRate: 0,
+					groupBuff: true,
 					effect: {
 						'cost-spirit': 50,
 						'plus-dodge': 15,
@@ -4369,6 +4386,7 @@
 					desc: 'Recite a Mantra that causes you and your allies within 40 yards to reflect melee damage back at enemies, dealing Holy damage equal to 40% of the damage sustained. The effect lasts for 3 minutes.  For 3 seconds after activation, the effect on you increases to 80% of the damage sustained.  This is a Mantra. You can only have one Mantra active at a time.',
 					rune: 'Increases attack speed for you and your allies by 8%.',
 					procRate: 0,
+					groupBuff: true,
 					effect: {
 						'cost-spirit': 50,
 						'plus-attack-speed': 8,
@@ -4416,9 +4434,11 @@
 					desc: 'Create a runic circle of protection on the ground for 5 seconds that cannot be passed by enemies.',
 					rune: 'You and your allies standing in the area of effect of Inner Sanctuary deal 10% additional damage.',
 					procRate: 0,
+					groupBuff: true,
 					effect: {
 						'cost-spirit': 30,
 						'cooldown': 20,
+						'plus-damage-conditional': 10,
 					},
 				},
 				'inner-sanctuary~b': {
@@ -4436,9 +4456,11 @@
 					desc: 'Create a runic circle of protection on the ground for 5 seconds that cannot be passed by enemies.',
 					rune: 'You and your allies standing in the area of effect of Inner Sanctuary take 35% less damage.',
 					procRate: 0,
+					groupBuff: true,
 					effect: {
 						'cost-spirit': 30,
 						'cooldown': 20,
+						'plus-damage-reduce': 35,
 					},
 				},
 				'inner-sanctuary~d': {
@@ -4446,9 +4468,11 @@
 					desc: 'Create a runic circle of protection on the ground for 5 seconds that cannot be passed by enemies.',
 					rune: 'You and your allies standing in the area of effect of Inner Sanctuary regenerate 1550.49 Life per second.',
 					procRate: 0,
+					groupBuff: true,
 					effect: {
 						'cost-spirit': 30,
 						'cooldown': 20,
+						'plus-life-regen': 1550.49,
 					},
 				},
 				'inner-sanctuary~e': {
@@ -4525,17 +4549,21 @@
 					name: 'Mantra of Healing',
 					desc: 'Recite a Mantra that causes you and your allies within 40 yards to gain increased Life regeneration by 310.1 Life per second. The Mantra lasts 3 minutes.  For 3 seconds after activation Mantra of Healing shrouds you and your allies with a mystical shield that absorbs up to 930.29 damage.  This is a Mantra. You can only have one Mantra active at a time.',
 					procRate: 0,
+					groupBuff: true,
 					effect: {
 						'cost-spirit': 50,
+						'plus-life-regen': 310.1,
 					},
 				},
 				'mantra-of-healing~a': {
 					name: 'Mantra of Healing - Sustenance',
 					desc: 'Recite a Mantra that causes you and your allies within 40 yards to gain increased Life regeneration by 310.1 Life per second. The Mantra lasts 3 minutes.  For 3 seconds after activation Mantra of Healing shrouds you and your allies with a mystical shield that absorbs up to 930.29 damage.  This is a Mantra. You can only have one Mantra active at a time.',
-					rune: 'Increases the Life regeneration granted by Mantra of Healing to 0 Life per second.',
+					rune: 'Increases the Life regeneration granted by Mantra of Healing to 620 Life per second.',
 					procRate: 0,
+					groupBuff: true,
 					effect: {
 						'cost-spirit': 50,
+						'plus-life-regen': 620,
 					},
 				},
 				'mantra-of-healing~b': {
@@ -4543,8 +4571,10 @@
 					desc: 'Recite a Mantra that causes you and your allies within 40 yards to gain increased Life regeneration by 310.1 Life per second. The Mantra lasts 3 minutes.  For 3 seconds after activation Mantra of Healing shrouds you and your allies with a mystical shield that absorbs up to 930.29 damage.  This is a Mantra. You can only have one Mantra active at a time.',
 					rune: 'Mantra of Healing also heals 186.06 Life when hitting an enemy.',
 					procRate: 0,
+					groupBuff: true,
 					effect: {
 						'cost-spirit': 50,
+						'plus-life-regen': 310.1,
 					},
 				},
 				'mantra-of-healing~c': {
@@ -4552,8 +4582,11 @@
 					desc: 'Recite a Mantra that causes you and your allies within 40 yards to gain increased Life regeneration by 310.1 Life per second. The Mantra lasts 3 minutes.  For 3 seconds after activation Mantra of Healing shrouds you and your allies with a mystical shield that absorbs up to 930.29 damage.  This is a Mantra. You can only have one Mantra active at a time.',
 					rune: 'Mantra of Healing also increases Vitality by 10%.',
 					procRate: 0,
+					groupBuff: true,
 					effect: {
 						'cost-spirit': 50,
+						'plus-life-regen': 310.1,
+            'plus-percent-vitality': 10,
 					},
 				},
 				'mantra-of-healing~d': {
@@ -4561,8 +4594,10 @@
 					desc: 'Recite a Mantra that causes you and your allies within 40 yards to gain increased Life regeneration by 310.1 Life per second. The Mantra lasts 3 minutes.  For 3 seconds after activation Mantra of Healing shrouds you and your allies with a mystical shield that absorbs up to 930.29 damage.  This is a Mantra. You can only have one Mantra active at a time.',
 					rune: 'Mantra of Healing also regenerates 3 Spirit per second.',
 					procRate: 0,
+					groupBuff: true,
 					effect: {
 						'cost-spirit': 50,
+						'plus-life-regen': 310.1,
 					},
 				},
 				'mantra-of-healing~e': {
@@ -4570,15 +4605,18 @@
 					desc: 'Recite a Mantra that causes you and your allies within 40 yards to gain increased Life regeneration by 310.1 Life per second. The Mantra lasts 3 minutes.  For 3 seconds after activation Mantra of Healing shrouds you and your allies with a mystical shield that absorbs up to 930.29 damage.  This is a Mantra. You can only have one Mantra active at a time.',
 					rune: 'Mantra of Healing also increases resistances to all damage types by 20%.',
 					procRate: 0,
+					groupBuff: true,
 					effect: {
 						'cost-spirit': 50,
-						'plus-resist-all': 20
+						'plus-resist-all': 20,
+						'plus-life-regen': 310.1,
 					},
 				},
 				'mantra-of-conviction': {
 					name: 'Mantra of Conviction',
 					desc: 'Recite a Mantra that causes all enemies within 20 yards of you to take 12% additional damage. The Mantra lasts 3 minutes.  For 3 seconds after activation, the effect is increased to 24% additional damage.  This is a Mantra. You can only have one Mantra active at a time.',
 					procRate: 0,
+					groupBuff: true,
 					effect: {
 						'cost-spirit': 50,
 						'plus-damage': 24,
@@ -4589,6 +4627,7 @@
 					desc: 'Recite a Mantra that causes all enemies within 20 yards of you to take 12% additional damage. The Mantra lasts 3 minutes.  For 3 seconds after activation, the effect is increased to 24% additional damage.  This is a Mantra. You can only have one Mantra active at a time.',
 					rune: 'Increases the strength of Mantra of Conviction so that enemies take 24% additional damage and 48% for the first 3 seconds.',
 					procRate: 0,
+					groupBuff: true,
 					effect: {
 						'cost-spirit': 50,
 						'plus-damage': 48,
@@ -4599,6 +4638,7 @@
 					desc: 'Recite a Mantra that causes all enemies within 20 yards of you to take 12% additional damage. The Mantra lasts 3 minutes.  For 3 seconds after activation, the effect is increased to 24% additional damage.  This is a Mantra. You can only have one Mantra active at a time.',
 					rune: 'Enemies affected by Mantra of Conviction take 12% weapon damage per second as Holy.',
 					procRate: 0,
+					groupBuff: true,
 					effect: {
 						'cost-spirit': 50,
 						'plus-damage': 24,
@@ -4609,6 +4649,7 @@
 					desc: 'Recite a Mantra that causes all enemies within 20 yards of you to take 12% additional damage. The Mantra lasts 3 minutes.  For 3 seconds after activation, the effect is increased to 24% additional damage.  This is a Mantra. You can only have one Mantra active at a time.',
 					rune: 'Slows the movement of enemies within 20 yards by 30%.',
 					procRate: 0,
+					groupBuff: true,
 					effect: {
 						'cost-spirit': 50,
 						'plus-damage': 24,
@@ -4619,6 +4660,7 @@
 					desc: 'Recite a Mantra that causes all enemies within 20 yards of you to take 12% additional damage. The Mantra lasts 3 minutes.  For 3 seconds after activation, the effect is increased to 24% additional damage.  This is a Mantra. You can only have one Mantra active at a time.',
 					rune: 'You and your allies have a 30% chance to be healed for 279.09 - 341.11 Life when using melee attacks on an enemy under the effects of Mantra of Conviction.',
 					procRate: 0,
+					groupBuff: true,
 					effect: {
 						'cost-spirit': 50,
 						'plus-damage': 24,
@@ -4629,6 +4671,7 @@
 					desc: 'Recite a Mantra that causes all enemies within 20 yards of you to take 12% additional damage. The Mantra lasts 3 minutes.  For 3 seconds after activation, the effect is increased to 24% additional damage.  This is a Mantra. You can only have one Mantra active at a time.',
 					rune: 'Enemies affected by Mantra of Conviction deal 10% less damage.',
 					procRate: 0,
+					groupBuff: true,
 					effect: {
 						'cost-spirit': 50,
 						'plus-damage': 24,
@@ -5869,6 +5912,7 @@
 					name: 'Big Bad Voodoo',
 					desc: 'Conjure a Fetish that begins a ritual dance that increases the attack speed and movement speed of all nearby allies by 20% for 20 seconds.',
 					procRate: 0,
+					groupBuff: true,
 					effect: {
 						'cooldown': 120,
 						'plus-attack-speed': 20,
@@ -5879,6 +5923,7 @@
 					desc: 'Conjure a Fetish that begins a ritual dance that increases the attack speed and movement speed of all nearby allies by 20% for 20 seconds.',
 					rune: 'The Fetish increases the damage of all nearby allies by 30%.',
 					procRate: 0,
+					groupBuff: true,
 					effect: {
 						'cooldown': 120,
 						'plus-damage': 30,
@@ -5890,6 +5935,7 @@
 					desc: 'Conjure a Fetish that begins a ritual dance that increases the attack speed and movement speed of all nearby allies by 20% for 20 seconds.',
 					rune: 'Increases the duration of the ritual to 30 seconds.',
 					procRate: 0,
+					groupBuff: true,
 					effect: {
 						'cooldown': 120,
 						'plus-attack-speed': 20,
@@ -5900,9 +5946,11 @@
 					desc: 'Conjure a Fetish that begins a ritual dance that increases the attack speed and movement speed of all nearby allies by 20% for 20 seconds.',
 					rune: 'The ritual heals all nearby allies for 5% of their maximum Life per second.',
 					procRate: 0,
+					groupBuff: true,
 					effect: {
 						'cooldown': 120,
 						'plus-attack-speed': 20,
+						'plus-percent-life-regen': 5,
 					},
 				},
 				'big-bad-voodoo~d': {
@@ -5910,6 +5958,7 @@
 					desc: 'Conjure a Fetish that begins a ritual dance that increases the attack speed and movement speed of all nearby allies by 20% for 20 seconds.',
 					rune: 'The ritual restores 122.5 Mana per second while standing in the ritual area.',
 					procRate: 0,
+					groupBuff: true,
 					effect: {
 						'cooldown': 120,
 						'plus-attack-speed': 20,
@@ -5920,6 +5969,7 @@
 					desc: 'Conjure a Fetish that begins a ritual dance that increases the attack speed and movement speed of all nearby allies by 20% for 20 seconds.',
 					rune: 'Enemies who die in the ritual area have a 50% chance to resurrect as a Zombie Dog.',
 					procRate: 0,
+					groupBuff: true,
 					effect: {
 						'cooldown': 120,
 						'plus-attack-speed': 20,
@@ -6808,6 +6858,7 @@
 					desc: 'Invoke a bubble of warped time and space for 8 seconds, reducing enemy attack speed by 20% and movement speed by 60%. This bubble also slows the movement of enemy projectiles by 90%.',
 					rune: 'Time is sped up for any allies standing in the area, increasing their attack speed by 10%.',
 					procRate: 0,
+					groupBuff: true,
 					effect: {
 						'cooldown': 15,
 						'plus-attack-speed': 10,

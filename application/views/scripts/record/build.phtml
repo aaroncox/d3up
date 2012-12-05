@@ -32,6 +32,7 @@
       <li><a data-tab="#skills" class="button">Skills</a></li>
       <li><a data-tab="#passives" class="button">Passives</a></li>
       <li><a data-tab="#buffs" class="button">Buffs</a></li>
+      <li><a data-tab="#group-buffs" class="button">Group Buffs</a></li>
       <? if($this->myBuild): ?>
       <li><a data-tab="#edit" class="button">Edit</a></li>
       <? endif ?>
@@ -55,6 +56,7 @@
       <div id="skills"><?= $this->render("./record/build/skills.phtml") ?></div>
       <div id="passives"><?= $this->render("./record/build/passives.phtml") ?></div>
       <div id="buffs"><?= $this->render("./record/build/buffs.phtml") ?></div>
+      <div id="group-buffs"><?= $this->render("./record/build/group-buffs.phtml") ?></div>
       <? if($this->myBuild): ?>
       <div id="edit"><?= $this->render("./record/build/edit.phtml") ?></div>
       <? endif ?>
@@ -171,6 +173,7 @@
       build.renderSkillsTo($("#skills"));
       build.renderSkillsTo($("#passives"));
       build.renderSkillsTo($("#buffs"));
+      build.renderSkillsTo($("#group-buffs"));
       build.renderSkillCatalog($("#skill-catalog"));
 	  });
   </script>

@@ -223,6 +223,21 @@
 						});
 						// console.log(v, ordered);
 					});
+				} else if(type == "group-buffs") {
+					ordered = {};
+					var skills = d3up.gameData.actives;
+					$.each(skills, function(heroClass, data) {
+					  $.each(data, function(idx, skill) {
+					    if(skill.groupBuff && skill.groupBuff == true) {
+                ordered[idx] = {
+                  slug: idx, 
+                  isBuff: true,
+                  data: skill,
+                  heroClass: heroClass,
+                };
+					    }
+					  });
+					});
 				} else {
 					$.each(unordered, function(slug, data) {
 						if(data) {
@@ -239,6 +254,7 @@
         $.each(ordered, function(idx, skill) {
 					var slug = skill.slug,
 							data = skill.data, 
+							heroClass = skill.heroClass,
 							isBuff = false;
 					if(skill.isBuff) {
 						isBuff = true
@@ -265,7 +281,6 @@
                   }
                   checkbox.trigger("change");
                 }
-                
               });
               if(!data.name) {
                 icon.attr('data-name', slug.replace(/\-/g, " ").capitalize());
@@ -324,7 +339,10 @@
           				}
           				// Set the Default
           				checkbox.attr("data-stacks", stacks);
+                  // if(heroClass) {
+                  // }
           			}
+        				checkbox.attr("data-skill-class", heroClass);          				  
                 // if(build.stats.skillData[slug] && build.stats.skillData[slug].activate) {
                 // 
                 // }
@@ -338,6 +356,9 @@
                   var name = $(this).attr('data-skill'), 
 											stacks = $(this).attr('data-stacks'),
                       type = $(this).closest("table").data("skill-type");
+                  if(type == 'group-buffs') {
+                    type = $(this).attr("data-skill-class");
+                  }
                   if(!d3up.builds['build'].skills.enabled[name]) {
                     skillIcon.addClass("skill-activated");
                     tr.addClass("skill-activated");
@@ -384,8 +405,12 @@
                 });
       					control.append("Activate ", checkbox, select);					
       				}
-							if(!isBuff) {
-								icon = $("<img src='/images/icons/" + build.meta.heroClass + "-" + cleaned[0] + ".png'>");
+							if(!isBuff || (isBuff && heroClass)) {
+							  var cls = build.meta.heroClass;
+							  if(heroClass) {
+							    cls = heroClass;
+							  }
+								icon = $("<img src='/images/icons/" + cls + "-" + cleaned[0] + ".png'>");
 								icon.attr('data-tooltip', data.desc);
 								icon.attr('data-name', data.name);
 								if(data.rune) {

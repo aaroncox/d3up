@@ -1122,6 +1122,7 @@ tr.compared > td:first-child {
 #tab-summary {
 	padding: 10px 0;
 }
+#group-buffs,
 #companion-buffs,
 #build-passive-skills,
 #build-active-skills {
