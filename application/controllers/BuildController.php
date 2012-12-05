@@ -144,16 +144,20 @@ class BuildController extends D3Up_Controller_Action
 			'battletag' => $battletag
 		);
 		$users = Epic_Mongo::db("user")->fetchAll($query);
-		$query = array(
-			'$or' => array()
-		);
-		foreach($users as $user) {
-			$query['$or'][]['_createdBy'] = $user->createReference();
+		if($users) {
+			$query = array(
+				'$or' => array()
+			);
+			foreach($users as $user) {
+				$query['$or'][]['_createdBy'] = $user->createReference();
+			}
+			// var_dump($query); exit;
+			$sort = array(
+				'_lastCrawl' => -1,
+			);
+			$this->view->builds = Epic_Mongo::db("build")->fetchAll($query, $sort);	
+		} else {
+			throw new Exception("BattleTag not found in the database.");
 		}
-		// var_dump($query); exit;
-		$sort = array(
-			'_lastCrawl' => -1,
-		);
-		$this->view->builds = Epic_Mongo::db("build")->fetchAll($query, $sort);
 	}
 } // END class HeroController extends Epic_Controller_Action
