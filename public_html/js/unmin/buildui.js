@@ -723,7 +723,7 @@ $(function() {
 
 	var saveStatsButton = $(".saveStats");
 	saveStatsButton.attr("data-name", "Manual Stats Save");
-	saveStatsButton.attr("data-tooltip", "Manually save the stats from the right (stats) panel of your build to the database.<br/><br/>This happens automatically on a skill change or item change, but if for some reason you're stats aren't updating, hit this.");
+	saveStatsButton.attr("data-tooltip", "Manually save the stats from the right (stats) panel of your build to the database.<br/><br/>This happens automatically on a skill change or item change, but if for some reason your stats aren't updating, hit this.");
 	saveStatsButton.bindSkilltip();
 	saveStatsButton.bind('click', function() {
 		var stats = d3up.builds.build.getStats();
