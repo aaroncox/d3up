@@ -31,8 +31,9 @@ class D3Up_Mongo_Schema extends Epic_Mongo_Schema {
 			'revision' => 'D3Up_Mongo_Post_Guide_Revision',
 		),
 		'user' => array(
-			'profile' => 'D3Up_Mongo_User_Profile'
-		)
+			'profile' => 'D3Up_Mongo_User_Profile',
+			'group' => 'D3Up_Mongo_User_Group',
+		),
 	);
 	
 	/**

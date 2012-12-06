@@ -1,0 +1,45 @@
+<?
+	$this->myGroup = false;
+	if($profile = D3Up_Auth::getInstance()->getProfile()) { 
+		// var_dump($this->group->owner, $profile->createReference()); exit;
+		if($this->group->owner->createReference() == $profile->createReference()) {
+			$this->myGroup = true;
+		}
+	}
+?>
+<div class="group-builds content-page">				
+	<div class='featured title-block' data-class="all">
+		<div class="controls" style="padding: 10px">
+			<? if($this->myGroup): ?>
+				<a href="#" class="button addGroupMember">Add Member</a>
+				<a href="/group/<?= $this->group->id ?>/edit" class="button">Edit Group</a>
+			<? endif ?>
+		</div>
+		<h5 style='color: #B18135'>Group</h5>
+		<h2 class="ui-table-header"><?= $this->group->name ?></h2>
+		<div class='section-preview'>		
+			<?= $this->group->description ?>
+		</div>
+	</div>
+	<div class="form member-form" style="display: none">
+		<form method="post" class="form" action="/group/<?= $this->group->id ?>/add">
+			<h2>Add a Build to this Group</h2>
+			<p>Character ID #</p>
+			<p><input type="text" name="build-id"/></p>
+			<p>The ID is the number you see in the URL. http://d3up.com/b/1 is <strong>1</strong></p>
+			<input type="submit" name="Add"/>
+			</dl>
+		</form>
+	</div>
+	<table id="all-builds" class="d3up-table">
+		<?= $this->render("./group/_build-table.phtml")?>
+	</table>
+</div>
+<script type="text/javascript" charset="utf-8">
+	$(function() {
+		var button = $(".addGroupMember");
+		button.click(function() {
+			$(".member-form").show();
+		});
+	})
+</script>
