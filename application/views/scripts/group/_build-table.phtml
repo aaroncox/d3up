@@ -32,6 +32,7 @@
 		?>
 		<th></th>
 		<th class="views">SC/HC</th>
+		<th>Paragon</th>
 		<th><a href="?sort=name<?= $params ?>">Name</a></th>
 		<th>Skills</th>
 		<th><a href="?sort=dps<?= $params ?>">DPS</a></th>
@@ -42,6 +43,7 @@
 	<tr class='build-row'>
 		<td class="icon"><img src="/images/<?= $build->class ?>.png"/></td>
 		<td><?= ($build->hardcore) ? "<span class='neg' title='Hardcore'>HC</span>" : "<span class='pos' title='Softcore'>SC</span>" ?> </td>
+		<td class="stat"><?= $build->paragon ?></td>
 		<td class='name'><?= $this->mLink($build) ?></td>
 		<td class="skills">
 			<? if($build->actives): ?>
@@ -74,7 +76,7 @@
 		<? if($this->myGroup): ?>
 			<td class="stat"><a class='button' href="/group/<?= $this->group->id ?>/remove/build/<?= $build->id ?>">Remove</a></td>
 		<? endif ?>
-		<? if(!$this->myGroup && $this->profile->id == $build->_createdBy->id): ?>
+		<? if(!$this->myGroup && $this->profile && $build->_createdBy && $this->profile->id == $build->_createdBy->id): ?>
 			<td class="stat"><a class='button' href="/group/<?= $this->group->id ?>/leave/build/<?= $build->id ?>">Leave</a></td>
 		<? endif ?>
 	</tr>

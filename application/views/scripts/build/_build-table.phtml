@@ -34,6 +34,7 @@
 		<th class="votes"><a href="?sort=votes<?= $params ?>">Votes</a></th>
 		<th class="views"><a href="?sort=views<?= $params ?>">Views</a></th>
 		<th class="views">SC/HC</th>
+		<th>Paragon</th>
 		<th><a href="?sort=name<?= $params ?>">Name</a></th>
 		<th>Skills</th>
 		<th><a href="?sort=dps<?= $params ?>">DPS</a></th>
@@ -52,6 +53,7 @@
 		</td>
 		<td class="stat views"><?= $this->prettyStat($build->views) ?></td>
 		<td><?= ($build->hardcore) ? "<span class='neg' title='Hardcore'>HC</span>" : "<span class='pos' title='Softcore'>SC</span>" ?> </td>
+		<td class="stat"><?= $build->paragon ?></td>
 		<td class='name'><?= $this->mLink($build) ?></td>
 		<td class="skills">
 			<? if($build->actives): ?>
