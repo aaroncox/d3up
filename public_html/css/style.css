@@ -1303,6 +1303,7 @@ div.title-block {
 	position: relative;
 	background-image: url('/images/bgs/default.jpeg');
 	background-position: top;
+	background-repeat: no-repeat;
 }
 .title-block[data-class=barbarian],
 #guide[data-class=barbarian] div.title-block {
