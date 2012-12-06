@@ -270,6 +270,10 @@
               icon.attr('data-tooltip', data.desc),
               icon.attr('data-name', data.name);
               icon.attr('data-skill', slug);
+              var checkbox = $(".skill-activate[data-skill='" + slug + "']");
+              if(checkbox.length) {
+                icon.css({cursor: 'pointer'});
+              }
               icon.click(function() {
                 var checkbox = $(".skill-activate[data-skill='" + slug + "']");
                 if(checkbox.length) {
