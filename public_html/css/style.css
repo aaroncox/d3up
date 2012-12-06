@@ -953,6 +953,9 @@ tr.compared > td:first-child {
 	color: #565656;
 	margin-left: 20px;
 }
+.d3up-table .button {
+  line-height: 16px;
+}
 .d3up-table td.sorting {
 	line-height: 1em;
 }

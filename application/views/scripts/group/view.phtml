@@ -13,12 +13,12 @@
 	}
 ?>
 <div class="group-builds content-page">				
-	<div class='featured title-block' data-class="all">
-		<div class="controls" style="padding: 10px">
+	<div class='featured title-block ui-helper-clearfix' data-class="all">
+		<div class="controls ui-helper-clearfix" style="padding: 5px">
 			<? if($this->myGroup): ?>
-				<a href="#" class="button addGroupMember">Add Member</a>
+				<a href="#" class="button addGroupMember">Add Build</a>
+				<a href="#" class="button joinGroup">Add My Build</a>
 				<a href="/group/<?= $this->group->id ?>/edit" class="button">Edit Group</a>
-				<a href="#" class="button joinGroup">Join Group</a>
 			<? elseif($this->group->mode): ?>
 				<a href="#" class="button joinGroup">Join Group</a>
 			<? endif ?>
@@ -26,7 +26,7 @@
 		<h5 style='color: #B18135'>Group (<?= ($this->group->mode) ? "Open" : "Closed" ?>)</h5>
 		<h2 class="ui-table-header"><?= $this->group->name ?></h2>
 		<div class='section-preview'>		
-			<?= $this->group->description ?>
+			<?= $this->group->description ?>&nbsp;
 		</div>
 	</div>
 	<? if($this->myGroup): ?>
