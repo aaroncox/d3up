@@ -100,6 +100,9 @@ class GroupController extends D3Up_Controller_Action
 	}
 	public function viewAction() {
 		$group = $this->getGroup();
+		if(!$group) {
+			throw new Exception("Group not found");
+		}
 		if($profile = Epic_Auth::getInstance()->getProfile()) {
 			$query = array(
 				'_createdBy' => $profile->createReference()
