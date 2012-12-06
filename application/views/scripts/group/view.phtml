@@ -73,3 +73,134 @@
 		});
 	})
 </script>
+<? if(!$this->noScript): ?>
+<script type="text/javascript">
+	$(function() {
+		var advSearch = $("#advSearch"),
+				advSearchPanel = $("#advSearchPanel"),
+				advSkillSearch = $("#advSkillSearch"),
+				advPassiveSearch = $("#advPassiveSearch"),
+				isHardcoreCheckbox = $("#isHardcore"),
+				classSelect = $("#classSelect");
+		advSearch.click(function() {
+			if(advSearchPanel.is(":visible")) {
+				advSearchPanel.hide();
+			} else {
+				advSearchPanel.show();
+			}
+		});
+		$.each(d3up.gameData.actives, function(heroClass, data) {
+			$.each(data, function(k,v) {
+				var option = $("<option>");
+				option.html(v.name);
+				option.attr("value", k);
+				advSkillSearch.append(option);
+			});
+		});
+		$.each(d3up.gameData.passives, function(heroClass, data) {
+			$.each(data, function(k,v) {
+				var option = $("<option>");
+				option.html(k.replace(/-/g, " ").capitalize());
+				option.attr("value", k);
+				advPassiveSearch.append(option);
+			});
+		});
+		<? foreach(explode("|", $this->selectedActives) as $active): ?>
+			advSkillSearch.find("option[value='<?= $active ?>']").attr("selected", "selected");
+		<? endforeach ?>
+		<? foreach(explode("|", $this->selectedPassives) as $passive): ?>
+			advPassiveSearch.find("option[value=<?= $passive ?>]").attr("selected", "selected");
+		<? endforeach ?>
+		advSkillSearch.chosen();
+		advPassiveSearch.chosen();
+		<? if(empty($this->selectedPassives) && empty($this->selectedActives)): ?>
+		advSearchPanel.hide();
+		<? endif ?>
+		$(".build-paginator a").bind('click', setupPaginator);
+		advSkillSearch.bind('change', searchBuilds);
+		advPassiveSearch.bind('change', searchBuilds);
+		classSelect.bind('change', searchBuilds);
+		isHardcoreCheckbox.bind('change', searchBuilds);
+		function searchBuilds() {
+			var skills = advSkillSearch.val(),
+					passives = advPassiveSearch.val(), 
+					heroClass = classSelect.val(),
+					isHardcore = isHardcoreCheckbox.is(":checked");
+			if(skills && skills.length) {
+				skills = skills.join("|");
+			}
+			if(passives && passives.length) {
+				passives = passives.join("|");
+			}
+			$.ajax({
+				data: {
+					skills: skills,
+					passives: passives,
+					class: heroClass,
+					isHardcore: isHardcore,
+				},
+				success: function(data) {
+					var content = $(data);
+					$("#all-builds").replaceWith(content.find("#all-builds"));
+					$(".build-paginator a").bind('click', setupPaginator);
+					$("td.skills img").each(bindAllSkilltips);
+				}
+			});
+		}
+		$("td.skills img").each(function() {
+			if($(this).data("id") && $(this).data("id") != "undefined") {
+				var skill = d3up.gameData.actives[$(this).attr("data-class")][$(this).attr("data-id")];
+				if(!skill) {
+					skill = d3up.gameData.passives[$(this).attr("data-class")][$(this).attr("data-id")];
+					if(skill) {
+  					skill.name = $(this).attr("data-id").replace(/\-/g," ").capitalize();					  
+					}
+				}
+				if(skill) {
+  				var tooltip = skill.desc;
+					if(skill.rune) {
+						tooltip = tooltip + "<br/><br/>" + skill.rune;
+					}
+					$(this).attr("data-name", skill.name);
+					$(this).attr("data-tooltip", tooltip);
+					$(this).bindSkilltip();				
+				}				
+			}
+		});
+		function setupPaginator() {
+			var resultsTable = $(".recent-builds table#all-builds tbody"),
+					link = $(this).prop("href");
+			resultsTable.addClass("ui-state-disabled");
+			$.ajax({
+				url: link,
+				type: 'html',
+				success: function(data) {
+					var results = $("<div/>").append(data);
+					resultsTable.replaceWith(results.find(".recent-builds table#all-builds tbody"));
+					$(".build-paginator a").bind('click', setupPaginator);
+					$("td.skills img").each(bindAllSkilltips);
+				}
+			});
+			return false;
+		};
+		function bindAllSkilltips() {
+			var skill = d3up.gameData.actives[$(this).attr("data-class")][$(this).attr("data-id")];
+			if(!skill) {
+				skill = d3up.gameData.passives[$(this).attr("data-class")][$(this).attr("data-id")];
+				if(skill != "undefined" && $(this).attr("data-id").length) {
+					skill.name = $(this).attr("data-id").replace(/\-/g," ").capitalize();				
+				}
+			}
+			if(skill) {
+				var tooltip = skill.desc;
+				if(skill.rune) {
+					tooltip = tooltip + "<br/><br/>" + skill.rune;
+				}
+				$(this).attr("data-name", skill.name);
+				$(this).attr("data-tooltip", tooltip);
+				$(this).bindSkilltip();				
+			}
+		}
+	});
+</script>
+<? endif ?>
