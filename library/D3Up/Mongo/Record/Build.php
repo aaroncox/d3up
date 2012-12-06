@@ -27,6 +27,13 @@ class D3Up_Mongo_Record_Build extends Epic_Mongo_Document_Record
 		}
 	}
 	
+	public function getGroups() {
+		$query = array(
+			'members' => $this->createReference()
+		);
+		return Epic_Mongo::db('group')->fetchAll($query);
+	}
+	
 	public function cleanExport() {
 		$export = $this->export(); 
 		$toRemove = array(

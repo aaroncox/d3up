@@ -265,6 +265,9 @@ class RecordController extends D3Up_Controller_Action
 					// Add the Guide form since we own it
 					$this->view->guideForm = $guideForm = new D3Up_Form_Record_Build_Guide(array('build' => $record));					
 					$this->_handleForm($guideForm);
+					// Pull groups
+					$this->view->groups = $record->getGroups();
+					// var_dump($this->view->groups->export()); exit;
 				}
 				// Now see if they've issued an action against the hero
 				if($a = $this->getRequest()->getParam('a')) {

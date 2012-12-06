@@ -1,4 +1,31 @@
 <h5>Group Memberships</h5>
 <div id="groups" class="page">
-	
+	<? foreach($this->groups as $group): ?>
+		<table id="build-active-skills" data-skill-type="actives" data-display="table-row">
+			<tbody>
+				<tr class="skill-calc-row" data-id="disintegrate~a">
+					<td colspan="2">
+						<h3><?= $group->name ?></h3>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<? foreach($group->members as $member): ?>
+							<div class="inline-flow group-member">
+								<?
+									$text = "<img src='/images/".$member->class.".png'> ".$member->name
+								?>
+								<?= $this->mLink($member, array("text" => $text)) ?>
+							</div>
+						<? endforeach ?>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	<? endforeach ?>
 </div>
+
+
+
+
+

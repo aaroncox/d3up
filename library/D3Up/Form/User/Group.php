@@ -75,11 +75,12 @@ class D3Up_Form_User_Group extends Epic_Form
 			$query = array(
 				'_createdBy' => D3Up_Auth::getInstance()->getProfile()->createReference(),
 			);
-			$builds = Epic_Mongo::db('build')->fetchAll($query);
+			$builds = Epic_Mongo::db('build')->fetchAll($query, array('paragon' => -1, 'level' => -1));
 			$names = array();
 			foreach($builds as $build) {
 				$names[$build->id] = $build->name;
-				$this->builds->addMultiOption($build->id, $build->name);
+				$desc = "[L".($build->level?:0)."/P".($build->paragon?:0)."/] " . $build->name . " (".$build->class.")";
+				$this->builds->addMultiOption($build->id, $desc);
 			}			
 		}
 		
