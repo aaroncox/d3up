@@ -537,11 +537,11 @@ class D3Up_Tool_Crawler
 			// Fixes for Hidden Damage Attributes!
 			if(isset($data['attributesRaw']) && isset($attrsArray['minmax-damage'])) {
 				// If we have minmax damage already set from the item, lets see if there's a hidden +min or +max
-				if(isset($data['attributesRaw']['Damage_Min#Physical'])) {
-					$attrsArray['minmax-damage']['min'] += $data['attributesRaw']['Damage_Bonus_Min#Physical']['min'];
+				if(isset($data['attributesRaw']['Damage_Bonus_Min#Physical'])) {
+					$attrsArray['min-damage'] = $data['attributesRaw']['Damage_Bonus_Min#Physical']['min'];
 				}
-				if(isset($data['attributesRaw']['Damage_Max#Physical'])) {
-					$attrsArray['minmax-damage']['max'] += $data['attributesRaw']['Damage_Bonus_Max#Physical']['max'];
+				if(isset($data['attributesRaw']['Damage_Bonus_Max#Physical'])) {
+					$attrsArray['max-damage'] = $data['attributesRaw']['Damage_Bonus_Max#Physical']['max'];
 				}
 			}
 			// var_dump($attrsArray, $data); exit;
