@@ -9,6 +9,12 @@ $(function() {
 	$($("#tabs").find(".current").attr("data-tab")).show();
 	if(window.location.hash) {
 		atabs.hide();
+		controls.each(function() {
+		  $(this).removeClass("current");
+		  if($(this).data("tab") == window.location.hash) {
+		    $(this).addClass("current");
+		  }
+		})
 		tabs.find(window.location.hash).show();
 	}
 	controls.each(function() {
