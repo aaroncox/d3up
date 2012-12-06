@@ -74,6 +74,9 @@
 		<? if($this->myGroup): ?>
 			<td class="stat"><a class='button' href="/group/<?= $this->group->id ?>/remove/build/<?= $build->id ?>">Remove</a></td>
 		<? endif ?>
+		<? if(!$this->myGroup && $this->profile->id == $build->_createdBy->id): ?>
+			<td class="stat"><a class='button' href="/group/<?= $this->group->id ?>/leave/build/<?= $build->id ?>">Leave</a></td>
+		<? endif ?>
 	</tr>
 <? endforeach; ?>
 	<tr>

@@ -63,6 +63,16 @@ class D3Up_Form_User_Group extends Epic_Form
 			'value' => $group->descriptionSource,
 		));
 		
+		$this->addElement("select", "mode", array(
+			'required' => true, 
+			'label' => 'Group Type', 
+			'multiOptions' => array(
+				0 => 'Closed Group (The owner has to add all builds)',
+				1 => 'Open Group (Anyone can add their build to this group)',
+			),
+			'value' => $group->mode,
+		));
+		
 		if($group->isNewDocument()) {
 			$this->addElement("select", "builds", array(
 				'label' => 'Add builds to group',
@@ -95,6 +105,8 @@ class D3Up_Form_User_Group extends Epic_Form
 		// Set the Description Block
 		$group->description = $this->description->getRenderedValue();
 		$group->descriptionSource = $this->description->getValue();
+		// Set the Mode
+		$group->mode = $this->mode->getValue();
 		// Do we need to intially add members?
 		if($group->isNewDocument()) {
 			foreach($this->builds->getValue() as $id) { 

@@ -1,5 +1,10 @@
 <?
+	$this->hasBuilds = false;
 	$this->myGroup = false;
+	$this->profile = D3Up_Auth::getInstance()->getProfile();
+	if($this->builds) {
+		$this->hasBuilds = true;
+	}
 	if($profile = D3Up_Auth::getInstance()->getProfile()) { 
 		// var_dump($this->group->owner, $profile->createReference()); exit;
 		if($this->group->owner->createReference() == $profile->createReference()) {
@@ -13,14 +18,18 @@
 			<? if($this->myGroup): ?>
 				<a href="#" class="button addGroupMember">Add Member</a>
 				<a href="/group/<?= $this->group->id ?>/edit" class="button">Edit Group</a>
+				<a href="#" class="button joinGroup">Join Group</a>
+			<? elseif($this->group->mode): ?>
+				<a href="#" class="button joinGroup">Join Group</a>
 			<? endif ?>
 		</div>
-		<h5 style='color: #B18135'>Group</h5>
+		<h5 style='color: #B18135'>Group (<?= ($this->group->mode) ? "Open" : "Closed" ?>)</h5>
 		<h2 class="ui-table-header"><?= $this->group->name ?></h2>
 		<div class='section-preview'>		
 			<?= $this->group->description ?>
 		</div>
 	</div>
+	<? if($this->myGroup): ?>
 	<div class="form member-form" style="display: none">
 		<form method="post" class="form" action="/group/<?= $this->group->id ?>/add">
 			<h2>Add a Build to this Group</h2>
@@ -31,15 +40,35 @@
 			</dl>
 		</form>
 	</div>
+	<? endif ?>
+	<? if($this->hasBuilds): ?>
+	<div class="form join-form" style="display: none">
+		<form method="post" class="form" action="/group/<?= $this->group->id ?>/join">
+			<h2>Add your Build to this Group</h2>
+			<p>My Builds</p>
+			<select name="build-id">
+				<? foreach($this->builds as $build): ?>
+					<option value="<?= $build->id ?>">[L<?= $build->level ?>/P<?= $build->paragon?>/<?= ($this->hardcore) ? "HC" : "SC" ?>] <?= $build->name ?> (<?= $build->class ?>)</option>
+				<? endforeach ?>
+			</select>
+			<input type="submit" name="Join"/>
+			</dl>
+		</form>
+	</div>
+	<? endif ?>
 	<table id="all-builds" class="d3up-table">
 		<?= $this->render("./group/_build-table.phtml")?>
 	</table>
 </div>
 <script type="text/javascript" charset="utf-8">
 	$(function() {
-		var button = $(".addGroupMember");
-		button.click(function() {
+		var add = $(".addGroupMember");
+		add.click(function() {
 			$(".member-form").show();
+		});
+		var join = $(".joinGroup");
+		join.click(function() {
+			$(".join-form").show();
 		});
 	})
 </script>
