@@ -245,6 +245,10 @@ class RecordController extends D3Up_Controller_Action
 		if($record->_type == 'item') {
 			// $this->getSimilarItems();
 		}
+		if($record->_type == 'build') {
+			// Pull groups
+			$this->view->groups = $record->getGroups();
+		}
 		// if($record->_type == "build") {
 			// Get all the comments and the comment form
 			// $this->view->commentForm = $commentForm = new D3Up_form_Record_Build_Comment(array('build' => $record));
@@ -265,8 +269,6 @@ class RecordController extends D3Up_Controller_Action
 					// Add the Guide form since we own it
 					$this->view->guideForm = $guideForm = new D3Up_Form_Record_Build_Guide(array('build' => $record));					
 					$this->_handleForm($guideForm);
-					// Pull groups
-					$this->view->groups = $record->getGroups();
 					// var_dump($this->view->groups->export()); exit;
 				}
 				// Now see if they've issued an action against the hero
