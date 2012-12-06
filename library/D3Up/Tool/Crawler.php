@@ -427,7 +427,7 @@ class D3Up_Tool_Crawler
     // }
 		foreach ($profile['items'] as $slot => $gear) {
 			// var_dump($slot);
-			//       if($slot != "torso") {
+			//       if($slot != "rightFinger") {
 			//         continue;
 			//       }
 			// exit;
@@ -534,15 +534,25 @@ class D3Up_Tool_Crawler
 					}
 				}
 			}
-			
+			// Fixes for Hidden Damage Attributes!
+			if(isset($data['attributesRaw']) && isset($attrsArray['minmax-damage'])) {
+				// If we have minmax damage already set from the item, lets see if there's a hidden +min or +max
+				if(isset($data['attributesRaw']['Damage_Min#Physical'])) {
+					$attrsArray['minmax-damage']['min'] += $data['attributesRaw']['Damage_Bonus_Min#Physical']['min'];
+				}
+				if(isset($data['attributesRaw']['Damage_Max#Physical'])) {
+					$attrsArray['minmax-damage']['max'] += $data['attributesRaw']['Damage_Bonus_Max#Physical']['max'];
+				}
+			}
+			// var_dump($attrsArray, $data); exit;
 			// What slot is it in?
 			$slot = static::$_slotMap[$slot];			
 			// Add Attributes to the Item and Query
 			$query['attrs'] = $attrsArray;
 			$query['stats'] = $statsArray;
-			if($slot == "mainhand") {
-  			// var_dump($attrsArray); exit;			  
-			}
+			// if($slot == "leftFinger") {
+			//   			var_dump($attrsArray); exit;			  
+			// }
 			if($gearSet) {
 				$query['set'] = $gearSet;
 			}
