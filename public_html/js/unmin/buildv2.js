@@ -270,15 +270,16 @@
               icon.attr('data-tooltip', data.desc),
               icon.attr('data-name', data.name);
               icon.attr('data-skill', slug);
-              var checkbox = $(".skill-activate[data-skill='" + slug + "']");
-              if(checkbox.length) {
-                icon.css({cursor: 'pointer'});
+							var checkbox = $(".skill-activate[data-skill='" + slug + "']");
+							if((d3up.builds['build'].stats.skillData[slug] && d3up.builds['build'].stats.skillData[slug].activate)) {
+                icon.addClass("activatable");
               }
+							if(d3up.builds['build'].skills.enabled[slug]) {
+                icon.addClass("skill-activated");                  
+							}
               icon.click(function() {
-                var checkbox = $(".skill-activate[data-skill='" + slug + "']");
-                if(checkbox.length) {
-                  $(this).toggleClass("skill-activated");                  
-                  if(checkbox.is(":checked")) {
+								if((d3up.builds['build'].stats.skillData[slug] && d3up.builds['build'].stats.skillData[slug].activate)) {
+									if(d3up.builds['build'].skills.enabled[slug]) {
                     checkbox.removeAttr("checked");
                   } else {
                     checkbox.attr("checked", "checked");
