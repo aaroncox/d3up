@@ -656,6 +656,9 @@
 			build.skills['enabled'] = {};
       $.each(skills, function(type, data) {
 				build.skills[type] = {};
+				if(!data) {
+					return false;
+				}
         $.each(data, function(idx, slug) {
 					if(slug) {
 					  switch(type) {
