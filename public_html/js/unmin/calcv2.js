@@ -469,7 +469,13 @@ BuildCalculator.prototype = {
 							// }
 							break;								
 						case "critical-to-dodge":
-							this.bonuses['plus-dodge'].push(this.attrs['critical-hit'] * 0.30 / 100);
+							var value = Math.round(this.attrs['critical-hit'] * 0.30 / 100 * 100) / 100;
+							if(reverse == true) {
+								var pos = _.indexOf(this.bonuses['plus-dodge'], value);
+								this.bonuses['plus-dodge'].splice(pos,1);
+							} else {
+								this.bonuses['plus-dodge'].push(value);
+							}						
 							break;							
 						case "dexterity-to-armor":								
 							this.attrs['armor'] = this.attrs['armor'] + (this.attrs['dexterity'] * value);
@@ -499,9 +505,11 @@ BuildCalculator.prototype = {
 											switch(e) {
 												case "plus-dodge":
 													if(reverse == true) {
-														eff = -eff;
+														var pos = _.indexOf(this.bonuses['plus-dodge'], eff);
+														this.bonuses['plus-dodge'].splice(pos,1);
+													} else {
+														this.bonuses['plus-dodge'].push(eff);														
 													}
-													this.bonuses['plus-dodge'].pop(eff);
 													break;
 											}
 										}, this);
@@ -716,7 +724,9 @@ BuildCalculator.prototype = {
 		if(this.bonuses['plus-dodge'].length) {
 			_.each(this.bonuses['plus-dodge'], function(v) {
 				var percentage = rendered['dodge-chance'] / 100;
+				// console.log("Modifying:", percentage, v);
 				percentage = (1 - percentage) * (1 - v);
+				// console.log("new: ", percentage);
 				rendered['dodge-chance'] = (1 - percentage) * 100;
 			});
 		}
