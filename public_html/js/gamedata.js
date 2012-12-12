@@ -4104,7 +4104,7 @@
 					// 2nd + 3rd: 0.09 + 0.5
 					effect: {
 						'generate-spirit': 8,
-						'weapon-damage': 390,
+						'weapon-damage': 250,
 					},
 				},
 				'serenity': {
