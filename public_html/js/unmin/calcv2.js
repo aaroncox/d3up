@@ -826,6 +826,83 @@ BuildCalculator.prototype = {
 		// Return the Values for EHP
 		return rendered;
 	},
+	calcGearDps: function() {
+		var rendered = {};
+		// Some Wackyness to calculate DPS contributions per piece
+    _.each(this.gear, function(g, i) {
+     var item = i;
+			// console.log("removing", g, i);
+
+     // Unset the Item from the stats
+     this.removeItem(i);
+     // Don't deal with MH/OH atm
+     // if(i != "mainhand" && i != "offhand") {
+       // Calculate the difference in DPS if you took this piece off
+       // if(this.values['dps-damage']) {
+         var newDps = this.calcOffense();
+         this.values['dps-' + i] = this.values['dps'] - newDps['dps'];   
+         if(!this.values['dps-gear-total']) {
+   			   this.values['dps-gear-total'] = 0;
+   			 }
+   			 this.values['dps-gear-total'] += this.values['dps-' + i];
+       // }
+     // }
+			// console.log("parsing", g, i);
+     // Readd the Item to the set
+     this.parseItem(g, i);
+    }, this);
+    // // Calculate DPS per Stat
+    var incs = {
+     'pt-primary': {'stat': 1},
+     'pt-critical-hit': {'critical-hit': 1},
+     'pt-critical-hit-damage': {'critical-hit-damage': 1},
+     'pt-min-damage': {'min-damage': 1},
+     'pt-max-damage': {'max-damage': 1},
+     'pt-attack-speed': {'attack-speed': 1},
+		 'pt-elemental-damage': {'plus-holy-damage': 1}
+    };
+    _.each(incs, function(v, k) {
+     var item = {};
+     switch(k) {
+       case "pt-primary":
+         item = { attrs: { } };
+         item.attrs[this.attrs.primary] = 1;
+         break;
+       case "pt-armor":
+         item = {
+           stats: v
+         };
+         break;
+       default:
+         item = {
+           type: 'extra',
+           attrs: v
+         };
+         break;
+     }
+     this.parseItem(item, 'extra');
+     var newDps = this.calcOffense();
+     rendered['dps-' + k] = newDps['dps'] - this.values['dps'];       
+     // Re-add the Item to the gear set
+     this.removeItem('extra');
+    }, this);
+		// Figuring out what equals what
+		// var hK = false,
+		// 		hV = false;
+		// // Determine the Highest
+		// _.each(rendered, function(v,k) {
+		// 	if(v > hV) {
+		// 		hK = k;
+		// 		hV = v;
+		// 	}
+		// });
+		// var equals = "";
+		// _.each(rendered, function(v,k) {
+		// 	var equiv = hV / v;
+		// 	equals += " = " + equiv + " " + k;
+		// });
+		return rendered;
+	},
 	calcGearEhp: function(defenses, ehp) {
 		var rendered = {};	// Storage for Rendered Statistics
 		// Loop through each piece of gear
@@ -1795,11 +1872,11 @@ BuildCalculator.prototype = {
 				skills = this.calcSkills(),
 				allSkills = this.calcAllSkills(),
 				lifeRegen = this.calcLifeRegen(dps, skills);
-
 		this.attrs['primary-stat'] = this.attrs[this.attrs['primary']];
 		// Add all of our calculated values into the values object for returning
     // d3up.log("----");
 		_.extend(this.values, defenses, ehp, gearEhp, dps, skills, allSkills, lifeRegen, this.calcBES(defenses, ehp, dps));		
+		_.extend(this.values, this.calcGearDps());
 		// console.log("Block @ ", this.attrs['block-chance']);
 		// ----------------------------------
 		// Define Offensive Statistics before Passives so we can add to them
@@ -1831,64 +1908,7 @@ BuildCalculator.prototype = {
 			this.attrs['critical-hit'] = oldCrit;
 			// d3up.log(this.values['dps-sharpshooter'])
 		}
-		// Some Wackyness to calculate DPS contributions per piece
-    _.each(this.gear, function(g, i) {
-     var item = i;
-			// console.log("removing", g, i);
 
-     // Unset the Item from the stats
-     this.removeItem(i);
-     // Don't deal with MH/OH atm
-     // if(i != "mainhand" && i != "offhand") {
-       // Calculate the difference in DPS if you took this piece off
-       // if(this.values['dps-damage']) {
-         var newDps = this.calcOffense();
-         this.values['dps-' + i] = this.values['dps'] - newDps['dps'];   
-         if(!this.values['dps-gear-total']) {
-   			   this.values['dps-gear-total'] = 0;
-   			 }
-   			 this.values['dps-gear-total'] += this.values['dps-' + i];
-       // }
-     // }
-			// console.log("parsing", g, i);
-     // Readd the Item to the set
-     this.parseItem(g, i);
-    }, this);
-    // // Calculate DPS per Stat
-    var incs = {
-     'pt-primary': {'stat': 1},
-     'pt-critical-hit': {'critical-hit': 1},
-     'pt-critical-hit-damage': {'critical-hit-damage': 1},
-     'pt-min-damage': {'min-damage': 1},
-     'pt-max-damage': {'max-damage': 1},
-     'pt-attack-speed': {'attack-speed': 1},
-		 'pt-elemental-damage': {'plus-holy-damage': 1}
-    };
-    _.each(incs, function(v, k) {
-     var item = {};
-     switch(k) {
-       case "pt-primary":
-         item = { attrs: { } };
-         item.attrs[this.attrs.primary] = 1;
-         break;
-       case "pt-armor":
-         item = {
-           stats: v
-         };
-         break;
-       default:
-         item = {
-           type: 'extra',
-           attrs: v
-         };
-         break;
-     }
-     this.parseItem(item, 'extra');
-     var newDps = this.calcOffense();
-     this.values['dps-' + k] = newDps['dps'] - this.values['dps'];       
-     // Re-add the Item to the gear set
-     this.removeItem('extra');
-    }, this);
 		// Append Attributes into the values
 		this.values = _.extend(this.attrs, this.values);
 		// Do we have a text area to dump to?
