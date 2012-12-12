@@ -4245,7 +4245,10 @@
 					groupBuff: true,
 					effect: {
 						'cost-spirit': 50,
-						'plus-dodge': 15,
+						'stackable': {
+							'limit': 2,
+							'plus-dodge': 15,							
+						}
 					},
 				},
 				'mantra-of-evasion~a': {
@@ -4257,7 +4260,10 @@
 					effect: {
 						'cost-spirit': 50,
 						'weapon-damage': 35,
-						'plus-dodge': 15,
+						'stackable': {
+							'limit': 2,
+							'plus-dodge': 15,							
+						}
 					},
 				},
 				'mantra-of-evasion~b': {
@@ -4268,7 +4274,10 @@
 					groupBuff: true,
 					effect: {
 						'cost-spirit': 50,
-						'plus-dodge': 15,
+						'stackable': {
+							'limit': 2,
+							'plus-dodge': 15,							
+						}
 					},
 				},
 				'mantra-of-evasion~c': {
@@ -4279,7 +4288,10 @@
 					groupBuff: true,
 					effect: {
 						'cost-spirit': 50,
-						'plus-dodge': 15,
+						'stackable': {
+							'limit': 2,
+							'plus-dodge': 15,							
+						}
 						'plus-armor': 20,
 					},
 				},
@@ -4291,7 +4303,10 @@
 					groupBuff: true,
 					effect: {
 						'cost-spirit': 50,
-						'plus-dodge': 15,
+						'stackable': {
+							'limit': 2,
+							'plus-dodge': 15,							
+						}
 					},
 				},
 				'mantra-of-evasion~e': {
@@ -4302,7 +4317,10 @@
 					groupBuff: true,
 					effect: {
 						'cost-spirit': 50,
-						'plus-dodge': 15,
+						'stackable': {
+							'limit': 2,
+							'plus-dodge': 15,							
+						}
 					},
 				},
 				'sweeping-wind': {
