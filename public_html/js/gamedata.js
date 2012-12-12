@@ -4291,7 +4291,7 @@
 						'stackable': {
 							'limit': 2,
 							'plus-dodge': 15,							
-						}
+						},
 						'plus-armor': 20,
 					},
 				},
