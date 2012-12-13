@@ -41,12 +41,31 @@
 	        <span class="stat">DPS</span>
 	      </div>
 	    </td>
+	    <td class="hl-stat">
+	      <div class="item-stat">
+	        <span data-value="dps" class="value"><?= $this->record->stats['critical-hit'] ?: 0 ?>%</span>
+	        <span class="stat">Crit</span>
+	      </div>
+	    </td>
+	    <td class="hl-stat">
+	      <div class="item-stat">
+	        <span data-value="ehp" class="value"><?= $this->record->stats['critical-hit-damage'] ?: 0 ?>%</span>
+	        <span class="stat">CritDmg</span>
+	      </div>
+	    </td>
+	    <td class="hl-stat">
+	      <div class="item-stat">
+	        <span data-value="dps" class="value"><?= $this->record->stats['attack-speed-incs'] ?: 0 ?>%</span>
+	        <span class="stat">IAS</span>
+	      </div>
+	    </td>
 	    <td class="hl-ehp">
 	      <div class="item-stat">
 	        <span data-value="ehp" class="value"><?= $this->prettyStat($this->record->stats['ehp'], 0) ?></span>
 	        <span class="stat">EHP</span>
 	      </div>
 	    </td>
+	
 	  </tr>
 	</table>
 </div>

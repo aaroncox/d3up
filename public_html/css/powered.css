@@ -134,12 +134,16 @@ a:hover .ui-button-text {
   border: 1px solid #333;
   background: #222;
 }
+.stats-table td.hl-stat, 
 .stats-table td.hl-ehp, 
 .stats-table td.hl-dps {
   text-shadow: 2px 2px 2px #111;
-  font-size: 18px;
+  font-size: 15px;
   color: #ececec;
   padding: 5px;
+}
+.stats-table td.hl-stat .value {
+	color: #fff;
 }
 .stats-table td.hl-dps .value {
   color: #F50;
