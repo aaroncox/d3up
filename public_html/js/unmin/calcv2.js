@@ -2497,6 +2497,7 @@ BuildCalculator.prototype = {
 					'sharpshooter-dps': 'Sharpshooter DPS', 
 					'strength': 'Str', 
 					'tdps': 'tDPS',
+					'tickRate': 'tDPS TickRate',
 					'thorns': 'Thorns', 
 					'total-armor-reduction': 'Armor DmgReduce', 
 					'total-damage-reduction': 'Total DmgReduce',
