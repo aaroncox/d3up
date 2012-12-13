@@ -55,7 +55,9 @@
 	    </td>
 	    <td class="hl-stat">
 	      <div class="item-stat">
-	        <span data-value="dps" class="value"><?= $this->record->stats['attack-speed-incs'] ?: 0 ?>%</span>
+	        <span data-value="dps" class="value">
+						<?= ($this->record->stats['attack-speed-incs'] && $this->record->stats['attack-speed-incs'] != "NaN") ? $this->record->stats['attack-speed-incs'] : 0 ?>%
+					</span>
 	        <span class="stat">IAS</span>
 	      </div>
 	    </td>
