@@ -38,6 +38,9 @@ $(function() {
 			type: 'html',
 			success: function(data) {
 				target.replaceWith(data);
+				$("a[data-json]").each(function() {
+					$(this).bindTooltip();							
+				});
 			},
 			error: function() {
 				window.location = link;
