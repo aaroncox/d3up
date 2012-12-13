@@ -1455,6 +1455,10 @@ BuildCalculator.prototype = {
 		// d3up.log(atkSpeedInc);
     // d3up.log(options.skill, dLow, dHigh, dps, mathR, mathC, bnEleDamage);
 		hit = Math.round(mathS * mathA * mathM * mathE * mathC);
+		if(skill.effect['no-crits']) {
+			dps = Math.round(dAvg * mathR);
+			hit = Math.round(mathS * mathA * mathM * mathE);			
+		}
     // console.log(hit, mathS, mathA, mathM, mathE, mathC);
 		if(duration) {
 		  if(isStatic) {

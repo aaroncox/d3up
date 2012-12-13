@@ -1,29 +1,60 @@
+Hey everyone!
+
+It's been well over a month since I've provided an [update on D3Up.com](http://d3up.com), so I figured I'd take a moment to go over what's changed. I'm still working away on some new features, which I hope to have ready either late this year or sometime in early January.
+
+Since it always gets asked, ***"What's D3Up?"***, here's a fast answer:
+
+> D3Up is a gear simulator, DPS/EHP calculator and set of tools to help you optimize your Diablo 3 Characters. 
+
+> [I'd recommend watching this video where I go over the basics](http://www.youtube.com/watch?v=OaRts-nmOE8)
+
+Few quick notes (kinda TL;DR):
+
+- /r/d3up exists now, cmon over and chat!
+- **Group Buffs** - You can now activate all group buffs to see what other classes buffs do for you.
+- **Skill Catalog** - Shows a bunch of skills that you could use, with some stats on them.
+- **Build Groups** exist now, you can [create groups](http://d3up.com/group/create) to create groups, then add builds into them or make it an "Open Group" and others can join. All it does it puts all the builds on a page together for easy sharing.
+
+**Onto the patch notes!**
+
 General
-===
-- Removed the ItemDB portion of the site for now.			
-- Skill Catalog - All builds now have an experimental "Skill Catalog", which gives a brief overview of all of your DPS skills.
+---
+- Added a link to [/r/d3up](http://reddit.com/r/d3up), which is D3Up's new Subreddit. Feel free to use it to talk, report bugs, request features, whatever!
+- Removed the ItemDB portion of the site, it wasn't that useful and helps performance to not have Google crawling 5k+ pages of items every day.  		
+- Added a favicon!
+
+All Builds / Characters
+---
+- The Importer now detects "Hidden" affixes on items and will properly add them to items. This happened a lot on Jewelry that has a "+X-Y Damage" when it rolls an additional "+Min" or "+Max" damage. The +Min/+Max extra affix doesn't show on the tooltip, but now shows on D3Up.
+- Experimenting with a new "Build Group" feature, which lets [you create a group](http://d3up.com/group/create) and then add builds to it. It's useful for grouping a bunch of builds together, maybe to [show your Twitch Team](http://d3up.com/group/2) or the [/r/diablo Players](http://d3up.com/group/3).
+- Added a new tab, called *Group Buffs*. This tab lets you activate buffs that other players could give your character if they were in your game.
+- Skill Catalog - All builds now have an experimental "Skill Catalog", which gives a brief overview of all of your DPS skills (without Cooldown).
 - When changing skills/passives	all of your enabled skills/passives will be disabled until you activate them again. This is to prevent a bug where you could activate a skill then change that skill and the benefits of that skill would remain.
 - Corrected Duel-Wield math that has probably be incorrect for a long time.
 - Reduced the time of crawls for registered users to 2 minutes.
-- Added a favicon!
+- Revamped the Sync from Battle.net, which now saves all of your character stats to the DB when you sync. These stats can now be accessed via JSON [if you add /json onto the end of your build URL](http://d3up.com/b/1/json).
 
 Statistics (Sidebar)
-===
+---
 - Added IAS to the Damage Stats (along with bonuses from DW).
 - Added DPS vs Demons to Statistics.			
 - Arcane/Holy EHP no longer displays Poison EHP.	
 - Fix to attack speed display.	
-- Added "Damage Range" section showing the true damage of your weapons. 	
+- Added "Damage Range" section showing the true damage of your weapons. 
+- Fixed Ranged EHP calculations to use the right math :P	
+- Added HP:EHP Ratio to the sidebar.
 
 Item Simulation / Compare
-===
+---
 - Added a percentage change to the "Diff" window.
 - Fix for disappearing compare window.			
 - Added larger EHP/DPS numbers to the compares.			
-- You can now change the set the item belongs to in the simulate
+- You can now change the set the item belongs to in the simulate.
+- Fixed a bug preventing you from editing set items.
 
 Skills Tab
-===
+---
+- Normalized Weapon Damage for skills with Cooldowns. This corrected a lot of skill DPS for skills that factor in your attack speed (when normally they wouldn't).
 - Massive improvements to many skills in the "Skills" tab on all builds.
 - Skills now show damage types and proc coefficients.
 - Any bonuses from Items that affect a specific skills DPS are now factored into the Skills Damage display.
@@ -33,7 +64,7 @@ Skills Tab
 - Added experimental "Life per Second" (LPS) for each skill estimating the amount of life returned from all life regen stats against a single target (LoH, LS & Life Regen). 
 
 Barbarian 
-===
+---
 - Whirlwind/RltW - Added tDPS (Tornado DPS) based on [this thread](http://us.battle.net/d3/en/forum/topic/6864416737).
 - Whirlwind/RltW - Added Tick Rate to statistics sidebar for how often your Tornado's "Tick"
 - Weapons Master fury generation is now included in the RPS on skills.
@@ -41,64 +72,30 @@ Barbarian
 - Battle Rage - Into the Fray is now included in the RPS on skills.	
 
 Demon Hunter
-===
+---
 - Brooding now works.
 - Strafe modified to show 4 ticks instead of 1 big tick.			
 - +% Crit to Strafe: Now will scan from armory imports and adds bonus crit in the skills panel.
+- Cluster Grenades / Strafe - Fixed the math behind the damage
 
 Monk
-===
+---
+- Added all the hidden "haste" on Spirit Generators to help DPS calculations.
 - Fists of Thunder - Thunder Clap - Fixed damage calculations.
 - Monk skills gain bonus IAS for spirit generators (hidden values).
 - Fists of Thunder - Lightning Flash - Can now be activated.
 - Sweeping Winds - Added damage calculations (Calculates based on 3 stacks)
+- Way of the Hundred Fists - Windforce Fury - Fixed the Weapon Damage calculations.
+- Mantra of Evasion - Added a "stack" select box to the skill that lets you change whether it's the effect for the first 3 seconds or the normal duration. 1 stack = Normal Effect, 2 stack = 3 second effect.
+- Sixth Sense / Guardians Path - Fixed Dodge calculations from these skills to accurately show dodge percentages.
 
 Witch Doctor
-===
+---
 - Jungle Fortitude - Now will affect your damage reduction.			
 - Zombie Dogs - Life Link - Now can be activated for 10% damage reduction.			
 
 Wizard
-===
+---
 - Fixed Meteor proc coefficients.	
-- Tal Rasha's Set Bonus fixed so it's are +% Damage to Skills and not +% Elemental Damage.		
-
-
-Up'd to 4 dogs.
-Added build info to all builds.
-Removed log
-Fixed static damage
-Changed crawl time to 2 minutes.
-Updates complete!
-Letting people know i'll be restarting services.
-Guiding Light damage buff.
-Provoke the Pack now has a stackable damage boost.
-Added HC/SC to the character importer.
-Twitch brand updates and fix to Health Globes to add Potions to it.
-Fixed rings
-Few more fixes.
-Fix to a bunch of max stats.
-Fix to plus-life not showing on sidebar.
-Fixed craler
-Bonus Experience.
-JSON dump
-Updated Secret
-Fix URL callback for Twitch.tv.
-Twitch.tv Integration.
-Changed FitL to account for bonus elemental damage on top of it's native damage.
-Updated for simulating on elemental damages.
-Remove all spaces from battletags
-Fix for having 0 min/max damage bonus with FITL.
-Fix to boar companion
-Fixed spelling of Increases on Poison Darts
-Added resource cost of cluster arrow reduction affix.
-Life Regen fix
-Block/Dodge should show up in compares.
-Fix to dodge.
-Fixed DPS Math for DW
-Total Damage reduction
-Fix to plus-life on passives.
-Fix to DPS Math calculations and added EHP w/ Block + Dodge.
-No more yandex!
-Similar Items is off for performance.
-Few things to speed things up.
+- Magic Weapon - Blood Magic - Fixed the tooltip and it now also applies the bonus LifeSteal.
+- Tal Rasha's Set Bonus fixed so it's are +% Damage to Skills and not +% Elemental Damage.

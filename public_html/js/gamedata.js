@@ -3122,12 +3122,13 @@
 				},
 				'sentry': {
 					name: 'Sentry',
-					desc: 'Drop a turret on the ground. The turret begins firing at nearby enemies for 55%  weapon damage. Lasts 30 seconds.',
+					desc: 'Drop a turret on the ground. The turret begins firing at nearby enemies for 175% weapon damage. Lasts 30 seconds.',
 					procRate: 0,
 					effect: {
 						'cooldown': 8,
-						'cost-discipline': 30,
+						'cost-hatred': 30,
 						'weapon-damage': 175,
+						'no-crits': true,
 					},
 				},
 				'sentry~a': {
@@ -3137,8 +3138,9 @@
 					procRate: 0.75,
 					effect: {
 						'cooldown': 8,
-						'cost-discipline': 30,
+						'cost-hatred': 30,
 						'weapon-damage': 175,
+						'no-crits': true,
 					},
 				},
 				'sentry~b': {
@@ -3148,8 +3150,9 @@
 					procRate: 0,
 					effect: {
 						'cooldown': 6,
-						'cost-discipline': 30,
+						'cost-hatred': 30,
 						'weapon-damage': 175,
+						'no-crits': true,
 					},
 				},
 				'sentry~c': {
@@ -3159,8 +3162,9 @@
 					procRate: 0,
 					effect: {
 						'cooldown': 8,
-						'cost-discipline': 30,
+						'cost-hatred': 30,
 						'weapon-damage': 55,
+						'no-crits': true,
 					},
 				},
 				'sentry~d': {
@@ -3171,9 +3175,10 @@
 					groupBuff: true,
 					effect: {
 						'cooldown': 8,
-						'cost-discipline': 30,
+						'cost-hatred': 30,
 						'weapon-damage': 175,
 						'plus-percent-life-regen': 1,
+						'no-crits': true,
 					},
 				},
 				'sentry~e': {
@@ -3184,9 +3189,10 @@
 					groupBuff: true,
 					effect: {
 						'cooldown': 8,
-						'cost-discipline': 30,
+						'cost-hatred': 30,
 						'damage-reduce-conditional': 15,
 						'weapon-damage': 175,
+						'no-crits': true,
 					},
 				},
 				'cluster-arrow': {
