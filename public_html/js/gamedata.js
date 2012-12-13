@@ -3163,7 +3163,7 @@
 					effect: {
 						'cooldown': 8,
 						'cost-hatred': 30,
-						'weapon-damage': 55,
+						'weapon-damage': 175,
 						'no-crits': true,
 					},
 				},
