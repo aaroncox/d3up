@@ -649,6 +649,7 @@ $(function() {
 			var skill = $(this).val(), 
 					id = parseInt($(this).attr("name").replace("activeSelect", ""));
 			$.each(d3up.builds, function(k) {
+				var skills = _.keys(build.getSkills().actives);
 				skills[id] = skill;
 				d3up.builds[k].setSkills({actives: skills});
 				d3up.builds[k].run();
