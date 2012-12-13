@@ -2458,7 +2458,7 @@ BuildCalculator.prototype = {
 					'ap-on-crit': 'AP/Crit', 
 					'arcane-resist': 'Arcane Res', 
 					'armor': 'Armor', 
-					'attack-speed-incs': '+% Attack Speed',
+					'attack-speed-incs': '+% IAS',
 					'block-amount': 'Block', 
 					'block-chance': '%Block',
 					'blockChance': 'Block %', 
