@@ -1,0 +1,6 @@
+<? if($this->record->_type == 'item'): ?>
+	<?= $this->render('record/tooltip/item.phtml') ?>
+<? endif; ?>
+<? if($this->record->_type == 'build'): ?>
+	<?= $this->render('record/tooltip/build.phtml') ?>
+<? endif; ?>

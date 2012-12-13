@@ -424,4 +424,8 @@ class RecordController extends D3Up_Controller_Action
 		}
 		echo json_encode(array("status" => "ok")); exit;
 	}
+	public function tooltipAction() {
+		$record = $this->getRecord();
+		$this->_helper->layout()->disableLayout(); 
+	}
 } // END class RecordController extends Epic_Controller_Action
