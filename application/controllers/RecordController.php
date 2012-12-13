@@ -58,11 +58,11 @@ class RecordController extends D3Up_Controller_Action
 				'_original' => $record->createReference(),
 				'_createdBy' => $profile->createReference(), 
 			);
-			$dupe = Epic_Mongo::db("item")->fetchOne($query);
-			if($dupe) {
-				// $this->_redirect();
-				throw new Exception("You've already copied this item to your items, here's a <a href='/i/".$dupe->id."'>link to your copy</a>. To prevent abuse, you can't copy an item to your items more than once.");
-			}
+			// $dupe = Epic_Mongo::db("item")->fetchOne($query);
+			// if($dupe) {
+			// 	// $this->_redirect();
+			// 	throw new Exception("You've already copied this item to your items, here's a <a href='/i/".$dupe->id."'>link to your copy</a>. To prevent abuse, you can't copy an item to your items more than once.");
+			// }
 			if($confirm = $this->getRequest()->getParam("confirm")) {			
 				$new = Epic_Mongo::newDoc('item');
 				$export = $record->export();
