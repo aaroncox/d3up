@@ -74,7 +74,8 @@ class BuildController extends D3Up_Controller_Action
 		if($profile && $profile->region) {
 			$this->view->characters = D3Up_Tool_Crawler::getInstance()->getCharacters($profile);
 		}
-		if(!$this->getRequest()->getParam('character-id') && !$this->getRequest()->getParam('character-id-manual') && $this->getRequest()->getParam('region') && $this->getRequest()->getParam('battletag')) {
+		
+		if($this->_request->isXmlHttpRequest() && !$this->getRequest()->getParam('character-id') && !$this->getRequest()->getParam('character-id-manual') && $this->getRequest()->getParam('region') && $this->getRequest()->getParam('battletag')) {
 			$tag = str_replace(" ", "", $this->getRequest()->getParam('battletag'));
 			$region = $this->getRequest()->getParam('region');
 			echo json_encode(D3Up_Tool_Crawler::getCharactersByTag($tag, (int) $region)); exit;
