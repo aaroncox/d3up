@@ -588,6 +588,17 @@
 					effect = false,
 					wrap = $("<span class='skill-highlight'>").append(v); 
 			switch(k) {
+				case "stackable":
+					effect = "Each Stack: ";
+					_.each(v, function(d,i) {
+						if(this.builder.skillText[i] && wrap[0]) {
+							wrap = $("<span class='skill-highlight'>").append(d); 
+							effect += this.builder.skillText[i].replace("VVV", wrap[0].outerHTML);						
+						} else {
+		          // d3up.log("Unknown Effect: " + k);
+						}
+					}, this);
+					break;
 				default:
 					if(this.builder.skillText[k] && wrap[0]) {
 						effect = this.builder.skillText[k].replace("VVV", wrap[0].outerHTML);						

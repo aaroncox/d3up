@@ -4643,7 +4643,10 @@
 					groupBuff: true,
 					effect: {
 						'cost-spirit': 50,
-						'plus-damage': 24,
+						'stackable': {
+							'limit': 2,
+							'plus-damage': 12,
+						}
 					},
 				},
 				'mantra-of-conviction~a': {
@@ -4654,7 +4657,10 @@
 					groupBuff: true,
 					effect: {
 						'cost-spirit': 50,
-						'plus-damage': 48,
+						'stackable': {
+							'limit': 2,
+							'plus-damage': 24,
+						}
 					},
 				},
 				'mantra-of-conviction~b': {
@@ -4665,7 +4671,10 @@
 					groupBuff: true,
 					effect: {
 						'cost-spirit': 50,
-						'plus-damage': 24,
+						'stackable': {
+							'limit': 2,
+							'plus-damage': 12,
+						}
 					},
 				},
 				'mantra-of-conviction~c': {
@@ -4676,7 +4685,10 @@
 					groupBuff: true,
 					effect: {
 						'cost-spirit': 50,
-						'plus-damage': 24,
+						'stackable': {
+							'limit': 2,
+							'plus-damage': 12,
+						}
 					},
 				},
 				'mantra-of-conviction~d': {
@@ -4687,7 +4699,10 @@
 					groupBuff: true,
 					effect: {
 						'cost-spirit': 50,
-						'plus-damage': 24,
+						'stackable': {
+							'limit': 2,
+							'plus-damage': 12,
+						}
 					},
 				},
 				'mantra-of-conviction~e': {
@@ -4698,7 +4713,10 @@
 					groupBuff: true,
 					effect: {
 						'cost-spirit': 50,
-						'plus-damage': 24,
+						'stackable': {
+							'limit': 2,
+							'plus-damage': 12,
+						}
 					},
 				},
 			},
