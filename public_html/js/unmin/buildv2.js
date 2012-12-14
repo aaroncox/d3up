@@ -316,6 +316,9 @@
       					    skill = build.stats.skillData[slug];
 								if(!stacks) {
 									stacks = 1;
+									if(data.effect.stackable && data.effect.stackable.limit) {
+										stacks = data.effect.stackable.limit;
+									}
 								}
 								if(d3up.builds['build'].skills.enabled[slug]) {
 									skillIcon.addClass("skill-activated");
@@ -333,8 +336,11 @@
           			if(skill && skill.stackable) {
           				select.show();
           				if(select.find("option").length == 0) {
-            				for(i = 1; i <= skill.stackable; i++) {
+            				for(i = skill.stackable; i >= 1; i--) {
             				  var option = $("<option value='" + i + "'>").html(i + " Stacks");
+											if(data.effect.stackable.labels) {
+												option.html(data.effect.stackable.labels[i]);
+											}
 											if(stacks == i) {
 												// console.log("selecting #" + i, stacks);
 												option.attr("selected", "selected");

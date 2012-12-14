@@ -4254,6 +4254,10 @@
 						'stackable': {
 							'limit': 2,
 							'plus-dodge': 15,							
+							'labels': {
+								1: 'Full',
+								2: '3 Sec'
+							}
 						}
 					},
 				},
@@ -4269,6 +4273,10 @@
 						'stackable': {
 							'limit': 2,
 							'plus-dodge': 15,							
+							'labels': {
+								1: 'Full',
+								2: '3 Sec'
+							}
 						}
 					},
 				},
@@ -4283,6 +4291,10 @@
 						'stackable': {
 							'limit': 2,
 							'plus-dodge': 15,							
+							'labels': {
+								1: 'Full',
+								2: '3 Sec'
+							}
 						}
 					},
 				},
@@ -4297,6 +4309,10 @@
 						'stackable': {
 							'limit': 2,
 							'plus-dodge': 15,							
+							'labels': {
+								1: 'Full',
+								2: '3 Sec'
+							}
 						},
 						'plus-armor': 20,
 					},
@@ -4312,6 +4328,10 @@
 						'stackable': {
 							'limit': 2,
 							'plus-dodge': 15,							
+							'labels': {
+								1: 'Full',
+								2: '3 Sec'
+							}
 						}
 					},
 				},
@@ -4326,6 +4346,10 @@
 						'stackable': {
 							'limit': 2,
 							'plus-dodge': 15,							
+							'labels': {
+								1: 'Full',
+								2: '3 Sec'
+							}
 						}
 					},
 				},
@@ -4646,6 +4670,10 @@
 						'stackable': {
 							'limit': 2,
 							'plus-damage': 12,
+							'labels': {
+								1: 'Full',
+								2: '3 Sec'
+							}
 						}
 					},
 				},
@@ -4660,6 +4688,10 @@
 						'stackable': {
 							'limit': 2,
 							'plus-damage': 24,
+							'labels': {
+								1: 'Full',
+								2: '3 Sec'
+							}
 						}
 					},
 				},
@@ -4674,6 +4706,10 @@
 						'stackable': {
 							'limit': 2,
 							'plus-damage': 12,
+							'labels': {
+								1: 'Full',
+								2: '3 Sec'
+							}
 						}
 					},
 				},
@@ -4688,6 +4724,10 @@
 						'stackable': {
 							'limit': 2,
 							'plus-damage': 12,
+							'labels': {
+								1: 'Full',
+								2: '3 Sec'
+							}
 						}
 					},
 				},
@@ -4702,6 +4742,10 @@
 						'stackable': {
 							'limit': 2,
 							'plus-damage': 12,
+							'labels': {
+								1: 'Full',
+								2: '3 Sec'
+							}
 						}
 					},
 				},
@@ -4716,6 +4760,10 @@
 						'stackable': {
 							'limit': 2,
 							'plus-damage': 12,
+							'labels': {
+								1: 'Full',
+								2: '3 Sec'
+							}
 						}
 					},
 				},
@@ -5136,6 +5184,13 @@
 					  'stackable': {
 				      'limit': 5,
 					    'plus-intelligence-conditional': 130,
+							'labels': {
+								1: '1 Enemy',
+								2: '2 Enemy',
+								3: '3 Enemy',
+								4: '4 Enemy',
+								5: '5 Enemy',
+							}
 					  },
 						'cost-mana': 58.8,
 						'cooldown': 15,
@@ -5150,6 +5205,13 @@
 					  'stackable': {
 				      'limit': 5,
 					    'plus-intelligence-conditional': 130,
+							'labels': {
+								1: '1 Enemy',
+								2: '2 Enemy',
+								3: '3 Enemy',
+								4: '4 Enemy',
+								5: '5 Enemy',
+							}
 					  },
 						'cost-mana': 58.8,
 						'cooldown': 15,
@@ -5164,6 +5226,13 @@
 					  'stackable': {
 				      'limit': 5,
 					    'plus-intelligence-conditional': 130,
+							'labels': {
+								1: '1 Enemy',
+								2: '2 Enemy',
+								3: '3 Enemy',
+								4: '4 Enemy',
+								5: '5 Enemy',
+							}
 					  },
 						'cost-mana': 58.8,
 						'cooldown': 15,
@@ -5178,6 +5247,13 @@
 					  'stackable': {
 				      'limit': 5,
 					    'plus-intelligence-conditional': 130,
+							'labels': {
+								1: '1 Enemy',
+								2: '2 Enemy',
+								3: '3 Enemy',
+								4: '4 Enemy',
+								5: '5 Enemy',
+							}
 					  },
 						'cost-mana': 58.8,
 						'cooldown': 15,
@@ -5192,6 +5268,13 @@
 					  'stackable': {
 				      'limit': 5,
 					    'plus-intelligence-conditional': 130,
+							'labels': {
+								1: '1 Enemy',
+								2: '2 Enemy',
+								3: '3 Enemy',
+								4: '4 Enemy',
+								5: '5 Enemy',
+							}
 					  },
 						'cost-mana': 58.8,
 						'cooldown': 15,
@@ -5206,6 +5289,13 @@
 					  'stackable': {
 				      'limit': 5,
 					    'plus-intelligence-conditional': 130,
+							'labels': {
+								1: '1 Enemy',
+								2: '2 Enemy',
+								3: '3 Enemy',
+								4: '4 Enemy',
+								5: '5 Enemy',
+							}
 					  },
 						'cost-mana': 58.8,
 						'cooldown': 15,
@@ -6784,6 +6874,11 @@
 						'stackable': {
 						  'limit': 3,
 							'plus-armor': 20,
+							'labels': {
+								1: '1 Hit',
+								2: '2 Hit',
+								3: '3 Hit'
+							}
 						},
 					},
 				},
