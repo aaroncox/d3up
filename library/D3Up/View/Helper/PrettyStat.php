@@ -11,6 +11,9 @@ class D3Up_View_Helper_PrettyStat extends Zend_View_Helper_Abstract
 		if(!$value) return '~';
 		if(!is_numeric($value)) return '~';
 		$val = (float) $value;
+		if($val >= 1000000000000) {
+			return round($val / 1000000000000, $roundTo) ."t";
+		}
 		if($val >= 1000000000) {
 			return round($val / 1000000000, $roundTo) ."b";
 		}
