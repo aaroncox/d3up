@@ -1228,7 +1228,8 @@ BuildCalculator.prototype = {
 
     _.each(this.activeSkills, function(v,k) {
       var parts = k.split("~");
-      if(parts[0] == 'whirlwind') {
+			// For whirlwind and rltw
+      if(parts[0] == 'whirlwind' || k == 'sprint~c') {
         if(this.isDuelWielding) {
           // = ((0.7 * 43977.33) + (0.4833 * (43977.33 + 38764.61) / 2)) * 6
           rendered['tdps'] = ((0.7 * rendered['scram-a-mh']) + (0.4833 * (rendered['scram-a-mh'] + rendered['scram-a-oh']) / 2)) * this.tickRate(mathR);
