@@ -1,0 +1,19 @@
+<?
+	$this->headTitle($this->battletag . ' - Character Builds'); 
+?>
+<div class="recent-builds content-page">			
+	<div class="page">
+		<h2 class="ui-table-header">Search results for: '<?= $this->search ?>'</h2>
+	</div>	
+	<? if(count($this->builds)): ?>
+	<table id="all-builds" class="d3up-table">
+    <?= $this->render("build/_build-min.phtml") ?>
+	</table>
+	<? else: ?>
+	<div class="page">
+		<h4>No results were found for this search.</h4>
+		<p>Please make sure the battle tag you are searching for is valid, it should be <strong>playername#1234</strong> with no spaces.</p>
+		<p>If you can't find a build for someone, <a href="/build/create">feel free to create one</a> using the Manual Import to see how their character works!</p>
+	</div>
+	<? endif ?>
+</div>
