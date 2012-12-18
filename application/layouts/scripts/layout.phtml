@@ -8,6 +8,7 @@
 	<link rel="shortcut icon" href="/favicon.ico" sizes="16x16 32x32 64x64 128x128">
 	<link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.19/themes/dot-luv/jquery-ui.css" type="text/css" />
 	<script type="text/javascript" src="http://code.jquery.com/jquery-1.7.2.js"></script>
+	<script type="text/javascript" src="/js/powered.js"></script>
 	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.18/jquery-ui.js"></script>
 	<script src="http://us.battle.net/d3/static/js/tooltips.js"></script>
 	<?= $this->headCss()
@@ -45,16 +46,18 @@
 				<a href="/"><img src="/images/logo.jpg" alt="D3Up.com" /></a>
 			</div>
 			<div id="header-content" class="inline-flow">
-				<h2 class="table-header">
-				  Diablo 3 DPS & EHP Calculator
+				<h4 class="table-header">
 				  <? if($this->profile): ?>
 			      <span class='user-bar'><a href="/user/edit"><?= $this->profile->username ?></a> | <a href="/user/logout">Logout</a></span>
 				  <? else: ?>
 				    <span class='user-bar'><a href="/user/login">Login</a> | <a href='/user/register'>Register</a></span>
 				  <? endif ?>
-  		  </h2>
+  		  </h4>
 				<?= $this->render("_system-message.phtml")?>
 			</div>
+			<form method="post" action="/search" class="search-box">
+				<input type="text" name="search" id="search-box" placeholder="Search by BattleTag - Name#1234">
+			</dovm>
 		</div>
 		<?= $this->render("_menu.phtml") ?>
 		<div id="main">

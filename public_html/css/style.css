@@ -138,6 +138,42 @@ a:hover .ui-button-text {
 	border-bottom: 0;
 }
 #header {
+	position: relative;
+}
+#header .search-box input[type="text"] {
+	background: url(/images/search-white.png) no-repeat 10px 6px #444;
+	border: 0 none;
+	outline: none;
+	font: normal 12px Arial,Helvetica,Sans-serif;
+	color: #d7d7d7;
+	width:250px;
+	padding: 6px 15px 6px 35px;
+	-webkit-border-radius: 20px;
+	-moz-border-radius: 20px;
+	border-radius: 20px;
+	-webkit-box-shadow: 0 1px 0 rgba(255, 255, 255, 0.1), 0 1px 3px rgba(0, 0, 0, 0.2) inset;
+	-moz-box-shadow: 0 1px 0 rgba(255, 255, 255, 0.1), 0 1px 3px rgba(0, 0, 0, 0.2) inset;
+	box-shadow: 0 1px 0 rgba(255, 255, 255, 0.1), 0 1px 3px rgba(0, 0, 0, 0.2) inset;
+	-webkit-transition: all 0.7s ease 0s;
+	-moz-transition: all 0.7s ease 0s;
+	-o-transition: all 0.7s ease 0s;
+	transition: all 0.7s ease 0s;
+}
+
+#header .search-box input[type="text"]:focus {
+	background: url(/images/search-dark.png) no-repeat 10px 6px #fcfcfc;
+	color: #333;
+	width: 250px;
+	-webkit-box-shadow: 0 1px 0 rgba(255, 255, 255, 0.1), 0 1px 0 rgba(0, 0, 0, 0.9) inset;
+	-moz-box-shadow: 0 1px 0 rgba(255, 255, 255, 0.1), 0 1px 0 rgba(0, 0, 0, 0.9) inset;
+	box-shadow: 0 1px 0 rgba(255, 255, 255, 0.1), 0 1px 0 rgba(0, 0, 0, 0.9) inset;
+}
+
+#header .search-box {
+	border: 0;
+	position: absolute;
+	bottom: 0px;
+	right: 10px;
 }
 #header-content {
 	margin-top: 5px;
@@ -207,9 +243,9 @@ ul.simulate-item input,
 #sys-message {
 	height: 90px;
 	width: 728px;
-	text-align: center;
+	text-align: left;
 	font-size: 14px;
-	padding: 5px 15px;
+	padding: 0px 15px;
 	margin: 2px auto;
 /*	border-bottom: 1px solid #777;*/
 }
