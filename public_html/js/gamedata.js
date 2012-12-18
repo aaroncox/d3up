@@ -7122,8 +7122,8 @@
 					effect: {
 						'cost-arcane-power': 20,
 						'cooldown': 6,
-						'weapon-damage': 322,
-						'weapon-damage-for': 3,
+						'weapon-damage': 291,
+						'tick-modifier': 3,
 					},
 				},
 				'magic-weapon': {
