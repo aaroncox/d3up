@@ -700,6 +700,15 @@ dd:has(:focus) .chzn-container {
 	color: #7FCDFF;
 	margin: 5px 15px;
 }
+.build-header .battlenet {
+	float: right;
+	padding: 10px;
+}
+.build-header .battlenet img {
+	vertical-align:middle; 
+	display:inline-block; 
+	padding-right:5px;
+}
 .build-header .controls {
 	float: right;
 	padding: 5px;
