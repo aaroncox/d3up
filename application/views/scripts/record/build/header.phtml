@@ -1,5 +1,7 @@
 <div id="build-header" class="build-header title-block" data-class="<?= $this->record->class ?>">
+	<? if($this->record->_characterRg && $this->record->_characterId && $this->record->_characterBt): ?>
 	<div class="battlenet"><a href="http://<?= strtolower($this->regionDisplay($this->record->_characterRg, 'short')) ?>.battle.net/d3/en/profile/<?= str_replace("#", "-", $this->record->_characterBt) ?>/hero/<?= $this->record->_characterId ?>" target="_blank" id="profile-link"><img src="/images/battlenet.png"> Battle.net</a></div>
+	<? endif ?>
 	<h2>
 		<?= $this->mLink($this->record) ?> 
 	</h2>
