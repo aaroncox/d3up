@@ -5020,7 +5020,7 @@
 						'cost-mana': 49,
 						'cooldown': 60,
 						'weapon-damage': 9,
-						'damage-reduce-conditional': 20,
+						'damage-reduce-conditional': 10,
 					},
 				},
 				'summon-zombie-dogs~c': {
