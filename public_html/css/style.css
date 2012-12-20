@@ -2387,3 +2387,9 @@ div#statistics {
 .activatable {
 	cursor: pointer;
 }
+.pt-adjustor {
+	display: inline;
+	width: 30px;
+	height: 1.5em;
+	margin-left: 5px;
+}

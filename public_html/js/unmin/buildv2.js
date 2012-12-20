@@ -48,6 +48,8 @@
     },
     renderAgain: function() {
       var build = this;
+			// Reset the Gains by Stats Inputs
+			$(".pt-adjustor").val("1");
       // Reset the Calculator with our new Build
       this.calc.setBuild(this);
       // Run the new Stats

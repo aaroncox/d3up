@@ -661,6 +661,14 @@ $(function() {
       });
 		});
 	});
+	// Point Adjustors
+	$(".pt-adjustor").each(function() {
+		var stat = $(this).closest("tr").find('*[data-value]'),
+				data = $(this).attr("data-target");
+		$(this).bind('keyup', function() {
+			stat.html(Math.round(d3up.builds.build.stats[data] * $(this).val() * 100)/100);
+		});
+	});
 	// Append Save Buttons
 	if($("#character").data("owner")) {
 		var savePassives = $("<a class='save-skills button'>").html("Save Passives");
