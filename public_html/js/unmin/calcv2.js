@@ -181,6 +181,9 @@ BuildCalculator.prototype = {
 	applyEnabledSkill: function(e, i) {
     // console.log(e,i);
 		switch(i) {
+			case "plus-percent-vitality":
+				this.attrs['vitality'] = Math.round(this.attrs['vitality'] * (1 + (e / 100)));
+				break;
 			case "plus-dodge":
 				var value = e / 100;
 				this.bonuses['plus-dodge'].push(value);
@@ -589,7 +592,7 @@ BuildCalculator.prototype = {
 	// ----------------------------------
 	calcDefenses: function() {
 		var rendered = {};	// Storage for Rendered Statistics
-		// ----------------------------------
+ 		// ----------------------------------
 		// Life
 		// Formula : (36 + 4 * Level + (Level - 25) * Vitality)
 		// ----------------------------------
