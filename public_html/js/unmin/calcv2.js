@@ -1547,6 +1547,18 @@ BuildCalculator.prototype = {
 			}
 			rendered['lps-average'] = Math.round(total * 100) / 100;
 		}
+		if(!rendered['rps']) {
+			rendered['rps'] = {};
+		}
+		// Does the person have AP on Crit?
+		// console.log(this.attrs);
+		if(this.attrs['ap-on-crit']) {
+			// console.log((1 - (critHit * 0.01)));
+			if(options.skill.procRate) {
+				rendered['rps']['ap'] = (Math.round((critHit) * (options.skill.procRate) * 10)/10) + "%, +" + this.attrs['ap-on-crit'] + " AP";				
+			}
+			// console.log(rendered['rps']['ap']);
+		}
 		// Does this skill generate anything for us?
 		_.each(['generate-fury', 'generate-hatred', 'generate-spirit'], function(v,k) {
 			// console.log(k,v,options.skill);
@@ -1571,9 +1583,6 @@ BuildCalculator.prototype = {
 			}
 			// Generate the Resource Display
 			if(generate) {
-				if(!rendered['rps']) {
-					rendered['rps'] = {};
-				}
 				if(duration) {
 					rendered['rps'][resource] = Math.round(generate * 2 * 100) / 100;
 				} else {

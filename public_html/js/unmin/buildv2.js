@@ -568,6 +568,12 @@
 				case "rps":
 					_.each(i, function(v,k) {
 						switch(k) {
+							case "ap":
+								// row.append($("<td colspan='2'>").html(v));
+								// return row;							
+								label = "AP/Crit";
+								value = v;
+								break;
 							case "fury":
 								label = "Fury Generation";
 								value = v + " fury/sec";
