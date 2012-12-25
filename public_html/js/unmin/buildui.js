@@ -614,10 +614,12 @@ $(function() {
 		});
 		$("#passive-skill-chooser").append($("<p>").append(label, select));
 		select.bind('change', function() {
-			var skill = $(this).val(),
+			var skill = $(this).val(), 
 					id = parseInt($(this).attr("name").replace("passiveSelect", ""));
 			$.each(d3up.builds, function(k) {
+				var skills = _.keys(build.getSkills().passives);
 				skills[id] = skill;
+				// console.log(skills);
 				d3up.builds[k].setSkills({passives: skills});
 				d3up.builds[k].run();
 		  });
@@ -626,6 +628,19 @@ $(function() {
 	    $.each(d3up.builds, function(k) {
         d3up.builds[k].renderAgain();
       });
+			// Old 
+			// var skill = $(this).val(),
+			// 		id = parseInt($(this).attr("name").replace("passiveSelect", ""));
+			// $.each(d3up.builds, function(k) {
+			// 	skills[id] = skill;
+			// 	d3up.builds[k].setSkills({passives: skills});
+			// 	d3up.builds[k].run();
+			// 		  });
+			// 	    d3up.builds.build.renderSkillsTo($("#passives"));
+			// 	    d3up.builds.build.renderSkillsTo($("#build-header"));
+			// 	    $.each(d3up.builds, function(k) {
+			//         d3up.builds[k].renderAgain();
+			//       });
 		});
 	});
 	// Create the Selects for actives
