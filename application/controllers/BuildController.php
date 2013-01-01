@@ -8,6 +8,7 @@
 class BuildController extends D3Up_Controller_Action
 {
 	public function indexAction() {
+		throw new Exception("Currently disabled until I have a chance to fix a bug.");
 		$query = array(
 			'private' => array('$ne' => true),
 			'stats.dps' => array('$gt' => 0),
