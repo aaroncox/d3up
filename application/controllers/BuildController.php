@@ -8,14 +8,14 @@
 class BuildController extends D3Up_Controller_Action
 {
 	public function indexAction() {
-		throw new Exception("Currently disabled until I have a chance to fix a bug.");
+		// throw new Exception("Currently disabled until I have a chance to fix a bug.");
 		$query = array(
 			'private' => array('$ne' => true),
-			'stats.dps' => array('$gt' => 0),
-			'stats.ehp' => array('$gt' => 0),
+			// 'stats.dps' => array('$gt' => 0),
+			// 'stats.ehp' => array('$gt' => 0),
 			// 'votes' => array('$gt' => -5),
-			'actives' => array('$exists' => true),
-			'passives' => array('$exists' => true),
+			// 'actives' => array('$exists' => true),
+			// 'passives' => array('$exists' => true),
 		);
 		if($this->view->selectedActives = $skills = $this->getRequest()->getParam("skills")) {
 			if($skills != "null") {
@@ -60,7 +60,6 @@ class BuildController extends D3Up_Controller_Action
 				$this->view->isHardcore = $query['hardcore'] = true;
 			} 
 		}
-		// var_dump($query); exit;
 		$builds = Epic_Mongo::db('build')->fetchAll($query, $sort);	
 		$paginator = Zend_Paginator::factory($builds);
 		$paginator->setCurrentPageNumber($this->getRequest()->getParam('page', 1))->setItemCountPerPage(15)->setPageRange(3);
