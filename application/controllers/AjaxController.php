@@ -40,7 +40,7 @@ class AjaxController extends D3Up_Controller_Action
 		foreach(explode(",", $params['stats']) as $v) {
 			$parts = explode(" ", trim($v));
       if(count($parts) > 1) {
-       	$name = array_search($parts[1], $this->_statMap);
+       	$name = array_search(strtolower($parts[1]), array_map('strtolower', $this->_statMap));
         // var_dump($name);
   			if($name) {				
 	
@@ -79,7 +79,7 @@ class AjaxController extends D3Up_Controller_Action
 		 	    $p = explode(" ", $socket);
 		 	    array_push($parts, $socket);
 		 	    if(count($p) > 1) {
-      			$name = array_search($p[1], $this->_statMap);
+      			$name = array_search(strtolower($p[1]), array_map('strtolower', $this->_statMap));
       			$match = array($name, (int) $p[0]);
   		 	    foreach($this->_gemMap as $slug => $gem) {
   		 	      foreach($gem as $stat => $value) {
@@ -235,7 +235,7 @@ class AjaxController extends D3Up_Controller_Action
 		}
 		foreach(explode(", ", $params['a']) as $v) {
 			$parts = explode(" ", $v);
-			$name = array_search($parts[1], $this->_statMap);
+			$name = array_search(strtolower($parts[1]), array_map('strtolower', $this->_statMap));
 			if($name) {
 				$item->attrs->$name = (float) $parts[0];									
 			}
