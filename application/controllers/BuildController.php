@@ -8,7 +8,16 @@
 class BuildController extends D3Up_Controller_Action
 {
 	public function indexAction() {
-		throw new Exception("Currently disabled until I have a chance to fix a bug.");
+		// Some shitty logic to help debug
+		$pass = false;
+		if($user = Epic_Auth::getInstance()->getProfile()) {
+			if($user->username == 'gnarf' || $user->username == 'jesta') {
+				$pass = true;
+			}
+		}
+		if(!$pass) {
+			throw new Exception("Currently disabled until I have a chance to fix a bug.");			
+		}
 		$query = array(
 			'private' => array('$ne' => true),
 			// 'stats.dps' => array('$gt' => 0),
@@ -61,6 +70,17 @@ class BuildController extends D3Up_Controller_Action
 			} 
 		}
 		$builds = Epic_Mongo::db('build')->fetchAll($query, $sort);	
+		// Debugging Code
+		var_dump(
+			"Query ---", 
+			$query, 
+			"Sort ---", 
+			$sort, 
+			"Total Records: ".$builds->count(), 
+			"Current Page: ".$this->getRequest()->getParam('page', 1), 
+			"Per Page: 15"
+		); exit;
+		// End Debugging Code
 		$paginator = Zend_Paginator::factory($builds);
 		$paginator->setCurrentPageNumber($this->getRequest()->getParam('page', 1))->setItemCountPerPage(15)->setPageRange(3);
 		$this->view->builds = $paginator;
