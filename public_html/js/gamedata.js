@@ -98,6 +98,9 @@
 					'desc': 'Increases the damage of Ancient Spear and Weapon Throw by <span class="skill-highlight">10%</span>. In addition, a Critical Hit with Ancient Spear resets the cooldown while Critical Hits with Weapon Throw have a chance to return <span class="skill-highlight">14</span> Fury.',
 					'procEffect': {
 						'generate-fury-throw': 14,
+					},
+					'effect': {
+						'bb-weapon-throw-dmg': 10
 					}
 				},
 				'relentless': {
