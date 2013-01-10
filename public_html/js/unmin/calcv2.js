@@ -1368,7 +1368,6 @@ BuildCalculator.prototype = {
 			if(attributeTip) {
 				var bonusValue = this.attrs[attributeTip],
 						bonusText = '';
-				console.log(attributeTip);
 				if(td[attributeTip]) {
 					if(td[attributeTip].search(/cost/i) >= 0) {
 						// console.log("Resource cost reduction");
