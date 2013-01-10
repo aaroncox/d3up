@@ -451,7 +451,7 @@ BuildCalculator.prototype = {
 						case "max-spirit":
 						case "max-hatred":
 						case "max-fury":
-						case "life-steal":								
+						case "life-steal":	
 						case "cc-reduce":
 							if(this.attrs[effect]) {
 								this.attrs[effect] += (value * 100); 
@@ -496,6 +496,13 @@ BuildCalculator.prototype = {
 							// if(attrs['max-mana']) {
 							// 	attrs['max-mana'] = attrs['max-mana'] + (attrs['max-mana'] * value);
 							// }
+							break;
+						case "bb-weapon-throw-dmg":								
+							if(this.attrs[effect]) {
+								this.attrs[effect] += (value); 
+							} else {
+								this.attrs[effect] = value;
+							}
 							break;
 						case "critical-hit":
 							this.attrs['critical-hit'] = this.attrs['critical-hit'] + (value * 100);
@@ -1361,6 +1368,7 @@ BuildCalculator.prototype = {
 			if(attributeTip) {
 				var bonusValue = this.attrs[attributeTip],
 						bonusText = '';
+				console.log(attributeTip);
 				if(td[attributeTip]) {
 					if(td[attributeTip].search(/cost/i) >= 0) {
 						// console.log("Resource cost reduction");
