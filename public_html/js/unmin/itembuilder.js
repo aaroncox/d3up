@@ -162,7 +162,7 @@ ItemBuilder.prototype = {
 		'mana-kill': 'Grants VVV Mana per Kill',
 		'wd-firebomb': 'Reduces resource cost of Firebomb by VVV Mana',
 		'wd-haunt': 'Increases Haunt Damage by VVV%',
-		'wd-acid-clouds': 'Increases Critical Hit Chance of Acid Clouds by VVV%',
+		'wd-acid-cloud': 'Increases Critical Hit Chance of Acid Clouds by VVV%',
 		'wd-firebats': 'Reduces resource cost of Firebats by VVV Mana',
 		'wd-zombie-dogs': 'Reduces cooldown of Summon Zombie Dogs by VVV Seconds',
 		'wd-plague-of-toads': 'Increases Plague of Toads damage by VVV%',

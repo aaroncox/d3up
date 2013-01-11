@@ -418,7 +418,7 @@ class AjaxController extends D3Up_Controller_Action
 		'mana-max' => "MaxMana",
 		'wd-firebomb' => "W-FBomb",
 		'wd-haunt' => "W-Haunt",
-		'wd-acid-clouds' => "W-ACloud",
+		'wd-acid-cloud' => "W-ACloud",
 		'wd-firebats' => "W-FBats",
 		'wd-zombie-dogs' => "W-ZDogs",
 		'wd-plague-of-toads' => "W-PoT",
