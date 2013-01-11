@@ -55,6 +55,9 @@
       <? if(!$this->record->_createdBy->id || ($profile && $profile->id === $this->record->_createdBy->id)): ?>
       <li><a data-tab="#sync" class="button">Battle.net Sync</a></li>
       <? endif ?>
+			<? if($profile): ?>
+			<li><a class="button" href="/b/<?= $this->record->id ?>/copy">Duplicate Build</a></li>
+			<? endif ?>
       <? if($this->myBuild): ?>
       <li><a class="button" href="/user/items">My Items</a></li>
       <li><a class='saveStats button' href="#">Save Stats to DB</a></li>
