@@ -164,7 +164,7 @@ class BuildController extends D3Up_Controller_Action
 		$query = array(
 			'_characterBt' => strtolower($battletag)
 		);
-		$this->view->builds = $builds = Epic_Mongo::db("build")->fetchAll($query);
+		$this->view->builds = $builds = Epic_Mongo::db("build")->fetchAll($query, array('_lastCrawl' => -1));
 		if(!count($builds)) {
 			throw new Exception("BattleTag not found in the database.");
 		}
