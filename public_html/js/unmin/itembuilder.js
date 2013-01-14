@@ -191,7 +191,7 @@ ItemBuilder.prototype = {
 		// Legendaries
 		'pig-sticker': 'Squeal!',
 		'leg-blood-magic-blade': 'Blood oozes from you.',
-		'leg-wizardspike': '20% chance to hurl a frozen orb when attacking.',
+		'leg-wizardspike': 'VVV% chance to hurl a frozen orb when attacking.',
 		'leg-the-gidbinn': 'Chance to summon a Fetish when attacking.',
 		'leg-last-breath': 'Slain enemies rest in pieces.',
 		'leg-skycutter': 'Chance to summon angelic assistance when attacking.',
