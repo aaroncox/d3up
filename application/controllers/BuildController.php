@@ -162,7 +162,7 @@ class BuildController extends D3Up_Controller_Action
 	public function taglistAction() {
 		$this->view->battletag = $battletag = str_replace("-", "#", $this->getRequest()->getParam("bt"));
 		$query = array(
-			'_characterBt' => $battletag
+			'_characterBt' => strtolower($battletag)
 		);
 		$this->view->builds = $builds = Epic_Mongo::db("build")->fetchAll($query);
 		if(!count($builds)) {
