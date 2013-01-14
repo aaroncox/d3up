@@ -162,22 +162,10 @@ class BuildController extends D3Up_Controller_Action
 	public function taglistAction() {
 		$this->view->battletag = $battletag = str_replace("-", "#", $this->getRequest()->getParam("bt"));
 		$query = array(
-			'battletag' => $battletag
+			'_characterBt' => $battletag
 		);
-		$users = Epic_Mongo::db("user")->fetchAll($query);
-		if(count($users)) {
-			$query = array(
-				'$or' => array()
-			);
-			foreach($users as $user) {
-				$query['$or'][]['_createdBy'] = $user->createReference();
-			}
-			// var_dump($query); exit;
-			$sort = array(
-				'_lastCrawl' => -1,
-			);
-			$this->view->builds = Epic_Mongo::db("build")->fetchAll($query, $sort);	
-		} else {
+		$this->view->builds = $builds = Epic_Mongo::db("build")->fetchAll($query);
+		if(!count($builds)) {
 			throw new Exception("BattleTag not found in the database.");
 		}
 	}
