@@ -8498,7 +8498,7 @@
 			radiant_star_topaz: ['Radiant Star Topaz' ,'31% Better Chance of Finding Magical Items' ,'Melee attackers take 1800 damage per hit' ,'+58 Intelligence'],
 			marquise_amathyst: ["Marquise Amethyst",'+19% Life' ,'Each Hit Adds +700 Life' ,'+62 Vitality'],
 			marquise_emerald: ["Marquise Emerald",'+33% Extra Gold from Monsters' ,'Critical Hit Damage Increased by 110%' ,'+62 Dexterity'],
-			marquise_ruby: ["Marquise Ruby",'Increases Experience Rewarded per Kill by 33%' ,'+150-150 Damage' ,'+62 Strength'],
+			marquise_ruby: ["Marquise Ruby",'Increases Experience Rewarded per Kill by 33%' ,'+150 Minimum and +150 Maximum Damage' ,'+62 Strength'],
 			marquise_topaz: ["Marquise Topaz",'33% Better Chance of Finding Magical Items' ,'Melee attackers take 2200 damage per hit' ,'+62 Intelligence']
 		},
 		gemEffects: {
