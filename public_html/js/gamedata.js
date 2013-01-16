@@ -8553,7 +8553,11 @@
 			"radiant_star_amethyst":["Radiant Star Amethyst",["plus-life",18],["life-hit",600],["vitality",58]],
 			"radiant_star_emerald":["Radiant Star Emerald",["plus-gold-find",31],["critical-hit-damage",100],["dexterity",58]],
 			"radiant_star_ruby":["Radiant Star Ruby",["plus-experience-percent",31],["damage","20-40"],["strength",58]],
-			"radiant_star_topaz":["Radiant Star Topaz",["plus-magic-find",31],["thorns",1800],["intelligence",58]]
+			"radiant_star_topaz":["Radiant Star Topaz",["plus-magic-find",31],["thorns",1800],["intelligence",58]],
+			"marquise_amathyst":["Marquise Amethyst",["plus-life",19],["life-hit",700],["vitality",62]],
+			"marquise_emerald":["Marquise Emerald",["plus-gold-find",33],["critical-hit-damage",110],["dexterity",62]],
+			"marquise_ruby":["Marquise Ruby",["plus-experience-percent",33],["damage","150-150"],["strength",62]],
+			"marquise_topaz":["Marquise Topaz",["plus-magic-find",33],["thorns",2200],["intelligence",62]]
 		}
 	};
 })( d3up );
