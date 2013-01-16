@@ -76,7 +76,8 @@ BuildCalculator.prototype = {
 			'plus-percent-life-regen': 0,
 			'plus-percent-life-regen-passive': 0,
 			'proc-generate-fury': 0,
-			'generate-fury-second': 0
+			'generate-fury-second': 0,
+			'extra-armor': 0
 		};
 	},
 	setClass: function(newClass) {
@@ -481,10 +482,10 @@ BuildCalculator.prototype = {
 							}						
 							break;							
 						case "dexterity-to-armor":								
-							this.attrs['armor'] = this.attrs['armor'] + (this.attrs['dexterity'] * value);
+							this.bonuses['extra-armor'] = (this.attrs['dexterity'] * value);
 							break;
 						case "vitality-to-armor":
-							this.attrs['armor'] = this.attrs['armor'] + (this.attrs['vitality'] * value);
+							this.bonuses['extra-armor'] = (this.attrs['vitality'] * value);
 							break;
 						case "reduce-non-physical":
 							this.applyEnabledSkill(value, 'percent-non-physical');
@@ -623,7 +624,7 @@ BuildCalculator.prototype = {
 		// Armor
 		// Formula: ( Armor + Strength ) * ( Bonus Armor Percentage )
 		// ----------------------------------
-		rendered.armor = (this.attrs['armor'] + this.attrs['strength']) * (1 + this.bonuses['plus-armor']);
+		rendered.armor = (this.attrs['armor'] + this.attrs['strength'] + this.bonuses['extra-armor']) * (1 + this.bonuses['plus-armor']);
 		// ----------------------------------
 		// Damage Reduction
 		// Formula: ( Armor / ( 50 * Monster Level + Armor ) )
