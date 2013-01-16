@@ -2467,6 +2467,7 @@ BuildCalculator.prototype = {
 				} else {
 					this.attrs[ak] = parseFloat(av);
 				}
+
 			}, this);
 		}
 	},
@@ -2506,6 +2507,8 @@ BuildCalculator.prototype = {
 					'life-steal': 'Life/Steal', 
 					'lifeTotal': 'Life', 
 					'lightning-resist': 'Lightning Res', 
+					'min-damage': '+Min Dmg',
+					'max-damage': '+Max Dmg',
 					'physical-resist': 'Physical Res', 
 					'plus-block': '+Block', 
 					'plus-gold-find': '+Gold Find', 
