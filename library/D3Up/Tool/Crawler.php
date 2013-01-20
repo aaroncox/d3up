@@ -560,7 +560,7 @@ class D3Up_Tool_Crawler
 				}
 				$query['sockets'] = $socketsArray;
 				// Look to see if this item exists!
-				$found = false; //$found = Epic_Mongo::db('item')->fetchOne($query);
+				$found = Epic_Mongo::db('item')->fetchOne($query);
 				// Did we find this item already?
 	      // var_dump($slot); exit;
 				if($slot == 'mainhand') {
