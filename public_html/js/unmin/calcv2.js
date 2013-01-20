@@ -1978,8 +1978,7 @@ BuildCalculator.prototype = {
 					case "armor":
 						if(json.type == 'ring' || json.type == 'amulet') {
 							this.attrs[ak] -= parseFloat(av);
-							console.log(json.type, "-"+av);
-							
+							// console.log(json.type, "-"+av);							
 						}
 						break;
 					case "plus-block":
@@ -2315,7 +2314,7 @@ BuildCalculator.prototype = {
 							} else {
 								this.attrs[ak] = parseFloat(av);
 							}
-							console.log(json.type, av);
+							// console.log(json.type, av);
 						}
 						break;
 					case "block-chance":
