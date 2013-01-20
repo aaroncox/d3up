@@ -405,7 +405,7 @@ class D3Up_Tool_Crawler
 		$status = array();
 		$skills = array();
 		$passives = array();
-    // echo "<pre>"; var_dump($url, $profile); exit;
+    // echo "<pre>"; var_dump($url, $profile, $syncOnly); exit;
     // if(isset($profile['skills'])) {      
 		foreach($profile['skills']['active'] as $idx => $skill) {
       // var_dump($skill); exit;
