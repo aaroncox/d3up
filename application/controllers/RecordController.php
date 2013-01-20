@@ -397,7 +397,7 @@ class RecordController extends D3Up_Controller_Action
 	 		$fakeProfile = Epic_Mongo::newDoc('profile');
 	 		$fakeProfile->region = $record->_characterRg;
 	 		$fakeProfile->battletag = strtolower($record->_characterBt);
-	 		D3Up_Tool_Crawler::getInstance()->crawl($record, $fakeProfile, $record->_characterId, $syncOnly);		  
+	 		D3Up_Tool_Crawler::getInstance()->crawl($record, $fakeProfile, $syncOnly);		  
 		}
 		$record->crawlCount++;
 		$record->_lastCrawl = time();
