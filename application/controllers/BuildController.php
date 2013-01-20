@@ -9,15 +9,15 @@ class BuildController extends D3Up_Controller_Action
 {
 	public function indexAction() {
 		// Some shitty logic to help debug
-		$pass = false;
-		if($user = Epic_Auth::getInstance()->getProfile()) {
-			if($user->username == 'gnarf' || $user->username == 'jesta') {
-				$pass = true;
-			}
-		}
-		if(!$pass) {
-			throw new Exception("Currently disabled until I have a chance to fix a bug.");			
-		}
+		// $pass = false;
+		// if($user = Epic_Auth::getInstance()->getProfile()) {
+		// 	if($user->username == 'gnarf' || $user->username == 'jesta') {
+		// 		$pass = true;
+		// 	}
+		// }
+		// if(!$pass) {
+		// 	throw new Exception("Currently disabled until I have a chance to fix a bug.");			
+		// }
 		$query = array(
 			'private' => array('$ne' => true),
 			// 'stats.dps' => array('$gt' => 0),
@@ -44,7 +44,7 @@ class BuildController extends D3Up_Controller_Action
 			switch($sortBy) {
 				case "dps":
 				case "ehp":
-					$query['stats.'.$sortBy] = array('$ne' => null);
+					$query['stats.'.$sortBy] = array('$gt' => 0);
 					$sort['stats.'.$sortBy] = -1;
 					break;
 				case "votes":
@@ -69,17 +69,18 @@ class BuildController extends D3Up_Controller_Action
 				$this->view->isHardcore = $query['hardcore'] = true;
 			} 
 		}
+		// var_dump($sort); exit;
 		$builds = Epic_Mongo::db('build')->fetchAll($query, $sort);	
 		// Debugging Code
-		var_dump(
-			"Query ---", 
-			$query, 
-			"Sort ---", 
-			$sort, 
-			"Total Records: ".$builds->count(), 
-			"Current Page: ".$this->getRequest()->getParam('page', 1), 
-			"Per Page: 15"
-		); exit;
+		// var_dump(
+		// 	"Query ---", 
+		// 	$query, 
+		// 	"Sort ---", 
+		// 	$sort, 
+		// 	"Total Records: ".$builds->count(), 
+		// 	"Current Page: ".$this->getRequest()->getParam('page', 1), 
+		// 	"Per Page: 15"
+		// ); exit;
 		// End Debugging Code
 		$paginator = Zend_Paginator::factory($builds);
 		$paginator->setCurrentPageNumber($this->getRequest()->getParam('page', 1))->setItemCountPerPage(15)->setPageRange(3);
@@ -102,7 +103,7 @@ class BuildController extends D3Up_Controller_Action
 		}
 		// Create a new Build
 		$build = Epic_Mongo::newDoc('build');
-		$form = $this->view->form = $build->getEditForm();
+		// $form = $this->view->form = $build->getEditForm();
 		$battletag = null;
 		if($this->getRequest()->isPost()) {
 			$result = $form->process($this->getRequest()->getParams());
@@ -180,5 +181,8 @@ class BuildController extends D3Up_Controller_Action
 		);
 		$this->view->builds = Epic_Mongo::db("build")->fetchAll($query, $sort);	
 		// var_dump(Epic_Mongo::db('build')->fetchOne(array('id'=>1))->export(), $this->getRequest()->getParams()); exit;
+	}
+	public function dbTestsAction() {
+		
 	}
 } // END class HeroController extends Epic_Controller_Action
