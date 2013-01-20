@@ -281,6 +281,8 @@ class RecordController extends D3Up_Controller_Action
 					switch($a) {
 						// Equiping an Item into a slot
 						case "equip":
+							throw new Exception("Currently Disabled, please <a href='http://www.reddit.com/r/d3up/comments/16wpap/d3upcom_database_upgrades_all_data_saving/'>read this post</a> for more information. Expect saving to be ready again in a couple hours.");
+						
 							$slot = $this->getRequest()->getParam('slot');
 							$newItem = $this->getRequest()->getParam('newItem');
 							if($newItem == "") {
