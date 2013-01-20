@@ -28,7 +28,7 @@ $.fn.bindTooltip = function() {
 	}
 	itemType.html(item.display.type);
 	// Fix up the Tooltip Icon
-	if(item.icon) {
+	if(item && item.icon && item.quality) {
 		itemIcon.addClass("item-quality-" + item.quality);
 		itemIcon.html($("<img src='http://media.blizzard.com/d3/icons/items/large/" + item.icon + ".png'>"));
 		content.append(itemIcon);		
