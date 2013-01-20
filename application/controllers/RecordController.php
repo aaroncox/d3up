@@ -391,9 +391,9 @@ class RecordController extends D3Up_Controller_Action
 		} elseif($record->_createdBy->id) {
 			throw new Exception("This isn't an anonymous build, someone owns this build and you cannot sync it from Battle.net.");
 		} else {
-	 		if(time() <= $record->_lastCrawl + 60 * 60) {
-	 			throw new Exception("Anonymous Profiles may only be crawled once every hour. This profile has been updated too recently to be updated again, try again later!");
-	 		}
+	 		// if(time() <= $record->_lastCrawl + 60 * 60 * 1) {
+	 		// 	throw new Exception("Anonymous Profiles may only be crawled once every hour. This profile has been updated too recently to be updated again, try again later!");
+	 		// }
 	 		$fakeProfile = Epic_Mongo::newDoc('profile');
 	 		$fakeProfile->region = $record->_characterRg;
 	 		$fakeProfile->battletag = strtolower($record->_characterBt);
