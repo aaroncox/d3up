@@ -237,7 +237,7 @@ class RecordController extends D3Up_Controller_Action
 		$record = $this->getRecord();
 		if($record->_type == "build") {
 		  // $this->view->editForm = $record->getEditForm();
-		  $this->view->editForm->setAction("/build/edit/id/" . $record->id);
+		  // $this->view->editForm->setAction("/build/edit/id/" . $record->id);
 			$this->checkVote();
 			$this->view->resync = $this->getRequest()->getParam("resync");
 			if($record->_twitchEnabled && $record->_createdBy->_twitchUser) {
