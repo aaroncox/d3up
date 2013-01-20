@@ -37,6 +37,7 @@ class D3Up_Form_Record_Build_Guide extends Epic_Form
 	public function init()
 	{
 		parent::init();
+		throw new Exception("Currently Disabled, please <a href='http://www.reddit.com/r/d3up/comments/16wpap/d3upcom_database_upgrades_all_data_saving/'>read this post</a> for more information. Expect saving to be ready again in a couple hours.");
 		
 		$build = $this->getBuild();
 				

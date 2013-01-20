@@ -32,6 +32,8 @@ class RecordController extends D3Up_Controller_Action
 		}
 	}
 	public function deleteAction() {
+		throw new Exception("Currently Disabled, please <a href='http://www.reddit.com/r/d3up/comments/16wpap/d3upcom_database_upgrades_all_data_saving/'>read this post</a> for more information. Expect saving to be ready again in a couple hours.");
+		
 		$record = $this->getRecord();
 		$profile = Epic_Auth::getInstance()->getProfile();
 		if($profile->createReference() != $record->_createdBy->createReference()) {
@@ -45,6 +47,8 @@ class RecordController extends D3Up_Controller_Action
 		}
 	}
 	public function copyAction() {
+		throw new Exception("Currently Disabled, please <a href='http://www.reddit.com/r/d3up/comments/16wpap/d3upcom_database_upgrades_all_data_saving/'>read this post</a> for more information. Expect saving to be ready again in a couple hours.");
+		
 		// Get the record
 		$record = $this->getRecord();
 		// Get this user
@@ -103,7 +107,7 @@ class RecordController extends D3Up_Controller_Action
 				unset($export['id'], $export['_id'], $export['_createdBy'], $export['equipment'], $export['views'], $export['votes']);
 				$new->setFromArray($export);			
 				foreach(Epic_Mongo::db('gearset')->getSlots() as $slot) {
-					$item = $record->equipment->$slot;
+					$item = $record->gear->$slot;
 					if(!$item->id) {
 						continue;
 					}
@@ -123,7 +127,7 @@ class RecordController extends D3Up_Controller_Action
 					$newItem->_createdBy = $profile;
 					// var_dump($newItem); exit;
 					$newItem->save();
-					$new->equipment->$slot = $newItem;
+					$new->gear->$slot = $newItem;
 				}
 				if($record->_original->id) {
 					$new->_original = $record->_original;					
@@ -281,13 +285,13 @@ class RecordController extends D3Up_Controller_Action
 							$newItem = $this->getRequest()->getParam('newItem');
 							if($newItem == "") {
                 // Blank out the Item
-                $record->equipment[$slot] = null;
+                $record->gear[$slot] = null;
 							} else {
 							  // Fetch the new Item
 							 	$item = Epic_Mongo::db('item')->fetchOne(array('id' => (int) $newItem));
   							// If we are wearing a 2h weapon, blank out the offhand
-  							if(isset($record->equipment['mainhand']->id)) {
-  								switch($record->equipment['mainhand']->type) {
+  							if(isset($record->gear['mainhand']->id)) {
+  								switch($record->gear['mainhand']->type) {
   									case '2h-mace': 
   									case '2h-axe': 
   									case 'daibo': 
@@ -295,15 +299,15 @@ class RecordController extends D3Up_Controller_Action
   									case 'polearm': 
   									case 'staff': 
   									case '2h-sword':
-  										$record->equipment['offhand'] = null;
+  										$record->gear['offhand'] = null;
   										break;
   								}								
   							}
   							if(in_array($item->type, array('2h-mace', '2h-axe', 'daibo', 'crossbow', '2h-mighty', 'polearm', 'staff', '2h-sword'))) {								
-  								$record->equipment['offhand'] = null;
+  								$record->gear['offhand'] = null;
   							}
-  							$record->equipment[$slot] = $item;
-  							$record->equipmentCount = count($record->equipment); 
+  							$record->gear[$slot] = $item;
+  							$record->gearCount = count($record->gear); 
 							}
 							$stats = array();
 							foreach($this->getRequest()->getParam('stats') as $k => $v) {
@@ -340,6 +344,8 @@ class RecordController extends D3Up_Controller_Action
 		
 	}
 	public function crawlAction() {
+		throw new Exception("Currently Disabled, please <a href='http://www.reddit.com/r/d3up/comments/16wpap/d3upcom_database_upgrades_all_data_saving/'>read this post</a> for more information. Expect saving to be ready again in a couple hours.");
+		
 		if($profile = Epic_Auth::getInstance()->getProfile()) {		
 			$record = $this->getRecord();
 			if($record->_createdBy->createReference() == $profile->createReference()) {
@@ -360,11 +366,14 @@ class RecordController extends D3Up_Controller_Action
 		}
 	}
 	public function resyncAction() {
+		throw new Exception("Currently Disabled, please <a href='http://www.reddit.com/r/d3up/comments/16wpap/d3upcom_database_upgrades_all_data_saving/'>read this post</a> for more information. Expect saving to be ready again in a couple hours.");
+		
 		$record = $this->getRecord();
+		$syncOnly = $this->getRequest()->getParam('only');
 		$profile = D3Up_Auth::getInstance()->getProfile();
 		// For me so I can sync anyone in dev.
 		if(APPLICATION_ENV === 'development') {
-			D3Up_Tool_Crawler::getInstance()->crawl($record, $record->_createdBy, $record->_characterId);		  
+			D3Up_Tool_Crawler::getInstance()->crawl($record, false, $syncOnly);		  
   		// $this->_redirect("/b/" . $record->id ."?resync=true");
 		}
 		if(!$record->_characterId) {
@@ -386,7 +395,7 @@ class RecordController extends D3Up_Controller_Action
 			if(!$record->_createdBy->region) {
 			 throw new Exception("You do not have the 'Region' field filled out on your profile! Click <a href='/user/edit'>edit profile</a> and choose your region");
 			}
-			D3Up_Tool_Crawler::getInstance()->crawl($record, $record->_createdBy, $record->_characterId);		  
+			D3Up_Tool_Crawler::getInstance()->crawl($record, false, $syncOnly);		  
 		} elseif($record->_createdBy->id) {
 			throw new Exception("This isn't an anonymous build, someone owns this build and you cannot sync it from Battle.net.");
 		} else {
@@ -396,7 +405,7 @@ class RecordController extends D3Up_Controller_Action
 	 		$fakeProfile = Epic_Mongo::newDoc('profile');
 	 		$fakeProfile->region = $record->_characterRg;
 	 		$fakeProfile->battletag = strtolower($record->_characterBt);
-	 		D3Up_Tool_Crawler::getInstance()->crawl($record, $fakeProfile, $record->_characterId);		  
+	 		D3Up_Tool_Crawler::getInstance()->crawl($record, $fakeProfile, $record->_characterId, $syncOnly);		  
 		}
 		$record->crawlCount++;
 		$record->_lastCrawl = time();
@@ -415,6 +424,8 @@ class RecordController extends D3Up_Controller_Action
 		echo json_encode($record->cleanExport()); exit;
 	}
 	public function updateStatsAction() {
+		throw new Exception("Currently Disabled, please <a href='http://www.reddit.com/r/d3up/comments/16wpap/d3upcom_database_upgrades_all_data_saving/'>read this post</a> for more information. Expect saving to be ready again in a couple hours.");
+		
 		$record = $this->getRecord();
 		if($record->_type == 'build' && $record->_createdBy && $profile = Epic_Auth::getInstance()->getProfile()) {		
 			if($record->_createdBy->createReference() == $profile->createReference()) {			

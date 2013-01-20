@@ -83,6 +83,8 @@ class D3Up_Form_Record_Item extends Epic_Form
 	 **/
 	public function init()
 	{
+		throw new Exception("Currently Disabled, please <a href='http://www.reddit.com/r/d3up/comments/16wpap/d3upcom_database_upgrades_all_data_saving/'>read this post</a> for more information. Expect saving to be ready again in a couple hours.");
+		
 		parent::init();
 		$item = $this->getItem();
 
@@ -339,7 +341,7 @@ class D3Up_Form_Record_Item extends Epic_Form
 			// Save the Item
 			$item->save();
 			// Equip the new Item
-			$this->_build->equipment->$type = $item;
+			$this->_build->gear->$type = $item;
 			// Save the Build
 			$this->_build->save();
 			// Redirect to the build now
