@@ -94,7 +94,7 @@ var activeActives = [];
 			<p>Which item do you wish to simulate changes on?</p>
 			<p><select id="simulate-slot">
 				<option></option>
-				<? foreach($this->record->equipment->getSlots() as $slot): ?>
+				<? foreach($this->record->gear->getSlots() as $slot): ?>
 					<option class="slot" value="<?= $slot ?>"><?= ucfirst($slot) ?></option>
 				<? endforeach; ?>
 			</select></p>
@@ -135,7 +135,7 @@ var activeActives = [];
 			<p>Which item slot should we compare?</p>
 			<select id="compared-slot">
 				<option></option>
-				<? foreach($this->record->equipment->getSlots() as $slot): ?>
+				<? foreach($this->record->gear->getSlots() as $slot): ?>
 					<option class="slot" value="<?= $slot ?>"><?= ucfirst($slot) ?></option>
 				<? endforeach; ?>
 			</select>
@@ -161,7 +161,7 @@ var activeActives = [];
 			</p>
 			<? endif; ?>
 			<table class="equipment-table">
-			<? foreach($this->record->equipment->getSlots() as $slot): ?>
+			<? foreach($this->record->gear->getSlots() as $slot): ?>
 				<tr>
 					<td>
 						<?= ucfirst($slot) ?>
@@ -174,8 +174,8 @@ var activeActives = [];
 					<? endif; ?>
 					<td class="primary">
 						<span class="equipped" id="equipped-<?= $slot ?>" data-slot="<?= $slot ?>">
-							<? if($this->record->equipment[$slot]->id): ?>
-								<?= $this->itemLink($this->record->equipment[$slot]) ?>
+							<? if($this->record->gear[$slot]->id): ?>
+								<?= $this->itemLink($this->record->gear[$slot]) ?>
 							<? else: ?>
 								Nothing
 							<? endif ?>

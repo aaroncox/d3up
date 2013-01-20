@@ -31,11 +31,9 @@
 			}
 		?>
 		<th></th>
-		<th class="votes"><a href="?sort=votes<?= $params ?>">Votes</a></th>
-		<th class="views"><a href="?sort=views<?= $params ?>">Views</a></th>
 		<th class="views">SC/HC</th>
+		<th>Name</th>
 		<th>Paragon</th>
-		<th><a href="?sort=name<?= $params ?>">Name</a></th>
 		<th>Skills</th>
 		<th><a href="?sort=dps<?= $params ?>">DPS</a></th>
 		<th><a href="?sort=ehp<?= $params ?>">EHP</a></th>
@@ -44,17 +42,9 @@
 <? foreach($this->builds as $build): ?>
 	<tr class='build-row'>
 		<td class="icon"><img src="/images/<?= $build->class ?>.png"/></td>
-		<td class="stat votes">
-			<? if($build->votes): ?>
-				<? if($build->votes > 0): ?>+<? endif ?><?= $this->prettyStat($build->votes) ?>
-			<? else: ?>	
-				-
-			<? endif ?>
-		</td>
-		<td class="stat views"><?= $this->prettyStat($build->views) ?></td>
 		<td><?= ($build->hardcore) ? "<span class='neg' title='Hardcore'>HC</span>" : "<span class='pos' title='Softcore'>SC</span>" ?> </td>
-		<td class="stat"><?= $build->paragon ?></td>
 		<td class='name'><?= $this->mLink($build) ?></td>
+		<td class="stat"><?= $build->paragon ?></td>
 		<td class="skills">
 			<? if($build->actives): ?>
 				<? foreach($build->actives as $active): ?>

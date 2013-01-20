@@ -8,6 +8,7 @@ $.fn.bindTooltip = function() {
 			header = $("<div class='top'/>"),
 			content = $("<div class='item'/>"),
 			footer = $("<div class='bottom'/>"),
+			itemIcon = $("<div class='item-icon'/>"),
 			itemName = $("<p/>"),
 			itemLabel = $("<p class='item-type'/>"),
 			itemQuality = $("<span class='quality'/>"),
@@ -26,6 +27,12 @@ $.fn.bindTooltip = function() {
 		itemQuality.html(item.display.quality);			
 	}
 	itemType.html(item.display.type);
+	// Fix up the Tooltip Icon
+	if(item.icon) {
+		itemIcon.addClass("item-quality-" + item.quality);
+		itemIcon.html($("<img src='http://media.blizzard.com/d3/icons/items/large/" + item.icon + ".png'>"));
+		content.append(itemIcon);		
+	}
 	// Add the Header to the Tooltip
 	container.append(header.append(itemName.addClass("quality-" + item.quality)));
 	container.append(content);
@@ -52,7 +59,7 @@ $.fn.bindTooltip = function() {
 			// Add the DPS Value, Attack Speed and damage range
 			itemPrimaryBigStat.html(item.stats.dps);
 			itemPrimaryHelper.html("Damage Per Second");
-			itemExtraPercent.html(item.stats['speed'] + " <span class='stat-helper'>Attacks per Second</span>");
+			itemExtraPercent.html(Math.round(item.stats['speed'] * 100) / 100 + " <span class='stat-helper'>Attacks per Second</span>");
 			if(item.stats['damage']) {
 				itemExtraRange.html(item.stats['damage']['min'] + "-" + item.stats['damage']['max'] + " <span class='stat-helper'>Damage</span>");				
 			}

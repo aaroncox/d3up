@@ -8,6 +8,7 @@
 class D3Up_Mongo_Record_Item extends Epic_Mongo_Document_Record
 {
 	public $route = 'item';	
+	protected static $_collectionName = 'items';
 	protected static $_documentType = 'item';
 	
 	protected $_requirements = array(

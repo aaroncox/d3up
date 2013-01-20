@@ -483,6 +483,7 @@ BuildCalculator.prototype = {
 							break;							
 						case "dexterity-to-armor":								
 							this.bonuses['extra-armor'] = (this.attrs['dexterity'] * value);
+							console.log(this.bonuses['extra-armor'], this.attrs['dexterity'], value);
 							break;
 						case "vitality-to-armor":
 							this.bonuses['extra-armor'] = (this.attrs['vitality'] * value);
@@ -1977,6 +1978,8 @@ BuildCalculator.prototype = {
 					case "armor":
 						if(json.type == 'ring' || json.type == 'amulet') {
 							this.attrs[ak] -= parseFloat(av);
+							console.log(json.type, "-"+av);
+							
 						}
 						break;
 					case "plus-block":
@@ -2129,6 +2132,19 @@ BuildCalculator.prototype = {
 							this.attrs['speed-oh'] -= av;
 						}
 						break;
+					case "armor":
+						switch(json.type) {
+							case "ring":
+							case "amulet":				
+								break;
+							default:
+								if(this.attrs[ak]) {
+									this.attrs[ak] -= parseFloat(av);
+								} 
+								// console.log(json.type, "-"+av);
+								break;
+						}
+						break;
 					case "arcane-damage":
 					case "fire-damage":
 					case "lightning-damage":
@@ -2241,6 +2257,7 @@ BuildCalculator.prototype = {
 								} else {
 									this.attrs[ak] = parseFloat(av);
 								}
+								// console.log(json.type, "+"+av);
 								break;
 						}
 						break;
@@ -2298,6 +2315,7 @@ BuildCalculator.prototype = {
 							} else {
 								this.attrs[ak] = parseFloat(av);
 							}
+							console.log(json.type, av);
 						}
 						break;
 					case "block-chance":

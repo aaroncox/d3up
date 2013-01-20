@@ -218,7 +218,7 @@
 		<? foreach($builds as $build): ?>
 		<div class="build-parent" id="build-<?= $build->id ?>" data-class="<?= $build->class ?>">
 			<div class="build-items">
-				<? foreach($build->equipment as $slot => $gear):?>
+				<? foreach($build->gear as $slot => $gear):?>
 					<span class="<?= $slot ?>" data-slot="<?= $slot ?>"><?= $this->itemLink($gear) ?></span>
 				<? endforeach ?>
 			</div>

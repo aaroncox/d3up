@@ -32,8 +32,6 @@ class RecordController extends D3Up_Controller_Action
 		}
 	}
 	public function deleteAction() {
-		throw new Exception("Currently Disabled, please <a href='http://www.reddit.com/r/d3up/comments/16wpap/d3upcom_database_upgrades_all_data_saving/'>read this post</a> for more information. Expect saving to be ready again in a couple hours.");
-		
 		$record = $this->getRecord();
 		$profile = Epic_Auth::getInstance()->getProfile();
 		if($profile->createReference() != $record->_createdBy->createReference()) {
@@ -47,8 +45,6 @@ class RecordController extends D3Up_Controller_Action
 		}
 	}
 	public function copyAction() {
-		throw new Exception("Currently Disabled, please <a href='http://www.reddit.com/r/d3up/comments/16wpap/d3upcom_database_upgrades_all_data_saving/'>read this post</a> for more information. Expect saving to be ready again in a couple hours.");
-		
 		// Get the record
 		$record = $this->getRecord();
 		// Get this user
@@ -236,8 +232,8 @@ class RecordController extends D3Up_Controller_Action
 	public function viewAction() {
 		$record = $this->getRecord();
 		if($record->_type == "build") {
-		  // $this->view->editForm = $record->getEditForm();
-		  // $this->view->editForm->setAction("/build/edit/id/" . $record->id);
+		  $this->view->editForm = $record->getEditForm();
+		  $this->view->editForm->setAction("/build/edit/id/" . $record->id);
 			$this->checkVote();
 			$this->view->resync = $this->getRequest()->getParam("resync");
 			if($record->_twitchEnabled && $record->_createdBy->_twitchUser) {
@@ -271,8 +267,8 @@ class RecordController extends D3Up_Controller_Action
 				// Is this a build?
 				if($record->_type == "build") {
 					// Add the Guide form since we own it
-					// $this->view->guideForm = $guideForm = new D3Up_Form_Record_Build_Guide(array('build' => $record));					
-					// $this->_handleForm($guideForm);
+					$this->view->guideForm = $guideForm = new D3Up_Form_Record_Build_Guide(array('build' => $record));					
+					$this->_handleForm($guideForm);
 					// var_dump($this->view->groups->export()); exit;
 				}
 				// Now see if they've issued an action against the hero
@@ -281,8 +277,6 @@ class RecordController extends D3Up_Controller_Action
 					switch($a) {
 						// Equiping an Item into a slot
 						case "equip":
-							throw new Exception("Currently Disabled, please <a href='http://www.reddit.com/r/d3up/comments/16wpap/d3upcom_database_upgrades_all_data_saving/'>read this post</a> for more information. Expect saving to be ready again in a couple hours.");
-						
 							$slot = $this->getRequest()->getParam('slot');
 							$newItem = $this->getRequest()->getParam('newItem');
 							if($newItem == "") {
@@ -346,8 +340,6 @@ class RecordController extends D3Up_Controller_Action
 		
 	}
 	public function crawlAction() {
-		throw new Exception("Currently Disabled, please <a href='http://www.reddit.com/r/d3up/comments/16wpap/d3upcom_database_upgrades_all_data_saving/'>read this post</a> for more information. Expect saving to be ready again in a couple hours.");
-		
 		if($profile = Epic_Auth::getInstance()->getProfile()) {		
 			$record = $this->getRecord();
 			if($record->_createdBy->createReference() == $profile->createReference()) {
@@ -368,8 +360,6 @@ class RecordController extends D3Up_Controller_Action
 		}
 	}
 	public function resyncAction() {
-		throw new Exception("Currently Disabled, please <a href='http://www.reddit.com/r/d3up/comments/16wpap/d3upcom_database_upgrades_all_data_saving/'>read this post</a> for more information. Expect saving to be ready again in a couple hours.");
-		
 		$record = $this->getRecord();
 		$syncOnly = $this->getRequest()->getParam('only');
 		$profile = D3Up_Auth::getInstance()->getProfile();
@@ -426,8 +416,6 @@ class RecordController extends D3Up_Controller_Action
 		echo json_encode($record->cleanExport()); exit;
 	}
 	public function updateStatsAction() {
-		throw new Exception("Currently Disabled, please <a href='http://www.reddit.com/r/d3up/comments/16wpap/d3upcom_database_upgrades_all_data_saving/'>read this post</a> for more information. Expect saving to be ready again in a couple hours.");
-		
 		$record = $this->getRecord();
 		if($record->_type == 'build' && $record->_createdBy && $profile = Epic_Auth::getInstance()->getProfile()) {		
 			if($record->_createdBy->createReference() == $profile->createReference()) {			

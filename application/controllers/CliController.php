@@ -9,7 +9,7 @@ class CliController extends Epic_Controller_Action
 {
 	public function updateGearCountsAction() {
 		foreach(Epic_Mongo::db('build')->fetchAll() as $build) {
-			$build->equipmentCount = count($build->equipment);
+			$build->gearCount = count($build->gear);
 			$build->save();
 		}
 	}
@@ -26,10 +26,10 @@ class CliController extends Epic_Controller_Action
 	public function removeBadFieldsAction() {
 		$slots = Epic_Mongo::db('gearset')->getSlots();
 		foreach(Epic_Mongo::db('build')->fetchAll() as $build) {
-			foreach($build->equipment as $slot => $item) {
+			foreach($build->gear as $slot => $item) {
 				if(!in_array($slot, $slots)) {
 					echo "Bad: ". $slot;
-					unset($build->equipment->$slot);
+					unset($build->gear->$slot);
 				}
  				// var_dump($slot);
 			}

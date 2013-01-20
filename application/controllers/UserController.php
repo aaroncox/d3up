@@ -36,8 +36,6 @@ class UserController extends D3Up_Controller_Action
 		$this->_redirect("/");
 	}
 	public function registerAction() {
-		throw new Exception("Currently Disabled, please <a href='http://www.reddit.com/r/d3up/comments/16wpap/d3upcom_database_upgrades_all_data_saving/'>read this post</a> for more information. Expect saving to be ready again in a couple hours.");
-		
 		$form = $this->view->form = new D3Up_Auth_Form_Register();
 		$this->_handleForm($form);		
 		if(D3Up_Auth::getInstance()->getProfile()) {
@@ -165,8 +163,6 @@ class UserController extends D3Up_Controller_Action
 		}
 	}
 	public function shopAction() {
-		throw new Exception("Currently Disabled, please <a href='http://www.reddit.com/r/d3up/comments/16wpap/d3upcom_database_upgrades_all_data_saving/'>read this post</a> for more information. Expect saving to be ready again in a couple hours.");
-		
 		$this->view->profile = $profile = D3Up_Auth::getInstance()->getProfile();
 		if($profile) {
 			$profile->_lastSeen = time();
@@ -362,8 +358,6 @@ class UserController extends D3Up_Controller_Action
 		);
 	}
 	public function resetAction() {
-		throw new Exception("Currently Disabled, please <a href='http://www.reddit.com/r/d3up/comments/16wpap/d3upcom_database_upgrades_all_data_saving/'>read this post</a> for more information. Expect saving to be ready again in a couple hours.");
-		
 		$form = $this->view->form = new Epic_Auth_Form_ResetPassword();
 		if($this->getRequest()->isPost()) {
 			if($form->process($this->getRequest()->getParams())) {
@@ -382,8 +376,6 @@ class UserController extends D3Up_Controller_Action
 		}
 	}
 	public function changePasswordAction() {
-		throw new Exception("Currently Disabled, please <a href='http://www.reddit.com/r/d3up/comments/16wpap/d3upcom_database_upgrades_all_data_saving/'>read this post</a> for more information. Expect saving to be ready again in a couple hours.");
-		
 		$user = D3Up_Auth::getInstance()->getProfile();
 		$form = $this->view->form = new Epic_Auth_Form_ChangePassword(array('user' => $user));
 		$id = $this->getRequest()->getParam('id');
@@ -423,8 +415,6 @@ class UserController extends D3Up_Controller_Action
 		}
 	}
 	public function deleteItemsAction() {
-		throw new Exception("Currently Disabled, please <a href='http://www.reddit.com/r/d3up/comments/16wpap/d3upcom_database_upgrades_all_data_saving/'>read this post</a> for more information. Expect saving to be ready again in a couple hours.");
-		
 		$this->view->profile = $profile = D3Up_Auth::getInstance()->getProfile();
 		if(!$profile) {
 		  $this->_redirect('/user/login');

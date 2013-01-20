@@ -65,7 +65,7 @@
 }
 .d3-item .item p.item-type,
 .d3-item .item p.stats {
-	margin-left:70px;
+	margin-left: 90px;
 	margin-bottom: 5px;
 	width: auto;
 	text-align: left;
@@ -81,6 +81,7 @@
 	color: #7979D4;
 	margin: 10px 5px;
 	padding: 0;
+	clear: both;
 }
 .d3-item .item ul.attrs .value {
 	color: #A4A4C0;
@@ -95,6 +96,37 @@
 	background-repeat: no-repeat;
 	background-position: 0 5px;
 	overflow: hidden;
+}
+.d3-item .item .item-icon {
+	float: left;
+	margin: 0 20px 10px 10px;
+	border: 1px solid #000;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+}
+.d3-item .item .item-icon,
+.d3-item .item .item-icon.item-quality-1,
+.d3-item .item .item-icon.item-quality-2,
+.d3-item .item .item-icon.item-quality-3 {
+	border-color: #56402c;
+	background: url(http://us.battle.net/d3/static/images/item/icon-bgs/brown.png);
+}
+.d3-item .item .item-icon.item-quality-4 {
+	border-color: #6ba9ba;
+	background: url(http://us.battle.net/d3/static/images/item/icon-bgs/blue.png);
+}
+.d3-item .item .item-icon.item-quality-5 {
+	border-color: #b1a73c;
+	background: url(http://us.battle.net/d3/static/images/item/icon-bgs/yellow.png);
+}
+.d3-item .item .item-icon.item-quality-6 {
+	border-color: #b07b38;
+	background: url(http://us.battle.net/d3/static/images/item/icon-bgs/orange.png);
+}
+.d3-item .item .item-icon.item-quality-7 {
+	border-color: #87a73d;
+	background: url(http://us.battle.net/d3/static/images/item/icon-bgs/green.png);
 }
 .d3-item .item ul.sockets {
 	margin: 0;

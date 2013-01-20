@@ -10,7 +10,7 @@
  **/
 class D3Up_Mongo_Schema extends Epic_Mongo_Schema {
 	protected $_version = 14;
-  	protected $_tag = 'd3up';
+ 	protected $_tag = 'd3up';
 	protected $_classMap = array(
 		'record' => array(
 			'item' => 'D3Up_Mongo_Record_Item',
@@ -105,25 +105,6 @@ class D3Up_Mongo_Schema extends Epic_Mongo_Schema {
 			  }
 			case 13:
 				$db->execute('db.records.ensureIndex({_characterBt: 1, private: 1, _createdBy: 1, _type: 1})');
-				
-				// $db->execute('db.users.insert({id: 1, name: "admin", username: "admin", password: "'.md5('admin').'", _access: "admin", _type: "user"})');
-				// $db->execute('db.sequences.insert({"id" : "user", "sequence" : 1 })');
-			// case 0:
-      // $db->execute('db.posts.ensureIndex({uid:1}, {unique: true})');
-			// case 2:
-			// 	$db->execute("db.posts.ensureIndex({'tags.ref':1, 'tags.reason': 1})");
-			// 	$db->execute("db.posts.ensureIndex({'votes.score':1})");
-			// 	$db->execute("db.posts.ensureIndex({_created:1, touched:1})");
-			// 	$db->execute("db.posts.ensureIndex({_parent:1})");
-			// 	$db->execute("db.posts.ensureIndex({_parent:1, 'score.accepted':1})");
-			// case 3:
-			// 	$db->execute("db.posts.ensureIndex({touched:1, _created:1})");
-			// case 4:
-			// 	$db->execute("db.createCollection('searchlogs', {capped:true, size:1000000, max:10000});");
-			// case 5:
-			// 	$db->execute("db.search.ensureIndex({name:1, description:1})");
-			// case 6:
-			// 	$db->execute("db.search.ensureIndex({name:1, keywords:1, score: 1})");
     }
 	}
 }

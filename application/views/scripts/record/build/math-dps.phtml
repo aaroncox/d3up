@@ -1,8 +1,8 @@
 <?
   $isDW = false; 
-  if($this->record->equipment['offhand'] && $this->record->equipment['offhand']->id) {
-    // var_dump($this->record->equipment['offhand']->type, explode("|", "axe|ceremonial-knife|hand-crossbow|dagger|fist-weapon|mace|mighty-weapon|spear|sword|wand|2h-mace|2h-axe|bow|daibo|crossbow|2h-mighty|polearm|staff|2h-sword"));
-    if(in_array($this->record->equipment['offhand']->type, explode("|", "axe|ceremonial-knife|hand-crossbow|dagger|fist-weapon|mace|mighty-weapon|spear|sword|wand|2h-mace|2h-axe|bow|daibo|crossbow|2h-mighty|polearm|staff|2h-sword"))) {
+  if($this->record->gear['offhand'] && $this->record->gear['offhand']->id) {
+    // var_dump($this->record->gear['offhand']->type, explode("|", "axe|ceremonial-knife|hand-crossbow|dagger|fist-weapon|mace|mighty-weapon|spear|sword|wand|2h-mace|2h-axe|bow|daibo|crossbow|2h-mighty|polearm|staff|2h-sword"));
+    if(in_array($this->record->gear['offhand']->type, explode("|", "axe|ceremonial-knife|hand-crossbow|dagger|fist-weapon|mace|mighty-weapon|spear|sword|wand|2h-mace|2h-axe|bow|daibo|crossbow|2h-mighty|polearm|staff|2h-sword"))) {
       $isDW = true;
     }
   }

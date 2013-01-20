@@ -255,8 +255,14 @@ class D3Up_View_Helper_DisplayItem extends Zend_View_Helper_Abstract
 		}
 		return $this->view->htmlTag("p", $attrs, $this->_item->name);
 	}
+	private function _getIcon() {
+		return $this->view->htmlTag("img", array("src" => "http://media.blizzard.com/d3/icons/items/large/".$this->_item->icon.".png"));
+	}
 	private function _renderItem() {
 		$html = '';
+		if($this->_item->icon || $this->_item->icon != '') {
+			$html .= $this->view->htmlTag("div", array('class' => 'item-icon item-quality-'.$this->_item->quality), $this->_getIcon());
+		}
 		$html .= $this->view->htmlTag("p", array('class' => 'item-type quality-'.$this->_item->quality), $this->_qualityMap[$this->_item->quality]." ".$this->prettyDisplay($this->_item->type));
 		if(!empty($this->_item->stats)) {
 			$statHtml = '';

@@ -75,7 +75,7 @@
           },
           builder = new d3up.ItemBuilder,
           gearSlots = $("#build-gear .equipped"),
-          gear = <?= $this->build->equipment->getGearJson() ?>,
+          gear = <?= $this->build->gear->getGearJson() ?>,
           newItem = <?= json_encode($this->item->cleanExport()) ?>,
           meta = {
             level: '<?= $this->build->level ?>',

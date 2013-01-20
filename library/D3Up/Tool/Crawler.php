@@ -389,7 +389,7 @@ class D3Up_Tool_Crawler
 		
 	}     
 	
-	static public function crawl($build, $user = false) {
+	static public function crawl($build, $user = false, $syncOnly = false) {
 		$character = (int) $build->_characterId;
 		$battletag = $build->_characterBt;
 		$region = $build->_characterRg;
@@ -425,191 +425,198 @@ class D3Up_Tool_Crawler
 		  }
 		}
     // }
-		foreach ($profile['items'] as $slot => $gear) {
-			// var_dump($slot);
-			//       if($slot != "rightFinger") {
-			//         continue;
-			//       }
-			// exit;
-			// Explode the Tooltip Params
-			$parts = explode("/", $gear['tooltipParams']);
-			// Build the URL
-			$itemUrl = static::$dataUrl . $parts[1];
-			// Get the JSON
-			$data = static::get($itemUrl);
-			// var_dump($data, $itemUrl); exit;
-			// Get the Type
-			$dirtyType = str_replace("generic", "", strtolower($data['type']['id']));
-			if(!isset(static::$_dirtyTypes[$dirtyType])) {
-				throw new Exception("Type Unrecognized [" . $dirtyType . "]. Please email me at <a href='mailto:aaron.cox@greymass.com'>aaron.cox@greymass.com</a> and let me know about this error message!");
-			}
-			$type = static::$_dirtyTypes[$dirtyType];
-			// Start the Query 
-			$realUser = D3Up_Auth::getInstance()->getProfile();
-			if(!$realUser) {
-			  $realUser = $user;
-			}
-			$query = array(
-				'name' => $data['name'],
-				'type' => $type,
-				'_createdBy' => $realUser->createReference(),
-			);
-			// Do the Attributes on the Item
-			$attrsArray = array();
-			$socketsArray = array();
-			$gearSet = null;
-			// -------------------- FIX THIS
-			if(isset($data['set']) && isset($data['set']['slug'])) {
-				$query['set'] = $gearSet = $data['set']['slug'];				
-			}
-			$gems = $data['gems'];
-			foreach($gems as $gem) {
-				if(isset($gem['item']['name'])) {
-					$key = strtolower(str_replace(" ", "_",$gem['item']['name']));
-					$actual = static::$_gemMap[$key];
-					$socketsArray[] = $key;
+		if(!$syncOnly || $syncOnly == 'items') {
+			// echo "Syncing Items";
+			foreach ($profile['items'] as $slot => $gear) {
+				// var_dump($slot);
+				//       if($slot != "rightFinger") {
+				//         continue;
+				//       }
+				// exit;
+				// Explode the Tooltip Params
+				$parts = explode("/", $gear['tooltipParams']);
+				// Build the URL
+				$itemUrl = static::$dataUrl . $parts[1];
+				// Get the JSON
+				$data = static::get($itemUrl);
+				// var_dump($data, $itemUrl); exit;
+				// Get the Type
+				$dirtyType = str_replace("generic", "", strtolower($data['type']['id']));
+				if(!isset(static::$_dirtyTypes[$dirtyType])) {
+					throw new Exception("Type Unrecognized [" . $dirtyType . "]. Please email me at <a href='mailto:aaron.cox@greymass.com'>aaron.cox@greymass.com</a> and let me know about this error message!");
 				}
-			}
-			// var_dump($socketsArray); exit;
-			// Do the Stats on the item
-			$statsArray = array();
-			// Does this item have armor?
-			if(isset($data['armor']) && $type != "ring" && $type != "amulet") {
-				$statsArray['armor'] = (float) $data['armor']['min'];
-			}
-			if(isset($data['dps'])) {
-				$statsArray['dps'] = (float) $data['dps']['min'];					
-			}
-			if(isset($data['minDamage']) && isset($data['maxDamage'])) {
-				$statsArray['damage'] = array(
-					'min' => (float) $data['minDamage']['min'],
-					'max' => (float) $data['maxDamage']['min'],
-				);					
-			}
-			if(isset($data['attacksPerSecond'])) {
-				$statsArray['speed'] = (float) $data['attacksPerSecond']['min'];		
-			}
-			if(isset($data['attacksPerSecond'])) {
-				$statsArray['speed'] = (float) $data['attacksPerSecond']['min'];		
-			}
-			if(isset($data['blockChance'])) {
-				$statsArray['block-chance'] = $data['blockChance']['min'] * 100;
-			}
-			if(isset($data['attributesRaw']) && isset($data['attributesRaw']['Block_Amount_Item_Min']) && isset($data['attributesRaw']['Block_Amount_Item_Delta'])) {
-				$statsArray['block-amount'] = array(
-					'min' => $data['attributesRaw']['Block_Amount_Item_Min']['min'],
-					'max' => $data['attributesRaw']['Block_Amount_Item_Min']['min'] + $data['attributesRaw']['Block_Amount_Item_Delta']['min'],
+				$type = static::$_dirtyTypes[$dirtyType];
+				// Start the Query 
+				$realUser = D3Up_Auth::getInstance()->getProfile();
+				if(!$realUser) {
+				  $realUser = $user;
+				}
+				$query = array(
+					'name' => $data['name'],
+					'type' => $type,
+					'_createdBy' => $realUser->createReference(),
 				);
-			}
-			// Do the attributes from the item
-			$attrs = $data['attributes'];
-			foreach($attrs as $attr) {
-				foreach(static::$_attrMap as $stat => $regex) {
-					$parts = explode("~", $stat);
-					$stat = $parts[0];
-					$text = str_replace("–", "-", $attr);
-					$regex = "/".str_replace(array('+', '[v]'), array('\+','(\d+(\.\d+)?)'), $regex)."/i";
-          // var_dump($text, $regex);
-					if(preg_match($regex, $text, $matches)) {
-            // var_dump(count($matches));
-						if(count($matches) > 3) {
-							$attrsArray[$stat] = array(
-								'min' => (float) $matches[1],
-								'max' => (float) $matches[3],
-							);
-							if(isset($statsArray['damage']) && isset($statsArray['damage']['min'])) {
-								$statsArray['damage']['min'] += $matches[1];
-							}
-							if(isset($statsArray['damage']) && isset($statsArray['damage']['max'])) {
-								$statsArray['damage']['max'] += $matches[3];
-							}
-						} else {
-  					  if(!isset($matches[1])) {
-                $attrsArray[$stat] = true;
-  					  } else {
-  							$attrsArray[$stat] = (float) $matches[1];																					  					    
-  					  }
-						}
-						break;
+				// Do the Attributes on the Item
+				$attrsArray = array();
+				$socketsArray = array();
+				$gearSet = null;
+				// -------------------- FIX THIS
+				if(isset($data['set']) && isset($data['set']['slug'])) {
+					$query['set'] = $gearSet = $data['set']['slug'];				
+				}
+				$gems = $data['gems'];
+				foreach($gems as $gem) {
+					if(isset($gem['item']['name'])) {
+						$key = strtolower(str_replace(" ", "_",$gem['item']['name']));
+						$actual = static::$_gemMap[$key];
+						$socketsArray[] = $key;
 					}
 				}
-			}
-			// Fixes for Hidden Damage Attributes!
-			if(isset($data['attributesRaw']) && isset($attrsArray['minmax-damage'])) {
-				// If we have minmax damage already set from the item, lets see if there's a hidden +min or +max
-				if(isset($data['attributesRaw']['Damage_Bonus_Min#Physical'])) {
-					$attrsArray['min-damage'] = $data['attributesRaw']['Damage_Bonus_Min#Physical']['min'];
+				// var_dump($socketsArray); exit;
+				// Do the Stats on the item
+				$statsArray = array();
+				// Does this item have armor?
+				if(isset($data['armor']) && $type != "ring" && $type != "amulet") {
+					$statsArray['armor'] = (float) $data['armor']['min'];
 				}
-				if(isset($data['attributesRaw']['Damage_Bonus_Max#Physical'])) {
-					$attrsArray['max-damage'] = $data['attributesRaw']['Damage_Bonus_Max#Physical']['max'];
+				if(isset($data['dps'])) {
+					$statsArray['dps'] = (float) $data['dps']['min'];					
 				}
-			}
-			// var_dump($attrsArray, $data); exit;
-			// What slot is it in?
-			$slot = static::$_slotMap[$slot];			
-			// Add Attributes to the Item and Query
-			$query['attrs'] = $attrsArray;
-			$query['stats'] = $statsArray;
-			// if($slot == "leftFinger") {
-			//   			var_dump($attrsArray); exit;			  
-			// }
-			if($gearSet) {
-				$query['set'] = $gearSet;
-			}
-			$query['sockets'] = $socketsArray;
-			// Look to see if this item exists!
-			$found = Epic_Mongo::db('item')->fetchOne($query);
-			// Did we find this item already?
-      // var_dump($slot); exit;
-			if($slot == 'mainhand') {
-			  if(isset($data['type']) && isset($data['type']['twoHanded'])) {
-          $build->equipment['offhand'] = null;
-			  }
-			}
-			if(!$found) {
-				// If we didn't, lets make it!
-				$new = Epic_Mongo::newDoc('item');
-				$new->name = html_entity_decode($data['name']);
-				$new->type = $type;
-				// Determine the Type and Quality
-				$new->quality = array_search($data['displayColor'], self::$_qualityMap);
-				$parts = explode("_", $data['icon']);
-				// $new->type = self::$_dirtyTypes[$parts[0]];
-				// var_dump($data); exit;
+				if(isset($data['minDamage']) && isset($data['maxDamage'])) {
+					$statsArray['damage'] = array(
+						'min' => (float) $data['minDamage']['min'],
+						'max' => (float) $data['maxDamage']['min'],
+					);					
+				}
+				if(isset($data['attacksPerSecond'])) {
+					$statsArray['speed'] = (float) $data['attacksPerSecond']['min'];		
+				}
+				if(isset($data['attacksPerSecond'])) {
+					$statsArray['speed'] = (float) $data['attacksPerSecond']['min'];		
+				}
+				if(isset($data['blockChance'])) {
+					$statsArray['block-chance'] = $data['blockChance']['min'] * 100;
+				}
+				if(isset($data['attributesRaw']) && isset($data['attributesRaw']['Block_Amount_Item_Min']) && isset($data['attributesRaw']['Block_Amount_Item_Delta'])) {
+					$statsArray['block-amount'] = array(
+						'min' => $data['attributesRaw']['Block_Amount_Item_Min']['min'],
+						'max' => $data['attributesRaw']['Block_Amount_Item_Min']['min'] + $data['attributesRaw']['Block_Amount_Item_Delta']['min'],
+					);
+				}
+				// Do the attributes from the item
+				$attrs = $data['attributes'];
+				foreach($attrs as $attr) {
+					foreach(static::$_attrMap as $stat => $regex) {
+						$parts = explode("~", $stat);
+						$stat = $parts[0];
+						$text = str_replace("–", "-", $attr);
+						$regex = "/".str_replace(array('+', '[v]'), array('\+','(\d+(\.\d+)?)'), $regex)."/i";
+	          // var_dump($text, $regex);
+						if(preg_match($regex, $text, $matches)) {
+	            // var_dump(count($matches));
+							if(count($matches) > 3) {
+								$attrsArray[$stat] = array(
+									'min' => (float) $matches[1],
+									'max' => (float) $matches[3],
+								);
+								if(isset($statsArray['damage']) && isset($statsArray['damage']['min'])) {
+									$statsArray['damage']['min'] += $matches[1];
+								}
+								if(isset($statsArray['damage']) && isset($statsArray['damage']['max'])) {
+									$statsArray['damage']['max'] += $matches[3];
+								}
+							} else {
+	  					  if(!isset($matches[1])) {
+	                $attrsArray[$stat] = true;
+	  					  } else {
+	  							$attrsArray[$stat] = (float) $matches[1];																					  					    
+	  					  }
+							}
+							break;
+						}
+					}
+				}
+				// Fixes for Hidden Damage Attributes!
+				if(isset($data['attributesRaw']) && isset($attrsArray['minmax-damage'])) {
+					// If we have minmax damage already set from the item, lets see if there's a hidden +min or +max
+					if(isset($data['attributesRaw']['Damage_Bonus_Min#Physical'])) {
+						$attrsArray['min-damage'] = $data['attributesRaw']['Damage_Bonus_Min#Physical']['min'];
+					}
+					if(isset($data['attributesRaw']['Damage_Bonus_Max#Physical'])) {
+						$attrsArray['max-damage'] = $data['attributesRaw']['Damage_Bonus_Max#Physical']['max'];
+					}
+				}
+				// var_dump($attrsArray, $data); exit;
+				// What slot is it in?
+				$slot = static::$_slotMap[$slot];			
+				// Add Attributes to the Item and Query
+				$query['attrs'] = $attrsArray;
+				$query['stats'] = $statsArray;
+				// if($slot == "leftFinger") {
+				//   			var_dump($attrsArray); exit;			  
+				// }
 				if($gearSet) {
-					$new->set = $gearSet;
+					$query['set'] = $gearSet;
 				}
-				$new->stats = $statsArray;
-				$new->sockets = $socketsArray;
-				$new->attrs->setFromArray($attrsArray);
-				$new->_created = time();
-				$new->_createdBy = $realUser;
+				$query['sockets'] = $socketsArray;
+				// Look to see if this item exists!
+				$found = false; //$found = Epic_Mongo::db('item')->fetchOne($query);
+				// Did we find this item already?
+	      // var_dump($slot); exit;
 				if($slot == 'mainhand') {
-          // var_dump($new->export()); exit;
-        }
-				$new->save();
-				$status[$slot] = array(
-					'result' => 'new',
-					'slot' => $slot,
-					'item' => $new,
-				);
-				// Save it on the build
-				$build->equipment[$slot] = $new;
-			} else {
-				$build->equipment[$slot] = $found;				
-				$status[$slot] = array(
-					'result' => 'existed',
-					'slot' => $slot,
-					'item' => $found,
-				);
-			}
+				  if(isset($data['type']) && isset($data['type']['twoHanded'])) {
+	          $build->gear['offhand'] = null;
+				  }
+				}
+				if(!$found) {
+					// If we didn't, lets make it!
+					$new = Epic_Mongo::newDoc('item');
+					$new->name = html_entity_decode($data['name']);
+					$new->type = $type;
+					$new->icon = $data['icon'];
+					// Determine the Type and Quality
+					$new->quality = array_search($data['displayColor'], self::$_qualityMap);
+					$parts = explode("_", $data['icon']);
+					// $new->type = self::$_dirtyTypes[$parts[0]];
+					// var_dump($data); exit;
+					if($gearSet) {
+						$new->set = $gearSet;
+					}
+					$new->stats = $statsArray;
+					$new->sockets = $socketsArray;
+					$new->attrs->setFromArray($attrsArray);
+					$new->_created = time();
+					$new->_createdBy = $realUser;
+					if($slot == 'mainhand') {
+	          // var_dump($new->export()); exit;
+	        }
+					$new->save();
+					$status[$slot] = array(
+						'result' => 'new',
+						'slot' => $slot,
+						'item' => $new,
+					);
+					// Save it on the build
+					$build->gear[$slot] = $new;
+				} else {
+					$build->gear[$slot] = $found;				
+					$status[$slot] = array(
+						'result' => 'existed',
+						'slot' => $slot,
+						'item' => $found,
+					);
+				}
+			}			
 		}
 		// exit;
 		$build->hardcore = (bool) $profile['hardcore'];
 		$build->paragon = (int) $profile['paragonLevel'];
 		$build->level = (int) $profile['level'];
-		$build->actives = $skills;
-		$build->passives = $passives;
+		if(!$syncOnly || $syncOnly == 'skills') {
+			// echo "Syncing Skills";
+			$build->actives = $skills;
+			$build->passives = $passives;
+		}
 		$build->save();
 		return $status;
 	}
