@@ -1126,7 +1126,6 @@ BuildCalculator.prototype = {
 			rendered['dps-oh-real-max-bonus'] = this.attrs.ohRealDamage.max + bnMaxDamage;
 		}
 		
-		console.log(rendered);
 		// Determine Bonus Damage from Elemental Damage Bonuses
 		if(bnElePercent > 0 && this.attrs.mhRealDamage) {
 			bnEleDamage = (this.attrs.mhRealDamage.min + bnMinDamage + this.attrs.mhRealDamage.max + bnMaxDamage) / 2 * (bnElePercent / 100);
