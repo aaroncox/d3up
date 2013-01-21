@@ -134,7 +134,7 @@ class D3Up_Form_Record_Build extends Epic_Form
 			'defaultToDescription' => $build->_defaultToDescription,
 			'private' => $build->private,
 			'level' => $build->level ?: 60,
-			'paragon' => $build->paragon,
+			'paragon' => $build->paragon ?: 0,
 			'twitch' => $build->_twitchEnabled,
 			'hardcore' => $build->hardcore,
 			'profileUrl' => $build->profileUrl,
