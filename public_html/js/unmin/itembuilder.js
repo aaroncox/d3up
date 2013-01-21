@@ -773,16 +773,16 @@ ItemBuilder.prototype = {
 							min = $("<input name='stat_damage-min' tabindex='50'>"),
 							max = $("<input name='stat_damage-max' tabindex='50'>"),
 							speed = $("<input name='stat_speed' tabindex='50'>");
-					if(builder.item.stats.dps) {
+					if(builder.item.stats != null && builder.item.stats.dps) {
 						dps.val(builder.item.stats.dps);
 					}						
-					if(builder.item.stats.damage && builder.item.stats.damage.min) {
+					if(builder.item.stats != null && builder.item.stats.damage && builder.item.stats.damage.min) {
 						min.val(builder.item.stats.damage.min);
 					}						
-					if(builder.item.stats.damage && builder.item.stats.damage.max) {
+					if(builder.item.stats != null && builder.item.stats.damage && builder.item.stats.damage.max) {
 						max.val(builder.item.stats.damage.max);
 					}						
-					if(builder.item.stats.speed) {
+					if(builder.item.stats != null && builder.item.stats.speed) {
 						speed.val(builder.item.stats.speed);
 					}						
 					dps.keyup(function() {
