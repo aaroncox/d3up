@@ -483,7 +483,7 @@ BuildCalculator.prototype = {
 							break;							
 						case "dexterity-to-armor":								
 							this.bonuses['extra-armor'] = (this.attrs['dexterity'] * value);
-							console.log(this.bonuses['extra-armor'], this.attrs['dexterity'], value);
+							// console.log(this.bonuses['extra-armor'], this.attrs['dexterity'], value);
 							break;
 						case "vitality-to-armor":
 							this.bonuses['extra-armor'] = (this.attrs['vitality'] * value);
@@ -1877,8 +1877,8 @@ BuildCalculator.prototype = {
         besLoH = 1 + (this.attrs['life-hit'] / 5500),
         bes = (dps['tdps'] * besEhp * besMs * besLs * besLoH) / 500000;
     return {bes: bes};
-    console.log(dps['scram-r'], this.tickRate( dps['scram-r']), bes, besMs, besLs, besTicks, besLoH, this.attrs);
-	  console.log(defenses, ehp, dps);
+	  //     console.log(dps['scram-r'], this.tickRate( dps['scram-r']), bes, besMs, besLs, besTicks, besLoH, this.attrs);
+	  // console.log(defenses, ehp, dps);
 	},
 	run: function() {
 		// Apply all of the passive bonuses into the this.bonuses array for use in the math below
