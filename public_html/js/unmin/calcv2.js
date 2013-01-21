@@ -482,11 +482,19 @@ BuildCalculator.prototype = {
 							}						
 							break;							
 						case "dexterity-to-armor":								
-							this.bonuses['extra-armor'] = (this.attrs['dexterity'] * value);
-							// console.log(this.bonuses['extra-armor'], this.attrs['dexterity'], value);
+							if(reverse == true) {
+								this.bonuses['extra-armor'] = (this.attrs['dexterity'] * value);
+							} else {
+								this.bonuses['extra-armor'] = (this.attrs['dexterity'] * value);
+							}
+							// console.log("Armor: ", this.bonuses['extra-armor'], "Dexterity: ", this.attrs['dexterity'], "Multi:", value);
 							break;
 						case "vitality-to-armor":
-							this.bonuses['extra-armor'] = (this.attrs['vitality'] * value);
+							if(reverse == true) {
+								this.bonuses['extra-armor'] = 0;
+							} else {
+								this.bonuses['extra-armor'] = (this.attrs['vitality'] * value);
+							}
 							break;
 						case "reduce-non-physical":
 							this.applyEnabledSkill(value, 'percent-non-physical');
@@ -626,6 +634,7 @@ BuildCalculator.prototype = {
 		// Formula: ( Armor + Strength ) * ( Bonus Armor Percentage )
 		// ----------------------------------
 		rendered.armor = (this.attrs['armor'] + this.attrs['strength'] + this.bonuses['extra-armor']) * (1 + this.bonuses['plus-armor']);
+		// console.log("Calculated", "Armor: ", rendered.armor, "Extra Armor: ", this.bonuses['extra-armor']);
 		// ----------------------------------
 		// Damage Reduction
 		// Formula: ( Armor / ( 50 * Monster Level + Armor ) )
@@ -921,8 +930,6 @@ BuildCalculator.prototype = {
 		_.each(this.gear, function(g, i) {
 			// d3up.log("remove passives");
 			this.applyPassives(true); // Reverses Passive Gains
-			// Store the Item to for restoration
-			var item = i;
 			// Unset the Item from the stats and gear set
 			this.removeItem(i);
 			// d3up.log("add passives");
@@ -941,6 +948,12 @@ BuildCalculator.prototype = {
 			this.parseItem(g, i);
 			this.applyPassives(); // Readd Normal Passive Gains
 		}, this);
+		// Return rendered EHP Gear values
+		return rendered;
+	},
+	calcEhpPerStat: function(defenses, ehp) {
+		// console.log("Per Stat");
+		var rendered = {};
 		// Calculate EHP per Stat
 		var incs = {
 			'pt-resist-all': {'resist-all': 1},
@@ -969,9 +982,12 @@ BuildCalculator.prototype = {
 					};
 					break;
 			}
+			this.applyPassives(true); // Reverse Passive Gains			
 			this.parseItem(item, 'extra');
+			this.applyPassives(); // Apply Passive Gains			
 			var tDefenses = this.calcDefenses(),
 					tEhp = this.calcEffectiveHealth(tDefenses);
+			// console.log(tDefenses, tEhp, ehp.ehp);
 			// Calculate the Difference in EHP without the item
 			switch(k) {
 				case "pt-dexterity":
@@ -993,10 +1009,12 @@ BuildCalculator.prototype = {
 					rendered['ehp-' + k] = tEhp['ehp'] - ehp.ehp;				
 					break;
 			}
+			// console.log(rendered);
 			// Re-add the Item to the gear set
+			this.applyPassives(true); // Reverse Passive Gains			
 			this.removeItem('extra');
+			this.applyPassives(); // Apply Passive Gains			
 		}, this);
-		// Return rendered EHP Gear values
 		return rendered;
 	},
 	tickRate: function(speed) {
@@ -1882,10 +1900,10 @@ BuildCalculator.prototype = {
 	  // console.log(defenses, ehp, dps);
 	},
 	run: function() {
-		// Apply all of the passive bonuses into the this.bonuses array for use in the math below
-		this.applyPassives();
 		// Apply all Set Bonuses
 		this.applySetBonuses();
+		// Apply all of the passive bonuses into the this.bonuses array for use in the math below
+		this.applyPassives();
 		// Apply all bonuses from the Active skills indicated
 		this.applyEnabledSkills();
 		// Apply Stat Bonuses
@@ -1895,6 +1913,7 @@ BuildCalculator.prototype = {
 		var defenses = this.calcDefenses(),
 		 		ehp = this.calcEffectiveHealth(defenses), 
 				gearEhp = this.calcGearEhp(defenses, ehp),
+				ehpPerStat = this.calcEhpPerStat(defenses, ehp),
 				dps = this.calcOffense(), 
 				skills = this.calcSkills(),
 				allSkills = this.calcAllSkills(),
@@ -1902,7 +1921,7 @@ BuildCalculator.prototype = {
 		this.attrs['primary-stat'] = this.attrs[this.attrs['primary']];
 		// Add all of our calculated values into the values object for returning
     // d3up.log("----");
-		_.extend(this.values, defenses, ehp, gearEhp, dps, skills, allSkills, lifeRegen, this.calcBES(defenses, ehp, dps));		
+		_.extend(this.values, defenses, ehp, gearEhp, ehpPerStat, dps, skills, allSkills, lifeRegen, this.calcBES(defenses, ehp, dps));		
 		_.extend(this.values, this.calcGearDps());
 		// console.log("Block @ ", this.attrs['block-chance']);
 		// ----------------------------------
