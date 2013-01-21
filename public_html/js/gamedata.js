@@ -2595,7 +2595,7 @@
 					procRate: 0.5,
 					effect: {
 						'generate-hatred': 3,
-						'weapon-damage': 111,
+						'weapon-damage': 112,
 						'tick-modifier': 3,
 					},
 				},
