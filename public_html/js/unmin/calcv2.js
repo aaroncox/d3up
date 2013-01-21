@@ -1125,6 +1125,8 @@ BuildCalculator.prototype = {
 			rendered['dps-oh-real-min-bonus'] = this.attrs.ohRealDamage.min + bnMinDamage;
 			rendered['dps-oh-real-max-bonus'] = this.attrs.ohRealDamage.max + bnMaxDamage;
 		}
+		
+		console.log(rendered);
 		// Determine Bonus Damage from Elemental Damage Bonuses
 		if(bnElePercent > 0 && this.attrs.mhRealDamage) {
 			bnEleDamage = (this.attrs.mhRealDamage.min + bnMinDamage + this.attrs.mhRealDamage.max + bnMaxDamage) / 2 * (bnElePercent / 100);
@@ -1227,13 +1229,13 @@ BuildCalculator.prototype = {
 		rendered['scram-m'] = mathM;
 		rendered['bonus-damage'] = this.bonuses['plus-damage'];
 		
-		rendered['mh-min-damage'] = mathS * mhMinDamage * mathM;
-		rendered['mh-max-damage'] = mathS * mhMaxDamage * mathM;
+		rendered['mh-min-damage'] = mathS * (mhMinDamage + bnEleDamage) * mathM;
+		rendered['mh-max-damage'] = mathS * (mhMaxDamage + bnEleDamage) * mathM;
 		rendered['mh-min-damage-crit'] = rendered['mh-min-damage'] * (1 + (this.attrs['critical-hit-damage'] * 0.01));
 		rendered['mh-max-damage-crit'] = rendered['mh-max-damage'] * (1 + (this.attrs['critical-hit-damage'] * 0.01));
     if(this.isDuelWielding) {
-  		rendered['oh-min-damage'] = mathS * ohMinDamage * mathM;
-  		rendered['oh-max-damage'] = mathS * ohMaxDamage * mathM;
+  		rendered['oh-min-damage'] = mathS * (ohMinDamage + bnEleDamage) * mathM;
+  		rendered['oh-max-damage'] = mathS * (ohMaxDamage + bnEleDamage) * mathM;
   		rendered['oh-min-damage-crit'] = rendered['oh-min-damage'] * (1 + (this.attrs['critical-hit-damage'] * 0.01));
   		rendered['oh-max-damage-crit'] = rendered['oh-max-damage'] * (1 + (this.attrs['critical-hit-damage'] * 0.01));
     }
