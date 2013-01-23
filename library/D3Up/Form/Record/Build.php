@@ -197,10 +197,10 @@ class D3Up_Form_Record_Build extends Epic_Form
 		}
 		return false;
 	}
-	public function render()
+	public function render(Zend_View_Interface $view = NULL)
 	{
 		$this->removeDecorator('FloatClear');
 		$this->getDecorator('HtmlTag')->setOption('class','r2-Record-form')->setOption('id', 'ad-edit');
-		return parent::render();
+		return parent::render($view);
 	}
 } // END class D3Up_Form_Record_Build extends Epic_Form

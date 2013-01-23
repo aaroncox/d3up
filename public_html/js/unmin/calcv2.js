@@ -2121,17 +2121,16 @@ BuildCalculator.prototype = {
 		}
 		if(json.socketAttrs) {
 			_.each(json.socketAttrs, function(av, ak) {
-				if(ak == "damage") {
-					values = av.split("-");
+				if(ak == "ruby-damage") {
 					if(typeof(this.attrs['max-damage']) != "undefined") {
-						this.attrs['max-damage'] -= parseFloat(values[1]);
+						this.attrs['max-damage'] -= parseFloat(av);
 					} else {
-						this.attrs['max-damage'] = parseFloat(values[1]);
+						this.attrs['max-damage'] = parseFloat(av);
 					}
 					if(typeof(this.attrs['min-damage']) != "undefined") {
-						this.attrs['min-damage'] -= parseFloat(values[0]);
+						this.attrs['min-damage'] -= parseFloat(av);
 					} else {
-						this.attrs['min-damage'] = parseFloat(values[0]);
+						this.attrs['min-damage'] = parseFloat(av);
 					}
 				} else if(typeof(this.attrs[ak]) != "undefined") {
 					this.attrs[ak] -= parseFloat(av);
@@ -2488,17 +2487,16 @@ BuildCalculator.prototype = {
 		}
 		if(json.socketAttrs) {
 			_.each(json.socketAttrs, function(av, ak) {
-				if(ak == "damage") {
-					values = av.split("-");
+				if(ak == "ruby-damage") {
 					if(typeof(this.attrs['max-damage']) != "undefined") {
-						this.attrs['max-damage'] += parseFloat(values[1]);
+						this.attrs['max-damage'] += parseFloat(av);
 					} else {
-						this.attrs['max-damage'] = parseFloat(values[1]);
+						this.attrs['max-damage'] = parseFloat(av);
 					}
 					if(typeof(this.attrs['min-damage']) != "undefined") {
-						this.attrs['min-damage'] += parseFloat(values[0]);
+						this.attrs['min-damage'] += parseFloat(av);
 					} else {
-						this.attrs['min-damage'] = parseFloat(values[0]);
+						this.attrs['min-damage'] = parseFloat(av);
 					}
 				} else if(typeof(this.attrs[ak]) != "undefined") {
 					this.attrs[ak] += parseFloat(av);

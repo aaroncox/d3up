@@ -20,10 +20,10 @@ class D3Up_Mongo_Post_Guide extends Epic_Mongo_Document_Post
 		return new D3Up_Form_Post_Guide(array('guide' => $this));
 	}
 	
-	public function save() {
+	public function save($entierDocument = false) {
 		$filter = new Epic_Filter_Slug();
 		$this->slug = $filter->filter($this->title);
-		return parent::save();
+		return parent::save($entierDocument = false);
 	}
 	
 	public function viewCounter() {

@@ -7,13 +7,13 @@
  **/
 class D3Up_Mongo_User_Profile extends Epic_Mongo_Document_User
 {
-	public function save() {
+	public function save($entierDocument = false) {
 		if(!$this->apiKey) {
 			// First 10 Characters of md5(email) + MongoDB ObjectID
 			$key = substr(md5($this->email),0,10) . $this->_id;
 			$this->apiKey = $key;
 		}
-		return parent::save();
+		return parent::save($entierDocument = false);
 	}
 	
 	public function getEditForm() {

@@ -40,6 +40,7 @@ class D3Up_Tool_Attributes
 		'min-damage' => '+[v] Minimum Damage',
 		'max-damage' => '+[v] Maximum Damage',
 		'minmax-damage' => '+[v] Damage (Min-Max)',
+		'ruby-damage' => '+[v] Minimum and +[v] Maximum Damage',
 		// Elemental Damage Percents
 		'plus-arcane-damage' => '+[v]% to Arcane Damage',
 		'plus-cold-damage' => '+[v]% to Cold Damage',

@@ -63,12 +63,12 @@ class D3Up_Mongo_Record_Item extends Epic_Mongo_Document_Record
 		return new D3Up_Form_Record_Item(array('item' => $this));
 	}
 	
-	public function save() {
+	public function save($entierDocument = false) {
 	  if(!$this->_created) {
 	    $this->_created = time();
 	  }
 		$this->rating = D3Up_Tool_MaxStat::getInstance()->calc($this);
-		return parent::save();
+		return parent::save($entierDocument);
 	}
 	
 	public function cleanExport() {
