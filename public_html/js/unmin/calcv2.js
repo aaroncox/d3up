@@ -1928,12 +1928,12 @@ BuildCalculator.prototype = {
 						minRuby = mhBase.min + pMin + this.attrs['ruby-damage-mainhand'];
 				if(minRuby > mhBase.max) {
 					mhBase.max = minRuby + 1;
-					this.attrs['damage'] = {
-						min: (mhBase.min + pMin + this.attrs['ruby-damage-mainhand']) * (1 + (pDmg / 100)),
-						max: (mhBase.max + pMax + this.attrs['ruby-damage-mainhand']) * (1 + (pDmg / 100))
-					}
-					this.attrs.mhRealDamage = this.attrs['damage'];
 				}
+				this.attrs['damage'] = {
+					min: (mhBase.min + pMin + this.attrs['ruby-damage-mainhand']) * (1 + (pDmg / 100)),
+					max: (mhBase.max + pMax + this.attrs['ruby-damage-mainhand']) * (1 + (pDmg / 100))
+				}
+				this.attrs.mhRealDamage = this.attrs['damage'];
 			}
 		}
 		if(this.attrs['ruby-damage-offhand']) {
@@ -1949,12 +1949,12 @@ BuildCalculator.prototype = {
 						minRuby = ohBase.min + pMin + this.attrs['ruby-damage-offhand'];
 				if(minRuby > ohBase.max) {
 					ohBase.max = minRuby + 1;
-					this.attrs['damage-oh'] = {
-						min: (ohBase.min + pMin + this.attrs['ruby-damage-offhand']) * (1 + (pDmg / 100)),
-						max: (ohBase.max + pMax + this.attrs['ruby-damage-offhand']) * (1 + (pDmg / 100))
-					}
-					this.attrs.ohRealDamage = this.attrs['damage-oh'];
 				}
+				this.attrs['damage-oh'] = {
+					min: (ohBase.min + pMin + this.attrs['ruby-damage-offhand']) * (1 + (pDmg / 100)),
+					max: (ohBase.max + pMax + this.attrs['ruby-damage-offhand']) * (1 + (pDmg / 100))
+				}
+				this.attrs.ohRealDamage = this.attrs['damage-oh'];
 			}
 		}
 		return rendered;
