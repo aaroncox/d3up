@@ -1918,9 +1918,9 @@ BuildCalculator.prototype = {
 			rendered['ruby-damage-mainhand'] = this.attrs['ruby-damage-mainhand'];
 			// Find Base Values for MH
 			if(mh && mh.stats && mh.stats.damage) {
-				var pMin = mh.attrs['min-damage'],
-						pMax = mh.attrs['max-damage'],
-						pDmg = mh.attrs['plus-damage'],
+				var pMin = (mh.attrs['min-damage']) ? mh.attrs['min-damage'] : 0,
+						pMax = (mh.attrs['max-damage']) ? mh.attrs['max-damage'] : 0,
+						pDmg = (mh.attrs['plus-damage']) ? mh.attrs['plus-damage'] : 0,
 						mhBase = {
 							min: (mh.stats.damage.min / (1 + (pDmg / 100))) - pMin,
 							max: (mh.stats.damage.max / (1 + (pDmg / 100))) - pMax
@@ -1939,9 +1939,9 @@ BuildCalculator.prototype = {
 		if(this.attrs['ruby-damage-offhand']) {
 			rendered['ruby-damage-offhand'] = this.attrs['ruby-damage-offhand'];
 			if(oh && oh.stats && oh.stats.damage) {
-				var pMin = oh.attrs['min-damage'],
-						pMax = oh.attrs['max-damage'],
-						pDmg = oh.attrs['plus-damage'],
+				var pMin = (oh.attrs['min-damage']) ? oh.attrs['min-damage'] : 0,
+						pMax = (oh.attrs['max-damage']) ? oh.attrs['max-damage'] : 0,
+						pDmg = (oh.attrs['plus-damage']) ? oh.attrs['plus-damage'] : 0,
 						ohBase = {
 							min: (oh.stats.damage.min / (1 + (pDmg / 100))) - pMin,
 							max: (oh.stats.damage.max / (1 + (pDmg / 100))) - pMax
@@ -1957,10 +1957,10 @@ BuildCalculator.prototype = {
 				this.attrs.ohRealDamage = this.attrs['damage-oh'];
 			}
 		}
-		return rendered;
 		// console.log("[POST] Current Damage Ranges");
 		// console.log("MH: ", this.attrs['damage'].min, this.attrs['damage'].max);
 		// console.log("OH: ", this.attrs['damage-oh'].min, this.attrs['damage-oh'].max);
+		return rendered;
 	},
 	run: function() {
 		// Apply all Set Bonuses
