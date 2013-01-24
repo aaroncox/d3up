@@ -1453,8 +1453,8 @@ BuildCalculator.prototype = {
 			if(skill.effect['weapon-damage-type']) {
 				var dmgType = skill.effect['weapon-damage-type'],
 						dmgAttr = 'plus-' + dmgType + '-damage-skills';
-				// console.log(dmgAttr, this.attrs);
-				// console.log(mathE, this.attrs[dmgAttr]);
+				if(this.attrs[dmgAttr])
+				bonusText = "<span class='skill-highlight'>+" + this.attrs[dmgAttr] + "%</span> Damage";
 				if(this.attrs[dmgAttr]) {
 					mathM += this.attrs[dmgAttr] * 0.01;
 				}

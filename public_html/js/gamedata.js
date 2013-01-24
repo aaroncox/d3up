@@ -3348,6 +3348,7 @@
 					procRate3rd: 0.75,
 					monkHaste: 1.5,
 					effect: {
+						'weapon-damage-type': 'lightning',
 						'generate-spirit': 6,
 						'weapon-damage': 110,
 					},
@@ -3360,6 +3361,7 @@
 					procRate3rd: 0.75,
 					monkHaste: 1.5,
 					effect: {
+						'weapon-damage-type': 'lightning',
 						'generate-spirit': 6,
 						'weapon-damage': 145,
 						// '3rd-hit': 35,
@@ -3373,6 +3375,7 @@
 					procRate3rd: 0.75,
 					monkHaste: 1.5,
 					effect: {
+						'weapon-damage-type': 'lightning',
 						'generate-spirit': 6,
 						'weapon-damage': 110,
 					},
@@ -3385,6 +3388,7 @@
 					procRate3rd: 0.75,
 					monkHaste: 1.5,
 					effect: {
+						'weapon-damage-type': 'lightning',
 						'generate-spirit': 6,
 						'weapon-damage': 110,
 					},
@@ -3397,6 +3401,7 @@
 					procRate3rd: 0.75,
 					monkHaste: 1.5,
 					effect: {
+						'weapon-damage-type': 'lightning',
 						'generate-spirit': 6,
 						'weapon-damage': 110,
 					},
@@ -3409,6 +3414,7 @@
 					procRate3rd: 0.75,
 					monkHaste: 1.5,
 					effect: {
+						'weapon-damage-type': 'lightning',
 						'generate-spirit': 6,
 						'weapon-damage': 110,
 						'plus-dodge': 16,
@@ -3429,6 +3435,7 @@
 					rune: 'Release a torrent of fire that burns nearby enemies for 258% weapon damage as Fire and causes Knockback.',
 					procRate: 0.5,
 					effect: {
+						'weapon-damage-type': 'fire',
 						'cost-spirit': 30,
 						'weapon-damage': 258,
 					},
@@ -3439,6 +3446,7 @@
 					rune: 'Hurl a column of fire that burns through enemies, causing 294% weapon damage as Fire to each enemy it strikes.',
 					procRate: 0.5,
 					effect: {
+						'weapon-damage-type': 'fire',
 						'cost-spirit': 30,
 						'weapon-damage': 294,
 					},
@@ -3518,6 +3526,7 @@
 					procRate3rd: 0.35,
 					monkHaste: 1.333,
 					effect: {
+						'weapon-damage-type': 'lightning',
 						'generate-spirit': 6,
 						'weapon-damage': 110,
 						'3rd-hit': 60,
@@ -3682,6 +3691,7 @@
 					rune: 'Breath of Heaven also sears enemies for 80% weapon damage as Holy.',
 					procRate: 0,
 					effect: {
+						'weapon-damage-type': 'holy',
 						'cost-spirit': 25,
 						'cooldown': 15,
 						'weapon-damage': 80,
@@ -3864,6 +3874,7 @@
 					desc: 'Focuses a wave of light that crushes enemies for 390% weapon damage as Holy, followed by an additional 45% weapon damage as Holy to all enemies in a line.',
 					procRate: 0.11,
 					effect: {
+						'weapon-damage-type': 'holy',
 						'cost-spirit': 75,
 						'weapon-damage': 390,
 					},
@@ -3874,6 +3885,7 @@
 					rune: 'Increases damage of the initial strike to 566% weapon damage as Holy.',
 					procRate: 0.11,
 					effect: {
+						'weapon-damage-type': 'holy',
 						'cost-spirit': 75,
 						'weapon-damage': 566,
 					},
@@ -3884,6 +3896,7 @@
 					rune: 'Release bursts of energy that deal 430% weapon damage as Holy to nearby enemies.',
 					procRate: 0.25,
 					effect: {
+						'weapon-damage-type': 'holy',
 						'cost-spirit': 75,
 						'weapon-damage': 430,
 					},
@@ -3894,6 +3907,7 @@
 					rune: 'Summon an ancient pillar that deals 280% weapon damage followed by an additional 280% weapon damage after 2 seconds.',
 					procRate: 0.2,
 					effect: {
+						'weapon-damage-type': 'holy',
 						'cost-spirit': 75,
 						'weapon-damage': 560,
 						'weapon-damage-for': 2
@@ -3905,6 +3919,7 @@
 					rune: 'Reduces the cost of Wave of Light to 40 Spirit.',
 					procRate: 0.111,
 					effect: {
+						'weapon-damage-type': 'holy',
 						'cost-spirit': 75,
 						'weapon-damage': 390,
 					},
@@ -3915,6 +3930,7 @@
 					rune: 'Critical Hits Stun enemies for 3 seconds.',
 					procRate: 0.111,
 					effect: {
+						'weapon-damage-type': 'holy',
 						'cost-spirit': 75,
 						'weapon-damage': 390,
 					},
@@ -3979,6 +3995,7 @@
 					rune: 'Instead of bleeding, the target will burn for 250% weapon damage as Fire over 3 seconds. If the target dies while burning, it explodes causing all nearby enemies to burn for 60% weapon damage as Fire over 3 seconds. This effect can happen multiple times.',
 					procRate: 1,
 					effect: {
+						'weapon-damage-type': 'fire',
 						'cost-spirit': 40,
 						'weapon-damage': 250,
 						'weapon-damage-for': 3
@@ -3989,6 +4006,7 @@
 					desc: 'Pull all enemies within 24 yards towards you, followed by a furious blast of energy that deals 100% weapon damage as Holy.',
 					procRate: 0.125,
 					effect: {
+						'weapon-damage-type': 'holy',
 						'cost-spirit': 50,
 						'weapon-damage': 100,
 					},
@@ -3999,6 +4017,7 @@
 					rune: 'Changes the blast into an explosion of fire that has a 35% chance to Fear enemies for 1.5 seconds.',
 					procRate: 0.125,
 					effect: {
+						'weapon-damage-type': 'holy',
 						'cost-spirit': 50,
 						'weapon-damage': 100,
 					},
@@ -4009,6 +4028,7 @@
 					rune: 'Increases the distance enemies will be pulled towards you to 34 yards.',
 					procRate: 0.125,
 					effect: {
+						'weapon-damage-type': 'holy',
 						'cost-spirit': 50,
 						'weapon-damage': 100,
 					},
@@ -4019,6 +4039,7 @@
 					rune: 'Cyclone Strike heals you and all allies within 24 yards for 1240.39 Life.',
 					procRate: 0.125,
 					effect: {
+						'weapon-damage-type': 'holy',
 						'cost-spirit': 50,
 						'weapon-damage': 100,
 					},
@@ -4029,6 +4050,7 @@
 					rune: 'Reduces the Spirit cost of Cyclone Strike to 30 Spirit.',
 					procRate: 0.125,
 					effect: {
+						'weapon-damage-type': 'holy',
 						'cost-spirit': 50,
 						'weapon-damage': 100,
 					},
@@ -4039,6 +4061,7 @@
 					rune: 'After using Cyclone Strike, gain a 20% chance to dodge attacks for 3 seconds.',
 					procRate: 0.125,
 					effect: {
+						'weapon-damage-type': 'holy',
 						'cost-spirit': 50,
 						'weapon-damage': 100,
 					},
@@ -4384,6 +4407,7 @@
 					rune: 'Increases the radius of the vortex to 14 yards and changes the damage dealt to Fire.',
 					procRate: 0,
 					effect: {
+						'weapon-damage-type': 'fire',
 						'cost-spirit': 75,
 						'weapon-damage': 45,
 					},
@@ -4394,6 +4418,7 @@
 					rune: 'While your vortex is at the maximum stack count, Critical Hits have a chance to spawn a lightning tornado that periodically electrocutes nearby enemies for 20% weapon damage as Lightning. Each spawned lightning tornado lasts 3 seconds.',
 					procRate: 0,
 					effect: {
+						'weapon-damage-type': 'lightning',
 						'cost-spirit': 75,
 						'weapon-damage': 45,
 					},
