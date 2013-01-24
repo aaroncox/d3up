@@ -59,6 +59,8 @@ BuildCalculator.prototype = {
 			'resist-all': 0,
 			'plus-gold-find': 0,
 			'plus-magic-find': 0,
+			'ruby-damage-mainhand': 0,
+			'ruby-damage-offhand': 0
 		};
 		this.gear = {};
 		this.values = {};
@@ -1026,6 +1028,7 @@ BuildCalculator.prototype = {
     return ticks;
 	},
 	calcOffense: function() {
+		
 		var rendered = {}, // Storage for Rendered Statistics
 				atkSpeedInc = 0,
 				mhMinDamage = 0,
@@ -1040,6 +1043,9 @@ BuildCalculator.prototype = {
 				bnElePercent = 0,
 				bnAvgDamage = 0; 
 
+		// Stupid fix for stupid blizzard math
+		rendered = _.extend(rendered, this.applyRubies());
+
 		if(this.attrs['damage']) {
 			rendered['dps-mh-min'] = mhMinDamage = this.attrs['damage'].min;
 			rendered['dps-mh-max'] = mhMaxDamage = this.attrs['damage'].max;		
@@ -1051,6 +1057,7 @@ BuildCalculator.prototype = {
 				// rendered['dps-oh-avg'] = ohAvgDamage = (ohMinDamage + ohMaxDamage) / 2;
 			}
 		}
+		// console.log(rendered);
 		// Remove the +% Damage Bonus if it exists
     // d3up.log("MH Min/Max (w/ +% Damage): ", mhMinDamage, mhMaxDamage);
     // if(this.attrs.mhRealDamage && this.attrs['mainhand-plus-damage']) {
@@ -1899,6 +1906,62 @@ BuildCalculator.prototype = {
 	  //     console.log(dps['scram-r'], this.tickRate( dps['scram-r']), bes, besMs, besLs, besTicks, besLoH, this.attrs);
 	  // console.log(defenses, ehp, dps);
 	},
+	applyRubies: function() {
+		// console.log(this.attrs);
+		// console.log("[PRE] Current Damage Ranges");
+		// console.log("MH: ", this.attrs['damage'].min, this.attrs['damage'].max);
+		// console.log("OH: ", this.attrs['damage-oh'].min, this.attrs['damage-oh'].max);
+		var mh = this.getItem('mainhand'),
+				oh = this.getItem('offhand'),
+				rendered = {};
+		if(this.attrs['ruby-damage-mainhand']) {
+			rendered['ruby-damage-mainhand'] = this.attrs['ruby-damage-mainhand'];
+			// Find Base Values for MH
+			if(mh && mh.stats && mh.stats.damage) {
+				var pMin = mh.attrs['min-damage'],
+						pMax = mh.attrs['max-damage'],
+						pDmg = mh.attrs['plus-damage'],
+						mhBase = {
+							min: (mh.stats.damage.min / (1 + (pDmg / 100))) - pMin,
+							max: (mh.stats.damage.max / (1 + (pDmg / 100))) - pMax
+						}, 
+						minRuby = mhBase.min + pMin + this.attrs['ruby-damage-mainhand'];
+				if(minRuby > mhBase.max) {
+					mhBase.max = minRuby + 1;
+					this.attrs['damage'] = {
+						min: (mhBase.min + pMin + this.attrs['ruby-damage-mainhand']) * (1 + (pDmg / 100)),
+						max: (mhBase.max + pMax + this.attrs['ruby-damage-mainhand']) * (1 + (pDmg / 100))
+					}
+					this.attrs.mhRealDamage = this.attrs['damage'];
+				}
+			}
+		}
+		if(this.attrs['ruby-damage-offhand']) {
+			rendered['ruby-damage-offhand'] = this.attrs['ruby-damage-offhand'];
+			if(oh && oh.stats && oh.stats.damage) {
+				var pMin = oh.attrs['min-damage'],
+						pMax = oh.attrs['max-damage'],
+						pDmg = oh.attrs['plus-damage'],
+						ohBase = {
+							min: (oh.stats.damage.min / (1 + (pDmg / 100))) - pMin,
+							max: (oh.stats.damage.max / (1 + (pDmg / 100))) - pMax
+						}, 
+						minRuby = ohBase.min + pMin + this.attrs['ruby-damage-offhand'];
+				if(minRuby > ohBase.max) {
+					ohBase.max = minRuby + 1;
+					this.attrs['damage-oh'] = {
+						min: (ohBase.min + pMin + this.attrs['ruby-damage-offhand']) * (1 + (pDmg / 100)),
+						max: (ohBase.max + pMax + this.attrs['ruby-damage-offhand']) * (1 + (pDmg / 100))
+					}
+					this.attrs.ohRealDamage = this.attrs['damage-oh'];
+				}
+			}
+		}
+		return rendered;
+		// console.log("[POST] Current Damage Ranges");
+		// console.log("MH: ", this.attrs['damage'].min, this.attrs['damage'].max);
+		// console.log("OH: ", this.attrs['damage-oh'].min, this.attrs['damage-oh'].max);
+	},
 	run: function() {
 		// Apply all Set Bonuses
 		this.applySetBonuses();
@@ -1959,9 +2022,9 @@ BuildCalculator.prototype = {
 		this.values = _.extend(this.attrs, this.values);
 		// Do we have a text area to dump to?
 		var textarea = $("#json-data");
-		if(textarea) {
-			textarea.html(JSON.stringify(this.values));
-		}
+		// if(textarea) {
+		// 	textarea.html(JSON.stringify(this.values));
+		// }
 		// Return the values
 		return this.values;
 	},
@@ -2122,15 +2185,10 @@ BuildCalculator.prototype = {
 		if(json.socketAttrs) {
 			_.each(json.socketAttrs, function(av, ak) {
 				if(ak == "ruby-damage") {
-					if(typeof(this.attrs['max-damage']) != "undefined") {
-						this.attrs['max-damage'] -= parseFloat(av);
+					if(typeof(this.attrs[ak + "-" + slot]) != "undefined") {
+						this.attrs[ak + "-" + slot] -= parseFloat(av);
 					} else {
-						this.attrs['max-damage'] = parseFloat(av);
-					}
-					if(typeof(this.attrs['min-damage']) != "undefined") {
-						this.attrs['min-damage'] -= parseFloat(av);
-					} else {
-						this.attrs['min-damage'] = parseFloat(av);
+						this.attrs[ak + "-" + slot] = parseFloat(av);
 					}
 				} else if(typeof(this.attrs[ak]) != "undefined") {
 					this.attrs[ak] -= parseFloat(av);
@@ -2488,15 +2546,10 @@ BuildCalculator.prototype = {
 		if(json.socketAttrs) {
 			_.each(json.socketAttrs, function(av, ak) {
 				if(ak == "ruby-damage") {
-					if(typeof(this.attrs['max-damage']) != "undefined") {
-						this.attrs['max-damage'] += parseFloat(av);
+					if(typeof(this.attrs[ak + "-" + slot]) != "undefined") {
+						this.attrs[ak + "-" + slot] += parseFloat(av);
 					} else {
-						this.attrs['max-damage'] = parseFloat(av);
-					}
-					if(typeof(this.attrs['min-damage']) != "undefined") {
-						this.attrs['min-damage'] += parseFloat(av);
-					} else {
-						this.attrs['min-damage'] = parseFloat(av);
+						this.attrs[ak + "-" + slot] = parseFloat(av);
 					}
 				} else if(typeof(this.attrs[ak]) != "undefined") {
 					this.attrs[ak] += parseFloat(av);
@@ -2545,6 +2598,8 @@ BuildCalculator.prototype = {
 					'lightning-resist': 'Lightning Res', 
 					'min-damage': '+Min Dmg',
 					'max-damage': '+Max Dmg',
+					'ruby-damage-mainhand': '+Dmg MH Ruby',
+					'ruby-damage-offhand': '+Dmg OH Ruby',
 					'physical-resist': 'Physical Res', 
 					'plus-block': '+Block', 
 					'plus-gold-find': '+Gold Find', 
@@ -2565,6 +2620,7 @@ BuildCalculator.prototype = {
 				};
     // console.log(s1, s2);
 		_.each(s1, function(val, key) {
+			// console.log(key);
 			if(typeof(s2[key]) != "undefined") {
 				if(allowAll || allowed.hasOwnProperty(key)) {
 					if(!s1[key]) {
