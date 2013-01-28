@@ -1590,7 +1590,7 @@ BuildCalculator.prototype = {
 		if(this.attrs['ap-on-crit']) {
 			// console.log((1 - (critHit * 0.011)));
 			if(options.skill.procRate) {
-				rendered['rps']['ap'] = Math.round(mathR * this.attrs['ap-on-crit'] * options.skill.procRate * 100) / 100 + " AP/Sec";				
+				rendered['rps']['ap'] = Math.round(mathR * this.attrs['ap-on-crit'] * (critHit * 0.01) * options.skill.procRate * 100) / 100 + " AP/Sec";				
 				// rendered['rps']['ap'] = (Math.round((critHit) * (options.skill.procRate) * 10)/10) + "%, +" + this.attrs['ap-on-crit'] + " AP";				
 			}
 			// console.log(rendered['rps']['ap']);
