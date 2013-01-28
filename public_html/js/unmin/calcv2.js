@@ -1588,9 +1588,10 @@ BuildCalculator.prototype = {
 		// Does the person have AP on Crit?
 		// console.log(this.attrs);
 		if(this.attrs['ap-on-crit']) {
-			// console.log((1 - (critHit * 0.01)));
+			// console.log((1 - (critHit * 0.011)));
 			if(options.skill.procRate) {
-				rendered['rps']['ap'] = (Math.round((critHit) * (options.skill.procRate) * 10)/10) + "%, +" + this.attrs['ap-on-crit'] + " AP";				
+				rendered['rps']['ap'] = Math.round(mathR * this.attrs['ap-on-crit'] * options.skill.procRate * 100) / 100 + " AP/Sec";				
+				// rendered['rps']['ap'] = (Math.round((critHit) * (options.skill.procRate) * 10)/10) + "%, +" + this.attrs['ap-on-crit'] + " AP";				
 			}
 			// console.log(rendered['rps']['ap']);
 		}
