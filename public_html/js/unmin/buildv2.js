@@ -571,7 +571,7 @@
 							case "ap":
 								// row.append($("<td colspan='2'>").html(v));
 								// return row;							
-								label = "AP/Crit";
+								label = "AP/Crit/Sec";
 								value = v;
 								break;
 							case "fury":
