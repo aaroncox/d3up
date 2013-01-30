@@ -180,6 +180,13 @@ class D3Up_Tool_Crawler
 		'physical-resist' => '+[v] Physical Resistance',
 		'poison-resist' => '+[v] Poison Resistance',
 		'thorns' => 'Melee attackers take [v] damage per hit',
+		// Elemental Skill Bonuses
+		'plus-arcane-damage-skills' => 'Arcane skills deal [v]% more damage',
+		'plus-cold-damage-skills' => 'Cold skills deal [v]% more damage',
+		'plus-fire-damage-skills' => 'Fire skills deal [v]% more damage',
+		'plus-holy-damage-skills' => 'Holy skills deal [v]% more damage',
+		'plus-lightning-damage-skills' => 'Lightning skills deal [v]% more damage',
+		'plus-poison-damage-skills' => 'Poison skills deal [v]% more damage',
 		// Offensive Stats
 		'attack-speed' => 'Attack speed increased by [v]%',
 		'attack-speed~2' => 'Increases attack speed by [v]%',
@@ -429,9 +436,9 @@ class D3Up_Tool_Crawler
 			// echo "Syncing Items";
 			foreach ($profile['items'] as $slot => $gear) {
 				// var_dump($slot);
-				//       if($slot != "rightFinger") {
-				//         continue;
-				//       }
+				// 	      if($slot != "offHand") {
+				// 	        continue;
+				// 	      }
 				// exit;
 				// Explode the Tooltip Params
 				$parts = explode("/", $gear['tooltipParams']);
@@ -439,7 +446,7 @@ class D3Up_Tool_Crawler
 				$itemUrl = static::$dataUrl . $parts[1];
 				// Get the JSON
 				$data = static::get($itemUrl);
-				// var_dump($data, $itemUrl); exit;
+				// echo "<pre>"; var_dump($data, $itemUrl); exit;
 				// Get the Type
 				$dirtyType = str_replace("generic", "", strtolower($data['type']['id']));
 				if(!isset(static::$_dirtyTypes[$dirtyType])) {
@@ -546,7 +553,7 @@ class D3Up_Tool_Crawler
 						$attrsArray['max-damage'] = $data['attributesRaw']['Damage_Bonus_Max#Physical']['max'];
 					}
 				}
-				// var_dump($attrsArray, $data); exit;
+				// echo "<pre>"; var_dump($attrsArray, $data); exit;
 				// What slot is it in?
 				$slot = static::$_slotMap[$slot];			
 				// Add Attributes to the Item and Query
@@ -617,6 +624,7 @@ class D3Up_Tool_Crawler
 			$build->actives = $skills;
 			$build->passives = $passives;
 		}
+		// exit;
 		$build->save();
 		return $status;
 	}
