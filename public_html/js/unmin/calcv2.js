@@ -1915,8 +1915,8 @@ BuildCalculator.prototype = {
 		var mh = this.getItem('mainhand'),
 				oh = this.getItem('offhand'),
 				rendered = {};
+		// Blizzard Decided they didn't wanna use their stupid math, but I'm leaving it right here!
 		if(this.attrs['ruby-damage-mainhand']) {
-			rendered['ruby-damage-mainhand'] = this.attrs['ruby-damage-mainhand'];
 			// Find Base Values for MH
 			if(mh && mh.stats && mh.stats.damage) {
 				var pMin = (mh.attrs['min-damage']) ? mh.attrs['min-damage'] : 0,
@@ -1927,18 +1927,19 @@ BuildCalculator.prototype = {
 							max: (mh.stats.damage.max / (1 + (pDmg / 100))) - pMax
 						}, 
 						minRuby = mhBase.min + pMin + this.attrs['ruby-damage-mainhand'];
-				if(minRuby > mhBase.max) {
-					mhBase.max = minRuby + 1;
-				}
+				// if(minRuby > mhBase.max) {
+				// 	mhBase.max = minRuby + 1;
+				// }
+				// Percentage of +% Damage is APPLIED to Gem Damage
 				this.attrs['damage'] = {
 					min: (mhBase.min + pMin + this.attrs['ruby-damage-mainhand']) * (1 + (pDmg / 100)),
 					max: (mhBase.max + pMax + this.attrs['ruby-damage-mainhand']) * (1 + (pDmg / 100))
 				}
 				this.attrs.mhRealDamage = this.attrs['damage'];
+				rendered['ruby-damage-mainhand'] = this.attrs['ruby-damage-mainhand'] * (1 + (pDmg / 100));
 			}
 		}
 		if(this.attrs['ruby-damage-offhand']) {
-			rendered['ruby-damage-offhand'] = this.attrs['ruby-damage-offhand'];
 			if(oh && oh.stats && oh.stats.damage) {
 				var pMin = (oh.attrs['min-damage']) ? oh.attrs['min-damage'] : 0,
 						pMax = (oh.attrs['max-damage']) ? oh.attrs['max-damage'] : 0,
@@ -1948,15 +1949,17 @@ BuildCalculator.prototype = {
 							max: (oh.stats.damage.max / (1 + (pDmg / 100))) - pMax
 						}, 
 						minRuby = ohBase.min + pMin + this.attrs['ruby-damage-offhand'];
-				if(minRuby > ohBase.max) {
-					ohBase.max = minRuby + 1;
-				}
+				// if(minRuby > ohBase.max) {
+				// 	ohBase.max = minRuby + 1;
+				// }
+				// Percentage of +% Damage is APPLIED to Gem Damage
 				this.attrs['damage-oh'] = {
 					min: (ohBase.min + pMin + this.attrs['ruby-damage-offhand']) * (1 + (pDmg / 100)),
 					max: (ohBase.max + pMax + this.attrs['ruby-damage-offhand']) * (1 + (pDmg / 100))
 				}
 				this.attrs.ohRealDamage = this.attrs['damage-oh'];
 			}
+			rendered['ruby-damage-offhand'] = this.attrs['ruby-damage-offhand'] * (1 + (pDmg / 100));
 		}
 		// console.log("[POST] Current Damage Ranges");
 		// console.log("MH: ", this.attrs['damage'].min, this.attrs['damage'].max);
