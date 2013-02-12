@@ -261,7 +261,7 @@
 					'desc': 'Increases the duration of your Armor spells by <span class="skill-highlight">120</span> seconds. As long as an Armor spell is active, you gain <span class="skill-highlight">310</span> Life per second. The following skills are improved:<ul><li>Energy Armor</li><li>Ice Armor</li><li>Storm Armor</li></ul>'
 				},
 				'temporal-flux': {
-					'desc': 'Whenever you deal Arcane damage, enemies are slowed by <span class="skill-highlight">60%</span> for <span class="skill-highlight">3</span> seconds.'
+					'desc': 'Whenever you deal Arcane damage, enemies are slowed by <span class="skill-highlight">30%</span> for <span class="skill-highlight">2</span> seconds.'
 				},
 				'critical-mass': {
 					'desc': 'Critical Hits have a chance to reduce the cooldown of your spells by <span class="skill-highlight">1</span> second.'
@@ -270,7 +270,7 @@
 					'desc': 'When you deal damage with a Signature spell you may gain a Flash of Insight. After 5 Flashes of Insight, your next non-Signature spell deals <span class="skill-highlight">75%</span> additional damage. The following skills are Signature spells:<ul><li>Magic Missile</li><li>Shock Pulse</li><li>Spectral Blade</li><li>Electrocute</li></ul>'
 				},
 				'unstable-anomaly': {
-					'desc': 'Upon receiving fatal damage, you are healed back up to 45% of your maximum life. You also release a shockwave that knocks all enemies back and slows them by 60% for 3 seconds. This effect cannot occur more than once every 60 seconds.'
+					'desc': 'When reduced below <span class="skill-highlight">30%</span> Life, you are healed back up to 45% of your maximum life. You also release a shockwave that knocks all enemies back and slows them by 60% for 3 seconds. This effect cannot occur more than once every 60 seconds.'
 				}
 			},
 			'demon-hunter': {
@@ -3422,64 +3422,64 @@
 				},
 				'lashing-tail-kick': {
 					name: 'Lashing Tail Kick',
-					desc: 'Unleash a deadly roundhouse kick that knocks enemies back and deals 470% weapon damage.',
+					desc: 'Unleash a deadly roundhouse kick that knocks enemies back and deals 235% weapon damage.',
 					procRate: 0.667,
 					effect: {
 						'cost-spirit': 30,
-						'weapon-damage': 470,
+						'weapon-damage': 235,
 					},
 				},
 				'lashing-tail-kick~a': {
 					name: 'Lashing Tail Kick - Vulture Claw Kick',
-					desc: 'Unleash a deadly roundhouse kick that knocks enemies back and deals 470% weapon damage.',
+					desc: 'Unleash a deadly roundhouse kick that knocks enemies back and deals 235% weapon damage.',
 					rune: 'Release a torrent of fire that burns nearby enemies for 258% weapon damage as Fire and causes Knockback.',
 					procRate: 0.5,
 					effect: {
 						'weapon-damage-type': 'fire',
 						'cost-spirit': 30,
-						'weapon-damage': 470,
+						'weapon-damage': 258,
 					},
 				},
 				'lashing-tail-kick~b': {
 					name: 'Lashing Tail Kick - Spinning Flame Kick',
-					desc: 'Unleash a deadly roundhouse kick that knocks enemies back and deals 470% weapon damage.',
+					desc: 'Unleash a deadly roundhouse kick that knocks enemies back and deals 235% weapon damage.',
 					rune: 'Hurl a column of fire that burns through enemies, causing 294% weapon damage as Fire to each enemy it strikes.',
 					procRate: 0.5,
 					effect: {
 						'weapon-damage-type': 'fire',
 						'cost-spirit': 30,
-						'weapon-damage': 470,
+						'weapon-damage': 294,
 					},
 				},
 				'lashing-tail-kick~c': {
 					name: 'Lashing Tail Kick - Hand of Ytar',
-					desc: 'Unleash a deadly roundhouse kick that knocks enemies back and deals 470% weapon damage.',
+					desc: 'Unleash a deadly roundhouse kick that knocks enemies back and deals 235% weapon damage.',
 					rune: 'Attack enemies at long range, slowing the movement speed of affected targets by 80% for 2 seconds.',
 					procRate: 0.8,
 					effect: {
 						'cost-spirit': 30,
-						'weapon-damage': 470,
+						'weapon-damage': 235,
 					},
 				},
 				'lashing-tail-kick~d': {
 					name: 'Lashing Tail Kick - Sweeping Armada',
-					desc: 'Unleash a deadly roundhouse kick that knocks enemies back and deals 470% weapon damage.',
+					desc: 'Unleash a deadly roundhouse kick that knocks enemies back and deals 235% weapon damage.',
 					rune: 'Increases Knockback distance by 150% and slows the movement speed of struck enemies by 60% for 2 seconds.',
 					procRate: 0.5,
 					effect: {
 						'cost-spirit': 30,
-						'weapon-damage': 470,
+						'weapon-damage': 235,
 					},
 				},
 				'lashing-tail-kick~e': {
 					name: 'Lashing Tail Kick - Scorpion Sting',
-					desc: 'Unleash a deadly roundhouse kick that knocks enemies back and deals 470% weapon damage.',
+					desc: 'Unleash a deadly roundhouse kick that knocks enemies back and deals 235% weapon damage.',
 					rune: 'Enemies have a 50% chance to be stunned for 1.5 seconds instead of being knocked back.',
 					procRate: 0.667,
 					effect: {
 						'cost-spirit': 30,
 						'chance-stun': 50,
-						'weapon-damage': 470,
+						'weapon-damage': 235,
 					},
 				},				
 				'deadly-reach': {
@@ -3619,61 +3619,61 @@
 				},
 				'tempest-rush': {
 					name: 'Tempest Rush',
-					desc: 'Charge directly through your enemies, knocking them back and hobbling them, slowing their movement by 60% for 2 seconds. Also deals 155% weapon damage while running.',
+					desc: 'Charge directly through your enemies, knocking them back and hobbling them, slowing their movement by 60% for 2 seconds. Also deals 85% weapon damage while running.',
 					procRate: 0.25,
 					effect: {
 						'cost-spirit': 15,
-						'weapon-damage': 155,
+						'weapon-damage': 85,
 					},
 				},
 				'tempest-rush~a': {
 					name: 'Tempest Rush - Bluster',
-					desc: 'Charge directly through your enemies, knocking them back and hobbling them, slowing their movement by 60% for 2 seconds. Also deals 155% weapon damage while running.',
+					desc: 'Charge directly through your enemies, knocking them back and hobbling them, slowing their movement by 60% for 2 seconds. Also deals 85% weapon damage while running.',
 					rune: 'Enemies knocked back have their damage reduced by 20% for the duration of the effect.',
 					procRate: 0.25,
 					effect: {
 						'cost-spirit': 15,
-						'weapon-damage': 155,
+						'weapon-damage': 85,
 					},
 				},
 				'tempest-rush~b': {
 					name: 'Tempest Rush - Tailwind',
-					desc: 'Charge directly through your enemies, knocking them back and hobbling them, slowing their movement by 60% for 2 seconds. Also deals 155% weapon damage while running.',
+					desc: 'Charge directly through your enemies, knocking them back and hobbling them, slowing their movement by 60% for 2 seconds. Also deals 85% weapon damage while running.',
 					rune: 'Increases the movement speed of Tempest Rush by 25%.',
 					procRate: 0.25,
 					effect: {
 						'cost-spirit': 15,
-						'weapon-damage': 155,
+						'weapon-damage': 85,
 					},
 				},
 				'tempest-rush~c': {
 					name: 'Tempest Rush - Slipstream',
-					desc: 'Charge directly through your enemies, knocking them back and hobbling them, slowing their movement by 60% for 2 seconds. Also deals 155% weapon damage while running.',
+					desc: 'Charge directly through your enemies, knocking them back and hobbling them, slowing their movement by 60% for 2 seconds. Also deals 85% weapon damage while running.',
 					rune: 'Reduces damage taken while running by 25%.',
 					procRate: 0.25,
 					effect: {
 						'cost-spirit': 15,
-						'weapon-damage': 155,
+						'weapon-damage': 85,
 					},
 				},
 				'tempest-rush~d': {
 					name: 'Tempest Rush - Northern Breeze',
-					desc: 'Charge directly through your enemies, knocking them back and hobbling them, slowing their movement by 60% for 2 seconds. Also deals 155% weapon damage while running.',
+					desc: 'Charge directly through your enemies, knocking them back and hobbling them, slowing their movement by 60% for 2 seconds. Also deals 85% weapon damage while running.',
 					rune: 'Reduces the channeling cost of Tempest Rush to 8 Spirit.',
 					procRate: 0.25,
 					effect: {
 						'cost-spirit': 15,
-						'weapon-damage': 155,
+						'weapon-damage': 85,
 					},
 				},
 				'tempest-rush~e': {
 					name: 'Tempest Rush - Flurry',
-					desc: 'Charge directly through your enemies, knocking them back and hobbling them, slowing their movement by 60% for 2 seconds. Also deals 155% weapon damage while running.',
+					desc: 'Charge directly through your enemies, knocking them back and hobbling them, slowing their movement by 60% for 2 seconds. Also deals 85% weapon damage while running.',
 					rune: 'Increases the potency of the hobbling effect, slowing enemy movement by 80%.',
 					procRate: 0.25,
 					effect: {
 						'cost-spirit': 15,
-						'weapon-damage': 155,
+						'weapon-damage': 85,
 					},
 				},
 				'breath-of-heaven': {
@@ -3740,62 +3740,62 @@
 				},
 				'dashing-strike': {
 					name: 'Dashing Strike',
-					desc: 'Quickly dash at the targeted enemy or location, striking for 303% weapon damage and rooting the target for 1 second.',
+					desc: 'Quickly dash at the targeted enemy or location, striking for 160% weapon damage and rooting the target for 1 second.',
 					procRate: 1,
 					effect: {
 						'cost-spirit': 25,
-						'weapon-damage': 303,
+						'weapon-damage': 160,
 					},
 				},
 				'dashing-strike~a': {
 					name: 'Dashing Strike - Soaring Skull',
-					desc: 'Quickly dash at the targeted enemy or location, striking for 303% weapon damage and rooting the target for 1 second.',
+					desc: 'Quickly dash at the targeted enemy or location, striking for 160% weapon damage and rooting the target for 1 second.',
 					rune: 'Launch yourself through the air and slow all enemies along your path by 60% for 2 seconds.',
 					procRate: 1,
 					effect: {
 						'cost-spirit': 25,
-						'weapon-damage': 303,
+						'weapon-damage': 160,
 					},
 				},
 				'dashing-strike~b': {
 					name: 'Dashing Strike - Way of the Falling Star',
-					desc: 'Quickly dash at the targeted enemy or location, striking for 303% weapon damage and rooting the target for 1 second.',
+					desc: 'Quickly dash at the targeted enemy or location, striking for 160% weapon damage and rooting the target for 1 second.',
 					rune: 'After striking an enemy, your movement speed is increased 25% for 3 seconds.',
 					procRate: 1,
 					effect: {
 						'cost-spirit': 25,
-						'weapon-damage': 303,
+						'weapon-damage': 160,
 					},
 				},
 				'dashing-strike~c': {
 					name: 'Dashing Strike - Blinding Speed',
-					desc: 'Quickly dash at the targeted enemy or location, striking for 303% weapon damage and rooting the target for 1 second.',
+					desc: 'Quickly dash at the targeted enemy or location, striking for 160% weapon damage and rooting the target for 1 second.',
 					rune: 'Receive a 20% increased chance to Dodge for 3 seconds.',
 					procRate: 1,
 					effect: {
 						'cost-spirit': 25,
-						'weapon-damage': 303,
+						'weapon-damage': 160,
 					},
 				},
 				'dashing-strike~d': {
 					name: 'Dashing Strike - Quicksilver',
-					desc: 'Quickly dash at the targeted enemy or location, striking for 303% weapon damage and rooting the target for 1 second.',
+					desc: 'Quickly dash at the targeted enemy or location, striking for 160% weapon damage and rooting the target for 1 second.',
 					rune: 'Reduces the cost of Dashing Strike to 10 Spirit.',
 					procRate: 1,
 					effect: {
 						'cost-spirit': 25,
-						'weapon-damage': 303,
+						'weapon-damage': 160,
 					},
 				},
 				'dashing-strike~e': {
 					name: 'Dashing Strike - Flying Side Kick',
-					desc: 'Quickly dash at the targeted enemy or location, striking for 303% weapon damage and rooting the target for 1 second.',
+					desc: 'Quickly dash at the targeted enemy or location, striking for 160% weapon damage and rooting the target for 1 second.',
 					rune: 'Perform a flying kick that has a 60% chance to Stun your target for 1.5 seconds.',
 					procRate: 1,
 					effect: {
 						'cost-spirit': 25,
 						'chance-stun': 60,
-						'weapon-damage': 303,
+						'weapon-damage': 160,
 					},
 				},
 				'crippling-wave': {
@@ -3871,7 +3871,7 @@
 				},
 				'wave-of-light': {
 					name: 'Wave of Light',
-					desc: 'Focuses a wave of light that crushes enemies for 829% weapon damage as Holy, followed by an additional 45% weapon damage as Holy to all enemies in a line.',
+					desc: 'Focuses a wave of light that crushes enemies for 390% weapon damage as Holy, followed by an additional 45% weapon damage as Holy to all enemies in a line.',
 					procRate: 0.11,
 					effect: {
 						'weapon-damage-type': 'holy',
@@ -3881,18 +3881,18 @@
 				},
 				'wave-of-light~a': {
 					name: 'Wave of Light - Wall of Light',
-					desc: 'Focuses a wave of light that crushes enemies for 829% weapon damage as Holy, followed by an additional 45% weapon damage as Holy to all enemies in a line.',
-					rune: 'Increases damage of the initial strike to 1190% weapon damage as Holy.',
+					desc: 'Focuses a wave of light that crushes enemies for 390% weapon damage as Holy, followed by an additional 45% weapon damage as Holy to all enemies in a line.',
+					rune: 'Increases damage of the initial strike to 566% weapon damage as Holy.',
 					procRate: 0.11,
 					effect: {
 						'weapon-damage-type': 'holy',
 						'cost-spirit': 75,
-						'weapon-damage': 1190,
+						'weapon-damage': 566,
 					},
 				},
 				'wave-of-light~b': {
 					name: 'Wave of Light - Explosive Light',
-					desc: 'Focuses a wave of light that crushes enemies for 829% weapon damage as Holy, followed by an additional 45% weapon damage as Holy to all enemies in a line.',
+					desc: 'Focuses a wave of light that crushes enemies for 390% weapon damage as Holy, followed by an additional 45% weapon damage as Holy to all enemies in a line.',
 					rune: 'Release bursts of energy that deal 430% weapon damage as Holy to nearby enemies.',
 					procRate: 0.25,
 					effect: {
@@ -3903,41 +3903,41 @@
 				},
 				'wave-of-light~c': {
 					name: 'Wave of Light - Pillar of the Ancients',
-					desc: 'Focuses a wave of light that crushes enemies for 829% weapon damage as Holy, followed by an additional 45% weapon damage as Holy to all enemies in a line.',
-					rune: 'Summon an ancient pillar that deals 595% weapon damage followed by an additional 595% weapon damage after 2 seconds.',
+					desc: 'Focuses a wave of light that crushes enemies for 390% weapon damage as Holy, followed by an additional 45% weapon damage as Holy to all enemies in a line.',
+					rune: 'Summon an ancient pillar that deals 280% weapon damage followed by an additional 280% weapon damage after 2 seconds.',
 					procRate: 0.2,
 					effect: {
 						'weapon-damage-type': 'holy',
 						'cost-spirit': 75,
-						'weapon-damage': 1190,
+						'weapon-damage': 560,
 						'weapon-damage-for': 2
 					},
 				},
 				'wave-of-light~d': {
 					name: 'Wave of Light - Empowered Wave',
-					desc: 'Focuses a wave of light that crushes enemies for 829% weapon damage as Holy, followed by an additional 45% weapon damage as Holy to all enemies in a line.',
+					desc: 'Focuses a wave of light that crushes enemies for 390% weapon damage as Holy, followed by an additional 45% weapon damage as Holy to all enemies in a line.',
 					rune: 'Reduces the cost of Wave of Light to 40 Spirit.',
 					procRate: 0.111,
 					effect: {
 						'weapon-damage-type': 'holy',
 						'cost-spirit': 75,
-						'weapon-damage': 829,
+						'weapon-damage': 390,
 					},
 				},
 				'wave-of-light~e': {
 					name: 'Wave of Light - Blinding Light',
-					desc: 'Focuses a wave of light that crushes enemies for 829% weapon damage as Holy, followed by an additional 45% weapon damage as Holy to all enemies in a line.',
+					desc: 'Focuses a wave of light that crushes enemies for 390% weapon damage as Holy, followed by an additional 45% weapon damage as Holy to all enemies in a line.',
 					rune: 'Critical Hits Stun enemies for 3 seconds.',
 					procRate: 0.111,
 					effect: {
 						'weapon-damage-type': 'holy',
 						'cost-spirit': 75,
-						'weapon-damage': 829,
+						'weapon-damage': 390,
 					},
 				},
 				'exploding-palm': {
 					name: 'Exploding Palm',
-					desc: 'Cause a target to Bleed for 745% weapon damage as Physical over 9 seconds. If the target dies while bleeding, it explodes and deals 50% of the target\'s maximum Life as Physical damage to all nearby enemies.',
+					desc: 'Cause a target to Bleed for 745% weapon damage as Physical over 9 seconds. If the target dies while bleeding, it explodes and deals 30% of the target\'s maximum Life as Physical damage to all nearby enemies.',
 					procRate: 1,
 					effect: {
 						'cost-spirit': 40,
@@ -3947,7 +3947,7 @@
 				},
 				'exploding-palm~a': {
 					name: 'Exploding Palm - Impending Doom',
-					desc: 'Cause a target to Bleed for 745% weapon damage as Physical over 9 seconds. If the target dies while bleeding, it explodes and deals 50% of the target\'s maximum Life as Physical damage to all nearby enemies.',
+					desc: 'Cause a target to Bleed for 745% weapon damage as Physical over 9 seconds. If the target dies while bleeding, it explodes and deals 30% of the target\'s maximum Life as Physical damage to all nearby enemies.',
 					rune: 'Increases the duration of the Bleed effect to deal 745% weapon damage as Physical over 15 seconds.',
 					procRate: 1,
 					effect: {
@@ -3958,7 +3958,7 @@
 				},
 				'exploding-palm~b': {
 					name: 'Exploding Palm - Creeping Demise',
-					desc: 'Cause a target to Bleed for 745% weapon damage as Physical over 9 seconds. If the target dies while bleeding, it explodes and deals 50% of the target\'s maximum Life as Physical damage to all nearby enemies.',
+					desc: 'Cause a target to Bleed for 745% weapon damage as Physical over 9 seconds. If the target dies while bleeding, it explodes and deals 30% of the target\'s maximum Life as Physical damage to all nearby enemies.',
 					rune: 'Also reduces your target\'s movement speed by 80%.',
 					procRate: 1,
 					effect: {
@@ -3969,19 +3969,18 @@
 				},
 				'exploding-palm~c': {
 					name: 'Exploding Palm - The Flesh is Weak',
-					desc: 'Cause a target to Bleed for 745% weapon damage as Physical over 9 seconds. If the target dies while bleeding, it explodes and deals 50% of the target\'s maximum Life as Physical damage to all nearby enemies.',
+					desc: 'Cause a target to Bleed for 745% weapon damage as Physical over 9 seconds. If the target dies while bleeding, it explodes and deals 30% of the target\'s maximum Life as Physical damage to all nearby enemies.',
 					rune: 'Also causes the target to take 12% additional damage for 3 seconds.',
 					procRate: 1,
 					effect: {
 						'cost-spirit': 40,
 						'weapon-damage': 745,
-						'weapon-damage-for': 9,
-						'plus-damage': 12
+						'weapon-damage-for': 9
 					},
 				},
 				'exploding-palm~d': {
 					name: 'Exploding Palm - Strong Spirit',
-					desc: 'Cause a target to Bleed for 745% weapon damage as Physical over 9 seconds. If the target dies while bleeding, it explodes and deals 50% of the target\'s maximum Life as Physical damage to all nearby enemies.',
+					desc: 'Cause a target to Bleed for 745% weapon damage as Physical over 9 seconds. If the target dies while bleeding, it explodes and deals 30% of the target\'s maximum Life as Physical damage to all nearby enemies.',
 					rune: 'If the target explodes after bleeding, gain 5 Spirit for each enemy caught in the blast.',
 					procRate: 1,
 					effect: {
@@ -3992,7 +3991,7 @@
 				},
 				'exploding-palm~e': {
 					name: 'Exploding Palm - Essence Burn',
-					desc: 'Cause a target to Bleed for 745% weapon damage as Physical over 9 seconds. If the target dies while bleeding, it explodes and deals 50% of the target\'s maximum Life as Physical damage to all nearby enemies.',
+					desc: 'Cause a target to Bleed for 745% weapon damage as Physical over 9 seconds. If the target dies while bleeding, it explodes and deals 30% of the target\'s maximum Life as Physical damage to all nearby enemies.',
 					rune: 'Instead of bleeding, the target will burn for 250% weapon damage as Fire over 3 seconds. If the target dies while burning, it explodes causing all nearby enemies to burn for 60% weapon damage as Fire over 3 seconds. This effect can happen multiple times.',
 					procRate: 1,
 					effect: {
@@ -4004,67 +4003,67 @@
 				},
 				'cyclone-strike': {
 					name: 'Cyclone Strike',
-					desc: 'Pull all enemies within 24 yards towards you, followed by a furious blast of energy that deals 313% weapon damage as Holy.',
+					desc: 'Pull all enemies within 24 yards towards you, followed by a furious blast of energy that deals 100% weapon damage as Holy.',
 					procRate: 0.125,
 					effect: {
 						'weapon-damage-type': 'holy',
 						'cost-spirit': 50,
-						'weapon-damage': 313,
+						'weapon-damage': 100,
 					},
 				},
 				'cyclone-strike~a': {
 					name: 'Cyclone Strike - Sunburst',
-					desc: 'Pull all enemies within 24 yards towards you, followed by a furious blast of energy that deals 313% weapon damage as Holy.',
+					desc: 'Pull all enemies within 24 yards towards you, followed by a furious blast of energy that deals 100% weapon damage as Holy.',
 					rune: 'Changes the blast into an explosion of fire that has a 35% chance to Fear enemies for 1.5 seconds.',
 					procRate: 0.125,
 					effect: {
 						'weapon-damage-type': 'holy',
 						'cost-spirit': 50,
-						'weapon-damage': 313,
+						'weapon-damage': 100,
 					},
 				},
 				'cyclone-strike~b': {
 					name: 'Cyclone Strike - Implosion',
-					desc: 'Pull all enemies within 24 yards towards you, followed by a furious blast of energy that deals 313% weapon damage as Holy.',
+					desc: 'Pull all enemies within 24 yards towards you, followed by a furious blast of energy that deals 100% weapon damage as Holy.',
 					rune: 'Increases the distance enemies will be pulled towards you to 34 yards.',
 					procRate: 0.125,
 					effect: {
 						'weapon-damage-type': 'holy',
 						'cost-spirit': 50,
-						'weapon-damage': 313,
+						'weapon-damage': 100,
 					},
 				},
 				'cyclone-strike~c': {
 					name: 'Cyclone Strike - Soothing Breeze',
-					desc: 'Pull all enemies within 24 yards towards you, followed by a furious blast of energy that deals 313% weapon damage as Holy.',
+					desc: 'Pull all enemies within 24 yards towards you, followed by a furious blast of energy that deals 100% weapon damage as Holy.',
 					rune: 'Cyclone Strike heals you and all allies within 24 yards for 1240.39 Life.',
 					procRate: 0.125,
 					effect: {
 						'weapon-damage-type': 'holy',
 						'cost-spirit': 50,
-						'weapon-damage': 313,
+						'weapon-damage': 100,
 					},
 				},
 				'cyclone-strike~d': {
 					name: 'Cyclone Strike - Eye of the Storm',
-					desc: 'Pull all enemies within 24 yards towards you, followed by a furious blast of energy that deals 313% weapon damage as Holy.',
+					desc: 'Pull all enemies within 24 yards towards you, followed by a furious blast of energy that deals 100% weapon damage as Holy.',
 					rune: 'Reduces the Spirit cost of Cyclone Strike to 30 Spirit.',
 					procRate: 0.125,
 					effect: {
 						'weapon-damage-type': 'holy',
 						'cost-spirit': 50,
-						'weapon-damage': 313,
+						'weapon-damage': 100,
 					},
 				},
 				'cyclone-strike~e': {
 					name: 'Cyclone Strike - Wall of Wind',
-					desc: 'Pull all enemies within 24 yards towards you, followed by a furious blast of energy that deals 313% weapon damage as Holy.',
+					desc: 'Pull all enemies within 24 yards towards you, followed by a furious blast of energy that deals 100% weapon damage as Holy.',
 					rune: 'After using Cyclone Strike, gain a 20% chance to dodge attacks for 3 seconds.',
 					procRate: 0.125,
 					effect: {
 						'weapon-damage-type': 'holy',
 						'cost-spirit': 50,
-						'weapon-damage': 313,
+						'weapon-damage': 100,
 					},
 				},
 				'way-of-the-hundred-fists': {
@@ -4385,7 +4384,7 @@
 				},
 				'sweeping-wind': {
 					name: 'Sweeping Wind',
-					desc: 'Surround yourself in a vortex that continuously deals 20% weapon damage to all enemies within 10 yards. The vortex lasts 6 seconds and is refreshed each time you strike an enemy with a melee attack. Landing a Critical Hit has a chance to increase the vortex effect up to 2 times for a total of 60% weapon damage to nearby enemies.',
+					desc: 'Surround yourself in a vortex that continuously deals 15% weapon damage to all enemies within 10 yards. The vortex lasts 6 seconds and is refreshed each time you strike an enemy with a melee attack. Landing a Critical Hit has a chance to increase the vortex effect up to 2 times for a total of 45% weapon damage to nearby enemies.',
 					procRate: 0,
 					effect: {
 						'cost-spirit': 75,
@@ -4394,7 +4393,7 @@
 				},
 				'sweeping-wind~a': {
 					name: 'Sweeping Wind - Blade Storm',
-					desc: 'Surround yourself in a vortex that continuously deals 20% weapon damage to all enemies within 10 yards. The vortex lasts 6 seconds and is refreshed each time you strike an enemy with a melee attack. Landing a Critical Hit has a chance to increase the vortex effect up to 2 times for a total of 60% weapon damage to nearby enemies.',
+					desc: 'Surround yourself in a vortex that continuously deals 15% weapon damage to all enemies within 10 yards. The vortex lasts 6 seconds and is refreshed each time you strike an enemy with a melee attack. Landing a Critical Hit has a chance to increase the vortex effect up to 2 times for a total of 45% weapon damage to nearby enemies.',
 					rune: 'Intensify the vortex, increasing the damage per stack to 20% weapon damage. This increases the damage with 3 stacks to 60% weapon damage.',
 					procRate: 0,
 					effect: {
@@ -4404,44 +4403,44 @@
 				},
 				'sweeping-wind~b': {
 					name: 'Sweeping Wind - Fire Storm',
-					desc: 'Surround yourself in a vortex that continuously deals 20% weapon damage to all enemies within 10 yards. The vortex lasts 6 seconds and is refreshed each time you strike an enemy with a melee attack. Landing a Critical Hit has a chance to increase the vortex effect up to 2 times for a total of 60% weapon damage to nearby enemies.',
-					rune: 'Increases the radius of the vortex to 14 yards and deals 26% weapon damage as Fire.',
+					desc: 'Surround yourself in a vortex that continuously deals 15% weapon damage to all enemies within 10 yards. The vortex lasts 6 seconds and is refreshed each time you strike an enemy with a melee attack. Landing a Critical Hit has a chance to increase the vortex effect up to 2 times for a total of 45% weapon damage to nearby enemies.',
+					rune: 'Increases the radius of the vortex to 14 yards and changes the damage dealt to Fire.',
 					procRate: 0,
 					effect: {
 						'weapon-damage-type': 'fire',
 						'cost-spirit': 75,
-						'weapon-damage': 78,
+						'weapon-damage': 45,
 					},
 				},
 				'sweeping-wind~c': {
 					name: 'Sweeping Wind - Cyclone',
-					desc: 'Surround yourself in a vortex that continuously deals 20% weapon damage to all enemies within 10 yards. The vortex lasts 6 seconds and is refreshed each time you strike an enemy with a melee attack. Landing a Critical Hit has a chance to increase the vortex effect up to 2 times for a total of 60% weapon damage to nearby enemies.',
-					rune: 'While your vortex is at the maximum stack count, Critical Hits have a chance to spawn a lightning tornado that periodically electrocutes nearby enemies for 26% weapon damage as Lightning. Each spawned lightning tornado lasts 3 seconds.',
+					desc: 'Surround yourself in a vortex that continuously deals 15% weapon damage to all enemies within 10 yards. The vortex lasts 6 seconds and is refreshed each time you strike an enemy with a melee attack. Landing a Critical Hit has a chance to increase the vortex effect up to 2 times for a total of 45% weapon damage to nearby enemies.',
+					rune: 'While your vortex is at the maximum stack count, Critical Hits have a chance to spawn a lightning tornado that periodically electrocutes nearby enemies for 20% weapon damage as Lightning. Each spawned lightning tornado lasts 3 seconds.',
 					procRate: 0,
 					effect: {
 						'weapon-damage-type': 'lightning',
 						'cost-spirit': 75,
-						'weapon-damage': 78,
+						'weapon-damage': 45,
 					},
 				},
 				'sweeping-wind~d': {
 					name: 'Sweeping Wind - Inner Storm',
-					desc: 'Surround yourself in a vortex that continuously deals 20% weapon damage to all enemies within 10 yards. The vortex lasts 6 seconds and is refreshed each time you strike an enemy with a melee attack. Landing a Critical Hit has a chance to increase the vortex effect up to 2 times for a total of 60% weapon damage to nearby enemies.',
+					desc: 'Surround yourself in a vortex that continuously deals 15% weapon damage to all enemies within 10 yards. The vortex lasts 6 seconds and is refreshed each time you strike an enemy with a melee attack. Landing a Critical Hit has a chance to increase the vortex effect up to 2 times for a total of 45% weapon damage to nearby enemies.',
 					rune: 'As long as your vortex is at the maximum stack count, you gain 3 Spirit per second.',
 					procRate: 0,
 					effect: {
 						'cost-spirit': 75,
-						'weapon-damage': 60,
+						'weapon-damage': 45,
 					},
 				},
 				'sweeping-wind~e': {
 					name: 'Sweeping Wind - Master of Wind',
-					desc: 'Surround yourself in a vortex that continuously deals 20% weapon damage to all enemies within 10 yards. The vortex lasts 6 seconds and is refreshed each time you strike an enemy with a melee attack. Landing a Critical Hit has a chance to increase the vortex effect up to 2 times for a total of 60% weapon damage to nearby enemies.',
+					desc: 'Surround yourself in a vortex that continuously deals 15% weapon damage to all enemies within 10 yards. The vortex lasts 6 seconds and is refreshed each time you strike an enemy with a melee attack. Landing a Critical Hit has a chance to increase the vortex effect up to 2 times for a total of 45% weapon damage to nearby enemies.',
 					rune: 'Increases the duration of the vortex to 20 seconds.',
 					procRate: 0,
 					effect: {
 						'cost-spirit': 75,
-						'weapon-damage': 60,
+						'weapon-damage': 45,
 					},
 				},
 				'mantra-of-retribution': {
@@ -4512,13 +4511,13 @@
 				'inner-sanctuary~a': {
 					name: 'Inner Sanctuary - Forbidden Palace',
 					desc: 'Create a runic circle of protection on the ground for 5 seconds that cannot be passed by enemies.',
-					rune: 'You and your allies standing in the area of effect of Inner Sanctuary deal 15% additional damage.',
+					rune: 'You and your allies standing in the area of effect of Inner Sanctuary deal 10% additional damage.',
 					procRate: 0,
 					groupBuff: true,
 					effect: {
 						'cost-spirit': 30,
 						'cooldown': 20,
-						'plus-damage-conditional': 15,
+						'plus-damage-conditional': 10,
 					},
 				},
 				'inner-sanctuary~b': {
@@ -4558,7 +4557,7 @@
 				'inner-sanctuary~e': {
 					name: 'Inner Sanctuary - Sanctified Ground',
 					desc: 'Create a runic circle of protection on the ground for 5 seconds that cannot be passed by enemies.',
-					rune: 'When Inner Sanctuary expires, it becomes sanctified ground for 6 seconds, slowing the movement of all enemies that move through it by 80%.',
+					rune: 'When Inner Sanctuary expires, it becomes sanctified ground for 6 seconds, slowing the movement of all enemies that move through it by 60%.',
 					procRate: 0,
 					effect: {
 						'cost-spirit': 30,
@@ -4618,11 +4617,11 @@
 				'mystic-ally~e': {
 					name: 'Mystic Ally - Eternal Ally',
 					desc: 'Summon a mystic ally to fight alongside you until it is destroyed. The ally deals 40% of your weapon damage as Physical per swing.',
-					rune: 'Imbue the ally with the essence of life. When the ally dies, it has a 100% chance to be reborn after 3 seconds. In addition, the physical damage of the ally\'s basic attack is increased to 44% of your weapon damage per swing.',
+					rune: 'Imbue the ally with the essence of life. When the ally dies, it has a 50% chance to be reborn after 5 seconds. In addition, the physical damage of the ally\'s basic attack is increased to 44% of your weapon damage per swing.',
 					procRate: 0,
 					effect: {
 						'cost-spirit': 25,
-						'weapon-damage': 60,
+						'weapon-damage': 40,
 					},
 				},
 				'mantra-of-healing': {
@@ -6390,55 +6389,55 @@
 				},
 				'shock-pulse': {
 					name: 'Shock Pulse',
-					desc: 'Release a medium range pulse of 3 unpredictable charges of electricity that deal 150% weapon damage as Lightning.',
-					procRate: 0.8,
+					desc: 'Release a medium range pulse of 3 unpredictable charges of electricity that deal 105% weapon damage as Lightning.',
+					procRate: 0.667,
 					effect: {
-						'weapon-damage': 150,
+						'weapon-damage': 105,
 					},
 				},
 				'shock-pulse~a': {
 					name: 'Shock Pulse - Fire Bolts',
-					desc: 'Release a medium range pulse of 3 unpredictable charges of electricity that deal 150% weapon damage as Lightning.',
-					rune: 'Cast bolts of fire that each deal 195% weapon damage as Fire.',
-					procRate: 0.8,
+					desc: 'Release a medium range pulse of 3 unpredictable charges of electricity that deal 105% weapon damage as Lightning.',
+					rune: 'Cast bolts of fire that each deal 152% weapon damage as Fire.',
+					procRate: 0.667,
 					effect: {
-						'weapon-damage': 195,
+						'weapon-damage': 152,
 					},
 				},
 				'shock-pulse~b': {
 					name: 'Shock Pulse - Living Lightning',
-					desc: 'Release a medium range pulse of 3 unpredictable charges of electricity that deal 150% weapon damage as Lightning.',
-					rune: 'Conjure a being of lightning that drifts forward, electrocuting nearby enemies for 52% weapon damage as Lightning.',
-					procRate: 0.8,
+					desc: 'Release a medium range pulse of 3 unpredictable charges of electricity that deal 105% weapon damage as Lightning.',
+					rune: 'Conjure a being of lightning that drifts forward, electrocuting nearby enemies for 37% weapon damage as Lightning.',
+					procRate: 0.2,
 					effect: {
-						'weapon-damage': 52,
+						'weapon-damage': 37,
 					},
 				},
 				'shock-pulse~c': {
 					name: 'Shock Pulse - Piercing Orb',
-					desc: 'Release a medium range pulse of 3 unpredictable charges of electricity that deal 150% weapon damage as Lightning.',
-					rune: 'Merge the bolts in a single giant orb that oscillates forward dealing 150% weapon damage as Lightning to everything it hits.',
-					procRate: 0.8,
+					desc: 'Release a medium range pulse of 3 unpredictable charges of electricity that deal 105% weapon damage as Lightning.',
+					rune: 'Merge the bolts in a single giant orb that oscillates forward dealing 105% weapon damage as Lightning to everything it hits.',
+					procRate: 0.5,
 					effect: {
-						'weapon-damage': 150,
+						'weapon-damage': 105,
 					},
 				},
 				'shock-pulse~d': {
 					name: 'Shock Pulse - Lightning Affinity',
-					desc: 'Release a medium range pulse of 3 unpredictable charges of electricity that deal 150% weapon damage as Lightning.',
+					desc: 'Release a medium range pulse of 3 unpredictable charges of electricity that deal 105% weapon damage as Lightning.',
 					rune: 'Every target hit by a pulse restores 3 Arcane Power.',
-					procRate: 0.8,
+					procRate: 0.667,
 					effect: {
-						'weapon-damage': 150,
+						'weapon-damage': 105,
 					},
 				},
 				'shock-pulse~e': {
 					name: 'Shock Pulse - Explosive Bolts',
-					desc: 'Release a medium range pulse of 3 unpredictable charges of electricity that deal 150% weapon damage as Lightning.',
+					desc: 'Release a medium range pulse of 3 unpredictable charges of electricity that deal 105% weapon damage as Lightning.',
 					rune: 'Slain enemies explode, dealing 70% weapon damage as Lightning to every enemy within 10 yards.',
 					procRate: 0.5,
 					effect: {
-						'weapon-damage': 150,
+						'weapon-damage': 105,
 					},
 				},
 				'frost-nova': {
@@ -6500,36 +6499,36 @@
 				},
 				'arcane-orb': {
 					name: 'Arcane Orb',
-					desc: 'Hurl an orb of pure energy that explodes when it hits, dealing 200% weapon damage as Arcane to all enemies within 10 yards.',
+					desc: 'Hurl an orb of pure energy that explodes when it hits, dealing 175% weapon damage as Arcane to all enemies within 10 yards.',
 					procRate: 0.333,
 					effect: {
 						'cost-arcane-power': 35,
-						'weapon-damage': 200,
+						'weapon-damage': 175,
 					},
 				},
 				'arcane-orb~a': {
 					name: 'Arcane Orb - Obliteration',
-					desc: 'Hurl an orb of pure energy that explodes when it hits, dealing 200% weapon damage as Arcane to all enemies within 10 yards.',
-					rune: 'Increase the damage of the explosion to deal 260% weapon damage as Arcane.',
+					desc: 'Hurl an orb of pure energy that explodes when it hits, dealing 175% weapon damage as Arcane to all enemies within 10 yards.',
+					rune: 'Increase the damage of the explosion to deal 228% weapon damage as Arcane.',
 					procRate: 0.333,
 					effect: {
 						'cost-arcane-power': 35,
-						'weapon-damage': 260,
+						'weapon-damage': 228,
 					},
 				},
 				'arcane-orb~b': {
 					name: 'Arcane Orb - Arcane Nova',
-					desc: 'Hurl an orb of pure energy that explodes when it hits, dealing 200% weapon damage as Arcane to all enemies within 10 yards.',
+					desc: 'Hurl an orb of pure energy that explodes when it hits, dealing 175% weapon damage as Arcane to all enemies within 10 yards.',
 					rune: 'Modify the orb to deal 175% weapon damage as Arcane to all enemies within 20 yards.',
 					procRate: 0.167,
 					effect: {
 						'cost-arcane-power': 35,
-						'weapon-damage': 200,
+						'weapon-damage': 175,
 					},
 				},
 				'arcane-orb~c': {
 					name: 'Arcane Orb - Arcane Orbit',
-					desc: 'Hurl an orb of pure energy that explodes when it hits, dealing 200% weapon damage as Arcane to all enemies within 10 yards.',
+					desc: 'Hurl an orb of pure energy that explodes when it hits, dealing 175% weapon damage as Arcane to all enemies within 10 yards.',
 					rune: 'Create 4 Arcane Orbs that orbit you, exploding for 70% weapon damage as Arcane when enemies get close.',
 					procRate: 0.25,
 					effect: {
@@ -6539,22 +6538,22 @@
 				},
 				'arcane-orb~d': {
 					name: 'Arcane Orb - Tap the Source',
-					desc: 'Hurl an orb of pure energy that explodes when it hits, dealing 200% weapon damage as Arcane to all enemies within 10 yards.',
+					desc: 'Hurl an orb of pure energy that explodes when it hits, dealing 175% weapon damage as Arcane to all enemies within 10 yards.',
 					rune: 'Reduce casting cost to 20 Arcane Power.',
 					procRate: 0.333,
 					effect: {
 						'cost-arcane-power': 35,
-						'weapon-damage': 200,
+						'weapon-damage': 175,
 					},
 				},
 				'arcane-orb~e': {
 					name: 'Arcane Orb - Celestial Orb',
-					desc: 'Hurl an orb of pure energy that explodes when it hits, dealing 200% weapon damage as Arcane to all enemies within 10 yards.',
+					desc: 'Hurl an orb of pure energy that explodes when it hits, dealing 175% weapon damage as Arcane to all enemies within 10 yards.',
 					rune: 'The orb will pierce through targets, damaging any enemy it passes through.',
 					procRate: 0.2,
 					effect: {
 						'cost-arcane-power': 35,
-						'weapon-damage': 200,
+						'weapon-damage': 175,
 					},
 				},
 				'diamond-skin': {
@@ -6930,7 +6929,6 @@
 					procRate: 0.25,
 					effect: {
 						'weapon-damage': 90,
-						'weapon-damage-type': 'lightning',
 					},
 				},
 				'electrocute~a': {
@@ -6940,7 +6938,6 @@
 					procRate: 0.167,
 					effect: {
 						'weapon-damage': 86,
-						'weapon-damage-type': 'lightning',
 					},
 				},
 				'electrocute~b': {
@@ -6950,7 +6947,6 @@
 					procRate: 0.083,
 					effect: {
 						'weapon-damage': 90,
-						'weapon-damage-type': 'lightning',
 					},
 				},
 				'electrocute~c': {
@@ -6960,7 +6956,6 @@
 					procRate: 0.1,
 					effect: {
 						'weapon-damage': 115,
-						'weapon-damage-type': 'lightning',
 					},
 				},
 				'electrocute~d': {
@@ -6970,7 +6965,6 @@
 					procRate: 1,
 					effect: {
 						'weapon-damage': 90,
-						'weapon-damage-type': 'lightning',
 					},
 				},
 				'electrocute~e': {
@@ -6980,7 +6974,6 @@
 					procRate: 0.167,
 					effect: {
 						'weapon-damage': 90,
-						'weapon-damage-type': 'lightning',
 					},
 				},
 				'slow-time': {
@@ -7180,7 +7173,6 @@
 					procRate: 0,
 					effect: {
 						'cost-arcane-power': 25,
-						'plus-damage': 10,
 						'weapon-damage-for': 3,
 						'weapon-damage': 15,
 					},
@@ -7584,71 +7576,71 @@
 				},
 				'blizzard': {
 					name: 'Blizzard',
-					desc: 'Call down shards of ice to pelt an area, dealing 510% weapon damage as Cold to all enemies in the area over 6 seconds. Multiple casts in the same area do not stack.',
-					procRate: 0.0125,
+					desc: 'Call down shards of ice to pelt an area, dealing 210% weapon damage as Cold to all enemies in the area over 6 seconds. Multiple casts in the same area do not stack.',
+					procRate: 0.01,
 					effect: {
 						'cost-arcane-power': 40,
-						'weapon-damage': 510,
+						'weapon-damage': 210,
 						'weapon-damage-for': 6,
 						'weapon-damage-type': 'cold',
 					},
 				},
 				'blizzard~a': {
 					name: 'Blizzard - Unrelenting Storm',
-					desc: 'Call down shards of ice to pelt an area, dealing 510% weapon damage as Cold to all enemies in the area over 6 seconds. Multiple casts in the same area do not stack.',
-					rune: 'Increases the duration of Blizzard to deal 680% weapon damage as Cold over 8 seconds.',
-					procRate: 0.0125,
+					desc: 'Call down shards of ice to pelt an area, dealing 210% weapon damage as Cold to all enemies in the area over 6 seconds. Multiple casts in the same area do not stack.',
+					rune: 'Increases the duration of Blizzard to deal 280% weapon damage as Cold over 8 seconds.',
+					procRate: 0.01,
 					effect: {
 						'cost-arcane-power': 40,
-						'weapon-damage': 680,
+						'weapon-damage': 280,
 						'weapon-damage-for': 8,
 						'weapon-damage-type': 'cold',
 					},
 				},
 				'blizzard~b': {
 					name: 'Blizzard - Stark Winter',
-					desc: 'Call down shards of ice to pelt an area, dealing 510% weapon damage as Cold to all enemies in the area over 6 seconds. Multiple casts in the same area do not stack.',
+					desc: 'Call down shards of ice to pelt an area, dealing 210% weapon damage as Cold to all enemies in the area over 6 seconds. Multiple casts in the same area do not stack.',
 					rune: 'Increases the size of Blizzard to cover 22 yards, dealing 210% weapon damage as Cold over 6 seconds.',
-					procRate: 0.0125,
+					procRate: 0.005,
 					effect: {
 						'cost-arcane-power': 40,
-						'weapon-damage': 510,
+						'weapon-damage': 210,
 						'weapon-damage-for': 6,
 						'weapon-damage-type': 'cold',
 					},
 				},
 				'blizzard~c': {
 					name: 'Blizzard - Grasping Chill',
-					desc: 'Call down shards of ice to pelt an area, dealing 510% weapon damage as Cold to all enemies in the area over 6 seconds. Multiple casts in the same area do not stack.',
+					desc: 'Call down shards of ice to pelt an area, dealing 210% weapon damage as Cold to all enemies in the area over 6 seconds. Multiple casts in the same area do not stack.',
 					rune: 'After the Blizzard ends, the ground is covered in a low lying mist for 3 seconds that Slows the movement speed of enemies by 60%.',
-					procRate: 0.0125,
+					procRate: 0.01,
 					effect: {
 						'cost-arcane-power': 40,
-						'weapon-damage': 510,
+						'weapon-damage': 210,
 						'weapon-damage-for': 6,
 						'weapon-damage-type': 'cold',
 					},
 				},
 				'blizzard~d': {
 					name: 'Blizzard - Snowbound',
-					desc: 'Call down shards of ice to pelt an area, dealing 510% weapon damage as Cold to all enemies in the area over 6 seconds. Multiple casts in the same area do not stack.',
+					desc: 'Call down shards of ice to pelt an area, dealing 210% weapon damage as Cold to all enemies in the area over 6 seconds. Multiple casts in the same area do not stack.',
 					rune: 'Reduces the casting cost of Blizzard to 20 Arcane Power.',
-					procRate: 0.0125,
+					procRate: 0.01,
 					effect: {
 						'cost-arcane-power': 20,
-						'weapon-damage': 510,
+						'weapon-damage': 210,
 						'weapon-damage-for': 6,
 						'weapon-damage-type': 'cold',
 					},
 				},
 				'blizzard~e': {
 					name: 'Blizzard - Frozen Solid',
-					desc: 'Call down shards of ice to pelt an area, dealing 510% weapon damage as Cold to all enemies in the area over 6 seconds. Multiple casts in the same area do not stack.',
+					desc: 'Call down shards of ice to pelt an area, dealing 210% weapon damage as Cold to all enemies in the area over 6 seconds. Multiple casts in the same area do not stack.',
 					rune: 'Enemies caught in the Blizzard have a 20% chance to be Frozen for 3 seconds.',
-					procRate: 0.0125,
+					procRate: 0.01,
 					effect: {
 						'cost-arcane-power': 40,
-						'weapon-damage': 510,
+						'weapon-damage': 210,
 						'weapon-damage-for': 6,
 						'weapon-damage-type': 'cold',
 					},

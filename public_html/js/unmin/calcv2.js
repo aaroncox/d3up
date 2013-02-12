@@ -1453,7 +1453,6 @@ BuildCalculator.prototype = {
 			if(skill.effect['weapon-damage-type']) {
 				var dmgType = skill.effect['weapon-damage-type'],
 						dmgAttr = 'plus-' + dmgType + '-damage-skills';
-				if(this.attrs[dmgAttr])
 				bonusText = "<span class='skill-highlight'>+" + this.attrs[dmgAttr] + "%</span> Damage";
 				if(this.attrs[dmgAttr]) {
 					mathM += this.attrs[dmgAttr] * 0.01;
@@ -1477,8 +1476,9 @@ BuildCalculator.prototype = {
 			if(skill.effect['weapon-damage-type']) {
 				var dmgType = skill.effect['weapon-damage-type'],
 						dmgAttr = 'plus-' + dmgType + '-damage-skills';
-				// console.log(dmgAttr, this.attrs);
+				// console.log(dmgAttr, this.attrs[dmgAttr]);
 				// console.log(mathE, this.attrs[dmgAttr]);
+				bonusText = "<span class='skill-highlight'>+" + this.attrs[dmgAttr] + "%</span> Damage";
 				if(this.attrs[dmgAttr]) {
 					mathM += this.attrs[dmgAttr] * 0.01;
 				}
@@ -1829,6 +1829,7 @@ BuildCalculator.prototype = {
     }, this);
 	},
 	applySetBonuses: function() {
+		// console.log(this.sets);
 		_.each(this.sets, function(v,k) {
 			if(v > 1) {
 				if(d3up.gameData.sets[k]) {

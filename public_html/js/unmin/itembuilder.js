@@ -382,6 +382,10 @@ ItemBuilder.prototype = {
   			builder.item.setBonus = $(this).val();
   			builder.item.set = $(this).val();
   			builder.updatePreview();
+				if(builder.changeCallback) {
+					// console.log("Adding bonus & callback: ", $(this).val());
+					builder.changeCallback(builder);
+				}
   		});
 	  }
 	},
