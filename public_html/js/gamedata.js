@@ -3876,7 +3876,7 @@
 					effect: {
 						'weapon-damage-type': 'holy',
 						'cost-spirit': 75,
-						'weapon-damage': 390,
+						'weapon-damage': 829,
 					},
 				},
 				'wave-of-light~a': {
@@ -3893,12 +3893,12 @@
 				'wave-of-light~b': {
 					name: 'Wave of Light - Explosive Light',
 					desc: 'Focuses a wave of light that crushes enemies for 829% weapon damage as Holy, followed by an additional 45% weapon damage as Holy to all enemies in a line.',
-					rune: 'Release bursts of energy that deal 430% weapon damage as Holy to nearby enemies.',
+					rune: 'Release bursts of energy that deal 914% weapon damage as Holy to nearby enemies.',
 					procRate: 0.25,
 					effect: {
 						'weapon-damage-type': 'holy',
 						'cost-spirit': 75,
-						'weapon-damage': 430,
+						'weapon-damage': 914,
 					},
 				},
 				'wave-of-light~c': {
@@ -6435,7 +6435,7 @@
 				'shock-pulse~e': {
 					name: 'Shock Pulse - Explosive Bolts',
 					desc: 'Release a medium range pulse of 3 unpredictable charges of electricity that deal 150% weapon damage as Lightning.',
-					rune: 'Slain enemies explode, dealing 70% weapon damage as Lightning to every enemy within 10 yards.',
+					rune: 'Slain enemies explode, dealing 105% weapon damage as Lightning to every enemy within 10 yards.',
 					procRate: 0.5,
 					effect: {
 						'weapon-damage': 150,
