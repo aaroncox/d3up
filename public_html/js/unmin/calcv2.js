@@ -1473,7 +1473,7 @@ BuildCalculator.prototype = {
 			mathAl = mhMinDamage;
 			mathAh = mhMaxDamage;
 			mathM = (1 + this.bonuses['plus-damage']);
-			if(skill.effect['weapon-damage-type']) {
+			if(skill.effect['weapon-damage-type'] && this.attrs[dmgAttr]) {
 				var dmgType = skill.effect['weapon-damage-type'],
 						dmgAttr = 'plus-' + dmgType + '-damage-skills';
 				// console.log(dmgAttr, this.attrs[dmgAttr]);
