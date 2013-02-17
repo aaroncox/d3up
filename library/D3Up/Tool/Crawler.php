@@ -43,7 +43,18 @@ class D3Up_Tool_Crawler
     $body = file_get_contents($url);
     // No response from BNet? Let the user know
     if(!$body) {
-      throw new Exception("There was an error communicating with the Blizzard API. We attempted to access data at the following URL: <p><a href='".$url."'>".$url."</a></p>Please try again in a few moments to see if that resolves the problem, otherwise feel free to email me at <a href='mailto:aaron.cox@greymass.com'>aaron.cox@greymass.com</a>.");
+      throw new Exception("
+				There was an error communicating with the Blizzard API. 
+				
+				We attempted to access data at the following URL: 
+				
+				<p><a href='".$url."'>".$url."</a></p>
+				
+				<p><strong style='color: #f00'>Please read the message at the top of the page, this problem may already have been reported.</strong></p>
+				
+				If the message at the top doesn't indicate a problem, please try again in a few moments to see if that resolves the problem, 
+				otherwise feel free to email me at <a href='mailto:aaron.cox@greymass.com'>aaron.cox@greymass.com</a>.
+			");
     }
 		
 		return Zend_Json::decode($body);
