@@ -1,5 +1,7 @@
 <h5>Sync Character with Battle.net Profile</h5>
 <div class="form">
+	<h3 style='margin: 0; color: #d00'>Issues with Battle.net - Please Read</h3>
+	Since sometime on Friday (the 15th), the Battle.net API has been acting strange. Requests for characters and items (non 1.0.7 related) are failing. I've contacted Blizzard about it and hopefully they'll have it resolved soon. Because of this, the build creator <strong><u>may not find your characters</u></strong>.
 <? if($this->record->_characterBt && $this->record->_characterRg && $this->record->_characterId): ?>
   <? if(!$this->record->_createdBy->id): ?>
     <h3>This is an anonymous build</h3>
