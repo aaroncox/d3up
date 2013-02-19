@@ -655,7 +655,7 @@ class D3Up_Tool_Crawler
 			$build->actives = $skills;
 			$build->passives = $passives;
 		}
-		exit;
+		// exit;
 		$build->save();
 		return $status;
 	}
