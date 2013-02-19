@@ -22,7 +22,7 @@ class D3Up_Tool_Crawler
 		return static::$_instance;
 	}
 
-	static public $dataUrl = 'http://us.battle.net/api/d3/data/item/';
+	static public $dataUrl = 'http://eu.battle.net/api/d3/data/item/';
 	static public $profileUrl = array(
 		1 => 'http://us.battle.net/api/d3/profile/',
 		2 => 'http://eu.battle.net/api/d3/profile/',
@@ -30,34 +30,54 @@ class D3Up_Tool_Crawler
 	);
 
 	static public function get($url) {
-    // --- With Proxy
-    // $aContext = array(
-    //     'http' => array(
-    //         'proxy' => 'tcp://192.168.1.7:8888',
-    //         'request_fulluri' => true,
-    //     ),
-    // );
-    // $cxContext = stream_context_create($aContext);
-    // $body = file_get_contents($url, false, $cxContext);
-    // --- No Proxy
-    $body = file_get_contents($url);
+		// error_reporting(0);
+		// var_dump($url); 
+		$abort = false;
+		$tries = 0;
+		$limit = 5;
+		while($abort === false) {
+			// Proxy Settings
+	    // $aContext = array(
+	    //     'http' => array(
+	    //         'proxy' => 'tcp://192.168.1.7:8888',
+	    //         'request_fulluri' => true,
+	    //     ),
+	    // );
+	    // $cxContext = stream_context_create($aContext);
+	    if($json = file_get_contents($url)) {	// --- No Proxy
+	    // if($json = file_get_contents($url, false, $cxContext)) {		// --- With Proxy
+				// Success, return JSON
+				return Zend_Json::decode($json);
+			} else {
+				// Inc tries and try again!
+				// var_dump("Try #".$tries." of ".$limit);
+				$tries++;				
+			}
+			// If we've exceeded our limit, throw the exception.
+			if($tries >= $limit) {
+				// Failed, abort lookup
+				$abort = true;
+				throw new Exception("Failed with ".$tries."/".$limit." on ".$url);
+			}
+		}
+		// tries
     // No response from BNet? Let the user know
-    if(!$body) {
-      throw new Exception("
-				There was an error communicating with the Blizzard API. 
-				
-				We attempted to access data at the following URL: 
-				
-				<p><a href='".$url."'>".$url."</a></p>
-				
-				<p><strong style='color: #f00'>Please read the message at the top of the page, this problem may already have been reported.</strong></p>
-				
-				If the message at the top doesn't indicate a problem, please try again in a few moments to see if that resolves the problem, 
-				otherwise feel free to email me at <a href='mailto:aaron.cox@greymass.com'>aaron.cox@greymass.com</a>.
-			");
-    }
+			//     if(!$body) {
+		throw new Exception("
+			There was an error communicating with the Blizzard API. 
+
+			We attempted to access data at the following URL: 
+
+			<p><a href='".$url."'>".$url."</a></p>
+
+			<p><strong style='color: #f00'>Please read the message at the top of the page, this problem may already have been reported.</strong></p>
+
+			If the message at the top doesn't indicate a problem, please try again in a few moments to see if that resolves the problem, 
+			otherwise feel free to email me at <a href='mailto:aaron.cox@greymass.com'>aaron.cox@greymass.com</a>.
+		");
+			//     }
 		
-		return Zend_Json::decode($body);
+		// return Zend_Json::decode($body);
 	}
 	
 	static protected $_qualityMap = array(
@@ -635,7 +655,7 @@ class D3Up_Tool_Crawler
 			$build->actives = $skills;
 			$build->passives = $passives;
 		}
-		// exit;
+		exit;
 		$build->save();
 		return $status;
 	}
