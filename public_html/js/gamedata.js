@@ -2615,7 +2615,7 @@
 					rune: 'Increases Hatred generation to 6 Hatred.',
 					procRate: 0.5,
 					effect: {
-						'generate-hatred': 3,
+						'generate-hatred': 6,
 						'weapon-damage': 95,
 					},
 				},
