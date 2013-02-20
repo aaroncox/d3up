@@ -6745,7 +6745,7 @@
 					procRate: 0.2,
 					effect: {
 						'cost-arcane-power': 16,
-						'weapon-damage': 210,
+						'weapon-damage': 225,
 					},
 				},
 				'arcane-torrent~b': {
