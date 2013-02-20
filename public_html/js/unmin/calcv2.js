@@ -1911,20 +1911,28 @@ BuildCalculator.prototype = {
 				var pMin = (mh.attrs['min-damage']) ? mh.attrs['min-damage'] : 0,
 						pMax = (mh.attrs['max-damage']) ? mh.attrs['max-damage'] : 0,
 						pDmg = (mh.attrs['plus-damage']) ? mh.attrs['plus-damage'] : 0,
+						edMin = 0,
+						edMax = 0,
 						mhBase = {
 							min: (mh.stats.damage.min / (1 + (pDmg / 100))) - pMin,
 							max: (mh.stats.damage.max / (1 + (pDmg / 100))) - pMax
 						}, 
 						minRuby = mhBase.min + pMin + this.attrs['ruby-damage-mainhand'];
-				// if(minRuby > mhBase.max) {
-				// 	mhBase.max = minRuby + 1;
-				// }
+				_.each(['fire-damage', 'arcane-damage', 'poison-damage', 'cold-damage', 'lightning-damage', 'holy-damage'], function(v,k) {
+					if(_.has(mh.attrs, v)) {
+						edMin += mh.attrs[v].min;
+						edMax += mh.attrs[v].max;
+					}
+				}, this);
 				// Percentage of +% Damage is APPLIED to Gem Damage
 				this.attrs['damage'] = {
 					min: (mhBase.min + pMin + this.attrs['ruby-damage-mainhand']) * (1 + (pDmg / 100)),
 					max: (mhBase.max + pMax + this.attrs['ruby-damage-mainhand']) * (1 + (pDmg / 100))
 				}
-				this.attrs.mhRealDamage = this.attrs['damage'];
+				this.attrs.mhRealDamage = {
+					min: (mhBase.min + pMin + this.attrs['ruby-damage-mainhand']) * (1 + (pDmg / 100)) - edMin,
+					max: (mhBase.max + pMax + this.attrs['ruby-damage-mainhand']) * (1 + (pDmg / 100)) - edMax
+				}
 				rendered['ruby-damage-mainhand'] = this.attrs['ruby-damage-mainhand'] * (1 + (pDmg / 100));
 			}
 		}
@@ -1933,21 +1941,29 @@ BuildCalculator.prototype = {
 				var pMin = (oh.attrs['min-damage']) ? oh.attrs['min-damage'] : 0,
 						pMax = (oh.attrs['max-damage']) ? oh.attrs['max-damage'] : 0,
 						pDmg = (oh.attrs['plus-damage']) ? oh.attrs['plus-damage'] : 0,
+						edMin = 0,
+						edMax = 0,
+						
 						ohBase = {
 							min: (oh.stats.damage.min / (1 + (pDmg / 100))) - pMin,
 							max: (oh.stats.damage.max / (1 + (pDmg / 100))) - pMax
 						}, 
 						minRuby = ohBase.min + pMin + this.attrs['ruby-damage-offhand'];
-				// if(minRuby > ohBase.max) {
-				// 	ohBase.max = minRuby + 1;
-				// }
+				_.each(['fire-damage', 'arcane-damage', 'poison-damage', 'cold-damage', 'lightning-damage', 'holy-damage'], function(v,k) {
+					if(_.has(mh.attrs, v)) {
+						edMin += mh.attrs[v].min;
+						edMax += mh.attrs[v].max;
+					}
+				}, this);
 				// Percentage of +% Damage is APPLIED to Gem Damage
 				this.attrs['damage-oh'] = {
 					min: (ohBase.min + pMin + this.attrs['ruby-damage-offhand']) * (1 + (pDmg / 100)),
 					max: (ohBase.max + pMax + this.attrs['ruby-damage-offhand']) * (1 + (pDmg / 100))
 				}
-				this.attrs.ohRealDamage = this.attrs['damage-oh'];
-			}
+				this.attrs.ohRealDamage = {
+					min: (mhBase.min + pMin + this.attrs['ruby-damage-offhand']) * (1 + (pDmg / 100)) - edMin,
+					max: (mhBase.max + pMax + this.attrs['ruby-damage-offhand']) * (1 + (pDmg / 100)) - edMax
+				}			}
 			rendered['ruby-damage-offhand'] = this.attrs['ruby-damage-offhand'] * (1 + (pDmg / 100));
 		}
 		// console.log("[POST] Current Damage Ranges");
