@@ -1311,6 +1311,7 @@ BuildCalculator.prototype = {
 				bnAvgDamage = 0,
 				bnEleDamage = 0,
 				bnElePercent = 0,
+				bnSkillDamage = 0,
 				critHit = this.attrs['critical-hit'],
 				critHitDmg = this.attrs['critical-hit-damage'],
 				mathE = skill.effect['weapon-damage'],
@@ -1385,6 +1386,7 @@ BuildCalculator.prototype = {
 				shortName = 'wz';
 				break;
 		}
+		
 		if(shortName) {
 			var attributeName = shortName + '-' + options.skillName,
 					attributeTip = false;
@@ -1394,8 +1396,7 @@ BuildCalculator.prototype = {
 				attributeTip = shortName + '-' + options.skillName;
 			}
 			if(attributeTip) {
-				var bonusValue = this.attrs[attributeTip],
-						bonusText = '';
+				var bonusValue = this.attrs[attributeTip];
 				if(td[attributeTip]) {
 					if(td[attributeTip].search(/cost/i) >= 0) {
 						// console.log("Resource cost reduction");
@@ -1404,11 +1405,20 @@ BuildCalculator.prototype = {
 						critHit += bonusValue;
 						bonusText = "<span class='skill-highlight'>+" + bonusValue + "%</span> Crit";
 					} else if(td[attributeTip].search(/damage/i) >= 0) {					
-						// console.log("Damage buff");
-						mathE += bonusValue;
+						bnSkillDamage += bonusValue;
 						bonusText = "<span class='skill-highlight'>+" + bonusValue + "%</span> Damage";
 					}					
 				}
+			}
+		}
+		
+		// Do we have bonus +% Elemental Skill Damage?
+		if(skill.effect['weapon-damage-type']) {
+			var dmgType = skill.effect['weapon-damage-type'],
+					dmgAttr = 'plus-' + dmgType + '-damage-skills';
+			bonusText = "<span class='skill-highlight'>+" + this.attrs[dmgAttr] + "%</span> Damage";
+			if(this.attrs[dmgAttr]) {
+				bnSkillDamage += this.attrs[dmgAttr];
 			}
 		}
 		
@@ -1444,21 +1454,12 @@ BuildCalculator.prototype = {
 			mathA = (mhAvgDamage + ohAvgDamage) / 2;
 			mathAl = (mhMinDamage + ohMinDamage) / 2;
 			mathAh = (mhMaxDamage + ohMaxDamage) / 2;
-			mathM = (1 + this.bonuses['plus-damage']);
+			mathM = (1 + this.bonuses['plus-damage'] + (bnSkillDamage * 0.01));
 			var mhAPS = rendered['dps-speed'].mh * (1 + atkSpeedInc + 0.15 + this.bonuses['plus-attack-speed']) * bonusHaste,
 					ohAPS = rendered['dps-speed'].oh * (1 + atkSpeedInc + 0.15 + this.bonuses['plus-attack-speed']) * bonusHaste;
 			mathR = 2 / (1 / mhAPS + 1 / ohAPS);
 			// mathR = (rendered['dps-speed'].mh + rendered['dps-speed'].oh) / 2 * (1 + atkSpeedInc + 0.15 + this.bonuses['plus-attack-speed']);
 			mathC = 1 + (critHit * 0.01) * (critHitDmg * 0.01);
-			if(skill.effect['weapon-damage-type']) {
-				var dmgType = skill.effect['weapon-damage-type'],
-						dmgAttr = 'plus-' + dmgType + '-damage-skills';
-				bonusText = "<span class='skill-highlight'>+" + this.attrs[dmgAttr] + "%</span> Damage";
-				if(this.attrs[dmgAttr]) {
-					mathM += this.attrs[dmgAttr] * 0.01;
-				}
-				// console.log(mathE, this.attrs[dmgAttr]);
-			}
 			// console.log(critHit, critHitDmg);
 			dLow = mathS * mathAl * mathM * mathE;
 			dHigh = mathS * mathAh * mathM * mathE;
@@ -1472,18 +1473,7 @@ BuildCalculator.prototype = {
 			mathA = mhAvgDamage;
 			mathAl = mhMinDamage;
 			mathAh = mhMaxDamage;
-			mathM = (1 + this.bonuses['plus-damage']);
-			if(skill.effect['weapon-damage-type'] && this.attrs[dmgAttr]) {
-				var dmgType = skill.effect['weapon-damage-type'],
-						dmgAttr = 'plus-' + dmgType + '-damage-skills';
-				// console.log(dmgAttr, this.attrs[dmgAttr]);
-				// console.log(mathE, this.attrs[dmgAttr]);
-				bonusText = "<span class='skill-highlight'>+" + this.attrs[dmgAttr] + "%</span> Damage";
-				if(this.attrs[dmgAttr]) {
-					mathM += this.attrs[dmgAttr] * 0.01;
-				}
-				// console.log(mathE, this.attrs[dmgAttr]);
-			}
+			mathM = (1 + this.bonuses['plus-damage'] + (bnSkillDamage * 0.01));
 			dLow = mathS * mathAl * mathM * mathE;
 			dHigh = mathS * mathAh * mathM * mathE;
 			dAvg = mathS * mathA * mathM * mathE;
@@ -1631,14 +1621,12 @@ BuildCalculator.prototype = {
 			}
 
 		}, this);
+		
+		rendered['bnSkillDamage'] = bnSkillDamage;
+		
+		
 		// console.log(rendered['rps']);
 		// if(option.skill.effect[])
-		
-		
-		// If we have any bonuses, add em in
-		if(bonusText) {
-			rendered['bonusText'] = bonusText;
-		}
     // d3up.log(rendered);
     return rendered;
 	},

@@ -545,9 +545,11 @@
 					label = "Critical Hit";
 					value = i;
 					break;
-				case "bonusText":
-					label = "Gear Bonus";
-					value = i;
+				case "bnSkillDamage":
+					if(i > 0) {
+						label = "Gear Bonus";
+						value = "<span class='skill-highlight'>" + i + "% Damage</span>";						
+					}
 					break;
 				case "critical-hit-tick":
 					label = "Per Tick Crit";

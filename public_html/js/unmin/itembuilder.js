@@ -147,7 +147,7 @@ ItemBuilder.prototype = {
 		'mk-cyclone-strike': 'Reduces resource cost of Cyclone Strike by VVV Spirit',
 		'mk-deadly-reach': 'Increases Deadly Reach damage by VVV%',
 		'mk-exploding-palm': 'Increases Exploding Palm damage by VVV%',
-		'mk-fists-of-thunder': 'Increases Fist of Thunder damage by VVV%',
+		'mk-fists-of-thunder': 'Increases Fists of Thunder damage by VVV%',
 		'mk-sweeping-wind': 'Increases Sweeping Wind damage by VVV%',
 		'mk-sweeping-wind-cost': 'Reduces resource cost of Sweeping Wind by VVV Spirit.',
 		'mk-way-of-the-hundred-fists': 'Increases Way of the Hundred Fists damage by VVV%',
