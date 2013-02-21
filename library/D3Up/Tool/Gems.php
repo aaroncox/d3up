@@ -64,7 +64,7 @@ class D3Up_Tool_Gems
 		'radiant_star_emerald' => array('Radiant Star Emerald' , array('plus-gold-find', 31), array('critical-hit-damage', 100), array('dexterity', 58)),
 		'radiant_star_ruby' => array('Radiant Star Ruby' , array('plus-experience-percent', 31), array('ruby-damage', 130) ,array('strength', 58)),
 		'radiant_star_topaz' => array('Radiant Star Topaz' , array('plus-magic-find', 31), array('thorns', 1800), array('intelligence', 58)),
-		'marquise_amathyst' => array('Marquise Amethyst',array('plus-life',19),array('life-hit',700),array('vitality',62)),
+		'marquise_amethyst' => array('Marquise Amethyst',array('plus-life',19),array('life-hit',700),array('vitality',62)),
 		'marquise_emerald' => array('Marquise Emerald',array('plus-gold-find',33),array('critical-hit-damage',110),array('dexterity',62)),
 		'marquise_ruby' => array('Marquise Ruby',array('plus-experience-percent',33),array('ruby-damage', 160),array('strength',62)),
 		'marquise_topaz' => array('Marquise Topaz',array('plus-magic-find',33),array('thorns',2200),array('intelligence',62)),		
