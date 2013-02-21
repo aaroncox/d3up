@@ -37,13 +37,14 @@ class D3Up_Tool_Crawler
 		$limit = 5;
 		while($abort === false) {
 			// Proxy Settings
-	    // $aContext = array(
-	    //     'http' => array(
-	    //         'proxy' => 'tcp://192.168.1.7:8888',
-	    //         'request_fulluri' => true,
-	    //     ),
-	    // );
-	    // $cxContext = stream_context_create($aContext);
+	    $aContext = array(
+	        'http' => array(
+	            'proxy' => 'tcp://192.168.1.7:8888',
+	            'request_fulluri' => true,
+	        ),
+	    );
+	    $cxContext = stream_context_create($aContext);
+			// For my debugging, a proxy if needed.
 	    if($json = file_get_contents($url)) {	// --- No Proxy
 	    // if($json = file_get_contents($url, false, $cxContext)) {		// --- With Proxy
 				// Success, return JSON
@@ -408,9 +409,9 @@ class D3Up_Tool_Crawler
 			// echo "Syncing Items";
 			foreach ($profile['items'] as $slot => $gear) {
 				// var_dump($slot);
-				// 	      if($slot != "offHand") {
-				// 	        continue;
-				// 	      }
+					      // if($slot != "mainHand") {
+					      //   continue;
+					      // }
 				// exit;
 				// Explode the Tooltip Params
 				$parts = explode("/", $gear['tooltipParams']);
@@ -444,10 +445,16 @@ class D3Up_Tool_Crawler
 					$query['set'] = $gearSet = $data['set']['slug'];				
 				}
 				$gems = $data['gems'];
+				$weaponRuby = false;
 				foreach($gems as $gem) {
 					if(isset($gem['item']['name'])) {
 						$key = strtolower(str_replace(" ", "_",$gem['item']['name']));
+						// If this item has a ruby and has a DPS value, it's a weapon.
 						$actual = D3Up_Tool_Gems::$gems[$key];
+						if(strpos($key, 'ruby') && isset($data['dps']['min'])) {
+							// echo "Ruby in Weapon";
+							$weaponRuby = $actual[2][1];
+						}
 						$socketsArray[] = $key;
 					}
 				}
@@ -465,7 +472,7 @@ class D3Up_Tool_Crawler
 					$statsArray['damage'] = array(
 						'min' => (float) $data['minDamage']['min'],
 						'max' => (float) $data['maxDamage']['min'],
-					);					
+					);
 				}
 				if(isset($data['attacksPerSecond'])) {
 					$statsArray['speed'] = (float) $data['attacksPerSecond']['min'];		
@@ -484,6 +491,7 @@ class D3Up_Tool_Crawler
 				}
 				// Do the attributes from the item
 				$attrs = $data['attributes'];
+				$hasElementDmg = false;
 				foreach($attrs as $attr) {
 					foreach(static::$_attrMap as $stat => $regex) {
 						$parts = explode("~", $stat);
@@ -492,8 +500,8 @@ class D3Up_Tool_Crawler
 						$regex = "/".str_replace(array('+', '[v]'), array('\+','(\d+(\.\d+)?)'), $regex)."/i";
 	          // var_dump($text, $regex);
 						if(preg_match($regex, $text, $matches)) {
-	            // var_dump(count($matches));
 							if(count($matches) > 3) {
+								$hasElementDmg = true;
 								$attrsArray[$stat] = array(
 									'min' => (float) $matches[1],
 									'max' => (float) $matches[3],
@@ -515,6 +523,16 @@ class D3Up_Tool_Crawler
 						}
 					}
 				}
+				if($hasElementDmg && $weaponRuby) {
+					if(isset($attrsArray['plus-damage'])) {
+						$weaponRuby *= 1 + ($attrsArray['plus-damage'] * 0.01);
+					}
+					$statsArray['damage']['min'] -= $weaponRuby;
+					$statsArray['damage']['max'] -= $weaponRuby;
+					$statsArray['dps'] = round(($statsArray['damage']['min'] + $statsArray['damage']['max']) / 2 * $statsArray['speed'], 2);
+				}
+				// var_dump($data, $attrsArray, $statsArray);
+				
 				// Fixes for Hidden Damage Attributes!
 				if(isset($data['attributesRaw']) && isset($attrsArray['minmax-damage'])) {
 					// If we have minmax damage already set from the item, lets see if there's a hidden +min or +max
