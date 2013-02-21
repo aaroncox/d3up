@@ -1964,9 +1964,10 @@ BuildCalculator.prototype = {
 					max: (ohBase.max + pMax + this.attrs['ruby-damage-offhand']) * (1 + (pDmg / 100))
 				}
 				this.attrs.ohRealDamage = {
-					min: (mhBase.min + pMin + this.attrs['ruby-damage-offhand']) * (1 + (pDmg / 100)) - edMin,
-					max: (mhBase.max + pMax + this.attrs['ruby-damage-offhand']) * (1 + (pDmg / 100)) - edMax
-				}			}
+					min: (ohBase.min + pMin + this.attrs['ruby-damage-offhand']) * (1 + (pDmg / 100)) - edMin,
+					max: (ohBase.max + pMax + this.attrs['ruby-damage-offhand']) * (1 + (pDmg / 100)) - edMax
+				}			
+			}
 			rendered['ruby-damage-offhand'] = this.attrs['ruby-damage-offhand'] * (1 + (pDmg / 100));
 		}
 		// console.log("[POST] Current Damage Ranges");
