@@ -491,7 +491,6 @@ class D3Up_Tool_Crawler
 				}
 				// Do the attributes from the item
 				$attrs = $data['attributes'];
-				$hasElementDmg = false;
 				foreach($attrs as $attr) {
 					foreach(static::$_attrMap as $stat => $regex) {
 						$parts = explode("~", $stat);
@@ -501,7 +500,6 @@ class D3Up_Tool_Crawler
 	          // var_dump($text, $regex);
 						if(preg_match($regex, $text, $matches)) {
 							if(count($matches) > 3) {
-								$hasElementDmg = true;
 								$attrsArray[$stat] = array(
 									'min' => (float) $matches[1],
 									'max' => (float) $matches[3],
@@ -523,7 +521,7 @@ class D3Up_Tool_Crawler
 						}
 					}
 				}
-				if($hasElementDmg && $weaponRuby) {
+				if($weaponRuby) {
 					if(isset($attrsArray['plus-damage'])) {
 						$weaponRuby *= 1 + ($attrsArray['plus-damage'] * 0.01);
 					}
@@ -531,7 +529,7 @@ class D3Up_Tool_Crawler
 					$statsArray['damage']['max'] -= $weaponRuby;
 					$statsArray['dps'] = round(($statsArray['damage']['min'] + $statsArray['damage']['max']) / 2 * $statsArray['speed'], 2);
 				}
-				// var_dump($data, $attrsArray, $statsArray);
+				// var_dump($data, $attrsArray, $statsArray); exit;
 				
 				// Fixes for Hidden Damage Attributes!
 				if(isset($data['attributesRaw']) && isset($attrsArray['minmax-damage'])) {
