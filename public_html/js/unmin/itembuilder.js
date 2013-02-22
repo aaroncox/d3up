@@ -740,9 +740,9 @@ ItemBuilder.prototype = {
 							container.find("input").val(v.min + "-" + v.max).addClass("minmax");
 						}
 					}
-					container.find("input").keyup(function() { 
-						builder.updateAttribute($(this).attr("name"), $(this).val());
-					});
+					container.find("input").delayKeyup(function(el) { 
+						builder.updateAttribute(el.attr("name"), el.val());
+					}, 300);
 					builder.preview.attrs.append($("<li id='input-" + k + "'>").html(container));				
 				}
 			}
@@ -761,8 +761,8 @@ ItemBuilder.prototype = {
 					if(builder.item.stats && builder.item.stats.armor) {
 						armor.val(builder.item.stats.armor);
 					}
-					armor.keyup(function() {
-						builder.updateStat("armor", $(this).val());
+					armor.delayKeyup(function(el) { 
+						builder.updateStat("armor", el.val());
 					});
 					builder.preview.statsPrimaryValue.empty().append(armor);
 					builder.preview.statsPrimaryHelper.html("Armor");
@@ -788,18 +788,18 @@ ItemBuilder.prototype = {
 					}						
 					if(builder.item.stats != null && builder.item.stats.speed) {
 						speed.val(builder.item.stats.speed);
-					}						
-					dps.keyup(function() {
-						builder.updateStat("dps", $(this).val());
+					}				
+					dps.delayKeyup(function(el) {
+						builder.updateStat("dps", el.val());
 					});
-					min.keyup(function() {
-						builder.updateStat("damage-min", $(this).val());
+					min.delayKeyup(function(el) {
+						builder.updateStat("damage-min", el.val());
 					});
-					max.keyup(function() {
-						builder.updateStat("damage-max", $(this).val());
+					max.delayKeyup(function(el) {
+						builder.updateStat("damage-max", el.val());
 					});
-					speed.keyup(function() {
-						builder.updateStat("speed", $(this).val());
+					speed.delayKeyup(function(el) {
+						builder.updateStat("speed", el.val());
 					});
 					builder.preview.statsPrimaryValue.empty().append(dps);
 					builder.preview.statsPrimaryHelper.html("DPS");
@@ -818,17 +818,17 @@ ItemBuilder.prototype = {
 							tmin = $("<input name='stat_block-min' tabindex='50'>"),
 							tmax = $("<input name='stat_block-max' tabindex='50'>"),
 							tchance = $("<input name='stat_block-chance' tabindex='50'>");
-					tarmor.keyup(function() {
-						builder.updateStat("armor", $(this).val());
+					tarmor.delayKeyup(function(el) {
+						builder.updateStat("armor", el.val());
 					});
-					tmin.keyup(function() {
-						builder.updateStat("block-min", $(this).val());
+					tmin.delayKeyup(function(el) {
+						builder.updateStat("block-min", el.val());
 					});
-					tmax.keyup(function() {
-						builder.updateStat("block-max", $(this).val());
+					tmax.delayKeyup(function(el) {
+						builder.updateStat("block-max", el.val());
 					});
-					tchance.keyup(function() {
-						builder.updateStat("block-chance", $(this).val());
+					tchance.delayKeyup(function(el) {
+						builder.updateStat("block-chance", el.val());
 					});
 					if(builder.item.stats && builder.item.stats.armor) {
 						tarmor.val(builder.item.stats.armor);
