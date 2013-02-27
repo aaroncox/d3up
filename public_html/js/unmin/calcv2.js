@@ -704,6 +704,7 @@ BuildCalculator.prototype = {
 		    temp = temp * (1 - val / 100);
 		  }, this);
       rendered['percent-' + v] = Math.round((1 - temp) * 10000) / 10000;
+			rendered['display-percent-' + v] = Math.round((1 - temp) * 10000) / 100;
 		}, this);
 		// ----------------------------------
 		// Block Chance
@@ -822,9 +823,12 @@ BuildCalculator.prototype = {
 		// Formula: ( Life / (Percentage Damage Taken * Modifier ) )
 		// ----------------------------------
 		rendered['ehp-dodge'] = rendered['ehp-block-dodge'] = defenses.life / ( rendered.damageTaken * ( 1 - defenses['dodge-chance'] / 100));
-		rendered['ehp-melee'] = defenses.life / ( rendered.damageTaken * ( 1 - defenses['percent-melee-reduce'] ));
-		rendered['ehp-range'] = defenses.life / ( rendered.damageTaken * ( 1 - defenses['percent-range-reduce'] ));
-		rendered['ehp-elite'] = defenses.life / ( rendered.damageTaken * ( 1 - defenses['percent-elite-reduce'] ));
+		rendered['damage-taken-melee'] = ( rendered.damageTaken * ( 1 - defenses['percent-melee-reduce'] ));
+		rendered['damage-taken-range'] = ( rendered.damageTaken * ( 1 - defenses['percent-range-reduce'] ));
+		rendered['damage-taken-elite'] = ( rendered.damageTaken * ( 1 - defenses['percent-elite-reduce'] ));
+		rendered['ehp-melee'] = rendered['damage-taken-melee'];
+		rendered['ehp-range'] = rendered['damage-taken-range'];
+		rendered['ehp-elite'] = rendered['damage-taken-elite'];
 		// ----------------------------------
 		// EHP Block Calculation 
 		// Formula: 
@@ -2601,6 +2605,8 @@ BuildCalculator.prototype = {
 					'ehp-block': 'EHP w/ Block',
 					'ehp-block-dodge': 'EHP w/ Block+Dodge',
 					'ehp-dodge': 'EHP w/ Dodge',
+					'ehp-elite': 'EHP vs Elite',
+					'display-percent-elite-reduce': '-Elite Dmg%',
 					'fire-resist': 'Fire Res', 
 					'intelligence': 'Int', 
 					'life': 'HP',
@@ -2648,10 +2654,10 @@ BuildCalculator.prototype = {
 						} else {
 							diff[key] = allowed[key] + "|" + Math.round((s2[key] - s1[key]) * 100) / 100;													
 						}
-						// d3up.log(key + " - s2["+s2[key]+"] - s1["+s1[key]+"] = "+diff[allowed[key]]);					
+						d3up.log(key + " - s2["+s2[key]+"] - s1["+s1[key]+"] = "+diff[allowed[key]]);					
 					}
 				} else {
-					// d3up.log("disallowed: "+ key);
+					d3up.log("disallowed: ("+ key+")");
 				}
 			}
 		});
