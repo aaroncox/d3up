@@ -1291,11 +1291,11 @@ BuildCalculator.prototype = {
     // d3up.log(rendered);
 		if(this.attrs['elite-damage']) {
 			rendered['dps-elites'] = Math.round(rendered['dps'] * (1 + (this.attrs['elite-damage'] / 100)) * 100) / 100;
-			rendered['tdps-elites'] *= (1 + (this.attrs['elite-damage'] / 100));
+			rendered['tdps-elites'] = rendered['tdps'] * (1 + (this.attrs['elite-damage'] / 100));
 		}
 		if(this.attrs['demon-damage']) {
 			rendered['dps-demon'] = Math.round(rendered['dps'] * (1 + (this.attrs['demon-damage'] / 100)) * 100) / 100;
-			rendered['tdps-demon'] *= (1 + (this.attrs['demon-damage'] / 100));
+			rendered['tdps-demon'] = rendered['tdps'] * (1 + (this.attrs['demon-damage'] / 100));
 		}
 		return rendered;
 	},
@@ -2655,10 +2655,10 @@ BuildCalculator.prototype = {
 						} else {
 							diff[key] = allowed[key] + "|" + Math.round((s2[key] - s1[key]) * 100) / 100;													
 						}
-						d3up.log(key + " - s2["+s2[key]+"] - s1["+s1[key]+"] = "+diff[allowed[key]]);					
 					}
+					// d3up.log(key + " - s2["+s2[key]+"] - s1["+s1[key]+"] = "+diff[allowed[key]]);					
 				} else {
-					d3up.log("disallowed: ("+ key+")");
+					// d3up.log("disallowed: ("+ key+")");
 				}
 			}
 		});
