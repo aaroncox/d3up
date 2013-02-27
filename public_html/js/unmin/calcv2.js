@@ -2045,8 +2045,22 @@ BuildCalculator.prototype = {
 		// if(textarea) {
 		// 	textarea.html(JSON.stringify(this.values));
 		// }
+		// Apply any caps on values that may exist
+		this.values = this.applyCaps(this.values);
 		// Return the values
 		return this.values;
+	},
+	applyCaps: function(values) {
+		var caps = {
+			'plus-gold-find': 300,
+			'plus-magic-find': 300,
+		}
+		_.each(caps, function(v,k) {
+			if(values[k] && values[k] > v) {
+				values[k] = v;
+			}
+		});
+		return values;
 	},
 	removeItem: function(slot) {
 		var json = this.gear[slot];
