@@ -259,18 +259,10 @@ BuildCalculator.prototype = {
 		}
 	},
 	applyEnabledSkills: function() {
-    // console.log(this.enabledSkills);
 		_.each(this.enabledSkills, function(v,k) {
 			if(v.procEffect) {
 				_.each(v.procEffect, function(e,i) {
 					switch(i) {
-						case "generate-spirit-crit":
-							if(this.bonuses['proc-generate-spirit-crit']) {
-								this.bonuses['proc-generate-spirit-crit'] += e;
-							} else {
-								this.bonuses['proc-generate-spirit-crit'] = e;								
-							}
-							break;
 						case "generate-fury-crit":
 							if(this.bonuses['proc-generate-fury-crit']) {
 								this.bonuses['proc-generate-fury-crit'] += e;
@@ -1620,9 +1612,9 @@ BuildCalculator.prototype = {
 				generate += this.bonuses['proc-generate-fury-throw'] * (critHit * 0.01) * options.skill.procRate;
 				// console.log("no escape", this.bonuses['proc-generate-fury-throw'], options.skill.procRate, critHit, generate);
 			}
-			if(v == "generate-spirit" && this.bonuses['proc-generate-spirit-crit']) {
-				generate += this.bonuses['proc-generate-spirit-crit'] * (critHit * 0.01) * options.skill.procRate;
-				// console.log("battlerage", this.bonuses['proc-generate-fury-crit'], options.skill.procRate, critHit, generate);
+			if(v == "generate-spirit" && options.skill.procEffect && options.skill.procEffect['generate-spirit-crit']) {
+				generate += options.skill.procEffect['generate-spirit-crit'] * (critHit * 0.01) * options.skill.procRate;
+				// console.log("quickening", options.skill.procEffect['generate-spirit-crit'], options.skill.procRate, critHit, generate);
 			}
 			
 			// Generate the Resource Display
