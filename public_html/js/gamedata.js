@@ -5663,7 +5663,7 @@
 					procRate: 0.333,
 					effect: {
 						'cost-mana': 107.8,
-						'weapon-damage': 230,
+						'weapon-damage': 425,
 					},
 				},
 				'spirit-barrage~c': {
