@@ -3399,6 +3399,9 @@
 					rune: 'Critical Hits generate an additional 15 Spirit.',
 					procRate: 1,
 					procRate3rd: 0.75,
+					procEffect: {
+						'generate-spirit-crit': 15,
+					},
 					monkHaste: 1.5,
 					effect: {
 						'weapon-damage-type': 'lightning',
