@@ -6352,7 +6352,7 @@
 					effect: {
 						'weapon-damage-type': 'cold',
 						'cost-arcane-power': 16,
-						'weapon-damage': 215,
+						'weapon-damage': 280,
 					},
 				},
 				'ray-of-frost~c': {
