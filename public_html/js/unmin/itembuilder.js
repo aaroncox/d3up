@@ -534,9 +534,16 @@ ItemBuilder.prototype = {
 			case "arcane-damage":
 			case "minmax-damage":
 				var parts = value.split("-");
-				this.item.attrs[name] = {
-					min: parts[0],
-					max: parts[1]
+				if(parts.length > 1) {
+					this.item.attrs[name] = {
+						min: parts[0],
+						max: parts[1]
+					}					
+				} else {
+					this.item.attrs[name] = {
+						min: 0,
+						max: 0
+					}										
 				}
 				break;
 			default:
