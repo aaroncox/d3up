@@ -1,5 +1,6 @@
 (function( d3up ) {
 	d3up.gameData = {
+		version: '1.0.7',
 		passives: {
 			'barbarian': {
 				'pound-of-flesh': {
@@ -8532,7 +8533,7 @@
 			radiant_star_emerald: ['Radiant Star Emerald' ,'+31% Extra Gold from Monsters' ,'Critical Hit Damage Increased by 100%' ,'+58 Dexterity'],
 			radiant_star_ruby: ['Radiant Star Ruby' ,'Increases Experience Rewarded per Kill by 31%' ,'+130 Minimum and +130 Maximum Damage' ,'+58 Strength'],
 			radiant_star_topaz: ['Radiant Star Topaz' ,'31% Better Chance of Finding Magical Items' ,'Melee attackers take 1800 damage per hit' ,'+58 Intelligence'],
-			marquise_amathyst: ["Marquise Amethyst",'+19% Life' ,'Each Hit Adds +700 Life' ,'+62 Vitality'],
+			marquise_amethyst: ["Marquise Amethyst",'+19% Life' ,'Each Hit Adds +700 Life' ,'+62 Vitality'],
 			marquise_emerald: ["Marquise Emerald",'+33% Extra Gold from Monsters' ,'Critical Hit Damage Increased by 110%' ,'+62 Dexterity'],
 			marquise_ruby: ["Marquise Ruby",'Increases Experience Rewarded per Kill by 33%' ,'+160 Minimum and +160 Maximum Damage' ,'+62 Strength'],
 			marquise_topaz: ["Marquise Topaz",'33% Better Chance of Finding Magical Items' ,'Melee attackers take 2200 damage per hit' ,'+62 Intelligence']
@@ -8594,7 +8595,7 @@
 			"radiant_star_emerald":["Radiant Star Emerald",["plus-gold-find",31],["critical-hit-damage",100],["dexterity",58]],
 			"radiant_star_ruby":["Radiant Star Ruby",["plus-experience-percent",31],["ruby-damage",130],["strength",58]],
 			"radiant_star_topaz":["Radiant Star Topaz",["plus-magic-find",31],["thorns",1800],["intelligence",58]],
-			"marquise_amathyst":["Marquise Amethyst",["plus-life",19],["life-hit",700],["vitality",62]],
+			"marquise_amethyst":["Marquise Amethyst",["plus-life",19],["life-hit",700],["vitality",62]],
 			"marquise_emerald":["Marquise Emerald",["plus-gold-find",33],["critical-hit-damage",110],["dexterity",62]],
 			"marquise_ruby":["Marquise Ruby",["plus-experience-percent",33],["ruby-damage",160],["strength",62]],
 			"marquise_topaz":["Marquise Topaz",["plus-magic-find",33],["thorns",2200],["intelligence",62]]

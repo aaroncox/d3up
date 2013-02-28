@@ -1,5 +1,6 @@
 (function( d3up ) {
 	d3up.gameData = {
+		version: '1.0.6',
 		passives: {
 			'barbarian': {
 				'pound-of-flesh': {
