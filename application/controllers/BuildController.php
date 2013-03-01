@@ -172,14 +172,16 @@ class BuildController extends D3Up_Controller_Action
 	}
 	public function searchAction() {
 		$this->view->search = $search = $this->getRequest()->getParam('search');
-		$query = array(
-			'_characterBt' => strtolower($search),
-			'private' => false,
-		);
-		$sort = array(
-			'_lastCrawl' => -1,
-		);
-		$this->view->builds = Epic_Mongo::db("build")->fetchAll($query, $sort);	
+		if($search) {
+			$query = array(
+				'_characterBt' => strtolower($search),
+				'private' => false,
+			);
+			$sort = array(
+				'_lastCrawl' => -1,
+			);
+			$this->view->builds = Epic_Mongo::db("build")->fetchAll($query, $sort);				
+		}
 		// var_dump(Epic_Mongo::db('build')->fetchOne(array('id'=>1))->export(), $this->getRequest()->getParams()); exit;
 	}
 	public function dbTestsAction() {
