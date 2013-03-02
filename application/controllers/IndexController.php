@@ -12,18 +12,11 @@ class IndexController extends D3Up_Controller_Action {
 		$sort = array(
 			'_created' => -1,
 		);
-		$this->view->recentGuides = Epic_Mongo::db('guide')->fetchAll($query, $sort, 5);	
+		$this->view->recentGuides = Epic_Mongo::db('guide')->fetchAll($query, $sort, 15);	
 		$fQuery = array(
 			'id' => $this->view->featuredGuide
 		);
 		
-		$this->view->featured = $featured = Epic_Mongo::db('guide')->fetchAll($fQuery);
-    $query = array(
-      'private' => array('$ne' => true),
-      'stats.dps' => array('$exists' => true),
-      'stats.ehp' => array('$exists' => true),
-      '_original' => array('$exists' => false),
-    );
     // $this->view->builds = Epic_Mongo::db('build')->fetchAll($query, $sort, 10); 
     
     // $this->view->counts = array(
