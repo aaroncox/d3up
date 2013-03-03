@@ -614,7 +614,7 @@ BuildCalculator.prototype = {
 		// Life
 		// Formula : (36 + 4 * Level + (Level - 25) * Vitality)
 		// ----------------------------------
-		rendered.life = 36 + 4 * 60 + (60 - 25) * this.attrs['vitality'];
+		rendered.life = 36 + 4 * this.level + (this.level - 25) * this.attrs['vitality'];
 		// ----------------------------------
 		// +% Life Addition
 		// Formula : Life + ( Life * ( Plus Life / 100 ) )
