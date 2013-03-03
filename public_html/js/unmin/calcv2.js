@@ -1296,6 +1296,11 @@ BuildCalculator.prototype = {
 			rendered['dps-demon'] = Math.round(rendered['dps'] * (1 + (this.attrs['demon-damage'] / 100)) * 100) / 100;
 			rendered['tdps-demon'] = rendered['tdps'] * (1 + (this.attrs['demon-damage'] / 100));
 		}
+		if(this.attrs['demon-damage'] && this.attrs['elite-damage']) {
+			rendered['dps-demon-elite'] = Math.round(rendered['dps'] * (1 + (this.attrs['demon-damage'] / 100) + (this.attrs['elite-damage'] / 100)) * 100) / 100;
+			rendered['tdps-demon-elite'] = rendered['tdps'] * (1 + (this.attrs['demon-damage'] / 100) + (this.attrs['elite-damage'] / 100));
+			
+		}
 		return rendered;
 	},
 	calcSAME: function(options) {
@@ -2614,6 +2619,7 @@ BuildCalculator.prototype = {
 					'dps': 'DPS', 
 					'dps-demon': 'DPS vs Demons',
 					'dps-elites': 'DPS vs Elites',
+					'dps-demon-elite': 'DPS vs Elite+Demon',
 					'dps-speed-mh': 'MH AtkSpeed',
 					'dps-speed-mh': 'MH Attk/Sec',
 					'dps-speed-oh': 'OH AtkSpeed',

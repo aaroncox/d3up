@@ -106,7 +106,7 @@
               break;
           }
         }
-				var hiddenVals = ['sharpshooter-dps', 'dps-demon', 'tdps', 'tdps-elites', 'tdps-demon', 'tickRate-mh', 'tickRate-oh', 'dps-elites', 'scram-a-mh', 'scram-a-oh', '3sec-dps'];
+				var hiddenVals = ['sharpshooter-dps', 'dps-demon', 'tdps', 'tdps-elites', 'tdps-demon', 'dps-demon-elite', 'tdps-demon-elite', 'tickRate-mh', 'tickRate-oh', 'dps-elites', 'scram-a-mh', 'scram-a-oh', '3sec-dps'];
 				if(id == 'dps-speed-display' || id  == 'hp-ehp-ratio') {
 					stat.prepend(prefix + value + suffix);
 				} else if(_.indexOf(hiddenVals, id) >= 0 && parseFloat(value)) { 
