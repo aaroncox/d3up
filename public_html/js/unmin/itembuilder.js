@@ -514,6 +514,16 @@ ItemBuilder.prototype = {
 	setChangeCallback: function(fn) {
 		this.changeCallback = fn;
 	},
+	// Get the Skill Text
+	getSkillText: function(key, value) {
+		if(key && this.skillText[key] && value) {
+			return this.skillText[key].replace(/VVV/g, "<span class='value'>" + value + "</span>");
+		}
+		if(key && this.skillText[key]) {
+			return this.skillText[key];
+		} 
+		return false;
+	},
 	// Add an Attribute to this.item.attrs
 	addAttribute: function(name) {
 		if(!this.item.attrs) {
