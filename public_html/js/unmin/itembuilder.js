@@ -524,6 +524,16 @@ ItemBuilder.prototype = {
 		} 
 		return false;
 	},
+	getItemClass: function(type) {
+		var itemClass = null;
+		// Figure out the itemClass
+		_.each(this.itemClass, function(v,k) {
+			if(_.indexOf(v, type) >= 0) {
+ 				itemClass = k;
+			}
+		}, this);		
+		return itemClass;	
+	},
 	// Add an Attribute to this.item.attrs
 	addAttribute: function(name) {
 		if(!this.item.attrs) {
