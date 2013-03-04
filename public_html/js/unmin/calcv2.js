@@ -1678,6 +1678,7 @@ BuildCalculator.prototype = {
 					case "plus-armor":
 					case "plus-resist-all":
 					case "plus-dodge":
+					case "plus-life-steal":
 						activate = true;
 						break;
 					case "stackable":
