@@ -7196,6 +7196,7 @@
 					procRate: 0,
 					effect: {
 						'cost-arcane-power': 25,
+						'plus-damage': 10,
 						'stack': {
 							'weapon-damage': {
 								'limit': 3,
