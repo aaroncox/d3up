@@ -5091,6 +5091,7 @@
 						'cost-mana': 49,
 						'cooldown': 60,
 						'weapon-damage': 9,
+						'forced-life-steal': 25,
 					},
 				},
 				'firebats': {

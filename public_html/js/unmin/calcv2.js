@@ -1557,8 +1557,16 @@ BuildCalculator.prototype = {
   		  rendered['critical-hit-3rd'] = Math.round((1 + (this.bonuses['pierce-bonus'] / 100) * 2) * dLow * (1+ (critHitDmg * 0.01))) + " - " + Math.round((1 + (this.bonuses['pierce-bonus'] / 100) * 2) * dHigh * (1 + (critHitDmg * 0.01)));
   		}
 		}
-		if(this.attrs['life-steal'] && options.skill.procRate > 0) {
-			rendered['average-life-steal'] = Math.round(this.attrs['life-steal'] * hit  * 0.2) / 100;
+		if(this.attrs['life-steal'] && (options.skill.procRate > 0 || options.skill.effect['forced-life-steal'])) {
+			var lifeSteal = this.attrs['life-steal'];
+			if(options.skill.effect['life-steal']) {
+				lifeSteal += options.skill.effect['life-steal'];
+			}
+			// This is for Zombie Dogs, a 0% Proc Rate skill
+			if(options.skill.effect['forced-life-steal']) {
+				lifeSteal = options.skill.effect['forced-life-steal'];
+			}
+			rendered['average-life-steal'] = Math.round(lifeSteal * hit  * 0.2) / 100;
 			rendered['lps-life-steal'] = mathR * rendered['average-life-steal'];
 		}
 		if(this.attrs['life-hit'] && options.skill.procRate > 0) {
