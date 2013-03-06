@@ -4119,7 +4119,7 @@
 						'weapon-damage': 140,
 						'stackable': {
 				      'limit': 3,
-							'plus-attack-speed': 5,
+							'plus-attack-speed-after': 5,
 					  }
 					},
 				},

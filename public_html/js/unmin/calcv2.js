@@ -75,6 +75,7 @@ BuildCalculator.prototype = {
 			'3rd-hit-damage': false, // Keep disabled unless it's set
 			'percent-non-physical' : 0, // Percentage to reduce non-physical damage (ie superstition)
 			'plus-attack-speed-this': 0,
+			'plus-attack-speed-after': 0,
 			'plus-percent-life-regen': 0,
 			'plus-percent-life-regen-passive': 0,
 			'proc-generate-fury': 0,
@@ -246,6 +247,7 @@ BuildCalculator.prototype = {
 			case "plus-damage-reduce":
 			case "plus-resist-all":
 			case "plus-attack-speed":
+			case "plus-attack-speed-after":
 			case "plus-damage":
 			case "plus-armor":
 			case "plus-intelligence-percent":
@@ -1175,6 +1177,12 @@ BuildCalculator.prototype = {
 		rendered['bonus-elemental-percent'] = bnElePercent;
     // console.log(this.attrs.mhRealDamage.min, bnMinDamage, bnElePercent, bnEleDamage);
 		// Are we duel wielding?
+		
+		var afterEffect = 1;
+		if(this.bonuses['plus-attack-speed-after']) {
+			afterEffect += this.bonuses['plus-attack-speed-after'];
+		}
+		
     // d3up.log(this.attrs);		
 		var mathS, mathC, mathR, mathA, mathM;
 		rendered['attack-speed-incs-dw'] = " ";
@@ -1194,8 +1202,8 @@ BuildCalculator.prototype = {
 			// d3up.log(rendered['dps-speed'].mh, rendered['dps-speed'].oh);
 			mathS = 1 + this.attrs[this.attrs.primary] * 0.01;
 			mathC = 1 + (this.attrs['critical-hit'] * 0.01) * (this.attrs['critical-hit-damage'] * 0.01);
-			var mhAPS = rendered['dps-speed'].mh * (1 + atkSpeedInc + 0.15 + this.bonuses['plus-attack-speed']),
-					ohAPS = rendered['dps-speed'].oh * (1 + atkSpeedInc + 0.15 + this.bonuses['plus-attack-speed']);
+			var mhAPS = rendered['dps-speed'].mh * (1 + atkSpeedInc + 0.15 + this.bonuses['plus-attack-speed']) * afterEffect,
+					ohAPS = rendered['dps-speed'].oh * (1 + atkSpeedInc + 0.15 + this.bonuses['plus-attack-speed']) * afterEffect;
       // console.log(mhAPS);
 			rendered['aps-mh'] = mhAPS;
 			rendered['aps-oh'] = ohAPS;					
@@ -1217,7 +1225,7 @@ BuildCalculator.prototype = {
 			// console.log(mathA, rendered['dps-speed'], (1 + 0.15 + atkSpeedInc + this.bonuses['plus-attack-speed']));
 			// rendered['dps-speed-mh'] = Math.round(rendered['dps-speed'].mh * (1 + 0.15 + atkSpeedInc + this.bonuses['plus-attack-speed']) * 100) / 100;
 			// rendered['dps-speed-oh'] = Math.round(rendered['dps-speed'].oh * (1 + 0.15 + atkSpeedInc + this.bonuses['plus-attack-speed'])  * 100) / 100;
-			rendered['dps-speed-display'] = Math.round(rendered['dps-speed'].mh * (1 + 0.15 + atkSpeedInc + this.bonuses['plus-attack-speed']) * 100000) / 100000 + " MH<br/>" + Math.round(rendered['dps-speed'].oh * (1 + 0.15 + atkSpeedInc + this.bonuses['plus-attack-speed'])  * 100000) / 100000 + " OH";
+			rendered['dps-speed-display'] = Math.round(mhAPS * 100000) / 100000 + " MH<br/>" + Math.round(ohAPS  * 100000) / 100000 + " OH";
 			// d3up.log(mathS, mathC, mathR, mathA, mathM, rendered['dps'], "dw", rendered);
 		} else {
 			// if(this.attrs['plus-aps']) {
@@ -1233,7 +1241,7 @@ BuildCalculator.prototype = {
 			// console.log("mathM", this.bonuses['plus-damage']);
 			mathS = 1 + this.attrs[this.attrs.primary] * 0.01;
 			mathC = 1 + (this.attrs['critical-hit'] * 0.01) * (this.attrs['critical-hit-damage'] * 0.01);
-			mathR = rendered['dps-speed-mh'] * (1 + atkSpeedInc + this.bonuses['plus-attack-speed']);
+			mathR = rendered['dps-speed-mh'] * (1 + atkSpeedInc + this.bonuses['plus-attack-speed']) * afterEffect;
 			// console.log(rendered['dps-speed'], atkSpeedInc, this.bonuses['plus-attack-speed']);
 			mathA = mhAvgDamage;
 			mathM = (1 + this.bonuses['plus-damage']);
@@ -1243,7 +1251,7 @@ BuildCalculator.prototype = {
 			// rendered['dps'] = (((mhMinDamage + mhMaxDamage) / 2 + bnAvgDamage) * rendered['dps-speed']) * (1 + atkSpeedInc) * (this.attrs[this.attrs.primary] / 100 + 1) * 1 * ((this.attrs['critical-hit'] / 100) * (this.attrs['critical-hit-damage']/100) + 1);			
 			rendered['scram-a-mh'] = mathA * mathM * mathS * mathC;
 			// console.log(this.attrs['speed'], atkSpeedInc, this.bonuses['plus-attack-speed'], mathR);
-			rendered['dps-speed-display'] = Math.round(mathR * 100) / 100;
+			rendered['dps-speed-display'] = Math.round(mathR * 1000) / 1000;
 		}
 		// console.log(mathA);
 		rendered['scram-s'] = mathS;
@@ -1455,6 +1463,13 @@ BuildCalculator.prototype = {
 			rendered['dps'] = Math.round(rendered['dps'] * bonusHaste);
 		}
 		
+		// Monks also have skills that don't add up attack speed normally :P
+		var afterEffect = 1;
+		if(this.bonuses['plus-attack-speed-after']) {
+			afterEffect += this.bonuses['plus-attack-speed-after'];
+		}
+		
+		// console.log(options.skill.effect);
 		// d3up.log(this.attrs.mhRealDamage.min, bnMinDamage, bnEleDamage);
 		// Are we duel wielding?
 		if(this.isDuelWielding && !mhOnly) {
@@ -1469,8 +1484,8 @@ BuildCalculator.prototype = {
 			mathAl = (mhMinDamage + ohMinDamage) / 2;
 			mathAh = (mhMaxDamage + ohMaxDamage) / 2;
 			mathM = (1 + this.bonuses['plus-damage'] + (bnSkillDamage * 0.01));
-			var mhAPS = rendered['dps-speed'].mh * (1 + atkSpeedInc + 0.15 + this.bonuses['plus-attack-speed']) * bonusHaste,
-					ohAPS = rendered['dps-speed'].oh * (1 + atkSpeedInc + 0.15 + this.bonuses['plus-attack-speed']) * bonusHaste;
+			var mhAPS = rendered['dps-speed'].mh * (1 + atkSpeedInc + 0.15 + this.bonuses['plus-attack-speed']) * bonusHaste * afterEffect,
+					ohAPS = rendered['dps-speed'].oh * (1 + atkSpeedInc + 0.15 + this.bonuses['plus-attack-speed']) * bonusHaste * afterEffect;
 			mathR = 2 / (1 / mhAPS + 1 / ohAPS);
 			// mathR = (rendered['dps-speed'].mh + rendered['dps-speed'].oh) / 2 * (1 + atkSpeedInc + 0.15 + this.bonuses['plus-attack-speed']);
 			mathC = 1 + (critHit * 0.01) * (critHitDmg * 0.01);
@@ -1483,7 +1498,7 @@ BuildCalculator.prototype = {
 			rendered['dps-speed'] = Math.floor(this.attrs['speed'] * 1024) / 1024;
 			mathS = 1 + this.attrs[this.attrs.primary] * 0.01;
 			mathC = 1 + (critHit * 0.01) * (critHitDmg * 0.01);
-			mathR = rendered['dps-speed'] * (1 + atkSpeedInc + this.bonuses['plus-attack-speed']) * bonusHaste;
+			mathR = rendered['dps-speed'] * (1 + atkSpeedInc + this.bonuses['plus-attack-speed']) * bonusHaste * afterEffect;
 			mathA = mhAvgDamage;
 			mathAl = mhMinDamage;
 			mathAh = mhMaxDamage;
@@ -1685,6 +1700,7 @@ BuildCalculator.prototype = {
 					case "plus-crit-hit":
 					case "plus-life":
 					case "plus-attack-speed":
+					case "plus-attack-speed-after":
 					case "plus-melee-reduce":
 					case "plus-damage":
 					case "plus-armor":
