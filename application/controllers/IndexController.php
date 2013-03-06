@@ -11,6 +11,7 @@ class IndexController extends D3Up_Controller_Action {
 		);
 		$sort = array(
 			'_updated' => -1,
+			'_created' => -1,
 		);
 		$this->view->recentGuides = Epic_Mongo::db('guide')->fetchAll($query, $sort, 15);	
 		$fQuery = array(
