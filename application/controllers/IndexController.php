@@ -10,7 +10,7 @@ class IndexController extends D3Up_Controller_Action {
 			'id' => array('$ne' => $this->view->featuredGuide),
 		);
 		$sort = array(
-			'_created' => -1,
+			'_updated' => -1,
 		);
 		$this->view->recentGuides = Epic_Mongo::db('guide')->fetchAll($query, $sort, 15);	
 		$fQuery = array(
