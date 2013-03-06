@@ -1270,7 +1270,11 @@ BuildCalculator.prototype = {
       if(parts[0] == 'whirlwind' || k == 'sprint~c') {
         if(this.isDuelWielding) {
           // = ((0.7 * 43977.33) + (0.4833 * (43977.33 + 38764.61) / 2)) * 6
-          rendered['tdps'] = ((0.7 * rendered['scram-a-mh']) + (0.4833 * (rendered['scram-a-mh'] + rendered['scram-a-oh']) / 2)) * this.tickRate(mathR);
+					var a = 0.7 * rendered['scram-a-mh'],
+							b = 0.4833 * ((rendered['scram-a-mh'] + rendered['scram-a-oh']) / 2),
+							c = (this.tickRate(mhAPS) + this.tickRate(ohAPS)) / 2;
+					rendered['tdps'] = (a + b) * c;
+          // rendered['tdps'] = ((0.7 * rendered['scram-a-mh']) + (0.4833 * ((rendered['scram-a-mh'] + rendered['scram-a-oh']) / 2))) * (this.tickRate(mhAPS) + this.tickRate(ohAPS) / 2);
         } else {
           // 2H Tdps = [(.7 *M) + (.4833 * M) ]* t = 1.1833*m*t
           rendered['tdps'] = ((0.7 * rendered['scram-a-mh']) + (0.4833 * rendered['scram-a-mh'])) * this.tickRate(mathR);
