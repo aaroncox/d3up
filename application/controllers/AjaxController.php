@@ -51,7 +51,7 @@ class AjaxController extends D3Up_Controller_Action
               $sockets[] = "";
             }
             $item->sockets = $sockets;
-					} else if(in_array($name, array("poison-damage", "lightning-damage", "arcane-damage", "holy-damage", "fire-damage", "cold-damage"))) {
+					} else if(in_array($name, array("poison-damage", "lightning-damage", "arcane-damage", "holy-damage", "fire-damage", "cold-damage", "minmax-damage"))) {
 						$pieces = explode("-", $parts[0]);
 						if(count($pieces) > 1) {
 							$item->attrs->$name = array(
@@ -329,7 +329,7 @@ class AjaxController extends D3Up_Controller_Action
 		'poison-resist' => "PoisonR",
 		'thorns' => "Thorn",
 		// Offensive Stats
-		'damage' => "Dmg",
+		// 'damage' => "Dmg",
 		'attack-speed' => "AtkSpd",
 		'critical-hit' => "Crit",
 		'critical-hit-damage' => "CritD",
