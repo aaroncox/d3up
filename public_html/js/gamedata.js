@@ -7536,6 +7536,7 @@
 					effect: {
 						'cost-arcane-power': 50,
 						'weapon-damage': 260,
+						'weapon-damage-type': 'fire',
 					},
 				},
 				'meteor~a': {
@@ -7546,6 +7547,7 @@
 					effect: {
 						'cost-arcane-power': 50,
 						'weapon-damage': 390,
+						'weapon-damage-type': 'fire',
 					},
 				},
 				'meteor~b': {
@@ -7556,6 +7558,7 @@
 					effect: {
 						'cost-arcane-power': 50,
 						'weapon-damage': 728,
+						'weapon-damage-type': 'fire',
 					},
 				},
 				'meteor~c': {
@@ -7566,6 +7569,7 @@
 					effect: {
 						'cost-arcane-power': 50,
 						'weapon-damage': 312,
+						'weapon-damage-type': 'cold',
 					},
 				},
 				'meteor~d': {
@@ -7576,6 +7580,7 @@
 					effect: {
 						'cost-arcane-power': 50,
 						'weapon-damage': 260,
+						'weapon-damage-type': 'arcane',
 					},
 				},
 				'meteor~e': {
@@ -7586,6 +7591,7 @@
 					effect: {
 						'cost-arcane-power': 50,
 						'weapon-damage': 260,
+						'weapon-damage-type': 'fire',
 					},
 				},
 				'blizzard': {
