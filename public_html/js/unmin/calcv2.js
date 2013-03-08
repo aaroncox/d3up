@@ -834,20 +834,56 @@ BuildCalculator.prototype = {
 		rendered['ehp-block'] = rendered['ehp'];
 		if(defenses['block-chance'] && defenses['block-amount']) {
 			var hit = 70000,
-					taken = rendered.damageTaken * hit,
+					hits = 10,
+					taken = Math.round(rendered.damageTaken * hit * 100) / 100,
 					reduced = (defenses['block-chance'] / 100 * defenses['block-amount']),
 					change = taken / (taken - reduced);
-			// console.log(defenses['block-amount']);
-			rendered['ehp-block'] = ( rendered['ehp']  * change );
-			rendered['ehp-block-dodge'] = ( rendered['ehp-dodge']  * change );
-			if(rendered['ehp-block'] < 0) {
-				rendered['ehp-block'] = "Invulnerable";
+			// console.log("Hit Taken: " + hit);
+			// console.log("Reduction Math: " + hit + " * (1 - " + Math.round(defenses['percent-resist-all'] * 100) / 100 + "[% Resistance Reduction]) * (1 - " + Math.round(defenses.armorReduction * 100) / 100 + "[% armor reduction]) * (1 - " + this.bonuses['plus-damage-reduce'] + "[% generic damage reduction]) * (1 - 0.3[% Melee Reduction])");
+			// console.log("Reduced to: " + Math.round(taken * 100) / 100 + " damage, from " + (100 - Math.round(rendered.damageTaken * 10000) / 100) + "% reduction")
+			// console.log("Change to Block: " + defenses['block-chance'] + "% chance to block " + defenses['block-amount'] + " (average block)");
+			// console.log("Normal EHP Predicts over " + hits + " hits at " + hit + " damage, the average hit will be " + taken + " damage.");
+			// console.log("Simulating 'Blocked Hit' values...");
+			var simulatedDamageTaken = 0;
+			for(i = 1; i <= hits; i++) {
+				// console.log("=====================");
+				// console.log("Hit #" + i);
+				// console.log(defenses['block-chance'] / 10);
+				var afterBlock = taken - defenses['block-amount'];
+				if(afterBlock < 0) {
+					afterBlock = 0;
+				}
+				if(i <= (defenses['block-chance'] / 10)) {
+					// console.log("Result: Full Block");
+					// console.log(taken + " damage taken, reduced by " + defenses['block-amount'] + " = " + afterBlock);
+					simulatedDamageTaken += afterBlock;
+				} else if((defenses['block-chance'] / 10 - i) > -1) {
+					var partOfBlock = Math.round((1 + (defenses['block-chance'] / 10 - i)) * 100);
+					// console.log("Result: Partial Block (" + partOfBlock + "% of Block Value)");
+					var afterBlockValue = defenses['block-amount'] * (partOfBlock / 100);
+					// console.log("Modified Block Value: " + defenses['block-amount'] + " * " + partOfBlock / 100 + " = " + afterBlockValue);
+					var afterBlock = Math.round((taken - afterBlockValue) * 100) / 100;
+					if(afterBlock < 0) {
+						afterBlock = 0;
+					}
+					// console.log(taken + " damage taken, reduced by " + afterBlockValue + " = " + afterBlock);
+					simulatedDamageTaken += afterBlock;
+				} else {
+					// console.log("Result: No Block");
+					// console.log(taken + " damage taken");
+					simulatedDamageTaken += taken;
+				}
+				// console.log("Total Damage Taken: " + simulatedDamageTaken);
 			}
+			// console.log("=====================");
+			// console.log("EHP Predicted: " + taken * hits + " damage from " + hits + " hits (" + taken + " average hit)");
+			// console.log("Simulated: " + simulatedDamageTaken + " damage from " + hits + " hits (" + simulatedDamageTaken / hits + " average hit)");
+			var difference = 1 - (simulatedDamageTaken / (taken * hits));
+			// console.log(Math.round(difference * 100) + "% less damage taken, increasing EHP by " + Math.round(difference * 100) + "%");
+			rendered['ehp-block'] = rendered['ehp'] * (1 + difference);
+			rendered['ehp-block-dodge'] = rendered['ehp-dodge'] * (1 + difference);
+			// console.log(rendered['ehp'] + " EHP * " + Math.round(difference * 100)/100 + " = " + rendered['ehp-block']);
 		}
-		if(rendered['ehp-block-dodge'] < 0) {
-			rendered['ehp-block-dodge'] = "Invulnerable";
-		}
-		
 		// Return the Values for EHP
 		return rendered;
 	},
