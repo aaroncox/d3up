@@ -548,8 +548,12 @@
 				case "bnSkillDamage":
 					if(i > 0) {
 						label = "Gear Bonus";
-						value = "<span class='skill-highlight'>" + i + "% Damage</span>";						
+						value = "<span class='skill-highlight'>+" + i + "%</span> Damage";						
 					}
+					break;
+				case "bnSkillExtra":
+					label = "Gear Bonus";
+					value = i;
 					break;
 				case "critical-hit-tick":
 					label = "Per Tick Crit";
@@ -564,7 +568,7 @@
 					value = i;
 					break;
 				case "lps-average":
-					label = "LPS (APS*(LoH+LS))";
+					label = "Life/Sec";
 					value = i;
 					break;
 				case "rps":

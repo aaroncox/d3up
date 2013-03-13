@@ -1444,7 +1444,7 @@ BuildCalculator.prototype = {
 				shortName = 'wz';
 				break;
 		}
-		
+		var bonusText = false;
 		if(shortName) {
 			var attributeName = shortName + '-' + options.skillName,
 					attributeTip = false;
@@ -1455,6 +1455,7 @@ BuildCalculator.prototype = {
 			}
 			if(attributeTip) {
 				var bonusValue = this.attrs[attributeTip];
+				// console.log(attributeTip, bonusValue);
 				if(td[attributeTip]) {
 					if(td[attributeTip].search(/cost/i) >= 0) {
 						// console.log("Resource cost reduction");
@@ -1464,7 +1465,6 @@ BuildCalculator.prototype = {
 						bonusText = "<span class='skill-highlight'>+" + bonusValue + "%</span> Crit";
 					} else if(td[attributeTip].search(/damage/i) >= 0) {					
 						bnSkillDamage += bonusValue;
-						bonusText = "<span class='skill-highlight'>+" + bonusValue + "%</span> Damage";
 					}					
 				}
 			}
@@ -1479,7 +1479,6 @@ BuildCalculator.prototype = {
 				bnSkillDamage += this.attrs[dmgAttr];
 			}
 		}
-		
 		// Does this skill get bonus crit hit damage?
 		if(skill.effect && skill.effect['plus-crit-hit-damage']) {
 			critHitDmg += skill.effect['plus-crit-hit-damage'];
@@ -1644,6 +1643,10 @@ BuildCalculator.prototype = {
 				total += rendered['lps-life-hit'];
 			}
 			rendered['lps-average'] = Math.round(total * 100) / 100;
+			// If we have passive life regen, add it in as well
+			if(this.attrs['life-regen']) {
+				rendered['lps-average'] += this.values['life-regen'];
+			}
 		}
 		if(!rendered['rps']) {
 			rendered['rps'] = {};
@@ -1701,7 +1704,7 @@ BuildCalculator.prototype = {
 		}, this);
 		
 		rendered['bnSkillDamage'] = bnSkillDamage;
-		
+		rendered['bnSkillExtra'] = bonusText;
 		
 		// console.log(rendered['rps']);
 		// if(option.skill.effect[])
@@ -2063,18 +2066,19 @@ BuildCalculator.prototype = {
 		this.applyStatBonuses();
 		// Calculate Defensive Statistics
     // d3up.log("----");
-		var defenses = this.calcDefenses(),
-		 		ehp = this.calcEffectiveHealth(defenses), 
+		var defenses = this.calcDefenses();
+		_.extend(this.values, defenses);
+		var ehp = this.calcEffectiveHealth(defenses), 
 				gearEhp = this.calcGearEhp(defenses, ehp),
 				ehpPerStat = this.calcEhpPerStat(defenses, ehp),
 				dps = this.calcOffense(), 
 				skills = this.calcSkills(),
-				allSkills = this.calcAllSkills(),
+				// allSkills = this.calcAllSkills(),
 				lifeRegen = this.calcLifeRegen(dps, skills);
 		this.attrs['primary-stat'] = this.attrs[this.attrs['primary']];
 		// Add all of our calculated values into the values object for returning
     // d3up.log("----");
-		_.extend(this.values, defenses, ehp, gearEhp, ehpPerStat, dps, skills, allSkills, lifeRegen, this.calcBES(defenses, ehp, dps));		
+		_.extend(this.values, defenses, ehp, gearEhp, ehpPerStat, dps, skills, lifeRegen, this.calcBES(defenses, ehp, dps));		
 		_.extend(this.values, this.calcGearDps());
 		// console.log("Block @ ", this.attrs['block-chance']);
 		// ----------------------------------
