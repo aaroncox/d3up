@@ -11,13 +11,6 @@ class Bootstrap extends Epic_Application_Bootstrap
 	        include_once $classFileIncCache;
 	    }
 			Zend_Loader_PluginLoader::setIncludeFileCache($classFileIncCache);			
-			// Ratchetio Logging
-			$config = array(
-			    'access_token' => '625f833ca3864a64b21f9fd6c653a53c',
-			    'environment' => 'production',
-			    'root' => '/var/www/com_d3up'
-			);
-			Ratchetio::init($config);
 		}
 
 		// ini_set('session.gc_maxlifetime', 2592000);
