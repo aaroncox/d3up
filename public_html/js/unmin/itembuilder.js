@@ -12,6 +12,27 @@ ItemBuilder.prototype = {
 		"weapon": ["2h-mace","2h-axe","bow","daibo","crossbow","2h-mighty","polearm","staff","2h-sword","axe","ceremonial-knife","hand-crossbow","dagger","fist-weapon","mace","mighty-weapon","spear","sword","wand"],	
 		"shield": ["shield"]
 	},
+	baseSpeeds: {
+		'axe': 1.3,
+		'ceremonial-knife': 1.4,
+		'hand-crossbow': 1.6,
+		'dagger': 1.5,
+		'fist-weapon': 1.4,
+		'mace': 1.2,
+		'mighty-weapon': 1.3,
+		'spear': 1.2,
+		'sword': 1.4,
+		'wand': 1.4,
+		'2h-mace': 0.9,
+		'2h-axe': 1.1,
+		'bow': 1.4,
+		'daibo': 1.1,
+		'crossbow': 1.1,
+		'2h-mighty': 1,
+		'polearm': 0.95,
+		'staff': 1,
+		'2h-sword': 1.1,
+	},
 	// Listing of Qualities
 	qualityMap: ['Unspecified', 'Inferior', 'Normal', 'Superior', 'Magic', 'Rare', 'Legendary', 'Set'],
 	// Listing of Skill Text on Items
@@ -120,8 +141,8 @@ ItemBuilder.prototype = {
 		'bb-whirlwind': 'Increases Critical Hit Chance of Whirlwind by VVV%',
 		'bb-overpower': 'Increases Critical Hit Chance of Overpower by VVV%',
 		'bb-seismic-slam': 'Increases Critical Hit Chance of Seismic Slam by VVV%',
-		'bb-weapon-throw-dmg': 'Increases Weapon Throw damage by [v]%',
-		'bb-ancient-spear-dmg': 'Increases Ancient Spear damage by [v]%',
+		'bb-weapon-throw-dmg': 'Increases Weapon Throw damage by VVV%',
+		'bb-ancient-spear-dmg': 'Increases Ancient Spear damage by VVV%',
 		// Demon Hunter
 		'hatred-regen': 'Increases Hatred Regeneration by VVV per Second',
 		'max-discipline': '+VVV Maximum Discipline',
