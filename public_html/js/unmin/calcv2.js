@@ -628,7 +628,7 @@ BuildCalculator.prototype = {
 		// Demon Hunter - Brooding
 		// Formula : Life * (Regen * 0.01)
 		// ----------------------------------		
-		rendered['life-regen'] = this.attrs['life-regen'];
+		rendered['life-regen'] = (this.attrs['life-regen']) ? this.attrs['life-regen'] : 0;
 		if(this.bonuses['plus-percent-life-regen']) {
 			rendered['life-regen'] += rendered.life * (this.bonuses['plus-percent-life-regen'] * 0.01);
 		}
