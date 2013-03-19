@@ -379,7 +379,7 @@ class RecordController extends D3Up_Controller_Action
 		}
 		if($record->_createdBy && $profile && $profile->id == $record->_createdBy->id) {
 			if(time() <= $record->_lastCrawl + 60 * 2) {
-			   // throw new Exception("Profiles may only be crawled once every 2 minutes. This profile has been updated too recently to be updated again, try again later!");
+			   throw new Exception("Profiles may only be crawled once every 2 minutes. This profile has been updated too recently to be updated again, try again later!");
 			}
 			if(!$record->_characterRg || !$record->_characterBt || !$record->_characterId) {
 				$this->_redirect("/b/" . $record->id ."/crawl");
