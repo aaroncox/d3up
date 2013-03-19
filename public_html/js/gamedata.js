@@ -3782,6 +3782,7 @@
 					effect: {
 						'cost-spirit': 25,
 						'weapon-damage': 303,
+						'plus-dodge': 20,
 					},
 				},
 				'dashing-strike~d': {
@@ -4072,6 +4073,7 @@
 						'weapon-damage-type': 'holy',
 						'cost-spirit': 50,
 						'weapon-damage': 313,
+						'plus-dodge': 20,
 					},
 				},
 				'way-of-the-hundred-fists': {
