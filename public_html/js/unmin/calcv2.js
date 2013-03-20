@@ -29,6 +29,7 @@ BuildCalculator.prototype = {
 	isDuelWielding: false,	
 	// Reinitialize All Variables required for Math
 	init: function() {
+		this.builder = new d3up.ItemBuilder;		
 		this.stats = {
 			'armor': 0,
 			'block-chance': 0,
@@ -2290,19 +2291,44 @@ BuildCalculator.prototype = {
 				}
 			}, this);					
 		}
-		if(json.socketAttrs) {
-			_.each(json.socketAttrs, function(av, ak) {
-				if(ak == "ruby-damage") {
-					if(typeof(this.attrs[ak + "-" + slot]) != "undefined") {
-						this.attrs[ak + "-" + slot] -= parseFloat(av);
-					} else {
-						this.attrs[ak + "-" + slot] = parseFloat(av);
+		if(json.sockets) {
+			_.each(json.sockets, function(gem) {
+				var builder = this.builder,
+						itemClass = false, 
+						benefit = false;
+				_.each(builder.itemClass, function(data, type) {
+					if(_.indexOf(data, json.type) > 0) {
+						itemClass = type;
+						switch(type) {
+							case "weapon":
+								benefit = builder.gemEffect[gem][2];
+								break;
+							case "armor":
+								benefit = builder.gemEffect[gem][3];
+								break;
+							case "helm":
+								benefit = builder.gemEffect[gem][1];
+								break;
+							default:
+								break;
+						}
 					}
-				} else if(typeof(this.attrs[ak]) != "undefined") {
-					this.attrs[ak] -= parseFloat(av);
-				} else {
-					this.attrs[ak] = parseFloat(av);
-				}			
+				});
+				if(benefit) {
+					var ak = benefit[0],
+							av = benefit[1];
+					if(ak == "ruby-damage") {
+						if(typeof(this.attrs[ak + "-" + slot]) != "undefined") {
+							this.attrs[ak + "-" + slot] -= parseFloat(av);
+						} else {
+							this.attrs[ak + "-" + slot] = parseFloat(av);
+						}
+					} else if(typeof(this.attrs[ak]) != "undefined") {
+						this.attrs[ak] -= parseFloat(av);
+					} else {
+						this.attrs[ak] = parseFloat(av);
+					}
+				}
 			}, this);
 		}
 		if(json.stats) {
@@ -2651,22 +2677,52 @@ BuildCalculator.prototype = {
 				}
 			}, this);					
 		}
-		if(json.socketAttrs) {
-			_.each(json.socketAttrs, function(av, ak) {
-				if(ak == "ruby-damage") {
-					if(typeof(this.attrs[ak + "-" + slot]) != "undefined") {
-						this.attrs[ak + "-" + slot] += parseFloat(av);
-					} else {
-						this.attrs[ak + "-" + slot] = parseFloat(av);
+		if(json.sockets) {
+			_.each(json.sockets, function(gem) {
+				var builder = this.builder,
+						itemClass = false, 
+						benefit = false;
+				_.each(builder.itemClass, function(data, type) {
+					if(_.indexOf(data, json.type) > 0) {
+						itemClass = type;
+						switch(type) {
+							case "weapon":
+								benefit = builder.gemEffect[gem][2];
+								break;
+							case "armor":
+								benefit = builder.gemEffect[gem][3];
+								break;
+							case "helm":
+								benefit = builder.gemEffect[gem][1];
+								break;
+							default:
+								break;
+						}
 					}
-				} else if(typeof(this.attrs[ak]) != "undefined") {
-					this.attrs[ak] += parseFloat(av);
-				} else {
-					this.attrs[ak] = parseFloat(av);
+				});
+				if(benefit) {
+					var ak = benefit[0],
+							av = benefit[1];
+					if(ak == "ruby-damage") {
+						if(typeof(this.attrs[ak + "-" + slot]) != "undefined") {
+							this.attrs[ak + "-" + slot] += parseFloat(av);
+						} else {
+							this.attrs[ak + "-" + slot] = parseFloat(av);
+						}
+					} else if(typeof(this.attrs[ak]) != "undefined") {
+						this.attrs[ak] += parseFloat(av);
+					} else {
+						this.attrs[ak] = parseFloat(av);
+					}
 				}
-
 			}, this);
 		}
+		// if(json.socketAttrs) {
+		// 	_.each(json.socketAttrs, function(av, ak) {
+
+		// 
+		// 	}, this);
+		// }
 	},
 	diff: function(s1, s2, allowAll) {
 		var diff = {},
