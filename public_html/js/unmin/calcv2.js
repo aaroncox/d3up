@@ -2296,7 +2296,7 @@ BuildCalculator.prototype = {
 				var builder = this.builder,
 						itemClass = false, 
 						benefit = false;
-				_.each(builder.itemClass, function(data, type) {
+				_.each(builder.gemItemClass, function(data, type) {
 					if(_.indexOf(data, json.type) > 0) {
 						itemClass = type;
 						switch(type) {
@@ -2682,7 +2682,7 @@ BuildCalculator.prototype = {
 				var builder = this.builder,
 						itemClass = false, 
 						benefit = false;
-				_.each(builder.itemClass, function(data, type) {
+				_.each(builder.gemItemClass, function(data, type) {
 					if(_.indexOf(data, json.type) > 0) {
 						itemClass = type;
 						switch(type) {
@@ -2698,6 +2698,7 @@ BuildCalculator.prototype = {
 							default:
 								break;
 						}
+						// console.log("Found " + gem + " in " + json.type + " (" + type + ") providing " + benefit);
 					}
 				});
 				if(benefit) {
@@ -2714,6 +2715,7 @@ BuildCalculator.prototype = {
 					} else {
 						this.attrs[ak] = parseFloat(av);
 					}
+					// console.log("Adding " + ak + " of " + av );
 				}
 			}, this);
 		}

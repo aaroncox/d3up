@@ -12,6 +12,11 @@ ItemBuilder.prototype = {
 		"weapon": ["2h-mace","2h-axe","bow","daibo","crossbow","2h-mighty","polearm","staff","2h-sword","axe","ceremonial-knife","hand-crossbow","dagger","fist-weapon","mace","mighty-weapon","spear","sword","wand"],	
 		"shield": ["shield"]
 	},
+	gemItemClass: {
+		"helm": ["helm","spirit-stone","voodoo-mask","wizard-hat"],
+		"armor": ["amulet", "ring", "mojo", "source", "quiver","belt","boots","bracers","chest","cloak","gloves","pants","mighty-belt","shoulders","shield"],
+		"weapon": ["2h-mace","2h-axe","bow","daibo","crossbow","2h-mighty","polearm","staff","2h-sword","axe","ceremonial-knife","hand-crossbow","dagger","fist-weapon","mace","mighty-weapon","spear","sword","wand"],	
+	},
 	baseSpeeds: {
 		'axe': 1.3,
 		'ceremonial-knife': 1.4,
