@@ -242,6 +242,7 @@ class D3Up_Tool_Crawler
 		'plus-lightning-damage~2' => 'Adds [v]% to Lightning Damage',
 		'plus-poison-damage~2' => 'Adds [v]% to Poison Damage',
 		'elite-damage' => 'Increases Damage against Elites by [v]%',
+		'human-damage' => '+[v]% Damage to Humans',
 		// Ranges
 		'minmax-damage' => '+[v]-[v] Damage',
 		'arcane-damage' => '+[v]-[v] Arcane Damage',
