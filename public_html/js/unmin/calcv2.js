@@ -2293,27 +2293,29 @@ BuildCalculator.prototype = {
 		}
 		if(json.sockets) {
 			_.each(json.sockets, function(gem) {
-				var builder = this.builder,
-						itemClass = false, 
-						benefit = false;
-				_.each(builder.gemItemClass, function(data, type) {
-					if(_.indexOf(data, json.type) >= 0) {
-						itemClass = type;
-						switch(type) {
-							case "helm":
-								benefit = builder.gemEffect[gem][1];
-								break;
-							case "weapon":
-								benefit = builder.gemEffect[gem][2];
-								break;
-							case "armor":
-								benefit = builder.gemEffect[gem][3];
-								break;
-							default:
-								break;
+				if(gem) {
+					var builder = this.builder,
+							itemClass = false, 
+							benefit = false;
+					_.each(builder.gemItemClass, function(data, type) {
+						if(_.indexOf(data, json.type) >= 0) {
+							itemClass = type;
+							switch(type) {
+								case "helm":
+									benefit = builder.gemEffect[gem][1];
+									break;
+								case "weapon":
+									benefit = builder.gemEffect[gem][2];
+									break;
+								case "armor":
+									benefit = builder.gemEffect[gem][3];
+									break;
+								default:
+									break;
+							}
 						}
-					}
-				});
+					});
+				}
 				if(benefit) {
 					var ak = benefit[0],
 							av = benefit[1];
@@ -2681,29 +2683,30 @@ BuildCalculator.prototype = {
 		}
 		if(json.sockets) {
 			_.each(json.sockets, function(gem) {
-				// console.log("Looking at " + json.type);
-				var builder = this.builder,
-						itemClass = false, 
-						benefit = false;
-				_.each(builder.gemItemClass, function(data, type) {
-					if(_.indexOf(data, json.type) >= 0) {
-						itemClass = type;
-						switch(type) {
-							case "helm":
-								benefit = builder.gemEffect[gem][1];
-								break;
-							case "weapon":
-								benefit = builder.gemEffect[gem][2];
-								break;
-							case "armor":
-								benefit = builder.gemEffect[gem][3];
-								break;
-							default:
-								break;
+				if(gem) {
+					var builder = this.builder,
+							itemClass = false, 
+							benefit = false;
+					_.each(builder.gemItemClass, function(data, type) {
+						if(_.indexOf(data, json.type) >= 0) {
+							itemClass = type;
+							switch(type) {
+								case "helm":
+									benefit = builder.gemEffect[gem][1];
+									break;
+								case "weapon":
+									benefit = builder.gemEffect[gem][2];
+									break;
+								case "armor":
+									benefit = builder.gemEffect[gem][3];
+									break;
+								default:
+									break;
+							}
+							// console.log("Found " + gem + " in " + json.type + " (" + type + ") providing " + benefit);
 						}
-						// console.log("Found " + gem + " in " + json.type + " (" + type + ") providing " + benefit);
-					}
-				});
+					});					
+				}
 				if(benefit) {
 					var ak = benefit[0],
 							av = benefit[1];
