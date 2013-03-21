@@ -57,6 +57,7 @@ class D3Up_Tool_Attributes
 		'poison-damage' => '+[v] Poison Damage',
 		'elite-damage' => 'Increases Damage against Elites by [v]%',
 		'demon-damage' => '+[v]% Damage to Demons',
+		'human-damage' => '+[v]% Damage to Humans',
 		// Elemental Skill Bonuses
 		'plus-arcane-damage-skills' => 'Arcane skills deal [v]% more damage',
 		'plus-cold-damage-skills' => 'Cold skills deal [v]% more damage',

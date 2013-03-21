@@ -105,6 +105,7 @@ ItemBuilder.prototype = {
 		// Percent Increases
 		'elite-damage': 'Increases Damage against Elites by VVV%',
 		'demon-damage': '+VVV% Damage to Demons',
+		'human-damage': '+VVV% Damage to Humans',
 		// Procs
 		'procRate': 'Proc Coefficient: VVV%',
 		'monkHaste': 'Generator IAS Bonus: VVV%',
