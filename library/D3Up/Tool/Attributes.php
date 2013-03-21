@@ -143,7 +143,7 @@ class D3Up_Tool_Attributes
 		'mana-max' => '+[v] Maximum Mana',
 		'wd-firebomb' => 'Reduces resource cost of Firebomb by [v] Mana',
 		'wd-haunt' => 'Increases Haunt Damage by [v]%',
-		'wd-acid-cloud' => 'Increases Critical Hit Chance of Acid Clouds by [v]%',
+		'wd-acid-cloud' => 'Increases Critical Hit Chance of Acid Cloud by [v]%',
 		'wd-firebats' => 'Reduces resource cost of Firebats by [v] Mana',
 		'wd-zombie-dogs' => 'Reduces cooldown of Summon Zombie Dogs by [v] Seconds',
 		'wd-plague-of-toads' => 'Increases Plague of Toads damage by [v]%',
