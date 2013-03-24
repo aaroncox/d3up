@@ -155,6 +155,8 @@ class AjaxController extends D3Up_Controller_Action
     if($test) {
       // Just use it instead...
       $this->view->item = $item = $test;
+			$item->_created = time();
+			$item->save();
     } else {
   		$item->save();      
     }
