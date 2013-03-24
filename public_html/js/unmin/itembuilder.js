@@ -884,6 +884,9 @@ ItemBuilder.prototype = {
 					tchance.delayKeyup(function(el) {
 						builder.updateStat("block-chance", el.val());
 					});
+					if(!builder.item.stats) {
+						builder.item.stats = {};
+					}
 					if(builder.item.stats && builder.item.stats.armor) {
 						tarmor.val(builder.item.stats.armor);
 					}
