@@ -156,7 +156,7 @@ ItemBuilder.prototype = {
 		'dh-cluster-arrow': 'Reduces resource cost of Cluster Arrow by VVV Hatred.',
 		'dh-chakram': 'Reduces resource cost of Chakram by VVV Hatred',
 		'dh-evasive-fire': 'Increases Evasive Fire damage by VVV%',
-		'dh-grenades': 'Increases Grenades Damage by [V]%',
+		'dh-grenades': 'Increases Grenades Damage by VVV%',
 		'dh-impale': 'Reduces resource cost of Impale by VVV Hatred',
 		'dh-spike-trap': 'Increases Spike Trap damage by VVV%',
 		'dh-bola-shot': 'Increases Bola Shot damage by VVV%',
