@@ -552,8 +552,10 @@
 					}
 					break;
 				case "bnSkillExtra":
-					label = "Gear Bonus";
-					value = i;
+					if(i > 0) {
+						label = "Gear Bonus";
+						value = i;						
+					}
 					break;
 				case "critical-hit-tick":
 					label = "Per Tick Crit";
