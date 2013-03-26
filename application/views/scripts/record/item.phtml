@@ -28,7 +28,7 @@
 			<tr>
 				<? foreach($this->record->rating as $key => $value): ?>
 					<? if($key == 'total') { continue; } ?>
-					<td><?= $this->itemStat($key, round($value, 1) . "%", $value)?></td>
+					<td><?= $this->itemStat($key, str_replace("%","",round($value, 1)) . "%", $value)?></td>
 				<? endforeach ?>			
 			</tr>
 		</table>
