@@ -33,7 +33,7 @@ class D3Up_View_Helper_ItemStat extends D3Up_View_Helper_DisplayItem
 				$stat = "Min/Max Dmg";
 				break;
 			case "critical-hit-damage":
-				$value = $value."%";
+				$value = $value;
 				break;
 		}
 		$perClass = "unknown";
