@@ -1,7 +1,6 @@
 <h5>JSON Representation of your Character</h5>
 <div class="form">
-	<p>The following text box is primarily for developers and people wishing to run their own stats in external applications.</p>
-	<p>This data is raw output from the calculator and is currently undocumented and may change at any time upon further development of the site. Over time, I'll do my best to document all of the fields and values available.</p>
-	<textarea rows="10" cols="40" id="json-data"></textarea>
+	<p>Shown below is the URL at which you can access your character represented in a JSON format. This data is updated when you sync your build or use the 'Save Stats to DB' on the left navigation.</p>
+	<a href="/b/<?= $this->record->id ?>/json">http://d3up.com/b/<?= $this->record->id ?>/json</a>
 	<p>Feel free to <a href="mailto:aaron.cox@greymass.com">send me an email</a> and let me know what you end up using it!</p>
 </div>
