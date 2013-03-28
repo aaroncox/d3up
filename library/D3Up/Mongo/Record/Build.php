@@ -61,6 +61,7 @@ class D3Up_Mongo_Record_Build extends Epic_Mongo_Document_Record
 			'private',
 			'profileUrl',
 			'views',
+			'gear',
 		);
 		foreach($toRemove as $remove) {
 			unset($export[$remove]);
