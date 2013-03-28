@@ -4306,6 +4306,7 @@
 					rune: 'Successfully dodging an attack has a chance to create a burst of flame dealing 35% weapon damage as Fire to all nearby enemies.',
 					procRate: 0,
 					groupBuff: true,
+					apsMultiplier: true,
 					effect: {
 						'cost-spirit': 50,
 						'weapon-damage': 35,

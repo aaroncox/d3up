@@ -1544,15 +1544,19 @@ BuildCalculator.prototype = {
 			dAvg = mathS * mathA * mathM * mathE;
 			mhAvg = mathS * mathA * mathM * mathE;
 		}
-		// console.log(options.skill.name, dLow, dHigh);
 		dps = Math.round(dAvg * mathR * mathC);
 		// d3up.log(atkSpeedInc);
-    // d3up.log(options.skill, dLow, dHigh, dps, mathR, mathC, bnEleDamage);
+    // d3up.log(options.skill, dAvg, dLow, dHigh, dps, mathR, mathC, bnEleDamage);
 		hit = Math.round(mathS * mathA * mathM * mathE * mathC);
 		if(skill.effect['no-crits']) {
 			dps = Math.round(dAvg * mathR);
 			hit = Math.round(mathS * mathA * mathM * mathE);			
 		}
+		if(options.skill.apsMultiplier) {
+			dLow *= mathR;
+			dHigh *= mathR;
+		}
+		// console.log(dAvg);
     // console.log(hit, mathS, mathA, mathM, mathE, mathC);
 		if(duration) {
 		  if(isStatic) {
@@ -1594,6 +1598,7 @@ BuildCalculator.prototype = {
         dLow = dLow * speed;
         dHigh = dHigh * speed;
 			}
+			
   		// Does this get a 3rd hit bonus? (Monks)
 			if(this.bonuses['3rd-hit-damage']) {
 				var d3Low = mathS * mathAl * (mathM + (this.bonuses['3rd-hit-damage'] / 100)) * mathE,
@@ -1602,7 +1607,6 @@ BuildCalculator.prototype = {
 						dmgCycle = (((dLow + dHigh) / 2) + ((dLow + dHigh) / 2) + ((d3Low + d3High) / 2)) / 3;
  				rendered['3rd-hit'] = hit3;
 			}
-			// d3up.log(dLow, dHigh);
 			rendered['damage'] = Math.round(dLow) + " - " + Math.round(dHigh);
 			rendered['critical-hit'] = Math.round(dLow * (1+ (critHitDmg * 0.01))) + " - " + Math.round(dHigh * (1 + (critHitDmg * 0.01)));
 			if(this.bonuses['pierce-bonus']) {
