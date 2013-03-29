@@ -614,10 +614,15 @@ BuildCalculator.prototype = {
 	calcDefenses: function() {
 		var rendered = {};	// Storage for Rendered Statistics
  		// ----------------------------------
-		// Life
-		// Formula : (36 + 4 * Level + (Level - 25) * Vitality)
+		// Life (Different for Above/Below level 35)
 		// ----------------------------------
-		rendered.life = 36 + 4 * this.level + (this.level - 25) * this.attrs['vitality'];
+		if(this.level < 35) {
+			// Formula : (36 + 4 × Level + 10 × Vitality)
+			rendered.life = 36 + 4 * this.level + 10 * this.attrs['vitality'];			
+		} else {
+			// Formula : (36 + 4 * Level + (Level - 25) * Vitality)
+			rendered.life = 36 + 4 * this.level + (this.level - 25) * this.attrs['vitality'];			
+		}
 		// ----------------------------------
 		// +% Life Addition
 		// Formula : Life + ( Life * ( Plus Life / 100 ) )
