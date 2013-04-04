@@ -513,8 +513,10 @@ BuildCalculator.prototype = {
 							break;
 						case "bb-weapon-throw-dmg":								
 							if(this.attrs[effect]) {
+								this.attrs['bb-ancient-spear-dmg'] += (value);
 								this.attrs[effect] += (value); 
 							} else {
+								this.attrs['bb-ancient-spear-dmg'] = (value);
 								this.attrs[effect] = value;
 							}
 							break;
