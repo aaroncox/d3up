@@ -185,6 +185,9 @@
         // simulate: buildSimulate
       };
       d3up.compare = compare;
+			<? if(isset($_GET['debug']) == 'true'): ?>
+			console.log(d3up.builds);
+			<? endif ?>
       // Render build to Statistics Panels
       build.renderTo($("#statistics"));
       build.renderTo($("#dps-math"));

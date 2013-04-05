@@ -7,9 +7,9 @@
   <? endif ?>
   <p>This Build uses the following character:</p>
   <div class='notice'><a href="<?= D3Up_Tool_Crawler::makeUrl($this->record->_characterRg, $this->record->_characterBt, $this->record->_characterId) ?>"><?= $this->record->_characterBt ?> <br/> Character ID #<?= $this->record->_characterId?></a></div>
-  <a class="button" href="/b/<?= $this->record->id ?>/resync">Resync ALL Data from Battle.net</a>
-  <a class="button" href="/b/<?= $this->record->id ?>/resync/only/skills">Resync JUST SKILLS from Battle.net</a>
-  <a class="button" href="/b/<?= $this->record->id ?>/resync/only/items">Resync JUST ITEMS from Battle.net</a>
+  <a class="button" href="/b/<?= $this->record->id ?>/<?= $this->record->slug?:'~' ?>/resync">Resync ALL Data from Battle.net</a>
+  <a class="button" href="/b/<?= $this->record->id ?>/<?= $this->record->slug?:'~' ?>/resync/only/skills">Resync JUST SKILLS from Battle.net</a>
+  <a class="button" href="/b/<?= $this->record->id ?>/<?= $this->record->slug?:'~' ?>/resync/only/items">Resync JUST ITEMS from Battle.net</a>
   <? if($this->record->_createdBy->id): ?>
     <p>You may sync your profile once every (2) minutes by clicking the button above.</p>
     <p>If you'd like to change which character this build is sync'd with, feel free to use the button below to sync one of your other characters. I'd recommend against it, normally you should just create a new build, but if you need to correct the character, feel free.</p>
