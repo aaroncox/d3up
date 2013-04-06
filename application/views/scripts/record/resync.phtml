@@ -173,7 +173,7 @@
       build.renderSkillCatalog($("#skill-catalog"));
 			delete build.stats.allSkillData;
 			$.ajax({
-				url: '/b/' + <?= $this->record->id ?> + '/update-stats',
+				url: '/b/' + <?= $this->record->id ?> + '/target/update-stats',
 				cache: false,
 				data: {
 					stats: build.stats
