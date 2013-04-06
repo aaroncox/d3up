@@ -6738,6 +6738,7 @@
 					procRate: 0.14,
 					effect: {
 						'weapon-damage': 165,
+						'life-steal': 5,
 					},
 				},
 				'arcane-torrent': {
