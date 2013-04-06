@@ -758,7 +758,7 @@ $(function() {
 	saveStatsButton.bind('click', function() {
 		var stats = d3up.builds.build.getStats();
 		$.ajax({
-			url: '/b/' + $("#character").data("id") + '/update-stats',
+			url: '/b/' + $("#character").data("id") + '/target/update-stats',
 			cache: false,
 			data: {
 				stats: stats
