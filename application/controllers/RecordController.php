@@ -8,7 +8,14 @@
 class RecordController extends D3Up_Controller_Action
 {
 	public function getRecord() {
-		return $this->view->record = $this->getRequest()->getParam('record');
+		if($build = $this->getRequest()->getParam('record')) {
+			return $this->view->record = $build;			
+		} else if($id = $this->getRequest()->getParam('id')) {
+			// var_dump((int) $id, Epic_Mongo::db('build')->fetchOne(array('id' => (int) $id))); exit;
+			return $this->view->record = Epic_Mongo::db('build')->fetchOne(array('id' => (int) $id));
+		} else {
+			throw new Exception("Couldn't load the specified build");
+		}
 	}
 	public function indexAction() {		
 	}
@@ -413,7 +420,9 @@ class RecordController extends D3Up_Controller_Action
 	public function jsonAction() {
 		header('Content-type: application/json');
 		$record = $this->getRecord();
-		echo json_encode($record->cleanExport()); exit;
+		// var_dump($record); exit;
+		echo json_encode($record->cleanExport()); 
+		exit;
 	}
 	public function updateStatsAction() {
 		$record = $this->getRecord();
