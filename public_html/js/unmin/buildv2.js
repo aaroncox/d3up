@@ -551,6 +551,18 @@
 						value = "<span class='skill-highlight'>+" + i + "%</span> Damage";						
 					}
 					break;
+				case "bnDuration":
+					if(i > 0) {
+						label = "Duration Bonus";
+						value = "<span class='skill-highlight'>+" + i + "</span> Second(s)";						
+					}
+					break;
+				case "cast-duration":
+					if(i > 0) {
+						label = "Cast Duration";
+						value = i + " Seconds";						
+					}
+					break;
 				case "bnSkillExtra":
 					if(i > 0) {
 						label = "Gear Bonus";

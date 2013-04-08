@@ -1467,6 +1467,10 @@ BuildCalculator.prototype = {
 				if(td[attributeTip]) {
 					if(td[attributeTip].search(/cost/i) >= 0) {
 						// console.log("Resource cost reduction");
+					} else if(td[attributeTip].search(/duration/i) >= 0) {
+						mathE = mathE / duration * (duration + bonusValue);
+						duration += bonusValue;
+						rendered['bnDuration'] = bonusValue;
 					} else if(td[attributeTip].search(/critical hit/i) >= 0) {
 						// console.log("Crit Hit increase");
 						critHit += bonusValue;
@@ -1566,6 +1570,7 @@ BuildCalculator.prototype = {
 		// console.log(dAvg);
     // console.log(hit, mathS, mathA, mathM, mathE, mathC);
 		if(duration) {
+			rendered['cast-duration'] = duration;
 		  if(isStatic) {
 		    var tNorm = Math.round(mhAvg),
 		        tCrit = Math.round(mhAvg * (critHitDmg * 0.01 + 1)); 
