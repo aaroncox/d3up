@@ -107,7 +107,7 @@ class RecordController extends D3Up_Controller_Action
 				}
 				$new = Epic_Mongo::newDoc('build');
 				$export = $record->export();
-				unset($export['id'], $export['_id'], $export['_createdBy'], $export['equipment'], $export['views'], $export['votes']);
+				unset($export['id'], $export['_id'], $export['_createdBy'], $export['equipment'], $export['gear'], $export['views'], $export['votes']);
 				$new->setFromArray($export);			
 				foreach(Epic_Mongo::db('gearset')->getSlots() as $slot) {
 					$item = $record->gear->$slot;
