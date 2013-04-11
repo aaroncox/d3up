@@ -1359,6 +1359,26 @@ BuildCalculator.prototype = {
 		}
 		return rendered;
 	},
+	calcDmgTaken: function(heroClass, hit, type, element) {
+		var reduced = ( 1 - this.values['armorReduction'] );
+		// What type of Element is this damage?
+		if(element == 'generic') {
+			reduced *= ( 1 - this.values['percent-resist-all'] );
+		} else {
+			reduced *= ( 1 - this.values['percent-resist-' + element] );
+		}
+		// Do we get the extra Barbarian/Monk Bonus?
+		if(heroClass == 'barbarian' || heroClass == 'monk') {
+			reduced *= ( 1 - 0.3 );
+		}
+		// Are we applying any special 'type' reduction from the damage type?
+		if(type == 'generic') {
+			reduced *= ( 1 - this.bonuses['plus-damage-reduce'] );
+		} else {
+			reduced *= ( 1 - this.values['percent-' + type + '-reduce'] );
+		}
+		return hit * reduced;
+	},
 	calcSAME: function(options) {
 	  var skill = options.skill, 
 	      duration = options.duration, 

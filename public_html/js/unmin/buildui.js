@@ -221,6 +221,8 @@ $(function() {
 		// Set the Item
 		if(d3up.builds.compare.getItem(itemSlot)) {
 			builder.setItem(itemSlot, d3up.builds.compare.getItem(itemSlot));					
+		} else {
+			builder.setItem(itemSlot, {});					
 		}
 		// Set the Calculator Callback		
 		// console.log(d3up.builds.build.getItem(itemSlot).stats);
@@ -283,6 +285,7 @@ $(function() {
 		// Remove the old item
 		d3up.builds.compare.calc.removeItem(itemSlot);
 	  // Set the Proper Item
+		// console.log(itemSlot, inst);
     d3up.builds.compare.setItem(itemSlot, inst.getItem());
     // Loop through All Builds and render them again.
     $.each(d3up.builds, function(k) {
@@ -299,7 +302,6 @@ $(function() {
     statistics.find(".statistics-table").not("#compare-table").hide();   
     // Show the results table
     compareResults.show();
-		// console.log("diff", diff);
     // Append the Diff Table to the Compare Table
     $("#compare-table > tbody").replaceWith(d3up.compare.table(diff, 'compare'));
 	}
