@@ -19,7 +19,7 @@ class BuildController extends D3Up_Controller_Action
 		// 	throw new Exception("Currently disabled until I have a chance to fix a bug.");			
 		// }
 		$query = array(
-			'private' => array('$ne' => true),
+			'private' => false,
 			// 'stats.dps' => array('$gt' => 0),
 			// 'stats.ehp' => array('$gt' => 0),
 			// 'votes' => array('$gt' => -5),
