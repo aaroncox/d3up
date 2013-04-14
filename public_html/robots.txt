@@ -19,6 +19,7 @@ Disallow: /items/*
 Disallow: /items
 Disallow: /item*
 Disallow: /item
+Disallow: /build
 
 User-agent: Yandex
 Disallow: /
