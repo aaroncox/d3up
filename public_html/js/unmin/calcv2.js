@@ -814,6 +814,7 @@ BuildCalculator.prototype = {
 			rendered['ehp-poison'] 		= defenses.life / ( ( 1 - defenses.armorReduction ) * ( 1 - defenses['percent-resist-poison'] ) );
 			rendered['ehp-arcane'] 		= defenses.life / ( ( 1 - defenses.armorReduction ) * ( 1 - defenses['percent-resist-arcane'] ) );
 		}
+		rendered['plus-damage-reduce'] = this.bonuses['plus-damage-reduce'];
 		rendered['total-armor-reduction'] = defenses.armorReduction * 100;
 		rendered['total-resist-reduction'] = defenses['percent-resist-all'] * 100;
 		rendered['total-damage-reduction'] = (1 - rendered.damageTaken) * 100;
