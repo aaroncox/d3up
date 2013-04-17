@@ -4405,11 +4405,11 @@
 				'sweeping-wind~a': {
 					name: 'Sweeping Wind - Blade Storm',
 					desc: 'Surround yourself in a vortex that continuously deals 20% weapon damage to all enemies within 10 yards. The vortex lasts 6 seconds and is refreshed each time you strike an enemy with a melee attack. Landing a Critical Hit has a chance to increase the vortex effect up to 2 times for a total of 60% weapon damage to nearby enemies.',
-					rune: 'Intensify the vortex, increasing the damage per stack to 20% weapon damage. This increases the damage with 3 stacks to 60% weapon damage.',
+					rune: 'Intensify the vortex, increasing the damage per stack to 26% weapon damage. This increases the damage with 3 stacks to 78% weapon damage.',
 					procRate: 0,
 					effect: {
 						'cost-spirit': 75,
-						'weapon-damage': 60,
+						'weapon-damage': 78,
 					},
 				},
 				'sweeping-wind~b': {
