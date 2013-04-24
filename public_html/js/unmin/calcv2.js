@@ -420,6 +420,8 @@ BuildCalculator.prototype = {
 						effects[ effect ].call( this, value, effect )
 					} else
 					switch(effect) {
+						case "elite-damage":
+						case "demon-damage":
 						case "melee-reduce":
 					  case "elite-reduce":
 					  case "range-reduce":
@@ -1338,25 +1340,35 @@ BuildCalculator.prototype = {
 				}
       }
     }, this);
-    // console.log(rendered);
-		// Add any bonus damage onto the damage calculation
-		// if(this.bonuses['plus-damage']) {
-			// d3up.log(this.bonuses['plus-damage']);
-			// return rendered['dps'] * (1 + this.bonuses['plus-damage']);
-		// }
-    // d3up.log(rendered);
-		if(this.attrs['elite-damage']) {
-			rendered['dps-elites'] = Math.round(rendered['dps'] * (1 + (this.attrs['elite-damage'] / 100)) * 100) / 100;
-			rendered['tdps-elites'] = rendered['tdps'] * (1 + (this.attrs['elite-damage'] / 100));
+		if(this.attrs['elite-damage-incs'] && this.attrs['elite-damage-incs'].length) {
+			var temp = 1;
+		  _.each(this.attrs['elite-damage-incs'], function(val, idx) {
+		    temp *= 1 - (val / 100);
+		  }, this);
+			var modifier = 1 - temp;
+			rendered['dps-elites'] = Math.round(rendered['dps'] * (1 + modifier) * 100) / 100;
+			rendered['tdps-elites'] = rendered['tdps'] * (1 + modifier);
 		}
-		if(this.attrs['demon-damage']) {
-			rendered['dps-demon'] = Math.round(rendered['dps'] * (1 + (this.attrs['demon-damage'] / 100)) * 100) / 100;
-			rendered['tdps-demon'] = rendered['tdps'] * (1 + (this.attrs['demon-damage'] / 100));
+		if(this.attrs['demon-damage-incs'] && this.attrs['demon-damage-incs'].length) {
+			var temp = 1;
+		  _.each(this.attrs['demon-damage-incs'], function(val, idx) {
+		    temp *= 1 - (val / 100);
+		  }, this);
+			var modifier = 1 - temp;
+			rendered['dps-demon'] = Math.round(rendered['dps'] * (1 + modifier) * 100) / 100;
+			rendered['tdps-demon'] = rendered['tdps'] * (1 + modifier);
 		}
-		if(this.attrs['demon-damage'] && this.attrs['elite-damage']) {
-			rendered['dps-demon-elite'] = Math.round(rendered['dps'] * (1 + (this.attrs['demon-damage'] / 100) + (this.attrs['elite-damage'] / 100)) * 100) / 100;
-			rendered['tdps-demon-elite'] = rendered['tdps'] * (1 + (this.attrs['demon-damage'] / 100) + (this.attrs['elite-damage'] / 100));
-			
+		if(this.attrs['demon-damage-incs'] && this.attrs['demon-damage-incs'].length && this.attrs['elite-damage-incs'] && this.attrs['elite-damage-incs'].length) {
+			var temp = 1;
+		  _.each(this.attrs['demon-damage-incs'], function(val, idx) {
+		    temp *= 1 - (val / 100);
+		  }, this);
+		  _.each(this.attrs['elite-damage-incs'], function(val, idx) {
+		    temp *= 1 - (val / 100);
+		  }, this);
+			var modifier = 1 - temp;
+			rendered['dps-demon-elite'] = Math.round(rendered['dps'] * (1 + modifier) * 100) / 100;
+			rendered['tdps-demon-elite'] = rendered['tdps'] * (1 + modifier);	
 		}
 		return rendered;
 	},
@@ -1954,7 +1966,7 @@ BuildCalculator.prototype = {
 										this.attrs['attack-speed-incs'] += value;															
 										break;
 								}
-                if(_.indexOf(['melee-reduce', 'range-reduce', 'elite-reduce', 'cold-reduce'], stat) >= 0) {
+                if(_.indexOf(['elite-damage', 'demon-damage', 'melee-reduce', 'range-reduce', 'elite-reduce', 'cold-reduce'], stat) >= 0) {
                   if(typeof(this.attrs[stat + "-incs"]) == "undefined") {
                     this.attrs[stat + "-incs"] = [];
   								}
@@ -2197,6 +2209,8 @@ BuildCalculator.prototype = {
 					av = 0;
 				}
 				switch(ak) {
+					case "elite-damage":
+					case "melee-damage":
 					case "cold-reduce":
 				  case "melee-reduce":
 				  case "elite-reduce":
@@ -2529,6 +2543,8 @@ BuildCalculator.prototype = {
 					av = 0;
 				}
 				switch(ak) {
+					case "elite-damage":
+					case "demon-damage":
 					case "cold-reduce":
 				  case "melee-reduce":
 				  case "elite-reduce":
@@ -2785,10 +2801,12 @@ BuildCalculator.prototype = {
 					'dps-demon': 'DPS vs Demons',
 					'dps-elites': 'DPS vs Elites',
 					'dps-demon-elite': 'DPS vs Elite+Demon',
-					'dps-speed-mh': 'MH AtkSpeed',
-					'dps-speed-mh': 'MH Attk/Sec',
-					'dps-speed-oh': 'OH AtkSpeed',
-					'dps-speed-oh': 'OH Attk/Sec',
+					// 'dps-speed-mh': 'MH AtkSpeed',
+					// 'dps-speed-mh': 'MH Attk/Sec',
+					// 'dps-speed-oh': 'OH AtkSpeed',
+					// 'dps-speed-oh': 'OH Attk/Sec',
+					'aps-mh': 'MH APS',
+					'aps-oh': 'OH APS',
 					'ehp': 'EHP', 
 					'ehp-block': 'EHP w/ Block',
 					'ehp-block-dodge': 'EHP w/ Block+Dodge',
