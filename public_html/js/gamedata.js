@@ -3431,9 +3431,11 @@
 					name: 'Lashing Tail Kick',
 					desc: 'Unleash a deadly roundhouse kick that knocks enemies back and deals 470% weapon damage.',
 					procRate: 0.667,
+					monkHaste: 1.04,
 					effect: {
 						'cost-spirit': 30,
 						'weapon-damage': 470,
+						'weapon-damage-mh': true,
 					},
 				},
 				'lashing-tail-kick~a': {
@@ -3441,10 +3443,12 @@
 					desc: 'Unleash a deadly roundhouse kick that knocks enemies back and deals 470% weapon damage.',
 					rune: 'Release a torrent of fire that burns nearby enemies for 258% weapon damage as Fire and causes Knockback.',
 					procRate: 0.5,
+					monkHaste: 1.04,
 					effect: {
 						'weapon-damage-type': 'fire',
 						'cost-spirit': 30,
 						'weapon-damage': 470,
+						'weapon-damage-mh': true,
 					},
 				},
 				'lashing-tail-kick~b': {
@@ -3452,10 +3456,12 @@
 					desc: 'Unleash a deadly roundhouse kick that knocks enemies back and deals 470% weapon damage.',
 					rune: 'Hurl a column of fire that burns through enemies, causing 294% weapon damage as Fire to each enemy it strikes.',
 					procRate: 0.5,
-					effect: {
+          monkHaste: 1.04,
+          effect: {
 						'weapon-damage-type': 'fire',
 						'cost-spirit': 30,
 						'weapon-damage': 470,
+						'weapon-damage-mh': true,
 					},
 				},
 				'lashing-tail-kick~c': {
@@ -3463,9 +3469,11 @@
 					desc: 'Unleash a deadly roundhouse kick that knocks enemies back and deals 470% weapon damage.',
 					rune: 'Attack enemies at long range, slowing the movement speed of affected targets by 80% for 2 seconds.',
 					procRate: 0.8,
+					monkHaste: 1.04,
 					effect: {
 						'cost-spirit': 30,
 						'weapon-damage': 470,
+						'weapon-damage-mh': true,
 					},
 				},
 				'lashing-tail-kick~d': {
@@ -3473,9 +3481,11 @@
 					desc: 'Unleash a deadly roundhouse kick that knocks enemies back and deals 470% weapon damage.',
 					rune: 'Increases Knockback distance by 150% and slows the movement speed of struck enemies by 60% for 2 seconds.',
 					procRate: 0.5,
+					monkHaste: 1.04,
 					effect: {
 						'cost-spirit': 30,
 						'weapon-damage': 470,
+						'weapon-damage-mh': true,
 					},
 				},
 				'lashing-tail-kick~e': {
@@ -3483,10 +3493,12 @@
 					desc: 'Unleash a deadly roundhouse kick that knocks enemies back and deals 470% weapon damage.',
 					rune: 'Enemies have a 50% chance to be stunned for 1.5 seconds instead of being knocked back.',
 					procRate: 0.667,
+					monkHaste: 1.04,
 					effect: {
 						'cost-spirit': 30,
 						'chance-stun': 50,
 						'weapon-damage': 470,
+						'weapon-damage-mh': true,
 					},
 				},				
 				'deadly-reach': {
@@ -3885,6 +3897,7 @@
 						'weapon-damage-type': 'holy',
 						'cost-spirit': 75,
 						'weapon-damage': 829,
+						'weapon-damage-mh': true
 					},
 				},
 				'wave-of-light~a': {
@@ -3896,6 +3909,7 @@
 						'weapon-damage-type': 'holy',
 						'cost-spirit': 75,
 						'weapon-damage': 1190,
+						'weapon-damage-mh': true
 					},
 				},
 				'wave-of-light~b': {
@@ -3907,6 +3921,7 @@
 						'weapon-damage-type': 'holy',
 						'cost-spirit': 75,
 						'weapon-damage': 914,
+						'weapon-damage-mh': true
 					},
 				},
 				'wave-of-light~c': {
@@ -3918,7 +3933,8 @@
 						'weapon-damage-type': 'holy',
 						'cost-spirit': 75,
 						'weapon-damage': 1190,
-						'weapon-damage-for': 2
+						'weapon-damage-for': 2,
+						'weapon-damage-mh': true
 					},
 				},
 				'wave-of-light~d': {
@@ -3930,6 +3946,7 @@
 						'weapon-damage-type': 'holy',
 						'cost-spirit': 75,
 						'weapon-damage': 829,
+						'weapon-damage-mh': true
 					},
 				},
 				'wave-of-light~e': {
@@ -3941,6 +3958,7 @@
 						'weapon-damage-type': 'holy',
 						'cost-spirit': 75,
 						'weapon-damage': 829,
+						'weapon-damage-mh': true
 					},
 				},
 				'exploding-palm': {
@@ -3950,7 +3968,8 @@
 					effect: {
 						'cost-spirit': 40,
 						'weapon-damage': 745,
-						'weapon-damage-for': 9
+						'weapon-damage-for': 9,
+						'weapon-damage-mh': true
 					},
 				},
 				'exploding-palm~a': {
@@ -3961,7 +3980,8 @@
 					effect: {
 						'cost-spirit': 40,
 						'weapon-damage': 745,
-						'weapon-damage-for': 15
+						'weapon-damage-for': 15,
+						'weapon-damage-mh': true
 					},
 				},
 				'exploding-palm~b': {
@@ -3972,7 +3992,8 @@
 					effect: {
 						'cost-spirit': 40,
 						'weapon-damage': 745,
-						'weapon-damage-for': 9
+						'weapon-damage-for': 9,
+						'weapon-damage-mh': true
 					},
 				},
 				'exploding-palm~c': {
@@ -3984,7 +4005,8 @@
 						'cost-spirit': 40,
 						'weapon-damage': 745,
 						'weapon-damage-for': 9,
-						'plus-damage': 12
+						'plus-damage': 12,
+						'weapon-damage-mh': true
 					},
 				},
 				'exploding-palm~d': {
@@ -3995,7 +4017,8 @@
 					effect: {
 						'cost-spirit': 40,
 						'weapon-damage': 745,
-						'weapon-damage-for': 9
+						'weapon-damage-for': 9,
+						'weapon-damage-mh': true
 					},
 				},
 				'exploding-palm~e': {
@@ -4007,13 +4030,15 @@
 						'weapon-damage-type': 'fire',
 						'cost-spirit': 40,
 						'weapon-damage': 250,
-						'weapon-damage-for': 3
+						'weapon-damage-for': 3,
+						'weapon-damage-mh': true
 					},
 				},
 				'cyclone-strike': {
 					name: 'Cyclone Strike',
 					desc: 'Pull all enemies within 24 yards towards you, followed by a furious blast of energy that deals 313% weapon damage as Holy.',
 					procRate: 0.125,
+					monkHaste: 1.2,
 					effect: {
 						'weapon-damage-type': 'holy',
 						'cost-spirit': 50,
@@ -4025,6 +4050,7 @@
 					desc: 'Pull all enemies within 24 yards towards you, followed by a furious blast of energy that deals 313% weapon damage as Holy.',
 					rune: 'Changes the blast into an explosion of fire that has a 35% chance to Fear enemies for 1.5 seconds.',
 					procRate: 0.125,
+					monkHaste: 1.2,
 					effect: {
 						'weapon-damage-type': 'holy',
 						'cost-spirit': 50,
@@ -4036,6 +4062,7 @@
 					desc: 'Pull all enemies within 24 yards towards you, followed by a furious blast of energy that deals 313% weapon damage as Holy.',
 					rune: 'Increases the distance enemies will be pulled towards you to 34 yards.',
 					procRate: 0.125,
+					monkHaste: 1.2,
 					effect: {
 						'weapon-damage-type': 'holy',
 						'cost-spirit': 50,
@@ -4047,6 +4074,7 @@
 					desc: 'Pull all enemies within 24 yards towards you, followed by a furious blast of energy that deals 313% weapon damage as Holy.',
 					rune: 'Cyclone Strike heals you and all allies within 24 yards for 1240.39 Life.',
 					procRate: 0.125,
+					monkHaste: 1.2,
 					effect: {
 						'weapon-damage-type': 'holy',
 						'cost-spirit': 50,
@@ -4058,6 +4086,7 @@
 					desc: 'Pull all enemies within 24 yards towards you, followed by a furious blast of energy that deals 313% weapon damage as Holy.',
 					rune: 'Reduces the Spirit cost of Cyclone Strike to 30 Spirit.',
 					procRate: 0.125,
+					monkHaste: 1.2,
 					effect: {
 						'weapon-damage-type': 'holy',
 						'cost-spirit': 50,
@@ -4069,6 +4098,7 @@
 					desc: 'Pull all enemies within 24 yards towards you, followed by a furious blast of energy that deals 313% weapon damage as Holy.',
 					rune: 'After using Cyclone Strike, gain a 20% chance to dodge attacks for 3 seconds.',
 					procRate: 0.125,
+					monkHaste: 1.2,
 					effect: {
 						'weapon-damage-type': 'holy',
 						'cost-spirit': 50,
