@@ -557,6 +557,12 @@
 						value = "<span class='skill-highlight'>+" + i + "</span> Second(s)";						
 					}
 					break;
+				case "bnCriticalHit":
+					if(i > 0) {
+						label = "Critical Hit Bonus";
+						value = "<span class='skill-highlight'>+" + i + "%</span> Crit";
+					}
+					break;
 				case "cast-duration":
 					if(i > 0) {
 						label = "Cast Duration";
@@ -609,6 +615,9 @@
 						}
 					});
 					break;
+					default: 
+						// d3up.log("Unknown Bonus: " + s);
+						break;
 			}
 			if(label && value) {
 				row.append($("<td>").html(label));

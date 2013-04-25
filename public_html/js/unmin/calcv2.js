@@ -1505,9 +1505,8 @@ BuildCalculator.prototype = {
 						duration += bonusValue;
 						rendered['bnDuration'] = bonusValue;
 					} else if(td[attributeTip].search(/critical hit/i) >= 0) {
-						// console.log("Crit Hit increase");
 						critHit += bonusValue;
-						bonusText = "<span class='skill-highlight'>+" + bonusValue + "%</span> Crit";
+						rendered['bnCriticalHit'] = bonusValue;
 					} else if(td[attributeTip].search(/damage/i) >= 0) {					
 						bnSkillDamage += bonusValue;
 					}					
