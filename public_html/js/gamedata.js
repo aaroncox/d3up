@@ -341,7 +341,10 @@
 					}
 				},
 				'numbing-traps': {
-					'desc': 'Enemies hit by Fan of Knives, Spike Trap, Grenades, Sentry Turret and Caltrops have their damage reduced by <span class="skill-highlight">20%</span> for <span class="skill-highlight">3</span> seconds.'
+					'desc': 'Enemies hit by Fan of Knives, Spike Trap, Grenades, Sentry Turret and Caltrops have their damage reduced by <span class="skill-highlight">20%</span> for <span class="skill-highlight">3</span> seconds.',
+					'effect': {
+						'damage-reduce-conditional': 20
+					}
 				},
 				'perfectionist': {
 					'desc': 'Reduces the Discipline cost of all skills by <span class="skill-highlight">10%</span>. Also increases Life, Armor and Resistances by 10%',
