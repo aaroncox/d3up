@@ -161,7 +161,7 @@ class RecordController extends D3Up_Controller_Action
 		}
 	}
 	public function getSimilarAction() {
-		$this->getSimilarItems();
+		// $this->getSimilarItems();
 		$items = $this->view->similar;
 		$this->getResponse()->setHeader('Content-type', 'application/json');
 		$data = array();
