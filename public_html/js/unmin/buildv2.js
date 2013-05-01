@@ -369,6 +369,10 @@
                   var name = $(this).attr('data-skill'), 
 											stacks = $(this).attr('data-stacks'),
                       type = $(this).closest("table").data("skill-type");
+									// console.log(typeof(stacks));
+									if(stacks == "undefined") {
+										stacks = 1;
+									}
                   if(type == 'group-buffs') {
                     type = $(this).attr("data-skill-class");
                   }
