@@ -3438,7 +3438,6 @@
 					effect: {
 						'cost-spirit': 30,
 						'weapon-damage': 470,
-						'weapon-damage-mh': true,
 					},
 				},
 				'lashing-tail-kick~a': {
@@ -3451,7 +3450,6 @@
 						'weapon-damage-type': 'fire',
 						'cost-spirit': 30,
 						'weapon-damage': 470,
-						'weapon-damage-mh': true,
 					},
 				},
 				'lashing-tail-kick~b': {
@@ -3464,7 +3462,6 @@
 						'weapon-damage-type': 'fire',
 						'cost-spirit': 30,
 						'weapon-damage': 470,
-						'weapon-damage-mh': true,
 					},
 				},
 				'lashing-tail-kick~c': {
@@ -3476,7 +3473,6 @@
 					effect: {
 						'cost-spirit': 30,
 						'weapon-damage': 470,
-						'weapon-damage-mh': true,
 					},
 				},
 				'lashing-tail-kick~d': {
@@ -3488,7 +3484,6 @@
 					effect: {
 						'cost-spirit': 30,
 						'weapon-damage': 470,
-						'weapon-damage-mh': true,
 					},
 				},
 				'lashing-tail-kick~e': {
@@ -3501,7 +3496,6 @@
 						'cost-spirit': 30,
 						'chance-stun': 50,
 						'weapon-damage': 470,
-						'weapon-damage-mh': true,
 					},
 				},				
 				'deadly-reach': {
@@ -3896,6 +3890,7 @@
 					name: 'Wave of Light',
 					desc: 'Focuses a wave of light that crushes enemies for 829% weapon damage as Holy, followed by an additional 45% weapon damage as Holy to all enemies in a line.',
 					procRate: 0.11,
+					monkHaste: 0.75,
 					effect: {
 						'weapon-damage-type': 'holy',
 						'cost-spirit': 75,
@@ -3908,6 +3903,7 @@
 					desc: 'Focuses a wave of light that crushes enemies for 829% weapon damage as Holy, followed by an additional 45% weapon damage as Holy to all enemies in a line.',
 					rune: 'Increases damage of the initial strike to 1190% weapon damage as Holy.',
 					procRate: 0.11,
+					monkHaste: 0.75,
 					effect: {
 						'weapon-damage-type': 'holy',
 						'cost-spirit': 75,
@@ -3920,6 +3916,7 @@
 					desc: 'Focuses a wave of light that crushes enemies for 829% weapon damage as Holy, followed by an additional 45% weapon damage as Holy to all enemies in a line.',
 					rune: 'Release bursts of energy that deal 914% weapon damage as Holy to nearby enemies.',
 					procRate: 0.25,
+					monkHaste: 0.75,
 					effect: {
 						'weapon-damage-type': 'holy',
 						'cost-spirit': 75,
@@ -3932,6 +3929,7 @@
 					desc: 'Focuses a wave of light that crushes enemies for 829% weapon damage as Holy, followed by an additional 45% weapon damage as Holy to all enemies in a line.',
 					rune: 'Summon an ancient pillar that deals 595% weapon damage followed by an additional 595% weapon damage after 2 seconds.',
 					procRate: 0.2,
+					monkHaste: 0.75,
 					effect: {
 						'weapon-damage-type': 'holy',
 						'cost-spirit': 75,
@@ -3945,6 +3943,7 @@
 					desc: 'Focuses a wave of light that crushes enemies for 829% weapon damage as Holy, followed by an additional 45% weapon damage as Holy to all enemies in a line.',
 					rune: 'Reduces the cost of Wave of Light to 40 Spirit.',
 					procRate: 0.111,
+					monkHaste: 0.75,
 					effect: {
 						'weapon-damage-type': 'holy',
 						'cost-spirit': 75,
@@ -3957,6 +3956,7 @@
 					desc: 'Focuses a wave of light that crushes enemies for 829% weapon damage as Holy, followed by an additional 45% weapon damage as Holy to all enemies in a line.',
 					rune: 'Critical Hits Stun enemies for 3 seconds.',
 					procRate: 0.111,
+					monkHaste: 0.75,
 					effect: {
 						'weapon-damage-type': 'holy',
 						'cost-spirit': 75,
@@ -4046,6 +4046,7 @@
 						'weapon-damage-type': 'holy',
 						'cost-spirit': 50,
 						'weapon-damage': 313,
+						'weapon-damage-mh': true,
 					},
 				},
 				'cyclone-strike~a': {
@@ -4058,6 +4059,7 @@
 						'weapon-damage-type': 'holy',
 						'cost-spirit': 50,
 						'weapon-damage': 313,
+						'weapon-damage-mh': true,
 					},
 				},
 				'cyclone-strike~b': {
@@ -4070,6 +4072,7 @@
 						'weapon-damage-type': 'holy',
 						'cost-spirit': 50,
 						'weapon-damage': 313,
+						'weapon-damage-mh': true,
 					},
 				},
 				'cyclone-strike~c': {
@@ -4082,6 +4085,7 @@
 						'weapon-damage-type': 'holy',
 						'cost-spirit': 50,
 						'weapon-damage': 313,
+						'weapon-damage-mh': true,
 					},
 				},
 				'cyclone-strike~d': {
@@ -4094,6 +4098,7 @@
 						'weapon-damage-type': 'holy',
 						'cost-spirit': 50,
 						'weapon-damage': 313,
+						'weapon-damage-mh': true,
 					},
 				},
 				'cyclone-strike~e': {
@@ -4106,6 +4111,7 @@
 						'weapon-damage-type': 'holy',
 						'cost-spirit': 50,
 						'weapon-damage': 313,
+						'weapon-damage-mh': true,
 						'plus-dodge': 20,
 					},
 				},
@@ -4615,6 +4621,7 @@
 					effect: {
 						'cost-spirit': 25,
 						'weapon-damage': 40,
+						'weapon-damage-mh': true,
 					},
 				},
 				'mystic-ally~a': {
@@ -4625,6 +4632,7 @@
 					effect: {
 						'cost-spirit': 25,
 						'weapon-damage': 120,
+						'weapon-damage-mh': true,
 					},
 				},
 				'mystic-ally~b': {
@@ -4635,6 +4643,7 @@
 					effect: {
 						'cost-spirit': 25,
 						'weapon-damage': 120,
+						'weapon-damage-mh': true,
 					},
 				},
 				'mystic-ally~c': {
@@ -4646,6 +4655,7 @@
 						'cost-spirit': 25,
 						'plus-life': 10,
 						'weapon-damage': 60,
+						'weapon-damage-mh': true,
 					},
 				},
 				'mystic-ally~d': {
@@ -4656,6 +4666,7 @@
 					effect: {
 						'cost-spirit': 25,
 						'weapon-damage': 40,
+						'weapon-damage-mh': true,
 					},
 				},
 				'mystic-ally~e': {
@@ -4666,6 +4677,7 @@
 					effect: {
 						'cost-spirit': 25,
 						'weapon-damage': 60,
+						'weapon-damage-mh': true,
 					},
 				},
 				'mantra-of-healing': {
