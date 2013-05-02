@@ -5457,7 +5457,7 @@
 					effect: {
 						'cost-mana': 98,
 						'weapon-damage': 575,
-						'weapon-damage-for': 12,
+						'weapon-damage-for': 6,
 					},
 				},
 				'haunt~a': {
@@ -5468,7 +5468,7 @@
 					effect: {
 						'cost-mana': 98,
 						'weapon-damage': 575,
-						'weapon-damage-for': 12,
+						'weapon-damage-for': 6,
 					},
 				},
 				'haunt~b': {
@@ -5479,7 +5479,7 @@
 					effect: {
 						'cost-mana': 98,
 						'weapon-damage': 575,
-						'weapon-damage-for': 12,
+						'weapon-damage-for': 6,
 					},
 				},
 				'haunt~c': {
@@ -5490,7 +5490,7 @@
 					effect: {
 						'cost-mana': 98,
 						'weapon-damage': 575,
-						'weapon-damage-for': 12,
+						'weapon-damage-for': 6,
 					},
 				},
 				'haunt~d': {
@@ -5501,7 +5501,7 @@
 					effect: {
 						'cost-mana': 98,
 						'weapon-damage': 575,
-						'weapon-damage-for': 12,
+						'weapon-damage-for': 6,
 					},
 				},
 				'haunt~e': {
