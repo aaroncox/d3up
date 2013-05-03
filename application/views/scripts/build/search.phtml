@@ -3,7 +3,9 @@
 ?>
 <div class="recent-builds content-page">			
 	<div class="page">
-		<h2 class="ui-table-header">Search results for: '<?= $this->search ?>'</h2>
+		<h2 class="">Search results for: '<?= $this->search ?>'</h2>
+		<h2 class='neg'>Please Note - Builds are NOT automatically created by Searching</h2>
+		<p>D3Up does NOT contain every character on Battle.net, you have to actually <a href="/build/create">create a build</a> for them to show up. Use the "Getting Started" portion of the navigation for more information.</p>
 	</div>	
 	<? if(count($this->builds)): ?>
 	<table id="all-builds" class="d3up-table">
@@ -11,8 +13,6 @@
 	</table>
 	<? else: ?>
 	<div class="page">
-		<h2 class='neg'>Please Note - Builds aren't loaded by Searching</h2>
-		<p>D3Up does NOT contain every character on Battle.net, you have to actually <a href="/build/create">create a build</a> for them to show up. Use the "Getting Started" portion of the navigation for more information.</p>
 		<h4>No results were found for this search.</h4>
 		<p>Please make sure the battle tag you are searching for is valid, it should be <strong>battletag#1234</strong> with no spaces.</p>
 	</div>
