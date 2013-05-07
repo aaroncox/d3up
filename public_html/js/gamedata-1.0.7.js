@@ -1,6 +1,6 @@
 (function( d3up ) {
 	d3up.gameData = {
-		version: '1.0.8',
+		version: '1.0.7',
 		passives: {
 			'barbarian': {
 				'pound-of-flesh': {
@@ -192,9 +192,9 @@
 					'desc': 'Reduces all cooldowns by <span class="skill-highlight">20%</span>.'
 				},
 				'guiding-light': {
-					'desc': 'Whenever you use a direct heal skill on another player you and the other player deal <span class="skill-highlight">20%</span> more damage for <span class="skill-highlight">15</span> seconds.',
+					'desc': 'Whenever you use a direct heal skill on another player you and the other player deal <span class="skill-highlight">16%</span> more damage for <span class="skill-highlight">15</span> seconds.',
 					'effect': {
-						'plus-damage-conditional': 20
+						'plus-damage-conditional': 15
 					}
 				},
 				'one-with-everything': {
@@ -259,7 +259,7 @@
 					'desc': 'Lightning damage dealt to enemies has up to a <span class="skill-highlight">8%</span> chance to Stun the target for <span class="skill-highlight">2</span> seconds.'
 				},
 				'galvanizing-ward': {
-					'desc': 'Increases the duration of your Armor spells by <span class="skill-highlight">120</span> seconds. As long as an Armor spell is active, you gain <span class="skill-highlight">620</span> Life per second. The following skills are improved:<ul><li>Energy Armor</li><li>Ice Armor</li><li>Storm Armor</li></ul>'
+					'desc': 'Increases the duration of your Armor spells by <span class="skill-highlight">120</span> seconds. As long as an Armor spell is active, you gain <span class="skill-highlight">310</span> Life per second. The following skills are improved:<ul><li>Energy Armor</li><li>Ice Armor</li><li>Storm Armor</li></ul>'
 				},
 				'temporal-flux': {
 					'desc': 'Whenever you deal Arcane damage, enemies are slowed by <span class="skill-highlight">60%</span> for <span class="skill-highlight">3</span> seconds.'
@@ -303,9 +303,9 @@
 					'desc': 'Critical Hits have a chance to restore <span class="skill-highlight">1</span> Discipline.'
 				},
 				'brooding': {
-					'desc': 'You gain <span class="skill-highlight">2%</span> of your maximum Life per second.',
+					'desc': 'You gain <span class="skill-highlight">1%</span> of your maximum Life per second.',
 					'effect': {
-						'plus-percent-life-regen-passive': 2
+						'plus-percent-life-regen-passive': 1
 					}
 				},
 				'hot-pursuit': {
@@ -399,9 +399,9 @@
 					'desc': 'Whenever you deal Poison damage to an enemy, their damage is reduced by <span class="skill-highlight">20%</span> for <span class="skill-highlight">3</span> seconds.'
 				},
 				'blood-ritual': {
-					'desc': '<span class="skill-highlight">15%</span> of Mana costs are paid with Life. In addition, you regenerate <span class="skill-highlight">2%</span> of your maximum Life per second.',
+					'desc': '<span class="skill-highlight">15%</span> of Mana costs are paid with Life. In addition, you regenerate <span class="skill-highlight">1%</span> of your maximum Life per second.',
 					'effect': {
-						'plus-percent-life-regen-passive': 2,
+						'plus-percent-life-regen-passive': 1,
 					}
 				},
 				'zombie-handler': {
@@ -1809,7 +1809,7 @@
 				'war-cry~e': {
 					name: 'War Cry - Invigorate',
 					desc: 'Unleash a rallying cry to increase Armor for you and all allies within 50 yards by 20% for 60 seconds.',
-					rune: 'Increases maximum Life by 10% and regenerates 620 Life per second while affected by War Cry.',
+					rune: 'Increases maximum Life by 10% and regenerates 310.1 Life per second while affected by War Cry.',
 					groupBuff: true,
 					procRate: 0,
 					groupBuff: true,
@@ -1818,7 +1818,7 @@
 						'cooldown': 20,
 						'plus-armor': 20,
 						'plus-life': 10,
-						'plus-life-regen': 620,
+						'plus-life-regen': 310.1,
 					},
 				},
 				'wrath-of-the-berserker': {
@@ -2149,69 +2149,69 @@
 				},
 				'rapid-fire': {
 					name: 'Rapid Fire',
-					desc: 'Rapidly fire for 438% weapon damage as Physical.',
+					desc: 'Rapidly fire for 276% weapon damage as Physical.',
 					procRate: 0.167,
 					effect: {
 						'cost-hatred': 20,
-						'weapon-damage': 438,
+						'weapon-damage': 276,
 					},
 				},
 				'rapid-fire~a': {
 					name: 'Rapid Fire - Bombardment',
-					desc: 'Rapidly fire for 438% weapon damage as Physical.',
-					rune: 'Rapidly fire grenades that explode for 414% weapon damage as Fire to all enemies within a 8 yard radius.',
+					desc: 'Rapidly fire for 276% weapon damage as Physical.',
+					rune: 'Rapidly fire grenades that explode for 345% weapon damage as Fire to all enemies within a 4 yard radius.',
 					procRate: 0.111,
 					effect: {
 						'cost-hatred': 20,
-						'weapon-damage': 414,
+						'weapon-damage': 345,
 						'weapon-damage-type': 'fire',
 					},
 				},
 				'rapid-fire~b': {
 					name: 'Rapid Fire - High Velocity',
-					desc: 'Rapidly fire for 438% weapon damage as Physical.',
+					desc: 'Rapidly fire for 276% weapon damage as Physical.',
 					rune: 'Fire poison arrows that have a 40% chance to pierce through enemies.',
 					procRate: 0.056,
 					effect: {
 						'cost-hatred': 20,
-						'weapon-damage': 438,
+						'weapon-damage': 276,
 					},
 				},
 				'rapid-fire~c': {
 					name: 'Rapid Fire - Fire Support',
-					desc: 'Rapidly fire for 438% weapon damage as Physical.',
-					rune: 'While channeling Rapid Fire, launch 3 homing rockets every second. Each rocket deals 145% weapon damage as Physical to nearby targets.',
+					desc: 'Rapidly fire for 276% weapon damage as Physical.',
+					rune: 'While channeling Rapid Fire, launch 3 homing rockets every second. Each rocket deals 35% weapon damage as Physical to nearby targets.',
 					procRate: 0.167,
 					effect: {
 						'cost-hatred': 20,
-						'weapon-damage': 438,
+						'weapon-damage': 276,
 						'stack': {
 							'weapon-damage': {
 								'limit': 3,
-								'value': 145,
+								'value': 35,
 							},
 						},
 					},
 				},
 				'rapid-fire~d': {
 					name: 'Rapid Fire - Withering Fire',
-					desc: 'Rapidly fire for 438% weapon damage as Physical.',
-					rune: 'Reduces the initial Hatred cost to 10, and ignites your arrows, causing them to deal Fire damage.',
+					desc: 'Rapidly fire for 276% weapon damage as Physical.',
+					rune: 'Reduces the initial Hatred cost to 5, and ignites your arrows, causing them to deal Fire damage.',
 					procRate: 0.167,
 					effect: {
-						'weapon-damage': 438,
-						'cost-hatred': 10,
+						'weapon-damage': 276,
+						'cost-hatred': 5,
 						'weapon-damage-type': 'fire',
 					},
 				},
 				'rapid-fire~e': {
 					name: 'Rapid Fire - Web Shot',
-					desc: 'Rapidly fire for 438% weapon damage as Physical.',
+					desc: 'Rapidly fire for 276% weapon damage as Physical.',
 					rune: 'Slows the movement of affected targets by 80% for 1 second.',
 					procRate: 0.167,
 					effect: {
 						'cost-hatred': 20,
-						'weapon-damage': 438,
+						'weapon-damage': 276,
 					},
 				},
 				'smoke-screen': {
@@ -2846,13 +2846,13 @@
 				'companion~b': {
 					name: 'Companion - Boar Companion',
 					desc: 'Summon a raven companion. Your raven companion will periodically peck at enemies for 38% of your weapon damage as Physical.',
-					rune: 'Summon a boar instead of a raven. The boar increases your Life regeneration by 310 per second. In addition the boar increases your resistances to all damage types by 15%.',
+					rune: 'Summon a boar instead of a raven. The boar increases your Life regeneration by 155 per second. In addition the boar increases your resistances to all damage types by 15%.',
 					procRate: 0,
 					effect: {
 						'cooldown': 30,
 						'cost-discipline': 10,
 						'weapon-damage': 38,
-						'plus-life-regen': 310,
+						'plus-life-regen': 155,
 						'plus-resist-all': 15,
 					},
 				},
@@ -3183,14 +3183,14 @@
 				'sentry~d': {
 					name: 'Sentry - Aid Station',
 					desc: 'Drop a turret on the ground. The turret begins firing at nearby enemies for 175% weapon damage. Lasts 30 seconds.',
-					rune: 'Heals nearby allies for 2% of their maximum Life per second.',
+					rune: 'Heals nearby allies for 1% of their maximum Life per second.',
 					procRate: 0,
 					groupBuff: true,
 					effect: {
 						'cooldown': 8,
 						'cost-hatred': 30,
 						'weapon-damage': 175,
-						'plus-percent-life-regen': 2,
+						'plus-percent-life-regen': 1,
 						'no-crits': true,
 					},
 				},
@@ -4682,7 +4682,18 @@
 				},
 				'mantra-of-healing': {
 					name: 'Mantra of Healing',
-					desc: 'Recite a Mantra that causes you and your allies within 40 yards to gain increased Life regeneration by 620 Life per second. The Mantra lasts 3 minutes.  For 3 seconds after activation Mantra of Healing shrouds you and your allies with a mystical shield that absorbs up to 930.29 damage.  This is a Mantra. You can only have one Mantra active at a time.',
+					desc: 'Recite a Mantra that causes you and your allies within 40 yards to gain increased Life regeneration by 310.1 Life per second. The Mantra lasts 3 minutes.  For 3 seconds after activation Mantra of Healing shrouds you and your allies with a mystical shield that absorbs up to 930.29 damage.  This is a Mantra. You can only have one Mantra active at a time.',
+					procRate: 0,
+					groupBuff: true,
+					effect: {
+						'cost-spirit': 50,
+						'plus-life-regen': 310.1,
+					},
+				},
+				'mantra-of-healing~a': {
+					name: 'Mantra of Healing - Sustenance',
+					desc: 'Recite a Mantra that causes you and your allies within 40 yards to gain increased Life regeneration by 310.1 Life per second. The Mantra lasts 3 minutes.  For 3 seconds after activation Mantra of Healing shrouds you and your allies with a mystical shield that absorbs up to 930.29 damage.  This is a Mantra. You can only have one Mantra active at a time.',
+					rune: 'Increases the Life regeneration granted by Mantra of Healing to 620 Life per second.',
 					procRate: 0,
 					groupBuff: true,
 					effect: {
@@ -4690,61 +4701,50 @@
 						'plus-life-regen': 620,
 					},
 				},
-				'mantra-of-healing~a': {
-					name: 'Mantra of Healing - Sustenance',
-					desc: 'Recite a Mantra that causes you and your allies within 40 yards to gain increased Life regeneration by 620 Life per second. The Mantra lasts 3 minutes.  For 3 seconds after activation Mantra of Healing shrouds you and your allies with a mystical shield that absorbs up to 930.29 damage.  This is a Mantra. You can only have one Mantra active at a time.',
-					rune: 'Increases the Life regeneration granted by Mantra of Healing to 1240 Life per second.',
-					procRate: 0,
-					groupBuff: true,
-					effect: {
-						'cost-spirit': 50,
-						'plus-life-regen': 1240,
-					},
-				},
 				'mantra-of-healing~b': {
 					name: 'Mantra of Healing - Boon of Inspiration',
-					desc: 'Recite a Mantra that causes you and your allies within 40 yards to gain increased Life regeneration by 620 Life per second. The Mantra lasts 3 minutes.  For 3 seconds after activation Mantra of Healing shrouds you and your allies with a mystical shield that absorbs up to 930.29 damage.  This is a Mantra. You can only have one Mantra active at a time.',
+					desc: 'Recite a Mantra that causes you and your allies within 40 yards to gain increased Life regeneration by 310.1 Life per second. The Mantra lasts 3 minutes.  For 3 seconds after activation Mantra of Healing shrouds you and your allies with a mystical shield that absorbs up to 930.29 damage.  This is a Mantra. You can only have one Mantra active at a time.',
 					rune: 'Mantra of Healing also heals 186.06 Life when hitting an enemy.',
 					procRate: 0,
 					groupBuff: true,
 					effect: {
 						'cost-spirit': 50,
-						'plus-life-regen': 620,
+						'plus-life-regen': 310.1,
 					},
 				},
 				'mantra-of-healing~c': {
 					name: 'Mantra of Healing - Heavenly Body',
-					desc: 'Recite a Mantra that causes you and your allies within 40 yards to gain increased Life regeneration by 620 Life per second. The Mantra lasts 3 minutes.  For 3 seconds after activation Mantra of Healing shrouds you and your allies with a mystical shield that absorbs up to 930.29 damage.  This is a Mantra. You can only have one Mantra active at a time.',
+					desc: 'Recite a Mantra that causes you and your allies within 40 yards to gain increased Life regeneration by 310.1 Life per second. The Mantra lasts 3 minutes.  For 3 seconds after activation Mantra of Healing shrouds you and your allies with a mystical shield that absorbs up to 930.29 damage.  This is a Mantra. You can only have one Mantra active at a time.',
 					rune: 'Mantra of Healing also increases Vitality by 10%.',
 					procRate: 0,
 					groupBuff: true,
 					effect: {
 						'cost-spirit': 50,
-						'plus-life-regen': 620,
+						'plus-life-regen': 310.1,
             'plus-percent-vitality': 10,
 					},
 				},
 				'mantra-of-healing~d': {
 					name: 'Mantra of Healing - Circular Breathing',
-					desc: 'Recite a Mantra that causes you and your allies within 40 yards to gain increased Life regeneration by 620 Life per second. The Mantra lasts 3 minutes.  For 3 seconds after activation Mantra of Healing shrouds you and your allies with a mystical shield that absorbs up to 930.29 damage.  This is a Mantra. You can only have one Mantra active at a time.',
+					desc: 'Recite a Mantra that causes you and your allies within 40 yards to gain increased Life regeneration by 310.1 Life per second. The Mantra lasts 3 minutes.  For 3 seconds after activation Mantra of Healing shrouds you and your allies with a mystical shield that absorbs up to 930.29 damage.  This is a Mantra. You can only have one Mantra active at a time.',
 					rune: 'Mantra of Healing also regenerates 3 Spirit per second.',
 					procRate: 0,
 					groupBuff: true,
 					effect: {
 						'cost-spirit': 50,
-						'plus-life-regen': 620,
+						'plus-life-regen': 310.1,
 					},
 				},
 				'mantra-of-healing~e': {
 					name: 'Mantra of Healing - Time of Need',
-					desc: 'Recite a Mantra that causes you and your allies within 40 yards to gain increased Life regeneration by 620 Life per second. The Mantra lasts 3 minutes.  For 3 seconds after activation Mantra of Healing shrouds you and your allies with a mystical shield that absorbs up to 930.29 damage.  This is a Mantra. You can only have one Mantra active at a time.',
+					desc: 'Recite a Mantra that causes you and your allies within 40 yards to gain increased Life regeneration by 310.1 Life per second. The Mantra lasts 3 minutes.  For 3 seconds after activation Mantra of Healing shrouds you and your allies with a mystical shield that absorbs up to 930.29 damage.  This is a Mantra. You can only have one Mantra active at a time.',
 					rune: 'Mantra of Healing also increases resistances to all damage types by 20%.',
 					procRate: 0,
 					groupBuff: true,
 					effect: {
 						'cost-spirit': 50,
 						'plus-resist-all': 20,
-						'plus-life-regen': 620,
+						'plus-life-regen': 310.1,
 					},
 				},
 				'mantra-of-conviction': {
@@ -5147,61 +5147,61 @@
 				},
 				'firebats': {
 					name: 'Firebats',
-					desc: 'Call forth a swarm of fiery bats to burn enemies in front of you for 385% weapon damage as Fire.',
+					desc: 'Call forth a swarm of fiery bats to burn enemies in front of you for 180% weapon damage as Fire.',
 					procRate: 0.167,
 					effect: {
 						'cost-mana': 98,
-						'weapon-damage': 385,
+						'weapon-damage': 180,
 					},
 				},
 				'firebats~a': {
 					name: 'Firebats - Dire Bats',
-					desc: 'Call forth a swarm of fiery bats to burn enemies in front of you for 385% weapon damage as Fire.',
+					desc: 'Call forth a swarm of fiery bats to burn enemies in front of you for 180% weapon damage as Fire.',
 					rune: 'Summon fewer but larger bats that travel up to 40 yards and hit for 220% weapon damage as Fire.',
 					procRate: 0.167,
 					effect: {
 						'cost-mana': 98,
-						'weapon-damage': 385,
+						'weapon-damage': 220,
 					},
 				},
 				'firebats~b': {
 					name: 'Firebats - Hungry Bats',
-					desc: 'Call forth a swarm of fiery bats to burn enemies in front of you for 385% weapon damage as Fire.',
+					desc: 'Call forth a swarm of fiery bats to burn enemies in front of you for 180% weapon damage as Fire.',
 					rune: 'Rapidly summon bats that seek out nearby enemies for 350% weapon damage as Fire.',
 					procRate: 0.333,
 					effect: {
 						'cost-mana': 98,
-						'weapon-damage': 385,
+						'weapon-damage': 350,
 					},
 				},
 				'firebats~c': {
 					name: 'Firebats - Plague Bats',
-					desc: 'Call forth a swarm of fiery bats to burn enemies in front of you for 385% weapon damage as Fire.',
-					rune: 'Diseased bats fly towards the enemy and infect them. Damage is slow at first, but can increase over time to a maximum of 578% weapon damage as Poison.',
+					desc: 'Call forth a swarm of fiery bats to burn enemies in front of you for 180% weapon damage as Fire.',
+					rune: 'Diseased bats fly towards the enemy and infect them. Damage is slow at first, but can increase over time to a maximum of 270% weapon damage as Poison.',
 					procRate: 0.167,
 					effect: {
 						'cost-mana': 98,
-						'weapon-damage': 578,
+						'weapon-damage': 270,
 					},
 				},
 				'firebats~d': {
 					name: 'Firebats - Vampire Bats',
-					desc: 'Call forth a swarm of fiery bats to burn enemies in front of you for 385% weapon damage as Fire.',
+					desc: 'Call forth a swarm of fiery bats to burn enemies in front of you for 180% weapon damage as Fire.',
 					rune: 'Gain 3% of damage done by the bats as Life.',
 					procRate: 0.167,
 					effect: {
 						'cost-mana': 98,
-						'weapon-damage': 385,
+						'weapon-damage': 150,
 					},
 				},
 				'firebats~e': {
 					name: 'Firebats - Cloud of Bats',
-					desc: 'Call forth a swarm of fiery bats to burn enemies in front of you for 385% weapon damage as Fire.',
-					rune: 'Call forth a swirl of bats that damage nearby enemies for 500% weapon damage as Fire. The damage of the bats increases by 20% every second, up to a maximum of 100%.',
+					desc: 'Call forth a swarm of fiery bats to burn enemies in front of you for 180% weapon damage as Fire.',
+					rune: 'Call forth a swirl of bats that damage nearby enemies for 195% weapon damage as Fire. The damage of the bats increases by 20% every second, up to a maximum of 100%.',
 					procRate: 0.25,
 					effect: {
 						'cost-mana': 98,
-						'weapon-damage': 500,
+						'weapon-damage': 345,
 					},
 				},
 				'horrify': {
@@ -6381,7 +6381,18 @@
 				},
 				'ray-of-frost': {
 					name: 'Ray of Frost',
-					desc: 'Project a beam of frozen ice that blasts 280% weapon damage as Cold to the first enemy it hits, slowing the target\'s movement by 60% for 4 seconds.',
+					desc: 'Project a beam of frozen ice that blasts 215% weapon damage as Cold to the first enemy it hits, slowing the target\'s movement by 60% for 4 seconds.',
+					procRate: 0.333,
+					effect: {
+						'weapon-damage-type': 'cold',
+						'cost-arcane-power': 16,
+						'weapon-damage': 215,
+					},
+				},
+				'ray-of-frost~a': {
+					name: 'Ray of Frost - Snow Blast',
+					desc: 'Project a beam of frozen ice that blasts 215% weapon damage as Cold to the first enemy it hits, slowing the target\'s movement by 60% for 4 seconds.',
+					rune: 'Using continuously on a single target increases damage over 1.5 seconds to inflict a maximum of 280% weapon damage as Cold.',
 					procRate: 0.333,
 					effect: {
 						'weapon-damage-type': 'cold',
@@ -6389,59 +6400,48 @@
 						'weapon-damage': 280,
 					},
 				},
-				'ray-of-frost~a': {
-					name: 'Ray of Frost - Snow Blast',
-					desc: 'Project a beam of frozen ice that blasts 280% weapon damage as Cold to the first enemy it hits, slowing the target\'s movement by 60% for 4 seconds.',
-					rune: 'Using continuously on a single target increases damage over 1.5 seconds to inflict a maximum of 364% weapon damage as Cold.',
-					procRate: 0.333,
-					effect: {
-						'weapon-damage-type': 'cold',
-						'cost-arcane-power': 16,
-						'weapon-damage': 364,
-					},
-				},
 				'ray-of-frost~b': {
 					name: 'Ray of Frost - Sleet Storm',
-					desc: 'Project a beam of frozen ice that blasts 280% weapon damage as Cold to the first enemy it hits, slowing the target\'s movement by 60% for 4 seconds.',
-					rune: 'Create a swirling storm around you, dealing 364% weapon damage as Cold to all enemies caught within it.',
+					desc: 'Project a beam of frozen ice that blasts 215% weapon damage as Cold to the first enemy it hits, slowing the target\'s movement by 60% for 4 seconds.',
+					rune: 'Create a swirling storm around you, dealing 280% weapon damage as Cold to all enemies caught within it.',
 					procRate: 0.187,
 					effect: {
 						'weapon-damage-type': 'cold',
 						'cost-arcane-power': 16,
-						'weapon-damage': 364,
+						'weapon-damage': 280,
 					},
 				},
 				'ray-of-frost~c': {
 					name: 'Ray of Frost - Numb',
-					desc: 'Project a beam of frozen ice that blasts 280% weapon damage as Cold to the first enemy it hits, slowing the target\'s movement by 60% for 4 seconds.',
+					desc: 'Project a beam of frozen ice that blasts 215% weapon damage as Cold to the first enemy it hits, slowing the target\'s movement by 60% for 4 seconds.',
 					rune: 'Increase the amount the target\'s movement is slowed to 80% for 3 seconds.',
 					procRate: 0.333,
 					effect: {
 						'weapon-damage-type': 'cold',
 						'cost-arcane-power': 16,
-						'weapon-damage': 280,
+						'weapon-damage': 215,
 					},
 				},
 				'ray-of-frost~d': {
 					name: 'Ray of Frost - Cold Blood',
-					desc: 'Project a beam of frozen ice that blasts 280% weapon damage as Cold to the first enemy it hits, slowing the target\'s movement by 60% for 4 seconds.',
+					desc: 'Project a beam of frozen ice that blasts 215% weapon damage as Cold to the first enemy it hits, slowing the target\'s movement by 60% for 4 seconds.',
 					rune: 'Reduce casting cost to 10 Arcane Power.',
 					procRate: 0.333,
 					effect: {
 						'weapon-damage-type': 'cold',
 						'cost-arcane-power': 10,
-						'weapon-damage': 280,
+						'weapon-damage': 215,
 					},
 				},
 				'ray-of-frost~e': {
 					name: 'Ray of Frost - Black Ice',
-					desc: 'Project a beam of frozen ice that blasts 280% weapon damage as Cold to the first enemy it hits, slowing the target\'s movement by 60% for 4 seconds.',
-					rune: 'Enemies killed with Ray of Frost leave behind a patch of ice that deals 504% weapon damage as Cold to enemies moving through it over 3 seconds.',
+					desc: 'Project a beam of frozen ice that blasts 215% weapon damage as Cold to the first enemy it hits, slowing the target\'s movement by 60% for 4 seconds.',
+					rune: 'Enemies killed with Ray of Frost leave behind a patch of ice that deals 387% weapon damage as Cold to enemies moving through it over 3 seconds.',
 					procRate: 0.333,
 					effect: {
 						'weapon-damage-type': 'cold',
 						'cost-arcane-power': 16,
-						'weapon-damage': 280,
+						'weapon-damage': 410,
 					},
 				},
 				'shock-pulse': {
@@ -6788,56 +6788,56 @@
 				},
 				'arcane-torrent': {
 					name: 'Arcane Torrent',
-					desc: 'Hurl a barrage of arcane projectiles that deal 285% weapon damage as Arcane to all enemies near the impact location.',
+					desc: 'Hurl a barrage of arcane projectiles that deal 210% weapon damage as Arcane to all enemies near the impact location.',
 					procRate: 1,
 					effect: {
 						'cost-arcane-power': 16,
-						'weapon-damage': 285,
+						'weapon-damage': 210,
 					},
 				},
 				'arcane-torrent~a': {
 					name: 'Arcane Torrent - Disruption',
-					desc: 'Hurl a barrage of arcane projectiles that deal 285% weapon damage as Arcane to all enemies near the impact location.',
+					desc: 'Hurl a barrage of arcane projectiles that deal 210% weapon damage as Arcane to all enemies near the impact location.',
 					rune: 'Targets hit by Arcane Torrent become disrupted for 6 seconds, causing them to take 15% additional damage from any attacks that deal Arcane damage.',
 					procRate: 0.2,
 					effect: {
 						'cost-arcane-power': 16,
-						'weapon-damage': 285,
+						'weapon-damage': 225,
 					},
 				},
 				'arcane-torrent~b': {
 					name: 'Arcane Torrent - Cascade',
-					desc: 'Hurl a barrage of arcane projectiles that deal 285% weapon damage as Arcane to all enemies near the impact location.',
-					rune: 'Enemies killed by Arcane Torrent have a 100% chance to fire a new missile at a nearby enemy dealing 285% weapon damage as Arcane.',
+					desc: 'Hurl a barrage of arcane projectiles that deal 210% weapon damage as Arcane to all enemies near the impact location.',
+					rune: 'Enemies killed by Arcane Torrent have a 100% chance to fire a new missile at a nearby enemy dealing 210% weapon damage as Arcane.',
 					procRate: 0.16,
 					effect: {
 						'cost-arcane-power': 16,
-						'weapon-damage': 285,
+						'weapon-damage': 210,
 					},
 				},
 				'arcane-torrent~c': {
 					name: 'Arcane Torrent - Arcane Mines',
-					desc: 'Hurl a barrage of arcane projectiles that deal 285% weapon damage as Arcane to all enemies near the impact location.',
-					rune: 'Instead of firing projectiles, lay Arcane mines that arm after 2 seconds. These mines explode when an enemy approaches, dealing 340% weapon damage as Arcane. Enemies caught in the explosion have their movement and attack speeds reduced by 30% for 3 seconds.',
+					desc: 'Hurl a barrage of arcane projectiles that deal 210% weapon damage as Arcane to all enemies near the impact location.',
+					rune: 'Instead of firing projectiles, lay Arcane mines that arm after 2 seconds. These mines explode when an enemy approaches, dealing 180% weapon damage as Arcane. Enemies caught in the explosion have their movement and attack speeds reduced by 30% for 3 seconds.',
 					procRate: 0.5,
 					effect: {
 						'cost-arcane-power': 16,
-						'weapon-damage': 340,
+						'weapon-damage': 180,
 					},
 				},
 				'arcane-torrent~d': {
 					name: 'Arcane Torrent - Power Stone',
-					desc: 'Hurl a barrage of arcane projectiles that deal 285% weapon damage as Arcane to all enemies near the impact location.',
+					desc: 'Hurl a barrage of arcane projectiles that deal 210% weapon damage as Arcane to all enemies near the impact location.',
 					rune: 'Every missile hit has a 2% chance to leave behind a Power Stone that grants Arcane Power when picked up.',
 					procRate: 0.2,
 					effect: {
 						'cost-arcane-power': 16,
-						'weapon-damage': 285,
+						'weapon-damage': 210,
 					},
 				},
 				'arcane-torrent~e': {
 					name: 'Arcane Torrent - Death Blossom',
-					desc: 'Hurl a barrage of arcane projectiles that deal 285% weapon damage as Arcane to all enemies near the impact location.',
+					desc: 'Hurl a barrage of arcane projectiles that deal 210% weapon damage as Arcane to all enemies near the impact location.',
 					rune: 'Unleash a torrent of power beyond your control. You no longer direct where the projectiles go, but their damage is increased to 670% weapon damage as Arcane.',
 					procRate: 0.6,
 					effect: {
@@ -7350,61 +7350,61 @@
 				},
 				'disintegrate': {
 					name: 'Disintegrate',
-					desc: 'Thrust a beam of pure energy forward, dealing 220% weapon damage as Arcane and disintegrating enemies it kills.',
+					desc: 'Thrust a beam of pure energy forward, dealing 170% weapon damage as Arcane and disintegrating enemies it kills.',
 					procRate: 0.333,
 					effect: {
 						'cost-arcane-power': 18,
-						'weapon-damage': 220,
+						'weapon-damage': 170,
 					},
 				},
 				'disintegrate~a': {
 					name: 'Disintegrate - Intensify',
-					desc: 'Thrust a beam of pure energy forward, dealing 220% weapon damage as Arcane and disintegrating enemies it kills.',
-					rune: 'Damage increases slowly over time to inflict a maximum of 286% weapon damage as Arcane.',
+					desc: 'Thrust a beam of pure energy forward, dealing 170% weapon damage as Arcane and disintegrating enemies it kills.',
+					rune: 'Damage increases slowly over time to inflict a maximum of 221% weapon damage as Arcane.',
 					procRate: 0.333,
 					effect: {
 						'cost-arcane-power': 18,
-						'weapon-damage': 286,
+						'weapon-damage': 221,
 					},
 				},
 				'disintegrate~b': {
 					name: 'Disintegrate - Convergence',
-					desc: 'Thrust a beam of pure energy forward, dealing 220% weapon damage as Arcane and disintegrating enemies it kills.',
+					desc: 'Thrust a beam of pure energy forward, dealing 170% weapon damage as Arcane and disintegrating enemies it kills.',
 					rune: 'Increase the width of the beam allowing it to hit more enemies.',
 					procRate: 0.222,
 					effect: {
 						'cost-arcane-power': 18,
-						'weapon-damage': 220,
+						'weapon-damage': 170,
 					},
 				},
 				'disintegrate~c': {
 					name: 'Disintegrate - Entropy',
-					desc: 'Thrust a beam of pure energy forward, dealing 220% weapon damage as Arcane and disintegrating enemies it kills.',
-					rune: 'The beam fractures into a short-ranged cone that deals 253% weapon damage as Arcane.',
+					desc: 'Thrust a beam of pure energy forward, dealing 170% weapon damage as Arcane and disintegrating enemies it kills.',
+					rune: 'The beam fractures into a short-ranged cone that deals 196% weapon damage as Arcane.',
 					procRate: 0.333,
 					effect: {
 						'cost-arcane-power': 18,
-						'weapon-damage': 253,
+						'weapon-damage': 196,
 					},
 				},
 				'disintegrate~d': {
 					name: 'Disintegrate - Chaos Nexus',
-					desc: 'Thrust a beam of pure energy forward, dealing 220% weapon damage as Arcane and disintegrating enemies it kills.',
+					desc: 'Thrust a beam of pure energy forward, dealing 170% weapon damage as Arcane and disintegrating enemies it kills.',
 					rune: 'When casting the beam you become charged with energy that spits out at nearby enemies doing 44% weapon damage as Arcane.',
 					procRate: 0.222,
 					effect: {
 						'cost-arcane-power': 18,
-						'weapon-damage': 220,
+						'weapon-damage': 170,
 					},
 				},
 				'disintegrate~e': {
 					name: 'Disintegrate - Volatility',
-					desc: 'Thrust a beam of pure energy forward, dealing 220% weapon damage as Arcane and disintegrating enemies it kills.',
+					desc: 'Thrust a beam of pure energy forward, dealing 170% weapon damage as Arcane and disintegrating enemies it kills.',
 					rune: 'Enemies killed by the beam have a 35% chance to explode causing 395% weapon damage as Arcane to all enemies within 8 yards.',
 					procRate: 0.25,
 					effect: {
 						'cost-arcane-power': 18,
-						'weapon-damage': 220,
+						'weapon-damage': 170,
 					},
 				},
 				'familiar': {
@@ -7440,12 +7440,11 @@
 				'familiar~c': {
 					name: 'Familiar - Vigoron',
 					desc: 'Summon a companion that will attack your targets for 20% weapon damage as Arcane. This companion cannot be targeted or damaged by enemies and lasts for 5 minutes',
-					rune: 'While the Familiar is active, you regenerate 620 life every second.',
+					rune: 'While the Familiar is active, you regenerate life every second.',
 					procRate: 0,
 					effect: {
 						'cost-arcane-power': 20,
 						'weapon-damage': 20,
-						'plus-life-regen': 620,
 					},
 				},
 				'familiar~d': {
@@ -7929,7 +7928,7 @@
 				},
 				'loyalty': {
 					name: 'Loyalty',
-					desc: 'Regenerates <span class="skill-highlight">310</span> Life per second for you and the Templar.',
+					desc: 'Regenerates <span class="skill-highlight">155.05</span> Life per second for you and the Templar.',
 				},
 				'intimidate': {
 					name: 'Intimidate',
