@@ -17,6 +17,9 @@ $(function() {
 		})
 		tabs.find(window.location.hash).show();
 	}
+	function numberWithCommas(x) {
+	    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+	}
 	controls.each(function() {
 		if(!$(this).is(".saveStats")) {
 		  $(this).bind('click',function(e){
@@ -683,7 +686,8 @@ $(function() {
 		var stat = $(this).closest("tr").find('*[data-value]'),
 				data = $(this).attr("data-target");
 		$(this).bind('keyup', function() {
-			stat.html(Math.round(d3up.builds.build.stats[data] * $(this).val() * 100)/100);
+			var value = Math.round(d3up.builds.build.stats[data] * $(this).val() * 100)/100;
+			stat.html(numberWithCommas(value));
 		});
 	});
 	// Append Save Buttons
