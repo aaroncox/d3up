@@ -3901,13 +3901,13 @@
 				'wave-of-light~a': {
 					name: 'Wave of Light - Wall of Light',
 					desc: 'Focuses a wave of light that crushes enemies for 829% weapon damage as Holy, followed by an additional 45% weapon damage as Holy to all enemies in a line.',
-					rune: 'Increases damage of the initial strike to 1190% weapon damage as Holy.',
+					rune: 'Increases damage of the initial strike to 1202% weapon damage as Holy.',
 					procRate: 0.11,
 					monkHaste: 0.75,
 					effect: {
 						'weapon-damage-type': 'holy',
 						'cost-spirit': 75,
-						'weapon-damage': 1190,
+						'weapon-damage': 1202,
 						'weapon-damage-mh': true
 					},
 				},
