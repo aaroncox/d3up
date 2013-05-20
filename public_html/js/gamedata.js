@@ -6538,10 +6538,10 @@
 				'frost-nova~d': {
 					name: 'Frost Nova - Cold Snap',
 					desc: 'Blast nearby enemies with an explosion of ice and freeze them for 3 seconds.',
-					rune: 'Reduce cooldown of Frost Nova to 12 seconds.',
+					rune: 'Reduce cooldown of Frost Nova to 9 seconds.',
 					procRate: 0.167,
 					effect: {
-						'cooldown': 12,
+						'cooldown': 9,
 					},
 				},
 				'frost-nova~e': {
