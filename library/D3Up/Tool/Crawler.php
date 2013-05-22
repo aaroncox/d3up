@@ -555,7 +555,9 @@ class D3Up_Tool_Crawler
 				if($gearSet) {
 					$query['set'] = $gearSet;
 				}
-				$query['sockets'] = $socketsArray;
+				if(!empty($socketsArray)) {
+					$query['sockets'] = $socketsArray;					
+				}
 				// Look to see if this item exists!
 				$found = Epic_Mongo::db('item')->fetchOne($query);
 				// Did we find this item already?
