@@ -325,6 +325,7 @@ class D3Up_Tool_Crawler
 		'wd-haunt' => 'Increases Haunt Damage by [v]%',
 		'wd-acid-cloud' => 'Increases Critical Hit Chance of Acid Cloud by [v]%',
 		'wd-firebats' => 'Reduces resource cost of Firebats by [v] Mana',
+		'wd-locust-swarm' => 'Increases Locust Swarm Damage by [v]%',
 		'wd-zombie-dogs' => 'Reduces cooldown of Summon Zombie Dogs by [v] Seconds',
 		'wd-plague-of-toads' => 'Increases Plague of Toads damage by [v]%',
 		'wd-poison-darts' => 'Increases Poison Darts damage by [v]%',

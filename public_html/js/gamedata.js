@@ -8789,6 +8789,7 @@ td['mana-max'] = '+VVV Maximum Mana';
 td['wd-firebomb'] = 'Reduces resource cost of Firebomb by VVV Mana';
 td['wd-haunt'] = 'Increases Haunt Damage by VVV%';
 td['wd-acid-cloud'] = 'Increases Critical Hit Chance of Acid Clouds by VVV%';
+td['wd-locust-swarm'] = 'Increases Locust Swarm Damage by VVV%';
 td['wd-firebats'] = 'Reduces resource cost of Firebats by VVV Mana';
 td['wd-zombie-dogs'] = 'Reduces cooldown of Summon Zombie Dogs by VVV Seconds';
 td['wd-plague-of-toads'] = 'Increases Plague of Toads damage by VVV%';
