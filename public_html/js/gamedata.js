@@ -924,7 +924,7 @@
 						'stackable': {
 						  'limit': 5,
 							'plus-attack-speed-this': 15,
-							'plus-damage': 5,
+							'plus-damage': 4,
 						},
 					},
 				},
