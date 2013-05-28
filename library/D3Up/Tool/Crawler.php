@@ -382,6 +382,7 @@ class D3Up_Tool_Crawler
 		if(!$character || !is_int($character)) {
 			throw new Exception("You've reached this page in error, please use the copy button on your build page.");
 		}
+		$battletag = str_replace(" ", "", $battletag);
 		$url = self::$profileUrl[$region] . str_replace("#", "-", $battletag) . "/hero/" . $character;
 		$profile = static::get($url);
 		$status = array();
