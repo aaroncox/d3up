@@ -2847,7 +2847,7 @@ BuildCalculator.prototype = {
 				};
 		_.each(allowed, function(val, key) {
 			// console.log(key);
-			if(typeof(s2[key]) != "undefined") {
+			if(typeof(s2[key]) != "undefined" || typeof(s1[key]) != "undefined" ) {
 				if(allowAll || allowed.hasOwnProperty(key)) {
 					if(!s1[key]) {
 						s1[key] = 0;
