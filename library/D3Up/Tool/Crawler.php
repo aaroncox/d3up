@@ -624,6 +624,7 @@ class D3Up_Tool_Crawler
 	}
 	
 	public function getCharactersByTag($tag, $region) {
+		$tag = str_replace(" ", "", $tag);
 		$url = self::$profileUrl[$region] . strtolower(str_replace("#", "-", $tag)) . "/index";
     // var_dump($url); exit;
 		$data = self::get($url);
@@ -637,6 +638,7 @@ class D3Up_Tool_Crawler
 		if(!$user->battletag) {
 			return false;
 		}
+		$user->battletag = str_replace(" ", "", $user->battletag);
 		$url = self::$profileUrl[$user->region] . strtolower(str_replace("#", "-", $user->battletag)) . "/index";
 		$data = self::get($url);
 		return $data['heroes'];
@@ -646,11 +648,13 @@ class D3Up_Tool_Crawler
 		if(!$user->battletag) {
 			return false;
 		}
+		$user->battletag = str_replace(" ", "", $user->battletag);
 		$url = self::$profileUrl[$user->region] . strtolower(str_replace("#", "-", $user->battletag)) . "/hero/" . $character;
 		return $url;		
 	}
 	
 	public static function makeUrl($region, $battletag, $character) {
+		$battletag = str_replace(" ", "", $battletag);
 	  return $url = self::$profileUrl[$region] . strtolower(str_replace("#", "-", $battletag)) . "/hero/" . $character;		
 	}
 } // END class D3Up_Tool_Crawler
