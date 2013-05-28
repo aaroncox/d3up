@@ -2845,8 +2845,7 @@ BuildCalculator.prototype = {
 					'total-resist-reduction': 'Resist DmgReduce',
 					'vitality': 'Vit', 
 				};
-    // console.log(s1, s2);
-		_.each(s1, function(val, key) {
+		_.each(allowed, function(val, key) {
 			// console.log(key);
 			if(typeof(s2[key]) != "undefined") {
 				if(allowAll || allowed.hasOwnProperty(key)) {
