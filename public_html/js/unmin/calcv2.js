@@ -2800,6 +2800,7 @@ BuildCalculator.prototype = {
 					'dps-demon': 'DPS vs Demons',
 					'dps-elites': 'DPS vs Elites',
 					'dps-demon-elite': 'DPS vs Elite+Demon',
+					'dps-speed-display': 'Avg AtkSpd',
 					// 'dps-speed-mh': 'MH AtkSpeed',
 					// 'dps-speed-mh': 'MH Attk/Sec',
 					// 'dps-speed-oh': 'OH AtkSpeed',
