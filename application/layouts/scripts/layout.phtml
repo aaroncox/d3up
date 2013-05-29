@@ -46,18 +46,18 @@
 				<a href="/"><img src="/images/logo.jpg" alt="D3Up.com" /></a>
 			</div>
 			<div id="header-content" class="inline-flow">
-				<h4 class="table-header">
-				  <? if($this->profile): ?>
-			      <span class='user-bar'><a href="/user/edit"><?= $this->profile->username ?></a> | <a href="/user/logout">Logout</a></span>
-				  <? else: ?>
-				    <span class='user-bar'><a href="/user/login">Login</a> | <a href='/user/register'>Register</a></span>
-				  <? endif ?>
-  		  </h4>
+				<form method="post" action="/search" class="search-box ui-helper-clearfix">
+					<span class='user-bar table-header ui-helper-clearfix'>
+					  <? if($this->profile): ?>
+				      <a href="/user/edit"><?= $this->profile->username ?></a> | <a href="/user/logout">Logout</a>
+					  <? else: ?>
+					    <a href="/user/login">Login</a> | <a href='/user/register'>Register</a>
+					  <? endif ?>
+						<input type="text" name="search" id="search-box" placeholder="Search by BattleTag - Name#1234">
+	  		  </span>
+				</form>
 				<?= $this->render("_system-message.phtml")?>
 			</div>
-			<form method="post" action="/search" class="search-box">
-				<input type="text" name="search" id="search-box" placeholder="Search by BattleTag - Name#1234">
-			</form>
 		</div>
 		<?= $this->render("_menu.phtml") ?>
 		<div id="main">

@@ -1,16 +1,22 @@
-<!-- <div id="sys-message">
-	<h3 style='margin: 0; color: #0d0'>D3Up V2 - Feature Preview #2</h3>
-	Over the next month or two, I'm going to be previewing features on <a href='http://reddit.com/r/d3up'>/r/d3up on reddit</a>, 
-	with #2 being shown off today! <a href='http://www.reddit.com/r/d3up/comments/1brecl/new_feature_2_build_comparisons_in_d3upcom_v2/'>Build Comparisons</a> is going to be a new way to compare your build with another to see what makes each build tick.
-	Feel free to contact me at <a href="mailto:aaron.cox@greymass.com">aaron.cox@greymass.com</a> to report any bugs.
-</div> -->
-<!-- <div id="sys-message">
-	<h3 style='margin: 0; color: #0d0'>D3Up V2 - Feedback Requested</h3>
-	With V2 heavily in development, I'd like to collect some feedback about things you like and things you think are a pain about V1 of the site. I've <a href="http://www.reddit.com/r/Diablo/comments/1cxsby/what_is_your_workflowprocess_on_d3upcom_feedback/">started a post on reddit</a> to collect feedback about what would make your life easier while using D3Up.
-	Feel free to contact me at <a href="mailto:aaron.cox@greymass.com">aaron.cox@greymass.com</a> to report any bugs.
-</div> -->
-<div id="sys-message">
-	<h3 style='margin: 0; color: #0d0'>1.0.8 Game Data is Live</h3>
-	I've updated all the skill information for 1.0.8, if it's not showing up on your build, clear your cache and refresh the page. Also feel free to submit ideas still for v2 on <a href="http://www.reddit.com/r/Diablo/comments/1cxsby/what_is_your_workflowprocess_on_d3upcom_feedback/">this post on reddit</a>.
+<? if($this->profile): ?>
+<div id="sys-message" class='ui-helper-clearfix'>
+	<h3 style='margin: 0; color: #0d0'>Site Update, Life Update & Advertising Tests</h3>
+	Soon I'll be providing a major update regarding V2 of D3Up.com. I'm pretty excited with how it's turning out and want to share and get people involved. I've also posted <a href="http://www.reddit.com/r/d3up/comments/1faauv/testing_some_ads_and_moving_out_west/">an explanation of the new ads</a> which also includes a bit about how my life's changing this summer/fall.
 	Feel free to contact me at <a href="mailto:aaron.cox@greymass.com">aaron.cox@greymass.com</a> to report any bugs.
 </div>
+<? else: ?>
+<script type="text/javascript"><!--
+google_ad_client = "ca-pub-2154138165823650";
+/* D3Up.com - Leaderboard */
+google_ad_slot = "8888964129";
+google_ad_width = 728;
+google_ad_height = 90;
+//-->
+</script>
+<script type="text/javascript"
+src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+</script>
+<div class='ad-info'>
+	Why is there an ad here all of the sudden? <a href=''>Here's the explanation!</a> Also - Ads don't show for logged in users.
+</div>
+<? endif ?>

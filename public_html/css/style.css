@@ -109,7 +109,7 @@ td { vertical-align: top; }
 }
 
 .header-logo img {
-	height: 120px;
+	height: 140px;
 }
 
 body {
@@ -171,14 +171,14 @@ a:hover .ui-button-text {
 
 #header .search-box {
 	border: 0;
-	position: absolute;
+/*	position: absolute;
 	bottom: 0px;
 	right: 10px;
+*/
 }
 #header-content {
-	margin-top: 5px;
-	text-align: center;
-	width: 790px;
+	text-align: right;
+	width: 760px;
 }
 #header-content .table-header {
 	font-size: 14px;
@@ -1956,6 +1956,7 @@ div.toc.section {
 .user-bar {
 	float: right;
 	margin-right: 10px;
+	margin-bottom: 5px;
 }
 .menu-bar {
 	border: 1px solid #111;
@@ -2392,4 +2393,9 @@ div#statistics {
 	width: 30px;
 	height: 1.5em;
 	margin-left: 5px;
+}
+.ad-info {
+	font-size: 12px;
+	text-align: right;
+	margin-right: 20px;
 }
