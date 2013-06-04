@@ -1533,6 +1533,14 @@ BuildCalculator.prototype = {
 
 		if(this.bonuses['monk-fitl-bonus']) {
 			mhAvgDamage += this.calcFITL(bnEleDamage);
+			mhMinDamage += this.calcFITL(bnEleDamage) / 2;
+			mhMaxDamage += this.calcFITL(bnEleDamage) / 2;
+			if(ohAvgDamage) {
+				ohAvgDamage += this.calcFITL(bnEleDamage);
+				ohMinDamage += this.calcFITL(bnEleDamage) / 2;
+				ohMaxDamage += this.calcFITL(bnEleDamage) / 2;
+				
+			}
 		}
 
 		// Monks have bonus hidden attack speed
