@@ -4135,8 +4135,7 @@
 					// 2nd + 3rd: 0.18 + 1
 					effect: {
 						'generate-spirit': 8,
-						'weapon-damage': 240,
-						'weapon-damage-for': 5
+						'weapon-damage': 140
 					},
 				},
 				'way-of-the-hundred-fists~b': {
