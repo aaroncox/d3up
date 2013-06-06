@@ -2184,13 +2184,7 @@
 					procRate: 0.167,
 					effect: {
 						'cost-hatred': 20,
-						'weapon-damage': 438,
-						'stack': {
-							'weapon-damage': {
-								'limit': 3,
-								'value': 145,
-							},
-						},
+						'weapon-damage': 728
 					},
 				},
 				'rapid-fire~d': {
