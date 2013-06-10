@@ -1,3 +1,4 @@
+
 /* HTML5 Boilerplate  */
 
 article, aside, details, figcaption, figure, footer, header, hgroup, nav, section { display: block; }
@@ -2398,4 +2399,15 @@ div#statistics {
 	font-size: 12px;
 	text-align: right;
 	margin-right: 20px;
+}
+.content-page .loothunter {
+	border: 5px solid #000;
+	color: #222;
+	background-color: #fff;
+}
+.content-page .loothunter a,
+.content-page .loothunter a:hover,
+.content-page .loothunter a:visited {
+	text-decoration: underline;
+	color: #000;
 }
