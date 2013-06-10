@@ -37,20 +37,20 @@ class PostController extends D3Up_Controller_Action
 		$paginator->setCurrentPageNumber($this->getRequest()->getParam('page', 1))->setItemCountPerPage(5);
 		$this->view->posts = $paginator;
 		$this->view->counts = array(
-      'guides' => count(Epic_Mongo::db("guide")->fetchAll(array('published' => true))),
-      'builds' => count(Epic_Mongo::db("build")->fetchAll()),
-      'items' => count(Epic_Mongo::db("item")->fetchAll()),
-      'sales' => count(Epic_Mongo::db("sale")->fetchAll()),
+      // 'guides' => count(Epic_Mongo::db("guide")->fetchAll(array('published' => true))),
+      // 'builds' => count(Epic_Mongo::db("build")->fetchAll()),
+      // 'items' => count(Epic_Mongo::db("item")->fetchAll()),
+      // 'sales' => count(Epic_Mongo::db("sale")->fetchAll()),
     );
 	}
 	public function viewAction() {
 		$this->getPost();
 		$this->view->type = $type = $this->getRequest()->getParam('type');
 		$this->view->counts = array(
-      'guides' => count(Epic_Mongo::db("guide")->fetchAll(array('published' => true))),
-      'builds' => count(Epic_Mongo::db("build")->fetchAll()),
-      'items' => count(Epic_Mongo::db("item")->fetchAll()),
-      'sales' => count(Epic_Mongo::db("sale")->fetchAll()),
+      // 'guides' => count(Epic_Mongo::db("guide")->fetchAll(array('published' => true))),
+      // 'builds' => count(Epic_Mongo::db("build")->fetchAll()),
+      // 'items' => count(Epic_Mongo::db("item")->fetchAll()),
+      // 'sales' => count(Epic_Mongo::db("sale")->fetchAll()),
     );
 	}
 	public function replyAction() {
