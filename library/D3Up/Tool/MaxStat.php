@@ -529,7 +529,7 @@ class D3Up_Tool_MaxStat
 				350,    // intelligence
 				350,    // strength
 				350,    // vitality
-				499,    // life-regen
+				599,    // life-regen
 				2878,   // life-kill
 				959,    // life-hit
 				0,      // spirit-spent-life
