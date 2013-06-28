@@ -7121,11 +7121,11 @@
 				'storm-armor~c': {
 					name: 'Storm Armor - Reactive Armor',
 					desc: 'Bathe yourself in electrical energy, occasionally shocking nearby enemies for 100% weapon damage as Lightning. Lasts 120 seconds.  This is an Armor spell. Only one Armor spell can be active at a time.',
-					rune: 'Whenever you are hit, you have a chance to be enveloped with a lightning shield for 6 seconds that shocks nearby enemies for 70% weapon damage as Lightning.',
+					rune: 'Ranged and melee attackers are shocked for 70% weapon damage as Lightning.',
 					procRate: 0,
 					effect: {
 						'cost-arcane-power': 25,
-						'weapon-damage': 100,
+						'weapon-damage': 70,
 					},
 				},
 				'storm-armor~d': {
