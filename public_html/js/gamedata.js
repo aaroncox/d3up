@@ -461,7 +461,7 @@
 				'bash~b': {
 					name: 'Bash - Punish',
 					desc: 'Brutally smash an enemy for 165% weapon damage with a 20% chance to Knockback.',
-					rune: 'Increases the damage of your skills by 6% for 5 seconds after using Bash. This effect stacks up to 3 times.',
+					rune: 'Increases the damage of your skills by 8% for 5 seconds after using Bash. This effect stacks up to 3 times.',
 					procRate: 1,
 					effect: {
 						'chance-knockback': 20,
