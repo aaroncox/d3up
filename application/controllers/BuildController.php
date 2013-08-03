@@ -28,16 +28,16 @@ class BuildController extends D3Up_Controller_Action
 		);
 		if($this->view->selectedActives = $skills = $this->getRequest()->getParam("skills")) {
 			if($skills != "null") {
-				$query['actives']['$all'] = array_values(explode("|", $skills));				
+				// $query['actives']['$all'] = array_values(explode("|", $skills));				
 			}
 		}
 		if($this->view->selectedPassives = $passives = $this->getRequest()->getParam("passives")) {
 			if($passives != "null") {
-				$query['passives']['$all'] = array_values(explode("|", $passives));
+				// $query['passives']['$all'] = array_values(explode("|", $passives));
 			}
 		}
 		$sort = array(
-			'_created' => -1,
+			// '_created' => -1,
 		);
 		if($this->view->sortBy = $sortBy = $this->getRequest()->getParam('sort')) {
 			$sort = array();
@@ -47,10 +47,10 @@ class BuildController extends D3Up_Controller_Action
 					$query['stats.'.$sortBy] = array('$gt' => 0);
 					$sort['stats.'.$sortBy] = -1;
 					break;
-				case "votes":
-				case "views":
-					$sort[$sortBy] = -1;
-					break;
+				// case "votes":
+				// case "views":
+				// 	$sort[$sortBy] = -1;
+				// 	break;
 			}
 		}
 		// echo "<pre>"; var_dump($sort, $query); echo "</pre>";
