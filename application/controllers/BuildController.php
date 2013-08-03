@@ -8,6 +8,7 @@
 class BuildController extends D3Up_Controller_Action
 {
 	public function indexAction() {
+		echo "Disabling build browsing for a little bit, server's have a hard time keeping up and displaying as hundreds of new builds are created!"; exit;
 		// Some shitty logic to help debug
 		// $pass = false;
 		// if($user = Epic_Auth::getInstance()->getProfile()) {
