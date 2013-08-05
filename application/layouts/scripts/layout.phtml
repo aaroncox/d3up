@@ -48,11 +48,13 @@
 			<div id="header-content" class="inline-flow">
 				<form method="post" action="/search" class="search-box ui-helper-clearfix">
 					<span class='user-bar table-header ui-helper-clearfix'>
-					  <? if($this->profile): ?>
-				      <a href="/user/edit"><?= $this->profile->username ?></a> | <a href="/user/logout">Logout</a>
-					  <? else: ?>
-					    <a href="/user/login">Login</a> | <a href='/user/register'>Register</a>
-					  <? endif ?>
+						<? if(!$this->cached): ?>
+						  <? if($this->profile): ?>
+					      <a href="/user/edit"><?= $this->profile->username ?></a> | <a href="/user/logout">Logout</a>
+						  <? else: ?>
+						    <a href="/user/login">Login</a> | <a href='/user/register'>Register</a>
+						  <? endif ?>
+						<? endif ?>
 						<input type="text" name="search" id="search-box" placeholder="Search by BattleTag - Name#1234">
 	  		  </span>
 				</form>

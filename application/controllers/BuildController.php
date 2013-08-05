@@ -90,6 +90,7 @@ class BuildController extends D3Up_Controller_Action
 		// var_dump($paginator); exit;
 		$paginator->setCurrentPageNumber($this->getRequest()->getParam('page', 1))->setItemCountPerPage(15)->setPageRange(3);
 		$this->view->builds = $paginator;
+		$this->view->cached = true;
 		// $this->view->builds = $builds;
 		if($this->_request->isXmlHttpRequest()) {
 			$this->view->noScript = true;

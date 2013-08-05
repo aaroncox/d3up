@@ -1,13 +1,15 @@
 <div class="menu-bar">
 	<div class="menu-wrap">
 		<ul id="megamenu" class="ui-helper-clearfix">
-			<li>
-				<? if($this->profile): ?>
-					<?= $this->render("menu/user.phtml") ?>
-				<? else: ?>
-					<?= $this->render("menu/nouser.phtml") ?>
-				<? endif ?>
-			</li>
+			<? if(!$this->cached): ?>
+				<li>
+					<? if($this->profile): ?>
+						<?= $this->render("menu/user.phtml") ?>
+					<? else: ?>
+						<?= $this->render("menu/nouser.phtml") ?>
+					<? endif ?>
+				</li>
+			<? endif ?>
 			<li>
 				<h5><a href="/guide" class="drop">Guides</a></h5>
 				<span><a href="/guide" class="drop">Diablo 3 Guides</a></span>
