@@ -40,7 +40,7 @@ class Bootstrap extends Epic_Application_Bootstrap
 			),
 			'regexps' => array(
 				// cache the whole IndexController
-				// '^/.*' => array('cache' => true),
+				'^/.*' => array('cache' => false),
 				'^/build*' => array('cache' => true),
 				// place more controller links here to cache them
 			)
