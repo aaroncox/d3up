@@ -42,6 +42,7 @@ class Bootstrap extends Epic_Application_Bootstrap
 				// cache the whole IndexController
 				'^/.*' => array('cache' => false),
 				'^/build*' => array('cache' => true),
+				'^/build/create*' => array('cache' => false),
 				// place more controller links here to cache them
 			)
 		);
