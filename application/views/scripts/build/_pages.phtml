@@ -30,8 +30,5 @@
 			<span class="button"><?php echo $page; ?></span>
 		<?php endif; ?>
 	<?php endforeach; ?>
-	<?php if (isset($this->last) && $this->last != $this->next && $this->last != $this->current): ?>
-		<a class="button" href="?page=<?= $this->last ?><?= $params ?>">&raquo;</a>
-	<?php endif; ?>
 </div>
 <?php endif; ?>

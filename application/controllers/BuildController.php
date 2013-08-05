@@ -8,7 +8,7 @@
 class BuildController extends D3Up_Controller_Action
 {
 	public function indexAction() {
-		echo "Disabling build browsing for a little bit, server's have a hard time keeping up and displaying as hundreds of new builds are created!"; exit;
+		// echo "Disabling build browsing for a little bit, server's have a hard time keeping up and displaying as hundreds of new builds are created!"; exit;
 		// Some shitty logic to help debug
 		// $pass = false;
 		// if($user = Epic_Auth::getInstance()->getProfile()) {
@@ -71,6 +71,9 @@ class BuildController extends D3Up_Controller_Action
 			} 
 		}
 		// var_dump($sort); exit;
+		// $perPage = 20;
+		// $page = $this->getRequest()->getParam("page", 1);
+		// $skip = ($page - 1) * $perPage;
 		$builds = Epic_Mongo::db('build')->fetchAll($query, $sort);	
 		// Debugging Code
 		// var_dump(
@@ -83,9 +86,11 @@ class BuildController extends D3Up_Controller_Action
 		// 	"Per Page: 15"
 		// ); exit;
 		// End Debugging Code
-		$paginator = Zend_Paginator::factory($builds);
+		$paginator = new D3Up_Paginator($builds);
+		// var_dump($paginator); exit;
 		$paginator->setCurrentPageNumber($this->getRequest()->getParam('page', 1))->setItemCountPerPage(15)->setPageRange(3);
 		$this->view->builds = $paginator;
+		// $this->view->builds = $builds;
 		if($this->_request->isXmlHttpRequest()) {
 			$this->view->noScript = true;
 			$this->_helper->layout->disableLayout();

@@ -24,4 +24,37 @@ class Bootstrap extends Epic_Application_Bootstrap
 		} 	
   }
 
+	protected function _initCache() {
+		$dir = "/tmp/d3up-pages";
+		$frontendOptions = array(
+			'lifetime' => 3600,
+			// 'content_type_memorization' => true,
+			'default_options'           => array(
+				'cache' => true,
+				'cache_with_get_variables' => true,
+				'cache_with_cookie_variables' => true,
+        'make_id_with_cookie_variables' => false,
+			// 	'cache_with_post_variables' => true,
+			// 	'cache_with_session_variables' => true,
+			// 	'cache_with_cookie_variables' => true,
+			),
+			'regexps' => array(
+				// cache the whole IndexController
+				// '^/.*' => array('cache' => true),
+				'^/build*' => array('cache' => true),
+				// place more controller links here to cache them
+			)
+		);
+		$backendOptions = array(
+			'cache_dir' =>$dir
+		);
+		$cache = Zend_Cache::factory(
+			'Page',
+			'File',
+			$frontendOptions,
+			$backendOptions
+		);
+		$cache->start();
+	}
+
 }
