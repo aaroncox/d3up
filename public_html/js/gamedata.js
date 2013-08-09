@@ -6503,6 +6503,7 @@
 					desc: 'Blast nearby enemies with an explosion of ice and freeze them for 3 seconds.',
 					rune: 'Enemies take 15% more damage while frozen or chilled by Frost Nova.',
 					procRate: 0.167,
+					groupBuff: true,
 					effect: {
 						'cooldown': 12,
 						'plus-damage': 15,
