@@ -7046,6 +7046,7 @@
 					name: 'Slow Time - Time Warp',
 					desc: 'Invoke a bubble of warped time and space for 8 seconds, reducing enemy attack speed by 20% and movement speed by 60%. This bubble also slows the movement of enemy projectiles by 90%.',
 					rune: 'Enemies caught in the bubble of warped time take 20% more damage.',
+					groupBuff: true,
 					procRate: 0,
 					effect: {
 						'cooldown': 15,
