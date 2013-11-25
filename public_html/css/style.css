@@ -2404,6 +2404,11 @@ div#statistics {
 	border: 5px solid #000;
 	color: #222;
 	background-color: #fff;
+	background: url('/images/loothunter.png') no-repeat;
+	height: 230px;
+	padding-top: 130px;
+	margin: 20px;
+	text-align: center;
 }
 .content-page .loothunter a,
 .content-page .loothunter a:hover,
