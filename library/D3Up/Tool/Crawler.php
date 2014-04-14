@@ -74,7 +74,7 @@ class D3Up_Tool_Crawler
 			<p><strong style='color: #f00'>Please read the message at the top of the page, this problem may already have been reported.</strong></p>
 
 			If the message at the top doesn't indicate a problem, please try again in a few moments to see if that resolves the problem, 
-			otherwise feel free to email me at <a href='mailto:aaron.cox@greymass.com'>aaron.cox@greymass.com</a>.
+			otherwise feel free to post <a href='http://www.reddit.com/r/d3up/comments/22yzij/d3up_ros_updates_in_progress/'>a bug report here</a>.
 		");
 			//     }
 		
@@ -460,7 +460,7 @@ class D3Up_Tool_Crawler
 				// Get the Type
 				$dirtyType = str_replace("generic", "", strtolower($data['type']['id']));
 				if(!isset(static::$_dirtyTypes[$dirtyType])) {
-					throw new Exception("Type Unrecognized [" . $dirtyType . "]. Please email me at <a href='mailto:aaron.cox@greymass.com'>aaron.cox@greymass.com</a> and let me know about this error message!");
+					throw new Exception("Type Unrecognized [" . $dirtyType . "]. Please post <a href='http://www.reddit.com/r/d3up/comments/22yzij/d3up_ros_updates_in_progress/'>a bug report here</a> on our reddit post and I'll jump on it.");
 				}
 				$type = static::$_dirtyTypes[$dirtyType];
 				// Start the Query 
