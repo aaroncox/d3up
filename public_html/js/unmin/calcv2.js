@@ -111,12 +111,12 @@ BuildCalculator.prototype = {
 		this.attrs['intelligence'] += 7 + intMult * this.level;
 		this.attrs['vitality'] += 7 + vitMult * this.level;
 		if(this.paragon) {
-			this.attrs['strength'] += strMult * this.paragon;
-			this.attrs['dexterity'] += dexMult * this.paragon;
-			this.attrs['intelligence'] += intMult * this.paragon;
-			this.attrs['plus-magic-find'] += 3 * this.paragon;
-			this.attrs['plus-gold-find'] += 3 * this.paragon;
-			this.attrs['vitality'] += vitMult * this.paragon;
+			// this.attrs['strength'] += strMult * this.paragon;
+			// this.attrs['dexterity'] += dexMult * this.paragon;
+			// this.attrs['intelligence'] += intMult * this.paragon;
+			// this.attrs['plus-magic-find'] += 3 * this.paragon;
+			// this.attrs['plus-gold-find'] += 3 * this.paragon;
+			// this.attrs['vitality'] += vitMult * this.paragon;
 		}
 		this.attrs['hero-class'] = this.heroClass = newClass;
 	},
