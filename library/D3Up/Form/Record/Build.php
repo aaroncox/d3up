@@ -83,14 +83,14 @@ class D3Up_Form_Record_Build extends Epic_Form
 		$this->addElement("text", "level", array(
 			'label' => 'Character Level',
 			'validators' => array(
-				new Zend_Validate_Between(array('min' => 0, 'max' => 60))
+				new Zend_Validate_Between(array('min' => 0, 'max' => 70))
 			),
 		));
 
 		$this->addElement("text", "paragon", array(
 			'label' => 'Paragon Level',
 			'validators' => array(
-				new Zend_Validate_Between(array('min' => 0, 'max' => 100))
+				new Zend_Validate_Between(array('min' => 0, 'max' => 10000))
 			)
 		));
 
@@ -133,7 +133,7 @@ class D3Up_Form_Record_Build extends Epic_Form
 			'description' => $build->descriptionSource,
 			'defaultToDescription' => $build->_defaultToDescription,
 			'private' => $build->private,
-			'level' => $build->level ?: 60,
+			'level' => $build->level ?: 70,
 			'paragon' => $build->paragon ?: 0,
 			'twitch' => $build->_twitchEnabled,
 			'hardcore' => $build->hardcore,
