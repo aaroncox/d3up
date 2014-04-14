@@ -72,6 +72,7 @@ class D3Up_Form_Record_Build extends Epic_Form
 			'multiOptions' => array(
 				null => '',
 				'barbarian' => 'Barbarian',
+				'crusader' => 'Crusader',
 				'demon-hunter' => 'Demon Hunter',
 				'monk' => 'Monk',
 				'witch-doctor' => 'Witch Doctor',

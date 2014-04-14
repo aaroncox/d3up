@@ -1,7 +1,10 @@
 (function( d3up ) {
 	d3up.gameData = {
-		version: '1.0.8',
+		version: '2.0.0',
 		passives: {
+			'crusader': {
+
+			},
 			'barbarian': {
 				'pound-of-flesh': {
 					'desc': 'Increases the chance of finding a health globe by <span class="skill-highlight">25%</span> and you gain <span class="skill-highlight">100%</span> additional Life from health globes.',
@@ -437,6 +440,9 @@
 			}
 		},
 		actives: {
+			'crusader': {
+
+			},
 			'barbarian': {
 				'bash': {
 					name: 'Bash',

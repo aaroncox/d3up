@@ -97,6 +97,7 @@ BuildCalculator.prototype = {
 				this.attrs['primary'] = 'intelligence';
 				break;
 			case "barbarian":
+			case "crusader":
 				strMult = 3;
 				this.attrs['primary'] = 'strength';
 				break;
