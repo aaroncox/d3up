@@ -371,6 +371,38 @@ class D3Up_Tool_Crawler
 		
 	}     
 	
+	static protected function getAttributes($attr) {
+		$attrsArray = array();
+		foreach(static::$_attrMap as $stat => $regex) {
+			$parts = explode("~", $stat);
+			$stat = $parts[0];
+			$text = str_replace("–", "-", $attr);
+			$regex = "/".str_replace(array('+', '[v]'), array('\+','(\d+(\.\d+)?)'), $regex)."/i";
+			if(preg_match($regex, $text['text'], $matches)) {
+				if(count($matches) > 3) {
+					$attrsArray[$stat] = array(
+						'min' => (float) $matches[1],
+						'max' => (float) $matches[3],
+					);
+					if(isset($statsArray['damage']) && isset($statsArray['damage']['min'])) {
+						$statsArray['damage']['min'] += $matches[1];
+					}
+					if(isset($statsArray['damage']) && isset($statsArray['damage']['max'])) {
+						$statsArray['damage']['max'] += $matches[3];
+					}
+				} else {
+				  if(!isset($matches[1])) {
+            $attrsArray[$stat] = true;
+				  } else {
+						$attrsArray[$stat] = (float) $matches[1];																					  					    
+				  }
+				}
+				break;
+			}
+		}
+		return $attrsArray;
+	}
+
 	static public function crawl($build, $user = false, $syncOnly = false) {
 		$character = (int) $build->_characterId;
 		$battletag = $build->_characterBt;
@@ -422,7 +454,9 @@ class D3Up_Tool_Crawler
 				$itemUrl = static::$dataUrl . $parts[1];
 				// Get the JSON
 				$data = static::get($itemUrl);
-				// echo "<pre>"; var_dump($data, $itemUrl); exit;
+				if(!empty($data['gems'])) {
+					// echo "<pre>"; var_dump($data, $itemUrl); exit;					
+				}
 				// Get the Type
 				$dirtyType = str_replace("generic", "", strtolower($data['type']['id']));
 				if(!isset(static::$_dirtyTypes[$dirtyType])) {
@@ -452,12 +486,13 @@ class D3Up_Tool_Crawler
 				foreach($gems as $gem) {
 					if(isset($gem['item']['name'])) {
 						$key = strtolower(str_replace(" ", "_",$gem['item']['name']));
+						// var_dump($key); exit;
 						// If this item has a ruby and has a DPS value, it's a weapon.
-						$actual = D3Up_Tool_Gems::$gems[$key];
-						if(strpos($key, 'ruby') && isset($data['dps']['min'])) {
-							// echo "Ruby in Weapon";
-							$weaponRuby = $actual[2][1];
-						}
+						// $actual = D3Up_Tool_Gems::$gems[$key];
+						// if(strpos($key, 'ruby') && isset($data['dps']['min'])) {
+						// 	// echo "Ruby in Weapon";
+						// 	$weaponRuby = $actual[2][1];
+						// }
 						$socketsArray[] = $key;
 					}
 				}
@@ -469,7 +504,7 @@ class D3Up_Tool_Crawler
 					$statsArray['armor'] = (float) $data['armor']['min'];
 				}
 				if(isset($data['dps'])) {
-					$statsArray['dps'] = (float) $data['dps']['min'];					
+					$statsArray['dps'] = (float) $data['dps']['min'];
 				}
 				if(isset($data['minDamage']) && isset($data['maxDamage'])) {
 					$statsArray['damage'] = array(
@@ -493,35 +528,34 @@ class D3Up_Tool_Crawler
 					);
 				}
 				// Do the attributes from the item
-				$attrs = $data['attributes'];
-				foreach($attrs as $attr) {
-					foreach(static::$_attrMap as $stat => $regex) {
-						$parts = explode("~", $stat);
-						$stat = $parts[0];
-						$text = str_replace("–", "-", $attr);
-						$regex = "/".str_replace(array('+', '[v]'), array('\+','(\d+(\.\d+)?)'), $regex)."/i";
-	          // var_dump($text, $regex);
-						if(preg_match($regex, $text, $matches)) {
-							if(count($matches) > 3) {
-								$attrsArray[$stat] = array(
-									'min' => (float) $matches[1],
-									'max' => (float) $matches[3],
-								);
-								if(isset($statsArray['damage']) && isset($statsArray['damage']['min'])) {
-									$statsArray['damage']['min'] += $matches[1];
-								}
-								if(isset($statsArray['damage']) && isset($statsArray['damage']['max'])) {
-									$statsArray['damage']['max'] += $matches[3];
-								}
-							} else {
-	  					  if(!isset($matches[1])) {
-	                $attrsArray[$stat] = true;
-	  					  } else {
-	  							$attrsArray[$stat] = (float) $matches[1];																					  					    
-	  					  }
-							}
-							break;
-						}
+				$attrsArray = array();
+				foreach($data['attributes']['primary'] as $attr) { $attrsArray += static::getAttributes($attr); }
+				foreach($data['attributes']['secondary'] as $attr) { $attrsArray += static::getAttributes($attr); }
+				foreach($data['attributes']['passive'] as $attr) { $attrsArray += static::getAttributes($attr); }
+				if($slot == 'mainHand') {
+					if(isset($attrsArray['lightning-damage'])) {
+						$statsArray['damage']['min'] += $attrsArray['lightning-damage']['min'];
+						$statsArray['damage']['max'] += $attrsArray['lightning-damage']['max'];
+					}
+					if(isset($attrsArray['holy-damage'])) {
+						$statsArray['damage']['min'] += $attrsArray['holy-damage']['min'];
+						$statsArray['damage']['max'] += $attrsArray['holy-damage']['max'];
+					}
+					if(isset($attrsArray['arcane-damage'])) {
+						$statsArray['damage']['min'] += $attrsArray['arcane-damage']['min'];
+						$statsArray['damage']['max'] += $attrsArray['arcane-damage']['max'];
+					}
+					if(isset($attrsArray['cold-damage'])) {
+						$statsArray['damage']['min'] += $attrsArray['cold-damage']['min'];
+						$statsArray['damage']['max'] += $attrsArray['cold-damage']['max'];
+					}
+					if(isset($attrsArray['fire-damage'])) {
+						$statsArray['damage']['min'] += $attrsArray['fire-damage']['min'];
+						$statsArray['damage']['max'] += $attrsArray['fire-damage']['max'];
+					}
+					if(isset($attrsArray['poison-damage'])) {
+						$statsArray['damage']['min'] += $attrsArray['poison-damage']['min'];
+						$statsArray['damage']['max'] += $attrsArray['poison-damage']['max'];
 					}
 				}
 				if($weaponRuby) {
@@ -563,7 +597,6 @@ class D3Up_Tool_Crawler
 				// Look to see if this item exists!
 				$found = Epic_Mongo::db('item')->fetchOne($query);
 				// Did we find this item already?
-	      // var_dump($slot); exit;
 				if($slot == 'mainhand') {
 				  if(isset($data['type']) && isset($data['type']['twoHanded'])) {
 	          $build->gear['offhand'] = null;
@@ -588,9 +621,10 @@ class D3Up_Tool_Crawler
 					$new->attrs->setFromArray($attrsArray);
 					$new->_created = time();
 					$new->_createdBy = $realUser;
-					if($slot == 'mainhand') {
+					if($slot == 'offhand') {
 	          // var_dump($new->export()); exit;
 	        }
+	        // var_dump($new->export()); exit;
 					$new->save();
 					$status[$slot] = array(
 						'result' => 'new',
@@ -618,6 +652,7 @@ class D3Up_Tool_Crawler
 			$build->actives = $skills;
 			$build->passives = $passives;
 		}
+		// var_dump($build); exit;
 		// exit;
 		$build->save();
 		return $status;
@@ -631,6 +666,7 @@ class D3Up_Tool_Crawler
 		if(!isset($data['heroes'])) {
 			return null;
 		}
+		var_dump($data); exit;
 		return $data['heroes'];		
 	}
 	
