@@ -469,7 +469,20 @@ class D3Up_Tool_Crawler
 				// Get the Type
 				$dirtyType = str_replace("generic", "", strtolower($data['type']['id']));
 				if(!isset(static::$_dirtyTypes[$dirtyType])) {
-					throw new Exception("Type Unrecognized [" . $dirtyType . "]. Please post <a href='http://www.reddit.com/r/d3up/comments/22yzij/d3up_ros_updates_in_progress/'>a bug report here</a> on our reddit post and I'll jump on it.");
+					if(strpos($dirtyType, "_")) {
+						$actual = false;
+						foreach(explode("_", $dirtyType) as $possible) {
+							if(isset(static::$_dirtyTypes[$possible])) {
+								$actual = $possible;
+							}
+						}
+						if(!$actual) {
+							throw new Exception("Type Unrecognized [" . $dirtyType . "]. Please post <a href='http://www.reddit.com/r/d3up/comments/22yzij/d3up_ros_updates_in_progress/'>a bug report here</a> on our reddit post and I'll jump on it.");
+						}
+						$dirtyType = $actual;
+					} else {
+						throw new Exception("Type Unrecognized [" . $dirtyType . "]. Please post <a href='http://www.reddit.com/r/d3up/comments/22yzij/d3up_ros_updates_in_progress/'>a bug report here</a> on our reddit post and I'll jump on it.");
+					}
 				}
 				$type = static::$_dirtyTypes[$dirtyType];
 				// Start the Query 
