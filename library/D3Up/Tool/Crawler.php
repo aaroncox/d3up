@@ -145,6 +145,14 @@ class D3Up_Tool_Crawler
 		'orb' => 'source',
 		'quiver' => 'quiver',
 		'shield' => 'shield',
+		// Tons of ROS Additions
+		'boots_wizard' => 'boots',
+		'chestarmor_barbarian' => 'chest',
+		'flail2h' => 'flail',
+		'gloves_wizard' => 'gloves',
+		'helm_monk' => 'helm',
+		'helm_demonhunter' => 'helm',
+		'shoulders_wizard' => 'shoulders',
 	);
 	
 	static protected $_typesMap = array(
