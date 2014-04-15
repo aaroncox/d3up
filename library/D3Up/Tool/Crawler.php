@@ -148,7 +148,7 @@ class D3Up_Tool_Crawler
 		// Tons of ROS Additions
 		'boots_wizard' => 'boots',
 		'chestarmor_barbarian' => 'chest',
-		'flail2h' => 'flail',
+		'flail2h' => '2h-flail',
 		'gloves_wizard' => 'gloves',
 		'helm_monk' => 'helm',
 		'helm_demonhunter' => 'helm',
