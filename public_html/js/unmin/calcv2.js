@@ -306,7 +306,7 @@ BuildCalculator.prototype = {
 							var aSkill = d3up.gameData.actives['monk'][i],
 									total = 0;
 							if(aSkill.effect && aSkill.effect['generate-spirit']) {
-								total += 8;
+								total += 10;
 							}
 							this.applyEnabledSkill(total, 'plus-damage');
 						}, this);
