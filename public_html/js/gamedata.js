@@ -8194,6 +8194,613 @@
 					}
 				}
 			},
+			"crusader": {
+				"punish": {
+					"name": "Punish",
+					"desc": "Strike your enemy for <span class='skill-highlight'>270%</span> weapon damage and gain Hardened Senses, increasing your Block Chance by <span class='skill-highlight'>15%</span> for <span class='skill-highlight'>5</span> seconds.",
+					"procRate": 1,
+					"effect": {
+						"generate-wrath": 5,
+						"weapon-damage": 270,
+						"plus-block": 15
+					}
+				},
+				"punish~a": {
+					"name": "Punish - Roar",
+					"desc": "Strike your enemy for <span class='skill-highlight'>270%</span> weapon damage and gain Hardened Senses, increasing your Block Chance by <span class='skill-highlight'>15%</span> for <span class='skill-highlight'>5</span> seconds.",
+					"rune": "When you block with Hardened Senses active, you explode with fury dealing <span class='skill-highlight'>45%</span> weapon damage as Fire to enemies within <span class='skill-highlight'>15</span> yards.",
+					"procRate": 1,
+					"effect": {
+						"generate-wrath": 5,
+						"weapon-damage": 270,
+						"plus-block": 15
+					}
+				},
+				"punish~b": {
+					"name": "Punish - Celerity",
+					"desc": "Strike your enemy for <span class='skill-highlight'>270%</span> weapon damage and gain Hardened Senses, increasing your Block Chance by <span class='skill-highlight'>15%</span> for <span class='skill-highlight'>5</span> seconds.",
+					"rune": "When you block with Hardened Senses active, you gain <span class='skill-highlight'>15%</span> increased attack speed for <span class='skill-highlight'>3</span> seconds.",
+					"procRate": 1,
+					"effect": {
+						"generate-wrath": 5,
+						"weapon-damage": 270,
+						"plus-block": 15
+					}
+				},
+				"punish~c": {
+					"name": "Punish - Rebirth",
+					"desc": "Strike your enemy for <span class='skill-highlight'>270%</span> weapon damage and gain Hardened Senses, increasing your Block Chance by <span class='skill-highlight'>15%</span> for <span class='skill-highlight'>5</span> seconds.",
+					"rune": "When you block with Hardened Senses active, you gain <span class='skill-highlight'>4952</span> increased Life regeneration for <span class='skill-highlight'>2</span> seconds.",
+					"procRate": 1,
+					"effect": {
+						"generate-wrath": 5,
+						"weapon-damage": 270,
+						"plus-block": 15
+					}
+				},
+				"punish~d": {
+					"name": "Punish - Retaliate",
+					"desc": "Strike your enemy for <span class='skill-highlight'>270%</span> weapon damage and gain Hardened Senses, increasing your Block Chance by <span class='skill-highlight'>15%</span> for <span class='skill-highlight'>5</span> seconds.",
+					"rune": "When you block with Hardened Senses active, you deal <span class='skill-highlight'>94%</span> weapon damage to the attacker.",
+					"procRate": 1,
+					"effect": {
+						"generate-wrath": 5,
+						"weapon-damage": 270,
+						"plus-block": 15
+					}
+				},
+				"punish~e": {
+					"name": "Punish - Fury",
+					"desc": "Strike your enemy for <span class='skill-highlight'>270%</span> weapon damage and gain Hardened Senses, increasing your Block Chance by <span class='skill-highlight'>15%</span> for <span class='skill-highlight'>5</span> seconds.",
+					"rune": "When you block with Hardened Senses active, you gain <span class='skill-highlight'>15%</span> increased Critical Hit Chance for your next attack.",
+					"procRate": 1,
+					"effect": {
+						"generate-wrath": 5,
+						"weapon-damage": 270,
+						"plus-block": 15
+					}
+				},
+				"slash": {
+					"name": "Slash",
+					"desc": "Ignite the air in front of you, dealing <span class='skill-highlight'>190%</span> weapon damage as Fire.",
+					"procRate": 1,
+					"effect": {
+						"generate-wrath": 5,
+						"weapon-damage": 190,
+						"weapon-damage-type": "fire"
+					}
+				},
+				"slash~a": {
+					"name": "Slash - Electrify",
+					"desc": "Ignite the air in front of you, dealing <span class='skill-highlight'>190%</span> weapon damage as Fire.",
+					"rune": "The slash becomes pure lightning and has a <span class='skill-highlight'>25%</span> chance to stun enemies for <span class='skill-highlight'>2</span> seconds.",
+					"procRate": 1,
+					"effect": {
+						"generate-wrath": 5,
+						"weapon-damage": 190,
+						"weapon-damage-type": "lightning",
+						"chance-stun": 25
+					}
+				},
+				"slash~b": {
+					"name": "Slash - Carve",
+					"desc": "Ignite the air in front of you, dealing <span class='skill-highlight'>190%</span> weapon damage as Fire.",
+					"rune": "Carve a larger area in front of you, increasing the number of enemies hit.",
+					"procRate": 1,
+					"effect": {
+						"generate-wrath": 5,
+						"weapon-damage": 190,
+						"weapon-damage-type": "fire"
+					}
+				},
+				"slash~c": {
+					"name": "Slash - Crush",
+					"desc": "Ignite the air in front of you, dealing <span class='skill-highlight'>190%</span> weapon damage as Fire.",
+					"rune": "Slash gains a <span class='skill-highlight'>20%</span> increased Critical Hit Chance.",
+					"procRate": 1,
+					"effect": {
+						"generate-wrath": 5,
+						"weapon-damage": 190,
+						"weapon-damage-type": "fire",
+						"plus-critical-hit-this": 20
+					}
+				},
+				"slash~d": {
+					"name": "Slash - Zeal",
+					"desc": "Ignite the air in front of you, dealing <span class='skill-highlight'>190%</span> weapon damage as Fire.",
+					"rune": "Gain <span class='skill-highlight'>1%</span> increased Attack Speed for every enemy hit for <span class='skill-highlight'>3</span> seconds. This effect stacks up to <span class='skill-highlight'>5</span> times.",
+					"procRate": 1,
+					"effect": {
+						"generate-wrath": 5,
+						"weapon-damage": 190,
+						"weapon-damage-type": "fire",
+						"stackable": {
+							"limit": 5,
+							"plus-attack-speed": 1
+						}
+					}
+				},
+				"slash~e": {
+					"name": "Slash - Guard",
+					"desc": "Ignite the air in front of you, dealing <span class='skill-highlight'>190%</span> weapon damage as Fire.",
+					"rune": "Gain <span class='skill-highlight'>5%</span> increased Armor for each enemy hit. This effect stacks up to <span class='skill-highlight'>5</span> times.",
+					"procRate": 1,
+					"effect": {
+						"generate-wrath": 5,
+						"weapon-damage": 190,
+						"weapon-damage-type": "fire",
+						"stackable": {
+							"limit": 5,
+							"plus-armor": 5
+						}
+					}
+				},
+				"smite": {
+					"name": "Smite",
+					"desc": "Smite enemies up to <span class='skill-highlight'>15</span> yards away with holy chains that deal <span class='skill-highlight'>165%</span> weapon damage as Holy. The chains break off and strike up to <span class='skill-highlight'>3</span> additional enemies within <span class='skill-highlight'>20</span> yards for <span class='skill-highlight'>125%</span> weapon damage as Holy.",
+					"procRate": 1,
+					"effect": {
+						"generate-wrath": 5,
+						"weapon-damage": 165,
+						"weapon-damage-type": "holy"
+					}
+				},
+				"smite~a": {
+					"name": "Smite - Shatter",
+					"desc": "Smite enemies up to <span class='skill-highlight'>15</span> yards away with holy chains that deal <span class='skill-highlight'>165%</span> weapon damage as Holy. The chains break off and strike up to <span class='skill-highlight'>3</span> additional enemies within <span class='skill-highlight'>20</span> yards for <span class='skill-highlight'>125%</span> weapon damage as Holy.",
+					"rune": "The holy chains explode dealing <span class='skill-highlight'>20%</span> weapon damage as Holy to enemies within <span class='skill-highlight'>3</span> yards.",
+					"procRate": 1,
+					"effect": {
+						"generate-wrath": 5,
+						"weapon-damage": 165,
+						"weapon-damage-type": "holy"
+					}
+				},
+				"smite~b": {
+					"name": "Smite - Shackle",
+					"desc": "Smite enemies up to <span class='skill-highlight'>15</span> yards away with holy chains that deal <span class='skill-highlight'>165%</span> weapon damage as Holy. The chains break off and strike up to <span class='skill-highlight'>3</span> additional enemies within <span class='skill-highlight'>20</span> yards for <span class='skill-highlight'>125%</span> weapon damage as Holy.",
+					"rune": "Enemies hit by the chains have a <span class='skill-highlight'>20%</span> chance to be immobilized in place for <span class='skill-highlight'>1</span> seconds.",
+					"procRate": 1,
+					"effect": {
+						"generate-wrath": 5,
+						"weapon-damage": 165,
+						"weapon-damage-type": "holy"
+					}
+				},
+				"smite~c": {
+					"name": "Smite - Surge",
+					"desc": "Smite enemies up to <span class='skill-highlight'>15</span> yards away with holy chains that deal <span class='skill-highlight'>165%</span> weapon damage as Holy. The chains break off and strike up to <span class='skill-highlight'>3</span> additional enemies within <span class='skill-highlight'>20</span> yards for <span class='skill-highlight'>125%</span> weapon damage as Holy.",
+					"rune": "Increase the range of the initial chain to <span class='skill-highlight'>30</span> yards.",
+					"procRate": 1,
+					"effect": {
+						"generate-wrath": 5,
+						"weapon-damage": 165,
+						"weapon-damage-type": "holy"
+					}
+				},
+				"smite~d": {
+					"name": "Smite - Reaping",
+					"desc": "Smite enemies up to <span class='skill-highlight'>15</span> yards away with holy chains that deal <span class='skill-highlight'>165%</span> weapon damage as Holy. The chains break off and strike up to <span class='skill-highlight'>3</span> additional enemies within <span class='skill-highlight'>20</span> yards for <span class='skill-highlight'>125%</span> weapon damage as Holy.",
+					"rune": "Gain <span class='skill-highlight'>1238</span> increased Life regeneration for <span class='skill-highlight'>2</span> seconds for every enemy hit by the chains. This effect stacks up to <span class='skill-highlight'>4</span> times.",
+					"procRate": 1,
+					"effect": {
+						"generate-wrath": 5,
+						"weapon-damage": 165,
+						"weapon-damage-type": "holy",
+						"stackable": {
+							"limit": 4
+						}
+					}
+				},
+				"smite~e": {
+					"name": "Smite - Shared Fate",
+					"desc": "Smite enemies up to <span class='skill-highlight'>15</span> yards away with holy chains that deal <span class='skill-highlight'>165%</span> weapon damage as Holy. The chains break off and strike up to <span class='skill-highlight'>3</span> additional enemies within <span class='skill-highlight'>20</span> yards for <span class='skill-highlight'>125%</span> weapon damage as Holy.",
+					"rune": "The chains bind those they hit, causing them to share one another's fate. Enemies who share fate will be stunned for <span class='skill-highlight'>2</span> seconds if they move <span class='skill-highlight'>15</span> yards away from each other.",
+					"procRate": 1,
+					"effect": {
+						"generate-wrath": 5,
+						"weapon-damage": 165,
+						"weapon-damage-type": "holy"
+					}
+				},
+				"justice": {
+					"name": "Justice",
+					"desc": "Hurl a hammer of justice at your enemies, dealing <span class='skill-highlight'>240%</span> weapon damage.",
+					"procRate": 1,
+					"effect": {
+						"generate-wrath": 5,
+						"weapon-damage": 240,
+						"weapon-damage-type": "holy"
+					}
+				},
+				"justice~a": {
+					"name": "Justice - Burst",
+					"desc": "Hurl a hammer of justice at your enemies, dealing <span class='skill-highlight'>240%</span> weapon damage.",
+					"rune": "The hammer is charged with lightning and explodes on impact, dealing <span class='skill-highlight'>30%</span> weapon damage as Lightning to all enemies within <span class='skill-highlight'>10</span> yards. Enemies caught in the explosion have a <span class='skill-highlight'>20%</span> chance to be stunned for <span class='skill-highlight'>1</span> seconds.",
+					"procRate": 1,
+					"effect": {
+						"generate-wrath": 5,
+						"weapon-damage": 240,
+						"weapon-damage-type": "lightning",
+						"chance-stun": 20
+					}
+				},
+				"justice~b": {
+					"name": "Justice - Crack",
+					"desc": "Hurl a hammer of justice at your enemies, dealing <span class='skill-highlight'>240%</span> weapon damage.",
+					"rune": "When the hammer hits an enemy, there is an <span class='skill-highlight'>80%</span> chance it will crack into <span class='skill-highlight'>2</span> smaller hammers that fly out and deal <span class='skill-highlight'>175%</span> weapon damage as Holy.",
+					"procRate": 1,
+					"effect": {
+						"generate-wrath": 5,
+						"weapon-damage": 240,
+						"weapon-damage-type": "holy"
+					}
+				},
+				"justice~c": {
+					"name": "Justice - Hammer of Pursuit",
+					"desc": "Hurl a hammer of justice at your enemies, dealing <span class='skill-highlight'>240%</span> weapon damage.",
+					"rune": "The hammer seeks out nearby targets and deal <span class='skill-highlight'>300%</span> weapon damage.",
+					"procRate": 1,
+					"effect": {
+						"generate-wrath": 5,
+						"weapon-damage": 300,
+						"weapon-damage-type": "holy"
+					}
+				},
+				"justice~d": {
+					"name": "Justice - Sword of Justice",
+					"desc": "Hurl a hammer of justice at your enemies, dealing <span class='skill-highlight'>240%</span> weapon damage.",
+					"rune": "Hurl a sword of justice at your enemies. When the sword hits anenemy, gain <span class='skill-highlight'>3%</span> increased movement speed for <span class='skill-highlight'>3</span> seconds. This effect stacks up to <span class='skill-highlight'>5</span> times.",
+					"procRate": 1,
+					"effect": {
+						"generate-wrath": 5,
+						"weapon-damage": 240,
+						"weapon-damage-type": "holy",
+						"stackable": {
+							"limit": 5,
+							"plus-movement-speed": 3
+						}
+					}
+				},
+				"justice~e": {
+					"name": "Justice - Holy Bolt",
+					"desc": "Hurl a hammer of justice at your enemies, dealing <span class='skill-highlight'>240%</span> weapon damage.",
+					"rune": "Throw a bolt of holy power that heals you and your allies for <span class='skill-highlight'>1651</span> - <span class='skill-highlight'>2476</span> Life when it hits an enemy.",
+					"procRate": 1,
+					"effect": {
+						"generate-wrath": 5,
+						"weapon-damage": 240,
+						"weapon-damage-type": "holy"
+					}
+				},
+				"shield-bash": {
+					"name": "Shield Bash",
+					"desc": "Charge at your enemy, bashing him and all nearby foes. Does <span class='skill-highlight'>370%</span> weapon damage plus <span class='skill-highlight'>300%</span> of your shield's Block Chance as Holy damage.",
+					"procRate": 1,
+					"effect": {
+						"cost-wrath": 30,
+						"weapon-damage": 370,
+						"weapon-damage-type": "holy"
+					}
+				},
+				"shield-bash~a": {
+					"name": "Shield Bash - Shattered Shield",
+					"desc": "Charge at your enemy, bashing him and all nearby foes. Does <span class='skill-highlight'>370%</span> weapon damage plus <span class='skill-highlight'>300%</span> of your shield's Block Chance as Holy damage.",
+					"rune": "The shield shatters into other smaller fragments, hitting more enemies for <span class='skill-highlight'>380%</span> weapon damage plus <span class='skill-highlight'>335%</span> of your shield's Block Chance as damage.",
+					"procRate": 1,
+					"effect": {
+						"cost-wrath": 30,
+						"weapon-damage": 380,
+						"weapon-damage-type": "holy"
+					}
+				},
+				"shield-bash~b": {
+					"name": "Shield Bash - One on One",
+					"desc": "Charge at your enemy, bashing him and all nearby foes. Does <span class='skill-highlight'>370%</span> weapon damage plus <span class='skill-highlight'>300%</span> of your shield's Block Chance as Holy damage.",
+					"rune": "The targeted monster is Immobilized for <span class='skill-highlight'>3</span> seconds. All other monsters are knocked back.",
+					"procRate": 1,
+					"effect": {
+						"cost-wrath": 30,
+						"weapon-damage": 370,
+						"weapon-damage-type": "holy"
+					}
+				},
+				"shield-bash~c": {
+					"name": "Shield Bash - Shield Cross",
+					"desc": "Charge at your enemy, bashing him and all nearby foes. Does <span class='skill-highlight'>370%</span> weapon damage plus <span class='skill-highlight'>300%</span> of your shield's Block Chance as Holy damage.",
+					"rune": "Additional shields erupt from you in a cross formation. Enemies hit by any of the additional shields take <span class='skill-highlight'>135%</span> weapon damage plus <span class='skill-highlight'>100%</span> of your shield's Block Chance as damage.",
+					"procRate": 1,
+					"effect": {
+						"cost-wrath": 30,
+						"weapon-damage": 135,
+						"weapon-damage-type": "holy"
+					}
+				},
+				"shield-bash~d": {
+					"name": "Shield Bash - Crumble",
+					"desc": "Charge at your enemy, bashing him and all nearby foes. Does <span class='skill-highlight'>370%</span> weapon damage plus <span class='skill-highlight'>300%</span> of your shield's Block Chance as Holy damage.",
+					"rune": "Foes who are killed explode, dealing <span class='skill-highlight'>660%</span> weapon damage to enemies behind them and knocking those enemies back.",
+					"procRate": 1,
+					"effect": {
+						"cost-wrath": 30,
+						"weapon-damage": 370,
+						"weapon-damage-type": "holy"
+					}
+				},
+				"shield-bash~e": {
+					"name": "Shield Bash - Pound",
+					"desc": "Charge at your enemy, bashing him and all nearby foes. Does <span class='skill-highlight'>370%</span> weapon damage plus <span class='skill-highlight'>300%</span> of your shield's Block Chance as Holy damage.",
+					"rune": "Shield Bash will now deal <span class='skill-highlight'>740%</span> weapon damage plus <span class='skill-highlight'>500%</span> shield Block Chance as Holy. The range is reduced to <span class='skill-highlight'>8</span> yards.",
+					"procRate": 1,
+					"effect": {
+						"cost-wrath": 30,
+						"weapon-damage": 760,
+						"weapon-damage-type": "holy"
+					}
+				},
+				"sweep-attack": {
+					"name": "Sweep Attack",
+					"desc": "Sweep a mystical flail through enemies up to <span class='skill-highlight'>18</span> yards before you, dealing <span class='skill-highlight'>440%</span> weapon damage.",
+					"procRate": 1,
+					"effect": {
+						"cost-wrath": 20,
+						"weapon-damage": 440
+					}
+				},
+				"sweep-attack~a": {
+					"name": "Sweep Attack - Blazing Sweep",
+					"desc": "Sweep a mystical flail through enemies up to <span class='skill-highlight'>18</span> yards before you, dealing <span class='skill-highlight'>440%</span> weapon damage.",
+					"rune": "Enemies hit by the attack will catch on fire for <span class='skill-highlight'>170%</span> weapon damage over <span class='skill-highlight'>2</span> seconds.",
+					"procRate": 1,
+					"effect": {
+						"cost-wrath": 20,
+						"weapon-damage": 440,
+						"weapon-damage-type": "fire"
+					}
+				},
+				"sweep-attack~b": {
+					"name": "Sweep Attack - Trip Attack",
+					"desc": "Sweep a mystical flail through enemies up to <span class='skill-highlight'>18</span> yards before you, dealing <span class='skill-highlight'>440%</span> weapon damage.",
+					"rune": "Enemies hit by the sweep attack have a <span class='skill-highlight'>50%</span> chance to be tripped and Stunned for <span class='skill-highlight'>2</span> seconds.",
+					"procRate": 1,
+					"effect": {
+						"cost-wrath": 20,
+						"weapon-damage": 440,
+						"chance-stun": 50
+					}
+				},
+				"sweep-attack~c": {
+					"name": "Sweep Attack - Holy Shock",
+					"desc": "Sweep a mystical flail through enemies up to <span class='skill-highlight'>18</span> yards before you, dealing <span class='skill-highlight'>440%</span> weapon damage.",
+					"rune": "Heal for <span class='skill-highlight'>2063</span> Life for each enemy hit.",
+					"procRate": 1,
+					"effect": {
+						"cost-wrath": 20,
+						"weapon-damage": 440
+					}
+				},
+				"sweep-attack~d": {
+					"name": "Sweep Attack - Gathering Sweep",
+					"desc": "Sweep a mystical flail through enemies up to <span class='skill-highlight'>18</span> yards before you, dealing <span class='skill-highlight'>440%</span> weapon damage.",
+					"rune": "Enemies caught in the sweep are pulled toward you.",
+					"procRate": 1,
+					"effect": {
+						"cost-wrath": 20,
+						"weapon-damage": 440
+					}
+				},
+				"sweep-attack~e": {
+					"name": "Sweep Attack - Frozen Sweep",
+					"desc": "Sweep a mystical flail through enemies up to <span class='skill-highlight'>18</span> yards before you, dealing <span class='skill-highlight'>440%</span> weapon damage.",
+					"rune": "Thge flail becomes frozen, and enemies hit have a <span class='skill-highlight'>100%</span> chance to be chilled, Slowing them for <span class='skill-highlight'>3</span> seconds.",
+					"procRate": 1,
+					"effect": {
+						"cost-wrath": 20,
+						"weapon-damage": 440,
+						"weapon-damage-type": "cold"
+					}
+				},
+				"blessed-hammer": {
+					"name": "Blessed Hammer",
+					"desc": "Summon a blessed hammer that spins around you, dealing <span class='skill-highlight'>200%</span> weapon damage as Holy to all enemies hit.",
+					"procRate": 1,
+					"effect": {
+						"cost-wrath": 10,
+						"weapon-damage": 200,
+						"weapon-damage-type": "holy"
+					}
+				},
+				"blessed-hammer~a": {
+					"name": "Blessed Hammer - Burning Wrath",
+					"desc": "Summon a blessed hammer that spins around you, dealing <span class='skill-highlight'>200%</span> weapon damage as Holy to all enemies hit.",
+					"rune": "The hammer is engulfed in fire and has a <span class='skill-highlight'>25%</span> chance to scorch the ground over which it passes. Enemies who pass through the scorched ground take <span class='skill-highlight'>150%</span> weapon damage as Fire per second.",
+					"procRate": 1,
+					"effect": {
+						"cost-wrath": 10,
+						"weapon-damage": 200,
+						"weapon-damage-type": "fire"
+					}
+				},
+				"blessed-hammer~b": {
+					"name": "Blessed Hammer - Thunderstruck",
+					"desc": "Summon a blessed hammer that spins around you, dealing <span class='skill-highlight'>200%</span> weapon damage as Holy to all enemies hit.",
+					"rune": "The hammer is charged with lightning that occasionally arcs between you and the hammer as it spirals through the air, dealing <span class='skill-highlight'>40%</span> weapon damage as Lightning to enemies caught in the arcs.",
+					"procRate": 1,
+					"effect": {
+						"cost-wrath": 10,
+						"weapon-damage": 200,
+						"weapon-damage-type": "lightning"
+					}
+				},
+				"blessed-hammer~c": {
+					"name": "Blessed Hammer - Limitless",
+					"desc": "Summon a blessed hammer that spins around you, dealing <span class='skill-highlight'>200%</span> weapon damage as Holy to all enemies hit.",
+					"rune": "When the hammer hits an enemy there is a <span class='skill-highlight'>50%</span> chance that a new hammer will be created at the location of the enemy hit. This can only occur once per hammer.",
+					"procRate": 1,
+					"effect": {
+						"cost-wrath": 10,
+						"weapon-damage": 200,
+						"weapon-damage-type": "holy"
+					}
+				},
+				"blessed-hammer~d": {
+					"name": "Blessed Hammer - Icebound Hammer",
+					"desc": "Summon a blessed hammer that spins around you, dealing <span class='skill-highlight'>200%</span> weapon damage as Holy to all enemies hit.",
+					"rune": "The hammer is made of ice, chilling enemies it passes through and has a <span class='skill-highlight'>10%</span> chance to explode on impact, dealing <span class='skill-highlight'>75%</span> weapon damage as Cold and Freezing enemies within <span class='skill-highlight'>6</span> yards for <span class='skill-highlight'>2</span> seconds.",
+					"procRate": 1,
+					"effect": {
+						"cost-wrath": 10,
+						"weapon-damage": 200,
+						"weapon-damage-type": "cold"
+					}
+				},
+				"blessed-hammer~e": {
+					"name": "Blessed Hammer - Dominion",
+					"desc": "Summon a blessed hammer that spins around you, dealing <span class='skill-highlight'>200%</span> weapon damage as Holy to all enemies hit.",
+					"rune": "The Hammers now orbit you as you move.",
+					"procRate": 1,
+					"effect": {
+						"cost-wrath": 10,
+						"weapon-damage": 200,
+						"weapon-damage-type": "holy"
+					}
+				},
+				"blessed-shield": {
+					"name": "Blessed Shield",
+					"desc": "Hurl your shield, dealing <span class='skill-highlight'>340%</span> weapon damage plus <span class='skill-highlight'>250%</span> of shield Block Chance as damage. The shield will ricochet to 3 nearby enemies.",
+					"procRate": 1,
+					"effect": {
+						"cost-wrath": 20,
+						"weapon-damage": 340,
+						"weapon-damage-type": "holy"
+					}
+				},
+				"blessed-shield~a": {
+					"name": "Blessed Shield - Staggering Shield",
+					"desc": "Hurl your shield, dealing <span class='skill-highlight'>340%</span> weapon damage plus <span class='skill-highlight'>250%</span> of shield Block Chance as damage. The shield will ricochet to 3 nearby enemies.",
+					"rune": "The shield becomes charged with lightning and has a <span class='skill-highlight'>35%</span> chance to Stun the first enemy hit for <span class='skill-highlight'>2</span> seconds. Each enemy hit after the first has a <span class='skill-highlight'>5%</span> reduced chance to be stunned.",
+					"procRate": 1,
+					"effect": {
+						"cost-wrath": 20,
+						"weapon-damage": 340,
+						"weapon-damage-type": "lightning",
+						"chance-stun": 35
+					}
+				},
+				"blessed-shield~b": {
+					"name": "Blessed Shield - Combust",
+					"desc": "Hurl your shield, dealing <span class='skill-highlight'>340%</span> weapon damage plus <span class='skill-highlight'>250%</span> of shield Block Chance as damage. The shield will ricochet to 3 nearby enemies.",
+					"rune": "The shield erupts in flames and has a <span class='skill-highlight'>33%</span> chance to explode on impact, dealing <span class='skill-highlight'>270%</span> weapon damage as Fire to all enemies within <span class='skill-highlight'>8</span> yards.",
+					"procRate": 1,
+					"effect": {
+						"cost-wrath": 20,
+						"weapon-damage": 340,
+						"weapon-damage-type": "fire"
+					}
+				},
+				"blessed-shield~c": {
+					"name": "Blessed Shield - Divine Aegis",
+					"desc": "Hurl your shield, dealing <span class='skill-highlight'>340%</span> weapon damage plus <span class='skill-highlight'>250%</span> of shield Block Chance as damage. The shield will ricochet to 3 nearby enemies.",
+					"rune": "When the shield hits an enemy, your Armor is increased by <span class='skill-highlight'>5%</span> and Life regeneration is increased by <span class='skill-highlight'>5%</span> for <span class='skill-highlight'>4</span> seconds.",
+					"procRate": 1,
+					"effect": {
+						"cost-wrath": 20,
+						"weapon-damage": 340,
+						"weapon-damage-type": "holy",
+						"plus-armor": 5,
+						"plus-percent-life-regen": 5
+					}
+				},
+				"blessed-shield~d": {
+					"name": "Blessed Shield - Shattering Throw",
+					"desc": "Hurl your shield, dealing <span class='skill-highlight'>340%</span> weapon damage plus <span class='skill-highlight'>250%</span> of shield Block Chance as damage. The shield will ricochet to 3 nearby enemies.",
+					"rune": "When the shield hits an enemy, it splits into <span class='skill-highlight'>3</span> small fragments that bounce between nearby enemies, dealing <span class='skill-highlight'>50%</span> weapon damage to all enemies hit.",
+					"procRate": 1,
+					"effect": {
+						"cost-wrath": 20,
+						"weapon-damage": 340,
+						"weapon-damage-type": "holy"
+					}
+				},
+				"blessed-shield~e": {
+					"name": "Blessed Shield - Piercing Shield",
+					"desc": "Hurl your shield, dealing <span class='skill-highlight'>340%</span> weapon damage plus <span class='skill-highlight'>250%</span> of shield Block Chance as damage. The shield will ricochet to 3 nearby enemies.",
+					"rune": "The shield no longer bounces, but pierces through all enemies with a <span class='skill-highlight'>50%</span> chance to knock them aside.",
+					"procRate": 1,
+					"effect": {
+						"cost-wrath": 20,
+						"weapon-damage": 340,
+						"weapon-damage-type": "holy"
+					}
+				},
+				"fist-of-the-heavens": {
+					"name": "Fist of the Heavens",
+					"desc": "Call forth a pillar of lightning from the heavens that explodes, dealing <span class='skill-highlight'>340%</span> weapon damage as Lightning to any enemy within <span class='skill-highlight'>8</span> yards. The explosion creates <span class='skill-highlight'>6</span> piercing charged bolts that arc outward and deal <span class='skill-highlight'>340%</span> weapon damage as Lightning.",
+					"procRate": 1,
+					"effect": {
+						"cost-wrath": 30,
+						"weapon-damage": 340,
+						"weapon-damage-type": "lightning"
+					}
+				},
+				"fist-of-the-heavens~a": {
+					"name": "Fist of the Heavens - Divine Well",
+					"desc": "Call forth a pillar of lightning from the heavens that explodes, dealing <span class='skill-highlight'>340%</span> weapon damage as Lightning to any enemy within <span class='skill-highlight'>8</span> yards. The explosion creates <span class='skill-highlight'>6</span> piercing charged bolts that arc outward and deal <span class='skill-highlight'>340%</span> weapon damage as Lightning.",
+					"rune": "The holy bolts crackle with holy lightning and zap enemies within <span class='skill-highlight'>18</span> yards as they travel, dealing <span class='skill-highlight'>80%</span> weapon damage as Holy.",
+					"procRate": 1,
+					"effect": {
+						"cost-wrath": 30,
+						"weapon-damage": 340,
+						"weapon-damage-type": "holy"
+					}
+				},
+				"fist-of-the-heavens~b": {
+					"name": "Fist of the Heavens - Heaven's Tempest",
+					"desc": "Call forth a pillar of lightning from the heavens that explodes, dealing <span class='skill-highlight'>340%</span> weapon damage as Lightning to any enemy within <span class='skill-highlight'>8</span> yards. The explosion creates <span class='skill-highlight'>6</span> piercing charged bolts that arc outward and deal <span class='skill-highlight'>340%</span> weapon damage as Lightning.",
+					"rune": "Summon a lightning storm that covers a <span class='skill-highlight'>8</span>-yard radius for <span class='skill-highlight'>5</span> seconds, dealing <span class='skill-highlight'>150%</span> weapon damage per second to enemies who pass underneath it.",
+					"procRate": 1,
+					"effect": {
+						"cost-wrath": 30,
+						"weapon-damage": 150,
+						"weapon-damage-for": 5,
+						"weapon-damage-type": "lightning"
+					}
+				},
+				"fist-of-the-heavens~c": {
+					"name": "Fist of the Heavens - Fissure",
+					"desc": "Call forth a pillar of lightning from the heavens that explodes, dealing <span class='skill-highlight'>340%</span> weapon damage as Lightning to any enemy within <span class='skill-highlight'>8</span> yards. The explosion creates <span class='skill-highlight'>6</span> piercing charged bolts that arc outward and deal <span class='skill-highlight'>340%</span> weapon damage as Lightning.",
+					"rune": "Creates a fissure of lightning energy that deals <span class='skill-highlight'>400%</span> weapon damage over <span class='skill-highlight'>5</span> seconds to nearby enemies. If there is another fissure nearby, lightning will arc between them dealing an additional <span class='skill-highlight'>185%</span> weapon damage with each arc.",
+					"procRate": 1,
+					"effect": {
+						"cost-wrath": 30,
+						"weapon-damage": 400,
+						"weapon-damage-for": 5,
+						"weapon-damage-type": "lightning"
+					}
+				},
+				"fist-of-the-heavens~d": {
+					"name": "Fist of the Heavens - Reverberation",
+					"desc": "Call forth a pillar of lightning from the heavens that explodes, dealing <span class='skill-highlight'>340%</span> weapon damage as Lightning to any enemy within <span class='skill-highlight'>8</span> yards. The explosion creates <span class='skill-highlight'>6</span> piercing charged bolts that arc outward and deal <span class='skill-highlight'>340%</span> weapon damage as Lightning.",
+					"rune": "The bolt detonates with a shockwave on impact, causing all enemies hit to be knocked away from the blast and Slowed by <span class='skill-highlight'>80%</span> for <span class='skill-highlight'>4</span> seconds.",
+					"procRate": 1,
+					"effect": {
+						"cost-wrath": 30,
+						"weapon-damage": 340,
+						"weapon-damage-type": "lightning"
+					}
+				},
+				"fist-of-the-heavens~e": {
+					"name": "Fist of the Heavens - Retribution",
+					"desc": "Call forth a pillar of lightning from the heavens that explodes, dealing <span class='skill-highlight'>340%</span> weapon damage as Lightning to any enemy within <span class='skill-highlight'>8</span> yards. The explosion creates <span class='skill-highlight'>6</span> piercing charged bolts that arc outward and deal <span class='skill-highlight'>340%</span> weapon damage as Lightning.",
+					"rune": "Hurl a fist of fire and lightning that pierces through your enemies, dealing <span class='skill-highlight'>350%</span> weapon damage as Lightning and exploding at your target, dealing <span class='skill-highlight'>150%</span> weapon damage as Lightning to enemies within <span class='skill-highlight'>8</span> yards.",
+					"procRate": 1,
+					"effect": {
+						"cost-wrath": 30,
+						"weapon-damage": 350,
+						"weapon-damage-type": "lightning"
+					}
+				}
+			},
 			"misc-buffs": {
 				"charm": {
 					"name": "Charm",
