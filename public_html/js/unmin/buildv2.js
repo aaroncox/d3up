@@ -272,7 +272,7 @@
             case "icon":
               var li = $("<li>"),
                   cleaned = slug.split("~"),
-                  iconName = cleaned[0].replace(/-/i, ''),
+                  iconName = cleaned[0].replace(/-/ig, ''),
                   baseUrl = 'http://media.blizzard.com/d3/icons/skills/64/',
                   icon = $("<img class='skill-icon'>");
               if(build.iconmappings[iconName]) {
@@ -439,7 +439,7 @@
 							if(!isBuff || (isBuff && heroClass)) {
 							  var cls = build.meta.heroClass
                     cleaned = slug.split("~"),
-                    iconName = cleaned[0].replace(/-/i, ''),
+                    iconName = cleaned[0].replace(/-/ig, ''),
                     baseUrl = 'http://media.blizzard.com/d3/icons/skills/64/',
                     icon = $("<img class='skill-icon'>");
                 if(build.iconmappings[iconName]) {
