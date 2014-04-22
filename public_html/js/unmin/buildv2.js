@@ -17,6 +17,10 @@
     elems: {},
 		skillElems: {},
 		skillCatalog: {},
+    iconmappings: {
+      'blackhole' : 'x1_wizard_wormhole',
+      'dominance' : 'x1_wizard_passive_arcaneaegis'
+    },
     init: function(data) {
       this.calc = new d3up.BuildCalculator;
 			this.builder = new d3up.ItemBuilder;
@@ -268,7 +272,17 @@
             case "icon":
               var li = $("<li>"),
                   cleaned = slug.split("~"),
-                  icon = $("<img class='skill-icon' src='/images/icons/" + build.meta.heroClass + "-" + cleaned[0] + ".png'>");
+                  iconName = cleaned[0].replace(/-/i, ''),
+                  baseUrl = 'http://media.blizzard.com/d3/icons/skills/64/',
+                  icon = $("<img class='skill-icon'>");
+              if(build.iconmappings[iconName]) {
+                icon.attr("src", baseUrl + build.iconmappings[iconName] + ".png");
+              } else {
+                if(type == 'passives') {
+                  iconName = 'passive_' + iconName;
+                }
+                icon.attr("src", baseUrl + build.meta.heroClass + "_" + iconName + ".png");
+              }
               icon.attr('data-tooltip', data.desc),
               icon.attr('data-name', data.name);
               icon.attr('data-skill', slug);
@@ -423,11 +437,19 @@
       					control.append("Activate ", checkbox, select);					
       				}
 							if(!isBuff || (isBuff && heroClass)) {
-							  var cls = build.meta.heroClass;
-							  if(heroClass) {
-							    cls = heroClass;
-							  }
-								icon = $("<img src='/images/icons/" + cls + "-" + cleaned[0] + ".png'>");
+							  var cls = build.meta.heroClass
+                    cleaned = slug.split("~"),
+                    iconName = cleaned[0].replace(/-/i, ''),
+                    baseUrl = 'http://media.blizzard.com/d3/icons/skills/64/',
+                    icon = $("<img class='skill-icon'>");
+                if(build.iconmappings[iconName]) {
+                  icon.attr("src", baseUrl + build.iconmappings[iconName] + ".png");
+                } else {
+                  if(type == 'passives') {
+                    iconName = 'passive_' + iconName;
+                  }
+                  icon.attr("src", baseUrl + build.meta.heroClass + "_" + iconName + ".png");
+                };
 								icon.attr('data-tooltip', data.desc);
 								icon.attr('data-name', data.name);
 								if(data.rune) {
@@ -531,15 +553,15 @@
 					break;
 				case "damage":
 					label = "Damage Range";
-					value = i;
+					html = this.abbreviate(i[0], 2, 1) + " - " + this.abbreviate(i[1], 2, 2);
 					break;
 				case "damage-2nd":
 					label = "2nd Pierce Hit";
-					value = i;
+					html = this.abbreviate(i[0], 2, 1) + " - " + this.abbreviate(i[1], 2, 2);
 					break;
 				case "damage-3rd":
 					label = "3rd Pierce Hit";
-					value = i;
+					html = this.abbreviate(i[0], 2, 1) + " - " + this.abbreviate(i[1], 2, 2);
 					break;
 				case "dps":
 					label = "DPS";
@@ -547,30 +569,30 @@
 					break;
 				case "critical-hit":
 					label = "Critical Hit";
-					value = i;
+					html = this.abbreviate(i[0], 2, 1) + " - " + this.abbreviate(i[1], 2, 2);
 					break;
 				case "bnSkillDamage":
 					if(i > 0) {
 						label = "Gear Bonus";
-						value = "<span class='skill-highlight'>+" + i + "%</span> Damage";						
+						html = "<span class='skill-highlight'>+" + i + "%</span> Damage";						
 					}
 					break;
 				case "bnDuration":
 					if(i > 0) {
 						label = "Duration Bonus";
-						value = "<span class='skill-highlight'>+" + i + "</span> Second(s)";						
+						html = "<span class='skill-highlight'>+" + i + "</span> Second(s)";						
 					}
 					break;
 				case "bnCriticalHit":
 					if(i > 0) {
 						label = "Critical Hit Bonus";
-						value = "<span class='skill-highlight'>+" + i + "%</span> Crit";
+						html = "<span class='skill-highlight'>+" + i + "%</span> Crit";
 					}
 					break;
 				case "cast-duration":
 					if(i > 0) {
 						label = "Cast Duration";
-						value = i + " Seconds";						
+						html = i + " Seconds";						
 					}
 					break;
 				case "bnSkillExtra":
@@ -606,15 +628,15 @@
 								break;
 							case "fury":
 								label = "Fury Generation";
-								value = v + " fury/sec";
+								html = v + " fury/sec";
 								break;
 							case "spirit":
 								label = "Spirit Generation";
-								value = v + " spirit/sec";
+								html = v + " spirit/sec";
 								break;
 							case "hatred":
 								label = "Hatred Generation";
-								value = v + " hatred/sec";
+								html = v + " hatred/sec";
 								break;
 						}
 					});
@@ -625,9 +647,15 @@
 			}
 			if(label && value) {
 				row.append($("<td>").html(label));
-				row.append($("<td>").html(value))
+				row.append($("<td>").html(this.abbreviate(value, 1, 2)));
 				return row;
 			}
+      if(label && html) {
+        // console.log(label, html);
+        row.append($("<td>").html(label));
+        row.append($("<td>").html(html));
+        return row;
+      }
 			return false;
 		},
 		renderEffectData: function(k, v) {
@@ -748,7 +776,63 @@
     },
     getSkills: function() {
       return this.skills;
+    },
+    abbreviate: function(number, maxPlaces, forcePlaces, forceLetter) {
+      number = Number(number);
+      forceLetter = forceLetter || false;
+      if(forceLetter !== false) {
+        return Grid.utils.annotate(number, maxPlaces, forcePlaces, forceLetter);
+      }
+      var abbr;
+      if(number >= 1e12) {
+        abbr = 'T';
+      }
+      else if(number >= 1e9) {
+        abbr = 'B';
+      }
+      else if(number >= 1e6) {
+        abbr = 'M';
+      }
+      else if(number >= 1e3) {
+        abbr = 'K';
+      }
+      else {
+        abbr = '';
+      }
+      return this.annotate(number, maxPlaces, forcePlaces, abbr);
+    },
+    annotate: function(number, maxPlaces, forcePlaces, abbr) {
+      // set places to false to not round
+      var rounded = 0;
+      switch(abbr) {
+        case 'T':
+          rounded = number / 1e12;
+          break;
+        case 'B':
+          rounded = number / 1e9;
+          break;
+        case 'M':
+          rounded = number / 1e6;
+          break;
+        case 'K':
+          rounded = number / 1e3;
+          break;
+        case '':
+          rounded = number;
+          break;
+      }
+      if(maxPlaces !== false) {
+        var test = new RegExp('\\.\\d{' + (maxPlaces + 1) + ',}$');
+        if(test.test(('' + rounded))) {
+          rounded = rounded.toFixed(maxPlaces);
+        }
+      }
+      if(forcePlaces !== false) {
+        rounded = Number(rounded).toFixed(forcePlaces);
+      }
+      return rounded + abbr;
     }
+
   }
   d3up.Build = Build;
 })( d3up );

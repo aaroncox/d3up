@@ -789,7 +789,7 @@ BuildCalculator.prototype = {
 			// Damage Taken Percent
 			// Formula: ( 1 - Percentage Resist All ) * ( 1 - Percentage Armor Reduction ) * (1 - Bonus Damage Reduction) * (1 - 30% Melee Damage Reduction )
 			// ----------------------------------
-			rendered.damageTaken 			= ( 1 - defenses['percent-resist-all'] ) * ( 1 - defenses.armorReduction ) * (1 - this.bonuses['plus-damage-reduce']) * ( 1 - 0.3 );
+			rendered.damageTaken 			= ( 1 - defenses['percent-resist-all'] ) * ( 1 - defenses.armorReduction ) * (1 - (this.bonuses['plus-damage-reduce'] * 0.01)) * ( 1 - 0.3 );
 			// ----------------------------------
 			// Individual EHP Calculations for each resist
 			// Formula: ( Life / ( 1 - Percentage Armor Reduction ) * ( 1 - Percentage Individual Resist ) * (1 - 30% Melee Damage Reduction ) )
@@ -805,7 +805,7 @@ BuildCalculator.prototype = {
 			// Damage Taken Percent
 			// Formula: ( 1 - Percentage Resist All ) * ( 1 - Percentage Armor Reduction )
 			// ----------------------------------
-			rendered.damageTaken 			= ( 1 - defenses['percent-resist-all'] ) * (1 - this.bonuses['plus-damage-reduce']) * ( 1 - defenses.armorReduction );
+			rendered.damageTaken 			= ( 1 - defenses['percent-resist-all'] ) * (1 - (this.bonuses['plus-damage-reduce'] * 0.01)) * ( 1 - defenses.armorReduction );
 			// ----------------------------------
 			// Individual EHP Calculations for each resist
 			// Formula: ( Life / ( 1 - Percentage Armor Reduction ) * ( 1 - Percentage Individual Resist ) )
@@ -896,6 +896,7 @@ BuildCalculator.prototype = {
 			rendered['ehp-block-dodge'] = rendered['ehp-dodge'] * (1 + difference);
 			// console.log(rendered['ehp'] + " EHP * " + Math.round(difference * 100)/100 + " = " + rendered['ehp-block']);
 		}
+		// console.log(defenses,rendered,this.bonuses);
 		// Return the Values for EHP
 		return rendered;
 	},
@@ -1624,15 +1625,15 @@ BuildCalculator.prototype = {
   			// dps = Math.round(((dLow + dHigh) / 2 ) * mathC * 100)/100;
   			rendered['per-tick'] = Math.round(hit / duration);
   			rendered['total-damage'] = rendered['per-tick'] * duration;
-  			rendered['damage-tick'] = Math.round(dLow / duration) + " - " + Math.round(dHigh / duration);
-  			rendered['critical-hit-tick'] = Math.round(dLow / duration * (1 + (critHitDmg * 0.01))) + " - " + Math.round(dHigh / duration * (1 + (critHitDmg * 0.01)));
+  			rendered['damage-tick'] = [Math.round(dLow / duration),Math.round(dHigh / duration)];
+  			rendered['critical-hit-tick'] = [Math.round(dLow / duration * (1 + (critHitDmg * 0.01))),Math.round(dHigh / duration * (1 + (critHitDmg * 0.01)))];
 		  }
 		} else if(tickModifier) {
 			rendered['dps'] = dps;							
 			rendered['ticks'] = tickModifier;
 			rendered['average-hit'] = Math.round(hit / tickModifier * 100) / 100;			
-			rendered['damage'] = Math.round(dLow / tickModifier) + " - " + Math.round(dHigh / tickModifier);
-			rendered['critical-hit'] = Math.round(dLow * (1 + (critHitDmg * 0.01)) / tickModifier) + " - " + Math.round(dHigh * (1 + (critHitDmg * 0.01)) / tickModifier);
+			rendered['damage'] = [Math.round(dLow / tickModifier), Math.round(dHigh / tickModifier)];
+			rendered['critical-hit'] = [Math.round(dLow * (1 + (critHitDmg * 0.01)) / tickModifier),Math.round(dHigh * (1 + (critHitDmg * 0.01)) / tickModifier)];
 			
 		} else {
 			rendered['average-hit'] = Math.round(hit * 100) / 100;			
@@ -1660,13 +1661,14 @@ BuildCalculator.prototype = {
 						dmgCycle = (((dLow + dHigh) / 2) + ((dLow + dHigh) / 2) + ((d3Low + d3High) / 2)) / 3;
  				rendered['3rd-hit'] = hit3;
 			}
-			rendered['damage'] = Math.round(dLow) + " - " + Math.round(dHigh);
-			rendered['critical-hit'] = Math.round(dLow * (1+ (critHitDmg * 0.01))) + " - " + Math.round(dHigh * (1 + (critHitDmg * 0.01)));
+			rendered['damage'] = [Math.round(dLow),Math.round(dHigh)];
+			rendered['critical-hit'] = [Math.round(dLow * (1+ (critHitDmg * 0.01))),
+																	Math.round(dHigh * (1 + (critHitDmg * 0.01)))];
 			if(this.bonuses['pierce-bonus']) {
-  		  rendered['damage-2nd'] = Math.round((1 + (this.bonuses['pierce-bonus'] / 100)) * dLow) + " - " + Math.round((1 + (this.bonuses['pierce-bonus'] / 100)) * dHigh);
-  		  rendered['critical-hit-2nd'] = Math.round((1 + (this.bonuses['pierce-bonus'] / 100)) * dLow * (1+ (critHitDmg * 0.01))) + " - " + Math.round((1 + (this.bonuses['pierce-bonus'] / 100)) * dHigh * (1 + (critHitDmg * 0.01)));
-  		  rendered['damage-3rd'] = Math.round((1 + (this.bonuses['pierce-bonus'] / 100) * 2) * dLow) + " - " + Math.round((1 + (this.bonuses['pierce-bonus'] / 100) * 2) * dHigh);
-  		  rendered['critical-hit-3rd'] = Math.round((1 + (this.bonuses['pierce-bonus'] / 100) * 2) * dLow * (1+ (critHitDmg * 0.01))) + " - " + Math.round((1 + (this.bonuses['pierce-bonus'] / 100) * 2) * dHigh * (1 + (critHitDmg * 0.01)));
+  		  rendered['damage-2nd'] = [Math.round((1 + (this.bonuses['pierce-bonus'] / 100)) * dLow),Math.round((1 + (this.bonuses['pierce-bonus'] / 100)) * dHigh)];
+  		  rendered['critical-hit-2nd'] = [Math.round((1 + (this.bonuses['pierce-bonus'] / 100)) * dLow * (1+ (critHitDmg * 0.01))), Math.round((1 + (this.bonuses['pierce-bonus'] / 100)) * dHigh * (1 + (critHitDmg * 0.01)))];
+  		  rendered['damage-3rd'] = [Math.round((1 + (this.bonuses['pierce-bonus'] / 100) * 2) * dLow), Math.round((1 + (this.bonuses['pierce-bonus'] / 100) * 2) * dHigh)];
+  		  rendered['critical-hit-3rd'] = [Math.round((1 + (this.bonuses['pierce-bonus'] / 100) * 2) * dLow * (1+ (critHitDmg * 0.01))), Math.round((1 + (this.bonuses['pierce-bonus'] / 100) * 2) * dHigh * (1 + (critHitDmg * 0.01)))];
   		}
 		}
 		if(this.attrs['life-steal'] && (options.skill.procRate > 0 || options.skill.effect['forced-life-steal'])) {
