@@ -281,7 +281,7 @@
                 if(type == 'passives') {
                   iconName = 'passive_' + iconName;
                 }
-                icon.attr("src", baseUrl + build.meta.heroClass + "_" + iconName + ".png");
+                icon.attr("src", baseUrl + build.meta.heroClass.replace("-","") + "_" + iconName + ".png");
               }
               icon.attr('data-tooltip', data.desc),
               icon.attr('data-name', data.name);
