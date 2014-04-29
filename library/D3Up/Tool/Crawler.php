@@ -92,6 +92,9 @@ class D3Up_Tool_Crawler
 	);
 	
 	static protected $_dirtyTypes = array(
+		'flail1h' => 'flail',
+		'flail2h' => '2h-flail',
+		'crusadershield' => 'shield',
 		'amulet' => 'amulet',
 		'belt' => 'belt',
 		'boots' => 'boots',
