@@ -334,10 +334,10 @@
 					"desc": "Whenever you use Vault, Smoke Screen, or backflip with Evasive Fire you gain <span class='skill-highlight'>60%</span> movement speed for <span class='skill-highlight'>2</span> seconds."
 				},
 				"thrill-of-the-hunt": {
-					"desc": "Every <span class='skill-highlight'>7</span> seconds, your next Hatred spender will immobilize all targets hit by it for <span class='skill-highlight'>2</span> seconds. Enemies can only be rooted once every 7 seconds."
+					"desc": "Every <span class='skill-highlight'>6</span> seconds, your next skill that costs Hatred will immobilize all enemies hit for <span class='skill-highlight'>2</span> seconds."
 				},
 				"vengeance": {
-					"desc": "Your maximum Hatred is increased by <span class='skill-highlight'>25</span>. In addition, gain <span class='skill-highlight'>20</span> Hatred and <span class='skill-highlight'>2</span> Discipline whenever you are healed by a health globe.",
+					"desc": "Your maximum Hatred is increased by <span class='skill-highlight'>25</span>. In addition, gain <span class='skill-highlight'>30</span> Hatred and <span class='skill-highlight'>3</span> Discipline whenever you are healed by a health globe.",
 					"effect": {
 						"max-hatred": 25
 					}
@@ -349,25 +349,28 @@
 					}
 				},
 				"cull-the-weak": {
-					"desc": "Damage against slowed enemies increased by <span class='skill-highlight'>15%</span>.",
+					"desc": "Damage against slowed enemies increased by <span class='skill-highlight'>20%</span>.",
 					"effect": {
-						"plus-damage-conditional": 15
+						"plus-damage-conditional": 20
 					}
 				},
 				"night-stalker": {
 					"desc": "Critical Hits have a chance to restore <span class='skill-highlight'>1</span> Discipline."
 				},
 				"brooding": {
-					"desc": "You gain <span class='skill-highlight'>2%</span> of your maximum Life per second.",
+					"desc": "Gain <span class='skill-highlight'>1.5%</span> Life regeneration per second for every second you remain stationary, stacking up to 3 times. This bonus is reset 5 seconds after you move.",
 					"effect": {
-						"plus-percent-life-regen-passive": 2
+						"plus-percent-life-regen-passive-conditional": 4.5
 					}
 				},
 				"hot-pursuit": {
-					"desc": "Whenever you are at full Hatred, movement speed is increased by <span class='skill-highlight'>15%</span>."
+					"desc": "Increase movement speed by <span class='skill-highlight'>20%</span> for <span class='skill-highlight'>2</span> seconds when you hit an enemy.",
+					"effect": {
+						"plus-movement-speed-conditional": 20
+					}
 				},
 				"archery": {
-					"desc": "Gain a bonus based on the weapon type of your main hand weapon:<ul><li>Bow: <span class='skill-highlight'>15%</span> increased damage</li><li>Crossbows: <span class='skill-highlight'>50%</span> Critical Hit Damage</li><li>Hand Crossbows: <span class='skill-highlight'>10%</span> Critical Hit Chance</li></ul>",
+					"desc": "Gain a bonus based on your weapon type:<ul><li>Bow: <span class='skill-highlight'>8%</span> increased damage</li><li>Crossbow: <span class='skill-highlight'>50%</span> Critical Hit Damage</li><li>Hand Crossbow: <span class='skill-highlight'>5%</span> Critical Hit Chance</li><li>2nd Hand Crossbow: <span class='skill-highlight'>1</span> Hatred per second</li></ul>",
 					"effect": {
 						"switch": {
 							"lookup": "type",
@@ -376,7 +379,7 @@
 								{
 									"caseOf": "bow",
 									"effect": {
-										"plus-damage": 15
+										"plus-damage": 8
 									}
 								},
 								{
@@ -388,21 +391,33 @@
 								{
 									"caseOf": "hand-crossbow",
 									"effect": {
-										"critical-hit": 10
+										"critical-hit": 5
 									}
 								}
 							]
-						}
+						},
+						"switch": {
+							"lookup": "type",
+							"against": "offhand",
+							"cases": [
+								{
+									"caseOf": "hand-crossbow",
+									"effect": {
+										"hatred-regen": 1
+									}
+								}
+							]
+						},
 					}
 				},
 				"numbing-traps": {
-					"desc": "Enemies hit by Fan of Knives, Spike Trap, Grenades, Sentry Turret and Caltrops have their damage reduced by <span class='skill-highlight'>20%</span> for <span class='skill-highlight'>3</span> seconds.",
+					"desc": "Enemies you Slow or hit with Fan of Knives, Spike Trap, Caltrops, Grenades and Sentry fire have their damage reduced by <span class='skill-highlight'>25%</span> for <span class='skill-highlight'>3</span> seconds.",
 					"effect": {
-						"damage-reduce-conditional": 20
+						"damage-reduce-conditional": 25
 					}
 				},
 				"perfectionist": {
-					"desc": "Reduces the Discipline cost of all skills by <span class='skill-highlight'>10%</span>. Also increases Life, Armor and Resistances by 10%",
+					"desc": "Reduce the Discipline cost of all skills by <span class='skill-highlight'>10%</span>. Also increases Life, Armor, and resistance to all elements by 10%",
 					"effect": {
 						"plus-life": 10,
 						"plus-armor": 10,
@@ -410,19 +425,34 @@
 					}
 				},
 				"custom-engineering": {
-					"desc": "The duration of your Caltrops, Marked for Death, Spike Trap, and Sentry is increased by <span class='skill-highlight'>100%</span>, allows for a 3rd Sentry Turret and increases the maximum number of Spike Traps allowed to 6."
+					"desc": "Increase the duration of your Caltrops, Marked for Death, Spike Trap, and Sentry by <span class='skill-highlight'>100%</span>. Increase the maximum number of Sentries to <span class='skill-highlight'>3</span> and Spike Traps to <span class='skill-highlight'>6</span>."
 				},
 				"grenadier": {
-					"desc": "Increases Hatred generated from Grenades by <span class='skill-highlight'>2</span> and reduces the Hatred cost of Cluster Arrow by <span class='skill-highlight'>10</span>. Upon death, you drop a giant grenade that explodes for <span class='skill-highlight'>450%</span> weapon damage as Fire."
+					"desc": "Increase the damage of grenades by <span class='skill-highlight'>10%</span>. Increase the explosion size of grenades by <span class='skill-highlight'>20%</span>. Upon death, you drop a giant grenade that explodes for <span class='skill-highlight'>1000%</span> weapon damage as Fire."
 				},
 				"sharpshooter": {
-					"desc": "Gain <span class='skill-highlight'>3%</span> Critical Hit Chance every second. This bonus is reset <span class='skill-highlight'>1</span> second after you successfully critically hit.",
+					"desc": "Gain <span class='skill-highlight'>4%</span> Critical Hit Chance every second. This bonus is reset <span class='skill-highlight'>1</span> second after you successfully critically hit.",
 					"effect": {
 						"sharpshooter": true
 					}
 				},
 				"ballistics": {
-					"desc": "Damage from rockets increased by <span class='skill-highlight'>50%</span>. "
+					"desc": "Increase damage of rockets by <span class='skill-highlight'>100%</span>. In addition, you have a <span class='skill-highlight'>20%</span> chance to fire a homing rocket for <span class='skill-highlight'>150%</span> weapon damage when you attack."
+				},
+				"ambush": {
+					"desc": "You deal 40% additional damage to enemies above 75% health.",
+					"effect": {
+						"plus-damage-conditional": 40
+					}
+				},
+				"awareness": {
+					"desc": "Gain <span class='skill-highlight'>6%</span> Dodge Chance every second. This bonus is reset <span class='skill-highlight'>1</span> second after you successfully dodge an attack."
+				},
+				"single-out": {
+					"desc": "Gain <span class='skill-highlight'>25%</span> Critical Hit Chance against enemies who are more than <span class='skill-highlight'>20</span> yards away from any other enemies.",
+					"effect": {
+						"plus-crit-hit-conditional": 25
+					}
 				}
 			},
 			"witch-doctor": {
