@@ -1,0 +1,28 @@
+server {
+        listen 80;
+        server_name local.d3up.com;
+        root /the/path/to/the/folder/public_html;
+        index /;
+
+        access_log /var/log/nginx/d3up.access.log;
+        error_log /var/log/nginx/d3up.error.log error;
+
+        location ~* \.(png|jpg|jpeg|gif|ico)$ {
+                expires         360d;
+                log_not_found   off;
+                access_log      off;
+        }
+
+        rewrite ^/index.php(.*) $1 permanent;
+
+        location / {
+                try_files $uri @d3up_php;
+        }
+
+        location @d3up_php {
+                fastcgi_pass    127.0.0.1:9000;
+                include         fastcgi_params;
+                fastcgi_param   SCRIPT_FILENAME /the/path/to/the/folder/public_html/index.php;
+                fastcgi_param   APPLICATION_ENV development;
+        }
+}
