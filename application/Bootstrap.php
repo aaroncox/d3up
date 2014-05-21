@@ -49,13 +49,15 @@ class Bootstrap extends Epic_Application_Bootstrap
 		$backendOptions = array(
 			'cache_dir' =>$dir
 		);
-		$cache = Zend_Cache::factory(
-			'Page',
-			'File',
-			$frontendOptions,
-			$backendOptions
-		);
-		$cache->start();
+		if(APPLICATION_ENV === 'production') {
+			$cache = Zend_Cache::factory(
+				'Page',
+				'File',
+				$frontendOptions,
+				$backendOptions
+			);
+			$cache->start();
+		}
 	}
 
 }
